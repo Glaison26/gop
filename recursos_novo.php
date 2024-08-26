@@ -254,16 +254,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </script>
 
 </head>
-<div class="panel panel-light" style="background-color: #e3f2fd;">
+<div class="panel panel-primary class">
     <div class="panel-heading text-center">
-        <h2>Novo registro de Recurso Físico</h2>
+        <h4>GOP - Gestão Operacional</h4>
+        <h5>Novo Recurso<h5>
     </div>
 </div>
 
-<br>
-
 <body>
     <div class="container -my5">
+        <div class='alert alert-info' role='alert'>
+            <h5>Campos com (*) são obrigatórios</h5>
+        </div>
+
+        <br>
         <?php
         if (!empty($msg_erro)) {
             echo "

@@ -3,30 +3,13 @@ session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
+include("conexao.php");
+include("links.php");
 ?>
 <!doctype html>
 <html lang="en">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Gop</title>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
-    <link rel="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
-    <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
-</head>
-
 <body>
-    <script scr="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script scr="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script scr="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://nightly.datatables.net/js/jquery.dataTables.js"></script>
 
     <script language="Javascript">
         function confirmacao(id) {
@@ -48,7 +31,7 @@ if (!isset($_SESSION['newsession'])) {
         $(document).ready(function() {
             $('.tabexecutores').DataTable({
                 // 
-                "iDisplayLength": 5,
+                "iDisplayLength": -1,
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,
@@ -88,21 +71,22 @@ if (!isset($_SESSION['newsession'])) {
         });
     </script>
 
-    <div class="panel panel-light" style="background-color: #e3f2fd;">
+    <div class="panel panel-primary class">
         <div class="panel-heading text-center">
-            <h2>Lista de Executores</h2>
+            <h4>GOP - Gestão Operacional</h4>
+            <h5>Lista de Executores de Serviço<h5>
         </div>
     </div>
+
 
     <div class="container -my5">
         <br>
         <a class="btn btn-success btn-sm" href="/gop/executores_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
-        <a class="btn btn-info btn-sm" href=""><span class="glyphicon glyphicon-print"></span> Imprimir</a>
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
-        <table class="table display table-hover table-condensed tabexecutores">
-            <thead class="thead-dark">
+        <table class="table display table-bordered tabexecutores">
+            <thead class="thead">
                 <tr>
                     <th scope="col">Código</th>
                     <th scope="col">Executor</th>
@@ -116,16 +100,7 @@ if (!isset($_SESSION['newsession'])) {
             </thead>
             <tbody>
                 <?php
-                $servername = $_SESSION['local'];
-                $username = $_SESSION['usuario'];
-                $password =  $_SESSION['senha'];
-                $database = $_SESSION['banco'];
-                // criando a conexão com banco de dados
-                $conection = new mysqli($servername, $username, $password, $database);
-                // checo erro na conexão
-                if ($conection->connect_error) {
-                    die("Erro na Conexão com o Banco de Dados!! " . $conection->connect_error);
-                }
+               
                 // faço a Leitura da tabela com sql
                 $c_sql = "SELECT executores.id, executores.nome,  executores.cpf_cnpj, executores.fone1, executores.fone2, executores.contato, funcoes.descricao AS funcao" .
                     " FROM executores JOIN funcoes ON executores.id_funcao=funcoes.id" .
@@ -140,7 +115,7 @@ if (!isset($_SESSION['newsession'])) {
                 while ($c_linha = $result->fetch_assoc()) {
 
                     echo "
-                    <tr>
+                    <tr class='info'>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[nome]</td>
                     <td>$c_linha[funcao]</td>
@@ -150,7 +125,7 @@ if (!isset($_SESSION['newsession'])) {
                     <td>$c_linha[contato]</td>
                     
                     <td>
-                    <a class='btn btn-info btn-sm' href='/gop/executores_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                    <a class='btn btn-secondary btn-sm' href='/gop/executores_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 

@@ -3,31 +3,13 @@ session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
+include("conexao.php");
+include("links.php");
 ?>
 <!doctype html>
 <html lang="en">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Gop - Lista de Fabricantes</title>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
-    <link rel="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
-    <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
-</head>
-
 <body>
-    <script scr="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script scr="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script scr="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://nightly.datatables.net/js/jquery.dataTables.js"></script>
-
     <script language="Javascript">
         function confirmacao(id) {
             var resposta = confirm("Deseja remover esse registro?");
@@ -48,7 +30,7 @@ if (!isset($_SESSION['newsession'])) {
         $(document).ready(function() {
             $('.tabfabricantes').DataTable({
                 // 
-                "iDisplayLength": 5,
+                "iDisplayLength": -1,
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,
@@ -88,9 +70,10 @@ if (!isset($_SESSION['newsession'])) {
         });
     </script>
 
-    <div class="panel panel-light" style="background-color: #e3f2fd;">
+    <div class="panel panel-primary class">
         <div class="panel-heading text-center">
-            <h2>Lista de Fabricantes</h2>
+            <h4>GOP - Gestão Operacional</h4>
+            <h5>Lista de Fabricantes<h5>
         </div>
     </div>
 
@@ -99,12 +82,11 @@ if (!isset($_SESSION['newsession'])) {
 
         <br>
         <a class="btn btn-success btn-sm" href="/gop/fabricantes_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
-        <a class="btn btn-info btn-sm" href=""><span class="glyphicon glyphicon-print"></span> Imprimir</a>
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
-        <table class="table display table-hover  table-condensed tabfabricantes">
-            <thead class="thead-dark">
+        <table class="table display table-bordered tabfabricantes">
+            <thead class="thead">
                 <tr>
                     <th scope="col">Código</th>
                     <th scope="col">Fabricante</th>
@@ -118,16 +100,6 @@ if (!isset($_SESSION['newsession'])) {
             </thead>
             <tbody>
                 <?php
-                $servername = $_SESSION['local'];
-                $username = $_SESSION['usuario'];
-                $password =  $_SESSION['senha'];
-                $database = $_SESSION['banco'];
-                // criando a conexão com banco de dados
-                $conection = new mysqli($servername, $username, $password, $database);
-                // checo erro na conexão
-                if ($conection->connect_error) {
-                    die("Erro na Conexão com o Banco de Dados!! " . $conection->connect_error);
-                }
                 // faço a Leitura da tabela com sql
                 $c_sql = "SELECT fabricantes.id, fabricantes.descricao, fabricantes.razaosocial, fabricantes.cnpj_cpf, fabricantes.fone1, fabricantes.fone2, fabricantes.contato FROM fabricantes ORDER BY fabricantes.descricao";
                 $result = $conection->query($c_sql);
@@ -140,7 +112,7 @@ if (!isset($_SESSION['newsession'])) {
                 while ($c_linha = $result->fetch_assoc()) {
 
                     echo "
-                    <tr>
+                    <tr class='table-primary'>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descricao]</td>
                     <td>$c_linha[razaosocial]</td>
@@ -149,7 +121,7 @@ if (!isset($_SESSION['newsession'])) {
                     <td>$c_linha[fone2]</td>
                     <td>$c_linha[contato]</td>
                     <td>
-                    <a class='btn btn-info btn-sm' href='/gop/fabricantes_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                    <a class='btn btn-secondary btn-sm' href='/gop/fabricantes_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 

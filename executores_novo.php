@@ -5,6 +5,7 @@ if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
 
+
 // funções 
 
 function carregadados()

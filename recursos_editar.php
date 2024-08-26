@@ -286,13 +286,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
 </head>
 
 <body>
-    <div class="panel panel-light" style="background-color: #e3f2fd;">
+    <div class="panel panel-primary class">
         <div class="panel-heading text-center">
-            <h2>Editar Recursos Físicos</h2>
+            <h4>GOP - Gestão Operacional</h4>
+            <h5>Editar dados do Recurso<h5>
         </div>
     </div>
     <br>
+
     <div class="container -my5">
+        <?php
+        if (!empty($msg_erro)) {
+            echo "
+            <div class='alert alert-warning' role='alert'>
+                <h4>$msg_erro</h4>
+            </div>
+                ";
+        }
+        ?>
+
+        <div class='alert alert-info' role='alert'>
+            <h5>Campos com (*) são obrigatórios</h5>
+        </div>
+        <br>
         <form method="post">
             <input type="hidden" name="id" value="<?php echo $c_id; ?>">
             <div class="row mb-3">
@@ -542,15 +558,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                 </div>
             </div>
 
-            <?php
-            if (!empty($msg_erro)) {
-                echo "
-            <div class='alert alert-warning' role='alert'>
-                <h4>$msg_erro</h4>
-            </div>
-                ";
-            }
-            ?>
+
 
             <div class="row mb-3">
                 <div class="offset-sm-3 col-sm-3 d-grid">
