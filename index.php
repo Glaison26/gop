@@ -4,6 +4,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 } else {
     session_start();
     include("conexao.php");
+    $_SESSION['local'] = "localhost";
+    $_SESSION['usuario'] = "root";
+    $_SESSION['senha'] = "";
+    $_SESSION['banco'] = "gop";
    
     $c_login = $_POST['login'];
     $c_sql = "SELECT count(*) as achou FROM usuarios where usuarios.login='$c_login'";
