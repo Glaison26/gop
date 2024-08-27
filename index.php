@@ -3,32 +3,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $l_erro = '';
 } else {
     session_start();
-
-
-    // servidor hosting
-    // $_SESSION['local'] ="localhost";
-    // $_SESSION['usuario'] ="id20188879_glaison";
-    // $_SESSION['senha'] ="Taioba@316318";
-    // $_SESSION['banco'] ="id20188879_gop";
-    // servidor local
-
-    $_SESSION['local'] = "localhost";
-    $_SESSION['usuario'] = "root";
-    $_SESSION['senha'] = "";
-    $_SESSION['banco'] = "gop";
-
-    // rotina para entrada do usuário
-
-    $servername = $_SESSION['local'];
-    $username = $_SESSION['usuario'];
-    $password =  $_SESSION['senha'];
-    $database = $_SESSION['banco'];
-    // criando a conexão com banco de dados
-    $conection = new mysqli($servername, $username, $password, $database);
-    // checo erro na conexão
-    if ($conection->connect_error) {
-        die("Erro na Conexão com o Banco de Dados!! " . $conection->connect_error);
-    }
+    include("conexao.php");
+   
     $c_login = $_POST['login'];
     $c_sql = "SELECT count(*) as achou FROM usuarios where usuarios.login='$c_login'";
     $result = $conection->query($c_sql);
