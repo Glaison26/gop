@@ -179,22 +179,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
 </head>
 
 <body>
-    <div class="panel panel-light" style="background-color: #e3f2fd;">
+    <div class="panel panel-primary class">
         <div class="panel-heading text-center">
-            <h2>Editar Fornecedor</h2>
+            <div style="padding-left:15px;padding-top:15px;">
+               <!-- <img Align="left" src="\gop\images\cadastro.png" alt="" width="60" height="45">-->
+
+            </div>
+            <h4>GOP - Gestão Operacional</h4>
+            <h5>Novo Fornecedor<h5>
         </div>
     </div>
     <br>
     <div class="container -my5">
 
+    <div class='alert alert-info' role='alert'>
+            <div style="padding-left:15px;">
+                <img Align="left" src="\gop\images\escrita.png" alt="" width="50" height="45">
 
+            </div>
+            <h5>Campos com (*) são obrigatórios</h5>
+        </div>
+
+        <br>
         <?php
         if (!empty($msg_erro)) {
             echo "
             <div class='alert alert-warning' role='alert'>
-                <h4>$msg_erro</h4>
+                <div style='padding-left:15px;'>
+                    <h5><img Align='left' src='\gop\images\aviso.png' alt='30' height='35'> $msg_erro</h5>
+                </div>
+                
             </div>
-                ";
+            ";
         }
         ?>
 
@@ -210,7 +226,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
 
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Grupo </label>
-                <div class="col-sm-6">
+                <div class="col-sm-3">
                     <select class="form-control form-control-lg" id="grupo" name="grupo">
                         <?php
                         // select da tabela de espacos fisicos
@@ -240,11 +256,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
 
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Tipo Fabricante </label>
-                <div class="col-sm-6">
+                <div class="col-sm-2">
                     <select class="form-control form-control-lg" id="tipo" name="tipo">
                         <option <?= ($c_tipo == 'Juridica') ? 'selected' : '' ?>>Juridica</option>
                         <option <?= ($c_tipo == 'Física') ? 'selected' : '' ?>>Física</option>
                     </select>
+                </div>
+                <label class="col-sm-2 col-form-label">CNPJ/CPF</label>
+                <div class="col-sm-2">
+                    <input type="text" maxlength="18" class="form-control" name="cnpj_cpf" placeholder="somente números" value="<?php echo $c_cnpj_cpf; ?>">
                 </div>
             </div>
 
@@ -256,37 +276,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             </div>
             <hr>
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">CNPJ/CPF</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="18" class="form-control" name="cnpj_cpf" placeholder="somente números" value="<?php echo $c_cnpj_cpf; ?>">
-                </div>
-            </div>
+            
 
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Insc. Estadual</label>
-                <div class="col-sm-6">
+                <div class="col-sm-2">
                     <input type="text" maxlength="16" class="form-control" name="insc_estad" value="<?php echo $c_insc_estad; ?>">
+                </div>
+                <label class="col-sm-2 col-form-label">Insc. Municipal</label>
+                <div class="col-sm-2">
+                    <input type="text" maxlength="16" class="form-control" name="insc_munic" value="<?php echo $c_insc_munic; ?>">
                 </div>
 
             </div>
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Insc. Municipal</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="16" class="form-control" name="insc_munic" value="<?php echo $c_insc_munic; ?>">
-                </div>
-            </div>
+           
             <hr>
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Fone I</label>
-                <div class="col-sm-6">
+                <div class="col-sm-2">
                     <input type="text" maxlength="20" id="fone1" class="form-control" name="fone1" value="<?php echo $c_fone1; ?>">
                 </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Fone II</label>
-                <div class="col-sm-6">
+                <label class="col-sm-2 col-form-label">Fone II</label>
+                <div class="col-sm-2">
                     <input type="text" maxlength="20" id="fone2" class="form-control" name="fone2" value="<?php echo $c_fone2; ?>">
                 </div>
             </div>
@@ -312,16 +323,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                 </div>
             </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">CEP</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="10" id="cep" class="form-control" name="cep" value="<?php echo $c_cep; ?>">
-                </div>
-            </div>
+           
 
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Estado</label>
-                <div class="col-sm-6">
+                <div class="col-sm-3">
                     <select class="form-control form-control-lg" id="estado" name="estado" value="<?php echo $c_estado; ?>">
                         <option value="AC" <?= ($c_estado == 'AC') ? 'selected' : '' ?>>Acre</option>
                         <option value="AL" <?= ($c_estado == 'AL') ? 'selected' : '' ?>>Alagoas</option>
@@ -351,6 +357,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                         <option value="SE" <?= ($c_estado == 'SE') ? 'selected' : '' ?>>Sergipe</option>
                         <option value="TO" <?= ($c_estado == 'TO') ? 'selected' : '' ?>>Tocantis</option>
                     </select>
+                </div>
+                <label class="col-sm-1 col-form-label">CEP</label>
+                <div class="col-sm-2">
+                    <input type="text" maxlength="10" id="cep" class="form-control" name="cep" value="<?php echo $c_cep; ?>">
                 </div>
             </div>
 

@@ -246,6 +246,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <div class="container -my5">
         <div class='alert alert-info' role='alert'>
+            <div style="padding-left:15px;">
+                <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
+
+            </div>
             <h5>Campos com (*) são obrigatórios</h5>
         </div>
 
@@ -254,7 +258,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!empty($msg_erro)) {
             echo "
             <div class='alert alert-warning' role='alert'>
-                <h3>$msg_erro</h3>
+                <div style='padding-left:15px;'>
+                    
+                </div>
+                <h4><img Align='left' src='\gop\images\aviso.png' alt='30' height='35'> $msg_erro</h4>
             </div>
             ";
         }
@@ -282,14 +289,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                         <hr>
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Descrição</label>
+                            <label class="col-sm-3 col-form-label">Descrição (*)</label>
                             <div class="col-sm-6">
                                 <input type="text" maxlength="120" class="form-control" name="descricao" value="<?php echo $c_descricao; ?>">
                             </div>
                         </div>
 
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Patrimônio no.</label>
+                            <label class="col-sm-3 col-form-label">Patrimônio no. (*)</label>
                             <div class="col-sm-3">
                                 <input type="text" maxlength="20" class="form-control" name="patrimonio" value="<?php echo $c_patrimonio; ?>">
                             </div>
@@ -300,7 +307,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
 
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Modelo</label>
+                            <label class="col-sm-3 col-form-label">Modelo (*)</label>
                             <div class="col-sm-6">
                                 <input type="text" maxlength="90" class="form-control" name="modelo" value="<?php echo $c_modelo; ?>">
                             </div>
@@ -451,7 +458,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Nota Fiscal</label>
+                            <label class="col-sm-3 col-form-label">Nota Fiscal (*)</label>
                             <div class="col-sm-2">
                                 <input type="text" maxlength="20" class="form-control" name="notafiscal" value="<?php echo $c_notafiscal; ?>">
                             </div>
@@ -561,11 +568,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ?>
             <br>
             <div class="row mb-3">
-                    <div class="offset-sm-0 col-sm-3">
-                        <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                        <a class='btn btn-danger' href='/gop/recursos_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
-                    </div>
+                <div class="offset-sm-0 col-sm-3">
+                    <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
+                    <a class='btn btn-danger' href='/gop/recursos_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
                 </div>
+            </div>
         </form>
     </div>
 

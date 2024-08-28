@@ -42,7 +42,7 @@
          <a href="#"></a>
          <a title='Abertura de Solicitação de Serviço' href='#'><img src="\gop\images\contato.png" alt="" width="30" height="30"></a>
          <a title='Abertura de Ordem de Serviço' href='#'><img src="\gop\images\ordem.png" alt="" width="30" height="30"></a>
-         <a title='Cadastro de Equipamentos' href='#'><img src="\gop\images\equipamento.png" alt="" width="30" height="30"></a>
+         <a title='Cadastro de Recursos Físicos' href='#'><img src="\gop\images\config.png" alt="" width="30" height="30"></a>
          <a title='Alterar Senha' href='\gop\alterasenha.php'><img src="\gop\images\trocasenha.png" alt="" width="30" height="30"></a>
          <a title='Sair do Sistema' href='\gop\index.php'><img src="\gop\images\saida.png" alt="" width="30" height="30"></a>
      </div>
@@ -66,11 +66,12 @@
 
                  <div class="navbar-header">
                      <br>
-                     <div style="padding-left:20px;">
-                         <img Align="left" src="\gop\images\inicio.png" alt="35" height="35">
-                         <a class="navbar-brand" href="#"><h4>Menu Inicial</h4></a>
+                     <div style="padding-left:15px;">
+                         <img Align="left" src="\gop\images\inicio.png" alt="" width="60" height="50">
+                                          
                      </div>
                  </div>
+                   
                  <ul class="navbar-nav ml-auto">
 
                      <li class="nav-item dropdown">
@@ -78,7 +79,7 @@
                          <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cadastros</a>
                          <div class="dropdown-menu" aria-labelledby="dropdown01">
 
-                             <a class="dropdown-item" href="/gop/recursos_lista.php"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Recursos Fisicos</a>
+                             <a class="dropdown-item" href="/gop/recursos_lista.php"><img src="\gop\images\config.png" alt="" width="20" height="20"> Recursos Fisicos</a>
                              <a class="dropdown-item" href="/gop/espacos_lista.php"><img src="\gop\images\apartamento.png" alt="20" height="20"> Espaços Fisicos</a>
                              <a class="dropdown-item" href=""><span class="" aria-hidden="true"></span> _____________________________________</a>
                              <a class="dropdown-item" href="/gop/fornecedores_lista.php"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Fornecedores </a>
