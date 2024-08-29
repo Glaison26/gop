@@ -224,8 +224,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Novo Fornecedor</title>
-
     <script type="text/javascript">
         $(document).ready(function() {
             $("#fone1").mask("(99)9999-9999");
@@ -236,15 +234,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </script>
 
 </head>
-<div class="panel panel-primary class">
-    <div class="panel-heading text-center">
-        <h4>GOP - Gestão Operacional</h4>
-        <h5>Novo Recurso<h5>
-    </div>
-</div>
+
 
 <body>
     <div class="container -my5">
+        <div style="padding-top:5px;">
+            <div class="panel panel-primary class">
+                <div class="panel-heading text-center">
+                    <h4>GOP - Gestão Operacional</h4>
+                    <h5>Novo Recurso Físico<h5>
+                </div>
+            </div>
+        </div>
         <div class='alert alert-info' role='alert'>
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">

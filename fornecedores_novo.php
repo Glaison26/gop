@@ -7,31 +7,6 @@ if (!isset($_SESSION['newsession'])) {
 
 include('links.php');
 include('conexao.php');
-
-// funções 
-
-function carregadados()
-{
-    $c_descricao = $_POST['descricao'];
-    $c_razao = $_POST['razaosocial'];
-    $c_contato = $_POST['contato'];
-    $c_fone1 = $_POST['fone1'];
-    $c_fone2 = $_POST['fone2'];
-    $c_endereco = $_POST['endereco'];
-    $c_bairro = $_POST['bairro'];
-    $c_cidade = $_POST['cidade'];
-    $c_estado = $_POST['estado'];
-    $c_cep = $_POST['cep'];
-    $c_email = $_POST['email'];
-    $c_tipo = $_POST['tipo'];
-    $c_cnpj_cpf = $_POST['cnpj_cpf'];
-    $c_insc_estad = $_POST['onsc_estad'];
-    $c_insc_munic = $_POST['insc_munic'];
-    $c_email = $_POST['email'];
-    $c_url = $_POST['url'];
-    $c_obs = $_POST['obs'];
-}
-
 include_once "lib_gop.php";
 
 $c_descricao = "";
@@ -152,21 +127,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         });
     </script>
 
+    <script>
+        const handlePhone = (event) => {
+            let input = event.target
+            input.value = phoneMask(input.value)
+        }
+
+        const phoneMask = (value) => {
+            if (!value) return ""
+            value = value.replace(/\D/g, '')
+            value = value.replace(/(\d{2})(\d)/, "($1) $2")
+            value = value.replace(/(\d)(\d{4})$/, "$1-$2")
+            return value
+        }
+    </script>
+
 </head>
-<div class="panel panel-primary class">
-    <div class="panel-heading text-center">
-    <div style="padding-left:15px;padding-top:15px;">
-    <!--<img Align="left" src="\gop\images\cadastro.png" alt="" width="60" height="45">-->
-    
-    </div>
-        <h4>GOP - Gestão Operacional</h4>
-        <h5>Novo Fornecedor<h5>
-    </div>
-</div>
-<br>
 
 <body>
     <div class="container -my5">
+        <div style="padding-top:5px;">
+            <div class="panel panel-primary class">
+                <div class="panel-heading text-center">
+                    <div style="padding-left:15px;padding-top:15px;">
+                        <!--<img Align="left" src="\gop\images\cadastro.png" alt="" width="60" height="45">-->
+
+                    </div>
+                    <h4>GOP - Gestão Operacional</h4>
+                    <h5>Novo Fornecedor<h5>
+                </div>
+            </div>
+        </div>
         <div class='alert alert-info' role='alert'>
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="" width="50" height="45">
@@ -258,11 +249,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Fone I</label>
                 <div class="col-sm-2">
-                    <input type="text" maxlength="20" id="fone1" class="form-control" name="fone1" value="<?php echo $c_fone1; ?>">
+                    <input type="tel" onkeyup="handlePhone(event)" maxlength="20" id="fone1" class="form-control" name="fone1" value="<?php echo $c_fone1; ?>">
                 </div>
                 <label class="col-sm-2 col-form-label">Fone II</label>
                 <div class="col-sm-2">
-                    <input type="text" maxlength="20" id="fone2" class="form-control" name="fone2" value="<?php echo $c_fone2; ?>">
+                    <input type="tel" onkeyup="handlePhone(event)" maxlength="20" id="fone2" class="form-control" name="fone2" value="<?php echo $c_fone2; ?>">
                 </div>
             </div>
 

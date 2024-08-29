@@ -133,16 +133,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
 </head>
 
 <body>
-    <div class="panel panel-primary class">
-        <div class="panel-heading text-center">
-            <h4>GOP - Gestão Operacional</h4>
-            <h5>Editar Espaço Físico<h5>
-        </div>
-    </div>
-    <br>
+
     <div class="container -my5">
 
-
+        <div style="padding-top:5px;">
+            <div class="panel panel-primary class">
+                <div class="panel-heading text-center">
+                    <h4>GOP - Gestão Operacional</h4>
+                    <h5>Editar Espaço Físico<h5>
+                </div>
+            </div>
+        </div>
         <div class='alert alert-info' role='alert'>
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
@@ -189,7 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
 
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Tipo de Espaço Físico (*)</label>
-                <div class="col-sm-6">
+                <div class="col-sm-3">
                     <select class="form-control form-control-lg" id="tipo" name="tipo">
                         <option <?php echo $op1; ?>>Instalação</option>
                         <option <?php echo $op2; ?>>Edificação</option>
@@ -209,14 +210,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                 <div class="col-sm-2">
                     <input type="tel" maxlength="25" onkeyup="handlePhone(event)" id="fone1" class="form-control" name="fone1" value="<?php echo $c_fone1; ?>">
                 </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Fone II</label>
+                <label class="col-sm-2 col-form-label">Fone II</label>
                 <div class="col-sm-2">
                     <input type="tel" maxlength="25" onkeyup="handlePhone(event)" id="fone2" class="form-control" name="fone2" value="<?php echo $c_fone2; ?>">
                 </div>
             </div>
+
 
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Endereço (*)</label>

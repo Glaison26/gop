@@ -68,10 +68,9 @@
                      <br>
                      <div style="padding-left:15px;">
                          <img Align="left" src="\gop\images\inicio.png" alt="" width="60" height="50">
-                                          
                      </div>
                  </div>
-                   
+
                  <ul class="navbar-nav ml-auto">
 
                      <li class="nav-item dropdown">
@@ -96,17 +95,23 @@
                              <a class="dropdown-item" href="/gop/unidades_lista.php"><img src="\gop\images\peso.png" alt="20" height="20"> Unidades e Medidas</a>
                              <a class="dropdown-item" href="/gop/funcoes_lista.php"><img src="\gop\images\emprego.png" alt="20" height="20"> Funções e Cargos</a>
                              <a class="dropdown-item" href=""><span class="" aria-hidden="true"></span> _____________________________________</a>
-                             <a class="dropdown-item" href="/gop/pops_lista.php"><img src="\gop\images\degraus.png" alt="20" height="20"> Cadastro de POP</a>
-
-                             <a class="dropdown-item" href="/gop/checklist_lista.php"><img src="\gop\images\checklist.png" alt="20" height="20"> Cadastro de Cheklist</a>
-                             <a class="dropdown-item" href="/gop/ocorrencias_lista.php"><img src="\gop\images\incidente.png" alt="20" height="20"> Ocorrências Padrões</a>
-                             <a class="dropdown-item" href=""><span class="" aria-hidden="true"></span> _____________________________________</a>
                              <a class="dropdown-item" href="/gop/usuarios_lista.php"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Usuários</a>
 
+                         </div>
+                     <li class="nav-item dropdown">
+                         <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administrativo</a>
 
+                         <div class="dropdown-menu" aria-labelledby="dropdown01">
+                             <a class="dropdown-item" href="/gop/pops_lista.php"><img src="\gop\images\degraus.png" alt="20" height="20"> Cadastro de POP</a>
+                             <a class="dropdown-item" href="/gop/checklist_lista.php"><img src="\gop\images\checklist.png" alt="20" height="20"> Cadastro de Cheklist</a>
+                             <a class="dropdown-item" href="/gop/ocorrencias_lista.php"><img src="\gop\images\incidente.png" alt="20" height="20"> Ocorrências Padrões</a>
 
                          </div>
+
                      </li>
+                     </li>
+
+
 
                      <li class="nav-item dropdown">
                          <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Solicitação</a>
