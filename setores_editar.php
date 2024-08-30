@@ -161,7 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Centro de Custo </label>
                 <div class="col-sm-6">
-                    <select class="form-control form-control-lg" id="centrocusto" name="centrocusto">
+                    <select class="form-select form-select-lg mb-3" id="centrocusto" name="centrocusto">
                         <?php
                         // select da tabela de espacos fisicos
                         $c_sql_centro = "SELECT centrodecusto.id, centrodecusto.descricao FROM centrodecusto ORDER BY centrodecusto.descricao";
@@ -212,7 +212,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Prioritário</label>
                 <div class="col-sm-2">
-                    <select class="form-control form-control-lg" id="prioritario" name="prioritario">
+                    <select class="form-select form-select-lg mb-3" id="prioritario" name="prioritario">
                         <option <?= ($c_prioritario == 'SIM') ? 'selected' : '' ?>>SIM</option>
                         <option <?= ($c_prioritario == 'NÃO') ? 'selected' : '' ?>>NÃO</option>
                     </select>
@@ -220,7 +220,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
 
                 <label class="col-sm-2 col-form-label">Prioridade (de 1 a 5)</label>
                 <div class="col-sm-2">
-                    <select class="form-control form-control-lg" id="nivelprioridade" name="nivelprioridade">
+                    <select class="form-select form-select-lg mb-3" id="nivelprioridade" name="nivelprioridade">
                         <option <?= ($c_nivelprioridade == '1') ? 'selected' : '' ?>>1</option>
                         <option <?= ($c_nivelprioridade == '2') ? 'selected' : '' ?>>2</option>
                         <option <?= ($c_nivelprioridade == '3') ? 'selected' : '' ?>>3</option>

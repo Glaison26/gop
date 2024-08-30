@@ -191,7 +191,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Fornecedor </label>
                 <div class="col-sm-6">
-                    <select class="form-control form-control-lg" id="fornecedor" name="fornecedor">
+                    <select class="form-select form-select-lg mb-3" id="fornecedor" name="fornecedor">
                         <?php
                         // select da tabela de fornecedores
                         $c_sql_fornecedores = "SELECT fornecedores.id, fornecedores.descricao FROM fornecedores ORDER BY fornecedores.descricao";
@@ -209,7 +209,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Fabricante </label>
                 <div class="col-sm-6">
-                    <select class="form-control form-control-lg" id="fabricante" name="fabricante">
+                    <select class="form-select form-select-lg mb-3" id="fabricante" name="fabricante">
                         <?php
                         // select da tabela de fabricantes
                         $c_sql_fabricante = "SELECT fabricantes.id, fabricantes.descricao FROM fabricantes ORDER BY fabricantes.descricao";
@@ -227,7 +227,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Marca </label>
                 <div class="col-sm-6">
-                    <select class="form-control form-control-lg" id="marca" name="marca">
+                    <select class="form-select form-select-lg mb-3" id="marca" name="marca">
                         <?php
                         // select da tabela de Marcas
                         $c_sql_marca = "SELECT marcas.id, marcas.descricao FROM marcas ORDER BY marcas.descricao";
@@ -245,7 +245,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Oficina </label>
                 <div class="col-sm-2">
-                    <select class="form-control form-control-lg" id="oficina" name="oficina">
+                    <select class="form-select form-select-lg mb-3" id="oficina" name="oficina">
                         <?php
                         // select da tabela de oficinas
                         $c_sql_oficina = "SELECT oficinas.id, oficinas.descricao FROM oficinas ORDER BY oficinas.descricao";
@@ -261,7 +261,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 <label class="col-sm-2 col-form-label">Conservação</label>
                 <div class="col-sm-2">
-                    <select class="form-control form-control-lg" id="conservacao" name="conservacao">
+                    <select class="form-select form-select-lg mb-3" id="conservacao" name="conservacao">
                         <option>Péssimo</option>
                         <option>Ruim</option>
                         <option>Razoável</option>

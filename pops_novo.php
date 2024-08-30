@@ -206,7 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Recurso Fisico </label>
                 <div class="col-sm-6">
-                    <select class="form-control form-control-lg" id="recurso" name="recurso">
+                    <select class="form-select form-select-lg mb-3" id="recurso" name="recurso">
                         <?php
                         // select da tabela de recursos fisicos
                         $c_sql_recursos = "SELECT recursos.id, recursos.descricao FROM recursos ORDER BY recursos.descricao";
@@ -224,7 +224,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Espaco Fisico </label>
                 <div class="col-sm-6">
-                    <select class="form-control form-control-lg" id="espaco" name="espaco">
+                    <select class="form-select form-select-lg mb-3" id="espaco" name="espaco">
                         <?php
                         // select de espacos fisicos
                         $c_sql_espacos = "SELECT espacos.id, espacos.descricao FROM espacos ORDER BY espacos.descricao";
@@ -242,7 +242,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Oficina </label>
                 <div class="col-sm-6">
-                    <select class="form-control form-control-lg" id="oficina" name="oficina">
+                    <select class="form-select form-select-lg mb-3" id="oficina" name="oficina">
                         <?php
                         // select de oficinas
                         $c_sql_oficinas = "SELECT oficinas.id, oficinas.descricao FROM oficinas ORDER BY oficinas.descricao";

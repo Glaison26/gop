@@ -196,7 +196,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Grupo </label>
                 <div class="col-sm-3">
-                    <select class="form-control form-control-lg" id="grupo" name="grupo">
+                    <select class="form-select form-select-lg mb-3" id="grupo" name="grupo">
                         <?php
                         // select da tabela de espacos fisicos
                         $c_sql_grupos = "SELECT grupos.id, grupos.descricao FROM grupos ORDER BY grupos.descricao";
@@ -226,7 +226,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Tipo Fabricante </label>
                 <div class="col-sm-2">
-                    <select class="form-control form-control-lg" id="tipo" name="tipo">
+                    <select class="form-select form-select-lg mb-3" id="tipo" name="tipo">
                         <option <?= ($c_tipo == 'Juridica') ? 'selected' : '' ?>>Juridica</option>
                         <option <?= ($c_tipo == 'Física') ? 'selected' : '' ?>>Física</option>
                     </select>
@@ -297,7 +297,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Estado</label>
                 <div class="col-sm-3">
-                    <select class="form-control form-control-lg" id="estado" name="estado" value="<?php echo $c_estado; ?>">
+                    <select class="form-select form-select-lg mb-3" id="estado" name="estado" value="<?php echo $c_estado; ?>">
                         <option value="AC" <?= ($c_estado == 'AC') ? 'selected' : '' ?>>Acre</option>
                         <option value="AL" <?= ($c_estado == 'AL') ? 'selected' : '' ?>>Alagoas</option>
                         <option value="AP" <?= ($c_estado == 'AP') ? 'selected' : '' ?>>Amapa</option>

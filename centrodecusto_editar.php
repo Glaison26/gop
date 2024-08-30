@@ -177,7 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Espaço Físico </label>
                 <div class="col-sm-6">
-                    <select class="form-control form-control-lg" id="espaco" name="espaco">
+                    <select class="form-select form-select-lg mb-3" id="espaco" name="espaco">
                         <?php
                         // select da tabela de espacos fisicos
                         $c_sql_espacos = "SELECT espacos.id , espacos.descricao FROM espacos ORDER BY espacos.descricao";

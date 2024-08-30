@@ -209,7 +209,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Tipo de usuário </label>
                 <div class="col-sm-6">
-                    <select class="form-control form-control-lg" id="tipo" name="tipo" value="<?php echo $c_tipo; ?>">
+                    <select class="form-select form-select-lg mb-3" id="tipo" name="tipo" value="<?php echo $c_tipo; ?>">
                         <option <?php echo $op1 ?>>Operador</option>
                         <option <?php echo $op2 ?>>Consulta</option>
                         <option <?php echo $op3 ?>>Administrador</option>

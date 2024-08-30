@@ -162,7 +162,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Tipo de Espaço Físico (*) </label>
                 <div class="col-sm-3">
-                    <select class="form-control form-control-lg" id="tipo" name="tipo">
+                    <select class="class="form-select form-select-lg mb-3"" id="tipo" name="tipo">
                         <option>Instalação</option>
                         <option>Edificação</option>
                     </select>

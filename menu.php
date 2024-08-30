@@ -67,7 +67,7 @@
                  <div class="navbar-header">
                      <br>
                      <div style="padding-left:15px;">
-                         <img Align="left" src="\gop\images\inicio.png" alt="" width="60" height="50">
+                         <img Align="left" src="\gop\images\inicio.png" alt="" width="40" height="40">
                      </div>
                  </div>
 

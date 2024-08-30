@@ -175,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Tipo de usuário </label>
                 <div class="col-sm-6">
-                    <select class="form-control form-control-lg" id="tipo" name="tipo">
+                    <select class="form-select form-select-lg mb-3" id="tipo" name="tipo">
                         <option>Operador</option>
                         <option>Consulta</option>
                         <option>Administrador</option>

@@ -187,7 +187,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Tipo Fornecedor (*)</label>
                 <div class="col-sm-2">
-                    <select class="form-control form-control-lg" id="tipo" name="tipo">
+                    <select class="form-select form-select-lg mb-3" id="tipo" name="tipo">
                         <option>Juridica</option>
                         <option>Física</option>
                     </select>
@@ -251,7 +251,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Estado</label>
                 <div class="col-sm-3">
-                    <select class="form-control form-control-lg" id="estado" name="estado">
+                    <select class="form-select form-select-lg mb-3" id="estado" name="estado">
                         <option value="AC">Acre</option>
                         <option value="AL">Alagoas</option>
                         <option value="AP">Amapa</option>

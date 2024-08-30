@@ -5,23 +5,8 @@ if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
 
-// funções 
-
-function carregadados()
-{
-    $c_descricao = $_POST['descricao'];
-    $c_espaco = $_POST['espaco'];
-    $c_responsavel = $_POST['responsavel'];
-    $c_fone1 = $_POST['fone1'];
-    $c_fone2 = $_POST['fone2'];
-    $c_endereco = $_POST['endereco'];
-    $c_bairro = $_POST['bairro'];
-    $c_cidade = $_POST['cidade'];
-    $c_cep = $_POST['cep'];
-    $c_email = $_POST['email'];
-    $c_rateio = $_POST['rateio'];
-}
-
+include("conexao.php");
+include("links.php");
 include_once "lib_gop.php";
 
 $c_descricao = "";
@@ -35,20 +20,6 @@ $c_cidade = "";
 $c_cep = "";
 $c_email = "";
 $c_rateio = "";
-
-
-// conexão dom o banco de dados
-$servername = $_SESSION['local'];
-$username = $_SESSION['usuario'];
-$password =  $_SESSION['senha'];
-$database = $_SESSION['banco'];
-// criando a conexão com banco de dados
-$conection = new mysqli($servername, $username, $password, $database);
-// checo erro na conexão
-if ($conection->connect_error) {
-    die("Erro na Conexão com o Banco de Dados!! " . $conection->connect_error);
-}
-
 // variaveis para mensagens de erro e suscessso da gravação
 $msg_gravou = "";
 $msg_erro = "";
@@ -120,19 +91,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Novo Centro de Custo</title>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
-    <link rel="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
-    <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="js/jquery-1.2.6.pack.js"></script>
-    <script type="text/javascript" src="js/jquery.maskedinput-1.1.4.pack.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function() {
@@ -143,16 +101,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         });
     </script>
 
+    <script>
+        const handlePhone = (event) => {
+            let input = event.target
+            input.value = phoneMask(input.value)
+        }
+
+        const phoneMask = (value) => {
+            if (!value) return ""
+            value = value.replace(/\D/g, '')
+            value = value.replace(/(\d{2})(\d)/, "($1) $2")
+            value = value.replace(/(\d)(\d{4})$/, "$1-$2")
+            return value
+        }
+    </script>
+
 </head>
-<div class="panel panel-light" style="background-color: #e3f2fd;">
-    <div class="panel-heading text-center">
-        <h2>Novo registro de Centro de Custo</h2>
-    </div>
-</div>
-<br>
 
 <body>
     <div class="container -my5">
+        <div style="padding-top:5px;">
+            <div class="panel panel-primary class">
+                <div class="panel-heading text-center">
+                    <h4>GOP - Gestão Operacional</h4>
+                    <h5>Novo Espaço Físico<h5>
+                </div>
+            </div>
+        </div>
+        <div class='alert alert-info' role='alert'>
+            <div style="padding-left:15px;">
+                <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
+
+            </div>
+            <h5>Campos com (*) são obrigatórios</h5>
+        </div>
+
         <?php
         if (!empty($msg_erro)) {
             echo "
@@ -173,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Espaço Físico </label>
                 <div class="col-sm-6">
-                    <select class="form-control form-control-lg" id="espaco" name="espaco">
+                    <select class="form-select form-select-lg mb-3" id="espaco" name="espaco">
                         <?php
                         // select da tabela de espacos fisicos
                         $c_sql_espacos = "SELECT espacos.id, espacos.descricao FROM espacos ORDER BY espacos.descricao";

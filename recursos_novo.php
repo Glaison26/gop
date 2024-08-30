@@ -317,7 +317,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Fornecedor </label>
                             <div class="col-sm-6">
-                                <select class="form-control form-control-lg" id="fornecedor" name="fornecedor">
+                                <select class="form-select form-select-lg mb-3" id="fornecedor" name="fornecedor">
                                     <?php
                                     // select da tabela de fornecedores
                                     $c_sql_fornecedores = "SELECT fornecedores.id, fornecedores.descricao FROM fornecedores ORDER BY fornecedores.descricao";
@@ -335,7 +335,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Fabricante </label>
                             <div class="col-sm-6">
-                                <select class="form-control form-control-lg" id="fabricante" name="fabricante">
+                                <select class="form-select form-select-lg mb-3" id="fabricante" name="fabricante">
                                     <?php
                                     // select da tabela de fabricantes
                                     $c_sql_fabricante = "SELECT fabricantes.id, fabricantes.descricao FROM fabricantes ORDER BY fabricantes.descricao";
@@ -359,7 +359,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Oficina </label>
                             <div class="col-sm-2">
-                                <select class="form-control form-control-lg" id="oficina" name="oficina">
+                                <select class="form-select form-select-lg mb-3" id="oficina" name="oficina">
                                     <?php
                                     // select da tabela de oficinas
                                     $c_sql_oficina = "SELECT oficinas.id, oficinas.descricao FROM oficinas ORDER BY oficinas.descricao";
@@ -374,7 +374,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </div>
                             <label class="col-sm-2 col-form-label">Marca </label>
                             <div class="col-sm-2">
-                                <select class="form-control form-control-lg" id="marca" name="marca">
+                                <select class="form-select form-select-lg mb-3" id="marca" name="marca">
                                     <?php
                                     // select da tabela de Marcas
                                     $c_sql_marca = "SELECT marcas.id, marcas.descricao FROM marcas ORDER BY marcas.descricao";
@@ -391,7 +391,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Espaço Físico </label>
                             <div class="col-sm-4">
-                                <select class="form-control form-control-lg" id="espaco" name="espaco">
+                                <select class="form-select form-select-lg mb-3" id="espaco" name="espaco">
                                     <?php
                                     // select da tabela de espacos fisicos
                                     $c_sql_espacos = "SELECT espacos.id, espacos.descricao FROM espacos ORDER BY espacos.descricao";
@@ -409,7 +409,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Centro de Custo </label>
                             <div class="col-sm-4">
-                                <select class="form-control form-control-lg" id="centrodecusto" name="centrodecusto">
+                                <select class="form-select form-select-lg mb-3" id="centrodecusto" name="centrodecusto">
                                     <?php
                                     // select da tabela de centro de custo
                                     $c_sql_custo = "SELECT centrodecusto.id, centrodecusto.descricao FROM centrodecusto ORDER BY centrodecusto.descricao";
@@ -426,7 +426,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Grupo </label>
                             <div class="col-sm-4">
-                                <select class="form-control form-control-lg" id="grupo" name="grupo">
+                                <select class="form-select form-select-lg mb-3" id="grupo" name="grupo">
                                     <?php
                                     // select da tabela de grupos
                                     $c_sql_grupo = "SELECT grupos.id, grupos.descricao FROM grupos ORDER BY grupos.descricao";
@@ -444,7 +444,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Setor </label>
                             <div class="col-sm-4">
-                                <select class="form-control form-control-lg" id="setor" name="setor">
+                                <select class="form-select form-select-lg mb-3" id="setor" name="setor">
                                     <?php
                                     // select da tabela de setores
                                     $c_sql_setor = "SELECT setores.id, setores.descricao FROM setores ORDER BY setores.descricao";
@@ -480,7 +480,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div class="row mb-3">
                                 <label class="col-sm-3 col-form-label">Conservação</label>
                                 <div class="col-sm-2">
-                                    <select class="form-control form-control-lg" id="estado" name="estado" value="<?php echo $c_estado; ?>">
+                                    <select class="form-select form-select-lg mb-3" id="estado" name="estado" value="<?php echo $c_estado; ?>">
                                         <option>Ótimo</option>
                                         <option>Muito Bom</option>
                                         <option>Bom</option>

@@ -222,7 +222,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Marca </label>
                 <div class="col-sm-6">
-                    <select class="form-control form-control-lg" id="marca" name="marca">
+                    <select class="form-select form-select-lg mb-3" id="marca" name="marca">
                         <?php
                         // select da tabela de Marcas
                         $c_sql_marca = "SELECT marcas.id, marcas.descricao FROM marcas ORDER BY marcas.descricao";
@@ -245,7 +245,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Grupo </label>
                 <div class="col-sm-6">
-                    <select class="form-control form-control-lg" id="grupo" name="grupo">
+                    <select class="form-select form-select-lg mb-3" id="grupo" name="grupo">
                         <?php
                         // select da tabela de grupos
                         $c_sql_grupo = "SELECT grupos.id, grupos.descricao FROM grupos ORDER BY grupos.descricao";
@@ -279,7 +279,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Unidade de Entrada </label>
                 <div class="col-sm-2">
-                    <select class="form-control form-control-lg" id="unidadeentrada" name="unidadeentrada">
+                    <select class="form-select form-select-lg mb-3" id="unidadeentrada" name="unidadeentrada">
                         <?php
                         // select da tabela de unidades
                         $c_sql_unidades = "SELECT unidades.id, unidades.descricao FROM unidades ORDER BY unidades.descricao";
@@ -300,7 +300,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
 
                 <label class="col-sm-2 col-form-label">Unidade de Saida </label>
                 <div class="col-sm-2">
-                    <select class="form-control form-control-lg" id="unidadesaida" name="unidadesaida">
+                    <select class="form-select form-select-lg mb-3" id="unidadesaida" name="unidadesaida">
                         <?php
                         // select da tabela de unidades
                         $c_sql_unidades = "SELECT unidades.id, unidades.descricao FROM unidades ORDER BY unidades.descricao";
