@@ -6,7 +6,7 @@ if (!isset($_SESSION['newsession'])) {
 }
 
 include("conexao.php");
-include("links.php");
+include("links2.php");
 include_once "lib_gop.php";
 
 $c_descricao = "";
@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
                     <h4>GOP - Gestão Operacional</h4>
-                    <h5>Novo Espaço Físico<h5>
+                    <h5>Novo Centro de Custo<h5>
                 </div>
             </div>
         </div>
@@ -180,15 +180,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Fone I</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="20" id="fone1" class="form-control" name="fone1" value="<?php echo $c_fone1; ?>">
+                <div class="col-sm-2">
+                    <input type="tel" onkeyup="handlePhone(event)" maxlength="20" id="fone1" class="form-control" name="fone1" value="<?php echo $c_fone1; ?>">
                 </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Fone II</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="20" id="fone2" class="form-control" name="fone2" value="<?php echo $c_fone2; ?>">
+                <label class="col-sm-2 col-form-label">Fone II</label>
+                <div class="col-sm-2">
+                    <input type="tel" onkeyup="handlePhone(event)" maxlength="20" id="fone2" class="form-control" name="fone2" value="<?php echo $c_fone2; ?>">
                 </div>
             </div>
 
@@ -208,17 +205,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Cidade</label>
-                <div class="col-sm-6">
+                <div class="col-sm-3">
                     <input type="text" maxlength="100" id="cidade" class="form-control" name="cidade" value="<?php echo $c_cidade; ?>">
                 </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">CEP</label>
-                <div class="col-sm-6">
+                <label class="col-sm-1 col-form-label">CEP</label>
+                <div class="col-sm-2">
                     <input type="text" maxlength="10" id="cep" class="form-control" name="cep" value="<?php echo $c_cep; ?>">
                 </div>
             </div>
+
+
 
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">E-mail</label>
@@ -228,7 +224,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Rateio (%)</label>
-                <div class="col-sm-6">
+                <div class="col-sm-2">
                     <input type="text" maxlength="3" id="rateio" class="form-control col-xs-12" name="rateio" value="0.00">
                 </div>
             </div>

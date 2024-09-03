@@ -7,24 +7,11 @@ if (!isset($_SESSION['newsession'])) {
 
 // funções 
 
-function carregadados()
-{
-    $c_descricao = $_POST['descricao'];
-    $c_tipo = $_POST['tipo'];
-    $c_responsavel = $_POST['responsavel'];
-    $c_fone1 = $_POST['fone1'];
-    $c_fone2 = $_POST['fone2'];
-    $c_endereco = $_POST['endereco'];
-    $c_bairro = $_POST['bairro'];
-    $c_cidade = $_POST['cidade'];
-    $c_cep = $_POST['cep'];
-    $c_email = $_POST['email'];
-    $c_medida = $_POST['medida'];
-}
+
 
 include_once "lib_gop.php";
 include("conexao.php");
-include("links.php");
+include("links2.php");
 
 $c_descricao = "";
 $c_tipo = "";
@@ -162,7 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Tipo de Espaço Físico (*) </label>
                 <div class="col-sm-3">
-                    <select class="class="form-select form-select-lg mb-3"" id="tipo" name="tipo">
+                    <select class="form-select form-select-lg mb-3" id="tipo" name="tipo">
                         <option>Instalação</option>
                         <option>Edificação</option>
                     </select>

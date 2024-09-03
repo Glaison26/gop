@@ -5,7 +5,7 @@ if (!isset($_SESSION['newsession'])) {
 }
 
 
-include('links.php');
+include('links2.php');
 include('conexao.php');
 include_once "lib_gop.php";
 

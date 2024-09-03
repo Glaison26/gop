@@ -6,7 +6,7 @@ if (!isset($_SESSION['newsession'])) {
 
 include_once "lib_gop.php";
 include("conexao.php");
-include("links.php");
+include("links2.php");
 
 // rotina de post dos dados do formuário
 $c_id = "";

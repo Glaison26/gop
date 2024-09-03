@@ -5,7 +5,7 @@ if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
 
-include('links.php');
+include('links2.php');
 include('conexao.php');
 include_once "lib_gop.php";
 

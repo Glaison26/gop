@@ -3,7 +3,7 @@ session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
-include('links.php');
+include('links2.php');
 include('conexao.php');
 
 
@@ -317,12 +317,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             <!-- aba da agenda-->
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="apresentacao">
-                    <div style="padding-top:10px;padding-left:20px;">
+                    <div style="padding-top:15px;padding-left:20px;">
                         <div class="row mb-5">
-                            <div class="form-check col-sm-5">
-                                <div class="col-sm-5">
+                            <div class="form-check col-sm-4">
+                                <div class="col-sm-6">
                                     <label class="form-check-label col-form-label">Recurso Ativo</label>
-                                    <input class="form-check-input" type="checkbox" value="S" name="ativo" id="ativo" checked>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="ativo" id="ativo" checked>
+                                    </div>
                                 </div>
                             </div>
                         </div>

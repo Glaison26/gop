@@ -5,7 +5,7 @@ if (!isset($_SESSION['newsession'])) {
 }
 
 include("conexao.php");
-include("links.php");
+include("links2.php");
 
 include_once "lib_gop.php";
 
@@ -221,7 +221,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Tipo Executor </label>
                 <div class="col-sm-2">
-                    <select class="class="form-select form-select-lg mb-3"" id="tipo" name="tipo">
+                    <select class="form-select form-select-lg mb-3" id="tipo" name="tipo">
                         <option <?= ($c_tipo == 'J') ? 'selected' : '' ?>>Juridica</option>
                         <option <?= ($c_tipo == 'F') ? 'selected' : '' ?>>Física</option>
                     </select>
@@ -231,22 +231,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                     <input type="text" maxlength="18" class="form-control" name="cpfcnpj" placeholder="somente números" value="<?php echo $c_cnpj_cpf; ?>">
                 </div>
             </div>
-            <div class="row mb-3">
-
-            </div>
-
+           
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Contato</label>
                 <div class="col-sm-6">
                     <input type="text" maxlength="100" class="form-control" name="contato" value="<?php echo $c_contato; ?>">
                 </div>
             </div>
-            <hr>
+            
 
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Função/Cargo </label>
                 <div class="col-sm-3">
-                    <select class="class="form-select form-select-lg mb-3"" id="funcao" name="funcao">
+                    <select class="form-select form-select-lg mb-3" id="funcao" name="funcao">
                         <?php
                         // select da tabela de funções
                         $c_sql_secundario = "SELECT funcoes.id, funcoes.descricao FROM funcoes ORDER BY funcoes.descricao";
@@ -266,7 +263,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                 </div>
                 <label class="col-sm-1 col-form-label">Oficina </label>
                 <div class="col-sm-2">
-                    <select class="class="form-select form-select-lg mb-3"" id="oficina" name="oficina">
+                    <select class="form-select form-select-lg mb-3" id="oficina" name="oficina">
                         <?php
                         // select da tabela de oficinas
                         $c_sql_oficina = "SELECT oficinas.id, oficinas.descricao FROM oficinas ORDER BY oficinas.descricao";
@@ -321,7 +318,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Estado</label>
                 <div class="col-sm-2">
-                    <select class="class="form-select form-select-lg mb-3"" id="estado" name="estado" value="<?php echo $c_estado; ?>">
+                    <select class="form-select form-select-lg mb-3" id="estado" name="estado" value="<?php echo $c_estado; ?>">
                         <option value="AC" <?= ($c_estado == 'AC') ? 'selected' : '' ?>>Acre</option>
                         <option value="AL" <?= ($c_estado == 'AL') ? 'selected' : '' ?>>Alagoas</option>
                         <option value="AP" <?= ($c_estado == 'AP') ? 'selected' : '' ?>>Amapa</option>
@@ -382,7 +379,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Escolaridade</label>
                 <div class="col-sm-2">
-                    <select class="class="form-select form-select-lg mb-3"" id="escolaridade" name="escolaridade">
+                    <select class="form-select form-select-lg mb-3" id="escolaridade" name="escolaridade">
                         <option <?= ($c_escolaridade == 'Primário') ? 'selected' : '' ?>>Primário</option>
                         <option <?= ($c_escolaridade == '1o. Grau') ? 'selected' : '' ?>>1o. Grau</option>
                         <option <?= ($c_escolaridade == '2o. Grau') ? 'selected' : '' ?>>2o. Grau</option>
@@ -396,9 +393,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                 </div>
 
             </div>
-            <hr>
-
-
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Valor da hora</label>
                 <div class="col-sm-2">
@@ -410,7 +404,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                 </div>
 
             </div>
-            <hr>
+
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Observação</label>
                 <div class="col-sm-6">

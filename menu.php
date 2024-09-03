@@ -12,6 +12,7 @@
      <title>GOP - Gestão Operacional</title>
      <meta charset="utf-8">
      <meta name="viewport" content="width=device-width, initial-scale=1">
+     <link rel="shortcut icon" type="imagex/png" href="./imagens/img_gop.ico">
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
      <link rel="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
@@ -23,7 +24,7 @@
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-     <link rel="shortcut icon" type="imagex/png" href="./images/smed_icon.ico">
+     
      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 
@@ -94,64 +95,45 @@
                              <a class="dropdown-item" href="/gop/marcas_lista.php"><img src="\gop\images\marca.png" alt="20" height="20"> Marcas de Recursos</a>
                              <a class="dropdown-item" href="/gop/unidades_lista.php"><img src="\gop\images\peso.png" alt="20" height="20"> Unidades e Medidas</a>
                              <a class="dropdown-item" href="/gop/funcoes_lista.php"><img src="\gop\images\emprego.png" alt="20" height="20"> Funções e Cargos</a>
-                             <a class="dropdown-item" href=""><span class="" aria-hidden="true"></span> _____________________________________</a>
-                             <a class="dropdown-item" href="/gop/usuarios_lista.php"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Usuários</a>
+                                                      
 
                          </div>
                      <li class="nav-item dropdown">
                          <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administrativo</a>
-
                          <div class="dropdown-menu" aria-labelledby="dropdown01">
                              <a class="dropdown-item" href="/gop/pops_lista.php"><img src="\gop\images\degraus.png" alt="20" height="20"> Cadastro de POP</a>
                              <a class="dropdown-item" href="/gop/checklist_lista.php"><img src="\gop\images\checklist.png" alt="20" height="20"> Cadastro de Cheklist</a>
                              <a class="dropdown-item" href="/gop/ocorrencias_lista.php"><img src="\gop\images\incidente.png" alt="20" height="20"> Ocorrências Padrões</a>
 
                          </div>
-
                      </li>
-                     </li>
-
-
-
+                 
                      <li class="nav-item dropdown">
-                         <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Solicitação</a>
-
+                         <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Serviços</a>
                          <div class="dropdown-menu" aria-labelledby="dropdown01">
-                             <a class="dropdown-item" href=""><img src="\gop\images\novo-documento.png" alt="20" height="20"> Abertura</a>
-                             <a class="dropdown-item" href=""><img src="\gop\images\buscar.png" alt="20" height="20"> Consulta</a>
-
+                             <a class="dropdown-item" href=""><img src="\gop\images\contato.png" alt="20" height="20"> Solicitações de Serviços</a>
+                             <a class="dropdown-item" href=""><img src="\gop\images\ordem.png" alt="20" height="20"> Ordens de Serviços</a>
+                             <a class="dropdown-item" href=""><img src="\gop\images\preventivo.png" alt="20" height="20"> Preventivas </a>
                          </div>
-
                      </li>
 
-                     <li class="nav-item dropdown">
-                         <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ordens de Serviços</a>
-                         <div class="dropdown-menu" aria-labelledby="dropdown01">
-                             <a class="dropdown-item" href=""><img src="\gop\images\novo-documento.png" alt="20" height="20"> Abertura</a>
-                             <a class="dropdown-item" href=""><img src="\gop\images\buscar.png" alt="20" height="20"> Consulta</a>
-
-                         </div>
-
-                     </li>
-
-                     <li class="nav-item dropdown">
-                         <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Preventivas</a>
-                         <div class="dropdown-menu" aria-labelledby="dropdown01">
-                             <a class="dropdown-item" href=""><i class="fa  fa-cogs"></i> Cadastro</a>
-                             <a class="dropdown-item" href=""><i class="far fa fa-building"></i> Geração</a>
-
-                         </div>
-
-                     </li>
                      <li class="nav-item dropdown">
                          <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Almoxarifado</a>
                          <div class="dropdown-menu" aria-labelledby="dropdown01">
-                             <a class="dropdown-item" href=""><i class="far fa-clipboard"></i> Cotações</a>
-                             <a class="dropdown-item" href=""><i class="fas fa-cart-plus"></i> Compras Efetivas</a>
-                             <a class="dropdown-item" href=""><i class="fas fa-boxes"></i> Dispensações</a>
+                             <a class="dropdown-item" href=""><img src="\gop\images\cotacao.png" alt="20" height="20"> Cotações</a>
+                             <a class="dropdown-item" href=""><img src="\gop\images\compras.png" alt="20" height="20"> Compras Efetivas</a>
+                             <a class="dropdown-item" href=""><img src="\gop\images\dispensa.png" alt="20" height="20"> Dispensações</a>
                          </div>
 
 
+                     </li>
+                     <li class="nav-item dropdown">
+                         <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Usuários</a>
+                         <div class="dropdown-menu" aria-labelledby="dropdown01">
+                             <a class="dropdown-item" href=""><img src="\gop\images\usuario.png" alt="20" height="20"> Cadastro de Usuários</a>
+                             <a class="dropdown-item" href=""><img src="\gop\images\acessos.png" alt="20" height="20"> Perfis de Usuários</a>
+                             <a class="dropdown-item" href=""><img src="\gop\images\trocasenha.png" alt="20" height="20">Troca de Senha</a>
+                         </div>
                      </li>
 
                  </ul>

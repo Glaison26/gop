@@ -5,7 +5,7 @@ if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
 
-include('links.php');
+include('links2.php');
 include('conexao.php');
 // funções 
 
@@ -271,7 +271,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form method="post">
             <!-- abas de cadastro e cadstro de recursos -->
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#apresentacao" aria-controls="apresentacao" role="tab" data-toggle="tab">Apresentção</a></li>
+                <li role="presentation" class="active"><a href="#apresentacao" aria-controls="apresentacao" role="tab" data-toggle="tab">Apresentação</a></li>
                 <li role="presentation"><a href="#definicao" aria-controls="cadastro" role="tab" data-toggle="tab">Definição e Localização</a></li>
                 <li role="presentation"><a href="#outras" aria-controls="definicao" role="tab" data-toggle="tab">Outras Informações</a></li>
                 <li role="presentation"><a href="#obs" aria-controls="obs" role="tab" data-toggle="tab">Observações</a></li>
@@ -279,12 +279,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <!-- aba da agenda-->
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="apresentacao">
-                    <div style="padding-top:10px;padding-left:20px;">
+                    <div style="padding-top:15px;padding-left:20px;">
                         <div class="row mb-5">
                             <div class="form-check col-sm-5">
                                 <div class="col-sm-5">
                                     <label class="form-check-label col-form-label">Recurso Ativo</label>
-                                    <input class="form-check-input" type="checkbox" value="S" name="ativo" id="ativo" checked>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="ativo" id="ativo" checked>
+                                    </div>
                                 </div>
                             </div>
                         </div>

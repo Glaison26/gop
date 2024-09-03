@@ -101,7 +101,7 @@ include("links.php");
             </thead>
             <tbody>
                 <?php
-               
+
                 // faço a Leitura da tabela com sql
                 $c_sql = "SELECT recursos.id, recursos.descricao, recursos.patrimonio, fabricantes.descricao as fabricante, fornecedores.descricao as fornecedor," .
                     " marcas.descricao as marca, grupos.descricao as grupo, setores.descricao as setor" .
@@ -130,8 +130,9 @@ include("links.php");
                     <td>$c_linha[fabricante]</td>
                     <td>$c_linha[fornecedor]</td>
                     <td>$c_linha[marca]</td>
-                    <td>$c_linha[grupo]</td>
                     <td>$c_linha[setor]</td>
+                    <td>$c_linha[grupo]</td>
+                   
                     <td>
                     <a class='btn btn-secondary btn-sm' href='/gop/recursos_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
