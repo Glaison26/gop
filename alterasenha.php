@@ -154,7 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
                 <div class="row mb-3">
-                    <div class="offset-sm-3 col-sm-3">
+                <div class="offset-sm-3 col-sm-3">
                         <button name="btnentra" type="submit" class="btn btn-primary btn-sm"><span class='glyphicon glyphicon-check'></span> Confirma</button>
                         <a class='btn btn-dark btn-sm' href='/gop/menu.php'><span class='glyphicon glyphicon-log-out'></span> Voltar</a>
                     </div>

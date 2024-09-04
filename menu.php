@@ -130,7 +130,7 @@
                      <li class="nav-item dropdown">
                          <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Usuários</a>
                          <div class="dropdown-menu" aria-labelledby="dropdown01">
-                             <a class="dropdown-item" href=""><img src="\gop\images\usuario.png" alt="20" height="20"> Cadastro de Usuários</a>
+                             <a class="dropdown-item" href="/gop/usuarios_lista.php"><img src="\gop\images\usuario.png" alt="20" height="20"> Cadastro de Usuários</a>
                              <a class="dropdown-item" href=""><img src="\gop\images\acessos.png" alt="20" height="20"> Perfis de Usuários</a>
                              <a class="dropdown-item" href=""><img src="\gop\images\trocasenha.png" alt="20" height="20">Troca de Senha</a>
                          </div>
