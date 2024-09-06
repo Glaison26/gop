@@ -31,7 +31,7 @@ include("links.php");
         $(document).ready(function() {
             $('.tabsetores').DataTable({
                 // 
-                "iDisplayLength": 1,
+                "iDisplayLength": -1,
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,

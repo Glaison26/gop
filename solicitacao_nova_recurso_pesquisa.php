@@ -44,50 +44,56 @@ Pagina da rotina para selecionar o recurso da solicitação
 </head>
 
 <script>
-        $(document).ready(function() {
-            $('.tabrecursos').DataTable({
-                // 
-                "iDisplayLength": -1,
-                "order": [1, 'asc'],
-                "aoColumnDefs": [{
-                    'bSortable': false,
-                    'aTargets': [5]
-                }, {
-                    'aTargets': [0],
-                    "visible": false
-                }],
-                "oLanguage": {
-                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-                    "sLengthMenu": "_MENU_ resultados por página",
-                    "sInfoFiltered": " - filtrado de _MAX_ registros",
-                    "oPaginate": {
-                        "spagingType": "full_number",
-                        "sNext": "Próximo",
-                        "sPrevious": "Anterior",
-                        "sFirst": "Primeiro",
-                        "sLoadingRecords": "Carregando...",
-                        "sProcessing": "Processando...",
-                        "sZeroRecords": "Nenhum registro encontrado",
+    $(document).ready(function() {
+        $('.tabrecursos').DataTable({
+            // 
+            "iDisplayLength": -1,
+            "order": [1, 'asc'],
+            "aoColumnDefs": [{
+                'bSortable': false,
+                'aTargets': [5]
+            }, {
+                'aTargets': [0],
+                "visible": false
+            }],
+            "oLanguage": {
+                "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                "sLengthMenu": "_MENU_ resultados por página",
+                "sInfoFiltered": " - filtrado de _MAX_ registros",
+                "oPaginate": {
+                    "spagingType": "full_number",
+                    "sNext": "Próximo",
+                    "sPrevious": "Anterior",
+                    "sFirst": "Primeiro",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": "Processando...",
+                    "sZeroRecords": "Nenhum registro encontrado",
 
-                        "sLast": "Último"
-                    },
-                    "sSearch": "Pesquisar",
-                    "sLengthMenu": 'Mostrar <select>' +
-                        '<option value="5">5</option>' +
-                        '<option value="10">10</option>' +
-                        '<option value="20">20</option>' +
-                        '<option value="30">30</option>' +
-                        '<option value="40">40</option>' +
-                        '<option value="50">50</option>' +
-                        '<option value="-1">Todos</option>' +
-                        '</select> Registros'
-                }
-            });
-
+                    "sLast": "Último"
+                },
+                "sSearch": "Pesquisar",
+                "sLengthMenu": 'Mostrar <select>' +
+                    '<option value="5">5</option>' +
+                    '<option value="10">10</option>' +
+                    '<option value="20">20</option>' +
+                    '<option value="30">30</option>' +
+                    '<option value="40">40</option>' +
+                    '<option value="50">50</option>' +
+                    '<option value="-1">Todos</option>' +
+                    '</select> Registros'
+            }
         });
-    </script>
 
+    });
+</script>
 
+<!-- função para chamar conclusão da solicitação -->
+<script>
+    function conclusao(id) {
+
+        window.location.href = "/gop/solicitacao_recurso_conclusao.php?id=" + id;
+    }
+</script>
 
 <body>
     <div class="panel panel-primary class">
@@ -138,7 +144,7 @@ Pagina da rotina para selecionar o recurso da solicitação
                 if (!empty($c_sql)) {
                     // insiro os registro do banco de dados na tabela 
                     while ($c_linha = $result->fetch_assoc()) {
-                                         
+
                         echo "
                     <tr>
                     <td>$c_linha[id]</td>
@@ -148,7 +154,7 @@ Pagina da rotina para selecionar o recurso da solicitação
                     <td>$c_linha[setor]</td>
                                                        
                     <td>
-                    <a class='btn btn' title='Selecionar Recurso' href='javascript:func()'onclick='selecionar($c_linha[id])'><img src='\gop\images\selecionar.png'  width='20' height='20'> Selecionar</a>
+                    <a class='btn btn' title='Selecionar Recurso' href='javascript:func()'onclick='conclusao($c_linha[id])'><img src='\gop\images\selecionar.png'  width='20' height='20'> Selecionar</a>
                    
                     </td>
                         

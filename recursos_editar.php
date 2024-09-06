@@ -5,48 +5,6 @@ if (!isset($_SESSION['newsession'])) {
 }
 include('links2.php');
 include('conexao.php');
-
-
-function carregadados()
-{
-    $c_descricao = $_POST['descricao'];
-    $c_patrimonio = $_POST['patrimonio'];
-    $c_modelo = $_POST['modelo'];
-    $c_numeroserie = $_POST['numeroserie'];
-    $c_estado = $_POST['estado'];
-    $c_notafiscal = $_POST['notafiscal'];
-
-    $d_datacadastro = new DateTime($_POST['datacadastro']);
-    $d_datacadastro = $d_datacadastro->format('Y-m-d');
-
-    $d_datagarantia =  new DateTime($_POST['datagarantia']);
-    $d_datagarantia = $d_datagarantia->format('Y-m-d');
-
-    $d_dataaquisicao =  new DateTime($_POST['dataaquisicao']);
-    $d_dataaquisicao = $d_dataaquisicao->format('Y-m-d');
-
-    $d_ultimapreventiva = new DateTime($_POST['ultimapreventiva']);
-    $d_ultimapreventiva = $d_ultimapreventiva->format('Y-m-d');
-
-    $d_dataultimamanutencao = new DateTime($_POST['dataultimamanutencao']);
-    $d_dataultimamanutencao = $d_dataultimamanutencao->format('Y-m-d');
-
-    $n_valordepreciado = $_POST['valordepreciado'];
-    $n_valoraquisicao = $_POST['valoraquisicao'];
-    $c_ativo = $_POST['ativo'];
-    $c_motivo = $_POST['motivo'];
-    $c_anvisa = $_POST['anvisa'];
-    $c_grupo = $_POST['grupo'];
-    $c_marca = $_POST['marca'];
-    $c_fornecedor = $_POST['fornecedor'];
-    $c_fabricante = $_POST['fabricante'];
-    $c_espaco = $_POST['espaco'];
-    $c_centrodecusto = $_POST['centrodecusto'];
-    $c_oficina = $_POST['oficina'];
-    $c_setor = $_POST['setor'];
-    $c_obs = $_POST['obs'];
-}
-
 include_once "lib_gop.php";
 
 // rotina de post dos dados do formuário
@@ -177,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     do {
         if (empty($c_descricao) || empty($c_patrimonio) || empty($c_modelo) || empty($c_notafiscal)) {
             $msg_erro = "Campos Descrição, patrimonio, modelo, nota fiscal devem ser preenchidos!!";
-            Carregadados();
+            
             break;
             if (($d_dataaquisicao == null)) {
                 $msg_erro = "Campos data da aquisição deve ser informado!!";
