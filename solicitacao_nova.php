@@ -57,7 +57,7 @@ include("links2.php");
                             <img src="\gop\images\apartamento.png" height="140px" class="card-img-top" alt="...">
                             <div class="card-body">Serviço em Espaço Físico</div>
                             <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a href="#" class="btn btn-primary">Clique aqui</a>
+                                <a href="\gop\solicitacao_nova_espaco_pesquisa.php" class="btn btn-primary">Clique aqui</a>
                                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                             </div>
                         </div>
@@ -67,7 +67,7 @@ include("links2.php");
                             <img src="\gop\images\ordem.png" height="140px" class="card-img-top" alt="...">
                             <div class="card-body">Solicitação de Serviço Avulsa</div>
                             <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a href="#" class="btn btn-primary">Clique aqui</a>
+                                <a href="solicitacao_avulso_conclusao.php" class="btn btn-primary">Clique aqui</a>
                                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                             </div>
                         </div>

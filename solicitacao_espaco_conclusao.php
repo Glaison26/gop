@@ -6,12 +6,12 @@ if (!isset($_SESSION['newsession'])) {
 include("conexao.php");
 include("links2.php");
 // pego id do recurso selecionado na página anterior
-$i_id_recurso = $_GET["id"];
+$i_id_espaco = $_GET["id"];
 // sql para pegar nome
-$c_sql = "SELECT recursos.id, recursos.descricao FROM recursos where recursos.id='$i_id_recurso'";
+$c_sql = "SELECT espacos.id, espacos.descricao FROM espacos where espacos.id='$i_id_espaco'";
 $result = $conection->query($c_sql);
 $registro = $result->fetch_assoc();
-$c_recurso = $registro['descricao'];
+$c_espaco = $registro['descricao'];
 $c_solicitacao = "";
 
 // inclusão da solicitação no banco de dados
@@ -44,10 +44,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         //$d_data_abertura = $d_data_abertura->format('Y-m-d');
         // gravar informações 
-        $c_sql = "Insert into solicitacao (id_setor, id_solicitante,id_recursos, data_abertura, hora_abertura, 
-                status, classificacao,tipo,descricao) value ('$i_setor', '$i_solicitante', '$i_id_recurso', '$d_data_abertura', 
-                '$c_agora', 'A', 'R', '$c_tipo', '$c_descricao')";
-                echo $c_sql;
+        $c_sql = "Insert into solicitacao (id_setor, id_solicitante,id_espaco, data_abertura, hora_abertura, 
+                status, classificacao,tipo,descricao) value ('$i_setor', '$i_solicitante', '$i_id_espaco', '$d_data_abertura', 
+                '$c_agora', 'A', 'E', '$c_tipo', '$c_descricao')";
+        echo $c_sql;
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
         if (!$result) {
@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
-            <h5>Conclusão de abertura de Solicitação de Serviço para Recurso Físico<h5>
+            <h5>Conclusão de abertura de Solicitação de Serviço para Espaços Físico<h5>
         </div>
     </div>
 
@@ -85,13 +85,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
             </div>
-            <h5>Digite as informações da solicitação para o Recurso selecionado e Clique em finalizar para gravar a solicitação. Todos os Campos são obrigatórios</h5>
+            <h5>Digite as informações da solicitação para o Espaço Físico selecionado e Clique em finalizar para gravar a solicitação. Todos os Campos são obrigatórios</h5>
         </div>
         <form method="post">
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Recurso Selecionado</label>
+                <label class="col-sm-3 col-form-label">Espaço Físico Selecionado</label>
                 <div class="col-sm-7">
-                    <input type="text" readonly="120" class="form-control" name="descricao" value="<?php echo $c_recurso; ?>">
+                    <input type="text" readonly="120" class="form-control" name="descricao" value="<?php echo $c_espaco; ?>">
                 </div>
             </div>
 

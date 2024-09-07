@@ -11,15 +11,12 @@ include("links.php");
 // faço a Leitura da tabela de recursos com sql
 if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  // botão para executar sql de pesquisa de recursos
     $c_pesquisa = $_POST['pesquisa'];
-    $c_sql =    "SELECT recursos.id, recursos.descricao, recursos.id_setor, recursos.patrimonio, recursos.id_marca,
-                marcas.descricao AS marca, setores.descricao AS setor
-                FROM recursos
-                JOIN setores ON recursos.id_setor=setores.id
-                JOIN marcas ON recursos.id_marca=marcas.id";
+    $c_sql =    "SELECT espacos.id, espacos.descricao, espacos.tipo
+                 FROM espacos";
     if ($c_pesquisa != ' ') {
-        $c_sql = $c_sql . " where recursos.descricao LIKE " .  "'" . $c_pesquisa . "%'";
+        $c_sql = $c_sql . " where espacos.descricao LIKE " .  "'" . $c_pesquisa . "%'";
     }
-    $c_sql = $c_sql . " order by recursos.descricao";
+    $c_sql = $c_sql . " order by espacos.descricao";
     $result = $conection->query($c_sql);
     // verifico se a query foi correto
     if (!$result) {
@@ -45,13 +42,13 @@ Pagina da rotina para selecionar o recurso da solicitação
 
 <script>
     $(document).ready(function() {
-        $('.tabrecursos').DataTable({
+        $('.tabespacos').DataTable({
             // 
             "iDisplayLength": -1,
             "order": [1, 'asc'],
             "aoColumnDefs": [{
                 'bSortable': false,
-                'aTargets': [5]
+                'aTargets': [3]
             }, {
                 'aTargets': [0],
                 "visible": false
@@ -91,7 +88,7 @@ Pagina da rotina para selecionar o recurso da solicitação
 <script>
     function conclusao(id) {
 
-        window.location.href = "/gop/solicitacao_recurso_conclusao.php?id=" + id;
+        window.location.href = "/gop/solicitacao_espaco_conclusao.php?id=" + id;
     }
 </script>
 
@@ -99,7 +96,7 @@ Pagina da rotina para selecionar o recurso da solicitação
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
-            <h5>Seleção de Recurso Físico para Solicitação de Serviço<h5>
+            <h5>Seleção de Espaços Físico para Solicitação de Serviço<h5>
         </div>
     </div>
 
@@ -108,14 +105,14 @@ Pagina da rotina para selecionar o recurso da solicitação
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
             </div>
-            <h5>Digite a descrição do recurso físico ou parte dela e clique em buscar. Clique em selecionar ao lado do recurso que deseja abrir solicitação.</h5>
+            <h5>Digite a descrição do espaço físico ou parte dele e clique em buscar. Clique em selecionar ao lado do Espaço que deseja abrir solicitação.</h5>
         </div>
-        <!-- inputs para pesquisa de recurso -->
+        <!-- inputs para pesquisa de Espaço Fisico -->
         <form method="post">
             <hr>
             <div class="mb-5 row">
                 <hr>
-                <label for="up_parametroField" class="col-sm-3 col-form-label">Buscar Recurso</label>
+                <label for="up_parametroField" class="col-sm-3 col-form-label">Buscar Espaço Fisico</label>
 
                 <div class="col-sm-6">
                     <input type="text" class="form-control" id="pesquisa" name="pesquisa">
@@ -128,14 +125,12 @@ Pagina da rotina para selecionar o recurso da solicitação
         </form>
         <!-- tabela de recursos fisicos segundo busca executada com sql -->
         <hr>
-        <table class="table display  tabrecursos">
+        <table class="table display  tabespacos">
             <thead class="thead">
                 <tr class="info">
                     <th scope="col">#</th>
                     <th scope="col">Descrição</th>
-                    <th scope="col">Patrimônio</th>
-                    <th scope="col">Marca</th>
-                    <th scope="col">Setor</th>
+                    <th scope="col">Tipo</th>
                     <th scope="col">Opção</th>
                 </tr>
             </thead>
@@ -149,12 +144,10 @@ Pagina da rotina para selecionar o recurso da solicitação
                     <tr>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descricao]</td>
-                    <td>$c_linha[patrimonio]</td>
-                    <td>$c_linha[marca]</td>
-                    <td>$c_linha[setor]</td>
+                    <td>$c_linha[tipo]</td>
                                                        
                     <td>
-                    <a class='btn btn' title='Selecionar Recurso' href='javascript:func()'onclick='conclusao($c_linha[id])'><img src='\gop\images\selecionar.png'  width='20' height='20'> Selecionar</a>
+                    <a class='btn btn' title='Selecionar Espaço Físico' href='javascript:func()'onclick='conclusao($c_linha[id])'><img src='\gop\images\selecionar.png'  width='20' height='20'> Selecionar</a>
                    
                     </td>
                         

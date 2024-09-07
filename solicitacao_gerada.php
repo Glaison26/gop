@@ -30,7 +30,7 @@ if (!$result) {
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
-            <h5>Conclusão de abertura de Solicitação de Serviço para Recurso Físico<h5>
+            <h5>Conclusão de abertura de Solicitação de Serviço<h5>
         </div>
     </div>
    
