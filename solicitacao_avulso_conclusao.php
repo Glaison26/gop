@@ -125,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <div class="offset-sm-0 col-sm-3">
                     <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Finalizar</button>
-                    <a class='btn btn' href='/gop/solicitacao_nova_recurso_pesquisa.php'><img src="\gop\images\voltar.png" alt="" width="25" height="25"> Voltar</a>
+                    <a class='btn btn' href='/gop/solicitacao_nova.php'><img src="\gop\images\voltar.png" alt="" width="25" height="25"> Voltar</a>
                 </div>
             </div>
         </form>
