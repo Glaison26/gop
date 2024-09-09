@@ -55,7 +55,10 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
         $i_id_setor = $c_linha['id'];
         $c_where = $c_where . "solicitacao.id_setor='$i_id_setor' and ";
     }
-
+    if ($_POST['descritivo']<>''){
+        $c_descritivo = $_POST['descritivo']; 
+        $c_where = $c_where. "solicitacao.descricao LIKE '%$c_descritivo%' and "; 
+    }
     $c_where = $c_where = substr($c_where, 0, -5); // tirar o and no final
     // montagem do sql para recursos físicos
     $c_sqlrecursos = "SELECT solicitacao.id, solicitacao.data_abertura, solicitacao.hora_abertura, solicitacao.id_solicitante,
@@ -243,6 +246,12 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                             ?>
                         </select>
                     </div>
+                </div>
+                <div class="form-group">
+                <label class="col-md-2 form-label">Descritivo</label>
+                        <div class="col-sm-7">
+                            <input type="text"  class="form-control" name="descritivo" id="descritivo">
+                        </div>
                 </div>
 
             </div>
