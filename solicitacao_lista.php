@@ -224,7 +224,7 @@ include('conexao.php');
                                     <td>$c_linha[solicitacao_tipo]</td>
                                     
                                     <td>
-                                        <a class='btn btn-secondary btn-sm' href='/gop/setores_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Detalhe</a>
+                                        <a class='btn btn-secondary btn-sm' href='/gop/solicitacao_detalhe.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Detalhe</a>
                                         
                                     </td>
 
@@ -279,7 +279,7 @@ include('conexao.php');
                                     <td>$c_linha[solicitacao_tipo]</td>
                                     
                                     <td>
-                                        <a class='btn btn-secondary btn-sm' href='/gop/setores_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Detalhe</a>
+                                        <a class='btn btn-secondary btn-sm' href='/gop/solicitacao_detalhe.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Detalhe</a>
                                         
                                     </td>
 
@@ -331,7 +331,7 @@ include('conexao.php');
                                     <td>$c_linha[solicitacao_tipo]</td>
                                     
                                     <td>
-                                        <a class='btn btn-secondary btn-sm' href='/gop/setores_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Detalhe</a>
+                                        <a class='btn btn-secondary btn-sm' href='/gop/solicitacao_detalhe.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Detalhe</a>
                                         
                                     </td>
 
