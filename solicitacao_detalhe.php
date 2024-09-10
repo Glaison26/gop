@@ -150,7 +150,6 @@ $c_tipo = $registro['solicitacao_tipo'];
                         <div class="col-sm-2">
                             <input type="text" readonly class="form-control" name="data" id="data" value='<?php echo $d_data; ?>'>
                         </div>
-
                     </div>
 
                     <div class="row mb-3">

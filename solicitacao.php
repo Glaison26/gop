@@ -114,6 +114,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $_SESSION['sqlrecurso'] = $c_sqlrecursos;
     $_SESSION['sqlespaco'] = $c_sqlespacos;
     $_SESSION['sqlavulso'] = $c_sqlavulso;
+    $_SESSION['pesquisamenu'] = false;
     header('location: /gop/solicitacao_lista.php');
 }
 
@@ -226,11 +227,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                             ?>
                         </select>
                     </div>
-
-
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 col-form-label">Setor </label>
+                    <label class="col-sm-1 col-form-label">Setor </label>
                     <div class="col-sm-3">
                         <select class="form-select form-select-lg mb-3" id="setor" name="setor">
                             <option>Todos</option>
@@ -246,6 +243,10 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                             ?>
                         </select>
                     </div>
+
+                </div>
+                <div class="form-group">
+                    
                 </div>
                 <div class="form-group">
                 <label class="col-md-2 form-label">Descritivo</label>

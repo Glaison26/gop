@@ -4,6 +4,14 @@
     if (!isset($_SESSION['newsession'])) {
         die('Acesso não autorizado!!!');
     }
+    include('conexao.php');
+    // verifico numero de solicitações em aberto
+    $c_sql = "select COUNT(*) AS aberta_solicitacao FROM solicitacao WHERE STATUS = 'A'";
+    $result = $conection->query($c_sql);
+    $registro = $result->fetch_assoc();
+    $c_solicitacao_aberta = $registro['aberta_solicitacao'];
+    $c_ordens_sla = 0;
+    $c_preventivas= 0;
     ?>
  <!DOCTYPE html>
  <html lang="en">
@@ -24,7 +32,7 @@
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-     
+
      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 
@@ -38,7 +46,7 @@
 
  </head>
  <!-- barra lateral com opções mais utilizadas -->
- <div class="container -my5">
+ <div class="container -fluid">
      <div class="sidebar">
          <a href="#"></a>
          <a title='Abertura de Solicitação de Serviço' href='/gop/solicitacao.php'><img src="\gop\images\contato.png" alt="" width="30" height="30"></a>
@@ -64,80 +72,82 @@
 
              </div>
              <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-blue ftco-navbar-light" id="ftco-navbar">
-
-                 <div class="navbar-header">
-                     <br>
-                     <div style="padding-left:15px;">
-                         <img Align="left" src="\gop\images\inicio.png" alt="" width="40" height="40">
+                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                     <span class="fa fa-bars">Menu</span>
+                 </button>
+                 <div class="collapse navbar-collapse" id="ftco-nav">
+                     <div class="navbar-header">
+                         <br>
+                         <div style="padding-left:15px;">
+                             <img Align="left" src="\gop\images\inicio.png" alt="" width="40" height="40">
+                         </div>
                      </div>
+
+                     <ul class="navbar-nav ml-auto">
+
+                         <li class="nav-item dropdown">
+                             <!-- Opções de cadastro do menu -->
+                             <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cadastros</a>
+                             <div class="dropdown-menu" aria-labelledby="dropdown01">
+
+                                 <a class="dropdown-item" href="/gop/recursos_lista.php"><img src="\gop\images\config.png" alt="" width="20" height="20"> Recursos Fisicos</a>
+                                 <a class="dropdown-item" href="/gop/espacos_lista.php"><img src="\gop\images\apartamento.png" alt="20" height="20"> Espaços Fisicos</a>
+                                 <a class="dropdown-item" href="#"><span class="" aria-hidden="true"></span> _____________________________________</a>
+                                 <a class="dropdown-item" href="/gop/fornecedores_lista.php"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Fornecedores </a>
+                                 <a class="dropdown-item" href="/gop/fabricantes_lista.php"><img src="\gop\images\fabricante.png" alt="20" height="20"> Fabricantes</a>
+                                 <a class="dropdown-item" href="/gop/executores_lista.php"><img src="\gop\images\executores.png" alt="20" height="20"> Executores</a>
+                                 <a class="dropdown-item" href="/gop/centrodecusto_lista.php"><span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span> Centros de Custos</a>
+                                 <a class="dropdown-item" href="/gop/oficinas_lista.php"><img src="\gop\images\oficina.png" alt="20" height="20"> Oficinas</a>
+                                 <a class="dropdown-item" href="/gop/setores_lista.php"><img src="\gop\images\setores.png" alt="20" height="20"> Setores</a>
+                                 <a class="dropdown-item" href="#"><span class="" aria-hidden="true"></span> _____________________________________</a>
+                                 <a class="dropdown-item" href="/gop/materiais_lista.php"><img src="\gop\images\materiais.png" alt="20" height="20"> Materiais</a>
+                                 <a class="dropdown-item" href="/gop/ferramentas_lista.php"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Ferramentas</a>
+                                 <a class="dropdown-item" href="/gop/grupos_lista.php"><img src="\gop\images\grupo.png" alt="20" height="20"> Grupos de Recurso</a>
+                                 <a class="dropdown-item" href="/gop/marcas_lista.php"><img src="\gop\images\marca.png" alt="20" height="20"> Marcas de Recursos</a>
+                                 <a class="dropdown-item" href="/gop/unidades_lista.php"><img src="\gop\images\peso.png" alt="20" height="20"> Unidades e Medidas</a>
+                                 <a class="dropdown-item" href="/gop/funcoes_lista.php"><img src="\gop\images\emprego.png" alt="20" height="20"> Funções e Cargos</a>
+
+
+                             </div>
+                         </li>
+                         <li class="nav-item dropdown">
+                             <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administrativo</a>
+                             <div class="dropdown-menu" aria-labelledby="dropdown01">
+                                 <a class="dropdown-item" href="/gop/pops_lista.php"><img src="\gop\images\degraus.png" alt="20" height="20"> Cadastro de POP</a>
+                                 <a class="dropdown-item" href="/gop/checklist_lista.php"><img src="\gop\images\checklist.png" alt="20" height="20"> Cadastro de Cheklist</a>
+                                 <a class="dropdown-item" href="/gop/ocorrencias_lista.php"><img src="\gop\images\incidente.png" alt="20" height="20"> Ocorrências Padrões</a>
+
+                             </div>
+                         </li>
+
+                         <li class="nav-item dropdown">
+                             <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Serviços</a>
+                             <div class="dropdown-menu" aria-labelledby="dropdown01">
+                                 <a class="dropdown-item" href="/gop/solicitacao.php"><img src="\gop\images\contato.png" alt="20" height="20"> Solicitações de Serviços</a>
+                                 <a class="dropdown-item" href=""><img src="\gop\images\ordem.png" alt="20" height="20"> Ordens de Serviços</a>
+                                 <a class="dropdown-item" href=""><img src="\gop\images\preventivo.png" alt="20" height="20"> Preventivas </a>
+                             </div>
+                         </li>
+
+                         <li class="nav-item dropdown">
+                             <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Almoxarifado</a>
+                             <div class="dropdown-menu" aria-labelledby="dropdown01">
+                                 <a class="dropdown-item" href=""><img src="\gop\images\cotacao.png" alt="20" height="20"> Cotações</a>
+                                 <a class="dropdown-item" href=""><img src="\gop\images\compras.png" alt="20" height="20"> Compras Efetivas</a>
+                                 <a class="dropdown-item" href=""><img src="\gop\images\dispensa.png" alt="20" height="20"> Dispensações</a>
+                             </div>
+                         </li>
+                         <li class="nav-item dropdown">
+                             <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Usuários</a>
+                             <div class="dropdown-menu" aria-labelledby="dropdown01">
+                                 <a class="dropdown-item" href="/gop/usuarios_lista.php"><img src="\gop\images\usuario.png" alt="20" height="20"> Cadastro de Usuários</a>
+                                 <a class="dropdown-item" href=""><img src="\gop\images\acessos.png" alt="20" height="20"> Perfis de Usuários</a>
+                                 <a class="dropdown-item" href=""><img src="\gop\images\trocasenha.png" alt="20" height="20">Troca de Senha</a>
+                             </div>
+                         </li>
+
+                     </ul>
                  </div>
-
-                 <ul class="navbar-nav ml-auto">
-
-                     <li class="nav-item dropdown">
-                         <!-- Opções de cadastro do menu -->
-                         <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cadastros</a>
-                         <div class="dropdown-menu" aria-labelledby="dropdown01">
-
-                             <a class="dropdown-item" href="/gop/recursos_lista.php"><img src="\gop\images\config.png" alt="" width="20" height="20"> Recursos Fisicos</a>
-                             <a class="dropdown-item" href="/gop/espacos_lista.php"><img src="\gop\images\apartamento.png" alt="20" height="20"> Espaços Fisicos</a>
-                             <a class="dropdown-item" href="#"><span class="" aria-hidden="true"></span> _____________________________________</a>
-                             <a class="dropdown-item" href="/gop/fornecedores_lista.php"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Fornecedores </a>
-                             <a class="dropdown-item" href="/gop/fabricantes_lista.php"><img src="\gop\images\fabricante.png" alt="20" height="20"> Fabricantes</a>
-                             <a class="dropdown-item" href="/gop/executores_lista.php"><img src="\gop\images\executores.png" alt="20" height="20"> Executores</a>
-                             <a class="dropdown-item" href="/gop/centrodecusto_lista.php"><span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span> Centros de Custos</a>
-                             <a class="dropdown-item" href="/gop/oficinas_lista.php"><img src="\gop\images\oficina.png" alt="20" height="20"> Oficinas</a>
-                             <a class="dropdown-item" href="/gop/setores_lista.php"><img src="\gop\images\setores.png" alt="20" height="20"> Setores</a>
-                             <a class="dropdown-item" href="#"><span class="" aria-hidden="true"></span> _____________________________________</a>
-                             <a class="dropdown-item" href="/gop/materiais_lista.php"><img src="\gop\images\materiais.png" alt="20" height="20"> Materiais</a>
-                             <a class="dropdown-item" href="/gop/ferramentas_lista.php"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Ferramentas</a>
-                             <a class="dropdown-item" href="/gop/grupos_lista.php"><img src="\gop\images\grupo.png" alt="20" height="20"> Grupos de Recurso</a>
-                             <a class="dropdown-item" href="/gop/marcas_lista.php"><img src="\gop\images\marca.png" alt="20" height="20"> Marcas de Recursos</a>
-                             <a class="dropdown-item" href="/gop/unidades_lista.php"><img src="\gop\images\peso.png" alt="20" height="20"> Unidades e Medidas</a>
-                             <a class="dropdown-item" href="/gop/funcoes_lista.php"><img src="\gop\images\emprego.png" alt="20" height="20"> Funções e Cargos</a>
-                                                      
-
-                         </div>
-                     <li class="nav-item dropdown">
-                         <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administrativo</a>
-                         <div class="dropdown-menu" aria-labelledby="dropdown01">
-                             <a class="dropdown-item" href="/gop/pops_lista.php"><img src="\gop\images\degraus.png" alt="20" height="20"> Cadastro de POP</a>
-                             <a class="dropdown-item" href="/gop/checklist_lista.php"><img src="\gop\images\checklist.png" alt="20" height="20"> Cadastro de Cheklist</a>
-                             <a class="dropdown-item" href="/gop/ocorrencias_lista.php"><img src="\gop\images\incidente.png" alt="20" height="20"> Ocorrências Padrões</a>
-
-                         </div>
-                     </li>
-                 
-                     <li class="nav-item dropdown">
-                         <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Serviços</a>
-                         <div class="dropdown-menu" aria-labelledby="dropdown01">
-                             <a class="dropdown-item" href="/gop/solicitacao.php"><img src="\gop\images\contato.png" alt="20" height="20"> Solicitações de Serviços</a>
-                             <a class="dropdown-item" href=""><img src="\gop\images\ordem.png" alt="20" height="20"> Ordens de Serviços</a>
-                             <a class="dropdown-item" href=""><img src="\gop\images\preventivo.png" alt="20" height="20"> Preventivas </a>
-                         </div>
-                     </li>
-
-                     <li class="nav-item dropdown">
-                         <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Almoxarifado</a>
-                         <div class="dropdown-menu" aria-labelledby="dropdown01">
-                             <a class="dropdown-item" href=""><img src="\gop\images\cotacao.png" alt="20" height="20"> Cotações</a>
-                             <a class="dropdown-item" href=""><img src="\gop\images\compras.png" alt="20" height="20"> Compras Efetivas</a>
-                             <a class="dropdown-item" href=""><img src="\gop\images\dispensa.png" alt="20" height="20"> Dispensações</a>
-                         </div>
-
-
-                     </li>
-                     <li class="nav-item dropdown">
-                         <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Usuários</a>
-                         <div class="dropdown-menu" aria-labelledby="dropdown01">
-                             <a class="dropdown-item" href="/gop/usuarios_lista.php"><img src="\gop\images\usuario.png" alt="20" height="20"> Cadastro de Usuários</a>
-                             <a class="dropdown-item" href=""><img src="\gop\images\acessos.png" alt="20" height="20"> Perfis de Usuários</a>
-                             <a class="dropdown-item" href=""><img src="\gop\images\trocasenha.png" alt="20" height="20">Troca de Senha</a>
-                         </div>
-                     </li>
-
-                 </ul>
-
 
              </nav>
 
@@ -156,6 +166,71 @@
                  </div>
 
              </div>
+             <br><br><br>
+             <div class="row mx-auto h-25" style="max-width: 750px;">
+                 <div class="col-xl-4 col-md-6">
+                     <div class="card text-dark bg-light mb-3" style="width: 18rem;">
+                         <div class="card-header">
+                             <h4>Solicitações de Serviço</h4>
+                         </div>
+                         <div class="card-body">
+
+                             <p class="card-text">
+                             <img src="\gop\images\alerta.png" alt="25" height="25">
+                             <h4><strong> Existem <?php echo $c_solicitacao_aberta; ?> Solicitações registradas como abertas</strong></h4>
+                             </p>
+                             <a href="/gop/chama_solicitacoes_menu.php" class="btn btn-primary">Clique para Visualizar</a>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="col-xl-4 col-md-6">
+
+                     <div class="card text-dark bg-light mb-3" style="width: 18rem;">
+                         <div class="card-header">
+                             <h4>Ordens de Serviço</h4>
+                         </div>
+
+                         <div class="card-body">
+
+                             <p class="card-text">
+                            <?php 
+                            if ($c_ordens_sla>0){
+                             echo "<img src='\gop\images\alerta.png' alt='25' height='25'>";
+                            }else{
+                                echo "<img src='\gop\images\certo.png' alt='25' height='25'>";  
+                            }?>
+                             <h4><strong>Existem <?php echo $c_ordens_sla; ?> Ordens de Serviço fora do prazo SLA</h4></strong></p><br>
+                             <a href="#" class="btn btn-primary">Clique para Visualizar</a>
+                         </div>
+
+                     </div>
+                 </div>
+                 <div class="col-xl-4 col-md-6">
+                     <div class="card text-dark bg-light mb-3" style="width: 18rem;">
+                         <div class="card-header">
+                             <h4>Ordens de Serviço</h4>
+                         </div>
+
+                         <div class="card-body">
+
+                             <p class="card-text">
+                             <?php 
+                            if ($c_preventivas>0){
+                             echo "<img src='\gop\images\alerta.png' alt='25' height='25'>";
+                            }else{
+                                echo "<img src='\gop\images\certo.png' alt='25' height='25'>";  
+                            }?>
+                            
+                             <h4><strong>Existem 0 Preventivas Ordens de Serviço a serem geradas</h4></strong></p>
+                             <a href="#" class="btn btn-primary">Clique para Visualizar</a>
+                         </div>
+
+                     </div>
+                 </div>
+
+             </div>
+             <hr>
+
          </main>
 
 

@@ -295,7 +295,7 @@ include('conexao.php');
             <!-- aba das avulsas-->
             <div role="tabpanel" class="tab-pane" id="avulsas">
                 <div style="padding-top:15px;padding-left:20px;">
-                <table class="table table display table-bordered tabsolicitacao_avulsas">
+                    <table class="table table display table-bordered tabsolicitacao_avulsas">
                         <thead class="thead">
                             <tr>
                                 <th scope="col">Número</th>
@@ -348,7 +348,14 @@ include('conexao.php');
             </div>
         </div>
         <br>
-        <a class="btn btn btn-sm" href="\gop\solicitacao.php"><img src="\gop\images\voltar.png" alt="" width="25" height="25"> Voltar</a>
+        <?php
+        if ($_SESSION['pesquisamenu'] == false) {
+            echo "<a class='btn btn btn-sm' href='\gop\solicitacao.php'><img src='\gop\images\back.png' alt='' width='25' height='25'> Voltar</a>";
+        } else {
+            echo "<a class='btn btn btn-sm' href='\gop\menu.php'><img src='\gop\images\back.png' alt='' width='25' height='25'> Voltar</a>";
+        }
+
+        ?>
     </div>
 
 </body>
