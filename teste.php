@@ -1,6 +1,11 @@
 <?php
-$teste="(data_abertura>= and data_abertura<=) and";
-$teste = substr($teste, 0, -3);
-echo $teste;
+// the message
+$msg = "First line of text";
+
+// use wordwrap() if lines are longer than 70 characters
+$msg = wordwrap($msg,70);
+
+// send email
+mail("glaison26.queiroz@gmail.com","My subject",$msg);
 
 ?>

@@ -81,7 +81,6 @@ $c_tipo = $registro['solicitacao_tipo'];
         </div>
     </div>
 
-
     <div class="container -my5">
         <div class='alert alert-info' role='alert'>
             <div style="padding-left:15px;">
@@ -89,7 +88,7 @@ $c_tipo = $registro['solicitacao_tipo'];
             </div>
             <h5>Detalhe da Solicitação de Serviço No. <?php echo $registro['id'] ?> para Visualização </h5>
         </div>
-        <a class="btn btn btn-sm" href="#"><img src="\gop\images\ordem.png" alt="" width="25" height="25"> Gerar OS</a>
+        <a class="btn btn btn-sm" href="\gop\solicitacao_gera_os.php?id=<?php echo $registro['id']?>"><img src="\gop\images\ordem.png" alt="" width="25" height="25"> Gerar OS</a>
         <a class="btn btn btn-sm" href="\gop\solicitacao_lista.php"><img src="\gop\images\voltar.png" alt="" width="25" height="25"> Voltar</a>
         <hr>
         <!-- abas de solicitações por recursos físicos -->
@@ -122,9 +121,8 @@ $c_tipo = $registro['solicitacao_tipo'];
                                  <div class='col-sm-8'>
                                       <input  type='text' readonly class='form-control' name='recurso' id='recurso' value=' $c_recurso'>
                                 </div>
-                                </div>";
-                               
-                            
+                              </div>";
+                                                     
                     }
                     ?>
                     <?php

@@ -79,7 +79,7 @@
                      <div class="navbar-header">
                          <br>
                          <div style="padding-left:15px;">
-                             <img Align="left" src="\gop\images\inicio.png" alt="" width="40" height="40">
+                             <!--<img Align="left" src="\gop\images\inicio.png" alt="" width="40" height="40">-->
                          </div>
                      </div>
 
@@ -208,7 +208,7 @@
                  <div class="col-xl-4 col-md-6">
                      <div class="card text-dark bg-light mb-3" style="width: 18rem;">
                          <div class="card-header">
-                             <h4>Ordens de Serviço</h4>
+                             <h4>Preventivas</h4>
                          </div>
 
                          <div class="card-body">
