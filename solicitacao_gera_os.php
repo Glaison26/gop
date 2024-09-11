@@ -63,7 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     do {
         // verificos se solicitação está aberta. Se não não deixo gerar ordem de serviço
         if ($registro_solicitacao['status']<>'A'){
-            $msg_erro = " Já foi gerada ums Ordem de Serviço para esta Solicitação! Não foi possivel Gerar Ordem de Serviço! ";
+            $msg_erro = " Já foi gerada ums Ordem de Serviço para esta Solicitação! Não foi possivel Gerar
+             Ordem de Serviço! ";
             break;
         }
         // monto sql
@@ -78,6 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // mudo status da solicitacao que gerou a ordem de serviços
         $c_sql = "Update solicitacao SET status = 'E' where id='$i_id'";
         $result = $conection->query($c_sql);
+        header('location: /gop/Ordem_gerada.php');
     } while (false);
 }
 
