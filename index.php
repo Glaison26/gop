@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     <div class="container" style="width: 400px">
 
         <form method="post" class="row g-3">
-            </br></br></br></br></br></br></br></br>
+            </br></br></br></br></br>
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
                     <h5>Dados para acesso </h5>

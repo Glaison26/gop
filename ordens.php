@@ -6,10 +6,8 @@ if (!isset($_SESSION['newsession'])) {
 include("conexao.php");
 include("links2.php");
 
-
 // rotina para montagem do sql com as opções selecionadas
 if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
-
     // formatação de datas para o sql
     $d_data1 = $_POST['data1'];
     $d_data1 = date("Y-m-d", strtotime(str_replace('/', '-', $d_data1)));
@@ -18,26 +16,26 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     // expressão sql inicia para recursos fisicos
     // data de abertura
     if ($_POST['numero'] == '') {
-        $c_where = "(data_abertura>='$d_data1' and data_abertura<='$d_data2') and ";
+        $c_where = "(data_geracao>='$d_data1' and data_geracao<='$d_data2') and ";
     }
     // sql para status
     $c_status = $_POST['status'];
     if ($c_status == "Aberta") {
-        $c_where = $c_where . "solicitacao.status='A' and ";
+        $c_where = $c_where . "ordens.status='A' and ";
     }
     if ($_POST['status'] == "Em Andamento") {
-        $c_where = $c_where . "solicitacao.status='E' and ";
+        $c_where = $c_where . "ordens.status='E' and ";
     }
     if ($_POST['status'] == "Concluída") {
-        $c_where = $c_where . "solicitacao.status='C' and ";
+        $c_where = $c_where . "ordens.status='C' and ";
     }
-    // sql para tipo de solicitação (programada ou urgência)
+    // sql para tipo de ordem (programada ou urgência)
     $c_tipo = $_POST['tipo'];
     if ($c_tipo == "Programada") {
-        $c_where = $c_where . "solicitacao.tipo='P' and ";
+        $c_where = $c_where . "ordens.tipo='P' and ";
     }
     if ($c_tipo == "Urgência") {
-        $c_where = $c_where . "solicitacao.tipo='U' and ";
+        $c_where = $c_where . "ordens.tipo='U' and ";
     }
     // sql para solicitante
     if ($_POST["solicitante"] <> "Todos") {
@@ -46,7 +44,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
         $result = $conection->query($c_sql_solicitante);
         $c_linha = $result->fetch_assoc();
         $i_id_solicitante = $c_linha['id'];
-        $c_where = $c_where . "solicitacao.id_solicitante='$i_id_solicitante' and ";
+        $c_where = $c_where . "ordens.id_solicitante='$i_id_solicitante' and ";
     }
     // sql para setor
     if ($_POST["setor"] <> "Todos") {
@@ -55,74 +53,55 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
         $result = $conection->query($c_sql_setor);
         $c_linha = $result->fetch_assoc();
         $i_id_setor = $c_linha['id'];
-        $c_where = $c_where . "solicitacao.id_setor='$i_id_setor' and ";
+        $c_where = $c_where . "ordens.id_setor='$i_id_setor' and ";
     }
     if ($_POST['descritivo'] <> '') {
         $c_descritivo = $_POST['descritivo'];
-        $c_where = $c_where . "solicitacao.descricao LIKE '%$c_descritivo%' and ";
+        $c_where = $c_where . "ordens.descricao LIKE '%$c_descritivo%' and ";
     }
     if ($_POST['numero'] <> '') {
         $c_numero = $_POST['numero'];
-        $c_where = $c_where . "solicitacao.id = '$c_numero' and ";
+        $c_where = $c_where . "ordens.id = '$c_numero' and ";
     }
+    $c_wheretipo_recurso =  " and ordens.tipo='R'"; 
+    $c_wheretipo_espaco =  " and ordens.tipo='E'";
+    $c_wheretipo_avulso =  " and ordens.tipo='V'";
     $c_where = $c_where = substr($c_where, 0, -5); // tirar o and no final
     // montagem do sql para recursos físicos
-    $c_sqlrecursos = "SELECT solicitacao.id, solicitacao.data_abertura, solicitacao.hora_abertura, solicitacao.id_solicitante,
-                    solicitacao.id_recursos, solicitacao.tipo,  solicitacao.`status`,
-                    usuarios.nome AS solicitante, recursos.descricao AS recurso,
-                    case 
-                    WHEN solicitacao.tipo='P' THEN 'Programada'
-                    ELSE 'Urgência'
-                    END AS solicitacao_tipo,
+    $c_sql = "SELECT ordens.id, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
+                    ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao AS setor,
+                    usuarios.nome,
                     case
-                    when solicitacao.status='A' then 'Aberta'
-                    when solicitacao.status='E' then 'Em Andamento'
-                    when solicitacao.status='C' then 'Concluída'
-                    END AS solicitacao_status
-                    FROM solicitacao
-                    JOIN usuarios ON solicitacao.id_solicitante=usuarios.id
-                    JOIN recursos ON solicitacao.id_recursos=recursos.id
-                    where $c_where" . " order by solicitacao.data_abertura desc";
-    // montagem do sql para espaços fisicos
-    $c_sqlespacos = "SELECT solicitacao.id, solicitacao.data_abertura, solicitacao.hora_abertura, solicitacao.id_solicitante,
-                    solicitacao.tipo,  solicitacao.`status`,
-                    usuarios.nome AS solicitante, espacos.descricao AS espaco,
-                    case 
-                    WHEN solicitacao.tipo='P' THEN 'Programada'
-                    ELSE 'Urgência'
-                    END AS solicitacao_tipo,
+                    when ordens.status='A' then 'Aberta'
+                    when ordens.status='E' then 'Em Andamento'
+                    when ordens.status='C' then 'Concluída'
+                    END AS ordens_status,
                     case
-                    when solicitacao.status='A' then 'Aberta'
-                    when solicitacao.status='E' then 'Em Andamento'
-                    when solicitacao.status='C' then 'Concluída'
-                    END AS solicitacao_status
-                    FROM solicitacao
-                    JOIN usuarios ON solicitacao.id_solicitante=usuarios.id
-                    JOIN espacos ON solicitacao.id_espaco=espacos.id               
-                    where $c_where" . " order by solicitacao.data_abertura desc";
-    // montagem do sql para solicitações avulsas 
-    $c_sqlavulso =  "SELECT solicitacao.id, solicitacao.data_abertura, solicitacao.hora_abertura, solicitacao.id_solicitante,
-                    solicitacao.tipo,  solicitacao.`status`,
-                    usuarios.nome AS solicitante, 
-                    case 
-                    WHEN solicitacao.tipo='P' THEN 'Programada'
-                    ELSE 'Urgência'
-                    END AS solicitacao_tipo,
-                    case
-                    when solicitacao.status='A' then 'Aberta'
-                    when solicitacao.status='E' then 'Em Andamento'
-                    when solicitacao.status='C' then 'Concluída'
-                    END AS solicitacao_status
-                    FROM solicitacao
-                    JOIN usuarios ON solicitacao.id_solicitante=usuarios.id  
-                    where $c_where and classificacao='V'" . " order by solicitacao.data_abertura desc";
-    // chamo pagina com os dados a serem selecionados passando a string sql
+                    when tipo_ordem='C' then 'Corretiva'
+                    when tipo_ordem='P' then 'Preventiva'
+                    END AS ordens_tipo_texto
+                    FROM ordens
+                    JOIN setores ON ordens.id_setor=setores.id
+                    JOIN usuarios ON ordens.id_solicitante=usuarios.id
+                    where $c_where";
+    // sql para recurso, espaços e avulsas               
+    $c_sqlrecursos=$c_sql.$c_wheretipo_recurso;
+    $c_sqlespacos=$c_sql.$c_wheretipo_espaco;
+    $c_sqlavulso=$c_sql.$c_wheretipo_avulso;
+    // guardo session para proxima pagina de tabelas
     $_SESSION['sqlrecurso'] = $c_sqlrecursos;
     $_SESSION['sqlespaco'] = $c_sqlespacos;
     $_SESSION['sqlavulso'] = $c_sqlavulso;
     $_SESSION['pesquisamenu'] = false;
-    header('location: /gop/solicitacao_lista.php');
+
+    //echo $c_sqlrecursos;
+    //echo '----------------------------';
+    //echo $c_sqlespacos;
+    //echo '----------------------------';
+    //echo $c_sqlavulso;
+    //header('location: /gop/ordens_lista.php');
 }
+
 
 ?>
 
@@ -139,15 +118,18 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
 <script>
     // função para verificas selct do tipo de solicitação e desebilita/ habilitar espaco fisico ou recurso
     function verifica(value) {
-        var input_recurso = document.getElementById("recurso");
-        var input_espaco = document.getElementById("espaco");
+        var input_corretiva = document.getElementById("tipo_corretiva");
+        var input_preventiva = document.getElementById("tipo_preventiva");
 
         if (value == 1) {
-            input_recurso.disabled = false;
-            input_espaco.disabled = true;
+            input_corretiva.disabled = false;
+            input_preventiva.disabled = true;
         } else if (value == 2) {
-            input_recurso.disabled = true;
-            input_espaco.disabled = false;
+            input_corretiva.disabled = true;
+            input_preventiva.disabled = false;
+        } else if (value == 0) {
+            input_corretiva.disabled = true;
+            input_preventiva.disabled = true;
         }
     };
 </script>
@@ -156,7 +138,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
-            <h5>Solicitações de Serviços<h5>
+            <h5>Ordens de Serviços<h5>
         </div>
     </div>
 
@@ -166,11 +148,11 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
             </div>
-            <h5>Clique em nova solitação para abrir uma nova solicitação de serviço ou realize uma pesquisa com as opções de pesquisa abaixo</h5>
+            <h5>Realize uma pesquisa com as opções de pesquisa de Ordens de Serviço abaixo</h5>
         </div>
         <form method="post">
             <div style="padding-top:5px;padding-bottom:15px">
-                <a class="btn btn btn-sm" href="solicitacao_nova.php"><img src="\gop\images\contato.png" alt="" width="25" height="25"> Nova Solicitação</a>
+
                 <button type="submit" name='btnpesquisa' id='btnpesquisa' class="btn btn btn-sm"><img src="\gop\images\lupa.png" alt="" width="20" height="20"></span> Pesquisar</button>
                 <!--<a class="btn btn btn-sm" href="#"><img src="\gop\images\eraser.png" alt="" width="25" height="25"> Limpar pesquisa</a> -->
                 <a class="btn btn btn-sm" href="\gop\menu.php"><img src="\gop\images\voltar.png" alt="" width="25" height="25"> Voltar</a>
@@ -179,14 +161,22 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                 <div class="card-header">
                     <h5 class="text-center">Opções para pesquisa</h5>
                 </div>
+
                 <div class="form-group">
                     <div style="padding-top:15px;">
-                        <label class="col-md-2 form-label">No. da Solicitação</label>
+                        <label class="col-md-2 form-label">Ordens fora de SLA</label>
+                        <div class="col-sm-1">
+                            <input class="form-check-input" type="checkbox" value="S" name="chk_sla" id="chk_sla">
+                        </div>
+
+                        <label class="col-md-2 form-label">No. da Ordem</label>
                         <div class="col-sm-2">
                             <input type="text" class="form-control" name="numero" id="numero">
                         </div>
                     </div>
                 </div>
+
+
                 <div class="form-group">
                     <div style="padding-top:15px;">
                         <label class="col-md-2 form-label">De</label>
@@ -202,7 +192,15 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-2 col-form-label">Status</label>
+                    <label class="col-sm-2 col-form-label">Atendimento</label>
+                    <div class="col-sm-2">
+                        <select class="form-select form-select-lg mb-3" id="atendimento" name="atendimento" value="<?php echo $c_atendimento; ?>">
+                            <option>Todos</option>
+                            <option>Programada</option>
+                            <option>Urgência</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-1 col-form-label">Status</label>
                     <div class="col-sm-2">
                         <select class="form-select form-select-lg mb-3" id="status" name="status" value="<?php echo $c_status; ?>">
                             <option>Todos</option>
@@ -211,15 +209,6 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                             <option>Concluída</option>
                         </select>
                     </div>
-                    <label class="col-sm-1 col-form-label">Tipo</label>
-                    <div class="col-sm-2">
-                        <select class="form-select form-select-lg mb-3" id="tipo" name="tipo" value="<?php echo $c_tipo; ?>">
-                            <option>Todos</option>
-                            <option>Programada</option>
-                            <option>Urgência</option>
-                        </select>
-                    </div>
-
 
                 </div>
                 <div class="form-group">
@@ -259,8 +248,52 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
 
                 </div>
                 <div class="form-group">
-
+                    <label class="col-sm-2 col-form-label">Oficina </label>
+                    <div class="col-sm-3">
+                        <select class="form-select form-select-lg mb-3" id="oficina" name="oficina">
+                            <option>Todas</option>
+                            <?php
+                            // select da tabela de setores
+                            $c_sql_setor = "SELECT oficinas.id, oficinas.descricao FROM oficinas ORDER BY oficinas.descricao";
+                            $result_setor = $conection->query($c_sql_setor);
+                            while ($c_linha = $result_setor->fetch_assoc()) {
+                                echo "  
+                          <option>$c_linha[descricao]</option>
+                        ";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <label class="col-sm-1 col-form-label">Tipo</label>
+                    <div class="col-sm-2">
+                        <select onchange="verifica(value)" class="form-select form-select-lg mb-3" id="tipo" name="tipo" value="<?php echo $c_tipo; ?>">
+                            <option value="0">Todas</option>
+                            <option value="1">Corretiva</option>
+                            <option value="2">Preventiva</option>
+                        </select>
+                    </div>
                 </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 col-form-label">Tipo Corretiva</label>
+                    <div class="col-sm-2">
+                        <select disabled class="form-select form-select-lg mb-3" id="tipo_corretiva" name="tipo_corretiva" value="<?php echo $c_tipo_corretiva; ?>">
+                            <option>Todos</option>
+                            <option>Programada</option>
+                            <option>Urgênte</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-2 col-form-label">Tipo Preventiva</label>
+                    <div class="col-sm-2">
+                        <select disabled class="form-select form-select-lg mb-3" id="tipo_preventiva" name="tipo_preventiva" value="<?php echo $c_tipo_preventiva; ?>">
+                            <option>Todas</option>
+                            <option>Rotina</option>
+                            <option>Preditiva</option>
+                            <option>Sistematica</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label class="col-md-2 form-label">Descritivo</label>
                     <div class="col-sm-7">

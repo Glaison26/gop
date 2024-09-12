@@ -124,7 +124,7 @@
                              <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Serviços</a>
                              <div class="dropdown-menu" aria-labelledby="dropdown01">
                                  <a class="dropdown-item" href="/gop/solicitacao.php"><img src="\gop\images\contato.png" alt="20" height="20"> Solicitações de Serviços</a>
-                                 <a class="dropdown-item" href=""><img src="\gop\images\ordem.png" alt="20" height="20"> Ordens de Serviços</a>
+                                 <a class="dropdown-item" href="/gop/ordens.php"><img src="\gop\images\ordem.png" alt="20" height="20"> Ordens de Serviços</a>
                                  <a class="dropdown-item" href=""><img src="\gop\images\preventivo.png" alt="20" height="20"> Preventivas </a>
                              </div>
                          </li>

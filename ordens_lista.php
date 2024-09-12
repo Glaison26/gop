@@ -22,7 +22,7 @@ include('conexao.php');
 <!-- script da tabela de recursos -->
 <script>
     $(document).ready(function() {
-        $('.tabsolicitacao_recursos').DataTable({
+        $('.tabordens_recursos').DataTable({
             // 
             "iDisplayLength": -1,
             "order": [1, 'asc'],
@@ -68,7 +68,7 @@ include('conexao.php');
 <!-- script da tabela de espaços fisicos -->
 <script>
     $(document).ready(function() {
-        $('.tabsolicitacao_espacos').DataTable({
+        $('.tabordens_espacos').DataTable({
             // 
             "iDisplayLength": -1,
             "order": [1, 'asc'],
@@ -115,7 +115,7 @@ include('conexao.php');
 <!-- script da tabela de solicitações avulsas -->
 <script>
     $(document).ready(function() {
-        $('.tabsolicitacao_avulsas').DataTable({
+        $('.tabordens_avulsas').DataTable({
             // 
             "iDisplayLength": -1,
             "order": [1, 'asc'],
@@ -165,7 +165,7 @@ include('conexao.php');
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
-            <h5>Solicitações de Serviços<h5>
+            <h5>Lista de Ordens de Serviços<h5>
         </div>
     </div>
 
@@ -176,7 +176,7 @@ include('conexao.php');
 
             </div>
 
-            <h5>Resultado das Solicitações Selecionadas</h5>
+            <h5>Resultado das Ordens de Serviço Selecionadas</h5>
         </div>
 
         <!-- abas de solicitações por recursos físicos, Espaços físicos e avulsos -->
@@ -189,15 +189,15 @@ include('conexao.php');
             <!-- aba da recurso fisico-->
             <div role="tabpanel" class="tab-pane active" id="recurso">
                 <div style="padding-top:15px;padding-left:20px;">
-                    <table class="table table display table-bordered tabsolicitacao_recursos">
+                    <table class="table table display table-bordered tabordens_recursos">
                         <thead class="thead">
                             <tr>
                                 <th scope="col">Número</th>
+                                <th scope="col">Data Geração</th>
+                                <th scope="col">Hora Geração</th>
+                                <th scope="col">Descritivo</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Abertura</th>
-                                <th scope="col">Hora</th>
-                                <th scope="col">Solicitante</th>
-                                <th scope="col">Recurso Físico</th>
+                                <th scope="col">Setor</th>
                                 <th scope="col">Tipo</th>
                                 <th scope="col">Opções</th>
                             </tr>
