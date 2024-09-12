@@ -68,7 +68,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $c_wheretipo_avulso =  " and ordens.tipo='V'";
     $c_where = $c_where = substr($c_where, 0, -5); // tirar o and no final
     // montagem do sql para recursos físicos
-    $c_sql = "SELECT ordens.id, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
+    $c_sql = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
                     ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao AS setor,
                     usuarios.nome,
                     case
@@ -99,7 +99,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     //echo $c_sqlespacos;
     //echo '----------------------------';
     //echo $c_sqlavulso;
-    //header('location: /gop/ordens_lista.php');
+    header('location: /gop/ordens_lista.php');
 }
 
 

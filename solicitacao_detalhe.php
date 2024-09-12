@@ -93,13 +93,14 @@ $c_tipo = $registro['solicitacao_tipo'];
         <hr>
         <!-- abas de solicitações por recursos físicos -->
         <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#detalhe" aria-controls="detalhe" role="tab" data-toggle="tab">Detalhe da Solicitação</a></li>
-        <li role="presentation"><a href="#descritivo" aria-controls="descritivo" role="tab" data-toggle="tab">Descrição do Serviço</a></li>
+        <li role="presentation" class="active"><a href="#descritivo" aria-controls="descritivo" role="tab" data-toggle="tab">Descrição do Serviço</a></li>
+        <li role="presentation" ><a href="#detalhe" aria-controls="detalhe" role="tab" data-toggle="tab">Detalhe da Solicitação</a></li>
+        
         </ul>
 
         <div class="tab-content">
             <!-- aba da descricao fisico-->
-            <div role="tabpanel" class="tab-pane" id="descritivo">
+            <div role="tabpanel" class="tab-pane  active" id="descritivo">
                 <div style="padding-top:15px;padding-left:20px;">
 
                     <div class="form-group">
@@ -110,7 +111,7 @@ $c_tipo = $registro['solicitacao_tipo'];
                 </div>
             </div>
             <!-- aba de Detalhe -->
-            <div role="tabpanel" class="tab-pane  active" id="detalhe">
+            <div role="tabpanel" class="tab-pane" id="detalhe">
                 <div style="padding-top:15px;padding-left:20px;">
                     <?php
                     if ($registro['classificacao'] == 'R') {

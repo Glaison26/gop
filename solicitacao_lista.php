@@ -192,7 +192,7 @@ include('conexao.php');
                     <table class="table table display table-bordered tabsolicitacao_recursos">
                         <thead class="thead">
                             <tr>
-                                <th scope="col">Número</th>
+                                <th scope="col">#</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Abertura</th>
                                 <th scope="col">Hora</th>
@@ -247,7 +247,7 @@ include('conexao.php');
                     <table class="table table display table-bordered tabsolicitacao_espacos">
                         <thead class="thead">
                             <tr>
-                                <th scope="col">Número</th>
+                                <th scope="col">#</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Abertura</th>
                                 <th scope="col">Hora</th>
@@ -301,7 +301,7 @@ include('conexao.php');
                     <table class="table table display table-bordered tabsolicitacao_avulsas">
                         <thead class="thead">
                             <tr>
-                                <th scope="col">Número</th>
+                                <th scope="col">#</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Abertura</th>
                                 <th scope="col">Hora</th>

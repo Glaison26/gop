@@ -50,7 +50,7 @@
      <div class="sidebar">
          <a href="#"></a>
          <a title='Abertura de Solicitação de Serviço' href='/gop/solicitacao.php'><img src="\gop\images\contato.png" alt="" width="30" height="30"></a>
-         <a title='Ordens de Serviço' href='#'><img src="\gop\images\ordem.png" alt="" width="30" height="30"></a>
+         <a title='Ordens de Serviço' href='/gop/ordens.php'><img src="\gop\images\ordem.png" alt="" width="30" height="30"></a>
          <a title='Cadastro de Recursos Físicos' href='/gop/recursos_lista.php'><img src="\gop\images\config.png" alt="" width="30" height="30"></a>
          <a title='Alterar Senha' href='\gop\alterasenha.php'><img src="\gop\images\trocasenha.png" alt="" width="30" height="30"></a>
          <a title='Sair do Sistema' href='\gop\index.php'><img src="\gop\images\saida.png" alt="" width="30" height="30"></a>
