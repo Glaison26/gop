@@ -10,7 +10,6 @@ include('conexao.php');
 include('links2.php');
 include_once "lib_gop.php";
 
-
 $c_nome = "";
 $c_login = "";
 $c_cpf = "";
@@ -42,15 +41,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $msg_erro = "Todos os Campos devem ser preenchidos!!";
             break;
         }
-          // consiste se senha igual a confirmação
-          if ($c_senha != $c_senha2) {
+        // consiste se senha igual a confirmação
+        if ($c_senha != $c_senha2) {
             $msg_erro = "Senha digitada diferente da senha de confirmação!!";
             break;
         }
         $i_tamsenha = strlen($c_senha);
         if (($i_tamsenha < 8) || ($i_tamsenha > 30)) {
             $msg_erro = "Campo Senha deve ter no mínimo 8 caracteres e no máximo 30 caracteres";
-            
+
             break;
         }
         // consistencia se já existe login cadastrado
@@ -115,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <div class="container -my5">
 
     <body>
-    <div style="padding-top:5px;">
+        <div style="padding-top:5px;">
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
                     <h4>GOP - Gestão Operacional</h4>
@@ -220,7 +219,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 ";
             }
             ?>
-             <hr>
+            <hr>
             <div class="row mb-3">
                 <div class="offset-sm-3 col-sm-3">
                     <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>

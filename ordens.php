@@ -18,6 +18,24 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     if ($_POST['numero'] == '') {
         $c_where = "(data_geracao>='$d_data1' and data_geracao<='$d_data2') and ";
     }
+    // sql para tipo de atendimento (programada ou urgência)
+    $c_tipo_atendimento = $_POST['tipo'];
+
+    if ($c_tipo_atendimento == "1") {  // corretiva
+        $c_where = $c_where . "ordens.tipo_ordem='C' and ";
+        // sql para tipo de ordem corretiva (programada ou urgência)
+        $c_tipo = $_POST['tipo_corretiva'];
+        if ($c_tipo == "Programada") {
+            $c_where = $c_where . "ordens.tipo_corretiva='P' and ";
+        }
+        if ($c_tipo == "Urgênte") {
+            $c_where = $c_where . "ordens.tipo_corretiva='U' and ";
+        }
+    }
+    // preventiva
+    if ($c_tipo_atendimento == "2") { // preventiva
+        $c_where = $c_where . "ordens.tipo_ordem='P' and ";
+    }
     // sql para status
     $c_status = $_POST['status'];
     if ($c_status == "Aberta") {
@@ -29,14 +47,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     if ($_POST['status'] == "Concluída") {
         $c_where = $c_where . "ordens.status='C' and ";
     }
-    // sql para tipo de ordem (programada ou urgência)
-    $c_tipo = $_POST['tipo'];
-    if ($c_tipo == "Programada") {
-        $c_where = $c_where . "ordens.tipo='P' and ";
-    }
-    if ($c_tipo == "Urgência") {
-        $c_where = $c_where . "ordens.tipo='U' and ";
-    }
+
     // sql para solicitante
     if ($_POST["solicitante"] <> "Todos") {
         $c_solicitante = $_POST["solicitante"];
@@ -55,15 +66,26 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
         $i_id_setor = $c_linha['id'];
         $c_where = $c_where . "ordens.id_setor='$i_id_setor' and ";
     }
+    // sql para oficinas
+    if ($_POST['oficina'] <> "Todas") {
+        $c_oficina = $_POST["oficina"];
+        $c_sql_oficina = "select oficinas.id, oficinas.descricao from oficinas where oficinas.descricao = '$c_oficina'";
+        $result = $conection->query($c_sql_oficina);
+        $c_linha = $result->fetch_assoc();
+        $i_id_oficina = $c_linha['id'];
+        $c_where = $c_where . "ordens.id_oficina='$i_id_oficina' and ";
+    }
+    // sql para o descritivo
     if ($_POST['descritivo'] <> '') {
         $c_descritivo = $_POST['descritivo'];
         $c_where = $c_where . "ordens.descricao LIKE '%$c_descritivo%' and ";
     }
+    // sql para numero da ordem de serviço
     if ($_POST['numero'] <> '') {
         $c_numero = $_POST['numero'];
         $c_where = $c_where . "ordens.id = '$c_numero' and ";
     }
-    $c_wheretipo_recurso =  " and ordens.tipo='R'"; 
+    $c_wheretipo_recurso =  " and ordens.tipo='R'";
     $c_wheretipo_espaco =  " and ordens.tipo='E'";
     $c_wheretipo_avulso =  " and ordens.tipo='V'";
     $c_where = $c_where = substr($c_where, 0, -5); // tirar o and no final
@@ -85,17 +107,17 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     JOIN usuarios ON ordens.id_solicitante=usuarios.id
                     where $c_where";
     // sql para recurso, espaços e avulsas               
-    $c_sqlrecursos=$c_sql.$c_wheretipo_recurso;
-    $c_sqlespacos=$c_sql.$c_wheretipo_espaco;
-    $c_sqlavulso=$c_sql.$c_wheretipo_avulso;
+    $c_sqlrecursos = $c_sql . $c_wheretipo_recurso;
+    $c_sqlespacos = $c_sql . $c_wheretipo_espaco;
+    $c_sqlavulso = $c_sql . $c_wheretipo_avulso;
     // guardo session para proxima pagina de tabelas
     $_SESSION['sqlrecurso'] = $c_sqlrecursos;
     $_SESSION['sqlespaco'] = $c_sqlespacos;
     $_SESSION['sqlavulso'] = $c_sqlavulso;
     $_SESSION['pesquisamenu'] = false;
 
-    //echo $c_sqlrecursos;
-    //echo '----------------------------';
+    echo $c_sqlrecursos;
+    echo '----------------------------';
     //echo $c_sqlespacos;
     //echo '----------------------------';
     //echo $c_sqlavulso;
@@ -189,17 +211,6 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                         </div>
 
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-2 col-form-label">Atendimento</label>
-                    <div class="col-sm-2">
-                        <select class="form-select form-select-lg mb-3" id="atendimento" name="atendimento" value="<?php echo $c_atendimento; ?>">
-                            <option>Todos</option>
-                            <option>Programada</option>
-                            <option>Urgência</option>
-                        </select>
-                    </div>
                     <label class="col-sm-1 col-form-label">Status</label>
                     <div class="col-sm-2">
                         <select class="form-select form-select-lg mb-3" id="status" name="status" value="<?php echo $c_status; ?>">
@@ -209,8 +220,8 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                             <option>Concluída</option>
                         </select>
                     </div>
-
                 </div>
+
                 <div class="form-group">
 
                     <label class="col-sm-2 col-form-label">Solicitante </label>

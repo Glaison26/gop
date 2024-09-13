@@ -4,6 +4,7 @@ if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
 include("conexao.php");
+include('lib_gop.php');
 include("links2.php");
 // pego id do recurso selecionado na página anterior
 $i_id_recurso = $_GET["id"];
@@ -25,10 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $i_setor = $registro_setor['id'];
     // procuro solicitante
     $c_solicitante = $_SESSION['c_usuario'];
-    $c_sql_solicitante = "Select id from usuarios where login='$c_solicitante'";
+    $c_sql_solicitante = "Select id, email from usuarios where login='$c_solicitante'";
     $result_solicitante = $conection->query($c_sql_solicitante);
     $registro_solicitante = $result_solicitante->fetch_assoc();
     $i_solicitante = $registro_solicitante['id'];
+    $c_email = $registro_solicitante['email'];
+
+    //$c_email = 'teste de email';
     // tipo da solicitação
     if ($_POST['tipo'] == "Programada") {
         $c_tipo = "P";
@@ -47,17 +51,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $c_sql = "Insert into solicitacao (id_setor, id_solicitante,id_recursos, data_abertura, hora_abertura, 
                 status, classificacao,tipo,descricao) value ('$i_setor', '$i_solicitante', '$i_id_recurso', '$d_data_abertura', 
                 '$c_agora', 'A', 'R', '$c_tipo', '$c_descricao')";
-                echo $c_sql;
+        //echo $c_sql;
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
         if (!$result) {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
         }
+        // chamo o envio de email
+        if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
+            $c_sql =    "SELECT MAX(solicitacao.ID) AS id_solicitacao FROM solicitacao";
+
+            $result = $conection->query($c_sql);
+            $c_linha = $result->fetch_assoc();
+            $solicitacao = $c_linha['id_solicitacao'];
+            $c_assunto = "Abertura de Solicitação de Serviço no GOP";
+            $c_body = "Solicitação No.<b> $solicitacao </b> foi gerada com suceso! Aguarde o atendimento <br>" 
+            ."Descrição da Solicitação :". $c_descricao;
+            include('email_gop.php');
+        }
         header('location: /gop/solicitacao_gerada.php?id_recurso=$i_id_recurso');
-
-
-
-        //header('location: /gop/menu.php');
     } while (false);
 }
 ?>
