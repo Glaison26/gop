@@ -119,6 +119,7 @@ Pagina da rotina para selecionar o recurso da solicitação
 
                 <div class="col-sm-6">
                     <input type="text" class="form-control" id="pesquisa" name="pesquisa">
+                    
                 </div>
                 <div class="col-md-3">
                     <button class="btn btn btn-sm" type="submit" id='bntpesquisa' name='btnpesquisa' class="btn btn"><img src='\gop\images\buscar.png' alt='' width='20' height='20'></span> Buscar</button>

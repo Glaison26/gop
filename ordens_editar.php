@@ -61,6 +61,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         $hab_corretiva = '';
     }
     $c_descricao = $registro['descricao'];
+    // mau uso
+    if ($registro['mau_uso'] == 'S') {
+        $c_mau_uso = 'checked';
+    } else {
+        $c_mau_uso = '';
+    }
+    $c_situacao = $registro['situacao'];
+    // situação
+    if ($registro['situacao'] == 'N') {
+        $c_hab_nao_conformidade = '';
+    } else {
+        $c_hab_nao_conformidade = 'disabled';
+    }
+    $c_conclusao = $registro['conclusao'];
 } else {
 }
 
@@ -89,6 +103,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             input_preventiva.disabled = false;
         }
     };
+
+    function conformidade(value) {
+        var input_nao_conforme = document.getElementById("nao_conforme");
+        if ((value == 'C') || (value == '')) {
+            input_nao_conforme.disabled = true;
+            document.getElementById('nao_conforme').value = 'N';
+        } else if (value == 'N') {
+            input_nao_conforme.disabled = false;
+        }
+    };
+    // funcao para verificar select do conforme e não conforme
 </script>
 
 <body>
@@ -138,7 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                         <div class="row mb-8">
                             <label class="col-md-2 form-label">Data da Geração</label>
                             <div class="col-sm-2">
-                                <input type="Date" class="form-control" name="geracao" id="data_geracao" value='<?php echo $c_data_geracao; ?>'>
+                                <input type="Date" class="form-control" name="data_geracao" id="data_geracao" value='<?php echo $c_data_geracao; ?>'>
                             </div>
                             <label class="col-md-2 form-label">Hora da Geração</label>
                             <div class="col-sm-2">
@@ -242,7 +267,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">Descrição</label>
                             <div class="col-sm-8">
-                                <textarea class="form-control" id="descricao" name="descricao" rows="10 "><?php echo $c_descricao ?></textarea>
+                                <textarea class="form-control" id="descricao" name="descricao" rows="10"><?php echo $c_descricao ?></textarea>
                             </div>
                         </div>
                     </div>
@@ -250,13 +275,123 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                 <!-- aba de informações do atendimento da ordem-->
                 <div role="tabpanel" class="tab-pane" id="aba_atendimento">
                     <div style="padding-top:15px;padding-left:20px;">
-                        <p>terceira aba</p>
+                        <div class="row mb-8">
+                            <div class="form-check col-sm-3">
+                                <label class="form-check-label col-form-label">Registro de Mau uso</label>
+                                <div class="col-sm-1">
+                                    <input <?php echo $c_mau_uso ?> class="form-check-input" type="checkbox" value="S" name="chk_mau_uso" id="chk_mau_uso">
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Oficina </label>
+                            <div class="col-sm-3">
+                                <select class="form-select form-select-lg mb-3" id="oficina" name="oficina">
+                                   
+                                    <?php
+                                    // select da tabela de setores
+                                    $c_sql_oficina = "SELECT oficinas.id, oficinas.descricao FROM oficinas ORDER BY oficinas.descricao";
+                                    $result_oficina = $conection->query($c_sql_oficina);
+                                    while ($c_linha = $result_oficina->fetch_assoc()) {
+                                        $op = "";
+                                        if ($c_linha['id'] == $registro['id_oficina']) {
+                                            $op = "selected";
+                                        }
+                                        echo "<option $op>$c_linha[descricao]</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-8">
+                            <label class="col-md-2 form-label">Data da Entrada</label>
+                            <div class="col-sm-2">
+                                <input type="Date" class="form-control" name="data_entrada" id="data_entrada" value='<?php echo $c_data_entrada; ?>'>
+                            </div>
+                            <label class="col-md-2 form-label">Hora da Entrada</label>
+                            <div class="col-sm-2">
+                                <input type="time" class="form-control" name="hora_entrada" id="hora_entrada" value="<?php echo $c_hora_entrada ?>">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row mb-8">
+                            <label class="col-md-2 form-label">Data da Previsão</label>
+                            <div class="col-sm-2">
+                                <input type="Date" class="form-control" name="data_previsao" id="data_previsao" value='<?php echo $c_data_previsao; ?>'>
+                            </div>
+                            <label class="col-md-2 form-label">Hora da Previsão</label>
+                            <div class="col-sm-2">
+                                <input type="time" class="form-control" name="hora_previsao" id="hora_previsao" value="<?php echo $c_hora_previsao ?>">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row mb-3">
+
+                            <label class="col-sm-2 col-form-label">Situação</label>
+                            <div class="col-sm-2">
+                                <select onchange="conformidade(value)" class="form-select form-select-lg mb-3" id="situacao" name="situacao" value="<?php echo $c_situacao; ?>">
+                                    <option <?= ($registro['situacao'] == 'C') ? 'selected' : '' ?> value='C'>Conforme</option>
+                                    <option <?= ($registro['situacao'] == 'N') ? 'selected' : '' ?> value="N">Não Conforme</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-2 col-form-label">Motivo de Não Conformidade</label>
+                            <div class="col-sm-2">
+                                <select <?php echo $c_hab_nao_conformidade ?> class="form-select form-select-lg mb-3" id="nao_conforme" name="nao_conforme" value="<?php echo $c_nao_conforme; ?>">
+                                    <option value='N'>Não se aplica</option>
+                                    <option <?= ($registro['motivo_naoconformidade'] == 'D') ? 'selected' : '' ?> value='D'>Descontinuidade</option>
+                                    <option <?= ($registro['motivo_naoconformidade'] == 'R') ? 'selected' : '' ?> value="R">Re-Classificação</option>
+                                    <option <?= ($registro['motivo_naoconformidade'] == 'A') ? 'selected' : '' ?> value="A">Ajuste</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+
                     </div>
                 </div>
                 <!-- aba de informações da conclusão da ordem-->
                 <div role="tabpanel" class="tab-pane" id="aba_conclusao">
                     <div style="padding-top:15px;padding-left:20px;">
-                        <p>quarta aba</p>
+                    <div class="row mb-8">
+                            <label class="col-md-2 form-label">Data Conclusão</label>
+                            <div class="col-sm-2">
+                                <input type="Date" class="form-control" name="data_conclusão" id="data_conclusão" value='<?php echo $c_data_conclusao; ?>'>
+                            </div>
+                            <label class="col-md-2 form-label">Hora Conclusão</label>
+                            <div class="col-sm-2">
+                                <input type="time" class="form-control" name="hora_conclusao" id="hora_conclusao" value="<?php echo $c_hora_conclusao ?>">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row mb-8">
+                            <label class="col-md-2 form-label">Data Entrega</label>
+                            <div class="col-sm-2">
+                                <input type="Date" class="form-control" name="data_entrega" id="data_entrega" value='<?php echo $c_data_entrega; ?>'>
+                            </div>
+                            <label class="col-md-2 form-label">Hora Entrega</label>
+                            <div class="col-sm-2">
+                                <input type="time" class="form-control" name="hora_enterga" id="hora_entrega" value="<?php echo $c_hora_entrega ?>">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row mb-8">
+                            <label class="col-md-2 form-label">Data Saída</label>
+                            <div class="col-sm-2">
+                                <input type="Date" class="form-control" name="data_saida" id="data_saida" value='<?php echo $c_data_saida; ?>'>
+                            </div>
+                            <label class="col-md-2 form-label">Data Garantia</label>
+                            <div class="col-sm-2">
+                                <input type="Date" class="form-control" name="data_garantia" id="data_garantia" value='<?php echo $c_data_garantia; ?>'>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Conclusão</label>
+                            <div class="col-sm-8">
+                                <textarea class="form-control" id="conclusao" name="conclusao" rows="6"><?php echo $c_conclusao ?></textarea>
+                            </div>
+                        </div>
+                        <br>
                     </div>
                 </div>
             </div>
