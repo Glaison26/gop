@@ -182,7 +182,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             if (($c_tipo = '') || ($c_tipo = 'Operador')) {
                 $op1 = 'Selected';
             }
-            if ($c_tipo = 'Consulta') {
+            if ($c_tipo = 'Solicitante') {
                 $op2 = 'Selected';
             }
             if ($c_tipo = 'Administrador') {
@@ -194,7 +194,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                 <div class="col-sm-2">
                     <select class="form-select form-select-lg mb-3" id="tipo" name="tipo" value="<?php echo $c_tipo; ?>">
                         <option <?php echo $op1 ?>>Operador</option>
-                        <option <?php echo $op2 ?>>Consulta</option>
+                        <option <?php echo $op2 ?>>Solicitante</option>
                         <option <?php echo $op3 ?>>Administrador</option>
                     </select>
                 </div>

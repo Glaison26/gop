@@ -25,10 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $i_setor = $registro_setor['id'];
     // procuro solicitante
     $c_solicitante = $_SESSION['c_usuario'];
-    $c_sql_solicitante = "Select id from usuarios where login='$c_solicitante'";
+    $c_sql_solicitante = "Select id,email from usuarios where login='$c_solicitante'";
     $result_solicitante = $conection->query($c_sql_solicitante);
     $registro_solicitante = $result_solicitante->fetch_assoc();
     $i_solicitante = $registro_solicitante['id'];
+    $c_email = $registro_solicitante['email'];
     // tipo da solicitação
     if ($_POST['tipo'] == "Programada") {
         $c_tipo = "P";
@@ -52,6 +53,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // verifico se a query foi correto
         if (!$result) {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
+        }
+          // chamo o envio de email
+          if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
+            $c_sql =    "SELECT MAX(solicitacao.ID) AS id_solicitacao FROM solicitacao";
+
+            $result = $conection->query($c_sql);
+            $c_linha = $result->fetch_assoc();
+            $solicitacao = $c_linha['id_solicitacao'];
+            $c_assunto = "Abertura de Solicitação de Serviço no GOP";
+            $c_body = "Solicitação No.<b> $solicitacao </b> foi gerada com suceso! Aguarde o atendimento <br>" 
+            ."Descrição da Solicitação :". $c_descricao;
+            include('email_gop.php');
         }
         header('location: /gop/solicitacao_gerada.php?id_recurso=$i_id_recurso');
 

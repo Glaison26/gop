@@ -373,6 +373,7 @@ CREATE TABLE IF NOT EXISTS `ordens` (
   `previsao_minutos` int DEFAULT NULL,
   `tipo` char(1) DEFAULT NULL COMMENT 'definice se é ordem de recurso fisico ou espaço fisico\r\n(r=recurso ou E para espaco)',
   `numero_nota` varchar(20) DEFAULT NULL,
+  `conclusao` blob,
   `valor_material` double DEFAULT NULL,
   `valor_servico` double DEFAULT NULL,
   `tipo_ordem` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT 'tipo =corretiva ou preventiva valores = (c ou P)',
@@ -401,16 +402,25 @@ CREATE TABLE IF NOT EXISTS `ordens` (
   CONSTRAINT `FK_ordens_setores` FOREIGN KEY (`id_setor`) REFERENCES `setores` (`id`),
   CONSTRAINT `FK_ordens_usuarios` FOREIGN KEY (`id_solicitante`) REFERENCES `usuarios` (`id`),
   CONSTRAINT `FK_ordens_usuarios_2` FOREIGN KEY (`id_responsavel`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.ordens: ~4 rows (aproximadamente)
-INSERT INTO `ordens` (`id`, `id_solicitante`, `id_responsavel`, `id_setor`, `id_recurso`, `id_espaco`, `id_oficina`, `data_entrada`, `hora_entrada`, `data_inicio`, `hora_inicio`, `data_conclucao`, `hora_conclusao`, `data_garantia`, `data_entrega`, `hora_entrega`, `data_saida`, `previsao_Horas`, `previsao_minutos`, `tipo`, `numero_nota`, `valor_material`, `valor_servico`, `tipo_ordem`, `tipo_corretiva`, `tipo_preventiva`, `descritivo`, `mau_uso`, `situacao`, `motivo_naoconformidade`, `data_emissao`, `descricao`, `data_geracao`, `hora_geracao`, `data_previsao`, `hora_previsao`, `status`, `id_solicitacao`) VALUES
-	(8, 16, 16, 1, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, 'C', 'U', NULL, 'teste 3', NULL, NULL, NULL, NULL, _binary 0x7465737465, '2024-09-11', '17:41:00', '2024-09-11', '18:41:00', 'A', 12),
-	(9, 16, 16, 1, 2, 0, 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, 'C', 'P', NULL, 'teste4', NULL, NULL, NULL, NULL, _binary 0x637364736466736461667364667364766664, '2024-09-11', '17:44:00', '2024-09-11', '18:44:00', 'A', 4),
-	(10, 16, 16, 1, 3, 0, 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, 'C', 'P', NULL, '', NULL, NULL, NULL, NULL, _binary 0x4573746162696c697a61646f204465736c6967616e646f20736f7a696e686f, '2024-09-11', '18:11:00', '2024-09-11', '18:11:00', 'A', 5),
-	(11, 16, 16, 1, 3, 0, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, 'C', 'P', NULL, 'Estabilizador com problema', NULL, NULL, NULL, NULL, _binary 0x7465737465, '2024-09-11', '18:12:00', '2024-09-19', '23:12:00', 'A', 6),
-	(12, 16, 16, 1, 0, 1, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'E', NULL, NULL, NULL, 'C', 'P', NULL, 'teste de espaco fisico', NULL, NULL, NULL, NULL, _binary 0x496e7374616c61c3a7c3a36f206465206e6f7661206573747275747572612064652072656465, '2024-09-12', '12:23:00', '2024-09-12', '12:22:00', 'A', 9),
-	(13, 16, 16, 3, 3, 0, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, 'C', 'P', NULL, 'os com outro setor', NULL, NULL, NULL, NULL, _binary 0x7465737465, '2024-09-13', '16:38:00', '2024-09-13', '18:38:00', 'A', 25);
+-- Copiando dados para a tabela gop.ordens: ~7 rows (aproximadamente)
+INSERT INTO `ordens` (`id`, `id_solicitante`, `id_responsavel`, `id_setor`, `id_recurso`, `id_espaco`, `id_oficina`, `data_entrada`, `hora_entrada`, `data_inicio`, `hora_inicio`, `data_conclucao`, `hora_conclusao`, `data_garantia`, `data_entrega`, `hora_entrega`, `data_saida`, `previsao_Horas`, `previsao_minutos`, `tipo`, `numero_nota`, `conclusao`, `valor_material`, `valor_servico`, `tipo_ordem`, `tipo_corretiva`, `tipo_preventiva`, `descritivo`, `mau_uso`, `situacao`, `motivo_naoconformidade`, `data_emissao`, `descricao`, `data_geracao`, `hora_geracao`, `data_previsao`, `hora_previsao`, `status`, `id_solicitacao`) VALUES
+	(8, 16, 16, 1, 1, 0, 1, '2024-09-17', '15:23:00', '2024-09-17', '15:23:00', NULL, NULL, '2024-09-17', '2024-09-17', '15:29:00', '2024-09-17', NULL, NULL, 'R', '', NULL, 0, 0, 'C', 'P', '', 'Computador travando e lento', NULL, 'C', '', NULL, _binary 0x7465737465, '2024-09-11', '17:41:00', '2024-09-19', '13:00:00', 'A', 12),
+	(9, 16, 16, 1, 2, 0, 1, '2024-09-17', '15:23:00', '2024-09-17', '15:23:00', NULL, NULL, '2024-09-17', '2024-09-17', '15:29:00', '2024-09-17', NULL, NULL, 'R', '', NULL, 0, 0, 'C', 'P', '', 'Computador travando e lento', NULL, 'C', '', NULL, _binary 0x637364736466736461667364667364766664, '2024-09-11', '17:44:00', '2024-09-19', '13:00:00', 'A', 4),
+	(10, 16, 16, 1, 3, 0, 1, '2024-09-17', '15:23:00', '2024-09-17', '15:23:00', NULL, NULL, '2024-09-17', '2024-09-17', '15:29:00', '2024-09-17', NULL, NULL, 'R', '', NULL, 0, 0, 'C', 'P', '', 'Computador travando e lento', NULL, 'C', '', NULL, _binary 0x4573746162696c697a61646f204465736c6967616e646f20736f7a696e686f, '2024-09-11', '18:11:00', '2024-09-19', '13:00:00', 'A', 5),
+	(11, 16, 16, 1, 3, 0, 1, '2024-09-17', '15:23:00', '2024-09-17', '15:23:00', NULL, NULL, '2024-09-17', '2024-09-17', '15:29:00', '2024-09-17', NULL, NULL, 'R', '', NULL, 0, 0, 'C', 'P', '', 'Computador travando e lento', NULL, 'C', '', NULL, _binary 0x7465737465, '2024-09-11', '18:12:00', '2024-09-19', '13:00:00', 'A', 6),
+	(12, 16, 16, 1, 0, 1, 1, '2024-09-17', '15:23:00', '2024-09-17', '15:23:00', NULL, NULL, '2024-09-17', '2024-09-17', '15:29:00', '2024-09-17', NULL, NULL, 'E', '', NULL, 0, 0, 'C', 'P', '', 'Computador travando e lento', NULL, 'C', '', NULL, _binary 0x496e7374616c61c3a7c3a36f206465206e6f7661206573747275747572612064652072656465, '2024-09-12', '12:23:00', '2024-09-19', '13:00:00', 'A', 9),
+	(13, 16, 16, 1, 3, 0, 1, '2024-09-17', '15:23:00', '2024-09-17', '15:23:00', NULL, NULL, '2024-09-17', '2024-09-17', '15:29:00', '2024-09-17', NULL, NULL, 'R', '', NULL, 0, 0, 'C', 'P', '', 'Computador travando e lento', NULL, 'C', '', NULL, _binary 0x7465737465, '2024-09-13', '16:38:00', '2024-09-19', '13:00:00', 'A', 25),
+	(14, 16, 16, 1, 3, 0, 1, '2024-09-17', '15:23:00', '2024-09-17', '15:23:00', NULL, NULL, '2024-09-17', '2024-09-17', '15:29:00', '2024-09-17', NULL, NULL, 'R', '', NULL, 0, 0, 'C', 'P', '', 'Computador travando e lento', NULL, 'C', '', NULL, _binary 0x4573746162696c697a61646f7220517565696d61646f, '2024-09-17', '11:58:00', '2024-09-19', '13:00:00', 'A', 7),
+	(15, 16, 16, 1, 1, 0, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, NULL, 'C', 'P', NULL, 'Computador com travamento', NULL, NULL, NULL, NULL, _binary 0x746573746520636f6d20656d61696c, '2024-09-17', '14:54:00', '2024-09-19', '15:00:00', 'A', 14),
+	(16, 16, 16, 1, 1, 0, 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, NULL, 'C', 'P', NULL, 'teste', NULL, NULL, NULL, NULL, _binary 0x746573746520636f6d20656d61696c, '2024-09-17', '14:59:00', '2024-09-18', '15:58:00', 'A', 15),
+	(17, 16, 16, 1, 1, 0, 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, NULL, 'C', 'P', NULL, 'teste', NULL, NULL, NULL, NULL, _binary 0x54726f636120646120666f6e746520646520616c696d656e7461c3a7c3a36f, '2024-09-17', '15:01:00', '2024-09-19', '21:00:00', 'A', 24),
+	(18, 16, 16, 1, 0, 0, 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'V', NULL, NULL, NULL, NULL, 'C', 'P', NULL, 'teste', NULL, NULL, NULL, NULL, _binary 0x696e7374616c61c3a7c3a36f206465206f6666696365, '2024-09-17', '15:12:00', '2024-09-17', '15:00:00', 'A', 27),
+	(19, 16, 16, 1, 0, 0, 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'V', NULL, NULL, NULL, NULL, 'C', 'P', NULL, 'teste2', NULL, NULL, NULL, NULL, _binary 0x7465737465, '2024-09-17', '15:14:00', '2024-09-17', '15:30:00', 'A', 28),
+	(20, 16, 16, 1, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, NULL, 'C', 'P', NULL, 'teste de email', NULL, NULL, NULL, NULL, _binary 0x746573746520636f6d20656d61696c, '2024-09-17', '15:24:00', '2024-09-20', '15:00:00', 'A', 16),
+	(21, 16, 16, 1, 1, 0, 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, NULL, 'C', 'P', NULL, '', NULL, NULL, NULL, NULL, _binary 0x746573746520636f6d20656d61696c, '2024-09-17', '15:24:00', '2024-09-17', '15:24:00', 'A', 17),
+	(22, 16, 16, 3, 0, 2, 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'E', NULL, NULL, NULL, NULL, 'C', 'P', NULL, 'reforma do predio da saúde', NULL, NULL, NULL, NULL, _binary 0x7265666f726d6120646f207072c3a964696f, '2024-09-17', '15:26:00', '2024-10-19', '21:00:00', 'A', 26);
 
 -- Copiando estrutura para tabela gop.pops
 CREATE TABLE IF NOT EXISTS `pops` (
@@ -573,32 +583,35 @@ CREATE TABLE IF NOT EXISTS `solicitacao` (
   CONSTRAINT `FK_solicitacao_recursos` FOREIGN KEY (`id_recursos`) REFERENCES `recursos` (`id`),
   CONSTRAINT `FK_solicitacao_setores` FOREIGN KEY (`id_setor`) REFERENCES `setores` (`id`),
   CONSTRAINT `FK_solicitacao_usuarios` FOREIGN KEY (`id_solicitante`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.solicitacao: ~10 rows (aproximadamente)
+-- Copiando dados para a tabela gop.solicitacao: ~19 rows (aproximadamente)
 INSERT INTO `solicitacao` (`id`, `id_setor`, `id_solicitante`, `id_recursos`, `id_espaco`, `data_abertura`, `hora_abertura`, `status`, `tipo`, `descricao`, `classificacao`, `id_ordem`) VALUES
 	(4, 1, 16, 2, NULL, '2024-09-06', '17:26:00', 'E', 'P', _binary 0x637364736466736461667364667364766664, 'R', NULL),
 	(5, 1, 16, 3, NULL, '2024-09-06', '18:13:00', 'E', 'P', _binary 0x4573746162696c697a61646f204465736c6967616e646f20736f7a696e686f, 'R', NULL),
 	(6, 1, 16, 3, NULL, '2024-09-06', '18:21:00', 'E', 'P', _binary 0x7465737465, 'R', NULL),
-	(7, 1, 16, 3, NULL, '2024-09-06', '18:22:00', 'A', 'P', _binary 0x4573746162696c697a61646f7220517565696d61646f, 'R', NULL),
+	(7, 1, 16, 3, NULL, '2024-09-06', '18:22:00', 'E', 'P', _binary 0x4573746162696c697a61646f7220517565696d61646f, 'R', NULL),
 	(8, 3, 16, 3, NULL, '2024-09-06', '18:27:00', 'E', 'P', _binary 0x5375706572206171756563696d656e746f2065206465736c6967616e646f, 'R', NULL),
 	(9, 1, 16, NULL, 1, '2024-09-06', '23:03:00', 'E', 'P', _binary 0x496e7374616c61c3a7c3a36f206465206e6f7661206573747275747572612064652072656465, 'E', NULL),
 	(10, 3, 16, NULL, NULL, '2024-09-06', '23:34:00', 'A', 'P', _binary 0x5472616e73706f727465206465204d65646963616d656e746f2070617261206e6f76612073616c61, 'V', NULL),
 	(11, 3, 16, 3, NULL, '2024-09-07', '12:26:00', 'C', 'P', _binary 0x5375706572204171756563696d656e746f, 'R', NULL),
 	(12, 1, 16, 1, NULL, '2024-09-08', '11:17:00', 'E', 'U', _binary 0x7465737465, 'R', NULL),
 	(13, 3, 16, NULL, NULL, '2024-09-09', '19:52:00', 'A', 'P', _binary 0x496e7374616c61c3a7c3a36f2064652053697374656d61206465204661726dc3a1636961, 'V', NULL),
-	(14, 1, 16, 1, NULL, '2024-09-13', '14:26:00', 'A', 'P', _binary 0x746573746520636f6d20656d61696c, 'R', NULL),
-	(15, 1, 16, 1, NULL, '2024-09-13', '14:28:00', 'A', 'P', _binary 0x746573746520636f6d20656d61696c, 'R', NULL),
-	(16, 1, 16, 1, NULL, '2024-09-13', '14:30:00', 'A', 'P', _binary 0x746573746520636f6d20656d61696c, 'R', NULL),
-	(17, 1, 16, 1, NULL, '2024-09-13', '14:31:00', 'A', 'P', _binary 0x746573746520636f6d20656d61696c, 'R', NULL),
+	(14, 1, 16, 1, NULL, '2024-09-13', '14:26:00', 'E', 'P', _binary 0x746573746520636f6d20656d61696c, 'R', NULL),
+	(15, 1, 16, 1, NULL, '2024-09-13', '14:28:00', 'E', 'P', _binary 0x746573746520636f6d20656d61696c, 'R', NULL),
+	(16, 1, 16, 1, NULL, '2024-09-13', '14:30:00', 'E', 'P', _binary 0x746573746520636f6d20656d61696c, 'R', NULL),
+	(17, 1, 16, 1, NULL, '2024-09-13', '14:31:00', 'E', 'P', _binary 0x746573746520636f6d20656d61696c, 'R', NULL),
 	(18, 1, 16, 1, NULL, '2024-09-13', '14:31:00', 'A', 'P', _binary 0x746573746520636f6d20656d61696c, 'R', NULL),
 	(19, 1, 16, 1, NULL, '2024-09-13', '14:35:00', 'A', 'P', _binary 0x746573746520646520656d61696c, 'R', NULL),
 	(20, 1, 16, 1, NULL, '2024-09-13', '14:46:00', 'A', 'P', _binary 0x746573746520646520656d61696c, 'R', NULL),
 	(21, 1, 16, 2, NULL, '2024-09-13', '14:51:00', 'A', 'P', _binary 0x5365727669646f7220636f6d206465666569746f, 'R', NULL),
 	(22, 1, 16, 3, NULL, '2024-09-13', '15:02:00', 'A', 'P', _binary 0x4573746162696c697a61646f72206ec3a36f20636f6e736567756520736567757261722074656e73c3a36f206461207265646520656cc3a97472696361, 'R', NULL),
 	(23, 1, 16, 1, NULL, '2024-09-13', '15:04:00', 'A', 'P', _binary 0x466f726d617461c3a7c3a36f206520696e7374616c61c3a7c3a36f20646f2077696e646f7773203130, 'R', NULL),
-	(24, 1, 16, 1, NULL, '2024-09-13', '15:30:00', 'A', 'P', _binary 0x54726f636120646120666f6e746520646520616c696d656e7461c3a7c3a36f, 'R', NULL),
-	(25, 3, 16, 3, NULL, '2024-09-13', '16:29:00', 'E', 'P', _binary 0x7465737465, 'R', NULL);
+	(24, 1, 16, 1, NULL, '2024-09-13', '15:30:00', 'E', 'P', _binary 0x54726f636120646120666f6e746520646520616c696d656e7461c3a7c3a36f, 'R', NULL),
+	(25, 3, 16, 3, NULL, '2024-09-13', '16:29:00', 'E', 'P', _binary 0x7465737465, 'R', NULL),
+	(26, 3, 16, NULL, 2, '2024-09-17', '14:47:00', 'E', 'P', _binary 0x7265666f726d6120646f207072c3a964696f, 'E', NULL),
+	(27, 1, 16, NULL, NULL, '2024-09-17', '14:49:00', 'E', 'P', _binary 0x696e7374616c61c3a7c3a36f206465206f6666696365, 'V', NULL),
+	(28, 1, 16, NULL, NULL, '2024-09-17', '15:11:00', 'E', 'P', _binary 0x7465737465, 'V', NULL);
 
 -- Copiando estrutura para tabela gop.unidades
 CREATE TABLE IF NOT EXISTS `unidades` (
@@ -633,14 +646,16 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   PRIMARY KEY (`id`),
   KEY `FK_usuarios_setores` (`id_setor`),
   CONSTRAINT `FK_usuarios_setores` FOREIGN KEY (`id_setor`) REFERENCES `setores` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.usuarios: ~3 rows (aproximadamente)
+-- Copiando dados para a tabela gop.usuarios: ~6 rows (aproximadamente)
 INSERT INTO `usuarios` (`id`, `id_perfil`, `id_setor`, `nome`, `login`, `senha`, `ativo`, `cpf`, `tipo`, `email`) VALUES
 	(16, NULL, NULL, 'Glaison Queiroz', 'Glaison', 'dGFpb2JhMjYxMA==', 'S', '695.510.226-53', 'Administrador', 'glaison26.queiroz@gmail.com'),
 	(17, NULL, NULL, 'Manoel da Silva Braga', 'ManuelBraga', 'MTIzNDU2ZmRnZGZnc2Y=', 'N', '695.510.226-53', 'Administrador', NULL),
 	(19, NULL, NULL, 'Itamar Franco', 'Franco', 'OTk5OTk5OTk5', 'S', '695.510.226-53', 'Administrador', NULL),
-	(21, NULL, NULL, 'Manoel de Nobrega', 'Manoel', 'dGFpb2JhMTIz', 'S', '695.510.226-53', 'Operador', 'manoel@gmail.com');
+	(21, NULL, NULL, 'Manoel de Nobrega', 'Manoel', 'dGFpb2JhMTIz', 'S', '695.510.226-53', 'Operador', 'manoel@gmail.com'),
+	(22, NULL, NULL, 'Solicitante', 'Solicitante', 'MTIzNDU2Nzg=', 'S', '69551022653', 'Solicitante', 'glaison26.queiroz@gmail.com'),
+	(23, NULL, NULL, 'Adm', 'Adm', 'MTIzNDU2Nzg=', 'S', '69551022653', 'Administrador', 'glaison26.queiroz@gmail.com');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

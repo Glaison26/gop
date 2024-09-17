@@ -173,7 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="col-sm-2">
                     <select class="form-select form-select-lg mb-3" id="tipo" name="tipo">
                         <option>Operador</option>
-                        <option>Consulta</option>
+                        <option>Solicitante</option>
                         <option>Administrador</option>
                     </select>
                 </div>
