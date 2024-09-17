@@ -56,9 +56,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $c_tipo_corretiva = $registro_solicitacao['tipo']; // preventiva(normal) ou urgencia
     $c_descritivo = $_POST['descritivo'];
     $c_descricao = $registro_solicitacao['descricao'];
-    $d_data_previsao = $d_data_previsao =  new DateTime($_POST['data_sla']);
+    $d_data_previsao = new DateTime($_POST['data_sla']);
     $d_data_previsao = $d_data_previsao->format('Y-m-d');
-    $d_hora_previsao = $d_hora_previsao =  new DateTime($_POST['hora_sla']);
+    $d_hora_previsao =  new DateTime($_POST['hora_sla']);
     $d_hora_previsao = $d_hora_previsao->format('H:i');
     do {
         // verificos se solicitação está aberta. Se não não deixo gerar ordem de serviço
