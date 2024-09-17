@@ -18,7 +18,7 @@ $registro = $result->fetch_assoc();
 // sql para pegar dados da solicitação selecionada
 
 $c_sql = "SELECT solicitacao.id, solicitacao.data_abertura, solicitacao.hora_abertura, solicitacao.id_solicitante,
-solicitacao.id_recursos, solicitacao.tipo,  solicitacao.`status`, solicitacao.descricao, solicitacao.classificacao,
+solicitacao.id_recursos, solicitacao.tipo, solicitacao.id_ocorrencia, solicitacao.`status`, solicitacao.descricao, solicitacao.classificacao,
 usuarios.nome AS solicitante, setores.descricao AS setor,";
 if ($registro['classificacao'] == 'R') {
     $c_sql = $c_sql . "recursos.descricao AS recurso,";
@@ -59,7 +59,13 @@ $c_hora = $registro['hora_abertura'];
 $c_Solicitante = $registro['solicitante'];
 $c_status = $registro['solicitacao_status'];
 $c_tipo = $registro['solicitacao_tipo'];
+$i_id_ocorrencia = $registro['id_ocorrencia'];
 
+$c_sql = "select id,descricao from ocorrencias where ocorrencias.id='$i_id_ocorrencia'";
+
+$result_ocorrencia = $conection->query($c_sql);
+$registro_ocorrencia = $result_ocorrencia->fetch_assoc();
+$c_ocorrencia = $registro_ocorrencia['descricao'];
 ?>
 
 <!-- frontend html da página -->
@@ -157,7 +163,7 @@ $c_tipo = $registro['solicitacao_tipo'];
                             <input type="text" readonly class="form-control" name="setor" id="setor" value='<?php echo $c_setor; ?>'>
                         </div>
                         <label class="col-md-2 form-label">Solicitante</label>
-                        <div class="col-sm-4">
+                        <div class="col-sm-2">
                             <input type="text" readonly class="form-control" name="Solicitante" id="Solicitante" value='<?php echo $c_Solicitante; ?>'>
                         </div>
                     </div>
@@ -170,6 +176,13 @@ $c_tipo = $registro['solicitacao_tipo'];
                         <div class="col-sm-3">
                             <input type="text" readonly class="form-control" name="status" id="status" value='<?php echo $c_status; ?>'>
                         </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-md-2 form-label">Ocorrência</label>
+                        <div class="col-sm-6">
+                            <input type="text" readonly class="form-control" name="ocorrencia" id="ocorrencia" value='<?php echo $c_ocorrencia; ?>'>
+                        </div>
+                        
                     </div>
 
                 </div>

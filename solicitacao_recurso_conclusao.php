@@ -31,6 +31,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $registro_solicitante = $result_solicitante->fetch_assoc();
     $i_solicitante = $registro_solicitante['id'];
     $c_email = $registro_solicitante['email'];
+    // select da tabela de ocorrencia
+    $c_ocorrencia = $_POST['ocorrencia'];
+    $c_sql_ocorrencia = "SELECT ocorrencias.id, ocorrencias.descricao FROM ocorrencias where descricao='$c_ocorrencia'";
+    $result_ocorrencia = $conection->query($c_sql_ocorrencia);
+    $c_linha = $result_ocorrencia->fetch_assoc();
+    $i_ocorrencia = $c_linha['id'];
 
     //$c_email = 'teste de email';
     // tipo da solicitação
@@ -49,8 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         //$d_data_abertura = $d_data_abertura->format('Y-m-d');
         // gravar informações 
         $c_sql = "Insert into solicitacao (id_setor, id_solicitante,id_recursos, data_abertura, hora_abertura, 
-                status, classificacao,tipo,descricao) value ('$i_setor', '$i_solicitante', '$i_id_recurso', '$d_data_abertura', 
-                '$c_agora', 'A', 'R', '$c_tipo', '$c_descricao')";
+                status, classificacao,tipo,descricao, id_recurso, id_recurso) value ('$i_setor', '$i_solicitante', '$i_id_recurso', '$d_data_abertura', 
+                '$c_agora', 'A', 'R', '$c_tipo', '$c_descricao', $i_ocorrencia)";
         //echo $c_sql;
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
@@ -65,8 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $c_linha = $result->fetch_assoc();
             $solicitacao = $c_linha['id_solicitacao'];
             $c_assunto = "Abertura de Solicitação de Serviço no GOP";
-            $c_body = "Solicitação No.<b> $solicitacao </b> foi gerada com suceso! Aguarde o atendimento <br>" 
-            ."Descrição da Solicitação :". $c_descricao;
+            $c_body = "Solicitação No.<b> $solicitacao </b> foi gerada com suceso! Aguarde o atendimento <br>"
+                . "Descrição da Solicitação :" . $c_descricao;
             include('email_gop.php');
         }
         header('location: /gop/solicitacao_gerada.php?id_recurso=$i_id_recurso');
@@ -130,8 +136,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         }
                         ?>
                     </select>
-                </div>
 
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">Ocorrencia </label>
+                <div class="col-sm-7">
+                    <select class="form-select form-select-lg mb-3" id="ocorrencia" name="ocorrencia">
+                        <?php
+                        // select da tabela de ocorrencia
+                        $c_sql_ocorrencia = "SELECT ocorrencias.id, ocorrencias.descricao FROM ocorrencias ORDER BY ocorrencias.descricao";
+                        $result_ocorrencia = $conection->query($c_sql_ocorrencia);
+                        while ($c_linha = $result_ocorrencia->fetch_assoc()) {
+                            echo "  
+                          <option>$c_linha[descricao]</option>
+                        ";
+                        }
+                        ?>
+                    </select>
+
+                </div>
             </div>
             <div style="padding-top:5px;">
 

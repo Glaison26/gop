@@ -25,6 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $registro_solicitante = $result_solicitante->fetch_assoc();
     $i_solicitante = $registro_solicitante['id'];
     $c_email = $registro_solicitante['email'];
+    // select da tabela de ocorrencia
+    $c_ocorrencia = $_POST['ocorrencia'];
+    $c_sql_ocorrencia = "SELECT ocorrencias.id, ocorrencias.descricao FROM ocorrencias where descricao='$c_ocorrencia'";
+    $result_ocorrencia = $conection->query($c_sql_ocorrencia);
+    $c_linha = $result_ocorrencia->fetch_assoc();
+    $i_ocorrencia = $c_linha['id'];
     // tipo da solicitação
     if ($_POST['tipo'] == "Programada") {
         $c_tipo = "P";
@@ -41,24 +47,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         //$d_data_abertura = $d_data_abertura->format('Y-m-d');
         // gravar informações 
         $c_sql = "Insert into solicitacao (id_setor, id_solicitante, data_abertura, hora_abertura, 
-                status, classificacao,tipo,descricao) value ('$i_setor', '$i_solicitante',  '$d_data_abertura', 
-                '$c_agora', 'A', 'V', '$c_tipo', '$c_descricao')";
+                status, classificacao,tipo,descricao,id_ocorrencia) value ('$i_setor', '$i_solicitante',  '$d_data_abertura', 
+                '$c_agora', 'A', 'V', '$c_tipo', '$c_descricao', $i_ocorrencia)";
         echo $c_sql;
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
         if (!$result) {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
         }
-         // chamo o envio de email
-         if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
+        // chamo o envio de email
+        if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
             $c_sql =    "SELECT MAX(solicitacao.ID) AS id_solicitacao FROM solicitacao";
 
             $result = $conection->query($c_sql);
             $c_linha = $result->fetch_assoc();
             $solicitacao = $c_linha['id_solicitacao'];
             $c_assunto = "Abertura de Solicitação de Serviço no GOP";
-            $c_body = "Solicitação No.<b> $solicitacao </b> foi gerada com suceso! Aguarde o atendimento <br>" 
-            ."Descrição da Solicitação :". $c_descricao;
+            $c_body = "Solicitação No.<b> $solicitacao </b> foi gerada com suceso! Aguarde o atendimento <br>"
+                . "Descrição da Solicitação :" . $c_descricao;
             include('email_gop.php');
         }
         header('location: /gop/solicitacao_gerada.php?id_recurso=$i_id_recurso');
@@ -96,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <h5>Digite as informações da solicitação Avulsa e Clique em finalizar para gravar a solicitação. Todos os Campos são obrigatórios</h5>
         </div>
         <form method="post">
-           
+
 
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Tipo de Solicitação</label>
@@ -124,24 +130,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
 
             </div>
-            <div style="padding-top:5px;">
-
-                <div class="row mb-7">
-                    <label class="col-sm-3 col-form-label">Descrição</label>
-                    <div class="col-sm-7">
-                        <textarea class="form-control" id="solicitacao" name="solicitacao" rows="10"><?php echo $c_solicitacao; ?></textarea>
-                    </div>
-                </div>
-
-            </div>
-            <hr>
             <div class="row mb-3">
-                <div class="offset-sm-0 col-sm-3">
-                    <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Finalizar</button>
-                    <a class='btn btn' href='/gop/solicitacao_nova.php'><img src="\gop\images\voltar.png" alt="" width="25" height="25"> Voltar</a>
+                <label class="col-sm-3 col-form-label">Ocorrencia </label>
+                <div class="col-sm-7">
+                    <select class="form-select form-select-lg mb-3" id="ocorrencia" name="ocorrencia">
+                        <?php
+                        // select da tabela de ocorrencia
+                        $c_sql_setor = "SELECT ocorrencias.id, ocorrencias.descricao FROM ocorrencias ORDER BY ocorrencias.descricao";
+                        $result_setor = $conection->query($c_sql_setor);
+                        while ($c_linha = $result_setor->fetch_assoc()) {
+                            echo "  
+                          <option>$c_linha[descricao]</option>
+                        ";
+                        }
+                        ?>
+                    </select>
+
                 </div>
             </div>
-        </form>
+    <div style="padding-top:5px;">
+
+        <div class="row mb-7">
+            <label class="col-sm-3 col-form-label">Descrição</label>
+            <div class="col-sm-7">
+                <textarea class="form-control" id="solicitacao" name="solicitacao" rows="10"><?php echo $c_solicitacao; ?></textarea>
+            </div>
+        </div>
+
+    </div>
+    <hr>
+    <div class="row mb-3">
+        <div class="offset-sm-0 col-sm-3">
+            <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Finalizar</button>
+            <a class='btn btn' href='/gop/solicitacao_nova.php'><img src="\gop\images\voltar.png" alt="" width="25" height="25"> Voltar</a>
+        </div>
+    </div>
+    </form>
     </div>
 
 
