@@ -179,7 +179,7 @@ include("links.php");
     </div>
 
     <br>
-    <div class="container -my5">
+    <div class="container-fluid">
     
         <button type="button" title="Inclusão de Nova Oficina" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
             Incluir

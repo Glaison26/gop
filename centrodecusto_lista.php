@@ -77,7 +77,7 @@ include("links.php");
     </div>
 
 
-    <div class="container -my5">
+    <div class="container-fluid">
 
 
         <br>

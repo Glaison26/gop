@@ -180,7 +180,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                 <div class="card-header">
                     <h5 class="text-center">Opções para pesquisa</h5>
                 </div>
-                <div class="form-group">
+                <div class="row mb-3">
                     <div style="padding-top:15px;">
                         <label class="col-md-2 form-label">No. da Solicitação</label>
                         <div class="col-sm-2">
@@ -188,7 +188,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="row mb-3">
                     <div style="padding-top:15px;">
                         <label class="col-md-2 form-label">De</label>
                         <div class="col-sm-2">
@@ -202,7 +202,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="row mb-3">
                     <label class="col-sm-2 col-form-label">Status</label>
                     <div class="col-sm-2">
                         <select class="form-select form-select-lg mb-3" id="status" name="status" value="<?php echo $c_status; ?>">
@@ -223,7 +223,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
 
 
                 </div>
-                <div class="form-group">
+                <div class="row mb-3">
 
                     <label class="col-sm-2 col-form-label">Solicitante </label>
                     <div class="col-sm-3">
@@ -259,10 +259,8 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     </div>
 
                 </div>
-                <div class="form-group">
-
-                </div>
-                <div class="form-group">
+                
+                <div class="row mb-3">
                     <label class="col-md-2 form-label">Descritivo</label>
                     <div class="col-sm-7">
                         <input type="text" class="form-control" name="descritivo" id="descritivo">

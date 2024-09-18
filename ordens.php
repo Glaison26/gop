@@ -164,7 +164,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
         </div>
     </div>
 
-    <div class="container -my5">
+    <div class="container  -my5">
         <div class='alert alert-info' role='alert'>
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
@@ -184,11 +184,15 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     <h5 class="text-center">Opções para pesquisa</h5>
                 </div>
 
-                <div class="form-group">
+                <div class="row mb-3">
                     <div style="padding-top:15px;">
-                        <label class="col-md-2 form-label">Ordens fora de SLA</label>
-                        <div class="col-sm-1">
-                            <input class="form-check-input" type="checkbox" value="S" name="chk_sla" id="chk_sla">
+                        <div style="padding-left:15px;">
+                            <div class="form-check col-sm-4">
+                                <label class="form-check-label col-form-label">Fora de SLA</label>
+                                <div class="col-sm-2">
+                                    <input class="form-check-input" type="checkbox" value="S" name="chk_sla" id="chk_sla">
+                                </div>
+                            </div>
                         </div>
 
                         <label class="col-md-2 form-label">No. da Ordem</label>
@@ -199,30 +203,22 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                 </div>
 
 
-                <div class="form-group">
+                <div class="row mb-3">
                     <div style="padding-top:15px;">
                         <label class="col-md-2 form-label">De</label>
                         <div class="col-sm-2">
                             <input type="Date" class="form-control" name="data1" id="data1" value='<?php echo date("Y-m-d"); ?>' onkeypress="mascaraData(this)">
                         </div>
-                        <label class="col-md-1 form-label">até</label>
+                        <label class="col-md-2 form-label">até</label>
                         <div class="col-sm-2">
                             <input type="Date" class="form-control" name="data2" id="data2" value='<?php echo date("Y-m-d"); ?>' onkeypress="mascaraData(this)">
                         </div>
 
                     </div>
-                    <label class="col-sm-1 col-form-label">Status</label>
-                    <div class="col-sm-2">
-                        <select class="form-select form-select-lg mb-3" id="status" name="status" value="<?php echo $c_status; ?>">
-                            <option>Todos</option>
-                            <option>Aberta</option>
-                            <option>Em Andamento</option>
-                            <option>Concluída</option>
-                        </select>
-                    </div>
+                   
                 </div>
 
-                <div class="form-group">
+                <div class="row mb-3">
 
                     <label class="col-sm-2 col-form-label">Solicitante </label>
                     <div class="col-sm-3">
@@ -258,7 +254,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     </div>
 
                 </div>
-                <div class="form-group">
+                <div class="row mb-3">
                     <label class="col-sm-2 col-form-label">Oficina </label>
                     <div class="col-sm-3">
                         <select class="form-select form-select-lg mb-3" id="oficina" name="oficina">
@@ -285,7 +281,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="row mb-3">
                     <label class="col-sm-2 col-form-label">Tipo Corretiva</label>
                     <div class="col-sm-2">
                         <select disabled class="form-select form-select-lg mb-3" id="tipo_corretiva" name="tipo_corretiva" value="<?php echo $c_tipo_corretiva; ?>">
@@ -305,13 +301,22 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="row mb-3">
                     <label class="col-md-2 form-label">Descritivo</label>
                     <div class="col-sm-7">
                         <input type="text" class="form-control" name="descritivo" id="descritivo">
                     </div>
                 </div>
-
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">Status</label>
+                    <div class="col-sm-2">
+                        <select class="form-select form-select-lg mb-3" id="status" name="status" value="<?php echo $c_status; ?>">
+                            <option>Todos</option>
+                            <option>Aberta</option>
+                            <option>Concluída</option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
         </form>

@@ -10,25 +10,7 @@ include('conexao.php');
 include_once "lib_gop.php";
 
 // rotina de post dos dados do formuário
-$c_id = "";
-$c_descricao = "";
-$c_razao =  "";
-$c_contato =  "";
-$c_fone1 =  "";
-$c_fone2 =  "";
-$c_endereco =  "";
-$c_bairro =  "";
-$c_cidade =  "";
-$c_estado =  "";
-$c_cep =  "";
-$c_email =  "";
-$c_tipo =  "";
-$c_cnpj_cpf =  "";
-$c_insc_estad = "";
-$c_insc_munic =  "";
-$c_email =  "";
-$c_url =  "";
-$c_obs =  "";
+
 // variaveis para mensagens de erro e suscessso da gravação
 $msg_gravou = "";
 $msg_erro = "";
@@ -217,36 +199,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             </div>
 
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Razão Social</label>
+                <label class="col-sm-3 col-form-label">Razão Social (*)</label>
                 <div class="col-sm-6">
                     <input type="text" maxlength="120" class="form-control" name="razaosocial" value="<?php echo $c_razao; ?>">
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Tipo Fabricante </label>
+                <label class="col-sm-3 col-form-label">Tipo Fabricante (*) </label>
                 <div class="col-sm-2">
                     <select class="form-select form-select-lg mb-3" id="tipo" name="tipo">
                         <option <?= ($c_tipo == 'Juridica') ? 'selected' : '' ?>>Juridica</option>
                         <option <?= ($c_tipo == 'Física') ? 'selected' : '' ?>>Física</option>
                     </select>
                 </div>
-                <label class="col-sm-2 col-form-label">CNPJ/CPF</label>
+                <label class="col-sm-2 col-form-label">CNPJ/CPF  (*)</label>
                 <div class="col-sm-2">
                     <input type="text" maxlength="18" class="form-control" name="cnpj_cpf" placeholder="somente números" value="<?php echo $c_cnpj_cpf; ?>">
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Contato</label>
+                <label class="col-sm-3 col-form-label">Contato  (*)</label>
                 <div class="col-sm-6">
                     <input type="text" maxlength="100" class="form-control" name="contato" value="<?php echo $c_contato; ?>">
                 </div>
             </div>
-            <hr>
-
-
-
+           
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Insc. Estadual</label>
                 <div class="col-sm-2">
@@ -259,9 +238,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
 
             </div>
 
-            <hr>
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Fone I</label>
+                <label class="col-sm-3 col-form-label">Fone I  (*)</label>
                 <div class="col-sm-2">
                     <input type="tel" onkeyup="handlePhone(event)" maxlength="20" id="fone1" class="form-control" name="fone1" value="<?php echo $c_fone1; ?>">
                 </div>
@@ -343,7 +321,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Site</label>
                 <div class="col-sm-6">
-                    <input type="text" maxlength="120" id="url" class="form-control col-xs-12" name="url">
+                    <input type="text" maxlength="120" id="url" class="form-control col-xs-12" name="url" value="<?php echo $c_url; ?>">
                 </div>
             </div>
 

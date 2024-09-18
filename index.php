@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if ($c_login == 'Glaison') {
         $_SESSION["newsession"] = "gop";
         $_SESSION['c_usuario'] = $c_login;
+        $_SESSION['tipo'] = $registro['tipo'];
         header('location: /gop/menu.php');
     }
     if ($c_linha['achou'] == 0) {

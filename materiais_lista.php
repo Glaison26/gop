@@ -81,7 +81,7 @@ include_once "lib_gop.php";
         </div>
     </div>
     <br>
-    <div class="container -my5">
+    <div class="container-fluid">
 
         <a class="btn btn-success btn-sm" href="/gop/materiais_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>

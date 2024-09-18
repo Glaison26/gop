@@ -65,16 +65,18 @@
 
      <body class="sb-nav-fixed">
          <main>
+         <hr>
              <div class="panel">
-                 <div class="panel-heading text-center text-info">
+                 <div class="panel-heading text-center text-primary">
                      <br>
                      <h1><img Align="left" style="width:100px" class="img-responsive" src="\gop\imagens\img_gop.jpg">
                          <strong>Gestão Operacional</strong>
                      </h1>
-                     <br>
+                     
                  </div>
 
              </div>
+             <hr>
              <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-blue ftco-navbar-light" id="ftco-navbar">
                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                      <span class="fa fa-bars">Menu</span>
@@ -120,7 +122,7 @@
                              <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Administrativo</a>
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
                                  <a class='dropdown-item' href='/gop/pops_lista.php'><img src='\gop\images\degraus.png' alt='20' height='20'> Cadastro de POP</a>
-                                 <a class='dropdown-item' href='/gop/checklist_lista.php'><img src='\gop\images\checklist.png alt='20 height='20'> Cadastro de Cheklist</a>
+                                 <a class='dropdown-item' href='/gop/checklist_lista.php'><img src='\gop\images\checklist.png' alt='20' height='20'> Cadastro de Cheklist</a>
                                  <a class='dropdown-item' href='/gop/ocorrencias_lista.php'><img src='\gop\images\incidente.png' alt='20' height='20'> Ocorrências Padrões</a>
 
                              </div>
@@ -189,7 +191,7 @@
                     require('cards_menu.php');
                 }
                ?>
-             <hr>
+             
 
          </main>
 

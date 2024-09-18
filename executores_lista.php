@@ -79,7 +79,7 @@ include("links.php");
     </div>
 
 
-    <div class="container -my5">
+    <div class="container-fluid">
         <br>
         <a class="btn btn-success btn-sm" href="/gop/executores_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
