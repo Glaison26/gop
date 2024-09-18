@@ -40,6 +40,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         $c_espaco = $registro_espaco['descricao'];
     }
 
+    // sql para pegar ocorrencia
+
+    $i_ocorrencia = $registro['id_ocorrencia'];
+    $c_sql_ocorrencia = "Select id, descricao from ocorrencias where id='$i_ocorrencia'";
+    $result_ocorrencia = $conection->query($c_sql_ocorrencia);
+    $registro_ocorrencia = $result_ocorrencia->fetch_assoc();
+    $c_ocorrencia = $registro_ocorrencia['descricao'];
+
+
     // sql para pegar o responsável
     $c_responsavel = $registro['id_responsavel'];
     $c_sql_responsavel = "Select id,nome from usuarios where id='$c_responsavel'";
@@ -86,6 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $c_valor_material = $registro['valor_material'];
     $c_valor_servico = $registro['valor_servico'];
     $c_status = $registro['status'];
+    
     if ($c_status == 'A') {
         $c_status = 'Aberta';
     } else {
@@ -156,11 +166,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $c_valor_servico = $_POST['valor_servico'];
     $c_valor_material = $_POST['valor_material'];
     $c_descritivo = $_POST['descritivo'];
+
     if (!is_numeric($c_valor_servico))
         $c_valor_servico = 0;
     if (!is_numeric($c_valor_material))
         $c_valor_material = 0;
-    
+
     do {
         // sql para atualizar regitro da os
         $c_sql = "Update ordens" .
@@ -291,6 +302,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                             </div>";
                             }
                             ?>
+                        </div>
+                        <br>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Ocorrência</label>
+                            <div class="col-sm-6">
+                                <input readonly type="text" maxlength="50" class="form-control" name="ocorrencia" value="<?php echo $c_ocorrencia; ?>">
+                            </div>
                         </div>
                         <br>
                         <div class="row mb-3">

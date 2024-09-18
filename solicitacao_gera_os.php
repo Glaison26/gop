@@ -56,13 +56,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $c_tipo_corretiva = $registro_solicitacao['tipo']; // preventiva(normal) ou urgencia
     $c_descritivo = $_POST['descritivo'];
     $c_descricao = $registro_solicitacao['descricao'];
+    // data de inicio
+    $d_data_inicio = new DateTime($_POST['data_inicio']);
+    $d_data_inicio = $d_data_inicio->format('Y-m-d');
+    $d_hora_inicio = new DateTime($_POST['hora_inicio']);
+    $d_hora_inicio = $d_hora_inicio->format('H:i');
+
     $d_data_previsao = new DateTime($_POST['data_sla']);
     $d_data_previsao = $d_data_previsao->format('Y-m-d');
     $d_hora_previsao =  new DateTime($_POST['hora_sla']);
     $d_hora_previsao = $d_hora_previsao->format('H:i');
     $i_id_ocorrencia = $registro_solicitacao['id_ocorrencia'];
-    echo $descritivo;
-    die();
+    //echo $descritivo;
+    
     do {
         // verificos se solicitação está aberta. Se não não deixo gerar ordem de serviço
         if ($registro_solicitacao['status'] <> 'A') {
@@ -73,11 +79,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // monto sql
         $c_sql = "Insert into ordens (id_solicitante,id_responsavel, id_setor, id_recurso
              , id_espaco, id_oficina, tipo, tipo_ordem, tipo_corretiva, descritivo
-             , descricao, data_geracao, hora_geracao, data_previsao, hora_previsao, status, id_solicitacao, id_ocorrencia) 
+             , descricao, data_geracao, hora_geracao, data_previsao, hora_previsao, status, id_solicitacao, id_ocorrencia, data_inicio, hora_inicio) 
              value ('$i_id_solicitante', '$i_responsavel','$i_id_setor', '$i_id_recurso', 
              '$i_id_espaco', '$i_id_oficina', '$c_tipo', '$c_tipo_ordem', '$c_tipo_corretiva',
              '$c_descritivo', '$c_descricao', '$d_data_geracao', '$d_hora_geracao', 
-             '$d_data_previsao', '$d_hora_previsao', 'A', '$i_id ', $i_id_ocorrencia) ";
+             '$d_data_previsao', '$d_hora_previsao', 'A', '$i_id ', '$i_id_ocorrencia', '$d_data_inicio','$d_hora_inicio') ";
         $result = $conection->query($c_sql);
         // mudo status da solicitacao que gerou a ordem de serviços
         $c_sql = "Update solicitacao SET status = 'E' where id='$i_id'";

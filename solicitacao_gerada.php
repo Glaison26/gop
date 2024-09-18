@@ -33,16 +33,16 @@ if (!$result) {
             <h5>Conclusão de abertura de Solicitação de Serviço<h5>
         </div>
     </div>
-   
 
-    <div class="container-my5">
+
+    <div class="container -my5">
         <div class='alert alert-info' role='alert'>
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
             </div>
-            <h3>Solicitação de serviço No. <?php echo $solicitacao?> foi gerada com sucesso!  Clique em encerrar para voltar ao menu.</h3>
+            <h3>Solicitação de serviço No. <?php echo $solicitacao ?> foi gerada com sucesso! Clique em encerrar para voltar ao menu.</h3>
         </div>
-      
+
         <a class="btn btn btn-success" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Encerrar</a>
     </div>
 </body>

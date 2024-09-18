@@ -54,10 +54,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         //$d_data_abertura = $d_data_abertura->format('Y-m-d');
         // gravar informações 
-        $c_sql = "Insert into solicitacao (id_setor, id_solicitante,id_recursos, data_abertura, hora_abertura, 
-                status, classificacao,tipo,descricao, id_recurso, id_recurso) value ('$i_setor', '$i_solicitante', '$i_id_recurso', '$d_data_abertura', 
-                '$c_agora', 'A', 'R', '$c_tipo', '$c_descricao', $i_ocorrencia)";
-        //echo $c_sql;
+        $c_sql = "Insert into solicitacao (id_setor, id_solicitante, data_abertura, hora_abertura, 
+                status, classificacao,tipo,descricao,  id_ocorrencia, id_recursos) value ('$i_setor', '$i_solicitante', '$d_data_abertura', 
+                '$c_agora', 'A', 'R', '$c_tipo', '$c_descricao', '$i_ocorrencia', '$i_id_recurso')";
+        echo $c_sql;
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
         if (!$result) {
