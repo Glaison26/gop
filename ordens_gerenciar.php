@@ -25,32 +25,35 @@ $i_id = $_GET['id'];
 <div class="content">
 
     <body>
-    <div class="container -my5">
-    
-        <div class="panel panel-primary class">
-            <div class="panel-heading text-center">
-                <h4>GOP - Gestão Operacional</h4>
-                <h5>Gerenciamento da Ordem de Serviço<h5>
-            </div>
-        </div>
-
-
-        <div class='alert alert-info' role='alert'>
+        <div class="container ">
             <div style="padding-left:15px;">
-                <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
+                <div class="panel panel-primary class">
+                    <div class="panel-heading text-center">
+                        <h4>GOP - Gestão Operacional</h4>
+                        <h5>Gerenciamento da Ordem de Serviço<h5>
+                    </div>
+                </div>
             </div>
-            <h5>Clique na opção desejada das ações ou itens anexos a Ordem de serviço <?php echo $i_id; ?></h5>
+            <div style="padding-left:15px;">
+
+                <div class='alert alert-info' role='alert'>
+
+                    <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
+                    <h5>Clique na opção desejada das ações ou itens anexos a Ordem de serviço <?php echo $i_id; ?></h5>
+                </div>
+               
+            </div>
         </div>
-</div>
+
 </div>
 <!-- The sidebar -->
 <div class="container -fluid">
     <div class="sidebar">
         <a href="#"></a>
-        <a title='Abertura de Solicitação de Serviço' href='/gop/solicitacao.php'><img src="\gop\images\contato.png" alt="" width="30" height="30"><span> Concluir</span></a>
-        <a title='Ordens de Serviço' href='/gop/ordens.php'><img src='\gop\images\ordem.png' alt='' width='30' height='30'><span> Suspender</span></a>
-        <a title='Alterar Senha' href='\gop\alterasenha.php'><img src="\gop\images\trocasenha.png" alt="" width="30" height="30"><span> Cancelar</span></a>
-        <a title='Sair do Sistema' href='\gop\index.php'><img src="\gop\images\saida.png" alt="" width="30" height="30"></a><span> Materiais</span>
+        <a title='Abertura de Solicitação de Serviço' href='/gop/solicitacao.php'><img src="\gop\images\contato.png" alt="" width="30" height="30"><span></span></a>
+        <a title='Ordens de Serviço' href='/gop/ordens.php'><img src='\gop\images\ordem.png' alt='' width='30' height='30'><span></span></a>
+        <a title='Alterar Senha' href='\gop\alterasenha.php'><img src="\gop\images\trocasenha.png" alt="" width="30" height="30"><span></span></a>
+        <a title='Sair do Sistema' href='\gop\index.php'><img src="\gop\images\saida.png" alt="" width="30" height="30"></a><span></span>
     </div>
 </div>
 
@@ -68,7 +71,7 @@ $i_id = $_GET['id'];
     /* Style the sidebar - fixed full height */
     .sidebar {
         height: 100%;
-        width: 150px;
+        width: 70px;
         position: fixed;
         z-index: 1;
         top: 0;
