@@ -5,7 +5,7 @@ if (!isset($_SESSION['newsession'])) {
 }
 
 //echo $c_sql_recurso;
-include('links2.php');
+include('links.php');
 include('conexao.php');
 
 $i_id = $_GET['id'];
@@ -68,19 +68,19 @@ $i_id = $_GET['id'];
                 <!-- aba de executores-->
                 <div role="tabpanel" class="tab-pane" id="executores">
                     <div style="padding-top:15px;padding-left:20px;">
-                        <p>executores</p>
+                        <?php include('ordens_executores.php')?>
                     </div>
                 </div>
                 <!-- aba de POP-->
                 <div role="tabpanel" class="tab-pane" id="pop">
                     <div style="padding-top:15px;padding-left:20px;">
-                        <p>pop</p>
+                        <?php include('ordens_pop.php'); ?>
                     </div>
                 </div>
                  <!-- aba de checklist-->
                  <div role="tabpanel" class="tab-pane" id="checklist">
                     <div style="padding-top:15px;padding-left:20px;">
-                        <p>checklist</p>
+                        <?php include('ordens_check.php'); ?>
                     </div>
                 </div>
                  <!-- aba de plano de ação-->

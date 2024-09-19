@@ -5,12 +5,11 @@
 
 include_once "lib_gop.php";
 $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
-
 ?>
 
 <script>
     $(document).ready(function() {
-        $('.tabmateriais').DataTable({
+        $('.tabexecutores').DataTable({
             // 
             "iDisplayLength": -1,
             "order": [1, 'asc'],
@@ -46,29 +45,24 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
                     '<option value="50">50</option>' +
                     '<option value="-1">Todos</option>' +
                     '</select> Registros'
-
             }
-
         });
 
     });
 </script>
 
-
 <div class="container-fluid">
-
-    <a class="btn btn-success btn-sm" href="#"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
-
-
+    <br>
+    <a class="btn btn-success btn-sm" href="/gop/executores_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
     <hr>
-    <table class="table table display table-bordered tabmateriais">
+    <table class="table display table-bordered tabexecutores">
         <thead class="thead">
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">Material</th>
-                <th scope="col">Qtd.</th>
-                <th scope="col">Unidade</th>
-                <th scope="col">Valor</th>
+                <th scope="col">Código</th>
+                <th scope="col">Executor</th>
+                <th scope="col">Duração</th>
+                <th scope="col">Valor Hora</th>
+                <th scope="col">Valor Total</th>
                 <th scope="col">Opções</th>
             </tr>
         </thead>
@@ -76,11 +70,11 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
             <?php
 
             // faço a Leitura da tabela com sql
-            $c_sql = "SELECT ordens_materiais.id, materiais.descricao as material, unidades.abreviatura as unidade, ordens_materiais.quantidade,
-                    ordens_materiais.valor FROM ordens_materiais
-                    JOIN materiais ON ordens_materiais.id_material=materiais.id
-                    JOIN unidades ON ordens_materiais.id_unidade=unidades.id
-                    WHERE ordens_materiais.id_ordem='$i_id'";
+            $c_sql = "SELECT ordens_executores.id, executores.nome, ordens_executores.tempo_horas, ordens_executores.tempo_minutos,
+             ordens_executores.valor_hora, ordens_executores.valor_total
+                    FROM ordens_executores
+            JOIN executores ON ordens_executores.id_executor=executores.id
+            WHERE ordens_executores.id_ordem='$i_id'";
             $result = $conection->query($c_sql);
             // verifico se a query foi correto
             if (!$result) {
@@ -89,17 +83,19 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
 
             // insiro os registro do banco de dados na tabela 
             while ($c_linha = $result->fetch_assoc()) {
-                
-                $c_custo = $formatter->formatCurrency($c_linha['valor'], 'BRL');
+                $c_duracao = $c_linha['tempo_horas'].':'.$c_linha['tempo_minutos'].'hs.';
+                $c_valor_hora  = $formatter->formatCurrency($c_linha['valor_hora'], 'BRL');
+                $c_valor_total = $formatter->formatCurrency($c_linha['valor_total'], 'BRL');
                 echo "
                     <tr class='info'>
                     <td>$c_linha[id]</td>
-                    <td>$c_linha[material]</td>
-                    <td>$c_linha[quantidade]</td>
-                    <td>$c_linha[unidade]</td>
-                    <td style='text-align: right;'>$c_custo</td>
+                    <td>$c_linha[nome]</td>
+                    <td>$c_duracao</td>
+                    <td style='text-align: right;'>$c_valor_hora</td>
+                    <td style='text-align: right;'>$c_valor_total</td>
+                                       
                     <td>
-                    <a class='btn btn-secondary btn-sm' href='/gop/materiais_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                    <a class='btn btn-secondary btn-sm' href='/gop/executores_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
