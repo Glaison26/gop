@@ -405,11 +405,32 @@ CREATE TABLE IF NOT EXISTS `ordens` (
   CONSTRAINT `FK_ordens_usuarios_2` FOREIGN KEY (`id_responsavel`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.ordens: ~3 rows (aproximadamente)
+-- Copiando dados para a tabela gop.ordens: ~15 rows (aproximadamente)
 REPLACE INTO `ordens` (`id`, `id_solicitante`, `id_responsavel`, `id_setor`, `id_recurso`, `id_espaco`, `id_oficina`, `data_entrada`, `hora_entrada`, `data_inicio`, `hora_inicio`, `data_conclucao`, `hora_conclusao`, `data_garantia`, `data_entrega`, `hora_entrega`, `data_saida`, `previsao_Horas`, `previsao_minutos`, `tipo`, `numero_nota`, `conclusao`, `valor_material`, `valor_servico`, `tipo_ordem`, `tipo_corretiva`, `tipo_preventiva`, `descritivo`, `mau_uso`, `situacao`, `motivo_naoconformidade`, `data_emissao`, `descricao`, `data_geracao`, `hora_geracao`, `data_previsao`, `hora_previsao`, `status`, `id_solicitacao`, `id_ocorrencia`) VALUES
 	(24, 16, 16, 3, 1, 0, 3, NULL, NULL, '2024-09-18', '08:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, NULL, 'C', 'P', NULL, 'formatação ', NULL, NULL, NULL, NULL, _binary 0x466f6d617461c3a7c3a36f, '2024-09-18', '16:33:00', '2024-09-20', '17:00:00', 'A', 32, 2),
 	(25, 16, 16, 1, 0, 1, 1, NULL, NULL, '2024-09-18', '16:35:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'E', NULL, NULL, NULL, NULL, 'C', 'P', NULL, 'tomadas', NULL, NULL, NULL, NULL, _binary 0x746f6d61646173, '2024-09-18', '16:35:00', '2024-09-19', '08:00:00', 'A', 33, 3),
 	(26, 16, 16, 3, 0, 0, 3, NULL, NULL, '2024-09-18', '09:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'V', NULL, NULL, NULL, NULL, 'C', 'P', NULL, 'criação de email', NULL, NULL, NULL, NULL, _binary 0x43726961c3a7c3a36f20646520636f6e746120646520656d61696c20207465737465407361626172612e636f6d2e6272, '2024-09-18', '16:37:00', '2024-09-18', '09:30:00', 'A', 34, 5);
+
+-- Copiando estrutura para tabela gop.ordens_materiais
+CREATE TABLE IF NOT EXISTS `ordens_materiais` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_ordem` int DEFAULT NULL,
+  `id_material` int DEFAULT NULL,
+  `id_unidade` int DEFAULT NULL,
+  `quantidade` float DEFAULT NULL,
+  `valor` float DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_ordens_materiais_materiais` (`id_material`),
+  KEY `FK_ordens_materiais_unidades` (`id_unidade`),
+  KEY `FK_ordens_materiais_ordens` (`id_ordem`),
+  CONSTRAINT `FK_ordens_materiais_materiais` FOREIGN KEY (`id_material`) REFERENCES `materiais` (`id`),
+  CONSTRAINT `FK_ordens_materiais_ordens` FOREIGN KEY (`id_ordem`) REFERENCES `ordens` (`id`),
+  CONSTRAINT `FK_ordens_materiais_unidades` FOREIGN KEY (`id_unidade`) REFERENCES `unidades` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Copiando dados para a tabela gop.ordens_materiais: ~1 rows (aproximadamente)
+REPLACE INTO `ordens_materiais` (`id`, `id_ordem`, `id_material`, `id_unidade`, `quantidade`, `valor`) VALUES
+	(1, 24, 2, 8, 10, 150);
 
 -- Copiando estrutura para tabela gop.pops
 CREATE TABLE IF NOT EXISTS `pops` (

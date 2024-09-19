@@ -21,48 +21,87 @@ $i_id = $_GET['id'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
-
-<div class="content">
-
-    <body>
-        <div class="container ">
-            <div style="padding-left:15px;">
-                <div class="panel panel-primary class">
-                    <div class="panel-heading text-center">
-                        <h4>GOP - Gestão Operacional</h4>
-                        <h5>Gerenciamento da Ordem de Serviço<h5>
-                    </div>
-                </div>
-            </div>
-            <div style="padding-left:15px;">
-
-                <div class='alert alert-info' role='alert'>
-
-                    <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
-                    <h5>Clique na opção desejada das ações ou itens anexos a Ordem de serviço <?php echo $i_id; ?></h5>
-                </div>
-               
-            </div>
-        </div>
-
-</div>
 <!-- The sidebar -->
 <div class="container -fluid">
     <div class="sidebar">
-        <a href="#"></a>
-        <a title='Abertura de Solicitação de Serviço' href='/gop/solicitacao.php'><img src="\gop\images\contato.png" alt="" width="30" height="30"><span></span></a>
-        <a title='Ordens de Serviço' href='/gop/ordens.php'><img src='\gop\images\ordem.png' alt='' width='30' height='30'><span></span></a>
-        <a title='Alterar Senha' href='\gop\alterasenha.php'><img src="\gop\images\trocasenha.png" alt="" width="30" height="30"><span></span></a>
-        <a title='Sair do Sistema' href='\gop\index.php'><img src="\gop\images\saida.png" alt="" width="30" height="30"></a><span></span>
+
+        <a title='Voltar' href='\gop\ordens_lista.php'><img src="\gop\images\saida.png" alt="" width="20" height="25"><span> Voltar</span></a>
+        <a title='Concluir Ordem de Serviço' href='/gop/solicitacao.php'><img src="\gop\images\concluir.png" alt="" width="20" height="25"><span> Concluir</span></a>
+        <a title='Suspender Ordem de Serviço' href='/gop/ordens.php'><img src='\gop\images\aguardado.png' alt='' width='20' height='25'><span> Suspender</span></a>
+        <a title='Cancelar Ordem de Serviço' href='\gop\alterasenha.php'><img src="\gop\images\cancelar.png" alt="" width="20" height="25"><span> Cancelar</span></a>
+
     </div>
 </div>
 
+<body>
+    <div class="content">
+        <div class="container -fluid">
+
+            <div class="panel panel-primary class">
+                <div class="panel-heading text-center">
+                    <h4>GOP - Gestão Operacional</h4>
+                    <h5>Gerenciamento da Ordem de Serviço<h5>
+                </div>
+            </div>
+            <div class='alert alert-info' role='alert'>
+                <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
+                <h5>Clique na opção desejada das ações ou itens anexos a Ordem de serviço <?php echo $i_id; ?></h5>
+            </div>
+            <!-- abas de itens de os -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#materiais" aria-controls="materiais" role="tab" data-toggle="tab">Materiais Gastos</a></li>
+                <li role="presentation"><a href="#executores" aria-controls="executores" role="tab" data-toggle="tab">Executores</a></li>
+                <li role="presentation"><a href="#pop" aria-controls="pop" role="tab" data-toggle="tab">POP</a></li>
+                <li role="presentation"><a href="#checklist" aria-controls="checklist" role="tab" data-toggle="tab">Check Lists</a></li>
+                <li role="presentation"><a href="#plano" aria-controls="plano" role="tab" data-toggle="tab">Plano de Ação</a></li>
+                <li role="presentation"><a href="#ferramenta" aria-controls="ferramenta" role="tab" data-toggle="tab">Ferramentas</a></li>
+
+            </ul>
+            <div class="tab-content">
+                <!-- aba da materiais gastos-->
+                <div role="tabpanel" class="tab-pane active" id="materiais">
+                    <div style="padding-top:15px;padding-left:20px;">
+                       <?php include('ordens_materiais.php'); ?>
+                         
+                    </div>
+                </div>
+                <!-- aba de executores-->
+                <div role="tabpanel" class="tab-pane" id="executores">
+                    <div style="padding-top:15px;padding-left:20px;">
+                        <p>executores</p>
+                    </div>
+                </div>
+                <!-- aba de POP-->
+                <div role="tabpanel" class="tab-pane" id="pop">
+                    <div style="padding-top:15px;padding-left:20px;">
+                        <p>pop</p>
+                    </div>
+                </div>
+                 <!-- aba de checklist-->
+                 <div role="tabpanel" class="tab-pane" id="checklist">
+                    <div style="padding-top:15px;padding-left:20px;">
+                        <p>checklist</p>
+                    </div>
+                </div>
+                 <!-- aba de plano de ação-->
+                 <div role="tabpanel" class="tab-pane" id="plano">
+                    <div style="padding-top:15px;padding-left:20px;">
+                        <p>plano de acao</p>
+                    </div>
+                </div>
+                 <!-- aba de plano de ação-->
+                 <div role="tabpanel" class="tab-pane" id="ferramenta">
+                    <div style="padding-top:15px;padding-left:20px;">
+                        <p>ferramentas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 </body>
 
-
-
-
-</body>
 
 </html>
 
@@ -71,7 +110,7 @@ $i_id = $_GET['id'];
     /* Style the sidebar - fixed full height */
     .sidebar {
         height: 100%;
-        width: 70px;
+        width: 120px;
         position: fixed;
         z-index: 1;
         top: 0;
@@ -85,7 +124,7 @@ $i_id = $_GET['id'];
     .sidebar a {
         padding: 6px 8px 6px 16px;
         text-decoration: none;
-        font-size: 15px;
+        font-size: 14px;
         color: #F5F5F5;
         display: block;
     }
@@ -109,7 +148,7 @@ $i_id = $_GET['id'];
         }
 
         .sidebar a {
-            font-size: 18px;
+            font-size: 12px;
         }
     }
 </style>

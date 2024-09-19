@@ -179,147 +179,146 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                 <!--<a class="btn btn btn-sm" href="#"><img src="\gop\images\eraser.png" alt="" width="25" height="25"> Limpar pesquisa</a> -->
                 <a class="btn btn btn-sm" href="\gop\menu.php"><img src="\gop\images\voltar.png" alt="" width="25" height="25"> Voltar</a>
             </div>
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="text-center">Opções para pesquisa</h5>
+
+            <div class="panel panel-light class">
+                <div class="panel-heading text-center">
+                    <h4>Opções de Consulta<h4>
                 </div>
+            </div>
+            <div class="row mb-3">
 
-                <div class="row mb-3">
-                    <div style="padding-top:15px;">
-                        <div style="padding-left:15px;">
-                            <div class="form-check col-sm-4">
-                                <label class="form-check-label col-form-label">Fora de SLA</label>
-                                <div class="col-sm-2">
-                                    <input class="form-check-input" type="checkbox" value="S" name="chk_sla" id="chk_sla">
-                                </div>
-                            </div>
-                        </div>
-
-                        <label class="col-md-2 form-label">No. da Ordem</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" name="numero" id="numero">
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="row mb-3">
-                    <div style="padding-top:15px;">
-                        <label class="col-md-2 form-label">De</label>
-                        <div class="col-sm-2">
-                            <input type="Date" class="form-control" name="data1" id="data1" value='<?php echo date("Y-m-d"); ?>' onkeypress="mascaraData(this)">
-                        </div>
-                        <label class="col-md-2 form-label">até</label>
-                        <div class="col-sm-2">
-                            <input type="Date" class="form-control" name="data2" id="data2" value='<?php echo date("Y-m-d"); ?>' onkeypress="mascaraData(this)">
-                        </div>
-
-                    </div>
-                   
-                </div>
-
-                <div class="row mb-3">
-
-                    <label class="col-sm-2 col-form-label">Solicitante </label>
-                    <div class="col-sm-3">
-                        <select class="form-select form-select-lg mb-3" id="solicitante" name="solicitante">
-                            <option>Todos</option>
-                            <?php
-                            // select da tabela de solicitantes
-                            $c_sql_sol = "SELECT usuarios.id, usuarios.nome FROM usuarios ORDER BY usuarios.nome";
-                            $result_sol = $conection->query($c_sql_sol);
-                            while ($c_linha = $result_sol->fetch_assoc()) {
-                                echo "  
-                          <option>$c_linha[nome]</option>
-                        ";
-                            }
-                            ?>
-                        </select>
-                    </div>
-                    <label class="col-sm-1 col-form-label">Setor </label>
-                    <div class="col-sm-3">
-                        <select class="form-select form-select-lg mb-3" id="setor" name="setor">
-                            <option>Todos</option>
-                            <?php
-                            // select da tabela de setores
-                            $c_sql_setor = "SELECT setores.id, setores.descricao FROM setores ORDER BY setores.descricao";
-                            $result_setor = $conection->query($c_sql_setor);
-                            while ($c_linha = $result_setor->fetch_assoc()) {
-                                echo "  
-                          <option>$c_linha[descricao]</option>
-                        ";
-                            }
-                            ?>
-                        </select>
-                    </div>
-
-                </div>
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">Oficina </label>
-                    <div class="col-sm-3">
-                        <select class="form-select form-select-lg mb-3" id="oficina" name="oficina">
-                            <option>Todas</option>
-                            <?php
-                            // select da tabela de setores
-                            $c_sql_setor = "SELECT oficinas.id, oficinas.descricao FROM oficinas ORDER BY oficinas.descricao";
-                            $result_setor = $conection->query($c_sql_setor);
-                            while ($c_linha = $result_setor->fetch_assoc()) {
-                                echo "  
-                          <option>$c_linha[descricao]</option>
-                        ";
-                            }
-                            ?>
-                        </select>
-                    </div>
-                    <label class="col-sm-1 col-form-label">Tipo</label>
+                <div class="form-check col-sm-4">
+                    <label class="form-check-label col-form-label">Fora de SLA</label>
                     <div class="col-sm-2">
-                        <select onchange="verifica(value)" class="form-select form-select-lg mb-3" id="tipo" name="tipo" value="<?php echo $c_tipo; ?>">
-                            <option value="0">Todas</option>
-                            <option value="1">Corretiva</option>
-                            <option value="2">Preventiva</option>
-                        </select>
+                        <input class="form-check-input" type="checkbox" value="S" name="chk_sla" id="chk_sla">
                     </div>
                 </div>
 
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">Tipo Corretiva</label>
-                    <div class="col-sm-2">
-                        <select disabled class="form-select form-select-lg mb-3" id="tipo_corretiva" name="tipo_corretiva" value="<?php echo $c_tipo_corretiva; ?>">
-                            <option>Todos</option>
-                            <option>Programada</option>
-                            <option>Urgênte</option>
-                        </select>
-                    </div>
-                    <label class="col-sm-2 col-form-label">Tipo Preventiva</label>
-                    <div class="col-sm-2">
-                        <select disabled class="form-select form-select-lg mb-3" id="tipo_preventiva" name="tipo_preventiva" value="<?php echo $c_tipo_preventiva; ?>">
-                            <option>Todas</option>
-                            <option>Rotina</option>
-                            <option>Preditiva</option>
-                            <option>Sistematica</option>
-                        </select>
-                    </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label class="col-md-2 form-label">Descritivo</label>
-                    <div class="col-sm-7">
-                        <input type="text" class="form-control" name="descritivo" id="descritivo">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">Status</label>
-                    <div class="col-sm-2">
-                        <select class="form-select form-select-lg mb-3" id="status" name="status" value="<?php echo $c_status; ?>">
-                            <option>Todos</option>
-                            <option>Aberta</option>
-                            <option>Concluída</option>
-                        </select>
-                    </div>
+                <label class="col-md-2 form-label">No. da Ordem</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" name="numero" id="numero">
                 </div>
             </div>
 
-        </form>
+            <div class="row mb-3">
+
+                <label class="col-md-2 form-label">De</label>
+                <div class="col-sm-3">
+                    <input type="Date" class="form-control" name="data1" id="data1" value='<?php echo date("Y-m-d"); ?>' onkeypress="mascaraData(this)">
+                </div>
+                <label class="col-md-1 form-label">até</label>
+                <div class="col-sm-3">
+                    <input type="Date" class="form-control" name="data2" id="data2" value='<?php echo date("Y-m-d"); ?>' onkeypress="mascaraData(this)">
+                </div>
+
+            </div>
+
+
+
+            <div class="row mb-3">
+
+                <label class="col-sm-2 col-form-label">Solicitante </label>
+                <div class="col-sm-3">
+                    <select class="form-select form-select-lg mb-3" id="solicitante" name="solicitante">
+                        <option>Todos</option>
+                        <?php
+                        // select da tabela de solicitantes
+                        $c_sql_sol = "SELECT usuarios.id, usuarios.nome FROM usuarios ORDER BY usuarios.nome";
+                        $result_sol = $conection->query($c_sql_sol);
+                        while ($c_linha = $result_sol->fetch_assoc()) {
+                            echo "  
+                          <option>$c_linha[nome]</option>
+                        ";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <label class="col-sm-1 col-form-label">Setor </label>
+                <div class="col-sm-3">
+                    <select class="form-select form-select-lg mb-3" id="setor" name="setor">
+                        <option>Todos</option>
+                        <?php
+                        // select da tabela de setores
+                        $c_sql_setor = "SELECT setores.id, setores.descricao FROM setores ORDER BY setores.descricao";
+                        $result_setor = $conection->query($c_sql_setor);
+                        while ($c_linha = $result_setor->fetch_assoc()) {
+                            echo "  
+                          <option>$c_linha[descricao]</option>
+                        ";
+                        }
+                        ?>
+                    </select>
+                </div>
+
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Oficina </label>
+                <div class="col-sm-3">
+                    <select class="form-select form-select-lg mb-3" id="oficina" name="oficina">
+                        <option>Todas</option>
+                        <?php
+                        // select da tabela de setores
+                        $c_sql_setor = "SELECT oficinas.id, oficinas.descricao FROM oficinas ORDER BY oficinas.descricao";
+                        $result_setor = $conection->query($c_sql_setor);
+                        while ($c_linha = $result_setor->fetch_assoc()) {
+                            echo "  
+                          <option>$c_linha[descricao]</option>
+                        ";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <label class="col-sm-1 col-form-label">Tipo</label>
+                <div class="col-sm-2">
+                    <select onchange="verifica(value)" class="form-select form-select-lg mb-3" id="tipo" name="tipo" value="<?php echo $c_tipo; ?>">
+                        <option value="0">Todas</option>
+                        <option value="1">Corretiva</option>
+                        <option value="2">Preventiva</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Tipo Corretiva</label>
+                <div class="col-sm-2">
+                    <select disabled class="form-select form-select-lg mb-3" id="tipo_corretiva" name="tipo_corretiva" value="<?php echo $c_tipo_corretiva; ?>">
+                        <option>Todos</option>
+                        <option>Programada</option>
+                        <option>Urgênte</option>
+                    </select>
+                </div>
+                <label class="col-sm-2 col-form-label">Tipo Preventiva</label>
+                <div class="col-sm-2">
+                    <select disabled class="form-select form-select-lg mb-3" id="tipo_preventiva" name="tipo_preventiva" value="<?php echo $c_tipo_preventiva; ?>">
+                        <option>Todas</option>
+                        <option>Rotina</option>
+                        <option>Preditiva</option>
+                        <option>Sistematica</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-md-2 form-label">Descritivo</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" name="descritivo" id="descritivo">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Status</label>
+                <div class="col-sm-3">
+                    <select class="form-select form-select-lg mb-3" id="status" name="status" value="<?php echo $c_status; ?>">
+                        <option>Todos</option>
+                        <option>Aberta</option>
+                        <option>Concluída</option>
+                    </select>
+                </div>
+            </div>
+    </div>
+
+
+    </form>
     </div>
 
 
