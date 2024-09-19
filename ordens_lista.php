@@ -232,7 +232,7 @@ include('conexao.php');
                                     <td>
                                         <a class='btn btn-secondary btn-sm' href='/gop/ordens_editar.php?id=$c_linha[id]'>
                                         <span class='glyphicon glyphicon-pencil'></span> Editar</a>
-                                        <a class='btn btn-success btn-sm' href='/gop/ordens_anexos.php?id=$c_linha[id]'>
+                                        <a class='btn btn-success btn-sm' href='/gop/ordens_gerenciar.php?id=$c_linha[id]'>
                                         <img src='\gop\images\gerenciamento.png' alt='' width='23' height='18'> Gerenciar</a>
                                     </td>
 
@@ -291,8 +291,8 @@ include('conexao.php');
                                     
                                     <td>
                                         <a class='btn btn-secondary btn-sm' href='/gop/ordens_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
-                                        <a class='btn btn-success btn-sm' href='/gop/ordens_anexos.php?id=$c_linha[id]'>
-                                        <img src='\gop\images\anexo.png' alt='' width='15' height='20'> Anexos</a>
+                                        <a class='btn btn-success btn-sm' href='/gop/ordens_gerenciar.php?id=$c_linha[id]'>
+                                        <img src='\gop\images\gerenciamento.png' alt='' width='23' height='18'> Gerenciar</a>
                                     
                                     </td>
 
@@ -350,8 +350,8 @@ include('conexao.php');
                                     
                                     <td>
                                         <a class='btn btn-secondary btn-sm' href='/gop/ordens_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
-                                       <a class='btn btn-success btn-sm' href='/gop/ordens_anexos.php?id=$c_linha[id]'>
-                                        <img src='\gop\images\anexo.png' alt='' width='15' height='20'> Anexos</a>
+                                      <a class='btn btn-success btn-sm' href='/gop/ordens_gerenciar.php?id=$c_linha[id]'>
+                                        <img src='\gop\images\gerenciamento.png' alt='' width='23' height='18'> Gerenciar</a>
                                      
                                     </td>
 

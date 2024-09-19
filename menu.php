@@ -60,39 +60,39 @@
          <a title='Sair do Sistema' href='\gop\index.php'><img src="\gop\images\saida.png" alt="" width="30" height="30"></a>
      </div>
  </div>
+ <div class="content">
+     <div class="container -my5">
 
- <div class="container -my5">
-
-     <body class="sb-nav-fixed">
-         <main>
-         <hr>
-             <div class="panel">
-                 <div class="panel-heading text-center text-primary">
-                     <br>
-                     <h1><img Align="left" style="width:100px" class="img-responsive" src="\gop\imagens\img_gop.jpg">
-                         <strong>Gestão Operacional</strong>
-                     </h1>
-                     
-                 </div>
-
-             </div>
-             <hr>
-             <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-blue ftco-navbar-light" id="ftco-navbar">
-                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                     <span class="fa fa-bars">Menu</span>
-                 </button>
-                 <div class="collapse navbar-collapse" id="ftco-nav">
-                     <div class="navbar-header">
+         <body class="sb-nav-fixed">
+             <main>
+                 <hr>
+                 <div class="panel">
+                     <div class="panel-heading text-center text-primary">
                          <br>
-                         <div style="padding-left:15px;">
-                             <!--<img Align="left" src="\gop\images\inicio.png" alt="" width="40" height="40">-->
-                         </div>
+                         <h1><img Align="left" style="width:100px" class="img-responsive" src="\gop\imagens\img_gop.jpg">
+                             <strong>Gestão Operacional</strong>
+                         </h1>
+
                      </div>
 
-                     <ul class="navbar-nav ml-auto">
-                         <?php
-                            if ($_SESSION['tipo'] <> 'Solicitante') {
-                                echo "<li class='nav-item dropdown'>
+                 </div>
+                 <hr>
+                 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-blue ftco-navbar-light" id="ftco-navbar">
+                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                         <span class="fa fa-bars">Menu</span>
+                     </button>
+                     <div class="collapse navbar-collapse" id="ftco-nav">
+                         <div class="navbar-header">
+                             <br>
+                             <div style="padding-left:15px;">
+                                 <!--<img Align="left" src="\gop\images\inicio.png" alt="" width="40" height="40">-->
+                             </div>
+                         </div>
+
+                         <ul class="navbar-nav ml-auto">
+                             <?php
+                                if ($_SESSION['tipo'] <> 'Solicitante') {
+                                    echo "<li class='nav-item dropdown'>
                              <!-- Opções de cadastro do menu -->
                              <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup= true' aria-expanded='false'>Cadastros</a>
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
@@ -127,16 +127,16 @@
 
                              </div>
                          </li>";
-                            }
-                            ?>
+                                }
+                                ?>
 
-                         <li class="nav-item dropdown">
-                             <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Serviços</a>
-                             <div class="dropdown-menu" aria-labelledby="dropdown01">
-                                 <a class="dropdown-item" href="/gop/solicitacao.php"><img src="\gop\images\contato.png" alt="20" height="20"> Solicitações de Serviços</a>
-                                 <?php
-                                    if ($_SESSION['tipo'] <> 'Solicitante') {
-                                        echo "<a class='dropdown-item' href='/gop/ordens.php'><img src='\gop\images\ordem.png' alt='20' height='20'> Ordens de Serviços</a>
+                             <li class="nav-item dropdown">
+                                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Serviços</a>
+                                 <div class="dropdown-menu" aria-labelledby="dropdown01">
+                                     <a class="dropdown-item" href="/gop/solicitacao.php"><img src="\gop\images\contato.png" alt="20" height="20"> Solicitações de Serviços</a>
+                                     <?php
+                                        if ($_SESSION['tipo'] <> 'Solicitante') {
+                                            echo "<a class='dropdown-item' href='/gop/ordens.php'><img src='\gop\images\ordem.png' alt='20' height='20'> Ordens de Serviços</a>
                                   <a class='dropdown-item' href=#'><img src='\gop\images\preventivo.png' alt='20' height='20'> Preventivas </a>
                              </div>
                          </li>
@@ -150,53 +150,54 @@
                                  <a class='dropdown-item' href=''><img src='\gop\images\dispensa.png' alt='20' height=20> Dispensações</a>
                              </div>
                          </li>";
-                                    }
-                                    ?>
-                         <li class='nav-item dropdown'>
-                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Usuários</a>
-                             <div class='dropdown-menu' aria-labelledby='dropdown01'>
-                                 <?php
-                                    if ($_SESSION['tipo'] <> 'Solicitante') {
-                                        echo "<a class='dropdown-item' href='/gop/usuarios_lista.php'><img src='\gop\images\usuario.png' alt='20' height='20'> Cadastro de Usuários</a>
+                                        }
+                                        ?>
+                             <li class='nav-item dropdown'>
+                                 <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Usuários</a>
+                                 <div class='dropdown-menu' aria-labelledby='dropdown01'>
+                                     <?php
+                                        if ($_SESSION['tipo'] <> 'Solicitante') {
+                                            echo "<a class='dropdown-item' href='/gop/usuarios_lista.php'><img src='\gop\images\usuario.png' alt='20' height='20'> Cadastro de Usuários</a>
                                  <a class='dropdown-item' href=''><img src='\gop\images\acessos.png' alt='20' height='20'> Perfis de Usuários</a>";
-                                    }
-                                    ?>
-                                 <a class='dropdown-item' href=''><img src='\gop\images\trocasenha.png' alt='20' height='20'>Troca de Senha</a>
-                             </div>
-                         </li>
+                                        }
+                                        ?>
+                                     <a class='dropdown-item' href=''><img src='\gop\images\trocasenha.png' alt='20' height='20'>Troca de Senha</a>
+                                 </div>
+                             </li>
 
-                     </ul>
-                 </div>
-
-             </nav>
-
-             <div class="container">
-
-                 <div class="panel default class">
-
-                     <div class="alert alert-success">
-                         <?php
-                            date_default_timezone_set('America/Sao_Paulo');
-                            $agora = date('d/m/Y H:i');
-                            ?>
-                         <strong>Login efetuado! - </strong>Bem vindo <?php echo ' ' . $_SESSION['c_usuario'] . ' - ' . $agora . ' '; ?>
-                         <label for="usuario"></label>
+                         </ul>
                      </div>
+
+                 </nav>
+
+                 <div class="container">
+
+                     <div class="panel default class">
+
+                         <div class="alert alert-success">
+                             <?php
+                                date_default_timezone_set('America/Sao_Paulo');
+                                $agora = date('d/m/Y H:i');
+                                ?>
+                             <strong>Login efetuado! - </strong>Bem vindo <?php echo ' ' . $_SESSION['c_usuario'] . ' - ' . $agora . ' '; ?>
+                             <label for="usuario"></label>
+                         </div>
+                     </div>
+
                  </div>
-
-             </div>
-             <br><br><br>
-             <?php
-                if ($_SESSION['tipo'] <> 'Solicitante') {
-                    require('cards_menu.php');
-                }
-               ?>
-             
-
-         </main>
+                 <br><br><br>
+                 <?php
+                    if ($_SESSION['tipo'] <> 'Solicitante') {
+                        require('cards_menu.php');
+                    }
+                    ?>
 
 
-     </body>
+             </main>
+
+
+         </body>
+     </div>
  </div>
 
  </html>

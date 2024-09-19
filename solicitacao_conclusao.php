@@ -4,41 +4,41 @@ if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
 include("conexao.php");
-include('lib_gop.php');
 include("links2.php");
-// pego id do recurso selecionado na página anterior
-$i_id_recurso = $_GET["id"];
-// sql para pegar nome
-$c_sql = "SELECT recursos.id, recursos.descricao FROM recursos where recursos.id='$i_id_recurso'";
-$result = $conection->query($c_sql);
-$registro = $result->fetch_assoc();
-$c_recurso = $registro['descricao'];
+
+if ($_SESSION['tiposolicitacao'] == 'R') { // recurso fisico
+    // pego id do recurso selecionado na página anterior
+    $i_id_recurso = $_GET["id"];
+    // sql para pegar nome
+    $c_sql = "SELECT recursos.id, recursos.descricao FROM recursos where recursos.id='$i_id_recurso'";
+    $result = $conection->query($c_sql);
+    $registro = $result->fetch_assoc();
+    $c_recurso = $registro['descricao'];
+}
+if ($_SESSION['tiposolicitacao'] == 'E') {  // espaço físico
+    // pego id do recurso selecionado na página anterior
+    $i_id_espaco = $_GET["id"];
+    // sql para pegar nome
+    $c_sql = "SELECT espacos.id, espacos.descricao FROM espacos where espacos.id='$i_id_espaco'";
+    $result = $conection->query($c_sql);
+    $registro = $result->fetch_assoc();
+    $c_espaco = $registro['descricao'];
+}
+
 $c_solicitacao = "";
 
 // inclusão da solicitação no banco de dados
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // procuro setor selecionado
-    $c_setor = $_POST['setor'];
-    $c_sql_setor = "Select id from setores where descricao='$c_setor'";
-    $result_setor = $conection->query($c_sql_setor);
-    $registro_setor = $result_setor->fetch_assoc();
-    $i_setor = $registro_setor['id'];
+
     // procuro solicitante
     $c_solicitante = $_SESSION['c_usuario'];
-    $c_sql_solicitante = "Select id, email from usuarios where login='$c_solicitante'";
+    $c_sql_solicitante = "Select id,email from usuarios where login='$c_solicitante'";
     $result_solicitante = $conection->query($c_sql_solicitante);
     $registro_solicitante = $result_solicitante->fetch_assoc();
     $i_solicitante = $registro_solicitante['id'];
     $c_email = $registro_solicitante['email'];
-    // select da tabela de ocorrencia
-    $c_ocorrencia = $_POST['ocorrencia'];
-    $c_sql_ocorrencia = "SELECT ocorrencias.id, ocorrencias.descricao FROM ocorrencias where descricao='$c_ocorrencia'";
-    $result_ocorrencia = $conection->query($c_sql_ocorrencia);
-    $c_linha = $result_ocorrencia->fetch_assoc();
-    $i_ocorrencia = $c_linha['id'];
 
-    //$c_email = 'teste de email';
     // tipo da solicitação
     if ($_POST['tipo'] == "Programada") {
         $c_tipo = "P";
@@ -50,13 +50,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $d_data_abertura =   date("Y-m-d");
     $c_agora = date('H:i');
     $c_descricao = $_POST['solicitacao'];
+    $msg_erro = "";
     do {
 
+        if (($_POST['ocorrencia'] == '') || ($_POST['setor'] == '') || ($_POST['tipo'] == '') || ($_POST['solicitacao'] == '')) {
+            $msg_erro = 'Todos os campos devem selecionados e preenchidos!!';
+            break;
+        }
+        // procuro setor selecionado
+        $c_setor = $_POST['setor'];
+        $c_sql_setor = "Select id from setores where descricao='$c_setor'";
+        $result_setor = $conection->query($c_sql_setor);
+        $registro_setor = $result_setor->fetch_assoc();
+        $i_setor = $registro_setor['id'];
+        // select da tabela de ocorrencia
+        $c_ocorrencia = $_POST['ocorrencia'];
+        $c_sql_ocorrencia = "SELECT ocorrencias.id, ocorrencias.descricao FROM ocorrencias where descricao='$c_ocorrencia'";
+        $result_ocorrencia = $conection->query($c_sql_ocorrencia);
+        $c_linha = $result_ocorrencia->fetch_assoc();
+        $i_ocorrencia = $c_linha['id'];
         //$d_data_abertura = $d_data_abertura->format('Y-m-d');
         // gravar informações 
-        $c_sql = "Insert into solicitacao (id_setor, id_solicitante, data_abertura, hora_abertura, 
-                status, classificacao,tipo,descricao,  id_ocorrencia, id_recursos) value ('$i_setor', '$i_solicitante', '$d_data_abertura', 
-                '$c_agora', 'A', 'R', '$c_tipo', '$c_descricao', '$i_ocorrencia', '$i_id_recurso')";
+        if ($_SESSION['tiposolicitacao'] == 'V') { // avulso
+            $c_sql = "Insert into solicitacao (id_setor, id_solicitante, data_abertura, hora_abertura, 
+                status, classificacao,tipo,descricao,id_ocorrencia) value ('$i_setor', '$i_solicitante',  '$d_data_abertura', 
+                '$c_agora', 'A', 'V', '$c_tipo', '$c_descricao', $i_ocorrencia)";
+        }
+        if ($_SESSION['tiposolicitacao'] == 'R') { // recurso fisico
+            $c_sql = "Insert into solicitacao (id_setor, id_solicitante, data_abertura, hora_abertura, 
+            status, classificacao,tipo,descricao,  id_ocorrencia, id_recursos) value ('$i_setor', '$i_solicitante', '$d_data_abertura', 
+            '$c_agora', 'A', 'R', '$c_tipo', '$c_descricao', '$i_ocorrencia', '$i_id_recurso')";
+        }
+        if ($_SESSION['tiposolicitacao'] == 'E') { // espaço fisico
+            $c_sql = "Insert into solicitacao (id_setor, id_solicitante,id_espaco, data_abertura, hora_abertura, 
+            status, classificacao,tipo,descricao, id_ocorrencia) value ('$i_setor', '$i_solicitante', '$i_id_espaco', '$d_data_abertura', 
+            '$c_agora', 'A', 'E', '$c_tipo', '$c_descricao', $i_ocorrencia)";
+        }
         echo $c_sql;
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
@@ -76,6 +105,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             include('email_gop.php');
         }
         header('location: /gop/solicitacao_gerada.php?id_recurso=$i_id_recurso');
+
+
+
+        //header('location: /gop/menu.php');
     } while (false);
 }
 ?>
@@ -94,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
-            <h5>Conclusão de abertura de Solicitação de Serviço para Recurso Físico<h5>
+            <h5>Conclusão de abertura de Solicitação de Serviço<h5>
         </div>
     </div>
 
@@ -103,20 +136,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
             </div>
-            <h5>Digite as informações da solicitação para o Recurso selecionado e Clique em finalizar para gravar a solicitação. Todos os Campos são obrigatórios</h5>
+            <h5>Digite as informações da solicitação e Clique em finalizar para gravar a solicitação. Todos os Campos são obrigatórios</h5>
         </div>
-        <form method="post">
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Recurso Selecionado</label>
-                <div class="col-sm-7">
-                    <input type="text" readonly="120" class="form-control" name="descricao" value="<?php echo $c_recurso; ?>">
-                </div>
+        <?php
+        if (!empty($msg_erro)) {
+            echo "
+            <div class='alert alert-warning' role='alert'>
+                
+                <h3><img Align='left' src='\gop\images\aviso.png' alt='30' height='35'><span>&nbsp;&nbsp;&nbsp; $msg_erro</span></h3>
             </div>
+            ";
+        }
+        ?>
+        <form method="post">
+
 
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Tipo de Solicitação</label>
                 <div class="col-sm-2">
                     <select class="form-select form-select-lg mb-3" id="tipo" name="tipo" value="<?php echo $c_tipo; ?>">
+                        <option></option>
                         <option>Programada</option>
                         <option>Urgência</option>
 
@@ -125,6 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label class="col-sm-2 col-form-label">Setor </label>
                 <div class="col-sm-3">
                     <select class="form-select form-select-lg mb-3" id="setor" name="setor">
+                        <option></option>
                         <?php
                         // select da tabela de setores
                         $c_sql_setor = "SELECT setores.id, setores.descricao FROM setores ORDER BY setores.descricao";
@@ -136,18 +176,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         }
                         ?>
                     </select>
-
                 </div>
+
             </div>
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Ocorrencia </label>
                 <div class="col-sm-7">
                     <select class="form-select form-select-lg mb-3" id="ocorrencia" name="ocorrencia">
+                        <option></option>
                         <?php
                         // select da tabela de ocorrencia
-                        $c_sql_ocorrencia = "SELECT ocorrencias.id, ocorrencias.descricao FROM ocorrencias ORDER BY ocorrencias.descricao";
-                        $result_ocorrencia = $conection->query($c_sql_ocorrencia);
-                        while ($c_linha = $result_ocorrencia->fetch_assoc()) {
+                        $c_sql_setor = "SELECT ocorrencias.id, ocorrencias.descricao FROM ocorrencias ORDER BY ocorrencias.descricao";
+                        $result_setor = $conection->query($c_sql_setor);
+                        while ($c_linha = $result_setor->fetch_assoc()) {
                             echo "  
                           <option>$c_linha[descricao]</option>
                         ";
@@ -171,7 +212,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <div class="offset-sm-0 col-sm-3">
                     <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Finalizar</button>
-                    <a class='btn btn' href='/gop/solicitacao_nova_recurso_pesquisa.php'><img src="\gop\images\voltar.png" alt="" width="25" height="25"> Voltar</a>
+                    <a class='btn btn' href='/gop/solicitacao_nova.php'><img src="\gop\images\voltar.png" alt="" width="25" height="25"> Voltar</a>
                 </div>
             </div>
         </form>
