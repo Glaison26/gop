@@ -8,6 +8,8 @@ if (!isset($_SESSION['newsession'])) {
 include("conexao.php");
 include("links.php");
 
+$_SESSION['tiposolicitacao'] ='R'; 
+
 // faço a Leitura da tabela de recursos com sql
 if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  // botão para executar sql de pesquisa de recursos
     $c_pesquisa = $_POST['pesquisa'];
@@ -91,7 +93,7 @@ Pagina da rotina para selecionar o recurso da solicitação
 <script>
     function conclusao(id) {
 
-        window.location.href = "/gop/solicitacao_recurso_conclusao.php?id=" + id;
+        window.location.href = "/gop/solicitacao_conclusao.php?id=" + id;
     }
 </script>
 

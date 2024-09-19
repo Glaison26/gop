@@ -3,6 +3,7 @@ session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
+$_SESSION['tiposolicitacao'] = 'V';
 include("conexao.php");
 include("links2.php");
 ?>
@@ -67,7 +68,7 @@ include("links2.php");
                             <img src="\gop\images\ordem.png" height="140px" class="card-img-top" alt="...">
                             <div class="card-body">Solicitação de Serviço Avulsa</div>
                             <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a href="solicitacao_avulso_conclusao.php" class="btn btn-primary">Clique aqui</a>
+                                <a href="solicitacao_conclusao.php" class="btn btn-primary">Clique aqui</a>
                                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                             </div>
                         </div>
