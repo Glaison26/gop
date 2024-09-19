@@ -80,7 +80,7 @@ $i_id = $_GET['id'];
                  <!-- aba de checklist-->
                  <div role="tabpanel" class="tab-pane" id="checklist">
                     <div style="padding-top:15px;padding-left:20px;">
-                        <?php include('ordens_check.php'); ?>
+                        <?php // include('ordens_check.php'); ?>
                     </div>
                 </div>
                  <!-- aba de plano de ação-->
