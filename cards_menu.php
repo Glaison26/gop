@@ -7,7 +7,14 @@
             <div class="card-body">
 
                 <p class="card-text">
-                    <img src="\gop\images\alerta.png" alt="25" height="25">
+                    <?php
+                    if ($c_solicitacao_aberta > 0) {
+                        echo "<img src='\gop\images\alerta.png' alt='25' height='25'>";
+                    } else {
+                        echo "<img src='\gop\images\certo.png' alt='25' height='25'>";
+                    }
+                    ?>
+
                 <h4><strong> Existem <?php echo $c_solicitacao_aberta; ?> Solicitações registradas como abertas</strong></h4>
                 </p>
                 <a href="/gop/chama_solicitacoes_menu.php" class="btn btn-primary">Clique para Visualizar</a>

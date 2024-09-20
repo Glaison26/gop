@@ -61,14 +61,14 @@ $i_id = $_GET['id'];
                 <!-- aba da materiais gastos-->
                 <div role="tabpanel" class="tab-pane active" id="materiais">
                     <div style="padding-top:15px;padding-left:20px;">
-                       <?php include('ordens_materiais.php'); ?>
-                         
+                        <?php include('ordens_materiais.php'); ?>
+
                     </div>
                 </div>
                 <!-- aba de executores-->
                 <div role="tabpanel" class="tab-pane" id="executores">
                     <div style="padding-top:15px;padding-left:20px;">
-                        <?php include('ordens_executores.php')?>
+                        <?php include('ordens_executores.php') ?>
                     </div>
                 </div>
                 <!-- aba de POP-->
@@ -77,22 +77,22 @@ $i_id = $_GET['id'];
                         <?php include('ordens_pop.php'); ?>
                     </div>
                 </div>
-                 <!-- aba de checklist-->
-                 <div role="tabpanel" class="tab-pane" id="checklist">
+                <!-- aba de checklist-->
+                <div role="tabpanel" class="tab-pane" id="checklist">
                     <div style="padding-top:15px;padding-left:20px;">
-                        <?php // include('ordens_check.php'); ?>
+                        <?php include('ordens_check.php'); ?>
                     </div>
                 </div>
-                 <!-- aba de plano de ação-->
-                 <div role="tabpanel" class="tab-pane" id="plano">
+                <!-- aba de plano de ação-->
+                <div role="tabpanel" class="tab-pane" id="plano">
                     <div style="padding-top:15px;padding-left:20px;">
                         <p>plano de acao</p>
                     </div>
                 </div>
-                 <!-- aba de plano de ação-->
-                 <div role="tabpanel" class="tab-pane" id="ferramenta">
+                <!-- aba de plano de ação-->
+                <div role="tabpanel" class="tab-pane" id="ferramenta">
                     <div style="padding-top:15px;padding-left:20px;">
-                        <p>ferramentas</p>
+                        <?php include('ordens_ferramentas.php'); ?>
                     </div>
                 </div>
             </div>
@@ -101,6 +101,8 @@ $i_id = $_GET['id'];
     </div>
 
 </body>
+
+
 
 
 </html>

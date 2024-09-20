@@ -1,22 +1,12 @@
-<?php
-///////////////////////////////////////////////////////////////////////
-// arquivo de include com tabela de materiais de ordem de serviço
-///////////////////////////////////////////////////////////////////////
-
-include_once "lib_gop.php";
-$formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
-
-?>
-
 <script>
     $(document).ready(function() {
-        $('.tabmateriais').DataTable({
+        $('.tabferramentas').DataTable({
             // 
             "iDisplayLength": -1,
             "order": [1, 'asc'],
             "aoColumnDefs": [{
                 'bSortable': false,
-                'aTargets': [5]
+                'aTargets': [3]
             }, {
                 'aTargets': [0],
                 "visible": false
@@ -46,42 +36,35 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
                     '<option value="50">50</option>' +
                     '<option value="-1">Todos</option>' +
                     '</select> Registros'
-
             }
-
         });
 
     });
 </script>
 
-
 <div class="container-fluid">
-    <div class="panel panel-info class">
-        <div class="panel-heading">
-            <a class="btn btn-success" href="\gop\ordens_materiais_inclusao.php?id=<?php echo $i_id?><span class="glyphicon glyphicon-plus></span> Incluir</a>
-        </div>
-    </div>
+    <br>
+    <a class="btn btn-success btn-sm" href="/gop/ferramentas_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
     <hr>
-    <table class="table table display table-bordered tabmateriais">
+    <table class="table display table-hover  table-condensed tabferramentas">
         <thead class="thead">
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">Material</th>
-                <th scope="col">Qtd.</th>
-                <th scope="col">Unidade</th>
-                <th scope="col">Valor</th>
+                <th scope="col">Código</th>
+                <th scope="col">Descrição</th>
+                <th scope="col">Marca</th>
+                <th scope="col">Patrimônio</th>
                 <th scope="col">Opções</th>
             </tr>
         </thead>
         <tbody>
             <?php
-
             // faço a Leitura da tabela com sql
-            $c_sql = "SELECT ordens_materiais.id, materiais.descricao as material, unidades.abreviatura as unidade, ordens_materiais.quantidade,
-                    ordens_materiais.valor FROM ordens_materiais
-                    JOIN materiais ON ordens_materiais.id_material=materiais.id
-                    JOIN unidades ON ordens_materiais.id_unidade=unidades.id
-                    WHERE ordens_materiais.id_ordem='$i_id'";
+            $c_sql = "SELECT ordens_ferramentas.id, ferramentas.descricao, ferramentas.patrimonio, marcas.descricao AS marca FROM ordens_ferramentas
+                    JOIN ferramentas ON ordens_ferramentas.id_ferramenta=ferramentas.id
+                    JOIN marcas ON ferramentas.id_marca = marcas.id
+                    WHERE ordens_ferramentas.id_ordem='$i_id'
+                    ORDER BY ferramentas.descricao";
+
             $result = $conection->query($c_sql);
             // verifico se a query foi correto
             if (!$result) {
@@ -91,16 +74,15 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
             // insiro os registro do banco de dados na tabela 
             while ($c_linha = $result->fetch_assoc()) {
 
-                $c_custo = $formatter->formatCurrency($c_linha['valor'], 'BRL');
                 echo "
                     <tr class='info'>
                     <td>$c_linha[id]</td>
-                    <td>$c_linha[material]</td>
-                    <td>$c_linha[quantidade]</td>
-                    <td>$c_linha[unidade]</td>
-                    <td style='text-align: right;'>$c_custo</td>
+                    <td>$c_linha[descricao]</td>
+                    <td>$c_linha[marca]</td>
+                    <td>$c_linha[patrimonio]</td>
+                               
                     <td>
-                    <a class='btn btn-secondary btn-sm' href='/gop/materiais_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                    <a class='btn btn-secondary btn-sm' href='/gop/ferramentas_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
@@ -111,4 +93,3 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
         </tbody>
     </table>
 </div>
-
