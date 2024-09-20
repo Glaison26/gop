@@ -411,6 +411,22 @@ REPLACE INTO `ordens` (`id`, `id_solicitante`, `id_responsavel`, `id_setor`, `id
 	(25, 16, 16, 1, 0, 1, 1, NULL, NULL, '2024-09-18', '16:35:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'E', NULL, NULL, NULL, NULL, 'C', 'P', NULL, 'tomadas', NULL, NULL, NULL, NULL, _binary 0x746f6d61646173, '2024-09-18', '16:35:00', '2024-09-19', '08:00:00', 'A', 33, 3),
 	(26, 16, 16, 3, 0, 0, 3, NULL, NULL, '2024-09-18', '09:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'V', NULL, NULL, NULL, NULL, 'C', 'P', NULL, 'criação de email', NULL, NULL, NULL, NULL, _binary 0x43726961c3a7c3a36f20646520636f6e746120646520656d61696c20207465737465407361626172612e636f6d2e6272, '2024-09-18', '16:37:00', '2024-09-18', '09:30:00', 'A', 34, 5);
 
+-- Copiando estrutura para tabela gop.ordens_check
+CREATE TABLE IF NOT EXISTS `ordens_check` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_ordem` int DEFAULT NULL,
+  `id_check` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_ordens_check_ordens` (`id_ordem`),
+  KEY `FK_ordens_check_checklist` (`id_check`),
+  CONSTRAINT `FK_ordens_check_checklist` FOREIGN KEY (`id_check`) REFERENCES `checklist` (`id`),
+  CONSTRAINT `FK_ordens_check_ordens` FOREIGN KEY (`id_ordem`) REFERENCES `ordens` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Copiando dados para a tabela gop.ordens_check: ~0 rows (aproximadamente)
+REPLACE INTO `ordens_check` (`id`, `id_ordem`, `id_check`) VALUES
+	(1, 24, 1);
+
 -- Copiando estrutura para tabela gop.ordens_executores
 CREATE TABLE IF NOT EXISTS `ordens_executores` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -431,6 +447,22 @@ CREATE TABLE IF NOT EXISTS `ordens_executores` (
 REPLACE INTO `ordens_executores` (`id`, `id_ordem`, `id_executor`, `tempo_horas`, `tempo_minutos`, `valor_hora`, `valor_total`) VALUES
 	(2, 24, 6, 2, 30, 15.899999618530273, 1500);
 
+-- Copiando estrutura para tabela gop.ordens_ferramentas
+CREATE TABLE IF NOT EXISTS `ordens_ferramentas` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_ordem` int DEFAULT NULL,
+  `id_ferramenta` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_ordens_ferramentas_ordens` (`id_ordem`),
+  KEY `FK_ordens_ferramentas_ferramentas` (`id_ferramenta`),
+  CONSTRAINT `FK_ordens_ferramentas_ferramentas` FOREIGN KEY (`id_ferramenta`) REFERENCES `ferramentas` (`id`),
+  CONSTRAINT `FK_ordens_ferramentas_ordens` FOREIGN KEY (`id_ordem`) REFERENCES `ordens` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Copiando dados para a tabela gop.ordens_ferramentas: ~1 rows (aproximadamente)
+REPLACE INTO `ordens_ferramentas` (`id`, `id_ordem`, `id_ferramenta`) VALUES
+	(1, 24, 6);
+
 -- Copiando estrutura para tabela gop.ordens_materiais
 CREATE TABLE IF NOT EXISTS `ordens_materiais` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -448,7 +480,7 @@ CREATE TABLE IF NOT EXISTS `ordens_materiais` (
   CONSTRAINT `FK_ordens_materiais_unidades` FOREIGN KEY (`id_unidade`) REFERENCES `unidades` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.ordens_materiais: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela gop.ordens_materiais: ~1 rows (aproximadamente)
 REPLACE INTO `ordens_materiais` (`id`, `id_ordem`, `id_material`, `id_unidade`, `quantidade`, `valor`) VALUES
 	(1, 24, 2, 8, 10, 150.5);
 
@@ -464,7 +496,7 @@ CREATE TABLE IF NOT EXISTS `ordens_pop` (
   CONSTRAINT `FK_ordens_pop_pops` FOREIGN KEY (`id_pop`) REFERENCES `pops` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.ordens_pop: ~1 rows (aproximadamente)
+-- Copiando dados para a tabela gop.ordens_pop: ~0 rows (aproximadamente)
 REPLACE INTO `ordens_pop` (`id`, `id_ordem`, `id_pop`) VALUES
 	(1, 24, 2);
 
@@ -645,7 +677,7 @@ CREATE TABLE IF NOT EXISTS `unidades` (
   `descricao` varchar(120) NOT NULL DEFAULT '0',
   `abreviatura` varchar(6) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela gop.unidades: ~7 rows (aproximadamente)
 REPLACE INTO `unidades` (`id`, `descricao`, `abreviatura`) VALUES
@@ -655,7 +687,8 @@ REPLACE INTO `unidades` (`id`, `descricao`, `abreviatura`) VALUES
 	(4, 'Hora', 'H'),
 	(5, 'Litro', 'LT'),
 	(8, 'Unidade', 'UN'),
-	(9, 'Metro Cúbico', 'M3');
+	(9, 'Metro Cúbico', 'M3'),
+	(10, 'Metro', 'm');
 
 -- Copiando estrutura para tabela gop.usuarios
 CREATE TABLE IF NOT EXISTS `usuarios` (
