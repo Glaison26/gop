@@ -7,8 +7,12 @@ if (!isset($_SESSION['newsession'])) {
 //echo $c_sql_recurso;
 include('links.php');
 include('conexao.php');
-
-$i_id = $_GET['id'];
+if (isset($_GET['id'])) {
+    $i_id = $_GET['id'];
+    $_SESSION['id_ordem'] = $i_id;
+}else {
+    $i_id= $_SESSION['id_ordem'];
+}
 ?>
 
 <!-- Front end da página -->
@@ -27,8 +31,9 @@ $i_id = $_GET['id'];
 
         <a title='Voltar' href='\gop\ordens_lista.php'><img src="\gop\images\saida.png" alt="" width="20" height="25"><span> Voltar</span></a>
         <a title='Concluir Ordem de Serviço' href='/gop/solicitacao.php'><img src="\gop\images\concluir.png" alt="" width="20" height="25"><span> Concluir</span></a>
-        <a title='Suspender Ordem de Serviço' href='/gop/ordens.php'><img src='\gop\images\aguardado.png' alt='' width='20' height='25'><span> Suspender</span></a>
         <a title='Cancelar Ordem de Serviço' href='\gop\alterasenha.php'><img src="\gop\images\cancelar.png" alt="" width="20" height="25"><span> Cancelar</span></a>
+        <a title='Suspender Ordem de Serviço' href='/gop/ordens.php'><img src='\gop\images\aguardado.png' alt='' width='20' height='25'><span> Suspender</span></a>
+        
 
     </div>
 </div>
