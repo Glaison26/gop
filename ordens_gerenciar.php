@@ -10,8 +10,8 @@ include('conexao.php');
 if (isset($_GET['id'])) {
     $i_id = $_GET['id'];
     $_SESSION['id_ordem'] = $i_id;
-}else {
-    $i_id= $_SESSION['id_ordem'];
+} else {
+    $i_id = $_SESSION['id_ordem'];
 }
 ?>
 
@@ -25,18 +25,7 @@ if (isset($_GET['id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
-<!-- The sidebar -->
-<div class="container -fluid">
-    <div class="sidebar">
 
-        <a title='Voltar' href='\gop\ordens_lista.php'><img src="\gop\images\saida.png" alt="" width="20" height="25"><span> Voltar</span></a>
-        <a title='Concluir Ordem de Serviço' href='/gop/solicitacao.php'><img src="\gop\images\concluir.png" alt="" width="20" height="25"><span> Concluir</span></a>
-        <a title='Cancelar Ordem de Serviço' href='\gop\alterasenha.php'><img src="\gop\images\cancelar.png" alt="" width="20" height="25"><span> Cancelar</span></a>
-        <a title='Suspender Ordem de Serviço' href='/gop/ordens.php'><img src='\gop\images\aguardado.png' alt='' width='20' height='25'><span> Suspender</span></a>
-        
-
-    </div>
-</div>
 
 <body>
     <div class="content">
@@ -48,6 +37,18 @@ if (isset($_GET['id'])) {
                     <h5>Gerenciamento da Ordem de Serviço<h5>
                 </div>
             </div>
+            <div style="padding-bottom :2px;">
+                <div class="topnav">
+
+                    <a title='Voltar' href='\gop\ordens_lista.php'><img src="\gop\images\voltar.png" alt="" width="20" height="25"><span> Voltar</span></a>
+                    <a title='Concluir Ordem de Serviço' href='/gop/solicitacao.php'><img src="\gop\images\concluir.png" alt="" width="20" height="25"><span> Concluir</span></a>
+                    <a title='Cancelar Ordem de Serviço' href='\gop\alterasenha.php'><img src="\gop\images\cancelar.png" alt="" width="20" height="25"><span> Cancelar</span></a>
+                    <a title='Suspender Ordem de Serviço' href='/gop/ordens.php'><img src='\gop\images\aguardado.png' alt='' width='20' height='25'><span> Suspender</span></a>
+
+
+                </div>
+            </div>
+
             <div class='alert alert-info' role='alert'>
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
                 <h5>Clique na opção desejada das ações ou itens anexos a Ordem de serviço <?php echo $i_id; ?></h5>
@@ -117,7 +118,7 @@ if (isset($_GET['id'])) {
     /* Style the sidebar - fixed full height */
     .sidebar {
         height: 100%;
-        width: 120px;
+        width: 110px;
         position: fixed;
         z-index: 1;
         top: 0;
@@ -131,7 +132,7 @@ if (isset($_GET['id'])) {
     .sidebar a {
         padding: 6px 8px 6px 16px;
         text-decoration: none;
-        font-size: 14px;
+        font-size: 12px;
         color: #F5F5F5;
         display: block;
     }
@@ -157,5 +158,35 @@ if (isset($_GET['id'])) {
         .sidebar a {
             font-size: 12px;
         }
+    }
+</style>
+
+<style>
+    /* Add a black background color to the top navigation */
+    .topnav {
+        background-color: #4682B4;
+        overflow: hidden;
+    }
+
+    /* Style the links inside the navigation bar */
+    .topnav a {
+        float: left;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+    }
+
+    /* Change the color of links on hover */
+    .topnav a:hover {
+        background-color: #4682B4;
+        color: black;
+    }
+
+    /* Add a color to the active/current link */
+    .topnav a.active {
+        background-color: #4682B4;
+        color: white;
     }
 </style>

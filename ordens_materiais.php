@@ -7,6 +7,14 @@ include_once "lib_gop.php";
 $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
 
 ?>
+<script language="Javascript">
+    function confirmacao(id) {
+        var resposta = confirm("Deseja remover esse registro?");
+        if (resposta == true) {
+            window.location.href = "/gop/ordens_materiais_excluir.php?id=" + id;
+        }
+    }
+</script>
 
 <script>
     $(document).ready(function() {
@@ -58,7 +66,7 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
 <div class="container-fluid">
     <div class="panel panel-info class">
         <div class="panel-heading">
-            <a class="btn btn-success" href="\gop\ordens_materiais_inclusao.php?id=<?php echo $i_id?><span class="glyphicon glyphicon-plus></span> Incluir</a>
+            <a class="btn btn-success" href="/gop/ordens_materiais_inclusao.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
         </div>
     </div>
     <hr>
@@ -70,6 +78,7 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
                 <th scope="col">Qtd.</th>
                 <th scope="col">Unidade</th>
                 <th scope="col">Valor</th>
+                <th scope="cod">Vlr. Total</th>
                 <th scope="col">Opções</th>
             </tr>
         </thead>
@@ -89,9 +98,14 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
             }
 
             // insiro os registro do banco de dados na tabela 
+            $c_custo_total = 0;
             while ($c_linha = $result->fetch_assoc()) {
 
                 $c_custo = $formatter->formatCurrency($c_linha['valor'], 'BRL');
+                $c_total = $c_linha['valor'] * $c_linha['quantidade'];
+                $c_total = $formatter->formatCurrency($c_total, 'BRL');
+                $c_custo_total = $c_custo_total + $c_linha['valor'] * $c_linha['quantidade'];
+
                 echo "
                     <tr class='info'>
                     <td>$c_linha[id]</td>
@@ -99,8 +113,9 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
                     <td>$c_linha[quantidade]</td>
                     <td>$c_linha[unidade]</td>
                     <td style='text-align: right;'>$c_custo</td>
+                    <td style='text-align: right;'>$c_total</td>
                     <td>
-                    <a class='btn btn-secondary btn-sm' href='/gop/materiais_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                    <a class='btn btn-secondary btn-sm' href='/gop/ordens_materiais_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
@@ -110,5 +125,9 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
             ?>
         </tbody>
     </table>
+    <div class="panel panel-primary class">
+        <div class="panel-heading">
+            <p><h5>Custo Total : <?php echo  $formatter->formatCurrency($c_custo_total, 'BRL');?></h5></p>
+        </div>
+    </div>
 </div>
-

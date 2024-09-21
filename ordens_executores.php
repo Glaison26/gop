@@ -53,7 +53,11 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
 
 <div class="container-fluid">
     <br>
-    <a class="btn btn-success btn-sm" href="/gop/executores_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
+    <div class="panel panel-info class">
+        <div class="panel-heading">
+            <a class="btn btn-success" href="/gop/ordens_executores_inclusao.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
+        </div>
+    </div>
     <hr>
     <table class="table display table-bordered tabexecutores">
         <thead class="thead">

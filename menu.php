@@ -45,27 +45,13 @@
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
  </head>
- <!-- barra lateral com opções mais utilizadas -->
- <div class="container -fluid">
-     <div class="sidebar">
-         <a href="#"></a>
-         <a title='Abertura de Solicitação de Serviço' href='/gop/solicitacao.php'><img src="\gop\images\contato.png" alt="" width="30" height="30"></a>
-         <?php
-            if ($_SESSION['tipo'] <> 'Solicitante') {
-                echo "<a title='Ordens de Serviço' href='/gop/ordens.php'><img src='\gop\images\ordem.png' alt='' width='30' height='30'></a>";
-                echo "<a title='Cadastro de Recursos Físicos' href='/gop/recursos_lista.php'><img src='\gop\images\config.png' alt='' width='30' height='30'></a>";
-            }
-            ?>
-         <a title='Alterar Senha' href='\gop\alterasenha.php'><img src="\gop\images\trocasenha.png" alt="" width="30" height="30"></a>
-         <a title='Sair do Sistema' href='\gop\index.php'><img src="\gop\images\saida.png" alt="" width="30" height="30"></a>
-     </div>
- </div>
+
  <div class="content">
      <div class="container -my5">
 
          <body class="sb-nav-fixed">
              <main>
-                 <hr>
+
                  <div class="panel">
                      <div class="panel-heading text-center text-primary">
                          <br>
@@ -76,7 +62,7 @@
                      </div>
 
                  </div>
-                 <hr>
+
                  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-blue ftco-navbar-light" id="ftco-navbar">
                      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                          <span class="fa fa-bars">Menu</span>
@@ -169,6 +155,22 @@
                      </div>
 
                  </nav>
+                 <div class="container -fluid">
+                     <div style="padding-bottom :2px;">
+                         <div class="topnav">
+                             <a href="#"></a>
+                             <a title='Abertura de Solicitação de Serviço' href='/gop/solicitacao.php'><img src="\gop\images\contato.png" alt="" width="30" height="30"></a>
+                             <?php
+                                if ($_SESSION['tipo'] <> 'Solicitante') {
+                                    echo "<a title='Ordens de Serviço' href='/gop/ordens.php'><img src='\gop\images\ordem.png' alt='' width='30' height='30'></a>";
+                                    echo "<a title='Cadastro de Recursos Físicos' href='/gop/recursos_lista.php'><img src='\gop\images\config.png' alt='' width='30' height='30'></a>";
+                                }
+                                ?>
+                             <a title='Alterar Senha' href='\gop\alterasenha.php'><img src="\gop\images\trocasenha.png" alt="" width="30" height="30"></a>
+                             <a title='Sair do Sistema' href='\gop\index.php'><img src="\gop\images\saida.png" alt="" width="30" height="30"></a>
+                         </div>
+                     </div>
+                 </div>
 
                  <div class="container">
 
@@ -247,5 +249,35 @@
          .sidebar a {
              font-size: 18px;
          }
+     }
+ </style>
+
+ <style>
+     /* Add a black background color to the top navigation */
+     .topnav {
+         background-color: #4682B4;
+         overflow: hidden;
+     }
+
+     /* Style the links inside the navigation bar */
+     .topnav a {
+         float: left;
+         color: #f2f2f2;
+         text-align: center;
+         padding: 14px 16px;
+         text-decoration: none;
+         font-size: 17px;
+     }
+
+     /* Change the color of links on hover */
+     .topnav a:hover {
+         background-color: #4682B4;
+         color: black;
+     }
+
+     /* Add a color to the active/current link */
+     .topnav a.active {
+         background-color: #4682B4;
+         color: white;
      }
  </style>

@@ -1,17 +1,17 @@
-<?php
+<?php // controle de acesso ao formulário
 session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
 
-include('links2.php');
-include('conexao.php');
+
+
+include("conexao.php");
+include("links2.php");
+include_once "lib_gop.php";
 
 $c_id = $_SESSION['id_ordem'];
-
-$c_valor = "0";
-$c_indice = '';
-$msg_erro = "";
+$i_id = $_GET["id"];
 
 if (isset($_POST['btncusto'])) {  // pegar custo do material
 
@@ -19,18 +19,39 @@ if (isset($_POST['btncusto'])) {  // pegar custo do material
     $result = $conection->query($c_sql);
     $c_linha = $result->fetch_assoc();
     $c_valor = $c_linha['custo'];
-
     $c_indice = $_POST['material'];
 }
-// inclusão do material no banco de dados
+
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no formulário
+
+    if (!isset($_GET["id"])) {
+        header('location: /gop/ordens_gerenciar.php');
+        exit;
+    }
+
+    // leitura do cliente através de sql usando id passada
+    $c_sql = "select * from ordens_materiais where id=$i_id";
+    $result = $conection->query($c_sql);
+    $registro = $result->fetch_assoc();
+
+    if (!$registro) {
+        header('location: /gop/ordens_gerenciar.php');
+        exit;
+    }
+
+    // carrego variaveis do banco de dados
+    $i_id_material = $registro['id_material'];
+    $i_id_unidade = $registro['id_unidade'];
+    $n_quantidade = $registro['quantidade'];
+    $c_valor = $registro['valor'];
+}
+// metodo post para gravação dos dados dos materiais
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
     $c_custo = $_POST['valorunitario'];
     $c_quantidade = $_POST['quantidade'];
     $c_unidade = $_POST['unidade'];
     $c_material = $_POST['material'];
 
-
-    //
     do {
         if (empty($c_material) || empty($_POST['unidade']) || empty($_POST['quantidade'])) {
             $msg_erro = "Todos os campos devem ser preencidos !!";
@@ -44,26 +65,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
         }
 
         // sql para unidade
-        $c_sql_unidade = "SELECT unidades.id, unidades.abreviatura FROM unidades
-    where unidades.abreviatura='$c_unidade'  ORDER BY unidades.abreviatura";
+        $c_sql_unidade = "SELECT unidades.id, unidades.abreviatura FROM unidades 
+    where unidades.abreviatura='$c_unidade' ORDER BY unidades.abreviatura";
         $result_unidade = $conection->query($c_sql_unidade);
         $c_linha = $result_unidade->fetch_assoc();
         $i_id_unidade = $c_linha['id'];
         $c_material = $_POST['material'];
         // sql para pegar codigo do material
         $c_sql_material = "SELECT materiais.id, materiais.descricao FROM materiais
-   where materiais.descricao = '$c_material' ORDER BY materiais.descricao";
+     where materiais.descricao = '$c_material' ORDER BY materiais.descricao";
         $result_material = $conection->query($c_sql_material);
         $c_linha = $result_material->fetch_assoc();
         $i_id_material = $c_linha['id'];
+        //
 
-        $c_sql = "Insert into ordens_materiais (id_material, id_unidade, quantidade, valor, id_ordem)
-                 Value ('$i_id_material', '$i_id_unidade', '$c_quantidade', '$c_custo','$c_id')";
+        $c_sql = "update ordens_materiais set id_material='$i_id_material', id_unidade='$i_id_unidade',
+                  quantidade='$c_quantidade', valor='$c_custo'  where id=$i_id";;
+        echo $c_sql;
         $result = $conection->query($c_sql);
         // somatório dos valores de custo de material
         $c_sql = "SELECT SUM(ordens_materiais.quantidade * ordens_materiais.valor) AS total
-                FROM ordens_materiais
-                WHERE ordens_materiais.id_ordem='$c_id'";
+         FROM ordens_materiais
+         WHERE ordens_materiais.id_ordem='$c_id'";
         $result = $conection->query($c_sql);
         $c_linha = $result->fetch_assoc();
         $c_custo_total = $c_linha['total'];
@@ -74,9 +97,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
         header('location: /gop/ordens_gerenciar.php');
     } while (false);
 }
-
-
 ?>
+<!--
+/////////////////////////////////////////////////
+//  front end do formulario
+////////////////////////////////////////////////
+-->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -93,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
                     <h4>GOP - Gestão Operacional</h4>
-                    <h5>Novo Material para Ordem de Serviço<h5>
+                    <h5>Edição do Material para Ordem de Serviço<h5>
                 </div>
             </div>
         </div>
@@ -102,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
             </div>
-            <h5>Entre com os dados do material a ser anexado a Ordem de Serviço No. <?php echo $c_id ?> Campos com (*) são obrigatórios</h5>
+            <h5>Edite os dados do material a ser anexado a Ordem de Serviço No. <?php echo $c_id ?> Campos com (*) são obrigatórios</h5>
         </div>
 
         <br>
@@ -127,12 +153,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
                     <select class="form-select form-select-lg mb-3" id="material" name="material">
 
                         <?php
-                        if ($c_indice == '')
-                            echo "<option></option>";
+
                         // select da tabela de Material
                         $c_sql_material = "SELECT materiais.id, materiais.descricao FROM materiais ORDER BY materiais.descricao";
                         $result_material = $conection->query($c_sql_material);
                         while ($c_linha = $result_material->fetch_assoc()) {
+                            $op = " ";
+                            if ($c_linha['id'] == $registro['id_material']) {
+                                $op = 'selected';
+                            }
 
                             echo "  
                           <option $op>$c_linha[descricao]</option>
@@ -165,9 +194,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
                         $c_sql_unidade = "SELECT unidades.id, unidades.abreviatura FROM unidades ORDER BY unidades.abreviatura";
                         $result_unidade = $conection->query($c_sql_unidade);
                         while ($c_linha = $result_unidade->fetch_assoc()) {
-
+                            $op = " ";
+                            if ($c_linha['id'] == $registro['id_unidade']) {
+                                $op = "selected";
+                            }
                             echo "  
-                          <option>$c_linha[abreviatura]</option>
+                          <option $op>$c_linha[abreviatura]</option>
                         ";
                         }
                         ?>
