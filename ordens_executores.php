@@ -64,7 +64,7 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
     
     <div class="panel panel-info class">
         <div class="panel-heading">
-            <a class="btn btn-success" href="/gop/ordens_executores_inclusao.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
+            <a class="btn btn-success" href="/gop/ordens_executores_inclusao.php"><span class="glyphicon glyphicon-plus"></span> Incluir Executor</a>
         </div>
     </div>
     <hr>

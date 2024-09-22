@@ -70,12 +70,48 @@ include('conexao.php');
         });
     </script>
 
+    <script type="text/javascript">
+        // Função javascript e ajax para inclusão dos dados
+
+        $(document).on('submit', '#frmadd', function(e) {
+            e.preventDefault();
+            var c_descricao = $('#pop').val();
+
+            if (c_descricao != '') {
+
+                $.ajax({
+                    url: "ordens_pop_inclusao.php",
+                    type: "post",
+                    data: {
+                        c_descricao: c_descricao
+
+                    },
+                    success: function(data) {
+                        var json = JSON.parse(data);
+                        var status = json.status;
+
+                        location.reload();
+                        if (status == 'true') {
+
+                            $('#novoModal').modal('hide');
+                            location.reload();
+                        } else {
+                            alert('falha ao incluir dados');
+                        }
+                    }
+                });
+            } else {
+                alert('Preencha todos os campos obrigatórios');
+            }
+        });
+    </script>
+
     <div class="container-fluid">
 
         <div class="panel panel-info class">
             <div class="panel-heading">
                 <button type="button" title="Inclusão de POP" class="btn btn-success" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
-                    Incluir
+                    Incluir POP
                 </button>
             </div>
         </div>
@@ -147,17 +183,14 @@ include('conexao.php');
                         <label for="add_descricaoField" class="col-md-3 form-label">Selecionar POP</label>
                         <div class="col-sm-9">
                             <select class="form-select form-select-lg mb-3" id="pop" name="pop">
-
+                                <option></option>
                                 <?php
-
                                 // select da tabela de pops
                                 $c_sql_pop = "SELECT pops.id, pops.descricao FROM pops ORDER BY pops.descricao";
                                 $result_pop = $conection->query($c_sql_pop);
                                 while ($c_linha = $result_pop->fetch_assoc()) {
 
-                                    echo "  
-                          <option $op>$c_linha[descricao]</option>
-                        ";
+                                    echo "<option $op>$c_linha[descricao]</option>";
                                 }
                                 ?>
                             </select>

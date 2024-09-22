@@ -167,7 +167,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
                 </div>
-                <h5>Clique em nova solitação para abrir uma nova solicitação de serviço ou realize uma pesquisa com as opções de pesquisa abaixo</h5>
+                <h5><?php $_SESSION['c_usuario']?>Clique em nova solitação para abrir uma nova solicitação de serviço ou realize uma pesquisa com as opções de pesquisa abaixo</h5>
             </div>
             <form method="post">
                 <div style="padding-top:5px;padding-bottom:15px">
@@ -230,10 +230,20 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     <label class="col-sm-2 col-form-label">Solicitante </label>
                     <div class="col-sm-3">
                         <select class="form-select form-select-lg mb-3" id="solicitante" name="solicitante">
-                            <option>Todos</option>
-                            <?php
+                        <?php
+                            if ($_SESSION['tipo']<>'Solicitante'){
+                            echo "<option>Todos</option>";
+                            }
+                            
                             // select da tabela de solicitantes
+                            if ($_SESSION['tipo']<>'Solicitante'){
                             $c_sql_sol = "SELECT usuarios.id, usuarios.nome FROM usuarios ORDER BY usuarios.nome";
+                            }else{
+                                $c_login=$_SESSION['c_usuario'];
+                                 $c_sql_sol = "SELECT usuarios.id, usuarios.nome FROM usuarios where usuarios.login='$c_login'
+                                 ORDER BY usuarios.nome";    
+                            }
+                           
                             $result_sol = $conection->query($c_sql_sol);
                             while ($c_linha = $result_sol->fetch_assoc()) {
                                 echo "  
