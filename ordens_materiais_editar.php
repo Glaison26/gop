@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
         $c_custo_total = $c_linha['total'];
         $c_custo_total = number_format($c_custo_total, 2, '.', ' ');
         // edito o valor de materiais gastos na ordem de serviço
-        $c_sql = "update ordens set valor_servico='$c_custo_total' where id='$c_id'";
+        $c_sql = "update ordens set valor_material='$c_custo_total' where id='$c_id'";
         $result = $conection->query($c_sql);
         header('location: /gop/ordens_gerenciar.php');
     } while (false);

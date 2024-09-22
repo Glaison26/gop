@@ -57,7 +57,7 @@ if (isset($_GET['id'])) {
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#materiais" aria-controls="materiais" role="tab" data-toggle="tab">Materiais Gastos</a></li>
                 <li role="presentation"><a href="#executores" aria-controls="executores" role="tab" data-toggle="tab">Executores</a></li>
-                <li role="presentation"><a href="#pop" aria-controls="pop" role="tab" data-toggle="tab">POP</a></li>
+                <li role="presentation"><a href="#abapop" aria-controls="abapop" role="tab" data-toggle="tab">POP</a></li>
                 <li role="presentation"><a href="#checklist" aria-controls="checklist" role="tab" data-toggle="tab">Check Lists</a></li>
                 <li role="presentation"><a href="#plano" aria-controls="plano" role="tab" data-toggle="tab">Plano de Ação</a></li>
                 <li role="presentation"><a href="#ferramenta" aria-controls="ferramenta" role="tab" data-toggle="tab">Ferramentas</a></li>
@@ -78,7 +78,7 @@ if (isset($_GET['id'])) {
                     </div>
                 </div>
                 <!-- aba de POP-->
-                <div role="tabpanel" class="tab-pane" id="pop">
+                <div role="tabpanel" class="tab-pane" id="abapop">
                     <div style="padding-top:15px;padding-left:20px;">
                         <?php include('ordens_pop.php'); ?>
                     </div>
@@ -86,19 +86,19 @@ if (isset($_GET['id'])) {
                 <!-- aba de checklist-->
                 <div role="tabpanel" class="tab-pane" id="checklist">
                     <div style="padding-top:15px;padding-left:20px;">
-                        <?php include('ordens_check.php'); ?>
+                        <?php //include('ordens_check.php'); ?>
                     </div>
                 </div>
                 <!-- aba de plano de ação-->
                 <div role="tabpanel" class="tab-pane" id="plano">
                     <div style="padding-top:15px;padding-left:20px;">
-                        <p>plano de acao</p>
+                        
                     </div>
                 </div>
                 <!-- aba de plano de ação-->
                 <div role="tabpanel" class="tab-pane" id="ferramenta">
                     <div style="padding-top:15px;padding-left:20px;">
-                        <?php include('ordens_ferramentas.php'); ?>
+                        <?php //include('ordens_ferramentas.php'); ?>
                     </div>
                 </div>
             </div>

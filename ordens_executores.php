@@ -7,6 +7,15 @@ include_once "lib_gop.php";
 $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
 ?>
 
+<script language="Javascript">
+    function confirmacao(id) {
+        var resposta = confirm("Deseja remover esse registro?");
+        if (resposta == true) {
+            window.location.href = "/gop/ordens_executores_excluir.php?id=" + id;
+        }
+    }
+</script>
+
 <script>
     $(document).ready(function() {
         $('.tabexecutores').DataTable({
@@ -52,7 +61,7 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
 </script>
 
 <div class="container-fluid">
-    <br>
+    
     <div class="panel panel-info class">
         <div class="panel-heading">
             <a class="btn btn-success" href="/gop/ordens_executores_inclusao.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
@@ -86,10 +95,12 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
             }
 
             // insiro os registro do banco de dados na tabela 
+            $c_custo_total=0;
             while ($c_linha = $result->fetch_assoc()) {
                 $c_duracao = $c_linha['tempo_horas'].':'.$c_linha['tempo_minutos'].'hs.';
                 $c_valor_hora  = $formatter->formatCurrency($c_linha['valor_hora'], 'BRL');
                 $c_valor_total = $formatter->formatCurrency($c_linha['valor_total'], 'BRL');
+                $c_custo_total = $c_custo_total + $c_linha['valor_total'];
                 echo "
                     <tr class='info'>
                     <td>$c_linha[id]</td>
@@ -99,7 +110,7 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
                     <td style='text-align: right;'>$c_valor_total</td>
                                        
                     <td>
-                    <a class='btn btn-secondary btn-sm' href='/gop/executores_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                    <a class='btn btn-secondary btn-sm' href='/gop/ordens_executores_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
@@ -109,4 +120,9 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
             ?>
         </tbody>
     </table>
+    <div class="panel panel-primary class">
+        <div class="panel-heading">
+            <p><h5>Custo Total de Serviços : <?php echo  $formatter->formatCurrency($c_custo_total, 'BRL');?></h5></p>
+        </div>
+    </div>
 </div>

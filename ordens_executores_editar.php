@@ -8,11 +8,34 @@ include('links2.php');
 include('conexao.php');
 
 $c_id = $_SESSION['id_ordem'];
-
-$c_valor = "0";
-$c_indice = '';
+$i_id = $_GET["id"];
 $msg_erro = "";
 
+
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no formulário
+
+    if (!isset($_GET["id"])) {
+        header('location: /gop/ordens_gerenciar.php');
+        exit;
+    }
+
+    // leitura do  através de sql usando id passada
+    $c_sql = "select * from ordens_executores where id=$i_id";
+    $result = $conection->query($c_sql);
+    $registro = $result->fetch_assoc();
+
+    if (!$registro) {
+        header('location: /gop/ordens_gerenciar.php');
+        exit;
+    }
+
+    // carrego variaveis do banco de dados
+    $i_id_executor = $registro['id_executor'];
+    $n_tempo_horas = $registro['tempo_horas'];
+    $n_tempo_minutos = $registro['tempo_minutos'];
+
+    $c_custo = number_format($registro['valor_hora'], 2, '.', '');
+}
 
 // inclusão do material no banco de dados
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
@@ -56,21 +79,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
         $fracao = $c_tempo_minutos / 60;
         $custo_minuto = $fracao * $c_custo;
         $valor_total = $custo_horas + $custo_minuto;
-
         //
-        $c_sql = "Insert into ordens_executores (id_executor, tempo_horas, tempo_minutos, valor_hora, valor_total, id_ordem)
-                 Value ('$i_id_executor', '$c_tempo_horas', '$c_tempo_minutos','$c_custo',' $valor_total','$c_id')";
-        $result = $conection->query($c_sql);
+        $c_sql = "update ordens_executores set id_executor='$i_id_executor', tempo_horas='$c_tempo_horas',
+                 tempo_minutos='$c_tempo_minutos', valor_hora='$c_custo', valor_total=' $valor_total'
+                 where id=$i_id";
         // somatório dos valores de custo de material
         $c_sql = "SELECT SUM(ordens_executores.valor_total) AS total
-                FROM ordens_executores
-                WHERE ordens_executores.id_ordem='$c_id'";
+        FROM ordens_executores
+        WHERE ordens_executores.id_ordem='$c_id'";
         $result = $conection->query($c_sql);
         $c_linha = $result->fetch_assoc();
         $c_custo_total = $c_linha['total'];
         //$c_custo_total = number_format($c_custo_total, 2, '.', ' ');
         // edito o valor de materiais gastos na ordem de serviço
         $c_sql = "update ordens set valor_servico='$c_custo_total' where id='$c_id'";
+        $result = $conection->query($c_sql);
+
         $result = $conection->query($c_sql);
 
         header('location: /gop/ordens_gerenciar.php');
@@ -135,7 +159,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
                         $c_sql_executor = "SELECT executores.id, executores.nome FROM executores ORDER BY executores.nome";
                         $result_executor = $conection->query($c_sql_executor);
                         while ($c_linha = $result_executor->fetch_assoc()) {
-
+                            $op = "";
+                            if ($c_linha['id'] == $registro['id_executor']) {
+                                $op = 'selected';
+                            }
                             echo "  
                           <option $op>$c_linha[nome]</option>
                         ";
@@ -159,7 +186,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
                 <label class="col-sm-2 col-form-label">Valor hora</label>
                 <div class="col-sm-3">
                     <input placeholder="valor em Real" type="text" data-thousands="." data-decimal=","
-                        data-prefix="R$ " class="form-control" id="valor_hora" name="valor_hora" value="<?php echo $c_valor ?>">
+                        data-prefix="R$ " class="form-control" id="valor_hora" name="valor_hora" value="<?php echo $c_custo ?>">
                 </div>
             </div>
             <hr>
