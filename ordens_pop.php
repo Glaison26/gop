@@ -17,7 +17,7 @@ include('conexao.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   
+
 </head>
 
 <body>
@@ -79,7 +79,7 @@ include('conexao.php');
                 </button>
             </div>
         </div>
-      
+
         <hr>
         <table class="table table display table-bordered tabpops">
             <thead class="thead">
@@ -128,49 +128,52 @@ include('conexao.php');
         </table>
     </div>
 
-    <!-- janela Modal para inclusão de registro -->
-    <div class="modal fade" class="modal-dialog modal-lg" id="novoModal" name="novoModal" tabindex="-1" role="dialog" aria-labelledby="novoModal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Inclusão de POP a Ordem de Serviço</h4>
+
+</body>
+
+<!-- janela Modal para inclusão de registro -->
+<div class="modal fade" class="modal-dialog modal-lg" id="novoModal" name="novoModal" tabindex="-1" role="dialog" aria-labelledby="novoModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Inclusão de POP a Ordem de Serviço</h4>
+            </div>
+            <div class="modal-body">
+                <div class='alert alert-warning' role='alert'>
+                    <h5>Campos com (*) são obrigatórios</h5>
                 </div>
-                <div class="modal-body">
-                    <div class='alert alert-warning' role='alert'>
-                        <h5>Campos com (*) são obrigatórios</h5>
-                    </div>
-                    <form id="frmadd" action="">
-                        <div class="mb-3 row">
-                            <label for="add_descricaoField" class="col-md-3 form-label">Selecionar POP</label>
-                            <div class="col-sm-9">
-                                <select class="form-select form-select-lg mb-3" id="pop" name="pop">
+                <form id="frmadd" action="">
+                    <div class="mb-3 row">
+                        <label for="add_descricaoField" class="col-md-3 form-label">Selecionar POP</label>
+                        <div class="col-sm-9">
+                            <select class="form-select form-select-lg mb-3" id="pop" name="pop">
 
-                                    <?php
-                                   
-                                    // select da tabela de pops
-                                    $c_sql_pop = "SELECT pops.id, pops.descricao FROM pops ORDER BY pops.descricao";
-                                    $result_pop = $conection->query($c_sql_pop);
-                                    while ($c_linha = $result_pop->fetch_assoc()) {
+                                <?php
 
-                                        echo "  
+                                // select da tabela de pops
+                                $c_sql_pop = "SELECT pops.id, pops.descricao FROM pops ORDER BY pops.descricao";
+                                $result_pop = $conection->query($c_sql_pop);
+                                while ($c_linha = $result_pop->fetch_assoc()) {
+
+                                    echo "  
                           <option $op>$c_linha[descricao]</option>
                         ";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
 
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Fechar</button>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Fechar</button>
 
-                            </div>
-                    </form>
-                </div>
-
+                    </div>
+                </form>
             </div>
+
         </div>
     </div>
-</body>
+</div>
 
 </html>
