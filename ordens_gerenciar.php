@@ -30,82 +30,85 @@ if (isset($_GET['id'])) {
 <body>
     <div class="content">
         <div class="container -fluid">
-
-            <div class="panel panel-primary class">
-                <div class="panel-heading text-center">
-                    <h4>GOP - Gestão Operacional</h4>
-                    <h5>Gerenciamento da Ordem de Serviço<h5>
+            <div style="padding-top :20px;">
+                <div class="panel panel-primary class">
+                    <div class="panel-heading text-center">
+                        <h4>GOP - Gestão Operacional</h4>
+                        <h5>Gerenciamento da Ordem de Serviço<h5>
+                    </div>
                 </div>
+                <div>
+                    <div style="padding-bottom :2px;">
+                        <div class="topnav">
+
+                            <a title='Voltar' href='\gop\ordens_lista.php'><img src="\gop\images\voltar.png" alt="" width="20" height="25"><span> Voltar</span></a>
+                            <a title='Concluir Ordem de Serviço' href='/gop/solicitacao.php'><img src="\gop\images\concluir.png" alt="" width="20" height="25"><span> Concluir</span></a>
+                            <a title='Cancelar Ordem de Serviço' href='\gop\alterasenha.php'><img src="\gop\images\cancelar.png" alt="" width="20" height="25"><span> Cancelar</span></a>
+                            <a title='Suspender Ordem de Serviço' href='/gop/ordens.php'><img src='\gop\images\aguardado.png' alt='' width='20' height='25'><span> Suspender</span></a>
+
+
+                        </div>
+                    </div>
+
+                    <div class='alert alert-info' role='alert'>
+                        <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
+                        <h5>Clique na opção desejada das ações ou itens anexos a Ordem de serviço <?php echo $i_id; ?></h5>
+                    </div>
+                    <!-- abas de itens de os -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#materiais" aria-controls="materiais" role="tab" data-toggle="tab">Materiais Gastos</a></li>
+                        <li role="presentation"><a href="#executores" aria-controls="executores" role="tab" data-toggle="tab">Executores</a></li>
+                        <li role="presentation"><a href="#abapop" aria-controls="abapop" role="tab" data-toggle="tab">POP</a></li>
+                        <li role="presentation"><a href="#checklist" aria-controls="checklist" role="tab" data-toggle="tab">Check Lists</a></li>
+                        <li role="presentation"><a href="#plano" aria-controls="plano" role="tab" data-toggle="tab">Plano de Ação</a></li>
+                        <li role="presentation"><a href="#ferramenta" aria-controls="ferramenta" role="tab" data-toggle="tab">Ferramentas</a></li>
+
+                    </ul>
+                    <div class="tab-content">
+                        <!-- aba da materiais gastos-->
+                        <div role="tabpanel" class="tab-pane active" id="materiais">
+                            <div style="padding-top:15px;padding-left:20px;">
+                                <?php include('ordens_materiais.php'); ?>
+
+                            </div>
+                        </div>
+                        <!-- aba de executores-->
+                        <div role="tabpanel" class="tab-pane" id="executores">
+                            <div style="padding-top:15px;padding-left:20px;">
+                                <?php include('ordens_executores.php') ?>
+                            </div>
+                        </div>
+                        <!-- aba de POP-->
+                        <div role="tabpanel" class="tab-pane" id="abapop">
+                            <div style="padding-top:15px;padding-left:20px;">
+                                <?php include('ordens_pop.php'); ?>
+                            </div>
+                        </div>
+                        <!-- aba de checklist-->
+                        <div role="tabpanel" class="tab-pane" id="checklist">
+                            <div style="padding-top:15px;padding-left:20px;">
+                                <p>em construção</p>
+                                <?php //include('ordens_check.php'); 
+                                ?>
+                            </div>
+                        </div>
+                        <!-- aba de plano de ação-->
+                        <div role="tabpanel" class="tab-pane" id="plano">
+                            <div style="padding-top:15px;padding-left:20px;">
+
+                            </div>
+                        </div>
+                        <!-- aba de plano de ação-->
+                        <div role="tabpanel" class="tab-pane" id="ferramenta">
+                            <div style="padding-top:15px;padding-left:20px;">
+                                <?php //include('ordens_ferramentas.php'); 
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            <div style="padding-bottom :2px;">
-                <div class="topnav">
-
-                    <a title='Voltar' href='\gop\ordens_lista.php'><img src="\gop\images\voltar.png" alt="" width="20" height="25"><span> Voltar</span></a>
-                    <a title='Concluir Ordem de Serviço' href='/gop/solicitacao.php'><img src="\gop\images\concluir.png" alt="" width="20" height="25"><span> Concluir</span></a>
-                    <a title='Cancelar Ordem de Serviço' href='\gop\alterasenha.php'><img src="\gop\images\cancelar.png" alt="" width="20" height="25"><span> Cancelar</span></a>
-                    <a title='Suspender Ordem de Serviço' href='/gop/ordens.php'><img src='\gop\images\aguardado.png' alt='' width='20' height='25'><span> Suspender</span></a>
-
-
-                </div>
-            </div>
-
-            <div class='alert alert-info' role='alert'>
-                <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
-                <h5>Clique na opção desejada das ações ou itens anexos a Ordem de serviço <?php echo $i_id; ?></h5>
-            </div>
-            <!-- abas de itens de os -->
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#materiais" aria-controls="materiais" role="tab" data-toggle="tab">Materiais Gastos</a></li>
-                <li role="presentation"><a href="#executores" aria-controls="executores" role="tab" data-toggle="tab">Executores</a></li>
-                <li role="presentation"><a href="#abapop" aria-controls="abapop" role="tab" data-toggle="tab">POP</a></li>
-                <li role="presentation"><a href="#checklist" aria-controls="checklist" role="tab" data-toggle="tab">Check Lists</a></li>
-                <li role="presentation"><a href="#plano" aria-controls="plano" role="tab" data-toggle="tab">Plano de Ação</a></li>
-                <li role="presentation"><a href="#ferramenta" aria-controls="ferramenta" role="tab" data-toggle="tab">Ferramentas</a></li>
-
-            </ul>
-            <div class="tab-content">
-                <!-- aba da materiais gastos-->
-                <div role="tabpanel" class="tab-pane active" id="materiais">
-                    <div style="padding-top:15px;padding-left:20px;">
-                        <?php include('ordens_materiais.php'); ?>
-
-                    </div>
-                </div>
-                <!-- aba de executores-->
-                <div role="tabpanel" class="tab-pane" id="executores">
-                    <div style="padding-top:15px;padding-left:20px;">
-                        <?php include('ordens_executores.php') ?>
-                    </div>
-                </div>
-                <!-- aba de POP-->
-                <div role="tabpanel" class="tab-pane" id="abapop">
-                    <div style="padding-top:15px;padding-left:20px;">
-                        <?php include('ordens_pop.php'); ?>
-                    </div>
-                </div>
-                <!-- aba de checklist-->
-                <div role="tabpanel" class="tab-pane" id="checklist">
-                    <div style="padding-top:15px;padding-left:20px;">
-                        <p>em construção</p>
-                        <?php //include('ordens_check.php'); ?>
-                    </div>
-                </div>
-                <!-- aba de plano de ação-->
-                <div role="tabpanel" class="tab-pane" id="plano">
-                    <div style="padding-top:15px;padding-left:20px;">
-                        
-                    </div>
-                </div>
-                <!-- aba de plano de ação-->
-                <div role="tabpanel" class="tab-pane" id="ferramenta">
-                    <div style="padding-top:15px;padding-left:20px;">
-                        <?php //include('ordens_ferramentas.php'); ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
 
 </body>
 

@@ -120,6 +120,7 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
             ?>
         </tbody>
     </table>
+    <hr>
     <div class="panel panel-primary class">
         <div class="panel-heading">
             <p><h5>Custo Total de Serviços : <?php echo  $formatter->formatCurrency($c_custo_total, 'BRL');?></h5></p>
