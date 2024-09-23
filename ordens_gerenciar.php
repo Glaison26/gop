@@ -29,7 +29,7 @@ if (isset($_GET['id'])) {
 
 <body>
     <div class="content">
-        <div class="container -fluid">
+        <div class="container-fluid">
             <div style="padding-top :20px;">
                 <div class="panel panel-primary class">
                     <div class="panel-heading text-center">

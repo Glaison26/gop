@@ -83,6 +83,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
         $c_sql = "update ordens_executores set id_executor='$i_id_executor', tempo_horas='$c_tempo_horas',
                  tempo_minutos='$c_tempo_minutos', valor_hora='$c_custo', valor_total=' $valor_total'
                  where id=$i_id";
+        $result = $conection->query($c_sql);
+        //echo $c_sql;
+        //die();
+
+       
         // somatório dos valores de custo de material
         $c_sql = "SELECT SUM(ordens_executores.valor_total) AS total
         FROM ordens_executores
@@ -175,11 +180,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Tempo em horas</label>
                 <div class="col-sm-2">
-                    <input type="number" class="form-control" name="tempo_horas" value="<?php echo $n_tempo_horas; ?>">
+                    <input type="number" class="form-control" id="tempo_horas" name="tempo_horas" value="<?php echo $n_tempo_horas; ?>">
                 </div>
                 <label class="col-sm-1 col-form-label">Tempo em Min.</label>
                 <div class="col-sm-2">
-                    <input type="number" class="form-control" name="tempo_minutos" value="<?php echo $n_tempo_minutos; ?>">
+                    <input type="number" class="form-control" id="tempo_minutos" name="tempo_minutos" value="<?php echo $n_tempo_minutos; ?>">
                 </div>
             </div>
             <div class="mb-3 row">

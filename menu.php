@@ -47,22 +47,23 @@
  </head>
 
  <div class="content">
-     <div class="container -my5">
+     <main>
+         <div class="container-fluid">
 
-         <body class="sb-nav-fixed">
-             <main>
-             <div style="padding-top :5px;">
-                 <div class="panel">
-                     <div class="panel-heading text-center text-primary">
-                         <br>
-                         <h1><img Align="left" style="width:100px" class="img-responsive" src="\gop\imagens\img_gop.jpg">
-                             <strong>Gestão Operacional</strong>
-                         </h1>
+             <body class="sb-nav-fixed">
+
+                 <div style="padding-top :2px;">
+                     <div class="panel">
+                         <div class="panel-heading text-center text-primary">
+                             <br>
+                             <h1><img Align="left" style="width:120px" class="img-responsive" src="\gop\imagens\img_gop.jpg">
+                                 <strong>Gestão Operacional</strong>
+                             </h1>
+
+                         </div>
 
                      </div>
-
                  </div>
-             </div>
 
                  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-blue ftco-navbar-light" id="ftco-navbar">
                      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
@@ -151,43 +152,44 @@
                                      <a class='dropdown-item' href=''><img src='\gop\images\trocasenha.png' alt='20' height='20'>Troca de Senha</a>
                                  </div>
                              </li>
-
+                             <li class='nav-item'>
+                                 <div style="padding-top:10px;">
+                                     <a class='navbar-toggler' title='Sair do Sistema' href='\gop\index.php'></b>Sair</b></a>
+                                     <a class='navbar-brand' title='Sair do Sistema' href='\gop\index.php'><img src="\gop\images\saida.png" alt="" width="25" height="25"></a>
+                                 </div>
+                             </li>
                          </ul>
                      </div>
 
                  </nav>
-                 <div class="container -fluid">
-                     <div style="padding-bottom :2px;">
-                         <div class="topnav">
-                             <a href="#"></a>
-                             <a title='Abertura de Solicitação de Serviço' href='/gop/solicitacao.php'><img src="\gop\images\contato.png" alt="" width="30" height="30"></a>
-                             <?php
-                                if ($_SESSION['tipo'] <> 'Solicitante') {
-                                    echo "<a title='Ordens de Serviço' href='/gop/ordens.php'><img src='\gop\images\ordem.png' alt='' width='30' height='30'></a>";
-                                    echo "<a title='Cadastro de Recursos Físicos' href='/gop/recursos_lista.php'><img src='\gop\images\config.png' alt='' width='30' height='30'></a>";
-                                }
-                                ?>
-                             <a title='Alterar Senha' href='\gop\alterasenha.php'><img src="\gop\images\trocasenha.png" alt="" width="30" height="30"></a>
-                             <a title='Sair do Sistema' href='\gop\index.php'><img src="\gop\images\saida.png" alt="" width="30" height="30"></a>
-                         </div>
+
+                 <div style="padding-bottom :1px;">
+                     <div class="topnav">
+                         <a href="#"></a>
+                         <a title='Abertura de Solicitação de Serviço' href='/gop/solicitacao.php'><img src="\gop\images\contato.png" alt="" width="30" height="30"></a>
+                         <?php
+                            if ($_SESSION['tipo'] <> 'Solicitante') {
+                                echo "<a title='Ordens de Serviço' href='/gop/ordens.php'><img src='\gop\images\ordem.png' alt='' width='30' height='30'></a>";
+                                echo "<a title='Cadastro de Recursos Físicos' href='/gop/recursos_lista.php'><img src='\gop\images\config.png' alt='' width='30' height='30'></a>";
+                            }
+                            ?>
+                         <a title='Alterar Senha' href='\gop\alterasenha.php'><img src="\gop\images\trocasenha.png" alt="" width="30" height="30"></a>
+                         <a title='Sair do Sistema' href='\gop\index.php'><img src="\gop\images\saida.png" alt="" width="30" height="30"></a>
                      </div>
                  </div>
 
-                 <div class="container">
-
-                     <div class="panel default class">
-
-                         <div class="alert alert-success">
-                             <?php
-                                date_default_timezone_set('America/Sao_Paulo');
-                                $agora = date('d/m/Y H:i');
-                                ?>
-                             <strong>Login efetuado! - </strong>Bem vindo <?php echo ' ' . $_SESSION['c_usuario'] . ' - ' . $agora . ' '; ?>
-                             <label for="usuario"></label>
-                         </div>
+                 <div class="panel default class">
+                     <div class="alert alert-success">
+                         <?php
+                            date_default_timezone_set('America/Sao_Paulo');
+                            $agora = date('d/m/Y H:i');
+                            ?>
+                         <strong>Login efetuado! - </strong>Bem vindo <?php echo ' ' . $_SESSION['c_usuario'] . ' - ' . $agora . ' '; ?>
+                         <label for="usuario"></label>
                      </div>
-
                  </div>
+
+
                  <br><br><br>
                  <?php
                     if ($_SESSION['tipo'] <> 'Solicitante') {
@@ -195,63 +197,34 @@
                     }
                     ?>
 
-
-             </main>
-
+         </div>
 
          </body>
+     </main>
+
+
+
+ </div>
+
+ <div>
+     <div style="padding-bottom:15px;">
+         <footer>
+             <div style="padding-left :10px;">
+                 <p>
+                 <h4>GOP - Gestão Operacional - Todos os direitos reservados</h4>
+                 </p>
+                 <p>
+                 <h4>Versão 1.0</h4>
+                 </p>
+             </div>
+         </footer>
      </div>
  </div>
 
+
  </html>
 
- <!-- CSS para as barras laterais -->
- <style>
-     /* Style the sidebar - fixed full height */
-     .sidebar {
-         height: 100%;
-         width: 70px;
-         position: fixed;
-         z-index: 1;
-         top: 0;
-         left: 0;
-         background-color: #4682B4;
-         overflow-x: hidden;
-         padding-top: 16px;
-     }
 
-     /* Style sidebar links */
-     .sidebar a {
-         padding: 6px 8px 6px 16px;
-         text-decoration: none;
-         font-size: 20px;
-         color: #F5F5F5;
-         display: block;
-     }
-
-     /* Style links on mouse-over */
-     .sidebar a:hover {
-         color: #f1f1f1;
-     }
-
-     /* Style the main content */
-     .main {
-         margin-left: 160px;
-         /* Same as the width of the sidenav */
-         padding: 0px 10px;
-     }
-
-     /* Add media queries for small screens (when the height of the screen is less than 450px, add a smaller padding and font-size) */
-     @media screen and (max-height: 450px) {
-         .sidebar {
-             padding-top: 15px;
-         }
-
-         .sidebar a {
-             font-size: 18px;
-         }
-     }
- </style>
 
  <style>
      /* Add a black background color to the top navigation */
@@ -280,5 +253,30 @@
      .topnav a.active {
          background-color: #4682B4;
          color: white;
+     }
+ </style>
+
+
+ <!-- rodape do menu -->
+ <style>
+     html,
+     body {
+         min-height: 100%;
+     }
+
+     body {
+         padding: 0;
+         margin: 0;
+     }
+
+     footer {
+         position: absolute;
+         bottom: 0;
+         background-color: #4682B4;
+         color: #FFF;
+         width: 100%;
+         height: 100px;
+         text-align: left;
+         line-height: 70px;
      }
  </style>
