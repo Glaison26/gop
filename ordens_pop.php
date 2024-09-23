@@ -105,6 +105,64 @@ include('conexao.php');
             }
         });
     </script>
+    <!-- Coleta dados da tabela para edição do registro -->
+    <script>
+        $(document).ready(function() {
+
+            $('.editbtn').on('click', function() {
+
+                $('#editmodal').modal('show');
+
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function() {
+                    return $(this).text();
+                }).get();
+
+                console.log(data);
+
+                $('#up_idField').val(data[0]);
+                $('#pop').val(data[1]);
+
+
+            });
+        });
+    </script>
+
+<script type="text/javascript">
+        ~
+        // Função javascript e ajax para Alteração dos dados
+        $(document).on('submit', '#frmup', function(e) {
+            e.preventDefault();
+            var c_id = $('#up_idField').val();
+            var c_descricao = $('#pop').val();
+
+            if (c_descricao != '') {
+
+                $.ajax({
+                    url: "ordens_pop_editar.php",
+                    type: "post",
+                    data: {
+                        c_id: c_id,
+                        c_descricao: c_descricao
+                    },
+                    success: function(data) {
+                        var json = JSON.parse(data);
+                        var status = json.status;
+                        if (status == 'true') {
+                            $('#editmodal').modal('hide');
+                            location.reload();
+                        } else {
+                            alert('falha ao alterar dados');
+                        }
+                    }
+                });
+
+            } else {
+                alert('Todos os campos devem ser preenchidos!!');
+            }
+        });
+    </script>
 
     <div class="container-fluid">
 
@@ -152,7 +210,7 @@ include('conexao.php');
                     
                    
                     <td>
-                    <a class='btn btn-secondary btn-sm' href='/gop/pops_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                    <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar POP da Ordem de Serviço'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
@@ -201,6 +259,52 @@ include('conexao.php');
                         <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Fechar</button>
 
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal para edição dos dados -->
+<div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="editmodal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Editar POP da Ordem de Serviço</h4>
+            </div>
+            <div class="modal-body">
+                <div class='alert alert-warning' role='alert'>
+                    <h5>Campos com (*) são obrigatórios</h5>
+                </div>
+                <form id="frmup" method="POST" action="">
+                    <input type="hidden" id="up_idField" name="up_idField">
+                    <div class="mb-3 row">
+                        <label for="add_descricaoField" class="col-md-3 form-label">Selecionar POP</label>
+                        <div class="col-sm-9">
+                            <select class="form-select form-select-lg mb-3" id="pop" name="pop">
+                                <option></option>
+                                <?php
+                                // select da tabela de pops
+                                $c_sql_pop = "SELECT pops.id, pops.descricao FROM pops ORDER BY pops.descricao";
+                                $result_pop = $conection->query($c_sql_pop);
+                                while ($c_linha = $result_pop->fetch_assoc()) {
+                                    $op = '';
+                                    if ($c_linha['id']==$_POST['up_idField']){
+                                       $op='selected' ;
+                                    }
+
+                                    echo "<option $op>$c_linha[descricao]</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
+                        <button class="btn btn-secondary" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Fechar</button>
                     </div>
                 </form>
             </div>
