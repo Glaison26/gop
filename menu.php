@@ -190,7 +190,7 @@
                  </div>
 
 
-                 <br><br><br>
+                 <br>
                  <?php
                     if ($_SESSION['tipo'] <> 'Solicitante') {
                         require('cards_menu.php');
@@ -213,9 +213,7 @@
                  <p>
                  <h4>GOP - Gestão Operacional - Todos os direitos reservados</h4>
                  </p>
-                 <p>
-                 <h4>Versão 1.0</h4>
-                 </p>
+                
              </div>
          </footer>
      </div>
@@ -275,7 +273,7 @@
          background-color: #4682B4;
          color: #FFF;
          width: 100%;
-         height: 100px;
+         height: 45px;
          text-align: left;
          line-height: 70px;
      }

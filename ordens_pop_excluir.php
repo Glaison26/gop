@@ -4,19 +4,18 @@ if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
 
+include("conexao.php");
 
 if (!isset($_GET["id"])) {
-    header('location: /gop/oficinas_lista.php');
+    header('location: /gop/ordens_gerenciar.php');
     exit;
 }
-include("conexao.php");
 $c_id = "";
 $c_id = $_GET["id"];
 
+
 // Exclusão do registro
-$c_sql = "delete from oficinas where id=$c_id";
-echo $c_sql;
-echo $c_id;
+$c_sql = "delete from ordens_pop where id=$c_id";
 $result = $conection->query($c_sql);
 
-header('location: /gop/oficinas_lista.php');
+header('location: /gop/ordens_gerenciar.php');
