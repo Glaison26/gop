@@ -87,8 +87,8 @@ if (isset($_GET['id'])) {
                         <!-- aba de checklist-->
                         <div role="tabpanel" class="tab-pane" id="checklist">
                             <div style="padding-top:15px;padding-left:20px;">
-                                <p>em construção</p>
-                                <?php //include('ordens_check.php'); 
+                               
+                                <?php include('ordens_check.php'); 
                                 ?>
                             </div>
                         </div>

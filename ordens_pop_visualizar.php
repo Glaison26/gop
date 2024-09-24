@@ -18,14 +18,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $c_id = $_GET["id"];
     // leitura do pop
     $c_sql = "SELECT pops.id_recurso, pops.id_espaco, pops.id_oficina, pops.tipo, pops.descricao, pops.revisado,
-pops.preparado, pops.resultadoesperado, pops.materialnecessario, pops.descritivo, pops.atividadecritica, pops.cuidados, pops.anc, pops.`data`,pops.dataemissao,
-pops.processo, pops.objetivo, pops.risco, pops.refbibliografica,  pops.descricao as pop, recursos.descricao AS recurso, espacos.descricao AS espaco, oficinas.descricao AS oficina
-FROM pops
-JOIN oficinas ON pops.id_oficina = oficinas.id
-JOIN recursos ON pops.id_recurso = recursos.id
-JOIN espacos ON pops.id_espaco = espacos.id
-
-            where pops.id='$c_id'";
+            pops.preparado, pops.resultadoesperado, pops.materialnecessario, pops.descritivo, pops.atividadecritica, pops.cuidados, pops.anc, pops.`data`,pops.dataemissao,
+            pops.processo, pops.objetivo, pops.risco, pops.refbibliografica,  pops.descricao as pop, recursos.descricao AS recurso, espacos.descricao AS espaco, oficinas.descricao AS oficina
+            FROM pops
+            JOIN oficinas ON pops.id_oficina = oficinas.id
+            JOIN recursos ON pops.id_recurso = recursos.id
+            JOIN espacos ON pops.id_espaco = espacos.id where pops.id='$c_id'";
     $result = $conection->query($c_sql);
     $registro = $result->fetch_assoc();
 
