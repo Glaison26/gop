@@ -51,6 +51,17 @@
         });
     </script>
 
+    
+<script language="Javascript">
+        function confirmacao_ferramentas(id) {
+            var resposta = confirm("Deseja remover esse registro?");
+            if (resposta == true) {
+                window.location.href = "/gop/ordens_ferramentas_excluir.php?id=" + id;
+            }
+        }
+    </script>
+
+
 <script type="text/javascript">
         // Função javascript e ajax para inclusão dos dados
 
@@ -134,7 +145,7 @@
                                
                     <td>
                     
-                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
+                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao_ferramentas($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
                     </tr>
