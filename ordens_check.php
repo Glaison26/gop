@@ -62,6 +62,23 @@ include('conexao.php');
         });
     </script>
 
+<script language="Javascript">
+        function confirmacao_check(id) {
+            var resposta = confirm("Deseja remover esse registro?");
+            if (resposta == true) {
+                window.location.href = "/gop/ordens_check_excluir.php?id=" + id;
+            }
+        }
+    </script>
+
+<script language="Javascript">
+        function chamada_check(id) {
+
+            window.location.href = "/gop/ordens_checklist_visualizar.php?id=" + id;
+
+        }
+    </script>
+
     <script type="text/javascript">
         // Função javascript e ajax para inclusão dos dados
 
@@ -72,7 +89,7 @@ include('conexao.php');
             if (c_descricao != '') {
 
                 $.ajax({
-                    url: "ordens_pop_inclusao.php",
+                    url: "ordens_check_inclusao.php",
                     type: "post",
                     data: {
                         c_descricao: c_descricao
@@ -85,15 +102,15 @@ include('conexao.php');
                         location.reload();
                         if (status == 'true') {
 
-                            $('#novoModal').modal('hide');
+                            $('#novoModal_check').modal('hide');
                             location.reload();
                         } else {
-                            alert('falha ao incluir dados');
+                            alert('falha ao incluir dados'); 
                         }
                     }
                 });
             } else {
-                alert('Preencha todos os campos obrigatórios');
+               // alert('Preencha todos os campos obrigatórios');
             }
         });
     </script>
@@ -102,7 +119,8 @@ include('conexao.php');
     <div class="container-fluid">
         <div class="panel panel-info class">
             <div class="panel-heading">
-                <button type="button" title="Inclusão de CheckList" class="btn btn-success" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
+                <button type="button" title="Inclusão de CheckList" class="btn btn-success" data-toggle="modal" data-target="#novoModal_check">
+                    <span class="glyphicon glyphicon-plus"></span>
                     Incluir Check List
                 </button>
             </div>
@@ -122,7 +140,7 @@ include('conexao.php');
                 <?php
 
                 // faço a Leitura da tabela com sql
-                $c_sql = "SELECT ordens_check.id, checklist.descricao, checklist.descritivo FROM ordens_check
+                $c_sql = "SELECT ordens_check.id, checklist.descricao, ordens_check.id_check, checklist.descritivo FROM ordens_check
             JOIN checklist ON ordens_check.id_check=checklist.id
             WHERE ordens_check.id_ordem='$i_id'
             ORDER BY checklist.descricao";
@@ -140,8 +158,8 @@ include('conexao.php');
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descricao]</td>
                     <td>
-                   
-                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
+                   <a class='btn btn-info btn-sm' href='javascript:func()'onclick='chamada_check($c_linha[id_check])'><span class='glyphicon glyphicon-eye-open'></span> Visualizar</a>
+                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao_check($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
                     </tr>
@@ -153,7 +171,7 @@ include('conexao.php');
     </div>
 
     <!-- janela Modal para inclusão de registro -->
-    <div class="modal fade" class="modal-dialog modal-lg" id="novoModal" name="novoModal" tabindex="-1" role="dialog" aria-labelledby="novoModal" aria-hidden="true">
+    <div class="modal fade" class="modal-dialog modal-lg" id="novoModal_check" name="novoModal_check" tabindex="-1" role="dialog" aria-labelledby="novoModal_check" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -174,8 +192,7 @@ include('conexao.php');
                                     $c_sql_check = "SELECT checklist.id, checklist.descricao FROM checklist ORDER BY checklist.descricao";
                                     $result_check = $conection->query($c_sql_check);
                                     while ($c_linha = $result_check->fetch_assoc()) {
-
-                                        echo "<option $op>$c_linha[descricao]</option>";
+                                        echo "<option >$c_linha[descricao]</option>";
                                     }
                                     ?>
                                 </select>

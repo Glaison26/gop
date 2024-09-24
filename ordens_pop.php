@@ -21,11 +21,11 @@ include('conexao.php');
 </head>
 
 <body>
-<script language="Javascript">
+    <script language="Javascript">
         function chamada(id) {
-               
-                window.location.href = "/gop/ordens_pop_visualizar.php?id=" + id;
-            
+
+            window.location.href = "/gop/ordens_pop_visualizar.php?id=" + id;
+
         }
     </script>
 
@@ -115,7 +115,7 @@ include('conexao.php');
                     }
                 });
             } else {
-                alert('Preencha todos os campos obrigatórios');
+                //alert('Preencha todos os campos obrigatórios');
             }
         });
     </script>
@@ -149,8 +149,8 @@ include('conexao.php');
                 // faço a Leitura da tabela com sql
                 $c_sql = "SELECT ordens_pop.id, ordens_pop.id_pop, pops.descricao, 
                         CASE WHEN pops.tipo ='1' THEN 'Administrativo'" .
-                        "WHEN pops.tipo ='2' THEN 'Instalação'" .
-                        "END AS tipopop FROM ordens_pop
+                    "WHEN pops.tipo ='2' THEN 'Instalação'" .
+                    "END AS tipopop FROM ordens_pop
                         JOIN pops ON ordens_pop.id_pop=pops.id
                         WHERE ordens_pop.id_ordem='$i_id'";
                 $result = $conection->query($c_sql);
