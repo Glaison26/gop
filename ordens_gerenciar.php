@@ -40,13 +40,12 @@ if (isset($_GET['id'])) {
                 <div>
                     <div style="padding-bottom :2px;">
                         <div class="topnav">
-
-                            <a title='Voltar' href='\gop\ordens_lista.php'><img src="\gop\images\voltar.png" alt="" width="20" height="25"><span> Voltar</span></a>
-                            <a title='Concluir Ordem de Serviço' href='/gop/solicitacao.php'><img src="\gop\images\concluir.png" alt="" width="20" height="25"><span> Concluir</span></a>
-                            <a title='Cancelar Ordem de Serviço' href='\gop\alterasenha.php'><img src="\gop\images\cancelar.png" alt="" width="20" height="25"><span> Cancelar</span></a>
-                            <a title='Suspender Ordem de Serviço' href='/gop/ordens.php'><img src='\gop\images\aguardado.png' alt='' width='20' height='25'><span> Suspender</span></a>
-
-
+                           
+                            <a title='Concluir Ordem de Serviço' href='#'><img src="\gop\images\registro.png" alt="" width="30" height="25"><span> Emitir</span></a>
+                            <a title='Concluir Ordem de Serviço' href='#'><img src="\gop\images\concluir.png" alt="" width="30" height="25"><span> Concluir</span></a>
+                            <a title='Cancelar Ordem de Serviço' href='#'><img src="\gop\images\cancelar.png" alt="" width="30" height="25"><span> Cancelar</span></a>
+                            <a title='Suspender Ordem de Serviço' href='#'><img src='\gop\images\aguardado.png' alt='' width='30' height='25'><span> Suspender</span></a>
+                            <a title='Voltar' href='\gop\ordens_lista.php'><img src="\gop\images\voltar.png" alt="" width="30" height="25"><span> Voltar</span></a>
                         </div>
                     </div>
 
@@ -87,9 +86,7 @@ if (isset($_GET['id'])) {
                         <!-- aba de checklist-->
                         <div role="tabpanel" class="tab-pane" id="checklist">
                             <div style="padding-top:15px;padding-left:20px;">
-                                <p>em construção</p>
-                                <?php //include('ordens_check.php'); 
-                                ?>
+                               <?php include('ordens_check.php');?>
                             </div>
                         </div>
                         <!-- aba de plano de ação-->
@@ -101,7 +98,7 @@ if (isset($_GET['id'])) {
                         <!-- aba de plano de ação-->
                         <div role="tabpanel" class="tab-pane" id="ferramenta">
                             <div style="padding-top:15px;padding-left:20px;">
-                                <?php //include('ordens_ferramentas.php'); 
+                                <?php include('ordens_ferramentas.php'); 
                                 ?>
                             </div>
                         </div>

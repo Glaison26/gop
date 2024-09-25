@@ -17,8 +17,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
 
     $c_id = $_GET["id"];
     // leitura do pop
-    $c_sql = "SELECT *, recursos.descricao AS recurso, espacos.descricao AS espaco, oficinas.descricao AS oficina
-            from pops
+    $c_sql = "SELECT pops.id_recurso, pops.id_espaco, pops.id_oficina, pops.tipo, pops.descricao, pops.revisado,
+            pops.preparado, pops.resultadoesperado, pops.materialnecessario, pops.descritivo, pops.atividadecritica, pops.cuidados, pops.anc, pops.`data`,pops.dataemissao,
+            pops.processo, pops.objetivo, pops.risco, pops.refbibliografica,  pops.descricao as pop, recursos.descricao AS recurso, espacos.descricao AS espaco, oficinas.descricao AS oficina
+            FROM pops
             JOIN oficinas ON pops.id_oficina = oficinas.id
             JOIN recursos ON pops.id_recurso = recursos.id
             JOIN espacos ON pops.id_espaco = espacos.id where pops.id='$c_id'";
@@ -29,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         header('location: /gop/ordens_gerenciar.php');
         exit;
     }
+
     $c_tipo = $registro['tipo'];
     if ($c_tipo == 1)
         $c_tipo = 'Administrativo';
@@ -84,139 +87,138 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
             </div>
-            <h5>Visualização do POP selecionada da Ordem de serviço</h5>
+            <h5>Visualização do POP selecionada da Ordem de serviço No.<?php echo $_SESSION['id_ordem']; ?></h5>
         </div>
         <hr>
         <div class="row mb-3">
-            <label class="col-sm-3 col-form-label">Tipo</label>
+            <p>
+            <h5><strong>Tipo :</strong></h5>
+            </p>
+            <br>
             <div class="col-sm-6">
-                <input readonly type="text" maxlength="120" class="form-control" name="tipo" value="<?php echo $c_tipo; ?>">
+                <p><?php echo $c_tipo; ?></p>
             </div>
         </div>
         <div class="row mb-3">
-            <label class="col-sm-3 col-form-label">Descrição</label>
+            <p>
+            <h5><strong>Descrição :</strong></h5>
+            </p>
             <div class="col-sm-6">
-                <input readonly type="text" maxlength="120" class="form-control" name="descricao" value="<?php echo $c_descricao; ?>">
+
+                <p><?php echo $c_descricao; ?></p>
             </div>
         </div>
 
         <div class="row mb-3">
-            <label class="col-sm-3 col-form-label">Preparado por</label>
+            <p>
+            <h5><strong>Preparado por :</strong></h5>
+            </p>
             <div class="col-sm-6">
-                <input readonly type="text" maxlength="120" class="form-control" name="preparado" value="<?php echo $c_preparado; ?>">
+                <p><?php echo $c_preparado; ?></p>
             </div>
         </div>
 
-
         <div class="row mb-3">
-            <label class="col-sm-3 col-form-label">Revisado por</label>
+            <p>
+            <h5><strong>Revisado por:</strong></h5>
             <div class="col-sm-6">
-                <input readonly type="text" maxlength="120" class="form-control" name="revisado" value="<?php echo $c_revisado; ?>">
+                <p><?php echo $c_revisado; ?></p>
             </div>
         </div>
 
         <div class="row mb-3">
-            <label class="col-sm-3 col-form-label">Recurso Fisico </label>
+            <p>
+            <h5><strong>Recurso Fisico:</strong></h5>
             <div class="col-sm-6">
-                <input readonly type="text" maxlength="120" class="form-control" name="recurso" value="<?php echo $registro['recurso']; ?>">
+                <p><?php echo $registro['recurso']; ?></p>
             </div>
         </div>
 
         <div class="row mb-3">
-            <label class="col-sm-3 col-form-label">Espaco Fisico </label>
+            <h5><strong>Espaço Fisico:</strong></h5>
             <div class="col-sm-6">
-                <input readonly type="text" maxlength="120" class="form-control" name="espaco" value="<?php echo $registro['espaco']; ?>">
+                <p><?php echo $registro['espaco']; ?></p>
             </div>
         </div>
 
         <div class="row mb-3">
-            <label class="col-sm-3 col-form-label">Oficina </label>
+            <h5><strong>Oficina :</strong></h5>
             <div class="col-sm-6">
-                <input readonly type="text" maxlength="120" class="form-control" name="oficina" value="<?php echo $registro['oficina']; ?>">
+                <p><?php echo $registro['oficina']; ?></p>
             </div>
         </div>
 
         <div class="row mb-3">
-            <label class="col-sm-3 col-form-label">Descritivo do POP</label>
+            <h5><strong>Descritivo do POP :</strong></h5>
             <div class="col-sm-7">
-                <textarea readonly class="form-control" id="descritivo" name="descritivo" rows="6"><?php echo $c_descritivo ?></textarea>
+                <p><?php echo $c_descritivo ?></p>
             </div>
         </div>
 
+        <div class="row mb-3">
+            <h5><strong>Processos do POP :</strong></p>
+                <br>
+                <div class="col-sm-7">
+                    <p><?php echo $c_processo ?></p>
+                </div>
+        </div>
 
         <div class="row mb-3">
-            <label class="col-sm-3 col-form-label">Processos do POP</label>
+            <p><strong> Resultado Esperado :</strong></p>
             <div class="col-sm-7">
-                <textarea readonly class="form-control" id="processo" name="processo" rows="6"><?php echo $c_processo ?></textarea>
+                <p><?php echo $c_resultado ?></p>
             </div>
         </div>
 
-
         <div class="row mb-3">
-            <label class="col-sm-3 col-form-label">Resultado Esperado</label>
+            <p><strong>Objetivo</p></strong>
             <div class="col-sm-7">
-                <textarea readonly class="form-control" id="resultado" name="resultado" rows="6"><?php echo $c_resultado ?></textarea>
+                <p><?php echo $c_objetivo ?></p>
             </div>
         </div>
 
-
         <div class="row mb-3">
-            <label class="col-sm-3 col-form-label">Objetivo</label>
+            <p><strong>Material Necessário</p></strong>
             <div class="col-sm-7">
-                <textarea readonly class="form-control" id="objetivo" name="objetivo" rows="6"><?php echo $c_objetivo ?></textarea>
+                <p><?php echo $c_material ?></p>
             </div>
         </div>
 
         <div class="row mb-3">
-            <label class="col-sm-3 col-form-label">Material Necessário</label>
+            <p><strong>Cuidados </p></strong>
             <div class="col-sm-7">
-                <textarea readonly class="form-control" id="material" name="material" rows="6"><?php echo $c_material ?></textarea>
+                <p><?php echo $c_cuidados ?></p>
             </div>
         </div>
 
         <div class="row mb-3">
-            <label class="col-sm-3 col-form-label">Cuidados</label>
+            <p><strong>Riscos </p></strong>
             <div class="col-sm-7">
-                <textarea readonly class="form-control" id="cuidados" name="cuidados" rows="6"><?php echo $c_cuidados ?></textarea>
+                <p><?php echo $c_risco ?></p>
             </div>
         </div>
 
         <div class="row mb-3">
-            <label class="col-sm-3 col-form-label">Riscos</label>
+            <p><strong>Atividades Críticas</p></strong>
             <div class="col-sm-7">
-                <textarea readonly class="form-control" id="risco" name="risco" rows="6"><?php echo $c_risco ?></textarea>
+                <p><?php echo $c_atividadecritica ?></p>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <p><strong>A.N.C</p></strong>
+            <div class="col-sm-7">
+                <p><?php echo $c_anc ?></p>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <p><strong>Ref. Bibliografica</p></strong>
+            <div class="col-sm-7">
+                <p><?php echo $c_bibliografia ?></p>
             </div>
         </div>
 
-        <div class="row mb-3">
-            <label class="col-sm-3 col-form-label">Atividades Críticas</label>
-            <div class="col-sm-7">
-                <textarea readonly class="form-control" id="atividadecritica" name="atividadecritica" rows="6"><?php echo $c_atividadecritica ?></textarea>
-            </div>
-        </div>
-        <div class="row mb-3">
-            <label class="col-sm-3 col-form-label">A.N.C</label>
-            <div class="col-sm-7">
-                <textarea readonly class="form-control" id="anc" name="anc" rows="6"><?php echo $c_anc ?></textarea>
-            </div>
-        </div>
-        <div class="row mb-3">
-            <label class="col-sm-3 col-form-label">Ref. Bibliografica</label>
-            <div class="col-sm-7">
-                <textarea readonly class="form-control" id="bibliografia" name="bibliografia" rows="6"><?php echo $c_bibliografia ?></textarea>
-            </div>
-        </div>
-        <hr>
-        <div class="row mb-3">
-            <div class="offset-sm-0 col-sm-3">
-
-                <a class='btn btn-info' href='/gop/ordens_gerenciar.php'>Voltar</a>
-            </div>
-
-        </div>
     </div>
 
-    </div>
 
 </body>
 
