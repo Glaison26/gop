@@ -93,8 +93,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $c_estado = $_POST['estado'];
     $c_notafiscal = $_POST['notafiscal'];
 
-    $d_datacadastro = $_POST['datacadastro'];
-    //$d_datacadastro = $d_datacadastro->format('Y-m-d');
+    $d_datacadastro =  new DateTime($_POST['datacadastro']);
+    $d_datacadastro = $d_datacadastro->format('Y-m-d');
 
     $d_datagarantia =  new DateTime($_POST['datagarantia']);
     $d_datagarantia = $d_datagarantia->format('Y-m-d');
@@ -501,7 +501,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <label class="col-sm-3 col-form-label">Data de Cadastro</label>
                                 <div class="col-sm-2">
 
-                                    <input type="text" class="form-control" id="datacadastro" name="datacadastro" value="<?php echo $d_datacadastro; ?>">
+                                    <input type="date" class="form-control" id="datacadastro" name="datacadastro" value="<?php echo $d_datacadastro; ?>">
                                 </div>
                                 <label class="col-sm-2 col-form-label">Valor Aquisição</label>
                                 <div class="col-sm-2">
