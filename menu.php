@@ -64,7 +64,7 @@
 
                      </div>
                  </div>
-
+                 <br>
                  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-blue ftco-navbar-light" id="ftco-navbar">
                      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                          <span class="fa fa-bars">Menu</span>
@@ -125,7 +125,7 @@
                                      <?php
                                         if ($_SESSION['tipo'] <> 'Solicitante') {
                                             echo "<a class='dropdown-item' href='/gop/ordens.php'><img src='\gop\images\ordem.png' alt='20' height='20'> Ordens de Serviços</a>
-                                  <a class='dropdown-item' href=#'><img src='\gop\images\preventivo.png' alt='20' height='20'> Preventivas </a>
+                                  <a class='dropdown-item' href='/gop/preventivas.php'><img src='\gop\images\preventivo.png' alt='20' height='20'> Preventivas </a>
                              </div>
                          </li>
 
@@ -188,36 +188,31 @@
                          <label for="usuario"></label>
                      </div>
                  </div>
-
-
                  <br>
-                 <?php
-                    if ($_SESSION['tipo'] <> 'Solicitante') {
-                        require('cards_menu.php');
-                    }
-                    ?>
+                 <div class="content">
+                     <?php
+                        if ($_SESSION['tipo'] <> 'Solicitante') {
+                            require('cards_menu.php');
+                        }
+                        ?>
+                 </div>
 
+                 <div style="padding-bottom:15px;">
+                     <footer>
+                         <div style="padding-left :10px;">
+                             <p>
+                             <h4>GOP - Gestão Operacional - Todos os direitos reservados</h4>
+                             </p>
+                         </div>
+                     </footer>
+                 </div>
          </div>
-
          </body>
-     </main>
-
-
-
+ </div>
+ </main>
  </div>
 
- <div>
-     <div style="padding-bottom:15px;">
-         <footer>
-             <div style="padding-left :10px;">
-                 <p>
-                 <h4>GOP - Gestão Operacional - Todos os direitos reservados</h4>
-                 </p>
-                
-             </div>
-         </footer>
-     </div>
- </div>
+
 
 
  </html>

@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+</head>
+<body>
 <div class="row mx-auto h-25" style="max-width: 750px;">
     <div class="col-xl-4 col-md-6">
         <div class="card text-dark bg-light mb-3" style="width: 18rem;">
@@ -67,3 +75,5 @@
     </div>
 
 </div>
+</body>
+</html>

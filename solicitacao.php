@@ -270,8 +270,6 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                         </select>
                     </div>
                 </div>
-
-
                 <div class="row mb-3">
                     <label class="col-md-2 form-label">Descritivo</label>
                     <div class="col-sm-7">
