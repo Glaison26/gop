@@ -247,8 +247,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                             $result_sol = $conection->query($c_sql_sol);
                             while ($c_linha = $result_sol->fetch_assoc()) {
                                 echo "  
-                          <option>$c_linha[nome]</option>
-                        ";
+                          <option>$c_linha[nome]</option>";
                             }
                             ?>
                         </select>
@@ -262,9 +261,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                             $c_sql_setor = "SELECT setores.id, setores.descricao FROM setores ORDER BY setores.descricao";
                             $result_setor = $conection->query($c_sql_setor);
                             while ($c_linha = $result_setor->fetch_assoc()) {
-                                echo "  
-                          <option>$c_linha[descricao]</option>
-                        ";
+                                echo "<option>$c_linha[descricao]</option>";
                             }
                             ?>
                         </select>

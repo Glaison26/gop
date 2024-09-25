@@ -101,7 +101,7 @@ Pagina da rotina para selecionar o recurso da solicitação
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
-            <h5>Seleção de Recurso Físico para Solicitação de Serviço<h5>
+            <h5>Seleção de Recurso Físico<h5>
         </div>
     </div>
 
@@ -110,7 +110,7 @@ Pagina da rotina para selecionar o recurso da solicitação
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
             </div>
-            <h5>Digite a descrição do recurso físico ou parte dela e clique em buscar. Clique em selecionar ao lado do recurso que deseja abrir solicitação.</h5>
+            <h5>Digite a descrição do recurso físico ou parte dela e clique em buscar. Clique em selecionar ao lado do recurso que deseja abrir.</h5>
         </div>
         <!-- inputs para pesquisa de recurso -->
         <form method="post">
