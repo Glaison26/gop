@@ -8,7 +8,7 @@ if (!isset($_SESSION['newsession'])) {
 include("conexao.php");
 include("links.php");
 
-$_SESSION['tiposolicitacao'] ='R'; 
+$_SESSION['tiposolicitacao'] = 'R';
 
 // faço a Leitura da tabela de recursos com sql
 if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  // botão para executar sql de pesquisa de recursos
@@ -92,8 +92,11 @@ Pagina da rotina para selecionar o recurso da solicitação
 <!-- função para chamar conclusão da solicitação -->
 <script>
     function conclusao(id) {
-
         window.location.href = "/gop/solicitacao_conclusao.php?id=" + id;
+    }
+
+    function conclusao_prev(id) {
+        window.location.href = "/gop/preventiva_conclusao.php?id=" + id;
     }
 </script>
 
@@ -121,11 +124,16 @@ Pagina da rotina para selecionar o recurso da solicitação
 
                 <div class="col-sm-6">
                     <input type="text" class="form-control" id="pesquisa" name="pesquisa">
-                    
+
                 </div>
                 <div class="col-md-3">
                     <button class="btn btn btn-sm" type="submit" id='bntpesquisa' name='btnpesquisa' class="btn btn"><img src='\gop\images\buscar.png' alt='' width='20' height='20'></span> Buscar</button>
-                    <a class="btn btn btn-sm" href="\gop\solicitacao_nova.php"><img src="\gop\images\voltar.png" alt="" width="25" height="25"> Voltar</a>
+                    <?php
+                    if ($_SESSION['opcao'] == 'S')
+                        echo "<a class='btn btn btn-sm' href='\gop\solicitacao_nova.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
+                    else
+                        echo "<a class='btn btn btn-sm' href='\gop\preventivas_nova.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
+                    ?>
                 </div>
             </div>
         </form>
@@ -156,13 +164,12 @@ Pagina da rotina para selecionar o recurso da solicitação
                     <td>$c_linha[marca]</td>
                     <td>$c_linha[setor]</td>
                                                        
-                    <td>
-                    <a class='btn btn' title='Selecionar Recurso' href='javascript:func()'onclick='conclusao($c_linha[id])'><img src='\gop\images\selecionar.png'  width='20' height='20'> Selecionar</a>
-                   
-                    </td>
-                        
-                    </tr>
-                    ";
+                    <td>";
+                    if ($_SESSION['opcao']=='S')
+                      echo "<a class='btn btn' title='Selecionar Recurso' href='javascript:func()'onclick='conclusao($c_linha[id])'><img src='\gop\images\selecionar.png'  width='20' height='20'> Selecionar</a>";
+                    else
+                      echo "<a class='btn btn' title='Selecionar Recurso' href='javascript:func()'onclick='conclusao_prev($c_linha[id])'><img src='\gop\images\selecionar.png'  width='20' height='20'> Selecionar</a>";
+                    echo "</td></tr>";
                     }
                 }
                 ?>

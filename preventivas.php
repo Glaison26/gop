@@ -37,14 +37,13 @@ include("links2.php");
                 <h5><?php $_SESSION['c_usuario'] ?>Clique em nova preventiva um novo registro de preventiva ou realize uma pesquisa com as opções de pesquisa abaixo</h5>
             </div>
 
-
             <form method="post">
                 <div style="padding-top:5px;padding-bottom:15px">
                     <a class="btn btn btn-sm" href="preventivas_nova.php"><img src="\gop\images\preventivo.png" alt="" width="25" height="25"> Nova Preventiva</a>
                     <button type="submit" name='btnpesquisa' id='btnpesquisa' class="btn btn btn-sm"><img src="\gop\images\lupa.png" alt="" width="20" height="20"></span> Pesquisar</button>
 
                     <!--<a class="btn btn btn-sm" href="#"><img src="\gop\images\eraser.png" alt="" width="25" height="25"> Limpar pesquisa</a> -->
-                    <a class="btn btn btn-sm" href="\gop\menu.php"><img src="\gop\images\voltar.png" alt="" width="25" height="25"> Voltar</a>
+                    <a class="btn btn btn-sm" href="\gop\menu.php"><img src="\gop\images\saida.png" alt="" width="25" height="25"> Voltar</a>
                 </div>
                 <div class="panel panel-light class">
                     <div class="panel-heading text-center">

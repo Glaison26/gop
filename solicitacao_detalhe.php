@@ -95,7 +95,7 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
             <h5>Detalhe da Solicitação de Serviço No. <?php echo $registro['id'] ?> para Visualização </h5>
         </div>
         <a class="btn btn btn-sm" href="\gop\solicitacao_gera_os.php?id=<?php echo $registro['id']?>"><img src="\gop\images\ordem.png" alt="" width="25" height="25"> Gerar OS</a>
-        <a class="btn btn btn-sm" href="\gop\solicitacao_lista.php"><img src="\gop\images\voltar.png" alt="" width="25" height="25"> Voltar</a>
+        <a class="btn btn btn-sm" href="\gop\solicitacao_lista.php"><img src="\gop\images\saida.png" alt="" width="25" height="25"> Voltar</a>
         <hr>
         <!-- abas de solicitações por recursos físicos -->
         <ul class="nav nav-tabs" role="tablist">

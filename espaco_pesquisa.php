@@ -7,7 +7,7 @@ if (!isset($_SESSION['newsession'])) {
 // conexão dom o banco de dados
 include("conexao.php");
 include("links.php");
-$_SESSION['tiposolicitacao'] ='E';
+$_SESSION['tiposolicitacao'] = 'E';
 
 // faço a Leitura da tabela de recursos com sql
 if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  // botão para executar sql de pesquisa de recursos
@@ -91,13 +91,18 @@ Pagina da rotina para selecionar o recurso da solicitação
 
         window.location.href = "/gop/solicitacao_conclusao.php?id=" + id;
     }
+
+    function conclusao_prev(id) {
+
+        window.location.href = "/gop/preventiva_conclusao.php?id=" + id;
+    }
 </script>
 
 <body>
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
-            <h5>Seleção de Espaços Físico para Solicitação de Serviço<h5>
+            <h5>Seleção de Espaços Físico<h5>
         </div>
     </div>
 
@@ -106,7 +111,7 @@ Pagina da rotina para selecionar o recurso da solicitação
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
             </div>
-            <h5>Digite a descrição do espaço físico ou parte dele e clique em buscar. Clique em selecionar ao lado do Espaço que deseja abrir solicitação.</h5>
+            <h5>Digite a descrição do espaço físico ou parte dele e clique em buscar. Clique em selecionar ao lado do Espaço físico.</h5>
         </div>
         <!-- inputs para pesquisa de Espaço Fisico -->
         <form method="post">
@@ -120,7 +125,12 @@ Pagina da rotina para selecionar o recurso da solicitação
                 </div>
                 <div class="col-md-3">
                     <button class="btn btn btn-sm" type="submit" id='bntpesquisa' name='btnpesquisa' class="btn btn"><img src='\gop\images\buscar.png' alt='' width='20' height='20'></span> Buscar</button>
-                    <a class="btn btn btn-sm" href="\gop\solicitacao_nova.php"><img src="\gop\images\voltar.png" alt="" width="25" height="25"> Voltar</a>
+                    <?php
+                    if ($_SESSION['opcao'] == 'S')
+                        echo "<a class='btn btn btn-sm' href='\gop\solicitacao_nova.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
+                    else
+                        echo "<a class='btn btn btn-sm' href='\gop\preventivas_nova.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
+                    ?>
                 </div>
             </div>
         </form>
@@ -147,13 +157,12 @@ Pagina da rotina para selecionar o recurso da solicitação
                     <td>$c_linha[descricao]</td>
                     <td>$c_linha[tipo]</td>
                                                        
-                    <td>
-                    <a class='btn btn' title='Selecionar Espaço Físico' href='javascript:func()'onclick='conclusao($c_linha[id])'><img src='\gop\images\selecionar.png'  width='20' height='20'> Selecionar</a>
-                   
-                    </td>
-                        
-                    </tr>
-                    ";
+                    <td>";
+                        if ($_SESSION['opcao'] == 'S')
+                            echo "<a class='btn btn' title='Selecionar Espaço Físico' href='javascript:func()'onclick='conclusao($c_linha[id])'><img src='\gop\images\selecionar.png'  width='20' height='20'> Selecionar</a>";
+                        else
+                            echo "<a class='btn btn' title='Selecionar Espaço Físico' href='javascript:func()'onclick='conclusao_prev($c_linha[id])'><img src='\gop\images\selecionar.png'  width='20' height='20'> Selecionar</a>";
+                        echo "</td></tr>";
                     }
                 }
                 ?>

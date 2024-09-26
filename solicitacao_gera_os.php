@@ -159,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form method="post" onsubmit="return confirm('Confirma geração de Ordem de Serviço?')">
             <hr>
             <button type="submit" class="btn btn btn-sm" href=""><img src="\gop\images\ordem.png" alt="" width="25" height="25"> Gerar Ordem de Serviço</button>
-            <a class="btn btn btn-sm" href="\gop\solicitacao_lista.php"><img src="\gop\images\voltar.png" alt="" width="25" height="25"> Voltar</a>
+            <a class="btn btn btn-sm" href="\gop\solicitacao_lista.php"><img src="\gop\images\saida.png" alt="" width="25" height="25"> Voltar</a>
             <hr>
             <div class="row mb-6">
                 <label class="col-md-2 form-label">Data Inicio</label>

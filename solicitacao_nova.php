@@ -4,6 +4,7 @@ if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
 $_SESSION['tiposolicitacao'] = 'V';
+$_SESSION['opcao'] = "S";
 include("conexao.php");
 include("links2.php");
 ?>
@@ -19,14 +20,13 @@ include("links2.php");
 </head>
 
 <body>
-    <div class="panel panel-primary class">
-        <div class="panel-heading text-center">
-            <h4>GOP - Gestão Operacional</h4>
-            <h5>Solicitações de Serviços<h5>
-        </div>
-    </div>
-
     <div class="container -my5">
+        <div class="panel panel-primary class">
+            <div class="panel-heading text-center">
+                <h4>GOP - Gestão Operacional</h4>
+                <h5>Solicitações de Serviços<h5>
+            </div>
+        </div>
 
         <div class='alert alert-info' role='alert'>
             <div style="padding-left:15px;">
@@ -34,27 +34,48 @@ include("links2.php");
             </div>
             <h5>Escolha o tipo da solicitação entre Recurso Fisico, Espaço Físico ou solicitação avulsa</h5>
         </div>
-        <div style="padding-bottom:45px;">
-            <br>
-            <p>
-            <h4><strong>Opções : </h4></strong></p>
-            <br>
-            <div class="btn-group btn-group-lg">
-                <a type="button" class="btn btn-primary" href="\gop\solicitacao_nova_recurso_pesquisa.php"><img src="\gop\images\config.png" alt="" width="30" height="30">
+        <div style="padding-bottom :2px;">
+            <div class="topnav">
+                <a href="\gop\recurso_pesquisa.php"><img src="\gop\images\config.png" alt="" width="30" height="35">
                     Serviço em Recurso Físico</a>
-                <a type="button" class="btn btn-primary" href="\gop\solicitacao_nova_espaco_pesquisa.php"><img src="\gop\images\apartamento.png" alt="" width="30" height="30">
+                <a href="\gop\espaco_pesquisa.php"><img src="\gop\images\apartamento.png" alt="" width="30" height="35">
                     Serviço em Espaços Físicos</a>
-                <a type="button" class="btn btn-primary" href="\gop\solicitacao_conclusao.php"><img src="\gop\images\ordem.png" alt="" width="30" height="30">
+                <a href="\gop\solicitacao_conclusao.php"><img src="\gop\images\ordem.png" alt="" width="30" height="35">
                     Solicitação de Serviço Avulso</a>
-                <a type="button" class="btn btn-primary" href="\gop\solicitacao.php"><img src="\gop\images\voltar.png" alt="" width="30" height="30"> Voltar as opções</a>
+                <a href="\gop\solicitacao.php"><img src="\gop\images\saida.png" alt="" width="30" height="35"> Voltar as opções</a>
             </div>
         </div>
-
     </div>
-
-
 </body>
 
-
-
 </html>
+
+<style>
+    /* Add a black background color to the top navigation */
+    .topnav {
+        background-color: #4682B4;
+        overflow: hidden;
+    }
+
+    /* Style the links inside the navigation bar */
+    .topnav a {
+        float: left;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+    }
+
+    /* Change the color of links on hover */
+    .topnav a:hover {
+        background-color: #4682B4;
+        color: black;
+    }
+
+    /* Add a color to the active/current link */
+    .topnav a.active {
+        background-color: #4682B4;
+        color: white;
+    }
+</style>
