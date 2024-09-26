@@ -278,9 +278,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                                         } else {
                                             $op = '';
                                         }
-                                        echo "  
-                          <option $op>$c_linha[descricao]</option>
-                        ";
+                                        echo "<option $op>$c_linha[descricao]</option>";
                                     }
                                     ?>
                                 </select>
@@ -301,9 +299,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                                         } else {
                                             $op = '';
                                         }
-                                        echo "  
-                          <option $op>$c_linha[descricao]</option>
-                        ";
+                                        echo "<option $op>$c_linha[descricao]</option>";
                                     }
                                     ?>
                                 </select>

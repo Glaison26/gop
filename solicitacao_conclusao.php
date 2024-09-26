@@ -136,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
             </div>
-            <h5>Digite as informações da solicitação e Clique em finalizar para gravar a solicitação. Todos os Campos são obrigatórios</h5>
+            <h5>Digite as informações da solicitação e clique em finalizar para gravar a solicitação. Todos os Campos são obrigatórios</h5>
         </div>
         <?php
         if (!empty($msg_erro)) {

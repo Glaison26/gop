@@ -38,21 +38,17 @@ include("links2.php");
 
         <div style="padding-bottom :2px;">
             <div class="topnav">
-                <a href="\gop\recurso_pesquisa.php"><img src="\gop\images\config.png" alt="" width="30" height="35">
+                <a href="\gop\recurso_pesquisa.php"><img src="\gop\images\construcao.png" alt="" width="30" height="35">
                     Preventiva em Recurso Físico</a>
-                <a href="\gop\espaco_pesquisa.php"><img src="\gop\images\apartamento.png" alt="" width="30" height="35">
+                <a href="\gop\espaco_pesquisa.php"><img src="\gop\images\pedreiro.png" alt="" width="30" height="35">
                     Preventiva em Espaços Físicos</a>
 
                 <a href="\gop\preventivas.php"><img src="\gop\images\saida.png" alt="" width="30" height="35"> Voltar as opções</a>
             </div>
-
-
         </div>
-
+    </div>
 
 </body>
-
-
 
 </html>
 

@@ -36,9 +36,9 @@ include("links2.php");
         </div>
         <div style="padding-bottom :2px;">
             <div class="topnav">
-                <a href="\gop\recurso_pesquisa.php"><img src="\gop\images\config.png" alt="" width="30" height="35">
+                <a href="\gop\recurso_pesquisa.php"><img src="\gop\images\construcao.png" alt="" width="30" height="35">
                     Serviço em Recurso Físico</a>
-                <a href="\gop\espaco_pesquisa.php"><img src="\gop\images\apartamento.png" alt="" width="30" height="35">
+                <a href="\gop\espaco_pesquisa.php"><img src="\gop\images\pedreiro.png" alt="" width="30" height="35">
                     Serviço em Espaços Físicos</a>
                 <a href="\gop\solicitacao_conclusao.php"><img src="\gop\images\ordem.png" alt="" width="30" height="35">
                     Solicitação de Serviço Avulso</a>
