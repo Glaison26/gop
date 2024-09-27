@@ -30,6 +30,66 @@ if ($_SESSION['tiposolicitacao'] == 'E') {  // espaço físico
     $registro = $result->fetch_assoc();
     $c_espaco = $registro['descricao'];
 }
+// rotina para gravação dos dados
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    do {
+        if (empty($_POST['tipo_preventiva']) || empty($_POST['oficina']) || empty($_POST['centrodecusto'])) {
+            $msg_erro = "Todos os Campos devem ser preenchidos!!!";
+            break;
+        }
+
+        if (!is_numeric($_POST['periodicidade'])) {
+            $msg_erro = "Valor de periodicidade inválido !!";
+            break;
+        }
+        $c_descritivo = $_POST['descritivo'];
+        $c_tipopreventiva = $_POST['tipo_preventiva'];
+        // sql para pegar oficina
+        $c_oficina = $_POST["oficina"];
+        $c_sql_oficina = "select oficinas.id, oficinas.descricao from oficinas where oficinas.descricao = '$c_oficina'";
+        $result = $conection->query($c_sql_oficina);
+        $c_linha = $result->fetch_assoc();
+        $i_id_oficina = $c_linha['id'];
+        // verifico a id do centro de custo selecionado no combo 
+        $c_centrodecusto = $_POST['centrodecusto'];
+        $c_sql_secundario = "SELECT centrodecusto.id FROM centrodecusto where centrodecusto.descricao='$c_centrodecusto' ORDER BY centrodecusto.descricao";
+        $result_secundario = $conection->query($c_sql_secundario);
+        $registro_secundario = $result_secundario->fetch_assoc();
+        $i_id_centrodecusto = $registro_secundario['id'];
+        //
+        $d_data_cadastro = new DateTime($_POST['datacadastro']);
+        $d_data_cadastro = $d_data_cadastro->format('Y-m-d');
+        $i_periodicidade = $_POST['periodicidade'];
+        $c_data_ultima = new DateTime($_POST['data_ultima']);
+        $c_data_ultima = $c_data_ultima->format('Y-m-d');
+        if (!isset($_POST['chk_calibracao'])) {
+            $c_calibracao = 'N';
+        } else {
+            $c_calibracao = 'S';
+        }
+        $c_dias = '+' . $i_periodicidade . ' days';
+        $d_data_proxima = date('y-m-d', strtotime($c_dias, strtotime($c_data_ultima))); // incremento 1 dia a data do loop
+        // sql para inclusão do registro
+        if ($_SESSION['tiposolicitacao'] == 'R') // sql para recursos fisicos
+            $c_sql = "Insert into preventivas (id_recurso,id_oficina,id_centrodecusto,tipo,tipo_preventiva, data_cadastro
+                    , periodicidade_geracao, data_prox_realizacao, data_ult_realizacao, calibracao,descritivo) 
+                    value ('$i_id_recurso', '$i_id_oficina', '$i_id_centrodecusto', 'R', '$c_tipopreventiva',
+                    '$d_data_cadastro', '$i_periodicidade', '$d_data_proxima', '$c_data_ultima','$c_calibracao', '$c_descritivo')";
+        if ($_SESSION['tiposolicitacao'] == 'E') // sql para espacos fisicos
+            $c_sql = "Insert into preventivas (id_espaco,id_oficina,id_centrodecusto,tipo,tipo_preventiva, data_cadastro
+                      , periodicidade_geracao, data_prox_realizacao, data_ult_realizacao, calibracao,descritivo) 
+                      value ('$i_id_espaco', '$i_id_oficina', '$i_id_centrodecusto', 'E', '$c_tipopreventiva',
+                     '$d_data_cadastro', '$i_periodicidade', '$d_data_proxima', '$c_data_ultima','$c_calibracao', '$c_descritivo')";
+
+        $result = $conection->query($c_sql);
+        // verifico se a query foi correto
+        if (!$result) {
+            die("Erro ao Executar Sql!!" . $conection->connect_error);
+        }
+        $msg_gravou = "Dados Gravados com Sucesso!!";
+        header('location: /gop/preventivas.php');
+    } while (false);
+}
 ?>
 
 <!-- Interface HTML da pagina de inclusão de preventiva -->
@@ -94,9 +154,9 @@ if ($_SESSION['tiposolicitacao'] == 'E') {  // espaço físico
                     <div class="col-sm-3">
                         <select class="form-select form-select-lg mb-3" id="tipo_preventiva" name="tipo_preventiva" value="<?php echo $c_tipo_preventiva; ?>">
                             <option></option>
-                            <option>Rotina</option>
-                            <option>Preditiva</option>
-                            <option>Sistematica</option>
+                            <option value="R">Rotina</option>
+                            <option value="P">Preditiva</option>
+                            <option value="S">Sistematica</option>
                         </select>
                     </div>
                 </div>
@@ -147,13 +207,13 @@ if ($_SESSION['tiposolicitacao'] == 'E') {  // espaço físico
                 <div class="row mb-3">
                     <label class="col-sm-2 col-form-label">Periodicidade</label>
                     <div class="col-sm-2">
-                        <input type="number" class="form-control" placeholder="no. de dias" name="periodicidade" value="<?php echo $c_periodicidade; ?>" >
+                        <input type="number" class="form-control" placeholder="no. de dias" name="periodicidade" value="<?php echo $c_periodicidade; ?>">
                     </div>
                     <label class="col-sm-3 col-form-label">Ultima Realização</label>
                     <div class="col-sm-2">
-                        <input type="date"  class="form-control" id="datacadastro" name="datacadastro" value="<?php echo $d_dataultima; ?>">
+                        <input type="date" class="form-control" id="data_ultima" name="data_ultima" value="<?php echo $d_dataultima; ?>">
                     </div>
-                    
+
                 </div>
                 <hr>
                 <div class="row mb-3" style="padding-top:15px;padding-left:20px;">
@@ -165,12 +225,12 @@ if ($_SESSION['tiposolicitacao'] == 'E') {  // espaço físico
                     </div>
                 </div>
                 <hr>
-            <div class="row mb-3">
-                <div class="offset-sm-0 col-sm-3">
-                    <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Finalizar</button>
-                    <a class='btn btn-success' href='/gop/preventivas_nova.php'><img src="\gop\images\saida.png" alt="" width="25" height="18"> Voltar</a>
+                <div class="row mb-3">
+                    <div class="offset-sm-0 col-sm-3">
+                        <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Finalizar</button>
+                        <a class='btn btn-success' href='/gop/preventivas_nova.php'><img src="\gop\images\saida.png" alt="" width="25" height="18"> Voltar</a>
+                    </div>
                 </div>
-            </div>
         </form>
 
     </div>

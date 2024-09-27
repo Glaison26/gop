@@ -197,19 +197,20 @@
                         ?>
                  </div>
 
-                 <div style="padding-bottom:15px;">
-                     <footer>
-                         <div style="padding-left :10px;">
-                             <p>
-                             <h4>GOP - Gestão Operacional - Todos os direitos reservados</h4>
-                             </p>
-                         </div>
-                     </footer>
-                 </div>
          </div>
          </body>
- </div>
- </main>
+
+         <div style="padding-bottom:15px;">
+             <footer>
+                 <div style="padding-left :10px;">
+                     <p>
+                     <h4>GOP - Gestão Operacional - Todos os direitos reservados</h4>
+                     </p>
+                 </div>
+             </footer>
+         </div>
+
+     </main>
  </div>
 
 
@@ -263,7 +264,7 @@
      }
 
      footer {
-         position: absolute;
+         position: fixed;
          bottom: 0;
          background-color: #4682B4;
          color: #FFF;
