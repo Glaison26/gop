@@ -162,14 +162,17 @@ include('conexao.php');
 
 
 <body>
+<div class="container-fluid">
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
             <h5>Lista de Ordens de Serviços<h5>
         </div>
     </div>
-    <div class="content">
-        <div class="container-fluid">
+</div>
+
+    <div class="container-fluid">
+     
             <div class='alert alert-info' role='alert'>
                 <div style="padding-left:15px;">
                     <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
@@ -180,7 +183,7 @@ include('conexao.php');
             </div>
 
             <!-- abas de solicitações por recursos físicos, Espaços físicos e avulsos -->
-            <ul class="nav nav-tabs" role="tablist">
+            <ul class="nav nav-tabs nav-tabs-responsive" role="tablist">
                 <li role="presentation" class="active"><a href="#recurso" aria-controls="recurso" role="tab" data-toggle="tab">Ordens de Serviço em Recurso Físico</a></li>
                 <li role="presentation"><a href="#espaco" aria-controls="espaco" role="tab" data-toggle="tab">Ordens de Serviço em Espaços Físicos</a></li>
                 <li role="presentation"><a href="#avulsas" aria-controls="avulsas" role="tab" data-toggle="tab">Ordens de Serviço Avulsas</a></li>
@@ -308,6 +311,7 @@ include('conexao.php');
                 <!-- aba das avulsas-->
                 <div role="tabpanel" class="tab-pane" id="avulsas">
                     <div style="padding-top:15px;padding-left:20px;">
+
                         <table class="table table display table-bordered tabordens_avulsas">
                             <thead class="thead">
                                 <tr>
@@ -377,7 +381,7 @@ include('conexao.php');
 
             ?>
         </div>
-    </div>
+    
 </body>
 
 

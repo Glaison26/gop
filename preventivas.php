@@ -7,6 +7,21 @@ if (!isset($_SESSION['newsession'])) {
 include("conexao.php");
 include("links2.php");
 
+// montagem do sql para pesquisa de preventivas
+$c_sql = "SELECT preventivas.id_recurso, preventivas.id_espaco, preventivas.id_oficina, preventivas.id_centrodecusto, preventivas.tipo_preventiva,
+preventivas.data_cadastro, preventivas.periodicidade_geracao, preventivas.data_prox_realizacao, preventivas.data_ult_realizacao, preventivas.calibracao,
+oficinas.descricao AS oficina, recursos.descricao AS recurso, recursos.patrimonio,
+case
+when preventivas.tipo_preventiva ='S' then 'Sistemática'
+when preventivas.tipo_preventiva ='P' then 'Preditiva'
+when preventivas.tipo_preventiva ='R' then 'Rotina'
+END AS preventiva_tipo_completo
+FROM preventivas
+JOIN oficinas ON preventivas.id_oficina=oficinas.id
+JOIN recursos ON preventivas.id_recurso=recursos.id
+ORDER BY preventivas.data_prox_realizacao desc";
+
+
 ?>
 
 <!DOCTYPE html>
@@ -32,16 +47,14 @@ include("links2.php");
             <div class='alert alert-info' role='alert'>
                 <div style="padding-left:15px;">
                     <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
-
                 </div>
-                <h5><?php $_SESSION['c_usuario'] ?>Clique em nova preventiva um novo registro de preventiva ou realize uma pesquisa com as opções de pesquisa abaixo</h5>
+                <h5><?php $_SESSION['c_usuario']?>Clique em nova preventiva um novo registro de preventiva ou realize uma pesquisa com as opções de pesquisa abaixo</h5>
             </div>
 
             <form method="post">
                 <div style="padding-top:5px;padding-bottom:15px">
                     <a class="btn btn btn-sm" href="preventivas_nova.php"><img src="\gop\images\preventivo.png" alt="" width="25" height="25"> Nova Preventiva</a>
                     <button type="submit" name='btnpesquisa' id='btnpesquisa' class="btn btn btn-sm"><img src="\gop\images\lupa.png" alt="" width="20" height="20"></span> Pesquisar</button>
-
                     <!--<a class="btn btn btn-sm" href="#"><img src="\gop\images\eraser.png" alt="" width="25" height="25"> Limpar pesquisa</a> -->
                     <a class="btn btn btn-sm" href="\gop\menu.php"><img src="\gop\images\saida.png" alt="" width="25" height="25"> Voltar</a>
                 </div>
