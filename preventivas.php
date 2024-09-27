@@ -6,9 +6,27 @@ if (!isset($_SESSION['newsession'])) {
 }
 include("conexao.php");
 include("links2.php");
+if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
+    // montagem do sql para pesquisa de preventivas em recursos fisicos
+    $c_sqlrecursos = "SELECT preventivas.id ,preventivas.id_recurso,  preventivas.descritivo, preventivas.id_oficina, preventivas.id_centrodecusto, preventivas.tipo_preventiva,
+preventivas.data_cadastro, preventivas.periodicidade_geracao, preventivas.data_prox_realizacao, preventivas.data_ult_realizacao, preventivas.calibracao,
+oficinas.descricao AS oficina, recursos.descricao AS recurso, recursos.patrimonio,
+case
+when preventivas.tipo_preventiva ='S' then 'Sistemática'
+when preventivas.tipo_preventiva ='P' then 'Preditiva'
+when preventivas.tipo_preventiva ='R' then 'Rotina'
+END AS preventiva_tipo_completo,
+case
+when preventivas.calibracao ='S' then 'Sim'
+when preventivas.calibracao ='N' then 'Não'
+END AS preventiva_calibracao
+FROM preventivas
+JOIN oficinas ON preventivas.id_oficina=oficinas.id
+JOIN recursos ON preventivas.id_recurso=recursos.id
+ORDER BY preventivas.data_prox_realizacao desc";
 
-// montagem do sql para pesquisa de preventivas
-$c_sql = "SELECT preventivas.id_recurso, preventivas.id_espaco, preventivas.id_oficina, preventivas.id_centrodecusto, preventivas.tipo_preventiva,
+    // montagem de sql para pesquisa de preventivas dem espaçõs fisicos
+    $c_sqlespacos = "SELECT preventivas.id, preventivas.descritivo, preventivas.id_espaco, preventivas.id_oficina, preventivas.id_centrodecusto, preventivas.tipo_preventiva,
 preventivas.data_cadastro, preventivas.periodicidade_geracao, preventivas.data_prox_realizacao, preventivas.data_ult_realizacao, preventivas.calibracao,
 oficinas.descricao AS oficina, recursos.descricao AS recurso, recursos.patrimonio,
 case
@@ -18,9 +36,16 @@ when preventivas.tipo_preventiva ='R' then 'Rotina'
 END AS preventiva_tipo_completo
 FROM preventivas
 JOIN oficinas ON preventivas.id_oficina=oficinas.id
-JOIN recursos ON preventivas.id_recurso=recursos.id
+JOIN recursos ON preventivas.id_espaco=espacos.id
 ORDER BY preventivas.data_prox_realizacao desc";
+    // variaves que repassaram o sql de pesquisa
+    $_SESSION['sqlrecurso'] = $c_sqlrecursos;
+    $_SESSION['sqlespaco'] = $c_sqlespacos;
+    // variavel de controle de retorno para o card ou não no menu principal
+    $_SESSION['pesquisamenu'] = false;
 
+    header('location: /gop/preventivas_lista.php');
+}
 
 ?>
 
@@ -34,7 +59,6 @@ ORDER BY preventivas.data_prox_realizacao desc";
 </head>
 
 <body>
-
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
@@ -48,7 +72,7 @@ ORDER BY preventivas.data_prox_realizacao desc";
                 <div style="padding-left:15px;">
                     <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
                 </div>
-                <h5><?php $_SESSION['c_usuario']?>Clique em nova preventiva um novo registro de preventiva ou realize uma pesquisa com as opções de pesquisa abaixo</h5>
+                <h5><?php $_SESSION['c_usuario'] ?>Clique em nova preventiva um novo registro de preventiva ou realize uma pesquisa com as opções de pesquisa abaixo</h5>
             </div>
 
             <form method="post">
@@ -71,7 +95,7 @@ ORDER BY preventivas.data_prox_realizacao desc";
                             <option>Nenhuma data</option>
                             <option>Próxima realização</option>
                             <option>Ultima realização</option>
-                            
+
                         </select>
                     </div>
 

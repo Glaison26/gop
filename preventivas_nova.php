@@ -27,7 +27,7 @@ include("links2.php");
         </div>
     </div>
 
-    <div class="container -my5">
+    <div class="container-my5">
 
         <div class='alert alert-info' role='alert'>
             <div style="padding-left:15px;">
