@@ -222,8 +222,6 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                             <option>Urgência</option>
                         </select>
                     </div>
-
-
                 </div>
                 <div class="row mb-3">
 

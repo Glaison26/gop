@@ -152,12 +152,7 @@
                                      <a class='dropdown-item' href=''><img src='\gop\images\trocasenha.png' alt='20' height='20'>Troca de Senha</a>
                                  </div>
                              </li>
-                             <li class='nav-item'>
-                                 <div style="padding-top:10px;">
-                                     <a class='navbar-toggler' title='Sair do Sistema' href='\gop\index.php'></b>Sair</b></a>
-                                     <a class='navbar-brand' title='Sair do Sistema' href='\gop\index.php'><img src="\gop\images\saida.png" alt="" width="25" height="25"></a>
-                                 </div>
-                             </li>
+                             
                          </ul>
                      </div>
 

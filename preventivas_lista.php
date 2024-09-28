@@ -73,7 +73,7 @@ include('conexao.php');
             "order": [1, 'asc'],
             "aoColumnDefs": [{
                 'bSortable': false,
-                'aTargets': [6]
+                'aTargets': [7]
             }, {
                 'aTargets': [0],
                 "visible": true
@@ -111,8 +111,6 @@ include('conexao.php');
     });
 </script>
 
-
-
 <body>
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
@@ -130,7 +128,15 @@ include('conexao.php');
 
             <h5>Resultado das Preventivas Selecionadas</h5>
         </div>
+        <?php
+        if ($_SESSION['pesquisamenu'] == false) {
+            echo "<a class='btn btn btn-sm' href='\gop\preventivas.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
+        } else {
+            echo "<a class='btn btn btn-sm' href='\gop\menu.php'><img src='\gop\images\back.png' alt='' width='25' height='25'> Voltar</a>";
+        }
 
+        ?>
+        <hr>
         <!-- abas de preventivas por recursos físicos, Espaços físicos e avulsos -->
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#recurso" aria-controls="recurso" role="tab" data-toggle="tab">Preventivas em Recurso Físico</a></li>
@@ -146,6 +152,7 @@ include('conexao.php');
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Recurso</th>
+                                <th scope="col">Patrimônio</th>
                                 <th scope="col">Descritivo</th>
                                 <th scope="col">Tipo</th>
                                 <th scope="col">Calibração</th>
@@ -168,21 +175,21 @@ include('conexao.php');
                             while ($c_linha = $result->fetch_assoc()) {
                                 $c_data_realizacao = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_ult_realizacao'])));
                                 $c_data_proxima = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_prox_realizacao'])));
-                                
+
                                 echo "
                                 <tr class='info'>
                                     <td>$c_linha[id]</td>
                                     <td>$c_linha[recurso]</td>
+                                    <td>$c_linha[patrimonio]
                                     <td>$c_linha[descritivo]</td>
                                     <td>$c_linha[preventiva_tipo_completo]</td>
                                     <td>$c_linha[preventiva_calibracao]</td>
-                                    <td>$c_linha[periodicidade_geracao]</td>
+                                    <td>$c_linha[periodicidade_geracao] dias</td>
                                     <td>$c_data_realizacao</td>
                                     <td>$c_data_proxima</td>
-                                   
-                                    
+                                                                    
                                     <td>
-                                        <a class='btn btn-secondary btn-sm' href='/gop/solicitacao_detalhe.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Detalhe</a>
+                                        <a class='btn btn-secondary btn-sm' href='/gop/preventivas_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                                         
                                     </td>
 
@@ -199,24 +206,21 @@ include('conexao.php');
             <!-- aba da espaco fisico-->
             <div role="tabpanel" class="tab-pane" id="espaco">
                 <div style="padding-top:15px;padding-left:20px;">
-                    <table class="table table display table-bordered tabsolicitacao_espacos">
+                    <table class="table table display table-bordered tabpreventivas_espacos">
                         <thead class="thead">
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Abertura</th>
-                                <th scope="col">Hora</th>
-                                <th scope="col">Solicitante</th>
                                 <th scope="col">Espaço Físico</th>
+                                <th scope="col">Descritivo</th>
                                 <th scope="col">Tipo</th>
-                                <th scope="col">Opções</th>
+                                <th scope="col">Periodicidade</th>
+                                <th scope="col">Ultima Realização</th>
+                                <th scope="col">Próxima Realização</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-
                             // faço a Leitura da tabela com sql
-
                             $result = $conection->query($c_sql_espaco);
                             // verifico se a query foi correto
                             if (!$result) {
@@ -225,19 +229,21 @@ include('conexao.php');
 
                             // insiro os registro do banco de dados na tabela 
                             while ($c_linha = $result->fetch_assoc()) {
-                                $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_abertura'])));
+                                $c_data_realizacao = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_ult_realizacao'])));
+                                $c_data_proxima = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_prox_realizacao'])));
+
                                 echo "
                                 <tr class='info'>
                                     <td>$c_linha[id]</td>
-                                    <td>$c_linha[solicitacao_status]</td>
-                                    <td>$c_data</td>
-                                    <td>$c_linha[hora_abertura]</td>
-                                    <td>$c_linha[solicitante]</td>
                                     <td>$c_linha[espaco]</td>
-                                    <td>$c_linha[solicitacao_tipo]</td>
+                                    <td>$c_linha[descritivo]</td>
+                                    <td>$c_linha[preventiva_tipo_completo]</td>
+                                    <td>$c_linha[periodicidade_geracao] dias</td>
+                                    <td>$c_data_realizacao</td>
+                                    <td>$c_data_proxima</td>
                                     
                                     <td>
-                                        <a class='btn btn-secondary btn-sm' href='/gop/solicitacao_detalhe.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Detalhe</a>
+                                        <a class='btn btn-secondary btn-sm' href='/gop/preventivas_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                                         
                                     </td>
 
@@ -305,15 +311,7 @@ include('conexao.php');
                 </div>
             </div>
         </div>
-        <br>
-        <?php
-        if ($_SESSION['pesquisamenu'] == false) {
-            echo "<a class='btn btn btn-sm' href='\gop\solicitacao.php'><img src='\gop\images\back.png' alt='' width='25' height='25'> Voltar</a>";
-        } else {
-            echo "<a class='btn btn btn-sm' href='\gop\menu.php'><img src='\gop\images\back.png' alt='' width='25' height='25'> Voltar</a>";
-        }
 
-        ?>
     </div>
 
 </body>
