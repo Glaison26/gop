@@ -30,7 +30,7 @@ include('conexao.php');
                 'aTargets': [6]
             }, {
                 'aTargets': [0],
-                "visible": true
+                "visible": false
             }],
             "oLanguage": {
                 "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -73,10 +73,10 @@ include('conexao.php');
             "order": [1, 'asc'],
             "aoColumnDefs": [{
                 'bSortable': false,
-                'aTargets': [7]
+                'aTargets': [6]
             }, {
                 'aTargets': [0],
-                "visible": true
+                "visible": false
             }],
             "oLanguage": {
                 "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -147,13 +147,13 @@ include('conexao.php');
             <!-- aba da recurso fisico-->
             <div role="tabpanel" class="tab-pane active" id="recurso">
                 <div style="padding-top:15px;padding-left:20px;">
-                    <table class="table table display table-bordered tabpreventivas_recursos">
+                    <table class="table table display table-bordered table-sm tabpreventivas_recursos">
                         <thead class="thead">
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Recurso</th>
                                 <th scope="col">Patrimônio</th>
-                                <th scope="col">Descritivo</th>
+                                
                                 <th scope="col">Tipo</th>
                                 <th scope="col">Calibração</th>
                                 <th scope="col">Periodicidade</th>
@@ -181,7 +181,7 @@ include('conexao.php');
                                     <td>$c_linha[id]</td>
                                     <td>$c_linha[recurso]</td>
                                     <td>$c_linha[patrimonio]
-                                    <td>$c_linha[descritivo]</td>
+                                    
                                     <td>$c_linha[preventiva_tipo_completo]</td>
                                     <td>$c_linha[preventiva_calibracao]</td>
                                     <td>$c_linha[periodicidade_geracao] dias</td>
@@ -190,7 +190,8 @@ include('conexao.php');
                                                                     
                                     <td>
                                         <a class='btn btn-secondary btn-sm' href='/gop/preventivas_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
-                                        
+                                      <a class='btn btn-success btn-sm' href='/gop/preventivas_anexos.php?id=$c_linha[id]'>
+                                        <img src='\gop\images\anexo.png' alt='' width='23' height='18'> Anexos</a>  
                                     </td>
 
                                 </tr>
@@ -211,7 +212,7 @@ include('conexao.php');
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Espaço Físico</th>
-                                <th scope="col">Descritivo</th>
+                               
                                 <th scope="col">Tipo</th>
                                 <th scope="col">Periodicidade</th>
                                 <th scope="col">Ultima Realização</th>
@@ -236,7 +237,7 @@ include('conexao.php');
                                 <tr class='info'>
                                     <td>$c_linha[id]</td>
                                     <td>$c_linha[espaco]</td>
-                                    <td>$c_linha[descritivo]</td>
+                                    
                                     <td>$c_linha[preventiva_tipo_completo]</td>
                                     <td>$c_linha[periodicidade_geracao] dias</td>
                                     <td>$c_data_realizacao</td>
@@ -244,7 +245,8 @@ include('conexao.php');
                                     
                                     <td>
                                         <a class='btn btn-secondary btn-sm' href='/gop/preventivas_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
-                                        
+                                        <a class='btn btn-success btn-sm' href='/gop/preventivas_anexos.php?id=$c_linha[id]'>
+                                        <img src='\gop\images\anexo.png' alt='' width='23' height='18'> Anexos</a>  
                                     </td>
 
                                 </tr>

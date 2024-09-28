@@ -25,12 +25,12 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     if ($_POST['tipo_data'] == '2') {
         $c_where = "(data_ult_realizacao>='$d_data1' and data_ult_realizacao<='$d_data2') and ";
     }
-    // pesquisa por tipo de preventiva
+    // pesquisa por descritivo da preventiva
     if ($_POST['descritivo'] <> '') {
         $c_descritivo = $_POST['descritivo'];
         $c_where = $c_where . "preventivas.descritivo LIKE '%$c_descritivo%' and ";
     }
-
+    // tipo de preventiva
     $c_tipo = $_POST['tipo'];
     if ($c_tipo <> 'T')
         $c_where =  $c_where ."tipo_preventiva='$c_tipo' and ";
