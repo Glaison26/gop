@@ -33,7 +33,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     // tipo de preventiva
     $c_tipo = $_POST['tipo'];
     if ($c_tipo <> 'T')
-        $c_where =  $c_where ."tipo_preventiva='$c_tipo' and ";
+        $c_where =  $c_where . "tipo_preventiva='$c_tipo' and ";
     // pesquisa por descritivo
 
     if ($c_where <> '')

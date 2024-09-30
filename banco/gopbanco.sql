@@ -43,11 +43,13 @@ CREATE TABLE IF NOT EXISTS `preventivas` (
   CONSTRAINT `FK_preventivas_espacos` FOREIGN KEY (`id_espaco`) REFERENCES `espacos` (`id`),
   CONSTRAINT `FK_preventivas_oficinas` FOREIGN KEY (`id_oficina`) REFERENCES `oficinas` (`id`),
   CONSTRAINT `FK_preventivas_recursos` FOREIGN KEY (`id_recurso`) REFERENCES `recursos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.preventivas: ~1 rows (aproximadamente)
-REPLACE INTO `preventivas` (`id`, `id_recurso`, `id_espaco`, `id_oficina`, `id_centrodecusto`, `tipo`, `tipo_preventiva`, `data_cadastro`, `periodicidade_geracao`, `data_prox_realizacao`, `data_ult_realizacao`, `calibracao`, `descritivo`) VALUES
-	(1, 1, NULL, 3, 1, 'R', 'S', '2024-09-25', 30, '2024-09-25', '2024-09-25', 'N', NULL);
+-- Copiando dados para a tabela gop.preventivas: ~2 rows (aproximadamente)
+INSERT INTO `preventivas` (`id`, `id_recurso`, `id_espaco`, `id_oficina`, `id_centrodecusto`, `tipo`, `tipo_preventiva`, `data_cadastro`, `periodicidade_geracao`, `data_prox_realizacao`, `data_ult_realizacao`, `calibracao`, `descritivo`) VALUES
+	(1, 1, NULL, 3, 1, 'R', 'S', '2024-09-25', 30, '2024-10-25', '2024-09-25', 'N', _binary 0x7465737465),
+	(2, 1, NULL, 3, 1, 'R', 'P', '2024-09-26', 45, '2024-11-10', '2024-09-26', 'N', _binary 0x746573746520636f6d20746573746520646520616c74657261c3a7c3a36f),
+	(4, NULL, 2, 7, 2, 'E', 'P', '2024-09-26', 20, '2024-10-08', '2024-09-18', 'N', _binary 0x74657374652065737061c3a76f2066697369636f);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
