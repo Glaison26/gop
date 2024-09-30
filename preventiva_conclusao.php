@@ -77,9 +77,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     '$d_data_cadastro', '$i_periodicidade', '$d_data_proxima', '$c_data_ultima','$c_calibracao', '$c_descritivo')";
         if ($_SESSION['tiposolicitacao'] == 'E') // sql para espacos fisicos
             $c_sql = "Insert into preventivas (id_espaco,id_oficina,id_centrodecusto,tipo,tipo_preventiva, data_cadastro
-                      , periodicidade_geracao, data_prox_realizacao, data_ult_realizacao, calibracao,descritivo) 
+                      , periodicidade_geracao, data_prox_realizacao, data_ult_realizacao, calibracao,descritivo, gerar) 
                       value ('$i_id_espaco', '$i_id_oficina', '$i_id_centrodecusto', 'E', '$c_tipopreventiva',
-                     '$d_data_cadastro', '$i_periodicidade', '$d_data_proxima', '$c_data_ultima','$c_calibracao', '$c_descritivo')";
+                     '$d_data_cadastro', '$i_periodicidade', '$d_data_proxima', '$c_data_ultima','$c_calibracao', '$c_descritivo', 'Sim')";
 
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
