@@ -33,7 +33,7 @@ if ($_SESSION['tiposolicitacao'] == 'E') {  // espaço físico
 // rotina para gravação dos dados
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     do {
-        if (empty($_POST['tipo_preventiva']) || empty($_POST['oficina']) || empty($_POST['centrodecusto'])) {
+        if (empty($_POST['tipo_preventiva']) || empty($_POST['oficina']) || empty($_POST['ocorrencia']) || empty($_POST['centrodecusto'])) {
             $msg_erro = "Todos os Campos devem ser preenchidos!!!";
             break;
         }
@@ -62,6 +62,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $i_periodicidade = $_POST['periodicidade'];
         $c_data_ultima = new DateTime($_POST['data_ultima']);
         $c_data_ultima = $c_data_ultima->format('Y-m-d');
+        // 
+        $c_ocorrencia = $_POST['ocorrencia'];
+        $c_sql_ocorrencia = "select ocorrencias.id from ocorrencias where ocorrencias.descricao='$c_ocorrencia'";
+        $result_ocorrencia = $conection->query($c_sql_ocorrencia);
+        $registro_ocorrencia = $result_ocorrencia->fetch_assoc();
+        $i_id_ocorrencia = $registro_ocorrencia['id'];
         if (!isset($_POST['chk_calibracao'])) {
             $c_calibracao = 'N';
         } else {
@@ -72,14 +78,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // sql para inclusão do registro
         if ($_SESSION['tiposolicitacao'] == 'R') // sql para recursos fisicos
             $c_sql = "Insert into preventivas (id_recurso,id_oficina,id_centrodecusto,tipo,tipo_preventiva, data_cadastro
-                    , periodicidade_geracao, data_prox_realizacao, data_ult_realizacao, calibracao,descritivo) 
+                    , periodicidade_geracao, data_prox_realizacao, data_ult_realizacao, calibracao,descritivo, gerar, id_ocorrencia) 
                     value ('$i_id_recurso', '$i_id_oficina', '$i_id_centrodecusto', 'R', '$c_tipopreventiva',
-                    '$d_data_cadastro', '$i_periodicidade', '$d_data_proxima', '$c_data_ultima','$c_calibracao', '$c_descritivo')";
+                    '$d_data_cadastro', '$i_periodicidade', '$d_data_proxima', '$c_data_ultima','$c_calibracao', '$c_descritivo', 'Sim', '$i_id_ocorrencia')";
         if ($_SESSION['tiposolicitacao'] == 'E') // sql para espacos fisicos
             $c_sql = "Insert into preventivas (id_espaco,id_oficina,id_centrodecusto,tipo,tipo_preventiva, data_cadastro
-                      , periodicidade_geracao, data_prox_realizacao, data_ult_realizacao, calibracao,descritivo, gerar) 
+                      , periodicidade_geracao, data_prox_realizacao, data_ult_realizacao, calibracao,descritivo, gerar, id_ocorrencia) 
                       value ('$i_id_espaco', '$i_id_oficina', '$i_id_centrodecusto', 'E', '$c_tipopreventiva',
-                     '$d_data_cadastro', '$i_periodicidade', '$d_data_proxima', '$c_data_ultima','$c_calibracao', '$c_descritivo', 'Sim')";
+                     '$d_data_cadastro', '$i_periodicidade', '$d_data_proxima', '$c_data_ultima','$c_calibracao', '$c_descritivo', 'Sim', '$i_id_ocorrencia')";
 
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
@@ -205,7 +211,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">Periodicidade</label>
+                    <label class="col-sm-3 col-form-label">Periodicidade</label>
                     <div class="col-sm-2">
                         <input type="number" class="form-control" placeholder="no. de dias" name="periodicidade" value="<?php echo $c_periodicidade; ?>">
                     </div>
@@ -214,6 +220,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <input type="date" class="form-control" id="data_ultima" name="data_ultima" value="<?php echo $d_dataultima; ?>">
                     </div>
 
+                </div>
+                <br>
+                <div class="row m3-2">
+                    <label class="col-sm-2 col-form-label">Ocorrencia </label>
+                    <div class="col-sm-8">
+                        <select class="form-select form-select-lg mb-3" id="ocorrencia" name="ocorrencia">
+                            <option></option>
+                            <?php
+                            // select da tabela de ocorrencia
+                            $c_sql_setor = "SELECT ocorrencias.id, ocorrencias.descricao FROM ocorrencias ORDER BY ocorrencias.descricao";
+                            $result_setor = $conection->query($c_sql_setor);
+                            while ($c_linha = $result_setor->fetch_assoc()) {
+                                echo "  
+                          <option>$c_linha[descricao]</option>
+                        ";
+                            }
+                            ?>
+                        </select>
+
+                    </div>
                 </div>
                 <hr>
                 <div class="row mb-3" style="padding-top:15px;padding-left:20px;">

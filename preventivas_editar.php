@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         exit;
     }
 
-   
+
     // leitura da preventiva através de sql usando id passada
     $c_sql = "select * from preventivas where id=$i_id";
     $result = $conection->query($c_sql);
@@ -34,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $c_periodicidade = $registro['periodicidade_geracao'];
     $d_data_ultima = $registro['data_ult_realizacao'];
     $c_descritivo = $registro['descritivo'];
+    $i_id_ocorrencia = $registro['id_ocorrencia'];
 } else {  // post das informações
     do {
         if (!is_numeric($_POST['periodicidade'])) {
@@ -60,6 +61,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         $i_periodicidade = $_POST['periodicidade'];
         $c_data_ultima = new DateTime($_POST['data_ultima']);
         $c_data_ultima = $c_data_ultima->format('Y-m-d');
+        // 
+        $c_ocorrencia = $_POST['ocorrencia'];
+        $c_sql_ocorrencia = "select ocorrencias.id from ocorrencias where ocorrencias.descricao='$c_ocorrencia'";
+        $result_ocorrencia = $conection->query($c_sql_ocorrencia);
+        $registro_ocorrencia = $result_ocorrencia->fetch_assoc();
+        $i_id_ocorrencia = $registro_ocorrencia['id'];
         if (!isset($_POST['chk_calibracao'])) {
             $c_calibracao = 'N';
         } else {
@@ -70,9 +77,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         // sql para alteração do registro
         $c_sql = "update preventivas set id_oficina='$i_id_oficina',id_centrodecusto='$i_id_centrodecusto',
     tipo_preventiva='$c_tipopreventiva', data_cadastro='$d_data_cadastro',periodicidade_geracao='$i_periodicidade',
-    data_prox_realizacao='$d_data_proxima', data_ult_realizacao='$c_data_ultima', calibracao='$c_calibracao',
+    data_prox_realizacao='$d_data_proxima', data_ult_realizacao='$c_data_ultima', calibracao='$c_calibracao', id_ocorrencia='$i_id_ocorrencia',
     descritivo='$c_descritivo' where id=$i_id";
-    echo $c_sql;
+        echo $c_sql;
 
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
@@ -207,7 +214,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                     </div>
 
                 </div>
-                <hr>
+                <br>
+                <div class="row m3-2">
+                    <label class="col-sm-2 col-form-label">Ocorrencia </label>
+                    <div class="col-sm-8">
+                        <select class="form-select form-select-lg mb-3" id="ocorrencia" name="ocorrencia">
+
+                            <?php
+                            // select da tabela de ocorrencia
+                            $c_sql_setor = "SELECT ocorrencias.id, ocorrencias.descricao FROM ocorrencias ORDER BY ocorrencias.descricao";
+                            $result_setor = $conection->query($c_sql_setor);
+                            while ($c_linha = $result_setor->fetch_assoc()) {
+                                $op = '';
+                                if ($c_linha['id'] == $registro['id_ocorrencia']) {
+                                    $op = 'selected';
+                                } else {
+                                    $op = '';
+                                }
+                                echo "  
+                          <option $op>$c_linha[descricao]</option>
+                        ";
+                            }
+                            ?>
+                        </select>
+
+                    </div>
+                </div>
                 <div class="row mb-3" style="padding-top:15px;padding-left:20px;">
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">Descritivo</label>

@@ -50,6 +50,14 @@ frontend com tabela das preventivas a serem geradas
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
+<script language="Javascript">
+        function confirma_geracao(id) {
+            var resposta = confirm("Confirma a geração das preventivas?");
+            if (resposta == true) {
+                window.location.href = "/gop/preventivas_gerar.php";
+            }
+        }
+    </script>
 <!-- script para tabela de preventivas em recursos fisicos a serem geradas -->
 <script>
     $(document).ready(function() {
@@ -159,7 +167,7 @@ frontend com tabela das preventivas a serem geradas
 
             <h5>Resultado das Preventivas Selecionadas para geração de ordens de serviço. Selecione as preventiava a serem geradas e clique em gerar ordens de serviço </h5>
         </div>
-        <a class='btn btn btn-sm' href='#'><img src='\gop\images\ordem.png' alt='' width='25' height='25'> Gerar ordens de serviço</a>
+        <a class='btn btn btn-sm' href='javascript:func()'onclick='confirma_geracao()'><img src='\gop\images\ordem.png' alt='' width='25' height='25'> Gerar ordens de serviço</a>
         <a class='btn btn btn-sm' href='\gop\preventivas.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>
 
         <hr>
@@ -178,7 +186,6 @@ frontend com tabela das preventivas a serem geradas
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Recurso</th>
-                              
                                 <th scope="col">Calibração</th>
                                 <th scope="col">Periodicidade</th>
                                 <th scope="col">Ultima Realização</th>
