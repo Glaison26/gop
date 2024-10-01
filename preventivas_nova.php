@@ -23,7 +23,7 @@ include("links2.php");
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
-            <h5>Cadastro de Prevêntivas<h5>
+            <h5>Cadastro de Preventivas<h5>
         </div>
     </div>
 

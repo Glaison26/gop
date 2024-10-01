@@ -27,7 +27,7 @@ ORDER BY preventivas.data_prox_realizacao desc";
 echo $c_sql_recurso;
 // sql com as preventiva com data da próxima realização igual ou inferior a data do dia em espaço fisico
 $c_sql_espaco = "SELECT preventivas.id, preventivas.tipo, preventivas.id_oficina, preventivas.tipo_preventiva, 
-preventivas.periodicidade_geracao, preventivas.id_setor, preventivas.calibracao, preventivas.id_espaco, 
+preventivas.periodicidade_geracao, preventivas.descritivo, preventivas.id_setor, preventivas.calibracao, preventivas.id_espaco, 
 espacos.descricao as espaco, preventivas.data_ult_realizacao, preventivas.data_prox_realizacao,
  preventivas.gerar, preventivas.id_ocorrencia,
 case
@@ -55,6 +55,11 @@ $c_sql_responsavel = "Select id from usuarios where login='$c_responsavel'";
 $result_responsavel = $conection->query($c_sql_responsavel);
 $registro_responsavel = $result_responsavel->fetch_assoc();
 $i_id_solicitante = $registro_responsavel['id'];
+$d_data_geracao =  date("Y-m-d");
+$d_hora_geracao = date('H:i');
+// data de inicio
+$d_data_inicio = date("Y-m-d");
+$d_hora_inicio = date('H:i');
 // loop para recursos fisicos
 while ($c_linha = $result->fetch_assoc()) {
 
@@ -64,21 +69,18 @@ while ($c_linha = $result->fetch_assoc()) {
     $i_id_setor   = $c_linha['id_setor'];
     $i_id_ocorrencia = $c_linha['id_ocorrencia'];
     //
-    $d_data_geracao =  date("Y-m-d");
-    $d_hora_geracao = date('H:i');
     $c_tipo = $c_linha['tipo']; // recurso fisico, espaço fisico ou avulsa 
     $c_tipo_ordem = 'P'; // Preventiva 
     $c_descritivo = $c_linha['descritivo'];
+    $c_descricao = 'Preventiva de '.$c_linha['recurso'];
     $c_tipo_preventiva = $c_linha['tipo_preventiva'];
-    // data de inicio
-    $d_data_inicio = date("Y-m-d");
-    $d_hora_inicio = date('H:i');
+    
     $i_id_preventiva = $c_linha['id'];
     // inserir dados da preventiva na tabela de ordens de serviços
     $c_sql = "insert into ordens (id_solicitante, id_responsavel, id_recurso, id_oficina, id_setor, data_inicio, hora_inicio, tipo,
-    tipo_ordem, tipo_preventiva, descricao,  data_geracao, hora_geracao, status)
-    value ('$i_id_solicitante', '$i_id_solicitante', '$i_id_recurso', '$i_id_oficina', '$i_id_setor', '$d_data_inicio', '$d_hora_inicio',
-    'R', 'P', '$c_tipo_preventiva', '$c_descritivo', '$d_data_geracao', '$d_hora_geracao', 'A' )";
+    tipo_ordem, tipo_preventiva, descricao,  data_geracao, hora_geracao, status, id_ocorrencia, descritivo)
+    value ('$i_id_solicitante', '$i_id_solicitante', '$i_id_recurso', '$i_id_oficina','$i_id_setor', '$d_data_inicio', '$d_hora_inicio',
+    'R', 'P', '$c_tipo_preventiva', '$c_descritivo', '$d_data_geracao', '$d_hora_geracao', 'A', '$i_id_ocorrencia', '$c_descricao')";
     $resultado = $conection->query($c_sql);
     if (!$resultado) {
         die("Erro ao Executar Sql!!" . $conection->connect_error);
@@ -86,16 +88,66 @@ while ($c_linha = $result->fetch_assoc()) {
     // mudança de dados da prevetiva gerada
     $i_periodicidade = $c_linha['periodicidade_geracao'];
     $c_dias = '+' . $i_periodicidade . ' days';
+    $d_data_anterior = $c_linha['data_prox_realizacao'];
     $d_data_proxima = date('y-m-d', strtotime($c_dias, strtotime($c_linha['data_prox_realizacao']))); // incremento 1 dia a data do loop
-    $d_data_anterior = date("Y-m-d");
-   
+    
+
     $c_sql = "update preventivas set data_prox_realizacao='$d_data_proxima', data_ult_realizacao='$d_data_anterior'
     where id='$i_id_preventiva' ";
     $resultado = $conection->query($c_sql);
     if (!$resultado) {
         die("Erro ao Executar Sql!!" . $conection->connect_error);
     }
+}
 
-   
+////////////////////////////////////////////////////
+// rotina para gerar preventivas de espaços fisicos
+////////////////////////////////////////////////////
+
+$result = $conection->query($c_sql_espaco);
+// verifico se a query foi correto
+if (!$result) {
+    die("Erro ao Executar Sql!!" . $conection->connect_error);
+}
+// loop para espaços fisicos
+while ($c_linha = $result->fetch_assoc()) {
+    // variaveis para fazer o insert
+    $i_id_espaco = $c_linha['id_espaco'];
+    $i_id_oficina = $c_linha['id_oficina'];
+    $i_id_setor   = $c_linha['id_setor'];
+    $i_id_ocorrencia = $c_linha['id_ocorrencia'];
+    //
+    $c_tipo = $c_linha['tipo']; // recurso fisico, espaço fisico ou avulsa 
+    $c_tipo_ordem = 'P'; // Preventiva 
+    $c_descritivo = $c_linha['descritivo'];
+    $c_descricao = 'Preventiva de '.$c_linha['espaco'];
+    $c_tipo_preventiva = $c_linha['tipo_preventiva'];
+
+    $i_id_preventiva = $c_linha['id'];
+    // inserir dados da preventiva na tabela de ordens de serviços
+    $c_sql = "insert into ordens (id_solicitante, id_responsavel, id_espaco, id_oficina, id_setor, data_inicio, hora_inicio, tipo,
+    tipo_ordem, tipo_preventiva, descricao,  data_geracao, hora_geracao, status, id_ocorrencia, descritivo)
+    value ('$i_id_solicitante', '$i_id_solicitante', '$i_id_recurso', '$i_id_oficina', '$i_id_setor', '$d_data_inicio', '$d_hora_inicio',
+    'E', 'P', '$c_tipo_preventiva', '$c_descritivo', '$d_data_geracao', '$d_hora_geracao', 'A', $i_id_ocorrencia, '$c_descricao')";
+    $resultado = $conection->query($c_sql);
+    if (!$resultado) {
+        die("Erro ao Executar Sql!!" . $conection->connect_error);
+    }
+    // mudança de dados da prevetiva gerada
+    $i_periodicidade = $c_linha['periodicidade_geracao'];
+    $c_dias = '+' . $i_periodicidade . ' days';
+    $d_data_anterior = $c_linha['data_prox_realizacao'];
+    $d_data_proxima = date('y-m-d', strtotime($c_dias, strtotime($c_linha['data_prox_realizacao']))); // incremento 1 dia a data do loop
+    
+
+    $c_sql = "update preventivas set data_prox_realizacao='$d_data_proxima', data_ult_realizacao='$d_data_anterior'
+    where id='$i_id_preventiva' ";
+    $resultado = $conection->query($c_sql);
+    if (!$resultado) {
+        die("Erro ao Executar Sql!!" . $conection->connect_error);
+    }
+    //  chamo pagina com o resumo da geração de preventivas
+    header('location: /gop/preventivas_resumo.php');
+
 }
 // 
