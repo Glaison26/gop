@@ -92,11 +92,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     }
     $c_conclusao = $registro['conclusao'];
     $c_nota = $registro['numero_nota'];
-    
-    $c_valor_material = number_format($registro['valor_material'], 2, '.', '');
-    $c_valor_servico = number_format($registro['valor_servico'], 2, '.', '');
+
+    if ($registro['valor_material'] > 0)
+        $c_valor_material = number_format($registro['valor_material'], 2, '.', '');
+    if ($registro['valor_servico'] > 0)
+        $c_valor_servico = number_format($registro['valor_servico'], 2, '.', '');
     $c_status = $registro['status'];
-    
+
     if ($c_status == 'A') {
         $c_status = 'Aberta';
     } else {
