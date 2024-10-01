@@ -10,12 +10,13 @@ if (!isset($_SESSION['newsession'])) {
 include("conexao.php");
 include("links2.php");
 // pegar ordens geradas
-$c_data = date('Y/m/d H:i');
-$c_sql =  "SELECT  FROM ordens";
-
+$c_data = date('Y/m/d');
+$c_sql =  "SELECT ordens.id, ordens.descritivo FROM ordens
+WHERE ordens.data_geracao='$c_data' ORDER BY ordens.id desc";
+//echo $c_sql;
 $result = $conection->query($c_sql);
 $c_linha = $result->fetch_assoc();
-$solicitacao = $c_linha['id_solicitacao'];
+
 // verifico se a query foi correto
 if (!$result) {
     die("Erro ao Executar Sql!!" . $conection->connect_error);
@@ -44,10 +45,44 @@ if (!$result) {
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
             </div>
-            <h3>Lista de Ordens de Serviço Geradas pelas preventivas do dia.</h3>
+            <h4>Lista de Ordens de Serviço Geradas pelas preventivas do dia.</h4>
         </div>
+        <div style="padding-bottom:15px;">
+            <a class="btn btn btn-success" href="/gop/preventivas.php"><span class="glyphicon glyphicon-off"></span> Encerrar</a><br>
+        </div>
+        <table class="table table display table-bordered tabordens">
+            <thead class="thead">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Descritivo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
 
-        <a class="btn btn btn-success" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Encerrar</a>
+                // faço a Leitura da tabela com sql
+
+                $result = $conection->query($c_sql);
+                // verifico se a query foi correto
+                if (!$result) {
+                    die("Erro ao Executar Sql!!" . $conection->connect_error);
+                }
+
+                // insiro os registro do banco de dados na tabela 
+                while ($c_linha = $result->fetch_assoc()) {
+
+                    echo "
+                                <tr class='info'>
+                                    <td>$c_linha[id]</td>
+                                    <td>$c_linha[descritivo]</td>
+
+                                </tr>
+                                ";
+                }
+                ?>
+
+            </tbody>
+        </table>
     </div>
 
 </body>

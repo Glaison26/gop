@@ -51,13 +51,13 @@ frontend com tabela das preventivas a serem geradas
 
 </head>
 <script language="Javascript">
-        function confirma_geracao(id) {
-            var resposta = confirm("Confirma a geração das preventivas?");
-            if (resposta == true) {
-                window.location.href = "/gop/preventivas_gerar.php";
-            }
+    function confirma_geracao(id) {
+        var resposta = confirm("Confirma a geração das preventivas?");
+        if (resposta == true) {
+            window.location.href = "/gop/preventivas_gerar.php";
         }
-    </script>
+    }
+</script>
 <!-- script para tabela de preventivas em recursos fisicos a serem geradas -->
 <script>
     $(document).ready(function() {
@@ -167,7 +167,7 @@ frontend com tabela das preventivas a serem geradas
 
             <h5>Resultado das Preventivas Selecionadas para geração de ordens de serviço. Selecione as preventiava a serem geradas e clique em gerar ordens de serviço </h5>
         </div>
-        <a class='btn btn btn-sm' href='javascript:func()'onclick='confirma_geracao()'><img src='\gop\images\ordem.png' alt='' width='25' height='25'> Gerar ordens de serviço</a>
+        <a class='btn btn btn-sm' href='javascript:func()' onclick='confirma_geracao()'><img src='\gop\images\gerar.png' alt='' width='25' height='25'> Gerar ordens</a>
         <a class='btn btn btn-sm' href='\gop\preventivas.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>
 
         <hr>
@@ -175,7 +175,6 @@ frontend com tabela das preventivas a serem geradas
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#recurso" aria-controls="recurso" role="tab" data-toggle="tab">Preventivas em Recurso Físico</a></li>
             <li role="presentation"><a href="#espaco" aria-controls="espaco" role="tab" data-toggle="tab">Preventivas em Espaços Físicos</a></li>
-
         </ul>
         <div class="tab-content">
             <!-- aba da recurso fisico-->
@@ -240,7 +239,7 @@ frontend com tabela das preventivas a serem geradas
                     <table class="table table display table-bordered tabpreventivas_espacos">
                         <thead class="thead">
                             <tr>
-                            <th scope="col">#</th>
+                                <th scope="col">#</th>
                                 <th scope="col">Espaço Fisico</th>
                                 <th scope="col">Calibração</th>
                                 <th scope="col">Periodicidade</th>

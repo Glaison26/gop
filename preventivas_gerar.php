@@ -74,7 +74,6 @@ while ($c_linha = $result->fetch_assoc()) {
     $c_descritivo = $c_linha['descritivo'];
     $c_descricao = 'Preventiva de '.$c_linha['recurso'];
     $c_tipo_preventiva = $c_linha['tipo_preventiva'];
-    
     $i_id_preventiva = $c_linha['id'];
     // inserir dados da preventiva na tabela de ordens de serviços
     $c_sql = "insert into ordens (id_solicitante, id_responsavel, id_recurso, id_oficina, id_setor, data_inicio, hora_inicio, tipo,
@@ -90,8 +89,7 @@ while ($c_linha = $result->fetch_assoc()) {
     $c_dias = '+' . $i_periodicidade . ' days';
     $d_data_anterior = $c_linha['data_prox_realizacao'];
     $d_data_proxima = date('y-m-d', strtotime($c_dias, strtotime($c_linha['data_prox_realizacao']))); // incremento 1 dia a data do loop
-    
-
+    //
     $c_sql = "update preventivas set data_prox_realizacao='$d_data_proxima', data_ult_realizacao='$d_data_anterior'
     where id='$i_id_preventiva' ";
     $resultado = $conection->query($c_sql);

@@ -9,9 +9,9 @@ include('links.php');
 include('conexao.php');
 if (isset($_GET['id'])) {
     $i_id = $_GET['id'];
-    $_SESSION['id_ordem'] = $i_id;
+    $_SESSION['id_preventiva'] = $i_id;
 } else {
-    $i_id = $_SESSION['id_ordem'];
+    $i_id = $_SESSION['id_preventiva'];
 }
 ?>
 
@@ -34,24 +34,20 @@ if (isset($_GET['id'])) {
                 <div class="panel panel-primary class">
                     <div class="panel-heading text-center">
                         <h4>GOP - Gestão Operacional</h4>
-                        <h5>Gerenciamento da Ordem de Serviço<h5>
+                        <h5>Anexos da Preventiva<h5>
                     </div>
                 </div>
                 <div>
                     <div style="padding-bottom :2px;">
                         <div class="topnav">
-                           
-                            <a title='Concluir Ordem de Serviço' href='#'><img src="\gop\images\registro.png" alt="" width="30" height="25"><span> Emitir</span></a>
-                            <a title='Concluir Ordem de Serviço' href='#'><img src="\gop\images\concluir.png" alt="" width="30" height="25"><span> Concluir</span></a>
-                            <a title='Cancelar Ordem de Serviço' href='#'><img src="\gop\images\cancelar.png" alt="" width="30" height="25"><span> Cancelar</span></a>
-                            <a title='Suspender Ordem de Serviço' href='#'><img src='\gop\images\aguardado.png' alt='' width='30' height='25'><span> Suspender</span></a>
-                            <a title='Voltar' href='\gop\ordens_lista.php'><img src="\gop\images\saida.png" alt="" width="30" height="25"><span> Voltar</span></a>
+                          
+                            <a title='Voltar' href='\gop\preventivas_lista.php'><img src="\gop\images\saida.png" alt="" width="30" height="25"><span> Voltar</span></a>
                         </div>
                     </div>
                     <br>
                     <div class='alert alert-info' role='alert'>
                         <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
-                        <h5>Clique na opção desejada das ações ou itens anexos a Ordem de serviço <?php echo $i_id; ?></h5>
+                        <h5>Gerencie itens anexos a Preventiva selecionada</h5>
                     </div>
                     <!-- abas de itens de os -->
                     <ul class="nav nav-tabs" role="tablist">
@@ -63,30 +59,31 @@ if (isset($_GET['id'])) {
                         <li role="presentation"><a href="#ferramenta" aria-controls="ferramenta" role="tab" data-toggle="tab">Ferramentas</a></li>
 
                     </ul>
+                  
                     <div class="tab-content">
                         <!-- aba da materiais gastos-->
                         <div role="tabpanel" class="tab-pane active" id="materiais">
                             <div style="padding-top:15px;padding-left:20px;">
-                                <?php include('ordens_materiais.php'); ?>
+                                <?php include('preventivas_materiais.php'); ?>
 
                             </div>
                         </div>
                         <!-- aba de executores-->
                         <div role="tabpanel" class="tab-pane" id="executores">
                             <div style="padding-top:15px;padding-left:20px;">
-                                <?php include('ordens_executores.php') ?>
+                                <?php include('preventivas_executores.php') ?>
                             </div>
                         </div>
                         <!-- aba de POP-->
                         <div role="tabpanel" class="tab-pane" id="abapop">
                             <div style="padding-top:15px;padding-left:20px;">
-                                <?php include('ordens_pop.php'); ?>
+                                <?php //include('ordens_pop.php'); ?>
                             </div>
                         </div>
                         <!-- aba de checklist-->
                         <div role="tabpanel" class="tab-pane" id="checklist">
                             <div style="padding-top:15px;padding-left:20px;">
-                               <?php include('ordens_check.php');?>
+                               <?php //include('ordens_check.php');?>
                             </div>
                         </div>
                         <!-- aba de plano de ação-->
@@ -98,7 +95,7 @@ if (isset($_GET['id'])) {
                         <!-- aba de plano de ação-->
                         <div role="tabpanel" class="tab-pane" id="ferramenta">
                             <div style="padding-top:15px;padding-left:20px;">
-                                <?php include('ordens_ferramentas.php'); 
+                                <?php //include('ordens_ferramentas.php'); 
                                 ?>
                             </div>
                         </div>
