@@ -3,9 +3,8 @@ session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
-
-include('links2.php');
-include('conexao.php');
+include('../links2.php');
+include('../conexao.php');
 
 $c_id = $_SESSION['id_ordem'];
 $i_id = $_GET["id"];
@@ -15,7 +14,7 @@ $msg_erro = "";
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no formulário
 
     if (!isset($_GET["id"])) {
-        header('location: /gop/ordens_gerenciar.php');
+        header('location: /gop/ordens/ordens_gerenciar.php');
         exit;
     }
 
@@ -25,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $registro = $result->fetch_assoc();
 
     if (!$registro) {
-        header('location: /gop/ordens_gerenciar.php');
+        header('location: /gop/ordens/ordens_gerenciar.php');
         exit;
     }
 
@@ -102,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
 
         $result = $conection->query($c_sql);
 
-        header('location: /gop/ordens_gerenciar.php');
+        header('location: /gop/ordens/ordens_gerenciar.php');
     } while (false);
 }
 

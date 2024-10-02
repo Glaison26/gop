@@ -4,10 +4,10 @@ if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
 
-include("conexao.php");
+include("../conexao.php");
 
 if (!isset($_GET["id"])) {
-    header('location: /gop/ordens_gerenciar.php');
+    header('location: /gop/ordens/ordens_gerenciar.php');
     exit;
 }
 $c_id = "";
@@ -28,4 +28,4 @@ $c_custo_total= $c_linha['total'];
 // edito o valor de materiais gastos na ordem de serviço
 $c_sql = "update ordens set valor_servico='$c_custo_total' where id='$c_id_ordem'";
 $result = $conection->query($c_sql);
-header('location: /gop/ordens_gerenciar.php');
+header('location: /gop/ordens/ordens_gerenciar.php');

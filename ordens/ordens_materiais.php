@@ -3,7 +3,7 @@
 // arquivo de include com tabela de materiais de ordem de serviço
 ///////////////////////////////////////////////////////////////////////
 
-include_once "lib_gop.php";
+include_once "../lib_gop.php";
 $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
 
 ?>
@@ -11,7 +11,7 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
     function confirmacao(id) {
         var resposta = confirm("Deseja remover esse registro?");
         if (resposta == true) {
-            window.location.href = "/gop/ordens_materiais_excluir.php?id=" + id;
+            window.location.href = "/gop/ordens/ordens_materiais_excluir.php?id=" + id;
         }
     }
 </script>
@@ -66,7 +66,7 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
 <div class="container-fluid">
     <div class="panel panel-info class">
         <div class="panel-heading">
-            <a class="btn btn-success" href="/gop/ordens_materiais_inclusao.php"><span class="glyphicon glyphicon-plus"></span> Incluir Material</a>
+            <a class="btn btn-success" href="/gop/ordens/ordens_materiais_inclusao.php"><span class="glyphicon glyphicon-plus"></span> Incluir Material</a>
         </div>
     </div>
     <hr>
@@ -115,7 +115,7 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
                     <td style='text-align: right;'>$c_custo</td>
                     <td style='text-align: right;'>$c_total</td>
                     <td>
-                    <a class='btn btn-secondary btn-sm' href='/gop/ordens_materiais_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                    <a class='btn btn-secondary btn-sm' href='/gop/ordens/ordens_materiais_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
@@ -128,7 +128,9 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
     <hr>
     <div class="panel panel-primary class">
         <div class="panel-heading">
-            <p><h5>Custo Total de Material : <?php echo  $formatter->formatCurrency($c_custo_total, 'BRL');?></h5></p>
+            <p>
+            <h5>Custo Total de Material : <?php echo  $formatter->formatCurrency($c_custo_total, 'BRL'); ?></h5>
+            </p>
         </div>
     </div>
 </div>

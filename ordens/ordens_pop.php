@@ -7,8 +7,8 @@ if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
 
-include('links2.php');
-include('conexao.php');
+include('../links2.php');
+include('../conexao.php');
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +24,7 @@ include('conexao.php');
     <script language="Javascript">
         function chamada(id) {
 
-            window.location.href = "/gop/ordens_pop_visualizar.php?id=" + id;
+            window.location.href = "/gop/ordens/ordens_pop_visualizar.php?id=" + id;
 
         }
     </script>
@@ -33,7 +33,7 @@ include('conexao.php');
         function confirmacao(id) {
             var resposta = confirm("Deseja remover esse registro?");
             if (resposta == true) {
-                window.location.href = "/gop/ordens_pop_excluir.php?id=" + id;
+                window.location.href = "/gop/ordens/ordens_pop_excluir.php?id=" + id;
             }
         }
     </script>

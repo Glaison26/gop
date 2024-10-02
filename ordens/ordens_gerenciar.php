@@ -5,8 +5,8 @@ if (!isset($_SESSION['newsession'])) {
 }
 
 //echo $c_sql_recurso;
-include('links.php');
-include('conexao.php');
+include('../links.php');
+include('../conexao.php');
 if (isset($_GET['id'])) {
     $i_id = $_GET['id'];
     $_SESSION['id_ordem'] = $i_id;

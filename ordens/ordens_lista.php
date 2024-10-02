@@ -18,7 +18,6 @@ include('../conexao.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
 </head>
 <!-- script da tabela de recursos -->
 <script>
@@ -258,7 +257,6 @@ include('../conexao.php');
                                 ";
                             }
                             ?>
-
 
                         </tbody>
                     </table>

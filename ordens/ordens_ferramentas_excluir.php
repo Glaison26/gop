@@ -4,10 +4,10 @@ if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
 
-include("conexao.php");
+include("../conexao.php");
 
 if (!isset($_GET["id"])) {
-    header('location: /gop/ordens_gerenciar.php');
+    header('location: /gop/ordens/ordens_gerenciar.php');
     exit;
 }
 $c_id = "";
@@ -18,4 +18,4 @@ $c_id = $_GET["id"];
 $c_sql = "delete from ordens_ferramentas where id=$c_id";
 $result = $conection->query($c_sql);
 
-header('location: /gop/ordens_gerenciar.php');
+header('location: /gop/ordens/ordens_gerenciar.php');

@@ -56,7 +56,7 @@
         function confirmacao_ferramentas(id) {
             var resposta = confirm("Deseja remover esse registro?");
             if (resposta == true) {
-                window.location.href = "/gop/ordens_ferramentas_excluir.php?id=" + id;
+                window.location.href = "/gop/ordens/ordens_ferramentas_excluir.php?id=" + id;
             }
         }
     </script>

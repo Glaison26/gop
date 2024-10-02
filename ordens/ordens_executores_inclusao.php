@@ -4,8 +4,8 @@ if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
 
-include('links2.php');
-include('conexao.php');
+include('../links2.php');
+include('../conexao.php');
 
 $c_id = $_SESSION['id_ordem'];
 
@@ -56,7 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
         $fracao = $c_tempo_minutos / 60;
         $custo_minuto = $fracao * $c_custo;
         $valor_total = $custo_horas + $custo_minuto;
-
         //
         $c_sql = "Insert into ordens_executores (id_executor, tempo_horas, tempo_minutos, valor_hora, valor_total, id_ordem)
                  Value ('$i_id_executor', '$c_tempo_horas', '$c_tempo_minutos','$c_custo',' $valor_total','$c_id')";
@@ -72,8 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
         // edito o valor de materiais gastos na ordem de serviço
         $c_sql = "update ordens set valor_servico='$c_custo_total' where id='$c_id'";
         $result = $conection->query($c_sql);
-
-        header('location: /gop/ordens_gerenciar.php');
+        header('location: /gop/ordens/ordens_gerenciar.php');
     } while (false);
 }
 
@@ -166,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
             <div class="row mb-3">
                 <div class="offset-sm-0 col-sm-3">
                     <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                    <a class='btn btn-danger' href='/gop/ordens_gerenciar.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                    <a class='btn btn-danger' href='/gop/ordens/ordens_gerenciar.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
                 </div>
             </div>
         </form>
