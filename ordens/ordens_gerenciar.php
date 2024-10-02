@@ -45,7 +45,7 @@ if (isset($_GET['id'])) {
                             <a title='Concluir Ordem de Serviço' href='#'><img src="\gop\images\concluir.png" alt="" width="30" height="25"><span> Concluir</span></a>
                             <a title='Cancelar Ordem de Serviço' href='#'><img src="\gop\images\cancelar.png" alt="" width="30" height="25"><span> Cancelar</span></a>
                             <a title='Suspender Ordem de Serviço' href='#'><img src='\gop\images\aguardado.png' alt='' width='30' height='25'><span> Suspender</span></a>
-                            <a title='Voltar' href='\gop\ordens_lista.php'><img src="\gop\images\saida.png" alt="" width="30" height="25"><span> Voltar</span></a>
+                            <a title='Voltar' href='\gop\ordens\ordens_lista.php'><img src="\gop\images\saida.png" alt="" width="30" height="25"><span> Voltar</span></a>
                         </div>
                     </div>
                     <br>

@@ -4,8 +4,8 @@ if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
 
-include("conexao.php");
-include("links2.php");
+include("../conexao.php");
+include("../links2.php");
 $c_id = $_GET["id"];
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no formulário
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $registro = $result->fetch_assoc();
 
     if (!$registro) {
-        header('location: /gop/ordens_gerenciar.php');
+        header('location: /gop/ordens/ordens_gerenciar.php');
         exit;
     }
     $c_descricao = $registro['descricao'];

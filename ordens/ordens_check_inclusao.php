@@ -4,7 +4,7 @@ if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
 // conexão dom o banco de dados
-include("conexao.php");
+include("../conexao.php");
 // rotina de inclusão
 $c_descricao = rtrim($_POST['c_descricao']);
 $c_sql = "select id from checklist where descricao='$c_descricao'";
