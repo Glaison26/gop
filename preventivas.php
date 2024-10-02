@@ -119,7 +119,7 @@ JOIN espacos ON preventivas.id_espaco=espacos.id";
                     <a class="btn btn btn-sm" href="preventivas_nova.php"><img src="\gop\images\preventivo.png" alt="" width="25" height="25"> Nova Preventiva</a>
                     <button type="submit" name='btnpesquisa' id='btnpesquisa' class="btn btn btn-sm"><img src="\gop\images\lupa.png" alt="" width="20" height="20"></span> Pesquisar</button>
                     <!--<a class="btn btn btn-sm" href="#"><img src="\gop\images\eraser.png" alt="" width="25" height="25"> Limpar pesquisa</a> -->
-                    <a class="btn btn btn-sm" href="\gop\preventivas_geracao.php"><img src="\gop\images\ordem.png" alt="" width="25" height="25"> Gerar Ordens Pendentes</a>
+                    <a class="btn btn btn-sm" href="\gop\preventivas_geracao.php"><img src="\gop\images\ordem.png" alt="" width="25" height="25">Preventivas Pendentes</a>
                     <a class="btn btn btn-sm" href="\gop\menu.php"><img src="\gop\images\saida.png" alt="" width="25" height="25"> Voltar</a>
                 </div>
                 <div class="panel panel-light class">

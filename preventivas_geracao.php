@@ -167,7 +167,7 @@ frontend com tabela das preventivas a serem geradas
 
             <h5>Resultado das Preventivas Selecionadas para geração de ordens de serviço. Selecione as preventiava a serem geradas e clique em gerar ordens de serviço </h5>
         </div>
-        <a class='btn btn btn-sm' href='javascript:func()' onclick='confirma_geracao()'><img src='\gop\images\gerar.png' alt='' width='25' height='25'> Gerar ordens</a>
+        <a class='btn btn btn-sm' href='javascript:func()' onclick='confirma_geracao()'><img src='\gop\images\gerar.png' alt='' width='25' height='25'> Gerar Preventivas</a>
         <a class='btn btn btn-sm' href='\gop\preventivas.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>
 
         <hr>

@@ -11,7 +11,15 @@
     $registro = $result->fetch_assoc();
     $c_solicitacao_aberta = $registro['aberta_solicitacao'];
     $c_ordens_sla = 0;
-    $c_preventivas = 0;
+    date_default_timezone_set('America/Sao_Paulo');
+    $agora = date('d/m/Y H:i');
+    $c_data = date('Y-m-d');
+    
+    $c_sql = "select COUNT(*) AS preventivas FROM preventivas WHERE data_prox_realizacao<='$c_data'";
+    $result = $conection->query($c_sql);
+    $registro = $result->fetch_assoc();
+    $c_preventivas = $registro['preventivas'];
+    
     ?>
  <!DOCTYPE html>
  <html lang="en">
@@ -175,10 +183,7 @@
 
                  <div class="panel default class">
                      <div class="alert alert-success">
-                         <?php
-                            date_default_timezone_set('America/Sao_Paulo');
-                            $agora = date('d/m/Y H:i');
-                            ?>
+                                                   
                          <strong>Login efetuado! - </strong>Bem vindo <?php echo ' ' . $_SESSION['c_usuario'] . ' - ' . $agora . ' '; ?>
                          <label for="usuario"></label>
                      </div>

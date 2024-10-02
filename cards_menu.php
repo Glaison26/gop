@@ -67,7 +67,7 @@
                         echo "<img src='\gop\images\certo.png' alt='25' height='25'>";
                     } ?>
 
-                <h4><strong>Existem 0 Preventivas Ordens de Serviço a serem geradas</h4></strong></p>
+                <h4><strong>Existem <?php echo $c_preventivas?> Preventivas a serem geradas</h4></strong></p>
                 <a href="#" class="btn btn-primary">Clique para Visualizar</a>
             </div>
 
