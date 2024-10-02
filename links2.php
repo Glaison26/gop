@@ -17,3 +17,34 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 
 <script src="https://cdn.datatables.net/2.1.5/js/dataTables.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+
+<style>
+     /* Add a black background color to the top navigation */
+     .topnav {
+         background-color: #4682B4;
+         overflow: hidden;
+     }
+
+     /* Style the links inside the navigation bar */
+     .topnav a {
+         float: left;
+         color: #f2f2f2;
+         text-align: center;
+         padding: 14px 16px;
+         text-decoration: none;
+         font-size: 17px;
+     }
+
+     /* Change the color of links on hover */
+     .topnav a:hover {
+         background-color: #4682B4;
+         color: black;
+     }
+
+     /* Add a color to the active/current link */
+     .topnav a.active {
+         background-color: #4682B4;
+         color: white;
+     }
+ </style>
