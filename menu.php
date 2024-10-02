@@ -132,7 +132,7 @@
                                      <a class="dropdown-item" href="/gop/solicitacao/solicitacao.php"><img src="\gop\images\contato.png" alt="20" height="20"> Solicitações de Serviços</a>
                                      <?php
                                         if ($_SESSION['tipo'] <> 'Solicitante') {
-                                            echo "<a class='dropdown-item' href='/gop/ordens.php'><img src='\gop\images\ordem.png' alt='20' height='20'> Ordens de Serviços</a>
+                                            echo "<a class='dropdown-item' href='/gop/ordens/ordens.php'><img src='\gop\images\ordem.png' alt='20' height='20'> Ordens de Serviços</a>
                                   <a class='dropdown-item' href='/gop/preventivas/preventivas.php'><img src='\gop\images\preventivo.png' alt='20' height='20'> Preventivas </a>
                              </div>
                          </li>
@@ -172,7 +172,7 @@
                          <a title='Abertura de Solicitação de Serviço' href='/gop/solicitacao/solicitacao.php'><img src="\gop\images\contato.png" alt="" width="30" height="30"></a>
                          <?php
                             if ($_SESSION['tipo'] <> 'Solicitante') {
-                                echo "<a title='Ordens de Serviço' href='/gop/ordens.php'><img src='\gop\images\ordem.png' alt='' width='30' height='30'></a>";
+                                echo "<a title='Ordens de Serviço' href='/gop/ordens/ordens.php'><img src='\gop\images\ordem.png' alt='' width='30' height='30'></a>";
                                 echo "<a title='Cadastro de Recursos Físicos' href='/gop/cadastros/recursos_lista.php'><img src='\gop\images\config.png' alt='' width='30' height='30'></a>";
                             }
                             ?>

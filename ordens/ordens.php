@@ -3,8 +3,8 @@ session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
-include("conexao.php");
-include("links2.php");
+include("../conexao.php");
+include("../links2.php");
 
 // rotina para montagem do sql com as opções selecionadas
 if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
@@ -121,7 +121,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     //echo $c_sqlespacos;
     //echo '----------------------------';
     //echo $c_sqlavulso;
-    header('location: /gop/ordens_lista.php');
+    header('location: /gop/ordens/ordens_lista.php');
 }
 
 

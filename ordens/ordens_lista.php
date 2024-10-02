@@ -7,8 +7,8 @@ $c_sql_recurso = $_SESSION['sqlrecurso'];
 $c_sql_espaco = $_SESSION['sqlespaco'];
 $c_sql_avulso = $_SESSION['sqlavulso'];
 //echo $c_sql_recurso;
-include('links.php');
-include('conexao.php');
+include('../links.php');
+include('../conexao.php');
 ?>
 
 <!DOCTYPE html>
@@ -178,7 +178,7 @@ include('conexao.php');
             <div class="topnav">
                 <?php
                 if ($_SESSION['pesquisamenu'] == false) {
-                    echo "<a class='btn btn btn-sm' href='\gop\ordens.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
+                    echo "<a class='btn btn btn-sm' href='\gop\ordens\ordens.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
                 } else {
                     echo "<a class='btn btn btn-sm' href='\gop\menu.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
                 }
@@ -248,9 +248,9 @@ include('conexao.php');
                                     <td>$c_linha[ordens_tipo_texto]</td>
                                     
                                     <td>
-                                        <a class='btn btn-secondary btn-sm' href='/gop/ordens_editar.php?id=$c_linha[id]'>
+                                        <a class='btn btn-secondary btn-sm' href='/gop/ordens/ordens_editar.php?id=$c_linha[id]'>
                                         <span class='glyphicon glyphicon-pencil'></span> Editar</a>
-                                        <a class='btn btn-success btn-sm' href='/gop/ordens_gerenciar.php?id=$c_linha[id]'>
+                                        <a class='btn btn-success btn-sm' href='/gop/ordens/ordens_gerenciar.php?id=$c_linha[id]'>
                                         <img src='\gop\images\gerenciamento.png' alt='' width='23' height='18'> Gerenciar</a>
                                     </td>
 
@@ -308,8 +308,8 @@ include('conexao.php');
                                     <td>$c_linha[ordens_tipo_texto]</td>
                                     
                                     <td>
-                                        <a class='btn btn-secondary btn-sm' href='/gop/ordens_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
-                                        <a class='btn btn-success btn-sm' href='/gop/ordens_gerenciar.php?id=$c_linha[id]'>
+                                        <a class='btn btn-secondary btn-sm' href='/gop/ordens/ordens_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                                        <a class='btn btn-success btn-sm' href='/gop/ordens/ordens_gerenciar.php?id=$c_linha[id]'>
                                         <img src='\gop\images\gerenciamento.png' alt='' width='23' height='18'> Gerenciar</a>
                                     
                                     </td>
@@ -368,8 +368,8 @@ include('conexao.php');
                                     <td>$c_linha[ordens_tipo_texto]</td>
                                     
                                     <td>
-                                        <a class='btn btn-secondary btn-sm' href='/gop/ordens_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
-                                      <a class='btn btn-success btn-sm' href='/gop/ordens_gerenciar.php?id=$c_linha[id]'>
+                                        <a class='btn btn-secondary btn-sm' href='/gop/ordens/ordens_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                                      <a class='btn btn-success btn-sm' href='/gop/ordens/ordens_gerenciar.php?id=$c_linha[id]'>
                                         <img src='\gop\images\gerenciamento.png' alt='' width='23' height='18'> Gerenciar</a>
                                      
                                     </td>

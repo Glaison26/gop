@@ -4,8 +4,8 @@ if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
 
-include('links2.php');
-include('conexao.php');
+include('../links2.php');
+include('../conexao.php');
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no formulário
 
     if (!isset($_GET["id"])) {
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $registro = $result->fetch_assoc();
 
     if (!$registro) {
-        header('location: /gop/ordens_lista.php');
+        header('location: /gop/ordens/ordens_lista.php');
         exit;
     }
     // sql para pegar recurso fisico se os for de recurso fisico
@@ -92,7 +92,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     }
     $c_conclusao = $registro['conclusao'];
     $c_nota = $registro['numero_nota'];
-
+    $c_valor_material = 0;
+    $c_valor_servico = 0;
     if ($registro['valor_material'] > 0)
         $c_valor_material = number_format($registro['valor_material'], 2, '.', '');
     if ($registro['valor_servico'] > 0)
@@ -192,7 +193,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         if (!$result) {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
         }
-        header('location: /gop/ordens_lista.php');
+        header('location: /gop/ordens/ordens_lista.php');
     } while (false);
 }
 
@@ -554,7 +555,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             <div class="row mb-3">
                 <div class="offset-sm-0 col-sm-3">
                     <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                    <a class='btn btn-danger' href='/gop/ordens_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                    <a class='btn btn-danger' href='/gop/ordens/ordens_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
                 </div>
             </div>
 
