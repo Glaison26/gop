@@ -5,8 +5,8 @@ if (!isset($_SESSION['newsession'])) {
 }
 $_SESSION['tiposolicitacao'] = 'V';
 $_SESSION['opcao'] = "S";
-include("conexao.php");
-include("links2.php");
+include("../conexao.php");
+include("../links2.php");
 ?>
 
 
@@ -40,9 +40,9 @@ include("links2.php");
                     Serviço em Recurso Físico</a>
                 <a href="\gop\espaco_pesquisa.php"><img src="\gop\images\pedreiro.png" alt="" width="30" height="35">
                     Serviço em Espaços Físicos</a>
-                <a href="\gop\solicitacao_conclusao.php"><img src="\gop\images\ordem.png" alt="" width="30" height="35">
+                <a href="\gop\solicitacao\solicitacao_conclusao.php"><img src="\gop\images\ordem.png" alt="" width="30" height="35">
                     Solicitação de Serviço Avulso</a>
-                <a href="\gop\solicitacao.php"><img src="\gop\images\saida.png" alt="" width="30" height="35"> Voltar as opções</a>
+                <a href="\gop\solicitacao\solicitacao.php"><img src="\gop\images\saida.png" alt="" width="30" height="35"> Voltar as opções</a>
             </div>
         </div>
     </div>

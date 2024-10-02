@@ -7,8 +7,8 @@ session_start(); // controle de acesso ao formulário
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
-include("conexao.php");
-include("links2.php");
+include("../conexao.php");
+include("../links2.php");
 date_default_timezone_set('America/Sao_Paulo');
 $msg_erro = "";
 
@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             include('email_gop.php');
         }
 
-        header('location: /gop/Ordem_gerada.php');
+        header('location: /gop/solicitacao/Ordem_gerada.php');
     } while (false);
 }
 

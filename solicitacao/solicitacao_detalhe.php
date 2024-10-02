@@ -7,8 +7,8 @@ session_start(); // controle de acesso ao formulário
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
-include("conexao.php");
-include("links2.php");
+include("../conexao.php");
+include("../links2.php");
 // pego id da solicitação selecionado na página anterior
 $i_id = $_GET["id"];
 // verifico classificação da solicitação
@@ -94,7 +94,7 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
             </div>
             <h5>Detalhe da Solicitação de Serviço No. <?php echo $registro['id'] ?> para Visualização </h5>
         </div>
-        <a class="btn btn btn-sm" href="\gop\solicitacao_gera_os.php?id=<?php echo $registro['id']?>"><img src="\gop\images\ordem.png" alt="" width="25" height="25"> Gerar OS</a>
+        <a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_gera_os.php?id=<?php echo $registro['id']?>"><img src="\gop\images\ordem.png" alt="" width="25" height="25"> Gerar OS</a>
         <a class="btn btn btn-sm" href="\gop\solicitacao_lista.php"><img src="\gop\images\saida.png" alt="" width="25" height="25"> Voltar</a>
         <hr>
         <!-- abas de solicitações por recursos físicos -->

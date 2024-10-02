@@ -3,8 +3,8 @@ session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
-include("conexao.php");
-include("links2.php");
+include("../conexao.php");
+include("../links2.php");
 // pegar recurso
 $c_sql =    "SELECT MAX(solicitacao.ID) AS id_solicitacao FROM solicitacao";
 

@@ -92,7 +92,7 @@ Pagina da rotina para selecionar o recurso da solicitação
 <!-- função para chamar conclusão da solicitação -->
 <script>
     function conclusao(id) {
-        window.location.href = "/gop/solicitacao_conclusao.php?id=" + id;
+        window.location.href = "/gop/solicitacao/solicitacao_conclusao.php?id=" + id;
     }
 
     function conclusao_prev(id) {
@@ -130,7 +130,7 @@ Pagina da rotina para selecionar o recurso da solicitação
                     <button class="btn btn btn-sm" type="submit" id='bntpesquisa' name='btnpesquisa' class="btn btn"><img src='\gop\images\buscar.png' alt='' width='20' height='20'></span> Buscar</button>
                     <?php
                     if ($_SESSION['opcao'] == 'S')
-                        echo "<a class='btn btn btn-sm' href='\gop\solicitacao_nova.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
+                        echo "<a class='btn btn btn-sm' href='\gop\solicitacao\solicitacao_nova.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
                     else
                         echo "<a class='btn btn btn-sm' href='\gop\preventivas_nova.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
                     ?>

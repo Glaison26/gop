@@ -7,8 +7,8 @@ $c_sql_recurso = $_SESSION['sqlrecurso'];
 $c_sql_espaco = $_SESSION['sqlespaco'];
 $c_sql_avulso = $_SESSION['sqlavulso'];
 //echo $c_sql_recurso;
-include('links.php');
-include('conexao.php');
+include('../links.php');
+include('../conexao.php');
 ?>
 
 <!DOCTYPE html>
@@ -227,7 +227,7 @@ include('conexao.php');
                                     <td>$c_linha[solicitacao_tipo]</td>
                                     
                                     <td>
-                                        <a class='btn btn-secondary btn-sm' href='/gop/solicitacao_detalhe.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Detalhe</a>
+                                        <a class='btn btn-secondary btn-sm' href='/gop/solicitacao/solicitacao_detalhe.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Detalhe</a>
                                         
                                     </td>
 
@@ -282,7 +282,7 @@ include('conexao.php');
                                     <td>$c_linha[solicitacao_tipo]</td>
                                     
                                     <td>
-                                        <a class='btn btn-secondary btn-sm' href='/gop/solicitacao_detalhe.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Detalhe</a>
+                                        <a class='btn btn-secondary btn-sm' href='/gop/solicitacao/solicitacao_detalhe.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Detalhe</a>
                                         
                                     </td>
 
@@ -334,7 +334,7 @@ include('conexao.php');
                                     <td>$c_linha[solicitacao_tipo]</td>
                                     
                                     <td>
-                                        <a class='btn btn-secondary btn-sm' href='/gop/solicitacao_detalhe.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Detalhe</a>
+                                        <a class='btn btn-secondary btn-sm' href='/gop/solicitacao/solicitacao_detalhe.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Detalhe</a>
                                         
                                     </td>
 
@@ -353,7 +353,7 @@ include('conexao.php');
         <br>
         <?php
         if ($_SESSION['pesquisamenu'] == false) {
-            echo "<a class='btn btn btn-sm' href='\gop\solicitacao.php'><img src='\gop\images\back.png' alt='' width='25' height='25'> Voltar</a>";
+            echo "<a class='btn btn btn-sm' href='\gop\solicitacao\solicitacao.php'><img src='\gop\images\back.png' alt='' width='25' height='25'> Voltar</a>";
         } else {
             echo "<a class='btn btn btn-sm' href='\gop\menu.php'><img src='\gop\images\back.png' alt='' width='25' height='25'> Voltar</a>";
         }

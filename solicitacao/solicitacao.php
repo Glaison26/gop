@@ -3,8 +3,8 @@ session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
-include("conexao.php");
-include("links2.php");
+include("../conexao.php");
+include("../links2.php");
 
 
 // rotina para montagem do sql com as opções selecionadas
@@ -121,7 +121,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $_SESSION['sqlespaco'] = $c_sqlespacos;
     $_SESSION['sqlavulso'] = $c_sqlavulso;
     $_SESSION['pesquisamenu'] = false;
-    header('location: /gop/solicitacao_lista.php');
+    header('location: /gop/solicitacao/solicitacao_lista.php');
 }
 
 ?>
@@ -171,7 +171,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
             </div>
             <form method="post">
                 <div style="padding-top:5px;padding-bottom:15px">
-                    <a class="btn btn btn-sm" href="solicitacao_nova.php"><img src="\gop\images\contato.png" alt="" width="25" height="25"> Nova Solicitação</a>
+                    <a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_nova.php"><img src="\gop\images\contato.png" alt="" width="25" height="25"> Nova Solicitação</a>
                     <button type="submit" name='btnpesquisa' id='btnpesquisa' class="btn btn btn-sm"><img src="\gop\images\lupa.png" alt="" width="20" height="20"></span> Pesquisar</button>
 
                     <!--<a class="btn btn btn-sm" href="#"><img src="\gop\images\eraser.png" alt="" width="25" height="25"> Limpar pesquisa</a> -->

@@ -129,7 +129,7 @@
                              <li class="nav-item dropdown">
                                  <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Serviços</a>
                                  <div class="dropdown-menu" aria-labelledby="dropdown01">
-                                     <a class="dropdown-item" href="/gop/solicitacao.php"><img src="\gop\images\contato.png" alt="20" height="20"> Solicitações de Serviços</a>
+                                     <a class="dropdown-item" href="/gop/solicitacao/solicitacao.php"><img src="\gop\images\contato.png" alt="20" height="20"> Solicitações de Serviços</a>
                                      <?php
                                         if ($_SESSION['tipo'] <> 'Solicitante') {
                                             echo "<a class='dropdown-item' href='/gop/ordens.php'><img src='\gop\images\ordem.png' alt='20' height='20'> Ordens de Serviços</a>
@@ -169,11 +169,11 @@
                  <div style="padding-bottom :1px;">
                      <div class="topnav">
                          <a href="#"></a>
-                         <a title='Abertura de Solicitação de Serviço' href='/gop/solicitacao.php'><img src="\gop\images\contato.png" alt="" width="30" height="30"></a>
+                         <a title='Abertura de Solicitação de Serviço' href='/gop/solicitacao/solicitacao.php'><img src="\gop\images\contato.png" alt="" width="30" height="30"></a>
                          <?php
                             if ($_SESSION['tipo'] <> 'Solicitante') {
                                 echo "<a title='Ordens de Serviço' href='/gop/ordens.php'><img src='\gop\images\ordem.png' alt='' width='30' height='30'></a>";
-                                echo "<a title='Cadastro de Recursos Físicos' href='/gop/recursos_lista.php'><img src='\gop\images\config.png' alt='' width='30' height='30'></a>";
+                                echo "<a title='Cadastro de Recursos Físicos' href='/gop/cadastros/recursos_lista.php'><img src='\gop\images\config.png' alt='' width='30' height='30'></a>";
                             }
                             ?>
                          <a title='Alterar Senha' href='\gop\alterasenha.php'><img src="\gop\images\trocasenha.png" alt="" width="30" height="30"></a>

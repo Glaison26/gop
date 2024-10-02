@@ -3,8 +3,8 @@ session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
-include("conexao.php");
-include("links2.php");
+include("../conexao.php");
+include("../links2.php");
 // pegar recurso
 $c_sql =    "SELECT MAX(ordens.ID) AS id_ordem FROM ordens";
 
@@ -43,7 +43,7 @@ if (!$result) {
             <h3>Ordem de serviço No. <?php echo $ordem?> foi gerada com sucesso!  Clique em encerrar para voltar ao menu.</h3>
         </div>
       
-        <a class="btn btn btn-success" href="/gop/solicitacao_lista.php"><span class="glyphicon glyphicon-off"></span> Encerrar</a>
+        <a class="btn btn btn-success" href="/gop/solicitacao/solicitacao_lista.php"><span class="glyphicon glyphicon-off"></span> Encerrar</a>
     </div>
 </body>
 

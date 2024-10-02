@@ -3,8 +3,8 @@ session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
-include("conexao.php");
-include("links2.php");
+include("../conexao.php");
+include("../links2.php");
 
 if ($_SESSION['tiposolicitacao'] == 'R') { // recurso fisico
     // pego id do recurso selecionado na página anterior
@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 . "Descrição da Solicitação :" . $c_descricao;
             include('email_gop.php');
         }
-        header('location: /gop/solicitacao_gerada.php?id_recurso=$i_id_recurso');
+        header('location: /gop/solicitacao/solicitacao_gerada.php?id_recurso=$i_id_recurso');
 
 
 
