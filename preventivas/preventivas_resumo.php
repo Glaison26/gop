@@ -7,8 +7,8 @@ session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
-include("conexao.php");
-include("links2.php");
+include("../conexao.php");
+include("../links2.php");
 // pegar ordens geradas
 $c_data = date('Y/m/d');
 $c_sql =  "SELECT ordens.id, ordens.descritivo FROM ordens
@@ -47,9 +47,7 @@ if (!$result) {
             </div>
             <h4>Lista de Ordens de Serviço Geradas pelas preventivas do dia.</h4>
         </div>
-        <div style="padding-bottom:15px;">
-            <a class="btn btn btn-success" href="/gop/preventivas.php"><span class="glyphicon glyphicon-off"></span> Encerrar</a><br>
-        </div>
+        
         <table class="table table display table-bordered tabordens">
             <thead class="thead">
                 <tr>
@@ -83,6 +81,9 @@ if (!$result) {
 
             </tbody>
         </table>
+        <div style="padding-bottom:15px;">
+            <a class="btn btn btn-primary" href="/gop/preventivas/preventivas.php"><span class="glyphicon glyphicon-off"></span> Finalizar</a><br>
+        </div>
     </div>
 
 </body>

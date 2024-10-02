@@ -133,7 +133,7 @@
                                      <?php
                                         if ($_SESSION['tipo'] <> 'Solicitante') {
                                             echo "<a class='dropdown-item' href='/gop/ordens.php'><img src='\gop\images\ordem.png' alt='20' height='20'> Ordens de Serviços</a>
-                                  <a class='dropdown-item' href='/gop/preventivas.php'><img src='\gop\images\preventivo.png' alt='20' height='20'> Preventivas </a>
+                                  <a class='dropdown-item' href='/gop/preventivas/preventivas.php'><img src='\gop\images\preventivo.png' alt='20' height='20'> Preventivas </a>
                              </div>
                          </li>
 

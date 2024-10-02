@@ -5,8 +5,8 @@ if (!isset($_SESSION['newsession'])) {
 }
 $_SESSION['tiposolicitacao'] = 'V';
 $_SESSION['opcao'] = "P";
-include("conexao.php");
-include("links2.php");
+include("../conexao.php");
+include("../links2.php");
 ?>
 
 
@@ -43,7 +43,7 @@ include("links2.php");
                 <a href="\gop\espaco_pesquisa.php"><img src="\gop\images\pedreiro.png" alt="" width="30" height="35">
                     Preventiva em Espaços Físicos</a>
 
-                <a href="\gop\preventivas.php"><img src="\gop\images\saida.png" alt="" width="30" height="35"> Voltar as opções</a>
+                <a href="\gop\preventivas\preventivas.php"><img src="\gop\images\saida.png" alt="" width="30" height="35"> Voltar as opções</a>
             </div>
         </div>
     </div>

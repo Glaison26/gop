@@ -5,8 +5,8 @@ if (!isset($_SESSION['newsession'])) {
 }
 
 //echo $c_sql_recurso;
-include('links.php');
-include('conexao.php');
+include('../links.php');
+include('../conexao.php');
 if (isset($_GET['id'])) {
     $i_id = $_GET['id'];
     $_SESSION['id_preventiva'] = $i_id;
@@ -41,7 +41,7 @@ if (isset($_GET['id'])) {
                     <div style="padding-bottom :2px;">
                         <div class="topnav">
                           
-                            <a title='Voltar' href='\gop\preventivas_lista.php'><img src="\gop\images\saida.png" alt="" width="30" height="25"><span> Voltar</span></a>
+                            <a title='Voltar' href='\gop\preventivas\preventivas_lista.php'><img src="\gop\images\saida.png" alt="" width="30" height="25"><span> Voltar</span></a>
                         </div>
                     </div>
                     <br>

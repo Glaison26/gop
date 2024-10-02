@@ -96,7 +96,7 @@ Pagina da rotina para selecionar o recurso da solicitação
     }
 
     function conclusao_prev(id) {
-        window.location.href = "/gop/preventiva_conclusao.php?id=" + id;
+        window.location.href = "/gop/preventivas/preventiva_conclusao.php?id=" + id;
     }
 </script>
 

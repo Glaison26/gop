@@ -5,9 +5,9 @@ if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
 
-include("conexao.php");
-include("links2.php");
-include_once "lib_gop.php";
+include("../conexao.php");
+include("../links2.php");
+include_once "../lib_gop.php";
 $msg_erro = "";
 $c_descritivo = "";
 date_default_timezone_set('America/Sao_Paulo');
@@ -96,14 +96,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                       , periodicidade_geracao, data_prox_realizacao, data_ult_realizacao, calibracao,descritivo, gerar,  id_ocorrencia ) 
                       value ('$i_id_espaco', '$i_id_oficina', '$i_setor', '$i_id_centrodecusto', 'E', '$c_tipopreventiva',
                      '$d_data_cadastro', '$i_periodicidade', '$d_data_proxima', '$c_data_ultima','$c_calibracao', '$c_descritivo', 'Sim', '$i_id_ocorrencia')";
-        echo $c_sql;
+        // echo $c_sql;
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
         if (!$result) {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
         }
+       
         $msg_gravou = "Dados Gravados com Sucesso!!";
-        header('location: /gop/preventivas.php');
+        header('location: /gop/preventivas/preventivas_finalizar.php');
     } while (false);
 }
 ?>
@@ -278,7 +279,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="row mb-3">
                     <div class="offset-sm-0 col-sm-3">
                         <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Finalizar</button>
-                        <a class='btn btn-success' href='/gop/preventivas_nova.php'><img src="\gop\images\saida.png" alt="" width="25" height="18"> Voltar</a>
+                        <a class='btn btn-success' href='/gop/preventivas/preventivas_nova.php'><img src="\gop\images\saida.png" alt="" width="25" height="18"> Voltar</a>
                     </div>
                 </div>
         </form>

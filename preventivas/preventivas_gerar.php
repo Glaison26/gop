@@ -5,8 +5,8 @@ if (!isset($_SESSION['newsession'])) {
 }
 
 
-include('links.php');
-include('conexao.php');
+include('../links.php');
+include('../conexao.php');
 
 // pego data do dia
 date_default_timezone_set('America/Sao_Paulo');
@@ -125,7 +125,7 @@ while ($c_linha = $result->fetch_assoc()) {
     // inserir dados da preventiva na tabela de ordens de serviços
     $c_sql = "insert into ordens (id_solicitante, id_responsavel, id_espaco, id_oficina, id_setor, data_inicio, hora_inicio, tipo,
     tipo_ordem, tipo_preventiva, descricao,  data_geracao, hora_geracao, status, id_ocorrencia, descritivo)
-    value ('$i_id_solicitante', '$i_id_solicitante', '$i_id_recurso', '$i_id_oficina', '$i_id_setor', '$d_data_inicio', '$d_hora_inicio',
+    value ('$i_id_solicitante', '$i_id_solicitante', '$i_id_espaco', '$i_id_oficina', '$i_id_setor', '$d_data_inicio', '$d_hora_inicio',
     'E', 'P', '$c_tipo_preventiva', '$c_descritivo', '$d_data_geracao', '$d_hora_geracao', 'A', $i_id_ocorrencia, '$c_descricao')";
     $resultado = $conection->query($c_sql);
     if (!$resultado) {
@@ -145,7 +145,7 @@ while ($c_linha = $result->fetch_assoc()) {
         die("Erro ao Executar Sql!!" . $conection->connect_error);
     }
     //  chamo pagina com o resumo da geração de preventivas
-    header('location: /gop/preventivas_resumo.php');
+    header('location: /gop/preventivas/preventivas_resumo.php');
 
 }
 // 

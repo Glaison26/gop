@@ -4,13 +4,13 @@ if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
 
-include('links2.php');
-include('conexao.php');
+include('../links2.php');
+include('../conexao.php');
 $i_id = $_GET["id"];
 //
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no formulário
     if (!isset($_GET["id"])) {
-        header('location: /gop/preventivas_lista.php');
+        header('location: /gop/preventivas/preventivas_lista.php');
         exit;
     }
 
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $registro = $result->fetch_assoc();
 
     if (!$registro) {
-        header('location: /gop/preventivas_lista.php');
+        header('location: /gop/preventivas/preventivas_lista.php');
         exit;
     }
     // captura dos dados extraídos via sql
@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             die("Erro ao Executar Sql!!" . $conection->connect_error);
         }
         $msg_gravou = "Dados Gravados com Sucesso!!";
-        header('location: /gop/preventivas_lista.php');
+        header('location: /gop/preventivas/preventivas_lista.php');
     } while (false);
 }
 
@@ -281,7 +281,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                 <div class="row mb-3">
                     <div class="offset-sm-0 col-sm-3">
                         <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                        <a class='btn btn-danger' href='/gop/preventivas_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                        <a class='btn btn-danger' href='/gop/preventivas/preventivas_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
                     </div>
                 </div>
         </form>

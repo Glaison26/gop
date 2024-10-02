@@ -3,44 +3,13 @@ session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
-// pego data do dia
-date_default_timezone_set('America/Sao_Paulo');
-$agora = date('Y-m-d');
-// sql com as preventiva com data da próxima realização igual ou inferior a data do dia em recurso fisico
-$c_sql_recurso = "SELECT preventivas.id, preventivas.periodicidade_geracao, preventivas.calibracao, preventivas.id_recurso, recursos.descricao as recurso,
-preventivas.data_ult_realizacao, preventivas.data_prox_realizacao, preventivas.gerar,
-case
-when preventivas.calibracao ='S' then 'Sim'
-when preventivas.calibracao ='N' then 'Não'
-END AS preventiva_calibracao
-FROM preventivas 
-JOIN recursos ON preventivas.id_recurso=recursos.id
-where data_prox_realizacao<='$agora'
-ORDER BY preventivas.data_prox_realizacao desc";
-// sql com as preventiva com data da próxima realização igual ou inferior a data do dia em espaço fisico
-$c_sql_espaco = "SELECT preventivas.id, preventivas.periodicidade_geracao, preventivas.calibracao, preventivas.id_espaco, espacos.descricao as espaco,
-preventivas.data_ult_realizacao, preventivas.data_prox_realizacao, preventivas.gerar,
-case
-when preventivas.calibracao ='S' then 'Sim'
-when preventivas.calibracao ='N' then 'Não'
-END AS preventiva_calibracao
-FROM preventivas 
-JOIN espacos ON preventivas.id_espaco=espacos.id
-where data_prox_realizacao<='$agora'
-ORDER BY preventivas.data_prox_realizacao desc";
-
-
+$c_sql_recurso = $_SESSION['sqlrecurso'];
+$c_sql_espaco = $_SESSION['sqlespaco'];
 
 //echo $c_sql_recurso;
-include('links.php');
-include('conexao.php');
+include('../links.php');
+include('../conexao.php');
 ?>
-
-<!--
-///////////////////////////////////////////////////
-frontend com tabela das preventivas a serem geradas
-///////////////////////////////////////////////////
--->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -48,17 +17,8 @@ frontend com tabela das preventivas a serem geradas
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 </head>
-<script language="Javascript">
-    function confirma_geracao(id) {
-        var resposta = confirm("Confirma a geração das preventivas?");
-        if (resposta == true) {
-            window.location.href = "/gop/preventivas_gerar.php";
-        }
-    }
-</script>
-<!-- script para tabela de preventivas em recursos fisicos a serem geradas -->
+<!-- script da tabela de recursos -->
 <script>
     $(document).ready(function() {
         $('.tabpreventivas_recursos').DataTable({
@@ -113,7 +73,7 @@ frontend com tabela das preventivas a serem geradas
             "order": [1, 'asc'],
             "aoColumnDefs": [{
                 'bSortable': false,
-                'aTargets': [7]
+                'aTargets': [6]
             }, {
                 'aTargets': [0],
                 "visible": false
@@ -155,9 +115,10 @@ frontend com tabela das preventivas a serem geradas
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
-            <h5>Lista de Preventivas aptas para geração de Ordens de Serviço<h5>
+            <h5>Lista de Preventivas<h5>
         </div>
     </div>
+
     <div class="container-fluid">
         <div class='alert alert-info' role='alert'>
             <div style="padding-left:15px;">
@@ -165,16 +126,22 @@ frontend com tabela das preventivas a serem geradas
 
             </div>
 
-            <h5>Resultado das Preventivas Selecionadas para geração de ordens de serviço. Selecione as preventiava a serem geradas e clique em gerar ordens de serviço </h5>
+            <h5>Resultado das Preventivas Selecionadas</h5>
         </div>
-        <a class='btn btn btn-sm' href='javascript:func()' onclick='confirma_geracao()'><img src='\gop\images\gerar.png' alt='' width='25' height='25'> Gerar Preventivas</a>
-        <a class='btn btn btn-sm' href='\gop\preventivas.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>
+        <?php
+        if ($_SESSION['pesquisamenu'] == false) {
+            echo "<a class='btn btn btn-sm' href='\gop\preventivas\preventivas.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
+        } else {
+            echo "<a class='btn btn btn-sm' href='\gop\menu.php'><img src='\gop\images\back.png' alt='' width='25' height='25'> Voltar</a>";
+        }
 
+        ?>
         <hr>
         <!-- abas de preventivas por recursos físicos, Espaços físicos e avulsos -->
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#recurso" aria-controls="recurso" role="tab" data-toggle="tab">Preventivas em Recurso Físico</a></li>
             <li role="presentation"><a href="#espaco" aria-controls="espaco" role="tab" data-toggle="tab">Preventivas em Espaços Físicos</a></li>
+
         </ul>
         <div class="tab-content">
             <!-- aba da recurso fisico-->
@@ -185,11 +152,13 @@ frontend com tabela das preventivas a serem geradas
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Recurso</th>
+                                <th scope="col">Patrimônio</th>
+                                
+                                <th scope="col">Tipo</th>
                                 <th scope="col">Calibração</th>
                                 <th scope="col">Periodicidade</th>
                                 <th scope="col">Ultima Realização</th>
                                 <th scope="col">Próxima Realização</th>
-                                <th scope="col">Gerar</th>
                                 <th scope="col">Opções</th>
                             </tr>
                         </thead>
@@ -211,16 +180,18 @@ frontend com tabela das preventivas a serem geradas
                                 <tr class='info'>
                                     <td>$c_linha[id]</td>
                                     <td>$c_linha[recurso]</td>
-                                   
+                                    <td>$c_linha[patrimonio]
+                                    
+                                    <td>$c_linha[preventiva_tipo_completo]</td>
                                     <td>$c_linha[preventiva_calibracao]</td>
                                     <td>$c_linha[periodicidade_geracao] dias</td>
                                     <td>$c_data_realizacao</td>
                                     <td>$c_data_proxima</td>
-                                    <td>$c_linha[gerar]</td>
                                                                     
                                     <td>
-                                        <a class='btn btn-success btn-sm' href='/gop/preventivas_selecionar.php?id=$c_linha[id]'><img src='\gop\images\selecionar.png' alt='' width='25' height='25'> Marcar/Desmarcar</a>
-                                       
+                                        <a class='btn btn-secondary btn-sm' href='/gop/preventivas/preventivas_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                                      <a class='btn btn-success btn-sm' href='/gop/preventivas/preventivas_anexos.php?id=$c_linha[id]'>
+                                        <img src='\gop\images\anexo.png' alt='' width='23' height='18'> Anexos</a>  
                                     </td>
 
                                 </tr>
@@ -240,12 +211,12 @@ frontend com tabela das preventivas a serem geradas
                         <thead class="thead">
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Espaço Fisico</th>
-                                <th scope="col">Calibração</th>
+                                <th scope="col">Espaço Físico</th>
+                               
+                                <th scope="col">Tipo</th>
                                 <th scope="col">Periodicidade</th>
                                 <th scope="col">Ultima Realização</th>
                                 <th scope="col">Próxima Realização</th>
-                                <th scope="col">Gerar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -266,16 +237,16 @@ frontend com tabela das preventivas a serem geradas
                                 <tr class='info'>
                                     <td>$c_linha[id]</td>
                                     <td>$c_linha[espaco]</td>
-                                   
-                                    <td>$c_linha[preventiva_calibracao]</td>
+                                    
+                                    <td>$c_linha[preventiva_tipo_completo]</td>
                                     <td>$c_linha[periodicidade_geracao] dias</td>
                                     <td>$c_data_realizacao</td>
                                     <td>$c_data_proxima</td>
-                                    <td>$c_linha[gerar]</td>
-                                                                    
+                                    
                                     <td>
-                                        <a class='btn btn-success btn-sm' href='/gop/preventivas_selecionar.php?id=$c_linha[id]'><img src='\gop\images\selecionar.png' alt='' width='25' height='25'> Marcar/Desmarcar</a>
-                                       
+                                        <a class='btn btn-secondary btn-sm' href='/gop//preventivas/preventivas_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                                        <a class='btn btn-success btn-sm' href='/gop/preventivas/preventivas_anexos.php?id=$c_linha[id]'>
+                                        <img src='\gop\images\anexo.png' alt='' width='23' height='18'> Anexos</a>  
                                     </td>
 
                                 </tr>
@@ -344,9 +315,6 @@ frontend com tabela das preventivas a serem geradas
         </div>
 
     </div>
-
-
-
 
 </body>
 
