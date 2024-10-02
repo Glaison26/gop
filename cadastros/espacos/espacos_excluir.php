@@ -4,8 +4,9 @@ if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
 
+
 if (!isset($_GET["id"])) {
-    header('location: /gop/fornecedores_lista.php');
+    header('location: /gop/cadastros/espacos/espacos_lista.php');
     exit;
 }
 $c_id = "";
@@ -22,6 +23,6 @@ if ($conection->connect_error) {
     die("Erro na Conexão com o Banco de Dados!! " . $conection->connect_error);
 }
 // Exclusão do registro
-$c_sql = "delete from fornecedores where id=$c_id";
+$c_sql = "delete from espacos where id=$c_id";
 $result = $conection->query($c_sql);
-header('location: /gop/fornecedores_lista.php');
+header('location: /gop/cadastros/espacos/espacos_lista.php');

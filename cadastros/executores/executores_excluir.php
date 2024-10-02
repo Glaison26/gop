@@ -5,7 +5,7 @@ if (!isset($_SESSION['newsession'])) {
 }
 
 if (!isset($_GET["id"])) {
-    header('location: /gop/executores_lista.php');
+    header('location: /gop/cadastros/executores/executores_lista.php');
     exit;
 }
 $c_id = "";
@@ -24,4 +24,4 @@ if ($conection->connect_error) {
 // Exclusão do registro
 $c_sql = "delete from executores where id=$c_id";
 $result = $conection->query($c_sql);
-header('location: /gop/executores_lista.php');
+header('location: /gop/cadastros/executores/executores_lista.php');

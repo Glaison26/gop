@@ -1,44 +1,69 @@
-<?php
-// controle de acesso ao formulário
+<?php // controle de acesso ao formulário
 session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
 
-include("conexao.php");
-include("links2.php");
-include_once "lib_gop.php";
+include("..\..\conexao.php");
+include("..\..\links2.php");
 
-$c_nome = '';
-$c_tipo = '';
-$c_endereco = '';
-$c_bairro = '';
-$c_cidade = '';
-$c_estado = '';
-$c_cep = '';
-$c_email = '';
-$c_url = '';
-$c_formacao = '';
-$c_contato = '';
-$c_fone1 = '';
-$c_fone2 = '';
-$c_fone3 = '';
+include_once "..\..\lib_gop.php";
+
+// rotina de post dos dados do formuário
+$c_id = "";
+
 $n_salario = '0.00';
 $c_cnpj_cpf = '';
 $i_horastrab = '0.00';
 $n_valorhora = '0.00';
-$c_escolaridade = '';
-$c_obs = '';
 
 // variaveis para mensagens de erro e suscessso da gravação
 $msg_gravou = "";
 $msg_erro = "";
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no formulário
 
+    if (!isset($_GET["id"])) {
+        header('location: /gop/cadastros/executores/executores_lista.php');
+        exit;
+    }
+
+    $c_id = $_GET["id"];
+    // leitura do cliente através de sql usando id passada
+    $c_sql = "select * from executores where id=$c_id";
+    $result = $conection->query($c_sql);
+    $registro = $result->fetch_assoc();
+
+    if (!$registro) {
+        header('location: /gop/cadastros/executores/executores_lista.php');
+        exit;
+    }
+
+    $c_nome = $registro["nome"];
+    $c_tipo = $registro["tipo"];
+    $c_endereco = $registro["endereco"];
+    $c_bairro = $registro["bairro"];
+    $c_cidade = $registro["cidade"];
+    $c_estado = $registro["uf"];
+    $c_cep = $registro["cep"];
+    $c_email = $registro["email"];
+    $c_url = $registro["url"];
+    $c_formacao = $registro["formacao"];
+    $c_contato = $registro["contato"];
+    $c_fone1 = $registro["fone1"];
+    $c_fone2 = $registro["fone2"];
+    $c_fone3 = $registro["fone3"];
+    $n_salario = $registro["salario"];;
+    $c_cnpj_cpf = $registro["cpf_cnpj"];
+    $i_horastrab = $registro["horastrab"];
+    $n_valorhora = $registro["valorhora"];
+    $c_escolaridade = $registro["escolaridade"];
+    $c_obs = $registro["obs"];
+} else {
+    // metodo post para atualizar dados
+    $c_id = $_POST["id"];
     $c_nome = $_POST['nome'];
     $c_tipo = $_POST['tipo'];
-    $c_cnpj_cpf = $_POST['cpfcnpj'];
     $c_endereco = $_POST['endereco'];
     $c_bairro = $_POST['bairro'];
     $c_cidade = $_POST['cidade'];
@@ -52,13 +77,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $c_fone2 = $_POST['fone2'];
     $c_fone3 = $_POST['fone3'];
     $n_salario = $_POST['salario'];
+    $c_cnpj_cpf = $_POST['cpfcnpj'];
     $i_horastrab = $_POST['horastrab'];
     $n_valorhora = $_POST['valorhora'];
-    $c_funcao = $_POST['funcao'];
-    $c_oficina = $_POST['oficina'];
     $c_escolaridade = $_POST['escolaridade'];
     $c_obs = $_POST['obs'];
-
+    $c_funcao = $_POST['funcao'];
+    $c_oficina = $_POST['oficina'];
+    if ($i_horastrab == '') {
+        $i_horastrab = 0;
+    }
+    if ($n_valorhora == '') {
+        $n_valorhora = 0;
+    }
     do {
         if (empty($c_nome) || empty($c_endereco) || empty($c_cnpj_cpf) || empty($c_bairro) || empty($c_cidade) || empty($c_cep)) {
             $msg_erro = "Campos Nome, endereco, bairro, cidade, cep e CPF/CNPJ devem ser preenchidos!!";
@@ -67,74 +98,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // mascara e validação para cpf ou cnpj
 
         if ($c_tipo == "Física") {
-            $c_cnpj_cpf = mask($c_cnpj_cpf, "###.###.###-##");
+            //$c_cnpj_cpf = mask($c_cnpj_cpf, "###.###.###-##");
             $c_tipo = 'F';
             if (!validaCPF($c_cnpj_cpf)) {
                 $msg_erro = "CPF informado inválido!!";
                 break;
             }
         } else {
-            $c_cnpj_cpf = mask($c_cnpj_cpf, "##.###.###/####-##");
+            //$c_cnpj_cpf = mask($c_cnpj_cpf, "##.###.###/####-##");
             $c_tipo = 'J';
             if (!valida_cnpj($c_cnpj_cpf)) {
                 $msg_erro = "CNPJ informado inválido!!";
                 break;
             }
         }
-        // verifico a id da função selecionado no combo
-        $c_sql_secundario = "SELECT funcoes.id FROM funcoes where funcoes.descricao='$c_funcao' ORDER BY funcoes.descricao";
-        $result_secundario = $conection->query($c_sql_secundario);
-        $registro_secundario = $result_secundario->fetch_assoc();
-        $i_funcao = $registro_secundario['id'];
-        // verifico o id da oficina
-        // verifico a id da função selecionado no combo
+        // select da tabela de oficinas para pegar codigo
         $c_sql_secundario = "SELECT oficinas.id FROM oficinas where oficinas.descricao='$c_oficina' ORDER BY oficinas.descricao";
         $result_secundario = $conection->query($c_sql_secundario);
         $registro_secundario = $result_secundario->fetch_assoc();
         $i_oficina = $registro_secundario['id'];
+        // select da tabela de FUNCOES para pegar codigo
+        $c_sql_secundario = "SELECT funcoes.id FROM funcoes where funcoes.descricao='$c_funcao' ORDER BY funcoes.descricao";
+        $result_secundario = $conection->query($c_sql_secundario);
+        $registro_secundario = $result_secundario->fetch_assoc();
+        $i_funcao = $registro_secundario['id'];
         // grava dados no banco
-
-        // faço a inclusão da tabela com sql
-        $c_sql = "Insert into executores (id_oficina,id_funcao, nome,endereco,bairro,cep,cidade,uf,contato,tipo,cpf_cnpj,email,url," .
-            " fone1,fone2,fone3,salario,horastrab,valorhora,escolaridade,formacao,obs)" .
-            " Value ('$i_oficina', '$i_funcao', '$c_nome', '$c_endereco', '$c_bairro','$c_cep', '$c_cidade', '$c_estado'," .
-            " '$c_contato', '$c_tipo', '$c_cnpj_cpf', '$c_email', '$c_url','$c_fone1', '$c_fone2', '$c_fone3'," .
-            " '$n_salario', '$i_horastrab', '$n_valorhora', '$c_escolaridade', '$c_formacao', '$c_obs')";
+        // faço a Leitura da tabela com sql
+        $c_sql = "Update executores" .
+            " SET id_oficina= '$i_oficina', id_funcao='$i_funcao', nome='$c_nome', endereco='$c_endereco'," .
+            " bairro='$c_bairro',cep='$c_cep',cidade='$c_cidade',uf='$c_estado'," .
+            " contato='$c_contato',tipo='$c_tipo',cpf_cnpj='$c_cnpj_cpf',email='$c_email',url='$c_url'," .
+            " fone1='$c_fone1',fone2='$c_fone2',fone3='$c_fone3',salario='$n_salario',horastrab='$i_horastrab'," .
+            " valorhora='$n_valorhora',escolaridade='$c_escolaridade',formacao='$c_formacao',obs='$c_obs'" .
+            " where id=$c_id";
         echo $c_sql;
         $result = $conection->query($c_sql);
+
         // verifico se a query foi correto
         if (!$result) {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
         }
-
-        $c_nome = '';
-        $c_tipo = '';
-        $c_endereco = '';
-        $c_bairro = '';
-        $c_cidade = '';
-        $c_estado = '';
-        $c_cep = '';
-        $c_email = '';
-        $c_url = '';
-        $c_formacao = '';
-        $c_contato = '';
-        $c_fone1 = '';
-        $c_fone2 = '';
-        $c_fone3 = '';
-        $c_salrio = '0.00';
-        $c_cnpj_cpf = '';
-        $i_horastrab = '0.00';
-        $n_valorhora = '0.00';
-        $c_escolaridade = '';
-        $c_obs = '';
-
-
         $msg_gravou = "Dados Gravados com Sucesso!!";
-
-        header('location: /gop/executores_lista.php');
+        header('location: /gop/cadastros/executores/executores_lista.php');
     } while (false);
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -142,17 +149,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <head>
     <meta charset="UTF-8">
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $("#fone1").mask("(99)9999-9999");
-            $("#fone2").mask("(99)9999-9999");
-            $('#fone3').mask("(99)9999-9999");
-            $("#cnpj_cpf").mask("999999999999999999");
-            $("#cep").mask("99.999-999");
-        });
-    </script>
-
     <script>
         const handlePhone = (event) => {
             let input = event.target
@@ -170,14 +166,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 </head>
 
-
 <body>
+
     <div class="container  -my5">
         <div style="padding-top:5px;">
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
                     <h4>GOP - Gestão Operacional</h4>
-                    <h5>Novo Executor de Serviço<h5>
+                    <h5>Editar dados de Executor de Serviço<h5>
                 </div>
             </div>
         </div>
@@ -188,21 +184,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <h5>Campos com (*) são obrigatórios</h5>
         </div>
-
-        <br>
         <?php
         if (!empty($msg_erro)) {
             echo "
             <div class='alert alert-warning' role='alert'>
-                <div style='padding-left:15px;'>
-                    <h5><img Align='left' src='\gop\images\aviso.png' alt='30' height='35'> $msg_erro</h5>
-                </div>
-                
+                <h4>$msg_erro</h4>
             </div>
-            ";
+                ";
         }
         ?>
+
         <form method="post">
+            <input type="hidden" name="id" value="<?php echo $c_id; ?>">
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Nome </label>
                 <div class="col-sm-6">
@@ -214,8 +207,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label class="col-sm-3 col-form-label">Tipo Executor </label>
                 <div class="col-sm-2">
                     <select class="form-select form-select-lg mb-3" id="tipo" name="tipo">
-                        <option>Juridica</option>
-                        <option>Física</option>
+                        <option <?= ($c_tipo == 'J') ? 'selected' : '' ?>>Juridica</option>
+                        <option <?= ($c_tipo == 'F') ? 'selected' : '' ?>>Física</option>
                     </select>
                 </div>
                 <label class="col-sm-2 col-form-label">CNPJ/CPF</label>
@@ -223,14 +216,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <input type="text" maxlength="18" class="form-control" name="cpfcnpj" placeholder="somente números" value="<?php echo $c_cnpj_cpf; ?>">
                 </div>
             </div>
-
-
+           
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Contato</label>
                 <div class="col-sm-6">
                     <input type="text" maxlength="100" class="form-control" name="contato" value="<?php echo $c_contato; ?>">
                 </div>
             </div>
+            
+
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Função/Cargo </label>
                 <div class="col-sm-3">
@@ -240,8 +234,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $c_sql_secundario = "SELECT funcoes.id, funcoes.descricao FROM funcoes ORDER BY funcoes.descricao";
                         $result_secundario = $conection->query($c_sql_secundario);
                         while ($c_linha = $result_secundario->fetch_assoc()) {
-                            echo "  
-                          <option>$c_linha[descricao]</option>
+                            if ($c_linha['id'] == $i_funcao) {
+                                $op =  'Selected';
+                            } else {
+                                $op = '';
+                            }
+                            echo "
+                               <option $op>$c_linha[descricao]</option>
                         ";
                         }
                         ?>
@@ -255,8 +254,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $c_sql_oficina = "SELECT oficinas.id, oficinas.descricao FROM oficinas ORDER BY oficinas.descricao";
                         $result_oficina = $conection->query($c_sql_oficina);
                         while ($c_linha = $result_oficina->fetch_assoc()) {
+                            if ($c_linha['id'] == $i_oficina) {
+                                $op = 'selected';
+                            } else {
+                                $op = '';
+                            }
                             echo "  
-                          <option>$c_linha[descricao]</option>
+                          <option $op>$c_linha[descricao]</option>
                         ";
                         }
                         ?>
@@ -265,17 +269,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
 
             <div class="row mb-3">
-
-            </div>
-           
-            <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Fone I</label>
                 <div class="col-sm-2">
-                    <input type="tel" onkeyup="handlePhone(event)" maxlength="20" id="fone1" class="form-control" name="fone1" value="<?php echo $c_fone1; ?>">
+                    <input type="tel" maxlength="20" onkeyup="handlePhone(event)" id="fone1" class="form-control" name="fone1" value="<?php echo $c_fone1; ?>">
                 </div>
                 <label class="col-sm-2 col-form-label">Fone II</label>
                 <div class="col-sm-2">
-                    <input type="tel" onkeyup="handlePhone(event)" maxlength="20" id="fone2" class="form-control" name="fone2" value="<?php echo $c_fone2; ?>">
+                    <input type="tel" maxlength="20" onkeyup="handlePhone(event)" id="fone2" class="form-control" name="fone2" value="<?php echo $c_fone2; ?>">
                 </div>
             </div>
 
@@ -302,39 +302,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Estado</label>
-                <div class="col-sm-3">
-                    <select class="form-select form-select-lg mb-3" id="estado" name="estado">
-                        <option value="AC">Acre</option>
-                        <option value="AL">Alagoas</option>
-                        <option value="AP">Amapa</option>
-                        <option value="AM">Amazonas</option>
-                        <option value="BA">Bahia</option>
-                        <option value="CE">Ceara</option>
-                        <option value="DF">Distrito Federal</option>
-                        <option value="ES">Espirito Santo</option>
-                        <option value="GO">Goias</option>
-                        <option value="MA">Maranhão</option>
-                        <option value="MT">Mato Grosso</option>
-                        <option value="MS">Mato Grosso do Sul</option>
-                        <option value="MG">Minas Gerais</option>
-                        <option value="PA">Para</option>
-                        <option value="PB">Paraiba</option>
-                        <option value="PR">Parana</option>
-                        <option value="PE">Pernambuco</option>
-                        <option value="PI">Piaui</option>
-                        <option value="RJ">Rio de Janeiro</option>
-                        <option value="RN">Rio Grande do Norte</option>
-                        <option value="RS">Rio Grande do Sul</option>
-                        <option value="RO">Rondonia</option>
-                        <option value="RR">Roraima</option>
-                        <option value="SC">Santa Catarina</option>
-                        <option value="SP">São Paulo</option>
-                        <option value="SE">Sergipe</option>
-                        <option value="TO">Tocantis</option>
+                <div class="col-sm-2">
+                    <select class="form-select form-select-lg mb-3" id="estado" name="estado" value="<?php echo $c_estado; ?>">
+                        <option value="AC" <?= ($c_estado == 'AC') ? 'selected' : '' ?>>Acre</option>
+                        <option value="AL" <?= ($c_estado == 'AL') ? 'selected' : '' ?>>Alagoas</option>
+                        <option value="AP" <?= ($c_estado == 'AP') ? 'selected' : '' ?>>Amapa</option>
+                        <option value="AM" <?= ($c_estado == 'AM') ? 'selected' : '' ?>>Amazonas</option>
+                        <option value="BA" <?= ($c_estado == 'BA') ? 'selected' : '' ?>>Bahia</option>
+                        <option value="CE" <?= ($c_estado == 'CE') ? 'selected' : '' ?>>Ceara</option>
+                        <option value="DF" <?= ($c_estado == 'DF') ? 'selected' : '' ?>>Distrito Federal</option>
+                        <option value="ES" <?= ($c_estado == 'ES') ? 'selected' : '' ?>>Espirito Santo</option>
+                        <option value="GO" <?= ($c_estado == 'GO') ? 'selected' : '' ?>>Goias</option>
+                        <option value="MA" <?= ($c_estado == 'MA') ? 'selected' : '' ?>>Maranhão</option>
+                        <option value="MT" <?= ($c_estado == 'MT') ? 'selected' : '' ?>>Mato Grosso</option>
+                        <option value="MS" <?= ($c_estado == 'MS') ? 'selected' : '' ?>>Mato Grosso do Sul</option>
+                        <option value="MG" <?= ($c_estado == 'MG') ? 'selected' : '' ?>>Minas Gerais</option>
+                        <option value="PA" <?= ($c_estado == 'PA') ? 'selected' : '' ?>>Para</option>
+                        <option value="PB" <?= ($c_estado == 'PB') ? 'selected' : '' ?>>Paraiba</option>
+                        <option value="PR" <?= ($c_estado == 'PR') ? 'selected' : '' ?>>Parana</option>
+                        <option value="PE" <?= ($c_estado == 'PE') ? 'selected' : '' ?>>Pernambuco</option>
+                        <option value="PI" <?= ($c_estado == 'PI') ? 'selected' : '' ?>>Piaui</option>
+                        <option value="RJ" <?= ($c_estado == 'RJ') ? 'selected' : '' ?>>Rio de Janeiro</option>
+                        <option value="RN" <?= ($c_estado == 'RN') ? 'selected' : '' ?>>Rio Grande do Norte</option>
+                        <option value="RS" <?= ($c_estado == 'RS') ? 'selected' : '' ?>>Rio Grande do Sul</option>
+                        <option value="RO" <?= ($c_estado == 'RO') ? 'selected' : '' ?>>Rondonia</option>
+                        <option value="RR" <?= ($c_estado == 'RR') ? 'selected' : '' ?>>Roraima</option>
+                        <option value="SC" <?= ($c_estado == 'SC') ? 'selected' : '' ?>>Santa Catarina</option>
+                        <option value="SP" <?= ($c_estado == 'SP') ? 'selected' : '' ?>>São Paulo</option>
+                        <option value="SE" <?= ($c_estado == 'SE') ? 'selected' : '' ?>>Sergipe</option>
+                        <option value="TO" <?= ($c_estado == 'TO') ? 'selected' : '' ?>>Tocantis</option>
                     </select>
-
                 </div>
-                <label class="col-sm-1 col-form-label">CEP</label>
+                <label class="col-sm-2 col-form-label">CEP</label>
                 <div class="col-sm-2">
                     <input type="text" maxlength="10" id="cep" class="form-control" name="cep" value="<?php echo $c_cep; ?>">
                 </div>
@@ -366,18 +365,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label class="col-sm-3 col-form-label">Escolaridade</label>
                 <div class="col-sm-2">
                     <select class="form-select form-select-lg mb-3" id="escolaridade" name="escolaridade">
-                        <option>Primário</option>
-                        <option>1o. Grau</option>
-                        <option>2o. Grau</option>
-                        <option>Curso Superior</option>
+                        <option <?= ($c_escolaridade == 'Primário') ? 'selected' : '' ?>>Primário</option>
+                        <option <?= ($c_escolaridade == '1o. Grau') ? 'selected' : '' ?>>1o. Grau</option>
+                        <option <?= ($c_escolaridade == '2o. Grau') ? 'selected' : '' ?>>2o. Grau</option>
+                        <option <?= ($c_escolaridade == 'Curso Superior') ? 'selected' : '' ?>>Curso Superior</option>
                     </select>
                 </div>
+
                 <label class="col-sm-2 col-form-label">Salário</label>
                 <div class="col-sm-2">
                     <input type="text" maxlength="20" class="form-control" name="salario" id="salario" value="<?php echo $n_salario; ?>">
                 </div>
-            </div>
 
+            </div>
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Valor da hora</label>
                 <div class="col-sm-2">
@@ -389,21 +389,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
 
             </div>
-          
+
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Observação</label>
                 <div class="col-sm-6">
-                    <textarea class="form-control" id="obs" name="obs" rows="3"></textarea>
+                    <textarea class="form-control" id="obs" name="obs" rows="3"><?php echo $c_obs ?></textarea>
                 </div>
             </div>
+
             <?php
             if (!empty($msg_gravou)) {
+
                 echo "
                     <div class='row mb-3'>
                         <div class='offset-sm-3 col-sm-6'>
                              <div class='alert alert-success alert-dismissible fade show' role='alert'>
                                 <strong>$msg_gravou</strong>
-                                   
                              </div>
                         </div>     
                     </div>    
@@ -414,10 +415,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <div class="offset-sm-3 col-sm-3">
                     <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                    <a class='btn btn-danger' href='/gop/executores_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                    <a class='btn btn-danger' href='/gop/cadastros/executores/executores_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
                 </div>
 
             </div>
+
         </form>
     </div>
 

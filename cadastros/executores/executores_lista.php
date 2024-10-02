@@ -3,18 +3,19 @@ session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
-include("conexao.php");
-include("links.php");
+include("../../conexao.php");
+include("../../links.php");
 ?>
 <!doctype html>
 <html lang="en">
 
 <body>
+
     <script language="Javascript">
         function confirmacao(id) {
             var resposta = confirm("Deseja remover esse registro?");
             if (resposta == true) {
-                window.location.href = "/gop/fabricantes_excluir.php?id=" + id;
+                window.location.href = "/gop/cadastros/executores/executores_excluir.php?id=" + id;
             }
         }
     </script>
@@ -28,7 +29,7 @@ include("links.php");
 
     <script>
         $(document).ready(function() {
-            $('.tabfabricantes').DataTable({
+            $('.tabexecutores').DataTable({
                 // 
                 "iDisplayLength": -1,
                 "order": [1, 'asc'],
@@ -73,24 +74,23 @@ include("links.php");
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
-            <h5>Lista de Fabricantes<h5>
+            <h5>Lista de Executores de Serviço<h5>
         </div>
     </div>
 
+
     <div class="container-fluid">
-
-
         <br>
-        <a class="btn btn-success btn-sm" href="/gop/fabricantes_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
+        <a class="btn btn-success btn-sm" href="/gop/cadastros/executores/executores_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
-        <table class="table display table-bordered tabfabricantes">
+        <table class="table display table-bordered tabexecutores">
             <thead class="thead">
                 <tr>
                     <th scope="col">Código</th>
-                    <th scope="col">Fabricante</th>
-                    <th scope="col">Razão Social</th>
+                    <th scope="col">Executor</th>
+                    <th scope="col">Função</th>
                     <th scope="col">CNPJ/CPF</th>
                     <th scope="col">Fone I</th>
                     <th scope="col">Fone II</th>
@@ -100,8 +100,11 @@ include("links.php");
             </thead>
             <tbody>
                 <?php
+               
                 // faço a Leitura da tabela com sql
-                $c_sql = "SELECT fabricantes.id, fabricantes.descricao, fabricantes.razaosocial, fabricantes.cnpj_cpf, fabricantes.fone1, fabricantes.fone2, fabricantes.contato FROM fabricantes ORDER BY fabricantes.descricao";
+                $c_sql = "SELECT executores.id, executores.nome,  executores.cpf_cnpj, executores.fone1, executores.fone2, executores.contato, funcoes.descricao AS funcao" .
+                    " FROM executores JOIN funcoes ON executores.id_funcao=funcoes.id" .
+                    " ORDER BY executores.nome";
                 $result = $conection->query($c_sql);
                 // verifico se a query foi correto
                 if (!$result) {
@@ -112,16 +115,17 @@ include("links.php");
                 while ($c_linha = $result->fetch_assoc()) {
 
                     echo "
-                    <tr class='table-primary'>
+                    <tr class='info'>
                     <td>$c_linha[id]</td>
-                    <td>$c_linha[descricao]</td>
-                    <td>$c_linha[razaosocial]</td>
-                    <td>$c_linha[cnpj_cpf]</td>
+                    <td>$c_linha[nome]</td>
+                    <td>$c_linha[funcao]</td>
+                    <td>$c_linha[cpf_cnpj]</td>
                     <td>$c_linha[fone1]</td>
                     <td>$c_linha[fone2]</td>
                     <td>$c_linha[contato]</td>
+                    
                     <td>
-                    <a class='btn btn-secondary btn-sm' href='/gop/fabricantes_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                    <a class='btn btn-secondary btn-sm' href='/gop/cadastros/executores/executores_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 

@@ -5,9 +5,9 @@ if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
 
-include('links2.php');
-include('conexao.php');
-include_once "lib_gop.php";
+include('../../links2.php');
+include('../../conexao.php');
+include_once "../../lib_gop.php";
 
 $c_descricao = "";
 $c_grupo = "";
@@ -83,30 +83,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!$result) {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
         }
-
-        $c_descricao = "";
-        $c_grupo = "";
-        $c_razao =  "";
-        $c_contato =  "";
-        $c_fone1 =  "";
-        $c_fone2 =  "";
-        $c_endereco =  "";
-        $c_bairro =  "";
-        $c_cidade =  "";
-        $c_estado =  "";
-        $c_cep =  "";
-        $c_email =  "";
-        $c_tipo =  "";
-        $c_cnpj_cpf =  "";
-        $c_insc_estad = "";
-        $c_insc_munic =  "";
-        $c_email =  "";
-        $c_url =  "";
-        $c_obs =  "";
+      
 
         $msg_gravou = "Dados Gravados com Sucesso!!";
 
-        header('location: /gop/fornecedores_lista.php');
+        header('location: /gop/cadastros/fornecedores/fornecedores_lista.php');
     } while (false);
 }
 
@@ -355,7 +336,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <div class="offset-sm-3 col-sm-3">
                     <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                    <a class='btn btn-danger' href='/gop/fornecedores_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                    <a class='btn btn-danger' href='/gop/cadastros/fornecedores/fornecedores_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
                 </div>
 
             </div>

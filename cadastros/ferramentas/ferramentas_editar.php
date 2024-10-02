@@ -1,14 +1,15 @@
-<?php
-// controle de acesso ao formulário
+<?php // controle de acesso ao formulário
 session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
 
-include_once "lib_gop.php";
-include("conexao.php");
-include("links2.php");
+include_once "../../lib_gop.php";
+include("../../conexao.php");
+include("../../links2.php");
 
+// rotina de post dos dados do formuário
+$c_id = "";
 $c_descricao = "";
 $c_patrimonio = "";
 $c_serie = "";
@@ -18,14 +19,46 @@ $n_valoraquisicao = 0;
 $d_datagarantia = null;
 $c_conservacao = "";
 $c_obs = "";
-
-
 // variaveis para mensagens de erro e suscessso da gravação
 $msg_gravou = "";
 $msg_erro = "";
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no formulário
 
+    if (!isset($_GET["id"])) {
+        header('location: /gop/cadastros/ferramentas/ferramentas_lista.php');
+        exit;
+    }
+
+    $c_id = $_GET["id"];
+    // leitura do cliente através de sql usando id passada
+    $c_sql = "select * from ferramentas where id=$c_id";
+    $result = $conection->query($c_sql);
+    $registro = $result->fetch_assoc();
+
+    if (!$registro) {
+        header('location: /gop/cadastros/ferramentas/ferramentas_lista.php');
+        exit;
+    }
+
+    $c_descricao = $registro['descricao'];
+    $c_patrimonio = $registro['patrimonio'];
+    $c_serie = $registro['serie'];
+    $c_notafiscal = $registro['notafiscal'];
+    $n_valoraquisicao = $registro['valor_aquisicao'];
+    $c_conservacao = $registro['conservacao'];
+    $c_obs = $registro['obs'];
+    $d_dataaquisicao = new DateTime($registro['data_aquisicao']);
+    $d_datagarantia = new DateTime($registro['data_garantia']);
+    $d_dataaquisicao = $d_dataaquisicao->format('y-m-d');
+    $d_datagarantia = $d_datagarantia->format('y-m-d');
+    $i_marca = $registro['id_marca'];
+    $i_fornecedor = $registro['id_fornecedor'];
+    $i_fabricante = $registro['id_fabricante'];
+    $i_oficina = $registro['id_oficina'];
+} else {
+    // metodo post para atualizar dados
+    $c_id = $_POST["id"];
     $c_descricao = $_POST['descricao'];
     $c_patrimonio = $_POST['patrimonio'];
     $c_serie = $_POST['serie'];
@@ -37,17 +70,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $c_fabricante = $_POST['fabricante'];
     $c_fornecedor = $_POST['fornecedor'];
     $c_oficina = $_POST['oficina'];
+    $d_dataaquisicao = new DateTime($_POST['dataaquisicao']);
+    $d_dataaquisicao = $d_dataaquisicao->format('Y-m-d');
+    $d_datagarantia = new DateTime($_POST['datagarantia']);
+    $d_datagarantia = $d_datagarantia->format('Y-m-d');
 
     do {
         if (empty($c_descricao)  || empty($c_patrimonio)) {
             $msg_erro = "Campos descrição , patrimônio e data da aquisição devem ser preenchidos!!";
             break;
         }
-
-        $d_dataaquisicao = new DateTime($_POST['dataaquisicao']);
-        $d_dataaquisicao = $d_dataaquisicao->format('Y-m-d');
-        $d_datagarantia = new DateTime($_POST['datagarantia']);
-        $d_datagarantia = $d_datagarantia->format('Y-m-d');
+        // monto sql para atabelas primarias para pegar a id
         // localizo o id do valor do combobox de centro de custos
         // select da tabela de oficinas para pegar codigo
         $c_sql_secundario = "SELECT oficinas.id FROM oficinas where oficinas.descricao='$c_oficina' ORDER BY oficinas.descricao";
@@ -71,34 +104,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $i_fabricante = $registro_secundario['id'];
         // grava dados no banco
         // faço a Leitura da tabela com sql
-        $c_sql = "Insert into ferramentas (descricao,  patrimonio, serie, notafiscal, valor_aquisicao, data_garantia, data_aquisicao, conservacao, obs," .
-            " id_oficina, id_marca, id_fornecedor, id_fabricante)" .
-            "Value ('$c_descricao', '$c_patrimonio', '$c_serie', '$c_notafiscal', '$n_valoraquisicao', '$d_datagarantia', '$d_dataaquisicao', '$c_conservacao'," .
-            " '$c_obs', '$i_oficina', '$i_marca', '$i_fornecedor', '$i_fabricante')";
-
+        $c_sql = "Update ferramentas" .
+            " SET descricao='$c_descricao', patrimonio='$c_patrimonio', serie='$c_serie', notafiscal='$c_notafiscal'," .
+            " valor_aquisicao='$n_valoraquisicao', data_garantia='$d_datagarantia', data_aquisicao='$d_dataaquisicao'," .
+            " conservacao='$c_conservacao', obs='$c_obs'," .
+            " id_oficina='$i_oficina', id_marca='$i_marca', id_fornecedor='$i_fornecedor', id_fabricante='$i_fabricante'" .
+            " where id=$c_id";
+        echo $c_sql;
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
         if (!$result) {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
         }
-
-        $c_descricao = "";
-        $c_patrimonio = "";
-        $c_serie = "";
-        $c_notafiscal = "";
-        $d_dataaquisicao = null;
-        $n_valoraquisicao = 0.00;
-        $d_datagarantia = null;
-        $c_conservacao = "";
-        $c_obs = "";
-
-
         $msg_gravou = "Dados Gravados com Sucesso!!";
-
-        header('location: /gop/ferramentas_lista.php');
+        header('location: /gop/cadastros/ferramentas/ferramentas_lista.php');
     } while (false);
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -108,16 +129,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 </head>
 
 <body>
-    <div class="container  -my5">
+
+    <div class="container -my5">
         <div style="padding-top:5px;">
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
                     <h4>GOP - Gestão Operacional</h4>
-                    <h5>Nova Ferramenta<h5>
+                    <h5>Editar dados da Ferramenta<h5>
                 </div>
             </div>
         </div>
@@ -128,6 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <h5>Campos com (*) são obrigatórios</h5>
         </div>
+
         <br>
         <?php
         if (!empty($msg_erro)) {
@@ -143,6 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ?>
 
         <form method="post">
+            <input type="hidden" name="id" value="<?php echo $c_id; ?>">
 
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Descrição</label>
@@ -171,8 +194,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $c_sql_fornecedores = "SELECT fornecedores.id, fornecedores.descricao FROM fornecedores ORDER BY fornecedores.descricao";
                         $result_fornecedores = $conection->query($c_sql_fornecedores);
                         while ($c_linha = $result_fornecedores->fetch_assoc()) {
+                            if ($c_linha['id'] == $i_fornecedor) {
+                                $op = 'selected';
+                            } else {
+                                $op = '';
+                            }
                             echo "  
-                          <option>$c_linha[descricao]</option>
+                          <option $op>$c_linha[descricao]</option>
                         ";
                         }
                         ?>
@@ -189,8 +217,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $c_sql_fabricante = "SELECT fabricantes.id, fabricantes.descricao FROM fabricantes ORDER BY fabricantes.descricao";
                         $result_fabricante = $conection->query($c_sql_fabricante);
                         while ($c_linha = $result_fabricante->fetch_assoc()) {
+                            if ($c_linha['id'] == $i_fabricante) {
+                                $op = 'selected';
+                            } else {
+                                $op = '';
+                            }
                             echo "  
-                          <option>$c_linha[descricao]</option>
+                          <option $op>$c_linha[descricao]</option>
                         ";
                         }
                         ?>
@@ -207,8 +240,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $c_sql_marca = "SELECT marcas.id, marcas.descricao FROM marcas ORDER BY marcas.descricao";
                         $result_marca = $conection->query($c_sql_marca);
                         while ($c_linha = $result_marca->fetch_assoc()) {
+                            if ($c_linha['id'] == $i_marca) {
+                                $op = 'selected';
+                            } else {
+                                $op = '';
+                            }
                             echo "  
-                          <option>$c_linha[descricao]</option>
+                          <option $op>$c_linha[descricao]</option>
                         ";
                         }
                         ?>
@@ -225,8 +263,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $c_sql_oficina = "SELECT oficinas.id, oficinas.descricao FROM oficinas ORDER BY oficinas.descricao";
                         $result_oficina = $conection->query($c_sql_oficina);
                         while ($c_linha = $result_oficina->fetch_assoc()) {
+                            if ($c_linha['id'] == $i_oficina) {
+                                $op = 'selected';
+                            } else {
+                                $op = '';
+                            }
                             echo "  
-                          <option>$c_linha[descricao]</option>
+                          <option $op>$c_linha[descricao]</option>
                         ";
                         }
                         ?>
@@ -236,12 +279,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label class="col-sm-2 col-form-label">Conservação</label>
                 <div class="col-sm-2">
                     <select class="form-select form-select-lg mb-3" id="conservacao" name="conservacao">
-                        <option>Péssimo</option>
-                        <option>Ruim</option>
-                        <option>Razoável</option>
-                        <option>Bom</option>
-                        <option>Muito Bom</option>
-                        <option>Ótimo</option>
+                        <option <?= ($c_conservacao == 'Péssimo') ? 'selected' : '' ?>>Péssimo</option>
+                        <option <?= ($c_conservacao == 'Ruim') ? 'selected' : '' ?>>Ruim</option>
+                        <option <?= ($c_conservacao == 'Razoável') ? 'selected' : '' ?>>Razoável</option>
+                        <option <?= ($c_conservacao == 'Bom') ? 'selected' : '' ?>>Bom</option>
+                        <option <?= ($c_conservacao == 'Muito Bom') ? 'selected' : '' ?>>Muito Bom</option>
+                        <option <?= ($c_conservacao == 'Ótimo') ? 'selected' : '' ?>>Ótimo</option>
                     </select>
                 </div>
             </div>
@@ -249,7 +292,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Data da Aquisição</label>
                 <div class="col-sm-2">
-                    <input type="date" maxlength="10" class="form-control" id="dataaquisicao" name="dataaquisicao" value="<?php echo $d_dataaquisicao; ?>">
+                    <input type="text" maxlength="10" class="form-control" id="dataaquisicao" name="dataaquisicao" value="<?php echo $d_dataaquisicao; ?>">
                 </div>
                 <label class="col-sm-2 col-form-label">Valor da Aquisição</label>
                 <div class="col-sm-2">
@@ -264,25 +307,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
                 <label class="col-sm-2 col-form-label">Data Fim da Garantia</label>
                 <div class="col-sm-2">
-                    <input type="date" maxlength="10" class="form-control" id="datagarantia" name="datagarantia" value="<?php echo $d_datagarantia; ?>">
+                    <input type="text" maxlength="10" class="form-control" id="datagarantia" name="datagarantia" value="<?php echo $d_datagarantia; ?>">
                 </div>
             </div>
 
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Observação</label>
                 <div class="col-sm-6">
-                    <textarea class="form-control" id="obs" name="obs" rows="3"></textarea>
+                    <textarea class="form-control" id="obs" name="obs" rows="3"><?php echo $c_obs; ?></textarea>
                 </div>
             </div>
 
+
             <?php
             if (!empty($msg_gravou)) {
+
                 echo "
                     <div class='row mb-3'>
                         <div class='offset-sm-3 col-sm-6'>
                              <div class='alert alert-success alert-dismissible fade show' role='alert'>
                                 <strong>$msg_gravou</strong>
-                                   
                              </div>
                         </div>     
                     </div>    
@@ -293,10 +337,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <div class="offset-sm-3 col-sm-3">
                     <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                    <a class='btn btn-danger' href='/gop/ferramentas_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                    <a class='btn btn-danger' href='/gop/cadastros/ferramentas/ferramentas_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
                 </div>
 
             </div>
+
         </form>
     </div>
 

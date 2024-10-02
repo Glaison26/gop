@@ -5,7 +5,7 @@ if (!isset($_SESSION['newsession'])) {
 }
 
 if (!isset($_GET["id"])) {
-    header('location: /gop/ferramentas_lista.php');
+    header('location: /gop/cadastros/fornecedores/fornecedores_lista.php');
     exit;
 }
 $c_id = "";
@@ -22,6 +22,6 @@ if ($conection->connect_error) {
     die("Erro na Conexão com o Banco de Dados!! " . $conection->connect_error);
 }
 // Exclusão do registro
-$c_sql = "delete from ferramentas where id=$c_id";
+$c_sql = "delete from fornecedores where id=$c_id";
 $result = $conection->query($c_sql);
-header('location: /gop/ferramentas_lista.php');
+header('location: /gop/cadastros/fornecedores/fornecedores_lista.php');

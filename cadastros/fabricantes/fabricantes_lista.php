@@ -3,21 +3,18 @@ session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
-include("conexao.php");
-include("links.php");
-include_once "lib_gop.php";
-
+include("../../conexao.php");
+include("../../links.php");
 ?>
 <!doctype html>
 <html lang="en">
 
 <body>
-    
     <script language="Javascript">
         function confirmacao(id) {
             var resposta = confirm("Deseja remover esse registro?");
             if (resposta == true) {
-                window.location.href = "/gop/materiais_excluir.php?id=" + id;
+                window.location.href = "/gop/cadastros/fabricantes/fabricantes_excluir.php?id=" + id;
             }
         }
     </script>
@@ -31,13 +28,13 @@ include_once "lib_gop.php";
 
     <script>
         $(document).ready(function() {
-            $('.tabmateriais').DataTable({
+            $('.tabfabricantes').DataTable({
                 // 
                 "iDisplayLength": -1,
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,
-                    'aTargets': [6]
+                    'aTargets': [7]
                 }, {
                     'aTargets': [0],
                     "visible": false
@@ -67,50 +64,44 @@ include_once "lib_gop.php";
                         '<option value="50">50</option>' +
                         '<option value="-1">Todos</option>' +
                         '</select> Registros'
-
                 }
-
             });
 
         });
     </script>
+
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
-            <h5>Lista de Materiais<h5>
+            <h5>Lista de Fabricantes<h5>
         </div>
     </div>
-    <br>
+
     <div class="container-fluid">
 
-        <a class="btn btn-success btn-sm" href="/gop/materiais_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
+
+        <br>
+        <a class="btn btn-success btn-sm" href="/gop/cadastros/fabricantes/fabricantes_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
-        <table class="table table display table-bordered tabmateriais">
+        <table class="table display table-bordered tabfabricantes">
             <thead class="thead">
                 <tr>
                     <th scope="col">Código</th>
-                    <th scope="col">Descrição</th>
-                    <th scope="col">Saldo</th>
-                    <th scope="col">Unidade</th>
-                    <th scope="col">Grupo</th>
-                    <th scope="col">Marca</th>
-                    <th scope="col">Custo</th>
+                    <th scope="col">Fabricante</th>
+                    <th scope="col">Razão Social</th>
+                    <th scope="col">CNPJ/CPF</th>
+                    <th scope="col">Fone I</th>
+                    <th scope="col">Fone II</th>
+                    <th scope="col">Contato</th>
                     <th scope="col">Opções</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-               
                 // faço a Leitura da tabela com sql
-                $c_sql = "SELECT materiais.id, materiais.descricao, materiais.quantidadeatual, materiais.custo, unidades.descricao AS unidade," .
-                    " marcas.descricao AS marca, grupos.descricao AS grupo" .
-                    " FROM materiais" .
-                    " JOIN  unidades on materiais.id_unidadeEntrada=unidades.id" .
-                    " JOIN  marcas on materiais.id_marca=marcas.id" .
-                    " JOIN  grupos on materiais.id_grupo=grupos.id" .
-                    " ORDER BY materiais.descricao";
+                $c_sql = "SELECT fabricantes.id, fabricantes.descricao, fabricantes.razaosocial, fabricantes.cnpj_cpf, fabricantes.fone1, fabricantes.fone2, fabricantes.contato FROM fabricantes ORDER BY fabricantes.descricao";
                 $result = $conection->query($c_sql);
                 // verifico se a query foi correto
                 if (!$result) {
@@ -119,18 +110,18 @@ include_once "lib_gop.php";
 
                 // insiro os registro do banco de dados na tabela 
                 while ($c_linha = $result->fetch_assoc()) {
-                    $c_custo = mask($c_linha['custo'], 'R$#########');
+
                     echo "
-                    <tr class='info'>
+                    <tr class='table-primary'>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descricao]</td>
-                    <td>$c_linha[quantidadeatual]</td>
-                    <td>$c_linha[unidade]</td>
-                    <td>$c_linha[grupo]</td>
-                    <td>$c_linha[marca]</td>
-                    <td>$c_custo</td>
+                    <td>$c_linha[razaosocial]</td>
+                    <td>$c_linha[cnpj_cpf]</td>
+                    <td>$c_linha[fone1]</td>
+                    <td>$c_linha[fone2]</td>
+                    <td>$c_linha[contato]</td>
                     <td>
-                    <a class='btn btn-secondary btn-sm' href='/gop/materiais_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                    <a class='btn btn-secondary btn-sm' href='/gop/cadastros/fabricantes/fabricantes_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 

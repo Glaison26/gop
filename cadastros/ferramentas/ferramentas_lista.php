@@ -3,19 +3,18 @@ session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
-include("conexao.php");
-include("links.php");
+include("../../conexao.php");
+include("../../links.php");
 ?>
 <!doctype html>
 <html lang="en">
 
 <body>
-  
     <script language="Javascript">
         function confirmacao(id) {
             var resposta = confirm("Deseja remover esse registro?");
             if (resposta == true) {
-                window.location.href = "/gop/espacos_excluir.php?id=" + id;
+                window.location.href = "/gop/cadastros/ferramentas/ferramentas_excluir.php?id=" + id;
             }
         }
     </script>
@@ -26,16 +25,15 @@ include("links.php");
         }
     </script>
 
-
     <script>
         $(document).ready(function() {
-            $('.tabespacos').DataTable({
+            $('.tabferramentas').DataTable({
                 // 
                 "iDisplayLength": -1,
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,
-                    'aTargets': [6]
+                    'aTargets': [5]
                 }, {
                     'aTargets': [0],
                     "visible": false
@@ -65,43 +63,51 @@ include("links.php");
                         '<option value="50">50</option>' +
                         '<option value="-1">Todos</option>' +
                         '</select> Registros'
-
                 }
-
             });
 
         });
     </script>
+
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
-            <h5>Lista de Espaços Físicos<h5>
+            <h5>Lista de Ferramentas<h5>
         </div>
     </div>
 
-    <br>
     <div class="container-fluid">
-
-        <a class="btn btn-success btn-sm" href="/gop/espacos_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
+        <br>
+        <a class="btn btn-success btn-sm" href="/gop/cadastros/ferramentas/ferramentas_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
-        <table class="table display table-bordered tabespacos">
+        <table class="table display table-hover  table-condensed tabferramentas">
             <thead class="thead">
                 <tr>
                     <th scope="col">Código</th>
                     <th scope="col">Descrição</th>
-                    <th scope="col">Tipo</th>
-                    <th scope="col">Responsável</th>
-                    <th scope="col">Fone I</th>
-                    <th scope="col">Fone II</th>
+                    <th scope="col">Patrimônio</th>
+                    <th scope="col">Fabricante</th>
+                    <th scope="col">Fornecedor</th>
+                    <th scope="col">Marca</th>
+                    <th scope="col">Nota</th>
+                    <th scope="col">Série</th>
                     <th scope="col">Opções</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 // faço a Leitura da tabela com sql
-                $c_sql = "SELECT espacos.id, espacos.descricao, espacos.tipo, espacos.responsavel, espacos.fone1, espacos.fone2 FROM espacos ORDER BY espacos.descricao";
+                $c_sql = "SELECT ferramentas.id, ferramentas.descricao, ferramentas.patrimonio, fabricantes.descricao AS fabricante, fornecedores.descricao AS fornecedor," .
+                    " marcas.descricao AS marca, ferramentas.notafiscal, ferramentas.serie" .
+                    " FROM ferramentas" .
+                    " JOIN fabricantes ON ferramentas.id_fabricante=fabricantes.id" .
+                    " JOIN fornecedores ON ferramentas.id_fornecedor=fornecedores.id" .
+                    " JOIN marcas ON ferramentas.id_marca=marcas.id" .
+                    " JOIN oficinas ON ferramentas.id_oficina=oficinas.id" .
+                    " ORDER BY ferramentas.descricao";
+
                 $result = $conection->query($c_sql);
                 // verifico se a query foi correto
                 if (!$result) {
@@ -115,12 +121,14 @@ include("links.php");
                     <tr class='info'>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descricao]</td>
-                    <td>$c_linha[tipo]</td>
-                    <td>$c_linha[responsavel]</td>
-                    <td>$c_linha[fone1]</td>
-                    <td>$c_linha[fone2]</td>
+                    <td>$c_linha[patrimonio]</td>
+                    <td>$c_linha[fabricante]</td>
+                    <td>$c_linha[fornecedor]</td>
+                    <td>$c_linha[marca]</td>
+                    <td>$c_linha[notafiscal]</td>
+                    <td>$c_linha[serie]</td>
                     <td>
-                    <a class='btn btn-secondary btn-sm' href='/gop/espacos_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                    <a class='btn btn-secondary btn-sm' href='/gop/cadastros/ferramentas/ferramentas_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
@@ -128,8 +136,6 @@ include("links.php");
                     ";
                 }
                 ?>
-
-
             </tbody>
         </table>
     </div>

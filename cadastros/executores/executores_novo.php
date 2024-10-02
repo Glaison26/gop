@@ -4,71 +4,102 @@ session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
-include("conexao.php");
-include("links2.php");
-include_once "lib_gop.php";
 
-$c_descricao = "";
-$c_razao =  "";
-$c_contato =  "";
-$c_fone1 =  "";
-$c_fone2 =  "";
-$c_endereco =  "";
-$c_bairro =  "";
-$c_cidade =  "";
-$c_estado =  "";
-$c_cep =  "";
-$c_email =  "";
-$c_tipo =  "";
-$c_cnpj_cpf =  "";
-$c_insc_estad = "";
-$c_insc_munic =  "";
-$c_email =  "";
-$c_url =  "";
-$c_obs =  "";
+include("../../conexao.php");
+include("../../links2.php");
+include_once "../../lib_gop.php";
+
+$c_nome = '';
+$c_tipo = '';
+$c_endereco = '';
+$c_bairro = '';
+$c_cidade = '';
+$c_estado = '';
+$c_cep = '';
+$c_email = '';
+$c_url = '';
+$c_formacao = '';
+$c_contato = '';
+$c_fone1 = '';
+$c_fone2 = '';
+$c_fone3 = '';
+$n_salario = '0.00';
+$c_cnpj_cpf = '';
+$i_horastrab = '0.00';
+$n_valorhora = '0.00';
+$c_escolaridade = '';
+$c_obs = '';
 
 // variaveis para mensagens de erro e suscessso da gravação
 $msg_gravou = "";
 $msg_erro = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $c_descricao = $_POST['descricao'];
-    $c_razao = $_POST['razaosocial'];
-    $c_contato = $_POST['contato'];
-    $c_fone1 = $_POST['fone1'];
-    $c_fone2 = $_POST['fone2'];
+
+    $c_nome = $_POST['nome'];
+    $c_tipo = $_POST['tipo'];
+    $c_cnpj_cpf = $_POST['cpfcnpj'];
     $c_endereco = $_POST['endereco'];
     $c_bairro = $_POST['bairro'];
     $c_cidade = $_POST['cidade'];
     $c_estado = $_POST['estado'];
     $c_cep = $_POST['cep'];
     $c_email = $_POST['email'];
-    $c_tipo = $_POST['tipo'];
-    $c_cnpj_cpf = $_POST['cnpj_cpf'];
-    $c_insc_estad = $_POST['insc_estad'];
-    $c_insc_munic = $_POST['insc_munic'];
-    $c_email = $_POST['email'];
     $c_url = $_POST['url'];
+    $c_formacao = $_POST['formacao'];
+    $c_contato = $_POST['contato'];
+    $c_fone1 = $_POST['fone1'];
+    $c_fone2 = $_POST['fone2'];
+    $c_fone3 = $_POST['fone3'];
+    $n_salario = $_POST['salario'];
+    $i_horastrab = $_POST['horastrab'];
+    $n_valorhora = $_POST['valorhora'];
+    $c_funcao = $_POST['funcao'];
+    $c_oficina = $_POST['oficina'];
+    $c_escolaridade = $_POST['escolaridade'];
     $c_obs = $_POST['obs'];
 
     do {
-        if (empty($c_descricao) || empty($c_razao) || empty($c_cnpj_cpf) || empty($c_tipo) || empty($c_contato)) {
-            $msg_erro = "Campos Fabricante, razão social, cnpj/cpf, tipo e contato devem ser preenchidos!!";
+        if (empty($c_nome) || empty($c_endereco) || empty($c_cnpj_cpf) || empty($c_bairro) || empty($c_cidade) || empty($c_cep)) {
+            $msg_erro = "Campos Nome, endereco, bairro, cidade, cep e CPF/CNPJ devem ser preenchidos!!";
             break;
         }
-        // mascara para cpf ou cnpj
+        // mascara e validação para cpf ou cnpj
+
         if ($c_tipo == "Física") {
             $c_cnpj_cpf = mask($c_cnpj_cpf, "###.###.###-##");
+            $c_tipo = 'F';
+            if (!validaCPF($c_cnpj_cpf)) {
+                $msg_erro = "CPF informado inválido!!";
+                break;
+            }
         } else {
             $c_cnpj_cpf = mask($c_cnpj_cpf, "##.###.###/####-##");
+            $c_tipo = 'J';
+            if (!valida_cnpj($c_cnpj_cpf)) {
+                $msg_erro = "CNPJ informado inválido!!";
+                break;
+            }
         }
+        // verifico a id da função selecionado no combo
+        $c_sql_secundario = "SELECT funcoes.id FROM funcoes where funcoes.descricao='$c_funcao' ORDER BY funcoes.descricao";
+        $result_secundario = $conection->query($c_sql_secundario);
+        $registro_secundario = $result_secundario->fetch_assoc();
+        $i_funcao = $registro_secundario['id'];
+        // verifico o id da oficina
+        // verifico a id da função selecionado no combo
+        $c_sql_secundario = "SELECT oficinas.id FROM oficinas where oficinas.descricao='$c_oficina' ORDER BY oficinas.descricao";
+        $result_secundario = $conection->query($c_sql_secundario);
+        $registro_secundario = $result_secundario->fetch_assoc();
+        $i_oficina = $registro_secundario['id'];
         // grava dados no banco
 
         // faço a inclusão da tabela com sql
-        $c_sql = "Insert into fabricantes (descricao, razaosocial, contato, fone1, fone2, endereco," .
-            "bairro, cep, estado, email, cidade,  tipo, cnpj_cpf, insc_estad, insc_munic, url, obs  )" .
-            "Value ('$c_descricao', '$c_razao', '$c_contato', '$c_fone1', '$c_fone2', '$c_endereco', '$c_bairro'," .
-            " '$c_cep', '$c_estado', '$c_email' ,'$c_cidade', '$c_tipo', '$c_cnpj_cpf', '$c_insc_estad', '$c_insc_munic', '$c_url', '$c_obs')";
+        $c_sql = "Insert into executores (id_oficina,id_funcao, nome,endereco,bairro,cep,cidade,uf,contato,tipo,cpf_cnpj,email,url," .
+            " fone1,fone2,fone3,salario,horastrab,valorhora,escolaridade,formacao,obs)" .
+            " Value ('$i_oficina', '$i_funcao', '$c_nome', '$c_endereco', '$c_bairro','$c_cep', '$c_cidade', '$c_estado'," .
+            " '$c_contato', '$c_tipo', '$c_cnpj_cpf', '$c_email', '$c_url','$c_fone1', '$c_fone2', '$c_fone3'," .
+            " '$n_salario', '$i_horastrab', '$n_valorhora', '$c_escolaridade', '$c_formacao', '$c_obs')";
         echo $c_sql;
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
@@ -76,28 +107,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
         }
 
-        $c_descricao = "";
-        $c_razao =  "";
-        $c_contato =  "";
-        $c_fone1 =  "";
-        $c_fone2 =  "";
-        $c_endereco =  "";
-        $c_bairro =  "";
-        $c_cidade =  "";
-        $c_estado =  "";
-        $c_cep =  "";
-        $c_email =  "";
-        $c_tipo =  "";
-        $c_cnpj_cpf =  "";
-        $c_insc_estad = "";
-        $c_insc_munic =  "";
-        $c_email =  "";
-        $c_url =  "";
-        $c_obs =  "";
+        $c_nome = '';
+        $c_tipo = '';
+        $c_endereco = '';
+        $c_bairro = '';
+        $c_cidade = '';
+        $c_estado = '';
+        $c_cep = '';
+        $c_email = '';
+        $c_url = '';
+        $c_formacao = '';
+        $c_contato = '';
+        $c_fone1 = '';
+        $c_fone2 = '';
+        $c_fone3 = '';
+        $c_salrio = '0.00';
+        $c_cnpj_cpf = '';
+        $i_horastrab = '0.00';
+        $n_valorhora = '0.00';
+        $c_escolaridade = '';
+        $c_obs = '';
+
 
         $msg_gravou = "Dados Gravados com Sucesso!!";
 
-        header('location: /gop/fabricantes_lista.php');
+        header('location: /gop/cadastros/executores/executores_lista.php');
     } while (false);
 }
 
@@ -109,11 +143,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
 
-
     <script type="text/javascript">
         $(document).ready(function() {
             $("#fone1").mask("(99)9999-9999");
             $("#fone2").mask("(99)9999-9999");
+            $('#fone3').mask("(99)9999-9999");
             $("#cnpj_cpf").mask("999999999999999999");
             $("#cep").mask("99.999-999");
         });
@@ -139,12 +173,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body>
     <div class="container  -my5">
-
         <div style="padding-top:5px;">
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
                     <h4>GOP - Gestão Operacional</h4>
-                    <h5>Novo Fabricante<h5>
+                    <h5>Novo Executor de Serviço<h5>
                 </div>
             </div>
         </div>
@@ -162,60 +195,79 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo "
             <div class='alert alert-warning' role='alert'>
                 <div style='padding-left:15px;'>
-                    
+                    <h5><img Align='left' src='\gop\images\aviso.png' alt='30' height='35'> $msg_erro</h5>
                 </div>
-                <h4><img Align='left' src='\gop\images\aviso.png' alt='30' height='35'> $msg_erro</h4>
+                
             </div>
             ";
         }
         ?>
         <form method="post">
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Nome do Fabricante (*)</label>
+                <label class="col-sm-3 col-form-label">Nome </label>
                 <div class="col-sm-6">
-                    <input type="text" maxlength="120" class="form-control" name="descricao" value="<?php echo $c_descricao; ?>">
+                    <input type="text" maxlength="120" class="form-control" name="nome" value="<?php echo $c_nome; ?>">
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Razão Social (*)</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="120" class="form-control" name="razaosocial" value="<?php echo $c_razao; ?>">
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Tipo Fornecedor (*)</label>
+                <label class="col-sm-3 col-form-label">Tipo Executor </label>
                 <div class="col-sm-2">
                     <select class="form-select form-select-lg mb-3" id="tipo" name="tipo">
                         <option>Juridica</option>
                         <option>Física</option>
                     </select>
                 </div>
-                <label class="col-sm-2 col-form-label">CNPJ/CPF (*)</label>
+                <label class="col-sm-2 col-form-label">CNPJ/CPF</label>
                 <div class="col-sm-2">
-                    <input type="text" maxlength="18" class="form-control" name="cnpj_cpf" placeholder="somente números" value="<?php echo $c_cnpj_cpf; ?>">
+                    <input type="text" maxlength="18" class="form-control" name="cpfcnpj" placeholder="somente números" value="<?php echo $c_cnpj_cpf; ?>">
                 </div>
             </div>
 
+
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Contato (*)</label>
+                <label class="col-sm-3 col-form-label">Contato</label>
                 <div class="col-sm-6">
                     <input type="text" maxlength="100" class="form-control" name="contato" value="<?php echo $c_contato; ?>">
                 </div>
             </div>
-           
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Insc. Estadual</label>
-                <div class="col-sm-2">
-                    <input type="text" maxlength="16" class="form-control" name="insc_estad" value="<?php echo $c_insc_estad; ?>">
+                <label class="col-sm-3 col-form-label">Função/Cargo </label>
+                <div class="col-sm-3">
+                    <select class="form-select form-select-lg mb-3" id="funcao" name="funcao">
+                        <?php
+                        // select da tabela de funções
+                        $c_sql_secundario = "SELECT funcoes.id, funcoes.descricao FROM funcoes ORDER BY funcoes.descricao";
+                        $result_secundario = $conection->query($c_sql_secundario);
+                        while ($c_linha = $result_secundario->fetch_assoc()) {
+                            echo "  
+                          <option>$c_linha[descricao]</option>
+                        ";
+                        }
+                        ?>
+                    </select>
                 </div>
-                <label class="col-sm-2 col-form-label">Insc. Municipal</label>
+                <label class="col-sm-1 col-form-label">Oficina </label>
                 <div class="col-sm-2">
-                    <input type="text" maxlength="16" class="form-control" name="insc_munic" value="<?php echo $c_insc_munic; ?>">
+                    <select class="form-select form-select-lg mb-3" id="oficina" name="oficina">
+                        <?php
+                        // select da tabela de oficinas
+                        $c_sql_oficina = "SELECT oficinas.id, oficinas.descricao FROM oficinas ORDER BY oficinas.descricao";
+                        $result_oficina = $conection->query($c_sql_oficina);
+                        while ($c_linha = $result_oficina->fetch_assoc()) {
+                            echo "  
+                          <option>$c_linha[descricao]</option>
+                        ";
+                        }
+                        ?>
+                    </select>
                 </div>
             </div>
-            <hr>
+
+            <div class="row mb-3">
+
+            </div>
+           
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Fone I</label>
                 <div class="col-sm-2">
@@ -280,6 +332,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <option value="SE">Sergipe</option>
                         <option value="TO">Tocantis</option>
                     </select>
+
                 </div>
                 <label class="col-sm-1 col-form-label">CEP</label>
                 <div class="col-sm-2">
@@ -297,10 +350,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Site</label>
                 <div class="col-sm-6">
-                    <input type="text" maxlength="120" id="url" class="form-control col-xs-12" name="url">
+                    <input type="text" maxlength="120" id="url" class="form-control col-xs-12" name="url" value="<?php echo $c_url; ?>">
                 </div>
             </div>
 
+            <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">Formação</label>
+                <div class="col-sm-6">
+                    <input type="text" maxlength="120" class="form-control" name="formacao" id="formacao" value="<?php echo $c_formacao; ?>">
+                </div>
+            </div>
+
+
+            <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">Escolaridade</label>
+                <div class="col-sm-2">
+                    <select class="form-select form-select-lg mb-3" id="escolaridade" name="escolaridade">
+                        <option>Primário</option>
+                        <option>1o. Grau</option>
+                        <option>2o. Grau</option>
+                        <option>Curso Superior</option>
+                    </select>
+                </div>
+                <label class="col-sm-2 col-form-label">Salário</label>
+                <div class="col-sm-2">
+                    <input type="text" maxlength="20" class="form-control" name="salario" id="salario" value="<?php echo $n_salario; ?>">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">Valor da hora</label>
+                <div class="col-sm-2">
+                    <input type="text" maxlength="20" class="form-control" name="valorhora" id="valorhora" value="<?php echo $n_valorhora; ?>">
+                </div>
+                <label class="col-sm-2 col-form-label">Horas Trabalhadas dia</label>
+                <div class="col-sm-2">
+                    <input type="text" maxlength="20" class="form-control" name="horastrab" id="horastrab" value="<?php echo $i_horastrab; ?>">
+                </div>
+
+            </div>
+          
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Observação</label>
                 <div class="col-sm-6">
@@ -325,7 +414,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <div class="offset-sm-3 col-sm-3">
                     <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                    <a class='btn btn-danger' href='/gop/fabricantes_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                    <a class='btn btn-danger' href='/gop/cadastros/executores/executores_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
                 </div>
 
             </div>
