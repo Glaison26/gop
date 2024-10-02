@@ -1,65 +1,21 @@
-<?php
-// controle de acesso ao formulário
+<?php // controle de acesso ao formulário
 session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
+include('../../links2.php');
+include('../../conexao.php');
+include_once "../../lib_gop.php";
 
-include('links2.php');
-include('conexao.php');
-// funções 
-
-function carregadados()
-{
-    $c_descricao = $_POST['descricao'];
-    $c_patrimonio = $_POST['patrimonio'];
-    $c_modelo = $_POST['modelo'];
-    $c_numeroserie = $_POST['numeroserie'];
-    $c_estado = $_POST['estado'];
-    $c_notafiscal = $_POST['notafiscal'];
-
-    $d_datacadastro = '';
-
-
-    $d_datagarantia =  new DateTime($_POST['datagarantia']);
-    $d_datagarantia = $d_datagarantia->format('Y-m-d');
-
-    $d_dataaquisicao =  new DateTime($_POST['dataaquisicao']);
-    $d_dataaquisicao = $d_dataaquisicao->format('Y-m-d');
-
-    $d_ultimapreventiva = new DateTime($_POST['ultimapreventiva']);
-    $d_ultimapreventiva = $d_ultimapreventiva->format('Y-m-d');
-
-    $d_dataultimamanutencao = new DateTime($_POST['dataultimamanutencao']);
-    $d_dataultimamanutencao = $d_dataultimamanutencao->format('Y-m-d');
-
-    $n_valordepreciado = $_POST['valordepreciado'];
-    $n_valoraquisicao = $_POST['valoraquisicao'];
-    $c_ativo = $_POST['ativo'];
-    $c_motivo = $_POST['motivo'];
-    $c_anvisa = $_POST['anvisa'];
-    $c_grupo = $_POST['grupo'];
-    $c_marca = $_POST['marca'];
-    $c_fornecedor = $_POST['fornecedor'];
-    $c_fabricante = $_POST['fabricante'];
-    $c_espaco = $_POST['espaco'];
-    $c_centrodecusto = $_POST['centrodecusto'];
-    $c_oficina = $_POST['oficina'];
-    $c_setor = $_POST['setor'];
-    $c_obs = $_POST['obs'];
-}
-
-include_once "lib_gop.php";
-
+// rotina de post dos dados do formuário
+$c_id = "";
 $c_descricao = '';
 $c_patrimonio = '';
 $c_modelo = '';
 $c_numeroserie = '';
 $c_estado = '';
 $c_notafiscal = '';
-date_default_timezone_set('America/Sao_Paulo');
-$d_datacadastro = date('d/m/Y');
-
+$d_datacadastro = date("d/m/y");;
 $d_datagarantia = '';
 $n_valoraquisicao = '0.00';
 $n_valordepreciado = '0.00';
@@ -77,15 +33,68 @@ $c_espaco = '';
 $c_centrodecusto = '';
 $c_oficina = '';
 $c_obs = '';
-
-
-
 // variaveis para mensagens de erro e suscessso da gravação
 $msg_gravou = "";
 $msg_erro = "";
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no formulário
 
+    if (!isset($_GET["id"])) {
+        header('location: /gop/cadastros/recursos/recursos_lista.php');
+        exit;
+    }
+
+    $c_id = $_GET["id"];
+    // leitura do cliente através de sql usando id passada
+    $c_sql = "select * from recursos where id=$c_id";
+    $result = $conection->query($c_sql);
+    $registro = $result->fetch_assoc();
+
+    if (!$registro) {
+        header('location: /gop/cadastros/recursos/recursos_lista.php');
+        exit;
+    }
+
+    $c_descricao = $registro['descricao'];
+    $c_patrimonio = $registro['patrimonio'];
+    $c_modelo = $registro['modelo'];
+    $c_numeroserie = $registro['numeroserie'];
+    $c_estado = $registro['estado'];
+    $c_notafiscal = $registro['notafiscal'];
+
+    $d_datacadastro = new DateTime($registro['datacadastro']);
+    $d_datacadastro = $d_datacadastro->format('Y-m-d');
+
+    $d_datagarantia =  new DateTime($registro['datagarantia']);
+    $d_datagarantia = $d_datagarantia->format('Y-m-d');
+
+    $d_dataaquisicao =  new DateTime($registro['dataaquisicao']);
+    $d_dataaquisicao = $d_dataaquisicao->format('Y-m-d');
+
+    $d_ultimapreventiva = new DateTime($registro['ultimapreventiva']);
+    $d_ultimapreventiva = $d_ultimapreventiva->format('Y-m-d');
+
+    $d_dataultimamanutencao = new DateTime($registro['ultimamanutencao']);
+    $d_dataultimamanutencao = $d_dataultimamanutencao->format('Y-m-d');
+
+    $n_valordepreciado = $registro['valordepreciado'];
+    $n_valoraquisicao = $registro['valoraquisicao'];
+    $c_ativo = $registro['ativo'];
+    $c_motivo = $registro['motivoinativo'];
+    $c_anvisa = $registro['reganvisa'];
+    $c_obs = $registro['obs'];
+    // variaveis para montagem de combobox
+    $i_fornecedor = $registro['id_fornecedor'];
+    $i_fabricante = $registro['id_fabricante'];
+    $i_grupo = $registro['id_grupo'];
+    $i_espacofisico = $registro['id_espacofisico'];
+    $i_centrodecusto = $registro['id_centrodecusto'];
+    $i_oficina = $registro['id_oficina'];
+    $i_setor = $registro['id_setor'];
+    $i_marca = $registro['id_marca'];
+} else {
+    // metodo post para atualizar dados
+    $c_id = $_POST["id"];
     $c_descricao = $_POST['descricao'];
     $c_patrimonio = $_POST['patrimonio'];
     $c_modelo = $_POST['modelo'];
@@ -93,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $c_estado = $_POST['estado'];
     $c_notafiscal = $_POST['notafiscal'];
 
-    $d_datacadastro =  new DateTime($_POST['datacadastro']);
+    $d_datacadastro = new DateTime($_POST['datacadastro']);
     $d_datacadastro = $d_datacadastro->format('Y-m-d');
 
     $d_datagarantia =  new DateTime($_POST['datagarantia']);
@@ -126,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     do {
         if (empty($c_descricao) || empty($c_patrimonio) || empty($c_modelo) || empty($c_notafiscal)) {
             $msg_erro = "Campos Descrição, patrimonio, modelo, nota fiscal devem ser preenchidos!!";
-            Carregadados();
+            
             break;
             if (($d_dataaquisicao == null)) {
                 $msg_erro = "Campos data da aquisição deve ser informado!!";
@@ -151,7 +160,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 break;
             }
         }
-
+        // monto sql para atabelas primarias para pegar a id
+        // localizo o id do valor do combobox de centro de custos
+        // select da tabela de oficinas para pegar codigo
         // verifico a id do grupo selecionado no combo
         $c_sql_secundario = "SELECT grupos.id FROM grupos where grupos.descricao='$c_grupo' ORDER BY grupos.descricao";
         $result_secundario = $conection->query($c_sql_secundario);
@@ -193,27 +204,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $registro_secundario = $result_secundario->fetch_assoc();
         $i_setor = $registro_secundario['id'];
         // grava dados no banco
-
-        // faço a inclusão da tabela com sql
-        $c_sql = "INSERT INTO recursos (id_espacofisico, id_fabricante, id_fornecedor, id_grupo, id_centrodecusto, id_oficina, id_setor, id_marca, descricao, patrimonio," .
-            " modelo, numeroserie, estado, notafiscal, datacadastro, datagarantia, valoraquisicao, valordepreciado, ultimapreventiva, ultimamanutencao," .
-            " dataaquisicao, ativo, motivoinativo, reganvisa, obs) VALUES ('$i_espaco', '$i_fabricante', '$i_fornecedor', '$i_grupo', '$i_centrodecusto', '$i_oficina', '$i_setor'," .
-            " '$i_marca', '$c_descricao', '$c_patrimonio' ,'$c_modelo', '$c_numeroserie', '$c_estado', '$c_notafiscal', '$d_datacadastro', '$d_datagarantia', '$n_valoraquisicao'," .
-            " '$n_valordepreciado', '$d_ultimapreventiva', '$d_dataultimamanutencao', '$d_dataaquisicao','$c_ativo','$c_motivo', '$c_anvisa', '$c_obs')";
-
+        // faço a Leitura da tabela com sql
+        $c_sql = "Update recursos" .
+            " SET id_espacofisico='$i_espaco', id_fabricante='$i_fabricante', id_fornecedor='$i_fornecedor', id_grupo='$i_grupo', id_centrodecusto='$i_centrodecusto'," .
+            " id_oficina='$i_oficina', id_setor='$i_setor', id_marca='$i_marca', descricao='$c_descricao', patrimonio='$c_patrimonio'," .
+            " modelo='$c_modelo', numeroserie='$c_numeroserie', estado='$c_estado', notafiscal='$c_notafiscal', datacadastro='$d_dataaquisicao', datagarantia='$d_datagarantia'," .
+            " valoraquisicao='$n_valoraquisicao', valordepreciado='$n_valordepreciado', ultimapreventiva='$d_ultimapreventiva', ultimamanutencao='$d_dataultimamanutencao'," .
+            " dataaquisicao='$d_dataaquisicao', ativo='$c_ativo', motivoinativo='$c_motivo', reganvisa='$c_anvisa', obs='$c_obs'" .
+            " where id=$c_id";
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
         if (!$result) {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
         }
-
-
         $msg_gravou = "Dados Gravados com Sucesso!!";
-
-        header('location: /gop/recursos_lista.php');
+        header('location: /gop/cadastros/recursos/recursos_lista.php');
     } while (false);
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -221,20 +228,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $("#fone1").mask("(99)9999-9999");
-            $("#fone2").mask("(99)9999-9999");
-            $("#cnpj_cpf").mask("999999999999999999");
-            $("#cep").mask("99.999-999");
-        });
-    </script>
 
 </head>
-
 
 <body>
     <div class="container  -my5">
@@ -242,7 +237,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
                     <h4>GOP - Gestão Operacional</h4>
-                    <h5>Novo Recurso Físico<h5>
+                    <h5>Editar Recurso Físico<h5>
                 </div>
             </div>
         </div>
@@ -270,8 +265,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <form method="post">
             <!-- abas de cadastro e cadstro de recursos -->
+            <input type="hidden" name="id" value="<?php echo $c_id; ?>">
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#apresentacao" aria-controls="apresentacao" role="tab" data-toggle="tab">Apresentação</a></li>
+                <li role="presentation" class="active"><a href="#apresentacao" aria-controls="apresentacao" role="tab" data-toggle="tab">Apresentção</a></li>
                 <li role="presentation"><a href="#definicao" aria-controls="cadastro" role="tab" data-toggle="tab">Definição e Localização</a></li>
                 <li role="presentation"><a href="#outras" aria-controls="definicao" role="tab" data-toggle="tab">Outras Informações</a></li>
                 <li role="presentation"><a href="#obs" aria-controls="obs" role="tab" data-toggle="tab">Observações</a></li>
@@ -281,8 +277,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div role="tabpanel" class="tab-pane active" id="apresentacao">
                     <div style="padding-top:15px;padding-left:20px;">
                         <div class="row mb-5">
-                            <div class="form-check col-sm-5">
-                                <div class="col-sm-5">
+                            <div class="form-check col-sm-4">
+                                <div class="col-sm-6">
                                     <label class="form-check-label col-form-label">Recurso Ativo</label>
                                     <div class="col-sm-3">
                                         <input class="form-check-input" type="checkbox" value="S" name="ativo" id="ativo" checked>
@@ -322,12 +318,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <select class="form-select form-select-lg mb-3" id="fornecedor" name="fornecedor">
                                     <?php
                                     // select da tabela de fornecedores
-                                    $c_sql_fornecedores = "SELECT fornecedores.id, fornecedores.descricao FROM fornecedores ORDER BY fornecedores.descricao";
+                                    $c_sql_fornecedores = "SELECT fornecedores.id, fornecedores.descricao 
+                                        FROM fornecedores ORDER BY fornecedores.descricao";
                                     $result_fornecedores = $conection->query($c_sql_fornecedores);
                                     while ($c_linha = $result_fornecedores->fetch_assoc()) {
-                                        echo "  
-                          <option>$c_linha[descricao]</option>
-                        ";
+                                        $op = '';
+                                        if ($c_linha['id'] == $i_fornecedor) {
+                                            $op = 'selected';
+                                        } else {
+                                            $op = '';
+                                        }
+
+                                        echo "<option $op>$c_linha[descricao]</option>";
                                     }
                                     ?>
                                 </select>
@@ -343,8 +345,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     $c_sql_fabricante = "SELECT fabricantes.id, fabricantes.descricao FROM fabricantes ORDER BY fabricantes.descricao";
                                     $result_fabricante = $conection->query($c_sql_fabricante);
                                     while ($c_linha = $result_fabricante->fetch_assoc()) {
-                                        echo "  
-                          <option>$c_linha[descricao]</option>
+                                        $op = '';
+                                        if ($c_linha['id'] == $i_fabricante) {
+                                            $op = 'selected';
+                                        } else {
+                                            $op = '';
+                                        }
+                                        echo "<option $op>$c_linha[descricao]</option>
                         ";
                                     }
                                     ?>
@@ -367,9 +374,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     $c_sql_oficina = "SELECT oficinas.id, oficinas.descricao FROM oficinas ORDER BY oficinas.descricao";
                                     $result_oficina = $conection->query($c_sql_oficina);
                                     while ($c_linha = $result_oficina->fetch_assoc()) {
-                                        echo "  
-                          <option>$c_linha[descricao]</option>
-                        ";
+                                        $op = '';
+                                        if ($c_linha['id'] == $i_oficina) {
+                                            $op = 'selected';
+                                        } else {
+                                            $op = '';
+                                        }
+
+                                        echo "<option $op>$c_linha[descricao]</option>";
                                     }
                                     ?>
                                 </select>
@@ -382,9 +394,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     $c_sql_marca = "SELECT marcas.id, marcas.descricao FROM marcas ORDER BY marcas.descricao";
                                     $result_marca = $conection->query($c_sql_marca);
                                     while ($c_linha = $result_marca->fetch_assoc()) {
-                                        echo "  
-                          <option>$c_linha[descricao]</option>
-                        ";
+                                        $op = '';
+                                        if ($c_linha['id'] == $i_marca) {
+                                            $op = 'selected';
+                                        } else {
+                                            $op = '';
+                                        }
+
+                                        echo "<option $op>$c_linha[descricao]</option>";
                                     }
                                     ?>
                                 </select>
@@ -399,9 +416,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     $c_sql_espacos = "SELECT espacos.id, espacos.descricao FROM espacos ORDER BY espacos.descricao";
                                     $result_espaco = $conection->query($c_sql_espacos);
                                     while ($c_linha = $result_espaco->fetch_assoc()) {
-                                        echo "  
-                          <option>$c_linha[descricao]</option>
-                        ";
+                                        $op = '';
+                                        if ($c_linha['id'] == $i_espacofisico) {
+                                            $op = 'selected';
+                                        } else {
+                                            $op = '';
+                                        }
+
+                                        echo "<option $op>$c_linha[descricao]</option>";
                                     }
                                     ?>
                                 </select>
@@ -417,10 +439,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     $c_sql_custo = "SELECT centrodecusto.id, centrodecusto.descricao FROM centrodecusto ORDER BY centrodecusto.descricao";
                                     $result_custo = $conection->query($c_sql_custo);
                                     while ($c_linha = $result_custo->fetch_assoc()) {
-                                        echo "  
-                          <option>$c_linha[descricao]</option>
-                        ";
+                                        $op = '';
+                                        if ($c_linha['id'] == $i_centrodecusto) {
+                                            $op = 'selected';
+                                        } else {
+                                            $op = '';
+                                        }
+
+                                        echo "<option $op>$c_linha[descricao]</option>";
                                     }
+
                                     ?>
                                 </select>
                             </div>
@@ -434,9 +462,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     $c_sql_grupo = "SELECT grupos.id, grupos.descricao FROM grupos ORDER BY grupos.descricao";
                                     $result_grupo = $conection->query($c_sql_grupo);
                                     while ($c_linha = $result_grupo->fetch_assoc()) {
-                                        echo "  
-                          <option>$c_linha[descricao]</option>
-                        ";
+                                        $op = '';
+                                        if ($c_linha['id'] == $i_grupo) {
+                                            $op = 'selected';
+                                        } else {
+                                            $op = '';
+                                        }
+                                        echo "<option $op>$c_linha[descricao]</option>";
                                     }
                                     ?>
                                 </select>
@@ -452,9 +484,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     $c_sql_setor = "SELECT setores.id, setores.descricao FROM setores ORDER BY setores.descricao";
                                     $result_setor = $conection->query($c_sql_setor);
                                     while ($c_linha = $result_setor->fetch_assoc()) {
-                                        echo "  
-                          <option>$c_linha[descricao]</option>
-                        ";
+                                        $op = '';
+                                        if ($c_linha['id'] == $i_setor) {
+                                            $op = 'selected';
+                                        } else {
+                                            $op = '';
+                                        }
+                                        echo "<option $op>$c_linha[descricao]</option>";
                                     }
                                     ?>
                                 </select>
@@ -483,12 +519,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <label class="col-sm-3 col-form-label">Conservação</label>
                                 <div class="col-sm-2">
                                     <select class="form-select form-select-lg mb-3" id="estado" name="estado" value="<?php echo $c_estado; ?>">
-                                        <option>Ótimo</option>
-                                        <option>Muito Bom</option>
-                                        <option>Bom</option>
-                                        <option>Razoável</option>
-                                        <option>Ruim</option>
-                                        <option>Péssimo</option>
+
+                                        <option value="Ótimo" <?= ($c_estado == "Ótimo") ? 'selected' : '' ?>>Ótimo</option>
+                                        <option value="Muito Bom" <?= ($c_estado == "Muito Bom") ? 'selected' : '' ?>>Muito Bom</option>
+                                        <option value="Bom" <?= ($c_estado == "Bom") ? 'selected' : '' ?>>Bom</option>
+                                        <option value="Razoável" <?= ($c_estado == "Razoável") ? 'selected' : '' ?>>Razoável</option>
+                                        <option value="Ruim" <?= ($c_estado == "Ruim") ? 'selected' : '' ?>>Ruim</option>
+                                        <option value="Péssimo" <?= ($c_estado == "Péssimo") ? 'selected' : '' ?>>Péssimo</option>
                                     </select>
                                 </div>
                                 <label class="col-sm-2 col-form-label">Data de Garantia</label>
@@ -501,7 +538,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <label class="col-sm-3 col-form-label">Data de Cadastro</label>
                                 <div class="col-sm-2">
 
-                                    <input type="date" class="form-control" id="datacadastro" name="datacadastro" value="<?php echo $d_datacadastro; ?>">
+                                    <input type="text" class="form-control" id="datacadastro" name="datacadastro" value="<?php echo $d_datacadastro; ?>">
                                 </div>
                                 <label class="col-sm-2 col-form-label">Valor Aquisição</label>
                                 <div class="col-sm-2">
@@ -573,7 +610,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <div class="offset-sm-0 col-sm-3">
                     <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                    <a class='btn btn-danger' href='/gop/recursos_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                    <a class='btn btn-danger' href='/gop/cadastros/recursos/recursos_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
                 </div>
             </div>
         </form>

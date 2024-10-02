@@ -93,13 +93,13 @@
                              <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup= true' aria-expanded='false'>Cadastros</a>
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
 
-                                 <a class='dropdown-item' href='/gop/recursos_lista.php'><img src='\gop\images\config.png' alt='' width='20' height='20'> Recursos Fisicos</a>
+                                 <a class='dropdown-item' href='/gop/cadastros/recursos/recursos_lista.php'><img src='\gop\images\config.png' alt='' width='20' height='20'> Recursos Fisicos</a>
                                  <a class='dropdown-item' href='/gop/espacos_lista.php'><img src='\gop\images\apartamento.png' alt='20' height='20'> Espaços Fisicos</a>
                                  <a class='dropdown-item' href='#'><span class='' aria-hidden='true'></span> _____________________________________</a>
                                  <a class='dropdown-item' href='/gop/fornecedores_lista.php'><span class='glyphicon glyphicon-briefcase' aria-hidden='true'></span> Fornecedores </a>
                                  <a class='dropdown-item' href='/gop/fabricantes_lista.php'><img src='\gop\images\ofabricante.png' alt='20' height='20'> Fabricantes</a>
                                  <a class='dropdown-item' href='/gop/executores_lista.php'><img src='\gop\images\oexecutores.png' alt='20' height='20'> Executores</a>
-                                 <a class='dropdown-item' href='/gop/centrodecusto_lista.php'><span class='glyphicon glyphicon-screenshot' aria-hidden='true'></span> Centros de Custos</a>
+                                 <a class='dropdown-item' href='/gop/cadastros/centrodecustos/centrodecusto_lista.php'><span class='glyphicon glyphicon-screenshot' aria-hidden='true'></span> Centros de Custos</a>
                                  <a class='dropdown-item' href='/gop/oficinas_lista.php'><img src='\gop\images\oficina.png' alt='20' height='20'> Oficinas</a>
                                  <a class='dropdown-item' href='/gop/setores_lista.php'><img src='\gop\images\setores.png' alt='20' height='20'> Setores</a>
                                  <a class='dropdown-item' href='#'><span class='' aria-hidden='true'></span> _____________________________________</a>
