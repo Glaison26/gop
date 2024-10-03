@@ -11,7 +11,7 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
     function confirmacao_material(id) {
         var resposta = confirm("Deseja remover esse registro?");
         if (resposta == true) {
-            window.location.href = "/gop/preventiva/preventivas_materiais_excluir.php?id=" + id;
+            window.location.href = "/gop/preventivas/preventivas_materiais_excluir.php?id=" + id;
         }
     }
 </script>

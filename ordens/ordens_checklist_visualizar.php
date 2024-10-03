@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
                     <h4>GOP - Gestão Operacional</h4>
-                    <h5>Visualizar Checklist da Ordem de serviço<h5>
+                    <h5>Visualizar Checklist <h5>
                 </div>
             </div>
         </div>
@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
             </div>
-            <h5>Visualização do checklist selecionado da Ordem de serviço No.<?php echo $_SESSION['id_ordem']; ?></h5>
+            <h5>Visualização do checklist selecionado </h5>
         </div>
         <hr>
        

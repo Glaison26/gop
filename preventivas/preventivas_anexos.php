@@ -83,7 +83,7 @@ if (isset($_GET['id'])) {
                         <!-- aba de checklist-->
                         <div role="tabpanel" class="tab-pane" id="checklist">
                             <div style="padding-top:15px;padding-left:20px;">
-                               <?php //include('ordens_check.php');?>
+                               <?php include('preventivas_checklist.php');?>
                             </div>
                         </div>
                         <!-- aba de plano de ação-->
@@ -95,7 +95,7 @@ if (isset($_GET['id'])) {
                         <!-- aba de plano de ação-->
                         <div role="tabpanel" class="tab-pane" id="ferramenta">
                             <div style="padding-top:15px;padding-left:20px;">
-                                <?php //include('ordens_ferramentas.php'); 
+                                <?php include('preventivas_ferramentas.php'); 
                                 ?>
                             </div>
                         </div>

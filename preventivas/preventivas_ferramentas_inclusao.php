@@ -7,13 +7,13 @@ if (!isset($_SESSION['newsession'])) {
 include("../conexao.php");
 // rotina de inclusão
 $c_descricao = rtrim($_POST['c_descricao']);
-$c_sql = "select id from executores where nome='$c_descricao'";
+$c_sql = "select id from ferramentas where descricao='$c_descricao'";
 $result = $conection->query($c_sql);
 $c_linha = $result->fetch_assoc();
-$i_id_executor = $c_linha['id'];
+$i_id_ferramenta = $c_linha['id'];
 
 $i_id_preventiva = $_SESSION['id_preventiva'];
-$c_sql = "Insert into preventivas_executores (id_executor, id_preventiva) Value ('$i_id_executor', '$i_id_preventiva')";
+$c_sql = "Insert into preventivas_ferramentas (id_ferramenta, id_preventiva) Value ('$i_id_ferramenta', '$i_id_preventiva')";
 
 $result = $conection->query($c_sql);
 

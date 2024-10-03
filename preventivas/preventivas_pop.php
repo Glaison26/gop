@@ -33,7 +33,7 @@ include('../conexao.php');
         function confirmacao(id) {
             var resposta = confirm("Deseja remover esse registro?");
             if (resposta == true) {
-                window.location.href = "/gop/ordens/ordens_pop_excluir.php?id=" + id;
+                window.location.href = "/gop/preventivas/preventivas_pop_excluir.php?id=" + id;
             }
         }
     </script>
@@ -87,14 +87,14 @@ include('../conexao.php');
     <script type="text/javascript">
         // Função javascript e ajax para inclusão dos dados
 
-        $(document).on('submit', '#frmadd', function(e) {
+        $(document).on('submit', '#frmadd_pop', function(e) {
             e.preventDefault();
-            var c_descricao = $('#pop').val();
+            var c_descricao = $('#add_pop').val();
 
             if (c_descricao != '') {
 
                 $.ajax({
-                    url: "ordens_pop_inclusao.php",
+                    url: "preventivas_pop_inclusao.php",
                     type: "post",
                     data: {
                         c_descricao: c_descricao
@@ -107,7 +107,7 @@ include('../conexao.php');
                         location.reload();
                         if (status == 'true') {
 
-                            $('#novoModal').modal('hide');
+                            $('#novoModal_pop').modal('hide');
                             location.reload();
                         } else {
                             alert('falha ao incluir dados');
@@ -127,7 +127,7 @@ include('../conexao.php');
 
         <div class="panel panel-info class">
             <div class="panel-heading">
-                <button type="button" title="Inclusão de POP" class="btn btn-success" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
+                <button type="button" title="Inclusão de POP" class="btn btn-success" data-toggle="modal" data-target="#novoModal_pop"><span class="glyphicon glyphicon-plus"></span>
                     Incluir POP
                 </button>
             </div>
@@ -147,12 +147,12 @@ include('../conexao.php');
                 <?php
 
                 // faço a Leitura da tabela com sql
-                $c_sql = "SELECT ordens_pop.id, ordens_pop.id_pop, pops.descricao, 
+                $c_sql = "SELECT preventivas_pop.id, preventivas_pop.id_pop, pops.descricao, 
                         CASE WHEN pops.tipo ='1' THEN 'Administrativo'" .
                     "WHEN pops.tipo ='2' THEN 'Instalação'" .
-                    "END AS tipopop FROM ordens_pop
-                        JOIN pops ON ordens_pop.id_pop=pops.id
-                        WHERE ordens_pop.id_ordem='$i_id'";
+                    "END AS tipopop FROM preventivas_pop
+                        JOIN pops ON preventivas_pop.id_pop=pops.id
+                        WHERE preventivas_pop.id_preventiva='$i_id'";
                 $result = $conection->query($c_sql);
                 // verifico se a query foi correto
                 if (!$result) {
@@ -186,7 +186,7 @@ include('../conexao.php');
 </body>
 
 <!-- janela Modal para inclusão de registro -->
-<div class="modal fade" class="modal-dialog modal-lg" id="novoModal" name="novoModal" tabindex="-1" role="dialog" aria-labelledby="novoModal" aria-hidden="true">
+<div class="modal fade" class="modal-dialog modal-lg" id="novoModal_pop" name="novoModal" tabindex="-1" role="dialog" aria-labelledby="novoModal_pop" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -196,11 +196,11 @@ include('../conexao.php');
                 <div class='alert alert-warning' role='alert'>
                     <h5>Campos com (*) são obrigatórios</h5>
                 </div>
-                <form id="frmadd" action="">
+                <form id="frmadd_pop" action="">
                     <div class="mb-3 row">
                         <label for="add_descricaoField" class="col-md-3 form-label">Selecionar POP</label>
                         <div class="col-sm-9">
-                            <select class="form-select form-select-lg mb-3" id="pop" name="pop">
+                            <select class="form-select form-select-lg mb-3" id="add_pop" name="add_pop">
                                 <option></option>
                                 <?php
                                 // select da tabela de pops
