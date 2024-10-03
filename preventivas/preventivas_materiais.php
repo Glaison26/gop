@@ -8,7 +8,7 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
 
 ?>
 <script language="Javascript">
-    function confirmacao(id) {
+    function confirmacao_material(id) {
         var resposta = confirm("Deseja remover esse registro?");
         if (resposta == true) {
             window.location.href = "/gop/preventiva/preventivas_materiais_excluir.php?id=" + id;
@@ -105,7 +105,7 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
                     <td>$c_linha[unidade]</td>
                     <td>
                     <a class='btn btn-secondary btn-sm' href='/gop/preventivas/preventivas_materiais_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
-                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
+                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao_material($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
                     </tr>

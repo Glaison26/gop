@@ -8,7 +8,7 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
 ?>
 
 <script language="Javascript">
-    function confirmacao(id) {
+    function confirmacao_executor(id) {
         var resposta = confirm("Deseja remover esse registro?");
         if (resposta == true) {
             window.location.href = "/gop/preventivas/preventivas_executores_excluir.php?id=" + id;
@@ -99,7 +99,7 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
                                                         
                     <td>
                     
-                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
+                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao_executor($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
                     </tr>
