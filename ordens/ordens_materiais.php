@@ -100,11 +100,15 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
             // insiro os registro do banco de dados na tabela 
             $c_custo_total = 0;
             while ($c_linha = $result->fetch_assoc()) {
-
-                $c_custo = $formatter->formatCurrency($c_linha['valor'], 'BRL');
-                $c_total = $c_linha['valor'] * $c_linha['quantidade'];
-                $c_total = $formatter->formatCurrency($c_total, 'BRL');
-                $c_custo_total = $c_custo_total + $c_linha['valor'] * $c_linha['quantidade'];
+                if ($c_linha['valor'] > 0) {
+                    $c_custo = $formatter->formatCurrency($c_linha['valor'], 'BRL');
+                    $c_total = $c_linha['valor'] * $c_linha['quantidade'];
+                    $c_total = $formatter->formatCurrency($c_total, 'BRL');
+                    $c_custo_total = $c_custo_total + $c_linha['valor'] * $c_linha['quantidade'];
+                }else{
+                    $c_custo=0.00;
+                    $c_total=0.00;
+                }
 
                 echo "
                     <tr class='info'>

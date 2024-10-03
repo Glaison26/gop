@@ -61,7 +61,7 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
 </script>
 
 <div class="container-fluid">
-    
+
     <div class="panel panel-info class">
         <div class="panel-heading">
             <a class="btn btn-success" href="/gop/ordens/ordens_executores_inclusao.php"><span class="glyphicon glyphicon-plus"></span> Incluir Executor</a>
@@ -95,12 +95,17 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
             }
 
             // insiro os registro do banco de dados na tabela 
-            $c_custo_total=0;
+            $c_custo_total = 0;
             while ($c_linha = $result->fetch_assoc()) {
-                $c_duracao = $c_linha['tempo_horas'].':'.$c_linha['tempo_minutos'].'hs.';
-                $c_valor_hora  = $formatter->formatCurrency($c_linha['valor_hora'], 'BRL');
-                $c_valor_total = $formatter->formatCurrency($c_linha['valor_total'], 'BRL');
-                $c_custo_total = $c_custo_total + $c_linha['valor_total'];
+                $c_duracao = $c_linha['tempo_horas'] . ':' . $c_linha['tempo_minutos'] . 'hs.';
+                if ($c_linha['valor_hora'] > 0) {
+                    $c_valor_hora  = $formatter->formatCurrency($c_linha['valor_hora'], 'BRL');
+                    $c_valor_total = $formatter->formatCurrency($c_linha['valor_total'], 'BRL');
+                    $c_custo_total = $c_custo_total + $c_linha['valor_total'];
+                }else{
+                    $c_valor_hora=0;
+                    $c_valor_total=0;
+                }
                 echo "
                     <tr class='info'>
                     <td>$c_linha[id]</td>
@@ -123,7 +128,9 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
     <hr>
     <div class="panel panel-primary class">
         <div class="panel-heading">
-            <p><h5>Custo Total de Serviços : <?php echo  $formatter->formatCurrency($c_custo_total, 'BRL');?></h5></p>
+            <p>
+            <h5>Custo Total de Serviços : <?php echo  $formatter->formatCurrency($c_custo_total, 'BRL'); ?></h5>
+            </p>
         </div>
     </div>
 </div>

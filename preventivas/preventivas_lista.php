@@ -30,7 +30,7 @@ include('../conexao.php');
                 'aTargets': [6]
             }, {
                 'aTargets': [0],
-                "visible": false
+                "visible": true
             }],
             "oLanguage": {
                 "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -76,7 +76,7 @@ include('../conexao.php');
                 'aTargets': [6]
             }, {
                 'aTargets': [0],
-                "visible": false
+                "visible": true
             }],
             "oLanguage": {
                 "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
