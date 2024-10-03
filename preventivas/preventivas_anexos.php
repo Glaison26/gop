@@ -77,7 +77,7 @@ if (isset($_GET['id'])) {
                         <!-- aba de POP-->
                         <div role="tabpanel" class="tab-pane" id="abapop">
                             <div style="padding-top:15px;padding-left:20px;">
-                                <?php //include('ordens_pop.php'); ?>
+                                <?php include('preventivas_pop.php'); ?>
                             </div>
                         </div>
                         <!-- aba de checklist-->

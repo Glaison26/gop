@@ -10,7 +10,6 @@ $c_id = $_SESSION['id_ordem'];
 $i_id = $_GET["id"];
 $msg_erro = "";
 
-
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no formulário
 
     if (!isset($_GET["id"])) {
@@ -123,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
                     <h4>GOP - Gestão Operacional</h4>
-                    <h5>Novo registro de executor para Ordem de Serviço<h5>
+                    <h5>Editar registro de executor para Ordem de Serviço<h5>
                 </div>
             </div>
         </div>
