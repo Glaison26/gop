@@ -4,8 +4,6 @@ include("../conexao.php"); // conexão de banco de dados
 include("../links.php");
 date_default_timezone_set('America/Sao_Paulo');
 
-
-
 if ((isset($_POST["btnfoto"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  // botão para incluir imagem
     $dir = "img/";
     $arquivo = $_FILES['arquivo'];
@@ -18,10 +16,10 @@ if ((isset($_POST["btnfoto"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  // 
     $c_pasta = $dir . $c_nomefoto;
 
     $d_data = date('Y-m-d');
-    $c_sql = "insert into imagens_pacientes (id_paciente, pasta_imagem, data) value ('$c_id', '$c_pasta', '$d_data')";
+    $c_sql = "insert into ordens_imagens (id_ordem, caminho, data) value ('$i_id', '$c_pasta', '$d_data')";
     $result = $conection->query($c_sql);
 }
-$c_caminho = '/smedweb/imagens_lista.php?id=' . $i_id;
+$c_caminho = '/gop/ordens/imagens_lista.php?id=' . $i_id;
 //
 ?>
 
@@ -84,7 +82,7 @@ $c_caminho = '/smedweb/imagens_lista.php?id=' . $i_id;
         function confirmacao(id) {
             var resposta = confirm("Deseja remover esse registro?");
             if (resposta == true) {
-                window.location.href = "/smedweb/imagens_excluir.php?id=" + id;
+                window.location.href = "/gop/ordens/imagens_excluir.php?id=" + id;
             }
         }
     </script>
@@ -93,15 +91,17 @@ $c_caminho = '/smedweb/imagens_lista.php?id=' . $i_id;
         <form method="post" enctype="multipart/form-data">
             <div class="panel panel-info">
                 <div class="panel panel-Light">
-                    <!-- <button class="btn btn-info" onclick="document.getElementById('arquivo').click()"><img src="\smedweb\images\camera.png" alt="" width="20" height="20"> Nova Imagem</button> -->
+
                     <br>
                     <div style="padding-left:7px;">
-
-                        <button type="submit" name="btnfoto" id="btnfoto" class="btn btn-Ligth"> <img src="\smedweb\images\imagem2.png" alt="" width="20" height="20"> Carregar imagem</button>
-                        <a class='btn btn-Light btn-sm' title='Lista de Imagens' href="<?php echo $c_caminho; ?>"><span class='glyphicon glyphicon-list-alt'></span> Listar Imagens</a>
-                        <a class='btn btn-Light' href='/smedweb/pacientes_lista.php'> <img src="\smedweb\images\voltar.png" alt="" width="15" height="15"> Voltar</a>
-                        <hr>
-                        <input type="file" name="arquivo" class="form-control-file" id="arquivo" accept="image/*">
+                        <div class="panel panel-info class">
+                            <div class="panel-heading">
+                                <button type="submit" name="btnfoto" id="btnfoto" class="btn btn-Ligth"><img src="\gop\images\imagem2.png" alt="" width="20" height="20"> Carregar imagem</button>
+                                <a class='btn btn-Light btn-sm' title='Lista de Imagens' href="<?php echo $c_caminho; ?>"><span class='glyphicon glyphicon-list-alt'></span> Listar Imagens</a>
+                                <hr>
+                                <input type="file" name="arquivo" class="form-control-file" id="arquivo" accept="image/*">
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -121,7 +121,7 @@ $c_caminho = '/smedweb/imagens_lista.php?id=' . $i_id;
                             <tbody>
                                 <?php
                                 // faço a Leitura da tabela com imagens
-                                $c_sql = "SELECT * FROM imagens_pacientes where imagens_pacientes.id_paciente='$c_id' ORDER BY imagens_pacientes.`data` desc";
+                                $c_sql = "SELECT * FROM ordens_imagens where ordens_imagens.id_ordem='$i_id' ORDER BY ordens_imagens.`data` desc";
                                 $result = $conection->query($c_sql);
                                 // verifico se a query foi correto
                                 if (!$result) {
@@ -131,15 +131,15 @@ $c_caminho = '/smedweb/imagens_lista.php?id=' . $i_id;
                                 // insiro os registro do banco de dados na tabela 
                                 while ($c_linha = $result->fetch_assoc()) {
                                     $c_data = DateTime::createFromFormat('Y-m-d', $c_linha['data']);
-                                    $c_data = $c_data->format('d/m/y');
+                                    $c_data = $c_data->format('d/m/Y');
                                     echo "
                                         <tr>
                                             <td>$c_linha[id]</td>
                                             <td>$c_data</td>
-                                            <td>$c_linha[descricao]</td>
-                                            <td>$c_linha[pasta_imagem]</td>
+                                            <td>$c_linha[comentario]</td>
+                                            <td>$c_linha[caminho]</td>
                                             <td>
-                                            <a class='btn btn-info btn-sm' title='Visualizar ' href='/smedweb/imagens_visualizar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-eye-open'> Visualizar</span></a>
+                                            <a class='btn btn-info btn-sm' title='Visualizar ' href='/gop/ordens/imagens_visualizar.php?id=$c_linha[id]'><img src='\gop\images\imagem2.png' alt='' width='20' height='16'> Visualizar</span></a>
                                             <a class='btn btn-danger btn-sm' title='Excluir' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                                             
                                             </td>
