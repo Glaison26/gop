@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $c_body = "A Ordem de serviço No.<b> $ordem da solicitação no. $i_id </b> foi gerada com suceso! Aguarde o atendimento <br>"
                 . "Descrição da Solicitação :" . $c_descricao . "<br>" .
                 " Previsão de execução: $data";
-            include('email_gop.php');
+            include('../email_gop.php');
         }
 
         header('location: /gop/solicitacao/Ordem_gerada.php');

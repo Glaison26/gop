@@ -10,9 +10,14 @@ include("../../conexao.php");
 // rotina de edição
 $c_id = $_POST['c_id'];
 $c_descricao = rtrim($_POST['c_descricao']);
+$c_fone1 = $_POST['c_fone1'];
+$c_fone2 = $_POST['c_fone2'];
+$c_responsavel = $_POST['c_responsavel'];
+$c_email = $_POST['c_email'] ;
 
 $c_sql = "Update oficinas" .
-    " SET descricao = '$c_descricao' where id=$c_id";
+    " SET descricao = '$c_descricao', fone1='$c_fone1', fone2='$c_fone2', responsavel='$c_responsavel',
+     email='$c_email' where id=$c_id";
 
 $result = $conection->query($c_sql);
 

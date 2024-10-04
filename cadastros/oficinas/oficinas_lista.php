@@ -26,6 +26,21 @@ include("../../links.php");
         }
     </script>
 
+    <script>
+        const handlePhone = (event) => {
+            let input = event.target
+            input.value = phoneMask(input.value)
+        }
+
+        const phoneMask = (value) => {
+            if (!value) return ""
+            value = value.replace(/\D/g, '')
+            value = value.replace(/(\d{2})(\d)/, "($1) $2")
+            value = value.replace(/(\d)(\d{4})$/, "$1-$2")
+            return value
+        }
+    </script>
+
 
     <script>
         $(document).ready(function() {
@@ -79,6 +94,10 @@ include("../../links.php");
         $(document).on('submit', '#frmadd', function(e) {
             e.preventDefault();
             var c_descricao = $('#add_descricaoField').val();
+            var c_fone1 = $('#add_fone1Field').val();
+            var c_fone2 = $('#add_fone2Field').val();
+            var c_email = $('#add_emailField').val();
+            var c_responsavel = $('#add_responsavelField').val();
 
             if (c_descricao != '') {
 
@@ -86,7 +105,11 @@ include("../../links.php");
                     url: "oficinas_novo.php",
                     type: "post",
                     data: {
-                        c_descricao: c_descricao
+                        c_descricao: c_descricao,
+                        c_fone1: c_fone1,
+                        c_fone2: c_fone2,
+                        c_email: c_email,
+                        c_responsavel: c_responsavel
 
                     },
                     success: function(data) {
@@ -127,6 +150,10 @@ include("../../links.php");
 
                 $('#up_idField').val(data[0]);
                 $('#up_descricaoField').val(data[1]);
+                $('#up_fone1Field').val(data[2]);
+                $('#up_fone2Field').val(data[3]);
+                $('#up_emailField').val(data[4]);
+                $('#up_responsavelField').val(data[5]);
 
 
             });
@@ -140,6 +167,10 @@ include("../../links.php");
             e.preventDefault();
             var c_id = $('#up_idField').val();
             var c_descricao = $('#up_descricaoField').val();
+            var c_fone1 = $('#up_fone1Field').val();
+            var c_fone2 = $('#up_fone2Field').val();
+            var c_email = $('#up_emailField').val();
+            var c_responsavel = $('#up_responsavelField').val();
 
             if (c_descricao != '') {
 
@@ -148,7 +179,11 @@ include("../../links.php");
                     type: "post",
                     data: {
                         c_id: c_id,
-                        c_descricao: c_descricao
+                        c_descricao: c_descricao,
+                        c_fone1: c_fone1,
+                        c_fone2: c_fone2,
+                        c_email: c_email,
+                        c_responsavel: c_responsavel
                     },
                     success: function(data) {
                         var json = JSON.parse(data);
@@ -180,7 +215,7 @@ include("../../links.php");
 
     <br>
     <div class="container-fluid">
-    
+
         <button type="button" title="Inclusão de Nova Oficina" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
             Incluir
         </button>
@@ -193,6 +228,10 @@ include("../../links.php");
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Descrição</th>
+                    <th scope="col">Telefone I</th>
+                    <th scope="col">Telefone II</th>
+                    <th scope="col">Responsável</th>
+                    <th scope="col">e-mail</th>
                     <th scope="col">Opções</th>
                 </tr>
             </thead>
@@ -200,7 +239,7 @@ include("../../links.php");
                 <?php
 
                 // faço a Leitura da tabela com sql
-                $c_sql = "SELECT oficinas.id, oficinas.descricao FROM oficinas ORDER BY oficinas.descricao";
+                $c_sql = "SELECT oficinas.id, oficinas.descricao, fone1, fone2, responsavel, email FROM oficinas ORDER BY oficinas.descricao";
                 $result = $conection->query($c_sql);
                 // verifico se a query foi correto
                 if (!$result) {
@@ -214,6 +253,10 @@ include("../../links.php");
                     <tr class='info'>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descricao]</td>
+                    <td>$c_linha[fone1]</td>
+                    <td>$c_linha[fone2]</td>
+                    <td>$c_linha[responsavel]</td>
+                    <td>$c_linha[email]</td>
                     <td>
                     <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Oficina'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
@@ -245,20 +288,45 @@ include("../../links.php");
                         <div class="mb-3 row">
                             <label for="add_descricaoField" class="col-md-3 form-label">Oficina (*)</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" id="add_descricaoField" name="add_dscricaoField">
+                                <input type="text" class="form-control" id="add_descricaoField" name="add_descricaoField">
                             </div>
                         </div>
-
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Fechar</button>
-
+                        <div class="mb-3 row">
+                            <label for="add_descricaoField" class="col-md-3 form-label">Telefone 1</label>
+                            <div class="col-md-4">
+                                <input type="text" onkeyup="handlePhone(event)" class="form-control" id="add_fone1Field" name="add_fone1Field">
+                            </div>
                         </div>
-                    </form>
+                        <div class="mb-3 row">
+                            <label for="add_descricaoField" class="col-md-3 form-label">Telefone 2</label>
+                            <div class="col-md-4">
+                                <input type="text" onkeyup="handlePhone(event)" class="form-control" id="add_fone2Field" name="add_fone2Field">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="add_descricaoField" class="col-md-3 form-label">e-mail</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="add_emailField" name="add_emailField">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="add_descricaoField" class="col-md-3 form-label">Resposável</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="add_responsavelField" name="add_responsavelField">
+                            </div>
+                        </div>
                 </div>
 
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Fechar</button>
+
+                </div>
+                </form>
             </div>
+
         </div>
+    </div>
     </div>
 
 
@@ -276,9 +344,33 @@ include("../../links.php");
                     <form id="frmup" method="POST" action="">
                         <input type="hidden" id="up_idField" name="up_idField">
                         <div class="mb-3 row">
-                            <label for="up_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
+                            <label for="up_descricaoField" class="col-md-3 form-label">Oficina (*)</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" id="up_descricaoField" name="up_dscricaoField">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="add_descricaoField" class="col-md-3 form-label">Telefone 1</label>
+                            <div class="col-md-4">
+                                <input type="text" onkeyup="handlePhone(event)" class="form-control" id="up_fone1Field" name="up_fone1Field">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="add_descricaoField" class="col-md-3 form-label">Telefone 2</label>
+                            <div class="col-md-4">
+                                <input type="text" onkeyup="handlePhone(event)" class="form-control" id="up_fone2Field" name="up_fone2Field">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="add_descricaoField" class="col-md-3 form-label">e-mail</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="up_emailField" name="up_emailField">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="add_descricaoField" class="col-md-3 form-label">Resposável</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="up_responsavelField" name="up_responsavelField">
                             </div>
                         </div>
 

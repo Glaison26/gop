@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $c_assunto = "Abertura de Solicitação de Serviço no GOP";
             $c_body = "Solicitação No.<b> $solicitacao </b> foi gerada com suceso! Aguarde o atendimento <br>"
                 . "Descrição da Solicitação :" . $c_descricao;
-            include('email_gop.php');
+            include('../email_gop.php');
         }
         header('location: /gop/solicitacao/solicitacao_gerada.php?id_recurso=$i_id_recurso');
 
