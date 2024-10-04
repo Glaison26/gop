@@ -68,7 +68,7 @@
                     } ?>
 
                 <h4><strong>Existem <?php echo $c_preventivas?> Preventivas a serem geradas</h4></strong></p><br>
-                <a href="#" class="btn btn-primary">Clique para Visualizar</a>
+                <a href="/gop/preventivas/preventivas_geracao.php" class="btn btn-primary">Clique para Visualizar</a>
             </div>
 
         </div>

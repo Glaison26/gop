@@ -61,6 +61,7 @@ if (isset($_GET['id'])) {
                         <li role="presentation"><a href="#checklist" aria-controls="checklist" role="tab" data-toggle="tab">Check Lists</a></li>
                         <li role="presentation"><a href="#plano" aria-controls="plano" role="tab" data-toggle="tab">Plano de Ação</a></li>
                         <li role="presentation"><a href="#ferramenta" aria-controls="ferramenta" role="tab" data-toggle="tab">Ferramentas</a></li>
+                        <li role="presentation"><a href="#imagens" aria-controls="imagens" role="tab" data-toggle="tab">Imagens</a></li>
 
                     </ul>
                     <div class="tab-content">
@@ -102,6 +103,14 @@ if (isset($_GET['id'])) {
                                 ?>
                             </div>
                         </div>
+                        <!-- aba de imagens da ordem de serviço -->
+                        <!-- aba da materiais gastos-->
+                        <div role="tabpanel" class="tab-pane" id="imagens">
+                            <div style="padding-top:15px;padding-left:20px;">
+                                <?php include('ordens_imagens.php'); ?>
+
+                            </div>
+                        </div> 
                     </div>
                 </div>
 
