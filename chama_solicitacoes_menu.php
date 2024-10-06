@@ -64,7 +64,7 @@ include("conexao.php");
     $_SESSION['sqlespaco'] = $c_sqlespacos;
     $_SESSION['sqlavulso'] = $c_sqlavulso;
     $_SESSION['pesquisamenu'] = true;
-    header('location: /gop/solicitacao_lista.php');
+    header('location: /gop/solicitacao/solicitacao_lista.php');
 
 
 ?>
