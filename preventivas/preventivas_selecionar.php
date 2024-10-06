@@ -3,9 +3,9 @@ session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
-include('conexao.php');
+include('../conexao.php');
 if (!isset($_GET["id"])) {
-    header('location: /gop/preventivas_geracao.php');
+    header('location: /gop/preventivas/preventivas_geracao.php');
     exit;
 }
 $c_id = "";
@@ -21,4 +21,4 @@ else
 // alteração do campo de geração de registro da preventiva
 $c_sql = "update preventivas set gerar='$c_status' where id=$c_id";
 $result = $conection->query($c_sql);
-header('location: /gop/preventivas_geracao.php');
+header('location: /gop/preventivas/preventivas_geracao.php');

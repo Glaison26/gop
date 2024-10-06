@@ -10,14 +10,16 @@ if ((isset($_POST["btnfoto"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  // 
     $_SESSION['c_nomefoto'] = $_FILES['arquivo']['name'];
 
     $c_nomefoto = $arquivo["name"];
-    move_uploaded_file($arquivo["tmp_name"], "$dir/" . $arquivo["name"]);
-    //echo $c_nomefoto;
-    // incluir registro da imagem no banco de dados
-    $c_pasta = $dir . $c_nomefoto;
+    if (!empty($c_nomefoto)) {
+        move_uploaded_file($arquivo["tmp_name"], "$dir/" . $arquivo["name"]);
+        //echo $c_nomefoto;
+        // incluir registro da imagem no banco de dados
+        $c_pasta = $dir . $c_nomefoto;
 
-    $d_data = date('Y-m-d');
-    $c_sql = "insert into ordens_imagens (id_ordem, caminho, data) value ('$i_id', '$c_pasta', '$d_data')";
-    $result = $conection->query($c_sql);
+        $d_data = date('Y-m-d');
+        $c_sql = "insert into ordens_imagens (id_ordem, caminho, data) value ('$i_id', '$c_pasta', '$d_data')";
+        $result = $conection->query($c_sql);
+    }
 }
 $c_caminho = '/gop/ordens/imagens_lista.php?id=' . $i_id;
 //

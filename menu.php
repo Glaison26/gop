@@ -72,7 +72,7 @@
 
                      </div>
                  </div>
-                 <br>
+                 
                  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-blue ftco-navbar-light" id="ftco-navbar">
                      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                          <span class="fa fa-bars">Menu</span>
@@ -93,35 +93,36 @@
                              <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup= true' aria-expanded='false'>Cadastros</a>
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
 
-                                 <a class='dropdown-item' href='/gop/cadastros/recursos/recursos_lista.php'><img src='\gop\images\config.png' alt='' width='20' height='20'> Recursos Fisicos</a>
-                                 <a class='dropdown-item' href='/gop/cadastros/espacos/espacos_lista.php'><img src='\gop\images\apartamento.png' alt='20' height='20'> Espaços Fisicos</a>
-                                 <a class='dropdown-item' href='#'><span class='' aria-hidden='true'></span> _____________________________________</a>
-                                 <a class='dropdown-item' href='/gop/cadastros/fornecedores/fornecedores_lista.php'><span class='glyphicon glyphicon-briefcase' aria-hidden='true'></span> Fornecedores </a>
-                                 <a class='dropdown-item' href='/gop/cadastros/fabricantes/fabricantes_lista.php'><img src='\gop\images\ofabricante.png' alt='20' height='20'> Fabricantes</a>
-                                 <a class='dropdown-item' href='/gop/cadastros/executores/executores_lista.php'><img src='\gop\images\oexecutores.png' alt='20' height='20'> Executores</a>
-                                 <a class='dropdown-item' href='/gop/cadastros/centrodecustos/centrodecusto_lista.php'><span class='glyphicon glyphicon-screenshot' aria-hidden='true'></span> Centros de Custos</a>
-                                 <a class='dropdown-item' href='/gop/cadastros/oficinas/oficinas_lista.php'><img src='\gop\images\oficina.png' alt='20' height='20'> Oficinas</a>
-                                 <a class='dropdown-item' href='/gop/cadastros/setores/setores_lista.php'><img src='\gop\images\setores.png' alt='20' height='20'> Setores</a>
-                                 <a class='dropdown-item' href='#'><span class='' aria-hidden='true'></span> _____________________________________</a>
-                                 <a class='dropdown-item' href='/gop/cadastros/materiais/materiais_lista.php'><img src='\gop\images\materiais.png' alt='20' height='20'> Materiais</a>
-                                 <a class='dropdown-item' href='/gop/cadastros/ferramentas/ferramentas_lista.php'><span class='glyphicon glyphicon-wrench' aria-hidden='true'></span> Ferramentas</a>
-                                 <a class='dropdown-item' href='/gop/cadastros/grupos/grupos_lista.php'><img src='\gop\images\grupo.png' alt='20' height='20'> Grupos de Recurso</a>
-                                 <a class='dropdown-item' href='/gop/cadastros/marcas/marcas_lista.php'><img src='\gop\images\marca.png' alt='20' height='20'> Marcas de Recursos</a>
-                                 <a class='dropdown-item' href='/gop/cadastros/unidades/unidades_lista.php'><img src='\gop\images\peso.png' alt='20' height='20'> Unidades e Medidas</a>
-                                 <a class='dropdown-item' href='/gop/cadastros/funcoes/funcoes_lista.php'><img src='\gop\images\oemprego.png' alt='20' height='20'> Funções e Cargos</a>
-
+                                 <a class='dropdown-item' href='/gop/cadastros/recursos/recursos_lista.php'><img src='\gop\images\config.png' alt='25' width='25' height='25'> Recursos Fisicos</a>
+                                 <a class='dropdown-item' href='/gop/cadastros/espacos/espacos_lista.php'><img src='\gop\images\apartamento.png' alt='25' width='25' height='25'> Espaços Fisicos</a>
+                                 
+                                 <a class='dropdown-item' href='/gop/cadastros/fornecedores/fornecedores_lista.php'><img src='\gop\images\ofornecedor.png' alt='25' width='25' height='25'> Fornecedores </a>
+                                 <a class='dropdown-item' href='/gop/cadastros/fabricantes/fabricantes_lista.php'><img src='\gop\images\ofabricante.png' alt='25' width='25' height='25'> Fabricantes</a>
+                                 <a class='dropdown-item' href='/gop/cadastros/executores/executores_lista.php'><img src='\gop\images\oexecutores.png' alt='25' width='25' height='25'> Executores</a>
+                                 <a class='dropdown-item' href='/gop/cadastros/centrodecustos/centrodecusto_lista.php'><img src='\gop\images\centrodecusto.png' alt='25' width='25' height='25'> Centros de Custos</a>
+                                 <a class='dropdown-item' href='/gop/cadastros/oficinas/oficinas_lista.php'><img src='\gop\images\oficina.png' alt='25' width='25' height='25'> Oficinas</a>
+                                 <a class='dropdown-item' href='/gop/cadastros/setores/setores_lista.php'><img src='\gop\images\setores.png' alt='25' width='25' height='25'> Setores</a>
+                               
+                                 <a class='dropdown-item' href='/gop/cadastros/materiais/materiais_lista.php'><img src='\gop\images\materiais.png' alt='25' width='25' height='25'> Materiais</a>
+                                 <a class='dropdown-item' href='/gop/cadastros/ferramentas/ferramentas_lista.php'><img src='\gop\images\caixa_ferramentas.png' alt='25' width='25' height='25'> Ferramentas</a>
+                                 <a class='dropdown-item' href='/gop/cadastros/grupos/grupos_lista.php'><img src='\gop\images\grupo.png' alt='25' width='25' height='25'> Grupos de Recurso</a>
+                                 <a class='dropdown-item' href='/gop/cadastros/marcas/marcas_lista.php'><img src='\gop\images\marca.png' alt='25' width='25' height='25'> Marcas de Recursos</a>
+                                 <a class='dropdown-item' href='/gop/cadastros/unidades/unidades_lista.php'><img src='\gop\images\peso.png' alt='25' width='25' height='25'> Unidades e Medidas</a>
+                                 <a class='dropdown-item' href='/gop/cadastros/funcoes/funcoes_lista.php'><img src='\gop\images\oemprego.png' alt='25' width='25' height='25'> Funções e Cargos</a>
+                                 <a class='dropdown-item' href='/gop/cadastros/pop/pops_lista.php'><img src='\gop\images\degraus.png' alt='25' width='25' height='25'> Cadastro de POP</a>
+                                 <a class='dropdown-item' href='/gop/cadastros/checklist/checklist_lista.php'><img src='\gop\images\checklist.png' alt='25' width='25' height='25'> Cadastro de Cheklist</a>
+                                 <a class='dropdown-item' href='/gop/cadastros/ocorrencias/ocorrencias_lista.php'><img src='\gop\images\incidente.png' alt='25' width='25' height='25'> Ocorrências Padrões</a>
 
                              </div>
                          </li>
                             
                          <li class='nav-item dropdown'>
-                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Administrativo</a>
+                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Planos de Ação</a>
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
-                                 <a class='dropdown-item' href='/gop/cadastros/pop/pops_lista.php'><img src='\gop\images\degraus.png' alt='20' height='20'> Cadastro de POP</a>
-                                 <a class='dropdown-item' href='/gop/cadastros/checklist/checklist_lista.php'><img src='\gop\images\checklist.png' alt='20' height='20'> Cadastro de Cheklist</a>
-                                 <a class='dropdown-item' href='/gop/cadastros/ocorrencias/ocorrencias_lista.php'><img src='\gop\images\incidente.png' alt='20' height='20'> Ocorrências Padrões</a>
-
-                             </div>
+                                 <a class='dropdown-item' href='/gop/cadastros/diretriz_lista.php'><img src='\gop\images\diretrizes.png' alt='25' width='25' height='25'> Diretrizes</a>
+                                 <a class='dropdown-item' href='/gop/cadastros/estrategias_lista.php'><img src='\gop\images\iconeestrategia.png' alt='25' width='25' height='25'> Estratégias</a>
+                                 <a class='dropdown-item' href='/gop/cadastros/estrategias_lista.php'><img src='\gop\images\planejamento.png' alt='25' width='25' height='25'> Planejamento</a>
+                                 </div>
                          </li>";
                                 }
                                 ?>
@@ -132,17 +133,16 @@
                                      <a class="dropdown-item" href="/gop/solicitacao/solicitacao.php"><img src="\gop\images\contato.png" alt="20" height="20"> Solicitações de Serviços</a>
                                      <?php
                                         if ($_SESSION['tipo'] <> 'Solicitante') {
-                                            echo "<a class='dropdown-item' href='/gop/ordens/ordens.php'><img src='\gop\images\ordem.png' alt='20' height='20'> Ordens de Serviços</a>
-                                  <a class='dropdown-item' href='/gop/preventivas/preventivas.php'><img src='\gop\images\preventivo.png' alt='20' height='20'> Preventivas </a>
+                                            echo "<a class='dropdown-item' href='/gop/ordens/ordens.php'><img src='\gop\images\ordem.png' alt='25' width='25' height='25'> Ordens de Serviços</a>
+                                  <a class='dropdown-item' href='/gop/preventivas/preventivas.php'><img src='\gop\images\preventivo.png' alt='25' width='25' height='25'> Preventivas </a>
                              </div>
                          </li>
-
 
                          <li class='nav-item dropdown'>
                              <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Almoxarifado</a>
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
-                                 <a class='dropdown-item' href=''><img src='\gop\images\cotacao.png' alt='20' height='20'> Cotações</a>
-                                 <a class='dropdown-item' href=''><img src='\gop\images\compras.png' alt='20' height='20'> Compras Efetivas</a>
+                                 <a class='dropdown-item' href=''><img src='\gop\images\cotacao.png' alt='25' width='25' height='25'> Cotações</a>
+                                 <a class='dropdown-item' href=''><img src='\gop\images\compras.png' alt='25' width='25' height='25'> Compras Efetivas</a>
                                  <a class='dropdown-item' href=''><img src='\gop\images\dispensa.png' alt='20' height=20> Dispensações</a>
                              </div>
                          </li>";
@@ -153,11 +153,11 @@
                                  <div class='dropdown-menu' aria-labelledby='dropdown01'>
                                      <?php
                                         if ($_SESSION['tipo'] <> 'Solicitante') {
-                                            echo "<a class='dropdown-item' href='/gop/cadastros/usuarios/usuarios_lista.php'><img src='\gop\images\usuario.png' alt='20' height='20'> Cadastro de Usuários</a>
-                                 <a class='dropdown-item' href=''><img src='\gop\images\acessos.png' alt='20' height='20'> Perfis de Usuários</a>";
+                                            echo "<a class='dropdown-item' href='/gop/cadastros/usuarios/usuarios_lista.php'><img src='\gop\images\usuario.png' alt='25' width='25' height='25'> Cadastro de Usuários</a>
+                                 <a class='dropdown-item' href=''><img src='\gop\images\acessos.png' alt='25' width='25' height='25'> Perfis de Usuários</a>";
                                         }
                                         ?>
-                                     <a class='dropdown-item' href=''><img src='\gop\images\trocasenha.png' alt='20' height='20'>Troca de Senha</a>
+                                     <a class='dropdown-item' href=''><img src='\gop\images\trocasenha.png' alt='25' width='25' height='25'>Troca de Senha</a>
                                  </div>
                              </li>
                              
@@ -169,15 +169,15 @@
                  <div style="padding-bottom :1px;">
                      <div class="topnav">
                          <a href="#"></a>
-                         <a title='Abertura de Solicitação de Serviço' href='/gop/solicitacao/solicitacao.php'><img src="\gop\images\contato.png" alt="" width="30" height="30"></a>
+                         <a title='Abertura de Solicitação de Serviço' href='/gop/solicitacao/solicitacao.php'><img src="\gop\images\contato.png" alt="" width="30" height="25"></a>
                          <?php
                             if ($_SESSION['tipo'] <> 'Solicitante') {
-                                echo "<a title='Ordens de Serviço' href='/gop/ordens/ordens.php'><img src='\gop\images\ordem.png' alt='' width='30' height='30'></a>";
-                                echo "<a title='Cadastro de Recursos Físicos' href='/gop/cadastros/recursos_lista.php'><img src='\gop\images\config.png' alt='' width='30' height='30'></a>";
+                                echo "<a title='Ordens de Serviço' href='/gop/ordens/ordens.php'><img src='\gop\images\ordem.png' alt='' width='30' height='25'></a>";
+                                echo "<a title='Cadastro de Recursos Físicos' href='/gop/cadastros/recursos_lista.php'><img src='\gop\images\config.png' alt='' width='30' height='25'></a>";
                             }
                             ?>
-                         <a title='Alterar Senha' href='\gop\alterasenha.php'><img src="\gop\images\trocasenha.png" alt="" width="30" height="30"></a>
-                         <a title='Sair do Sistema' href='\gop\index.php'><img src="\gop\images\saida.png" alt="" width="30" height="30"></a>
+                         <a title='Alterar Senha' href='\gop\alterasenha.php'><img src="\gop\images\trocasenha.png" alt="" width="30" height="25"></a>
+                         <a title='Sair do Sistema' href='\gop\index.php'><img src="\gop\images\saida.png" alt="" width="30" height="25"></a>
                      </div>
                  </div>
 
