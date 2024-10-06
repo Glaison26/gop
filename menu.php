@@ -173,7 +173,7 @@
                          <?php
                             if ($_SESSION['tipo'] <> 'Solicitante') {
                                 echo "<a title='Ordens de Serviço' href='/gop/ordens/ordens.php'><img src='\gop\images\ordem.png' alt='' width='30' height='25'></a>";
-                                echo "<a title='Cadastro de Recursos Físicos' href='/gop/cadastros/recursos_lista.php'><img src='\gop\images\config.png' alt='' width='30' height='25'></a>";
+                                echo "<a title='Cadastro de Recursos Físicos' href='/gop/cadastros/recursos/recursos_lista.php'><img src='\gop\images\config.png' alt='' width='30' height='25'></a>";
                             }
                             ?>
                          <a title='Alterar Senha' href='\gop\alterasenha.php'><img src="\gop\images\trocasenha.png" alt="" width="30" height="25"></a>
