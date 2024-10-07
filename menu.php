@@ -103,11 +103,11 @@
                                  <a class='dropdown-item' href='/gop/cadastros/oficinas/oficinas_lista.php'><img src='\gop\images\oficina.png' alt='25' width='25' height='25'> Oficinas</a>
                                  <a class='dropdown-item' href='/gop/cadastros/setores/setores_lista.php'><img src='\gop\images\setores.png' alt='25' width='25' height='25'> Setores</a>
                                
-                                 <a class='dropdown-item' href='/gop/cadastros/materiais/materiais_lista.php'><img src='\gop\images\materiais.png' alt='25' width='25' height='25'> Materiais</a>
+                                 
                                  <a class='dropdown-item' href='/gop/cadastros/ferramentas/ferramentas_lista.php'><img src='\gop\images\caixa_ferramentas.png' alt='25' width='25' height='25'> Ferramentas</a>
                                  <a class='dropdown-item' href='/gop/cadastros/grupos/grupos_lista.php'><img src='\gop\images\grupo.png' alt='25' width='25' height='25'> Grupos de Recurso</a>
                                  <a class='dropdown-item' href='/gop/cadastros/marcas/marcas_lista.php'><img src='\gop\images\marca.png' alt='25' width='25' height='25'> Marcas de Recursos</a>
-                                 <a class='dropdown-item' href='/gop/cadastros/unidades/unidades_lista.php'><img src='\gop\images\peso.png' alt='25' width='25' height='25'> Unidades e Medidas</a>
+                                 
                                  <a class='dropdown-item' href='/gop/cadastros/funcoes/funcoes_lista.php'><img src='\gop\images\oemprego.png' alt='25' width='25' height='25'> Funções e Cargos</a>
                                  <a class='dropdown-item' href='/gop/cadastros/pop/pops_lista.php'><img src='\gop\images\degraus.png' alt='25' width='25' height='25'> Cadastro de POP</a>
                                  <a class='dropdown-item' href='/gop/cadastros/checklist/checklist_lista.php'><img src='\gop\images\checklist.png' alt='25' width='25' height='25'> Cadastro de Cheklist</a>
@@ -119,7 +119,7 @@
                          <li class='nav-item dropdown'>
                              <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Planos de Ação</a>
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
-                                 <a class='dropdown-item' href='/gop/cadastros/diretriz_lista.php'><img src='\gop\images\diretrizes.png' alt='25' width='25' height='25'> Diretrizes</a>
+                                 <a class='dropdown-item' href='/gop/plano_acao/diretriz_lista.php'><img src='\gop\images\diretrizes.png' alt='25' width='25' height='25'> Diretrizes</a>
                                  <a class='dropdown-item' href='/gop/cadastros/estrategias_lista.php'><img src='\gop\images\iconeestrategia.png' alt='25' width='25' height='25'> Estratégias</a>
                                  <a class='dropdown-item' href='/gop/cadastros/estrategias_lista.php'><img src='\gop\images\planejamento.png' alt='25' width='25' height='25'> Planejamento</a>
                                  </div>
@@ -141,9 +141,11 @@
                          <li class='nav-item dropdown'>
                              <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Almoxarifado</a>
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
+                                 <a class='dropdown-item' href='/gop/cadastros/materiais/materiais_lista.php'><img src='\gop\images\materiais.png' alt='25' width='25' height='25'>Cadastro de Materiais</a>
                                  <a class='dropdown-item' href=''><img src='\gop\images\cotacao.png' alt='25' width='25' height='25'> Cotações</a>
                                  <a class='dropdown-item' href=''><img src='\gop\images\compras.png' alt='25' width='25' height='25'> Compras Efetivas</a>
                                  <a class='dropdown-item' href=''><img src='\gop\images\dispensa.png' alt='20' height=20> Dispensações</a>
+                                 <a class='dropdown-item' href='/gop/cadastros/unidades/unidades_lista.php'><img src='\gop\images\peso.png' alt='25' width='25' height='25'> Unidades e Medidas</a>
                              </div>
                          </li>";
                                         }
