@@ -120,7 +120,7 @@
                              <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Planos de Ação</a>
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
                                  <a class='dropdown-item' href='/gop/plano_acao/diretriz_lista.php'><img src='\gop\images\diretrizes.png' alt='25' width='25' height='25'> Diretrizes</a>
-                                 <a class='dropdown-item' href='/gop/cadastros/estrategias_lista.php'><img src='\gop\images\iconeestrategia.png' alt='25' width='25' height='25'> Estratégias</a>
+                                 <a class='dropdown-item' href='/gop/plano_acao/estrategias_lista.php'><img src='\gop\images\iconeestrategia.png' alt='25' width='25' height='25'> Estratégias</a>
                                  <a class='dropdown-item' href='/gop/cadastros/estrategias_lista.php'><img src='\gop\images\planejamento.png' alt='25' width='25' height='25'> Planejamento</a>
                                  </div>
                          </li>";
