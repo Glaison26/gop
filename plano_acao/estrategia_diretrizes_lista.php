@@ -11,25 +11,41 @@ if (!isset($_SESSION['newsession'])) {
 }
 include("../conexao.php");
 include("../links2.php");
-$c_id = $_GET["id"];
-$c_sql = "Select * from estrategias where id='$c_id'";
+if (isset($_GET['id'])) {
+    $i_id = $_GET['id'];
+    $_SESSION['id_estartegia'] = $i_id;
+} else {
+    $i_id = $_SESSION['id_estartegia'];
+}
+$c_sql = "Select * from estrategias where id='$i_id'";
 $result = $conection->query($c_sql);
 $c_nome = $result->fetch_assoc();
 $c_estrategia = $c_nome['descricao'];
 
-// faço a Leitura da tabela com sql
-$c_sql = "SELECT diretriz_estrategia.id, estrategias.descricao as estrategia, diretrizes.descricao as diretriz FROM diretriz_estrategia
-          JOIN estrategias ON diretriz_estrategia.id_estrategia=estrategias.id
-          JOIN diretrizes ON diretriz_estrategia.id_diretriz=diretrizes.id
-          where id_estrategia='$c_id'
-          ORDER BY diretrizes.descricao";
-$result = $conection->query($c_sql);
-// verifico se a query foi correto
-if (!$result) {
-    die("Erro ao Executar Sql!!" . $conection->connect_error);
+// click no botão para incluir diretriz selecionada no combobox
+$msg_erro = '';
+if ((isset($_POST["btnincluir"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
+    // pego a id da diretriz selecionada no combobox
+    $c_descricao = $_POST['dir'];
+    $c_sql_drz = "select id from diretrizes where descricao = '$c_descricao'";
+    $result_drz = $conection->query($c_sql_drz);
+    $c_linha_drz = $result_drz->fetch_assoc();
+    $i_id_drz = $c_linha_drz['id'];
+    // sql para verificar se já cadastrou a diretris para essa estartegia
+    $c_sql_conta = "select count(*) as total from diretriz_estrategia where id_diretriz='$i_id_drz' and id_estrategia = '$i_id'";
+    $result_drz  = $conection->query($c_sql_conta);
+    $c_linha_drz = $result_drz->fetch_assoc();
+    if ($c_linha_drz['total'] > 0)
+        $msg_erro = 'Diretriz já selecionada para essa Estratégia!!!';
+    else {
+        $c_sql_insert = "insert into diretriz_estrategia (id_estrategia, id_diretriz) value ('$i_id', '$i_id_drz')";
+        $result_drz =  $conection->query($c_sql_insert);
+    }
 }
-
 ?>
+
+
+
 <!doctype html>
 <html lang="en">
 
@@ -39,7 +55,7 @@ if (!$result) {
         function confirmacao(id) {
             var resposta = confirm("Deseja remover esse registro?");
             if (resposta == true) {
-                window.location.href = "/gop/plano_acao/diretriz_excluir.php?id=" + id;
+                window.location.href = "/gop/plano_acao/estrategia_diretriz_excluir.php?id=" + id;
             }
         }
     </script>
@@ -112,16 +128,29 @@ if (!$result) {
             <h4>Diretrizes para - <?php echo $c_estrategia ?></h4>
         </div>
     </div>
+    <?php
+    if (!empty($msg_erro)) {
+        echo "
+            <div class='alert alert-warning' role='alert'>
+                <div style='padding-left:15px;'>
+                    <h4><img Align='left' src='\gop\images\aviso.png' alt='30' height='35'> $msg_erro</h4>
+                </div>
+                
+            </div>
+            ";
+    }
+    ?>
     <br>
     <div class="container-fluid">
-        <div style="padding-left:7px;">
-            <div class="panel panel-info class">
-                <div class="panel-heading">
-                    <form method="post">
+        <form method="post">
+            <div style="padding-left:7px;">
+                <div class="panel panel-info class">
+                    <div class="panel-heading">
+
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">Selecionar Diretriz para Estratégia</label>
                             <div class="col-sm-5">
-                                <select class="form-select form-select-lg mb-3" id="diretriz" name="diretris">
+                                <select class="form-select form-select-lg mb-3" id="dir" name="dir">
                                     <?php
                                     // select da tabela de diretrizez
                                     $c_sql_diretriz = "SELECT diretrizes.id, diretrizes.descricao FROM diretrizes ORDER BY diretrizes.descricao";
@@ -139,11 +168,10 @@ if (!$result) {
                             Incluir
                         </button>
                         <a class="btn btn-secondary btn-sm" href="/gop/plano_acao/estrategias_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
-                    </form>
-
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
 
         <hr>
         <table class="table table display table-bordered tabdiretriz_estrategia">
@@ -156,6 +184,17 @@ if (!$result) {
             </thead>
             <tbody>
                 <?php
+                // faço a Leitura da tabela com sql
+                $c_sql = "SELECT diretriz_estrategia.id, estrategias.descricao as estrategia, diretrizes.descricao as diretriz FROM diretriz_estrategia
+                        JOIN estrategias ON diretriz_estrategia.id_estrategia=estrategias.id
+                        JOIN diretrizes ON diretriz_estrategia.id_diretriz=diretrizes.id
+                        where id_estrategia='$i_id'
+                        ORDER BY diretrizes.descricao";
+                $result = $conection->query($c_sql);
+                // verifico se a query foi correto
+                if (!$result) {
+                    die("Erro ao Executar Sql!!" . $conection->connect_error);
+                }
                 // insiro os registro do banco de dados na tabela 
                 while ($c_linha = $result->fetch_assoc()) {
 
