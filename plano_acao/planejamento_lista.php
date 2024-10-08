@@ -10,7 +10,7 @@ if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
 include("../conexao.php");
-include("../links.php");
+include("../links2.php");
 $c_texto = "";
 ?>
 <!doctype html>
@@ -90,18 +90,18 @@ $c_texto = "";
             var c_meta = $('#add_metaField').val();
             var c_descritivo = $('#add_descritivoField').val();
 
-            if ((c_setor != '')||(c_gerencia !='')||(c_descritivo !='')) {
+            if ((c_setor != '') || (c_gerencia != '') || (c_descritivo != '')) {
 
                 $.ajax({
                     url: "planejamento_novo.php",
                     type: "post",
                     data: {
-                        c_data : c_data,
-                        c_setor : c_setor,
-                        c_gerencia : c_gerencia,
-                        c_meta : c_meta,
-                        c_descritivo : c_descritivo
-                       
+                        c_data: c_data,
+                        c_setor: c_setor,
+                        c_gerencia: c_gerencia,
+                        c_meta: c_meta,
+                        c_descritivo: c_descritivo
+
                     },
                     success: function(data) {
                         var json = JSON.parse(data);
@@ -141,7 +141,7 @@ $c_texto = "";
 
                 $('#up_idField').val(data[0]);
                 $('#up_descricaoField').val(data[1]);
-                
+
 
             });
         });
@@ -153,7 +153,7 @@ $c_texto = "";
             e.preventDefault();
             var c_id = $('#up_idField').val();
             var c_descricao = $('#up_descricaoField').val();
-            
+
             if (c_descricao != '') {
 
                 $.ajax({
@@ -162,7 +162,7 @@ $c_texto = "";
                     data: {
                         c_id: c_id,
                         c_descricao: c_descricao
-                        
+
                     },
                     success: function(data) {
                         var json = JSON.parse(data);
@@ -266,21 +266,57 @@ $c_texto = "";
                     </div>
                     <form id="frmadd" action="">
                         <div class="mb-3 row">
-                            <label for="add_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" id="add_descricaoField" name="add_dscricaoField">
+                            <label for="add_descricaoField" class="col-md-3 form-label">Data (*)</label>
+                            <div class="col-md-5">
+                                <input type="date" class="form-control" id="add_dataField" name="add_dataField" value='<?php echo date("Y-m-d"); ?>'>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Fechar</button>
 
+                        <div class="mb-3 row">
+                            <label for="add_descricaoField" class="col-md-3 form-label">Descritivo (*)</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="add_descritivoField" name="add_descritivoField">
+                            </div>
                         </div>
-                    </form>
+                        <div class="mb-3 row">
+                            <label for="add_gerenciaField" class="col-md-3 form-label">Gerência (*)</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="add_gerenciaField" name="add_gerenciaField">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Setor (*)</label>
+                            <div class="col-sm-9">
+                                <select class="form-select form-select-lg mb-3" id="add_setorField" name="add_setorField">
+                                    <option></option>
+                                    <?php
+                                    // select da tabela de setores
+                                    $c_sql_setor = "SELECT setores.id, setores.descricao FROM setores ORDER BY setores.descricao";
+                                    $result_setor = $conection->query($c_sql_setor);
+                                    while ($c_linha = $result_setor->fetch_assoc()) {
+                                        echo "<option>$c_linha[descricao]</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Meta</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" id="add_metaField" name="add_metaField" rows="10"></textarea>
+                            </div>
+                        </div>
                 </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Fechar</button>
 
+                </div>
+                </form>
             </div>
+
         </div>
+    </div>
     </div>
 
     <!-- Modal para edição dos dados -->
@@ -302,7 +338,7 @@ $c_texto = "";
                                 <input type="text" class="form-control" id="up_descricaoField" name="up_dscricaoField">
                             </div>
                         </div>
-                        
+
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
                             <button class="btn btn-secondary" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Fechar</button>
