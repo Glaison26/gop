@@ -30,7 +30,7 @@ include('../conexao.php');
     </script>
 
     <script language="Javascript">
-        function confirmacao(id) {
+        function confirmacao_pop(id) {
             var resposta = confirm("Deseja remover esse registro?");
             if (resposta == true) {
                 window.location.href = "/gop/ordens/ordens_pop_excluir.php?id=" + id;
@@ -171,7 +171,7 @@ include('../conexao.php');
                    
                     <td>
                     <a class='btn btn-info btn-sm' href='javascript:func()'onclick='chamada($c_linha[id_pop])'><span class='glyphicon glyphicon-eye-open'></span> Visualizar</a>
-                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
+                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao_pop($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
                     </tr>

@@ -10,7 +10,7 @@ if (!isset($_GET["id"])) {
     header('location: /gop/ordens/ordens_gerenciar.php');
     exit;
 }
-$c_id = "";
+
 $c_id = $_GET["id"];
 
 

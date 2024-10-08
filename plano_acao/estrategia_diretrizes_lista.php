@@ -30,6 +30,8 @@ if (!$result) {
 }
 
 ?>
+
+
 <!doctype html>
 <html lang="en">
 
