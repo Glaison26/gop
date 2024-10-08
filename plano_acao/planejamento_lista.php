@@ -1,7 +1,7 @@
 <?php // controle de acesso ao formulário
 
 /////////////////////////////////////////////
-// Lista de Diretrizes para Planos de Ação
+// Lista de Planejamentos para Planos de Ação
 /////////////////////////////////////////////
 
 
@@ -22,7 +22,7 @@ $c_texto = "";
         function confirmacao(id) {
             var resposta = confirm("Deseja remover esse registro?");
             if (resposta == true) {
-                window.location.href = "/gop/plano_acao/diretriz_excluir.php?id=" + id;
+                window.location.href = "/gop/plano_acao/planejamento_excluir.php?id=" + id;
             }
         }
     </script>
@@ -36,7 +36,7 @@ $c_texto = "";
 
     <script>
         $(document).ready(function() {
-            $('.tabdiretriz').DataTable({
+            $('.tabplanejamento').DataTable({
                 // 
                 "iDisplayLength": -1,
                 "order": [1, 'asc'],
@@ -84,18 +84,24 @@ $c_texto = "";
     <script type="text/javascript">
         $(document).on('submit', '#frmadd', function(e) {
             e.preventDefault();
-            var c_descricao = $('#add_descricaoField').val();
-            var c_texto = $('#add_textoField').val();
+            var c_data = $('#add_dataField').val();
+            var c_setor = $('#add_setorField').val();
+            var c_gerencia = $('#add_gerenciaField').val();
+            var c_meta = $('#add_metaField').val();
+            var c_descritivo = $('#add_descritivoField').val();
 
-            if (c_descricao != '') {
+            if ((c_setor != '')||(c_gerencia !='')||(c_descritivo !='')) {
 
                 $.ajax({
-                    url: "diretriz_novo.php",
+                    url: "planejamento_novo.php",
                     type: "post",
                     data: {
-                        c_descricao: c_descricao,
-                        c_texto: c_texto
-
+                        c_data : c_data,
+                        c_setor : c_setor,
+                        c_gerencia : c_gerencia,
+                        c_meta : c_meta,
+                        c_descritivo : c_descritivo
+                       
                     },
                     success: function(data) {
                         var json = JSON.parse(data);
@@ -112,7 +118,7 @@ $c_texto = "";
                     }
                 });
             } else {
-                alert('Preencha todos os campos obrigatórios');
+                alert('Preencha todos os campos com (*) são obrigatórios');
             }
         });
     </script>
@@ -135,8 +141,7 @@ $c_texto = "";
 
                 $('#up_idField').val(data[0]);
                 $('#up_descricaoField').val(data[1]);
-                $('#up_textoField').val(data[2]);
-
+                
 
             });
         });
@@ -148,17 +153,16 @@ $c_texto = "";
             e.preventDefault();
             var c_id = $('#up_idField').val();
             var c_descricao = $('#up_descricaoField').val();
-            var c_texto = $('#up_textoField').val();
-
+            
             if (c_descricao != '') {
 
                 $.ajax({
-                    url: "diretriz_editar.php",
+                    url: "estrategia_editar.php",
                     type: "post",
                     data: {
                         c_id: c_id,
-                        c_descricao: c_descricao,
-                        c_texto: c_texto
+                        c_descricao: c_descricao
+                        
                     },
                     success: function(data) {
                         var json = JSON.parse(data);
@@ -183,31 +187,29 @@ $c_texto = "";
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
-            <h5>Lista de Diretrizes<h5>
+            <h5>Lista de Planejamentos<h5>
         </div>
     </div>
 
     <br>
     <div class="container-fluid">
 
-        <button type="button" title="Inclusão de nova diretriz" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal">
+        <button type="button" title="Inclusão de novo Planejamento" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal">
             <span class="glyphicon glyphicon-plus"></span>
             Incluir
         </button>
-        <?php
-        if ($_SESSION['voltadiretriz']=='N') 
-          echo "<a class='btn btn-secondary btn-sm' href='/gop/menu.php'><span class='glyphicon glyphicon-off'></span> Voltar</a>";
-        else 
-          echo "<a class='btn btn-secondary btn-sm' href='/gop/plano_acao/estrategia_diretrizes_lista.php'><span class='glyphicon glyphicon-off'></span> Voltar</a>";
-        ?>
+        <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
-        <table class="table table display table-bordered tabdiretriz">
+        <table class="table table display table-bordered tabplanejamento">
             <thead class="thead">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Descrição</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Gerência</th>
                     <th scope="col">Descritivo</th>
+                    <th scope="col">Setor</th>
+                    <th scope="col">Gerências</th>
                     <th scope="col">Opções</th>
                 </tr>
             </thead>
@@ -215,7 +217,10 @@ $c_texto = "";
                 <?php
 
                 // faço a Leitura da tabela com sql
-                $c_sql = "SELECT diretrizes.id, diretrizes.descricao, diretrizes.texto FROM diretrizes ORDER BY diretrizes.descricao";
+                $c_sql = "SELECT planejamento.id, setores.descricao AS setor, planejamento.id_setor, planejamento.`data`, planejamento.gerencia,
+                        planejamento.descritivo FROM planejamento 
+                        JOIN setores ON planejamento.id_setor=setores.id
+                        ORDER BY planejamento.`data` desc";
                 $result = $conection->query($c_sql);
                 // verifico se a query foi correto
                 if (!$result) {
@@ -228,10 +233,14 @@ $c_texto = "";
                     echo "
                     <tr class='info'>
                     <td>$c_linha[id]</td>
-                    <td>$c_linha[descricao]</td>
-                    <td>$c_linha[texto]</td>
+                    <td>$c_linha[data]</td>
+                    <td>$c_linha[descritivo]</td>
+                    <td>$c_linha[setor]</td>
+                    <td>$c_linha[gerencia]</td>
+                    <td>$c_linha[meta]</td>
                     <td>
-                    <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Diretriz'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
+                    <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Estratégia'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
+                    <a class='btn btn-info btn-sm' href='/gop/plano_acao/estrategia_diretrizes_lista.php?id=$c_linha[id]'><img src='\gop\images\diretrizes.png' alt='16' width='16' height='16'> Diretrizes</a>  
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
@@ -249,7 +258,7 @@ $c_texto = "";
         <div class="modal-dialog modal-dialog-centered" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Inclusão de nova Diretriz</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Inclusão de novo Planejamento</h4>
                 </div>
                 <div class="modal-body">
                     <div class='alert alert-warning' role='alert'>
@@ -262,13 +271,6 @@ $c_texto = "";
                                 <input type="text" class="form-control" id="add_descricaoField" name="add_dscricaoField">
                             </div>
                         </div>
-                        <div class="mb-3 row">
-                            <label for="add_textoField" class="col-md-3 form-label">Texto</label>
-                            <div class="col-md-9">
-                                <textarea class="form-control" id="add_textoField" name="add_textoField" rows="6"><?php echo $c_texto ?></textarea>
-                            </div>
-                        </div>
-
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Fechar</button>
@@ -281,13 +283,12 @@ $c_texto = "";
         </div>
     </div>
 
-
     <!-- Modal para edição dos dados -->
     <div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="editmodal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Editar Diretriz</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Editar Estratégia</h4>
                 </div>
                 <div class="modal-body">
                     <div class='alert alert-warning' role='alert'>
@@ -301,12 +302,7 @@ $c_texto = "";
                                 <input type="text" class="form-control" id="up_descricaoField" name="up_dscricaoField">
                             </div>
                         </div>
-                        <div class="mb-3 row">
-                            <label for="up_textoField" class="col-md-3 form-label">Texto</label>
-                            <div class="col-md-9">
-                                <textarea class="form-control" id="up_textoField" name="up_textoField" rows="6"><?php echo $c_texto ?></textarea>
-                            </div>
-                        </div>
+                        
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
                             <button class="btn btn-secondary" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Fechar</button>

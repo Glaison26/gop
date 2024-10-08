@@ -17,6 +17,7 @@ if (isset($_GET['id'])) {
 } else {
     $i_id = $_SESSION['id_estartegia'];
 }
+$_SESSION['voltadiretriz'] = 'S';
 $c_sql = "Select * from estrategias where id='$i_id'";
 $result = $conection->query($c_sql);
 $c_nome = $result->fetch_assoc();
@@ -26,7 +27,7 @@ $c_estrategia = $c_nome['descricao'];
 $c_sql = "SELECT diretriz_estrategia.id, estrategias.descricao as estrategia, diretrizes.descricao as diretriz FROM diretriz_estrategia
           JOIN estrategias ON diretriz_estrategia.id_estrategia=estrategias.id
           JOIN diretrizes ON diretriz_estrategia.id_diretriz=diretrizes.id
-          where id_estrategia='$c_id'
+          where id_estrategia='$i_id'
           ORDER BY diretrizes.descricao";
 $result = $conection->query($c_sql);
 // verifico se a query foi correto
@@ -156,6 +157,7 @@ if (!$result) {
                             <span class="glyphicon glyphicon-plus"></span>
                             Incluir
                         </button>
+                        <a class="btn btn-info btn-sm" href="/gop/plano_acao/diretriz_lista.php"><img src='\gop\images\diretrizes.png' alt='16' width='16' height='16'> Diretrizes</a>
                         <a class="btn btn-secondary btn-sm" href="/gop/plano_acao/estrategias_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
                     </div>
                 </div>

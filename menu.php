@@ -5,6 +5,7 @@
         die('Acesso não autorizado!!!');
     }
     include('conexao.php');
+    $_SESSION['voltadiretriz'] = 'N';
     // verifico numero de solicitações em aberto
     $c_sql = "select COUNT(*) AS aberta_solicitacao FROM solicitacao WHERE STATUS = 'A'";
     $result = $conection->query($c_sql);
@@ -102,8 +103,7 @@
                                  <a class='dropdown-item' href='/gop/cadastros/centrodecustos/centrodecusto_lista.php'><img src='\gop\images\centrodecusto.png' alt='25' width='25' height='25'> Centros de Custos</a>
                                  <a class='dropdown-item' href='/gop/cadastros/oficinas/oficinas_lista.php'><img src='\gop\images\oficina.png' alt='25' width='25' height='25'> Oficinas</a>
                                  <a class='dropdown-item' href='/gop/cadastros/setores/setores_lista.php'><img src='\gop\images\setores.png' alt='25' width='25' height='25'> Setores</a>
-                               
-                                 
+                                                                
                                  <a class='dropdown-item' href='/gop/cadastros/ferramentas/ferramentas_lista.php'><img src='\gop\images\caixa_ferramentas.png' alt='25' width='25' height='25'> Ferramentas</a>
                                  <a class='dropdown-item' href='/gop/cadastros/grupos/grupos_lista.php'><img src='\gop\images\grupo.png' alt='25' width='25' height='25'> Grupos de Recurso</a>
                                  <a class='dropdown-item' href='/gop/cadastros/marcas/marcas_lista.php'><img src='\gop\images\marca.png' alt='25' width='25' height='25'> Marcas de Recursos</a>
@@ -121,7 +121,7 @@
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
                                  <a class='dropdown-item' href='/gop/plano_acao/diretriz_lista.php'><img src='\gop\images\diretrizes.png' alt='25' width='25' height='25'> Diretrizes</a>
                                  <a class='dropdown-item' href='/gop/plano_acao/estrategias_lista.php'><img src='\gop\images\iconeestrategia.png' alt='25' width='25' height='25'> Estratégias</a>
-                                 <a class='dropdown-item' href='/gop/cadastros/estrategias_lista.php'><img src='\gop\images\planejamento.png' alt='25' width='25' height='25'> Planejamento</a>
+                                 <a class='dropdown-item' href='/gop/plano_acao/planejamento_lista.php'><img src='\gop\images\planejamento.png' alt='25' width='25' height='25'> Planejamento</a>
                                  </div>
                          </li>";
                                 }
