@@ -18,6 +18,7 @@ if (isset($_GET['id'])) {
     $i_id = $_SESSION['id_estartegia'];
 }
 $_SESSION['voltadiretriz'] = 'S';
+$msg_erro = "";
 $c_sql = "Select * from estrategias where id='$i_id'";
 $result = $conection->query($c_sql);
 $c_nome = $result->fetch_assoc();
@@ -33,6 +34,26 @@ $result = $conection->query($c_sql);
 // verifico se a query foi correto
 if (!$result) {
     die("Erro ao Executar Sql!!" . $conection->connect_error);
+}
+// botão incluir selecionado para incluir diretriz
+if ((isset($_POST["btnincluir"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
+
+    // sql para pegar a id da diretrix selecionada
+    $c_diretriz = $_POST['dir'];
+    $c_sql_diretriz = "select diretrizes.id from diretrizes where diretrizes.descricao='$c_diretriz'";
+    $result = $conection->query($c_sql_diretriz);
+    $c_dir = $result->fetch_assoc();
+    $i_diretriz = $c_dir['id'];
+    // verifico se não há duplicitade de diretrizes na mesma estratégia
+    $c_sql_conta = "select count(*) as total from diretriz_estrategia where id_estrategia='$i_id' and id_diretriz=$i_diretriz ";
+    $result = $conection->query($c_sql_conta);
+    $c_conta = $result->fetch_assoc();
+    if ($c_conta['total'] == 0) {
+        // insere registro
+        $c_sql_ins = "insert into diretriz_estrategia (id_estrategia, id_diretriz) value ('$i_id', '$i_diretriz')";
+        $result = $conection->query($c_sql_ins);
+    } else
+        $msg_erro = "Diretriz já foi incluida para essa estratégia !!!";
 }
 
 ?>
@@ -152,8 +173,7 @@ if (!$result) {
                                 </select>
                             </div>
                         </div>
-                        <button type="submit" name="btnincluir" id="btnincluir" title="Inclusão de nova diretriz a Estratégia" class="btn btn-success btn-sm"
-                            data-toggle="modal" data-target="#novoModal">
+                        <button type="submit" name="btnincluir" id="btnincluir" title="Inclusão de nova diretriz a Estratégia" class="btn btn-success btn-sm">
                             <span class="glyphicon glyphicon-plus"></span>
                             Incluir
                         </button>
