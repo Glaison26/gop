@@ -152,8 +152,8 @@ include("../../links.php");
                 $('#up_descricaoField').val(data[1]);
                 $('#up_fone1Field').val(data[2]);
                 $('#up_fone2Field').val(data[3]);
-                $('#up_emailField').val(data[4]);
-                $('#up_responsavelField').val(data[5]);
+                $('#up_emailField').val(data[5]);
+                $('#up_responsavelField').val(data[4]);
 
 
             });

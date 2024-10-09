@@ -45,7 +45,7 @@ $c_texto = "";
                     'aTargets': [2]
                 }, {
                     'aTargets': [0],
-                    "visible": true
+                    "visible": false
                 }],
                 "oLanguage": {
                     "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -123,65 +123,9 @@ $c_texto = "";
         });
     </script>
 
-    <!-- Coleta dados da tabela para edição do registro -->
-    <script>
-        $(document).ready(function() {
+   
 
-            $('.editbtn').on('click', function() {
-
-                $('#editmodal').modal('show');
-
-                $tr = $(this).closest('tr');
-
-                var data = $tr.children("td").map(function() {
-                    return $(this).text();
-                }).get();
-
-                console.log(data);
-
-                $('#up_idField').val(data[0]);
-                $('#up_descricaoField').val(data[1]);
-
-
-            });
-        });
-    </script>
-
-    <script type="text/javascript">
-        // Função javascript e ajax para Alteração dos dados
-        $(document).on('submit', '#frmup', function(e) {
-            e.preventDefault();
-            var c_id = $('#up_idField').val();
-            var c_descricao = $('#up_descricaoField').val();
-
-            if (c_descricao != '') {
-
-                $.ajax({
-                    url: "estrategia_editar.php",
-                    type: "post",
-                    data: {
-                        c_id: c_id,
-                        c_descricao: c_descricao
-
-                    },
-                    success: function(data) {
-                        var json = JSON.parse(data);
-                        var status = json.status;
-                        if (status == 'true') {
-                            $('#editmodal').modal('hide');
-                            location.reload();
-                        } else {
-                            alert('falha ao alterar dados');
-                        }
-                    }
-                });
-
-            } else {
-                alert('Todos os campos devem ser preenchidos!!');
-            }
-        });
-    </script>
-
+   
 
     <!-- montagem da página -->
     <div class="panel panel-primary class">
@@ -209,7 +153,8 @@ $c_texto = "";
                     <th scope="col">Gerência</th>
                     <th scope="col">Descritivo</th>
                     <th scope="col">Setor</th>
-                    <th scope="col">Gerências</th>
+
+                    <th scope="col">Meta</th>
                     <th scope="col">Opções</th>
                 </tr>
             </thead>
@@ -218,7 +163,7 @@ $c_texto = "";
 
                 // faço a Leitura da tabela com sql
                 $c_sql = "SELECT planejamento.id, setores.descricao AS setor, planejamento.id_setor, planejamento.`data`, planejamento.gerencia,
-                        planejamento.descritivo FROM planejamento 
+                        planejamento.descritivo, planejamento.meta FROM planejamento 
                         JOIN setores ON planejamento.id_setor=setores.id
                         ORDER BY planejamento.`data` desc";
                 $result = $conection->query($c_sql);
@@ -229,18 +174,18 @@ $c_texto = "";
 
                 // insiro os registro do banco de dados na tabela 
                 while ($c_linha = $result->fetch_assoc()) {
-
+                    $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data'])));
                     echo "
                     <tr class='info'>
                     <td>$c_linha[id]</td>
-                    <td>$c_linha[data]</td>
+                    <td>$c_data</td>
+                    <td>$c_linha[gerencia]</td>
                     <td>$c_linha[descritivo]</td>
                     <td>$c_linha[setor]</td>
-                    <td>$c_linha[gerencia]</td>
+                    
                     <td>$c_linha[meta]</td>
                     <td>
-                    <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Estratégia'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
-                    <a class='btn btn-info btn-sm' href='/gop/plano_acao/estrategia_diretrizes_lista.php?id=$c_linha[id]'><img src='\gop\images\diretrizes.png' alt='16' width='16' height='16'> Diretrizes</a>  
+                    <a class='btn btn-secondary btn-sm' title='Editar Planejamento' href='/gop/plano_acao/planejamento_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
@@ -303,7 +248,7 @@ $c_texto = "";
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Meta</label>
                             <div class="col-sm-9">
-                                <textarea class="form-control" id="add_metaField" name="add_metaField" rows="10"></textarea>
+                                <textarea class="form-control" id="add_metaField" name="add_metaField" rows="5"></textarea>
                             </div>
                         </div>
                 </div>
@@ -331,23 +276,58 @@ $c_texto = "";
                         <h5>Campos com (*) são obrigatórios</h5>
                     </div>
                     <form id="frmup" method="POST" action="">
-                        <input type="hidden" id="up_idField" name="up_idField">
                         <div class="mb-3 row">
-                            <label for="up_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" id="up_descricaoField" name="up_dscricaoField">
+                            <label for="up_dataField" class="col-md-3 form-label">Data (*)</label>
+                            <div class="col-md-5">
+                                <input type="date" class="form-control" id="up_dataField" name="up_dataField">
                             </div>
                         </div>
 
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                            <button class="btn btn-secondary" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Fechar</button>
+                        <div class="mb-3 row">
+                            <label for="add_descritivoField" class="col-md-3 form-label">Descritivo (*)</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="up_descritivoField" name="up_descritivoField">
+                            </div>
                         </div>
-                    </form>
+                        <div class="mb-3 row">
+                            <label for="up_gerenciaField" class="col-md-3 form-label">Gerência (*)</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="up_gerenciaField" name="up_gerenciaField">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Setor (*)</label>
+                            <div class="col-sm-9">
+                                <select class="form-select form-select-lg mb-3" id="up_setorField" name="up_setorField">
+                                    <?php
+                                    // select da tabela de setores
+                                    $c_sql_setor = "SELECT setores.id, setores.descricao FROM setores ORDER BY setores.descricao";
+                                    $result_setor = $conection->query($c_sql_setor);
+                                    while ($c_linha = $result_setor->fetch_assoc()) {
+                                        echo "<option>$c_linha[descricao]</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Meta</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" id="up_metaField" name="up_metaField" rows="5"></textarea>
+                            </div>
+                        </div>
                 </div>
 
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
+                    <button class="btn btn-secondary" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Fechar</button>
+                </div>
+                </form>
             </div>
+
         </div>
+    </div>
     </div>
 
 </body>
