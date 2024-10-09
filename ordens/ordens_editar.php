@@ -542,7 +542,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">Conclusão</label>
                             <div class="col-sm-8">
-                                <textarea class="form-control" id="conclusao" name="conclusao" rows="6"><?php echo $c_conclusao ?></textarea>
+                                <textarea readonly class="form-control" id="conclusao" name="conclusao" rows="6"><?php echo $c_conclusao ?></textarea>
                             </div>
                         </div>
                         <br>

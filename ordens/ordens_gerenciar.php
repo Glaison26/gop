@@ -41,8 +41,8 @@ if (isset($_GET['id'])) {
                     <div style="padding-bottom :2px;">
                         <div class="topnav">
                            
-                            <a title='Concluir Ordem de Serviço' href='#'><img src="\gop\images\registro.png" alt="" width="30" height="25"><span> Emitir</span></a>
-                            <a title='Concluir Ordem de Serviço' href='#'><img src="\gop\images\concluir.png" alt="" width="30" height="25"><span> Concluir</span></a>
+                            <a title='Emitir Ordem de Serviço' href='#'><img src="\gop\images\registro.png" alt="" width="30" height="25"><span> Emitir</span></a>
+                            <a title='Concluir Ordem de Serviço' href='\gop\ordens\ordens_conclusao.php?id=<?php echo $i_id ?>'><img src="\gop\images\concluir.png" alt="" width="30" height="25"><span> Concluir</span></a>
                             <a title='Cancelar Ordem de Serviço' href='#'><img src="\gop\images\cancelar.png" alt="" width="30" height="25"><span> Cancelar</span></a>
                             <a title='Suspender Ordem de Serviço' href='#'><img src='\gop\images\aguardado.png' alt='' width='30' height='25'><span> Suspender</span></a>
                             <a title='Voltar' href='\gop\ordens\ordens_lista.php'><img src="\gop\images\saida.png" alt="" width="30" height="25"><span> Voltar</span></a>
