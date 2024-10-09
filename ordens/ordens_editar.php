@@ -26,10 +26,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     // sql para pegar recurso fisico se os for de recurso fisico
     if ($registro['tipo'] == 'R') {
         $i_recurso = $registro['id_recurso'];
-        $c_sql_recurso = "Select id, descricao from recursos where id='$i_recurso'";
+        $c_sql_recurso = "Select id, descricao, patrimonio from recursos where id='$i_recurso'";
         $result_recurso = $conection->query($c_sql_recurso);
         $registro_recurso = $result_recurso->fetch_assoc();
-        $c_recurso = $registro_recurso['descricao'];
+        $c_recurso = $registro_recurso['patrimonio'].' - '.$registro_recurso['descricao'];
     }
     // sql para pegar espaço fisico se os for de espaço fisico
     if ($registro['tipo'] == 'E') {
@@ -47,8 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $result_ocorrencia = $conection->query($c_sql_ocorrencia);
     $registro_ocorrencia = $result_ocorrencia->fetch_assoc();
     $c_ocorrencia = $registro_ocorrencia['descricao'];
-
-
     // sql para pegar o responsável
     $c_responsavel = $registro['id_responsavel'];
     $c_sql_responsavel = "Select id,nome from usuarios where id='$c_responsavel'";

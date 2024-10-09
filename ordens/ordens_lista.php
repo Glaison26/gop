@@ -214,6 +214,7 @@ include('../conexao.php');
                                 <th scope="col">Data</th>
                                 <th scope="col">Hora</th>
                                 <th scope="col">Descritivo</th>
+                                <th scope="col">Patrimônio</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Setor</th>
                                 <th scope="col">Tipo</th>
@@ -242,6 +243,7 @@ include('../conexao.php');
                                     <td>$c_data</td>
                                     <td>$c_hora</td>
                                     <td>$c_linha[descritivo]</td>
+                                    <td>$c_linha[patrimonio]</td>
                                     <td>$c_linha[ordens_status]</td>
                                     <td>$c_linha[setor]</td>
                                     <td>$c_linha[ordens_tipo_texto]</td>

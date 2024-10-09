@@ -92,7 +92,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     // montagem do sql para recursos físicos
     $c_sql = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
                     ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao AS setor,
-                    usuarios.nome,
+                    usuarios.nome, recursos.descricao, recursos.patrimonio,
                     case
                     when ordens.status='A' then 'Aberta'
                     when ordens.status='E' then 'Em Andamento'
@@ -105,6 +105,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     FROM ordens
                     JOIN setores ON ordens.id_setor=setores.id
                     JOIN usuarios ON ordens.id_solicitante=usuarios.id
+                    JOIN recursos on ordens.id_recurso=recursos.id
                     where $c_where";
     // sql para recurso, espaços e avulsas               
     $c_sqlrecursos = $c_sql . $c_wheretipo_recurso;

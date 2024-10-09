@@ -186,6 +186,7 @@ $c_texto = "";
                     <td>$c_linha[meta]</td>
                     <td>
                     <a class='btn btn-secondary btn-sm' title='Editar Planejamento' href='/gop/plano_acao/planejamento_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                    <a class='btn btn-success btn-sm' title='Incluir Estratégia' href='/gop/plano_acao/planejamento_estrategia.php?id=$c_linha[id]'><img src='\gop\images\iconeestrategia.png' alt='' width='16' height='15'> Estratégias</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
