@@ -169,7 +169,7 @@ if ((isset($_POST["btnincluir"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                             Incluir
                         </button>
                         <a class="btn btn-info btn-sm" href="/gop/plano_acao/estrategias_lista.php"><img src='\gop\images\iconeestrategia.png' alt='16' width='16' height='16'> Estratégias</a>
-                        <a class="btn btn-secondary btn-sm" href="/gop/plano_acao/estrategias_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
+                        <a class="btn btn-secondary btn-sm" href="/gop/plano_acao/planejamento_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
                     </div>
                 </div>
             </div>
@@ -223,6 +223,7 @@ if ((isset($_POST["btnincluir"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     <td>$c_situacao</td>
                    
                     <td>
+                    <a class='btn btn-secondary btn-sm' title='Editar Diretriz Estratégica' href='/gop/plano_acao/planejamento_estrategia_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
