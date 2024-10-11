@@ -37,7 +37,7 @@ if ((isset($_POST["btnincluir"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $result = $conection->query($c_sql_anexos);
     while ($c_linha = $result->fetch_assoc()) {
         // insiro os anexos e estartegia selecionada
-        $id_dir= $c_linha['id_diretriz'];
+        $id_dir = $c_linha['id_diretriz'];
         $id_estr = $c_linha['id_estrategia'];
         $c_sql_ins = "insert into planejamento_diretrizes (id_planejamento, id_diretriz, id_estrategia) value ('$i_id', '$id_dir', '$id_estr')";
         $result_ins = $conection->query($c_sql_ins);
@@ -208,8 +208,9 @@ if ((isset($_POST["btnincluir"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                 // insiro os registro do banco de dados na tabela 
                 $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
                 while ($c_linha = $result->fetch_assoc()) {
-                    
-                    $c_custo = $formatter->formatCurrency($c_linha['custo'], 'BRL');
+                    $c_custo = "R$ 0,00";
+                    if ($c_linha['custo'] > 0)
+                        $c_custo = $formatter->formatCurrency($c_linha['custo'], 'BRL');
                     if ($c_linha['situacao'] == 'C')
                         $c_situacao = "Concluido";
                     else

@@ -93,7 +93,7 @@ if (isset($_GET['id'])) {
                         <!-- aba de plano de ação-->
                         <div role="tabpanel" class="tab-pane" id="plano">
                             <div style="padding-top:15px;padding-left:20px;">
-
+                                <?php include('ordens_plano.php')?>
                             </div>
                         </div>
                         <!-- aba de plano de ação-->

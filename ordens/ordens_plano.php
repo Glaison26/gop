@@ -18,7 +18,7 @@ include('../conexao.php');
 <body>
     <script>
         $(document).ready(function() {
-            $('.tabchecklist').DataTable({
+            $('.tabplanejamento').DataTable({
                 // 
                 "iDisplayLength": -1,
                 "order": [1, 'asc'],
@@ -62,34 +62,32 @@ include('../conexao.php');
         });
     </script>
 
-<script language="Javascript">
-        function confirmacao_check(id) {
+    <script language="Javascript">
+        function confirmacao_plano(id) {
             var resposta = confirm("Deseja remover esse registro?");
             if (resposta == true) {
-                window.location.href = "/gop/ordens/ordens_check_excluir.php?id=" + id;
+                window.location.href = "/gop/ordens/ordens_plano_excluir.php?id=" + id;
             }
         }
     </script>
 
-<script language="Javascript">
-        function chamada_check(id) {
-
-            window.location.href = "/gop/ordens/ordens_checklist_visualizar.php?id=" + id;
-
+    <script language="Javascript">
+        function chamada_plano(id) {
+            window.location.href = "/gop/ordens/ordens_plano_visualizar.php?id=" + id;
         }
     </script>
 
     <script type="text/javascript">
         // Função javascript e ajax para inclusão dos dados
 
-        $(document).on('submit', '#frmadd', function(e) {
+        $(document).on('submit', '#frmadd_plano', function(e) {
             e.preventDefault();
-            var c_descricao = $('#check').val();
+            var c_descricao = $('#add_plano').val();
 
             if (c_descricao != '') {
 
                 $.ajax({
-                    url: "ordens_check_inclusao.php",
+                    url: "ordens_plano_inclusao.php",
                     type: "post",
                     data: {
                         c_descricao: c_descricao
@@ -102,15 +100,15 @@ include('../conexao.php');
                         location.reload();
                         if (status == 'true') {
 
-                            $('#novoModal_check').modal('hide');
+                            $('#novoModal_plano').modal('hide');
                             location.reload();
                         } else {
-                            alert('falha ao incluir dados'); 
+                            alert('falha ao incluir dados');
                         }
                     }
                 });
             } else {
-               // alert('Preencha todos os campos obrigatórios');
+                 alert('Preencha todos os campos obrigatórios');
             }
         });
     </script>
@@ -119,9 +117,9 @@ include('../conexao.php');
     <div class="container-fluid">
         <div class="panel panel-info class">
             <div class="panel-heading">
-                <button type="button" title="Inclusão de CheckList" class="btn btn-success" data-toggle="modal" data-target="#novoModal_check">
+                <button type="button" title="Inclusão de Planejamento" class="btn btn-success" data-toggle="modal" data-target="#novoModal_plano">
                     <span class="glyphicon glyphicon-plus"></span>
-                    Incluir CheckList
+                    Incluir Planejamento
                 </button>
             </div>
         </div>
@@ -132,7 +130,7 @@ include('../conexao.php');
             <thead class="thead">
                 <tr>
                     <th scope="col">Código</th>
-                    <th scope="col">Descrição</th>
+                    <th scope="col">Descritivo do Planejamento</th>
                     <th scope="col">Opções</th>
                 </tr>
             </thead>
@@ -140,10 +138,10 @@ include('../conexao.php');
                 <?php
 
                 // faço a Leitura da tabela com sql
-                $c_sql = "SELECT ordens_check.id, checklist.descricao, ordens_check.id_check, checklist.descritivo FROM ordens_check
-            JOIN checklist ON ordens_check.id_check=checklist.id
-            WHERE ordens_check.id_ordem='$i_id'
-            ORDER BY checklist.descricao";
+                $c_sql = "SELECT ordens_plano.id, planejamento.descritivo, ordens_plano.id_plano FROM ordens_plano
+            JOIN planejamento ON ordens_plano.id_plano=planejamento.id
+            WHERE ordens_plano.id_ordem='$i_id'
+            ORDER BY planejamento.descritivo";
                 $result = $conection->query($c_sql);
                 // verifico se a query foi correto
                 if (!$result) {
@@ -156,10 +154,10 @@ include('../conexao.php');
                     echo "
                     <tr class='info'>
                     <td>$c_linha[id]</td>
-                    <td>$c_linha[descricao]</td>
+                    <td>$c_linha[descritivo]</td>
                     <td>
-                   <a class='btn btn-info btn-sm' href='javascript:func()'onclick='chamada_check($c_linha[id_check])'><span class='glyphicon glyphicon-eye-open'></span> Visualizar</a>
-                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao_check($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
+                    <a class='btn btn-info btn-sm' href='javascript:func()'onclick='chamada_plano($c_linha[id_plano])'><span class='glyphicon glyphicon-eye-open'></span> Visualizar</a>
+                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao_plano($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
                     </tr>
@@ -171,28 +169,28 @@ include('../conexao.php');
     </div>
 
     <!-- janela Modal para inclusão de registro -->
-    <div class="modal fade" class="modal-dialog modal-lg" id="novoModal_check" name="novoModal_check" tabindex="-1" role="dialog" aria-labelledby="novoModal_check" aria-hidden="true">
+    <div class="modal fade" class="modal-dialog modal-lg" id="novoModal_plano" name="novoModal_plano" tabindex="-1" role="dialog" aria-labelledby="novoModal_plano" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Inclusão de Check List a Ordem de Serviço</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Inclusão de Planejamento a Ordem de Serviço</h4>
                 </div>
                 <div class="modal-body">
                     <div class='alert alert-warning' role='alert'>
                         <h5>Campos com (*) são obrigatórios</h5>
                     </div>
-                    <form id="frmadd" action="">
+                    <form id="frmadd_plano" action="">
                         <div class="mb-3 row">
-                            <label for="add_descricaoField" class="col-md-3 form-label">Selecionar CheckList</label>
+                            <label for="add_plano" class="col-md-3 form-label">Selecionar Planejamento</label>
                             <div class="col-sm-9">
-                                <select class="form-select form-select-lg mb-3" id="check" name="check">
+                                <select class="form-select form-select-lg mb-3" id="add_plano" name="add_plano">
                                     <option></option>
                                     <?php
-                                    // select da tabela de checklist
-                                    $c_sql_check = "SELECT checklist.id, checklist.descricao FROM checklist ORDER BY checklist.descricao";
-                                    $result_check = $conection->query($c_sql_check);
-                                    while ($c_linha = $result_check->fetch_assoc()) {
-                                        echo "<option >$c_linha[descricao]</option>";
+                                    // select da tabela de planejamentos
+                                    $c_sql_plano = "SELECT planejamento.id, planejamento.descritivo FROM planejamento ORDER BY planejamento.descritivo";
+                                    $result_plano = $conection->query($c_sql_plano);
+                                    while ($c_linha = $result_plano->fetch_assoc()) {
+                                        echo "<option >$c_linha[descritivo]</option>";
                                     }
                                     ?>
                                 </select>
