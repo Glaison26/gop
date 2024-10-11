@@ -130,6 +130,8 @@ include('../conexao.php');
             <thead class="thead">
                 <tr>
                     <th scope="col">Código</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Gerência</th>
                     <th scope="col">Descritivo do Planejamento</th>
                     <th scope="col">Opções</th>
                 </tr>
@@ -138,7 +140,7 @@ include('../conexao.php');
                 <?php
 
                 // faço a Leitura da tabela com sql
-                $c_sql = "SELECT ordens_plano.id, planejamento.descritivo, ordens_plano.id_plano FROM ordens_plano
+                $c_sql = "SELECT ordens_plano.id, planejamento.descritivo, ordens_plano.id_plano, planejamento.data, planejamento.gerencia FROM ordens_plano
             JOIN planejamento ON ordens_plano.id_plano=planejamento.id
             WHERE ordens_plano.id_ordem='$i_id'
             ORDER BY planejamento.descritivo";
@@ -147,13 +149,14 @@ include('../conexao.php');
                 if (!$result) {
                     die("Erro ao Executar Sql!!" . $conection->connect_error);
                 }
-
                 // insiro os registro do banco de dados na tabela 
                 while ($c_linha = $result->fetch_assoc()) {
-
+                    $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data'])));
                     echo "
                     <tr class='info'>
                     <td>$c_linha[id]</td>
+                    <td>$c_data</td>
+                    <td>$c_linha[gerencia]</td>
                     <td>$c_linha[descritivo]</td>
                     <td>
                     <a class='btn btn-info btn-sm' href='javascript:func()'onclick='chamada_plano($c_linha[id_plano])'><span class='glyphicon glyphicon-eye-open'></span> Visualizar</a>
