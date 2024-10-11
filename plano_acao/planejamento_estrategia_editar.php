@@ -60,7 +60,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $c_observacao = $_POST['observacao'];
     // Altera as informações
     $c_sql = "update planejamento_diretrizes set prazo='$c_prazo', local='$c_local', responsavel='$c_responsavel'
-    , custo='$c_custo', situacao='$c_concluido', motivo='$c_motivo', metodologia='$c_metodologia', observacao='$c_observacao' where id='$c_id'";
+    , custo='$c_custo', situacao='$c_concluido', motivo='$c_motivo', metodologia='$c_metodologia',
+     observacao='$c_observacao' where id='$i_id'";
     $result = $conection->query($c_sql);
     header('location: /gop/plano_acao/planejamento_estrategia.php');
 }
@@ -147,20 +148,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Motivo</label>
                 <div class="col-sm-7">
-                    <textarea class="form-control" id="anc" name="anc" rows="5"><?php echo $c_motivo ?></textarea>
+                    <textarea class="form-control" id="motivo" name="motivo" rows="5"><?php echo $c_motivo ?></textarea>
                 </div>
             </div>
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Metodologia</label>
                 <div class="col-sm-7">
-                    <textarea class="form-control" id="anc" name="anc" rows="5"><?php echo $c_metodologia ?></textarea>
+                    <textarea class="form-control" id="metodologia" name="metodologia" rows="5"><?php echo $c_metodologia ?></textarea>
                 </div>
             </div>
 
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Observacao</label>
                 <div class="col-sm-7">
-                    <textarea class="form-control" id="anc" name="anc" rows="5"><?php echo $c_observacao ?></textarea>
+                    <textarea class="form-control" id="observacao" name="observacao" rows="5"><?php echo $c_observacao ?></textarea>
                 </div>
             </div>
 
@@ -169,7 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <div class="offset-sm-0 col-sm-3">
                     <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                    <a class='btn btn-danger' href='/gop/ordens/ordens_gerenciar.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                    <a class='btn btn-danger' href='/gop/plano_acao/planejamento_estrategia.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
                 </div>
             </div>
         </form>

@@ -206,7 +206,10 @@ if ((isset($_POST["btnincluir"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     die("Erro ao Executar Sql!!" . $conection->connect_error);
                 }
                 // insiro os registro do banco de dados na tabela 
+                $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
                 while ($c_linha = $result->fetch_assoc()) {
+                    
+                    $c_custo = $formatter->formatCurrency($c_linha['custo'], 'BRL');
                     if ($c_linha['situacao'] == 'C')
                         $c_situacao = "Concluido";
                     else
@@ -219,7 +222,7 @@ if ((isset($_POST["btnincluir"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     <td>$c_linha[prazo]</td>
                     <td>$c_linha[local]</td>
                     <td>$c_linha[responsavel]</td>
-                    <td>$c_linha[custo]</td>
+                    <td>$c_custo</td>
                     <td>$c_situacao</td>
                    
                     <td>
