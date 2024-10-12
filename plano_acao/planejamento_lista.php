@@ -33,6 +33,11 @@ $c_texto = "";
         }
     </script>
 
+    <script language="Javascript">
+        function chamada_plano(id) {
+            window.location.href = "/gop/ordens/ordens_plano_visualizar.php?id=" + id;
+        }
+    </script>
 
     <script>
         $(document).ready(function() {
@@ -123,9 +128,9 @@ $c_texto = "";
         });
     </script>
 
-   
 
-   
+
+
 
     <!-- montagem da página -->
     <div class="panel panel-primary class">
@@ -187,6 +192,7 @@ $c_texto = "";
                     <td>
                     <a class='btn btn-secondary btn-sm' title='Editar Planejamento' href='/gop/plano_acao/planejamento_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-success btn-sm' title='Incluir Estratégia' href='/gop/plano_acao/planejamento_estrategia.php?id=$c_linha[id]'><img src='\gop\images\iconeestrategia.png' alt='' width='16' height='15'> Estratégias</a>
+                    <a class='btn btn-info btn-sm' href='javascript:func()'onclick='chamada_plano($c_linha[id])'><span class='glyphicon glyphicon-eye-open'></span> Visualizar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 

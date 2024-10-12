@@ -12,10 +12,47 @@ include('../conexao.php');
 
 $i_id = $_GET["id"]; // id da ordem de serviço
 $c_conclusao = "";
+$msg_erro = "";
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    do {
+        // consistencias
+        $c_sql = "select * from ordens where id='$i_id'";
+        $result = $conection->query($c_sql);
+        $registro = $result->fetch_assoc();
+        // data da conclusão inferior a data da abertura
+        if ($registro['data_geracao'] > $_POST['data_conclusao']) {
+            $msg_erro = "Data da Conclusão deve ser igual ou superior a data da Geração !!!";
+            break;
+        }
+        if (empty($_POST['conclusao'])) {
+            $msg_erro = "Campo de conclusão deve ser preenchido !!!";
+            break;
+        }
+        // fecho a ordem de serviço
+        // verifico se houve solicitação para a ordem de serviço
+        if ($registro['tipo_ordem'] == 'C') {
+            $c_sql = "select * from solicitacao where id_ordem = '$i_id'";
+            $result = $conection->query($c_sql);
+            $i_total = mysqli_num_rows($result);
+            if ($i_total > 0) {
+                // atualizo o status da solicitação
+                $c_sql_up = "update solicitacao set status='C' where id_ordem = '$i_id'";
+                $result_up = $conection->query($c_sql_up);
+            }
+        }
+        // atualizo o status da ordem de servico e colo data hora e texto de conclusão
+        $c_data_conclusao = $_POST['data_conclusao'];
+        $c_hora_conclusao = $_POST['hora_conclusao'];
+        $c_conclusao = $_POST['conclusao'];
+        $c_sql_up = "update ordens set status='C', data_conclusao='$c_data_conclusao', 
+           hora_conclusao='$c_hora_conclusao', conclusao='$c_conclusao' where id=$i_id";
+        $result_up = $conection->query($c_sql_up);
+        header('location: /gop/ordens/ordens_gerenciar.php');
+    } while (false);
+}
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -62,11 +99,11 @@ $c_conclusao = "";
             <div class="row mb-8">
                 <label class="col-md-2 form-label">Data Conclusão</label>
                 <div class="col-sm-2">
-                    <input type="Date" class="form-control" name="data_geracao" id="data_geracao" value='<?php echo $c_data ?>'>
+                    <input type="Date" class="form-control" name="data_conclusao" id="data_conclusao" value='<?php echo $c_data ?>'>
                 </div>
                 <label class="col-md-2 form-label">Hora Conclusão</label>
                 <div class="col-sm-2">
-                    <input type="time" class="form-control" name="hora_geracao" id="hora_geracao" value="<?php echo $agora ?>">
+                    <input type="time" class="form-control" name="hora_conclusao" id="hora_conclusao" value="<?php echo $agora ?>">
                 </div>
             </div>
             <br>
@@ -76,6 +113,14 @@ $c_conclusao = "";
                     <textarea class="form-control" id="conclusao" name="conclusao" rows="6"><?php echo $c_conclusao ?></textarea>
                 </div>
             </div>
+            <hr>
+            <div class="row mb-3">
+                <div class="offset-sm-0 col-sm-3">
+                    <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-ok'></span> Fechar</button>
+                    <a class='btn btn-danger' href='/gop/ordens/ordens_gerenciar.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                </div>
+            </div>
+
         </form>
     </div>
 

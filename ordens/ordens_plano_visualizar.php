@@ -49,21 +49,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
             </div>
-            <h5>Visualização do Planejamento Selecionado selecionada</h5>
+            <h5>Visualização do Planejamento Selecionado do Plano de Ação</h5>
         </div>
         <hr>
         <?php
         while ($registro = $result->fetch_assoc()) {
-            echo "
-        <div class='row mb-6'>
+            $d_data = date("d-m-Y", strtotime(str_replace('/', '-', $registro['data'])));
+            echo "<div class='row mb-6'>
             <p><strong>Planejamento</p></strong>
             <div class='col-sm-7'>
-                <p>Data : $registro[data]<br>
+                <p>Data : $d_data<br>
                    Setor : $registro[setor]<br>
                    Gerência : $registro[gerencia]<br>
                    Descritivo :$registro[descritivo]<br>
-                   Meta :
-                   $registro[meta]<br>
+                   Meta : $registro[meta]<br>
                    <br>
                  
                 </p>
@@ -80,8 +79,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             //echo $c_sql_estr;
 
             while ($registro_estr = $result_estr->fetch_assoc()) {
-                echo "
-        <div class='row mb-6'>
+                if ($registro_estr['situacao']=='C')
+                  $c_situacao = 'Concluido';
+                else
+                  $c_situacao = 'Aberto';
+                echo "<div class='row mb-6'>
         
             <p>
             <strong>Estratégia: $registro_estr[estrategia]</strong><br>
@@ -93,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                  Prazo :  $registro_estr[prazo]<br>
                  Responsavel :  $registro_estr[responsavel]<br>
                  Custo :  $registro_estr[custo]<br>  
-                 Situação :  $registro_estr[situacao]<br>
+                 Situação :  $c_situacao<br>
                  Metodologia :  $registro_estr[metodologia]<br>
                  Motivo :  $registro_estr[motivo]<br>
                  Observação :  $registro_estr[observacao]<br>

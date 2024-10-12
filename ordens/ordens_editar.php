@@ -63,6 +63,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $c_hora_entrada = $registro['hora_entrada'];
     $c_data_inicio = $registro['data_inicio'];
     $c_hora_inicio = $registro['hora_inicio'];
+    // 
+    $c_data_conclusao = $registro['data_conclusao'];
+    $c_hora_conclusao = $registro['hora_conclusao'];
+
     $c_descritivo = $registro['descritivo'];
     $c_nome_responsavel = $registro_responsavel['nome'];
     $i_solicitacao = $registro['id_solicitacao'];
@@ -493,7 +497,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                         <div class="row mb-8">
                             <label class="col-md-2 form-label">Data Conclusão</label>
                             <div class="col-sm-2">
-                                <input readonly type="Date" class="form-control" name="data_conclusão" id="data_conclusão" value='<?php echo $c_data_conclusao; ?>'>
+                                <input readonly type="Date" class="form-control" name="data_conclusao" id="data_conclusao" value='<?php echo $c_data_conclusao; ?>'>
                             </div>
                             <label class="col-md-1 form-label">Hora Conclusão</label>
                             <div class="col-sm-2">
