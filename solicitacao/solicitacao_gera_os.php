@@ -100,10 +100,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $registro_solicitante = $result_solicitante->fetch_assoc();
         $c_email = $registro_solicitante['email']; // email do solicitante
         $c_email_oficina = $registro_oficina['email']; // email da oficina selecionada na ordem de serviço
+        echo $c_email_oficina;
+        
         // chamo o envio de email ordem de serviço gerada
         if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
-            $c_sql =    "SELECT MAX(ordens.ID) AS id_ordens FROM ordens";
-
+            $c_sql = "SELECT MAX(ordens.ID) AS id_ordens FROM ordens";
             $result = $conection->query($c_sql);
             $c_linha = $result->fetch_assoc();
             $ordem = $c_linha['id_ordens'];
@@ -165,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form method="post" onsubmit="return confirm('Confirma geração de Ordem de Serviço?')">
             <hr>
             <button type="submit" class="btn btn btn-sm" href=""><img src="\gop\images\ordem.png" alt="" width="25" height="25"> Gerar Ordem de Serviço</button>
-            <a class="btn btn btn-sm" href="\gop\solicitacao_lista.php"><img src="\gop\images\saida.png" alt="" width="25" height="25"> Voltar</a>
+            <a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_lista.php"><img src="\gop\images\saida.png" alt="" width="25" height="25"> Voltar</a>
             <hr>
             <div class="row mb-6">
                 <label class="col-md-2 form-label">Data Inicio</label>
