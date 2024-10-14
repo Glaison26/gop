@@ -89,7 +89,7 @@ Pagina da rotina para selecionar o recurso da solicitação
 <script>
     function conclusao(id) {
 
-        window.location.href = "/gop/solicitacao_conclusao.php?id=" + id;
+        window.location.href = "/gop/solicitacao/solicitacao_conclusao.php?id=" + id;
     }
 
     function conclusao_prev(id) {

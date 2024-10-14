@@ -30,7 +30,7 @@ try {
     //Recipients
     $mail->setFrom($c_email, 'GOP');
     $mail->addAddress($c_email, 'GOP');     // endereco para onde será enviado
-   
+    $mail->addCC($c_email_oficina, 'GOP');
     //Content
     $mail->isHTML(true);                                  //Set email format to HTML
     $mail->Subject = $c_assunto;

@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $msg_erro = "";
     // procuro oficina selecionado
     $c_oficina = $_POST['oficina'];
-    $c_sql_oficina = "Select id from oficinas where descricao='$c_oficina'";
+    $c_sql_oficina = "Select id, email from oficinas where descricao='$c_oficina'";
     $result_oficina = $conection->query($c_sql_oficina);
     $registro_oficina = $result_oficina->fetch_assoc();
 
@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $d_hora_previsao = $d_hora_previsao->format('H:i');
     $i_id_ocorrencia = $registro_solicitacao['id_ocorrencia'];
     //echo $descritivo;
-    
+
     do {
         // verificos se solicitação está aberta. Se não não deixo gerar ordem de serviço
         if ($registro_solicitacao['status'] <> 'A') {
@@ -85,17 +85,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
              '$c_descritivo', '$c_descricao', '$d_data_geracao', '$d_hora_geracao', 
              '$d_data_previsao', '$d_hora_previsao', 'A', '$i_id ', '$i_id_ocorrencia', '$d_data_inicio','$d_hora_inicio') ";
         $result = $conection->query($c_sql);
+        $c_sql =    "SELECT MAX(ordens.ID) AS id_ordem FROM ordens";
+        $result = $conection->query($c_sql);
+        $c_linha = $result->fetch_assoc();
+        $i_ordem = $c_linha['id_ordem'];
+
         // mudo status da solicitacao que gerou a ordem de serviços
-        $c_sql = "Update solicitacao SET status = 'E' where id='$i_id'";
+        $c_sql = "Update solicitacao SET status = 'E', id_ordem='$i_ordem' where id='$i_id'";
         $result = $conection->query($c_sql);
         // envia email com numero da OS e previsão de atendimento para solicitante
         // procuro solicitante
         $c_sql_solicitante = "Select id, email from usuarios where id='$i_responsavel'";
         $result_solicitante = $conection->query($c_sql_solicitante);
         $registro_solicitante = $result_solicitante->fetch_assoc();
-        $c_email = $registro_solicitante['email'];
-
-        // chamo o envio de email
+        $c_email = $registro_solicitante['email']; // email do solicitante
+        $c_email_oficina = $registro_oficina['email']; // email da oficina selecionada na ordem de serviço
+        // chamo o envio de email ordem de serviço gerada
         if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
             $c_sql =    "SELECT MAX(ordens.ID) AS id_ordens FROM ordens";
 
@@ -105,13 +110,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $c_data_inicio = new DateTime($_POST['data_inicio']);
             $c_data_inicio = $c_data_inicio->format('Y-m-d');
             $data = new DateTime($d_data_previsao);
-            $data = $data->format('d-m-Y'); 
-                $c_assunto = "Abertura de Ordem  de Serviço no GOP";
+            $data = $data->format('d-m-Y');
+            $c_assunto = "Abertura de Ordem  de Serviço no GOP";
             $c_body = "A Ordem de serviço No.<b> $ordem da solicitação no. $i_id </b> foi gerada com suceso! Aguarde o atendimento <br>"
                 . "Descrição da Solicitação :" . $c_descricao . "<br>" .
                 " Previsão de execução: $data";
             include('../email_gop.php');
         }
+      
 
         header('location: /gop/solicitacao/Ordem_gerada.php');
     } while (false);
