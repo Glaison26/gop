@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $registro_solicitante = $result_solicitante->fetch_assoc();
         $c_email = $registro_solicitante['email']; // email do solicitante
         $c_email_oficina = $registro_oficina['email']; // email da oficina selecionada na ordem de serviço
-        echo $c_email_oficina;
+        //echo $c_email_oficina;
         
         // chamo o envio de email ordem de serviço gerada
         if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {

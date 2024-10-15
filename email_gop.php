@@ -26,21 +26,20 @@ try {
     $mail->Password   = 'ckcf ndns wvoa kehu';                               //SMTP password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
     $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-
+    //$mail->Port       = 587; 
     //Recipients
     $mail->setFrom($c_email, 'GOP');
     $mail->addAddress($c_email, 'GOP');     // endereco para onde será enviado
-    //$mail->addCC($c_email_oficina, 'GOP');
+    if (!empty($c_email_oficina))
+        $mail->addCC($c_email_oficina, 'GOP');
     //Content
     $mail->isHTML(true);                                  //Set email format to HTML
     $mail->Subject = $c_assunto;
     $mail->Body    = $c_body;
-    
+
 
     $mail->send();
     echo 'Message has been sent';
 } catch (Exception $e) {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
-
-?>

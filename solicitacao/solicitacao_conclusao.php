@@ -88,11 +88,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         echo $c_sql;
         $result = $conection->query($c_sql);
+        $c_email_oficina="";
         // verifico se a query foi correto
         if (!$result) {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
         }
         // chamo o envio de email
+
         if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
             $c_sql =    "SELECT MAX(solicitacao.ID) AS id_solicitacao FROM solicitacao";
 
