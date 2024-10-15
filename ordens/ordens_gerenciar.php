@@ -13,6 +13,11 @@ if (isset($_GET['id'])) {
 } else {
     $i_id = $_SESSION['id_ordem'];
 }
+$c_sql_ordem = "select status from ordens where id='$i_id'";
+$result = $conection->query($c_sql_ordem);
+$c_linha_ordem = $result->fetch_assoc();
+
+
 ?>
 
 <!-- Front end da página -->

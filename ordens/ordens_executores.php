@@ -61,12 +61,16 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
 </script>
 
 <div class="container-fluid">
-
-    <div class="panel panel-info class">
-        <div class="panel-heading">
-            <a class="btn btn-success" href="/gop/ordens/ordens_executores_inclusao.php"><span class="glyphicon glyphicon-plus"></span> Incluir Executor</a>
+    <?php
+    if ($c_linha_ordem['status'] <> 'C')
+        echo "<div class='panel panel-info class'>
+        <div class='panel-heading'>
+            
+             <a class='btn btn-success' href='/gop/ordens/ordens_executores_inclusao.php'><span class='glyphicon glyphicon-plus'></span> Incluir Executor</a>
+            
         </div>
-    </div>
+    </div>";
+    ?>
     <hr>
     <table class="table display table-bordered tabexecutores">
         <thead class="thead">
@@ -102,9 +106,9 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
                     $c_valor_hora  = $formatter->formatCurrency($c_linha['valor_hora'], 'BRL');
                     $c_valor_total = $formatter->formatCurrency($c_linha['valor_total'], 'BRL');
                     $c_custo_total = $c_custo_total + $c_linha['valor_total'];
-                }else{
-                    $c_valor_hora=0;
-                    $c_valor_total=0;
+                } else {
+                    $c_valor_hora = 0;
+                    $c_valor_total = 0;
                 }
                 echo "
                     <tr class='info'>
@@ -114,13 +118,14 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
                     <td style='text-align: right;'>$c_valor_hora</td>
                     <td style='text-align: right;'>$c_valor_total</td>
                                        
-                    <td>
-                    <a class='btn btn-secondary btn-sm' href='/gop/ordens/ordens_executores_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                    <td>";
+                if ($c_linha_ordem['status'] <> 'C') {
+                    echo "<a class='btn btn-secondary btn-sm' href='/gop/ordens/ordens_executores_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
-                    </td>
+                    </td>";
+                }
 
-                    </tr>
-                    ";
+                echo "</tr>";
             }
             ?>
         </tbody>

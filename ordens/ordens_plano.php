@@ -108,21 +108,25 @@ include('../conexao.php');
                     }
                 });
             } else {
-                 alert('Preencha todos os campos obrigatórios');
+                alert('Preencha todos os campos obrigatórios');
             }
         });
     </script>
 
     <br>
     <div class="container-fluid">
-        <div class="panel panel-info class">
-            <div class="panel-heading">
-                <button type="button" title="Inclusão de Planejamento" class="btn btn-success" data-toggle="modal" data-target="#novoModal_plano">
-                    <span class="glyphicon glyphicon-plus"></span>
+        <?php
+        if ($c_linha_ordem['status'] <> 'C')
+            echo "
+        <div class='panel panel-info class'>
+            <div class='panel-heading'>
+                <button type='button' title='Inclusão de Planejamento' class='btn btn-success' data-toggle='modal' data-target='#novoModal_plano'>
+                    <span class='glyphicon glyphicon-plus'></span>
                     Incluir Planejamento
                 </button>
             </div>
-        </div>
+        </div>";
+        ?>
 
 
         <hr>
@@ -159,11 +163,13 @@ include('../conexao.php');
                     <td>$c_linha[gerencia]</td>
                     <td>$c_linha[descritivo]</td>
                     <td>
-                    <a class='btn btn-info btn-sm' href='javascript:func()'onclick='chamada_plano($c_linha[id_plano])'><span class='glyphicon glyphicon-eye-open'></span> Visualizar</a>
-                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao_plano($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
-                    </td>
+                    <a class='btn btn-info btn-sm' href='javascript:func()'onclick='chamada_plano($c_linha[id_plano])'><span class='glyphicon glyphicon-eye-open'></span> Visualizar</a>";
+                    if ($c_linha_ordem['status'] <> 'C')
+                        echo "<a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao_plano($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>";
 
-                    </tr>
+                    echo "</td>";
+
+                    "</tr>
                     ";
                 }
                 ?>

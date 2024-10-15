@@ -91,70 +91,74 @@ $c_caminho = '/gop/ordens/imagens_lista.php?id=' . $i_id;
 
     <div class="container-fluid">
         <form method="post" enctype="multipart/form-data">
-            <div class="panel panel-info">
-                <div class="panel panel-Light">
+            <?php
+            if ($c_linha_ordem['status'] <> 'C')
+                echo "<div class='panel panel-Light'>
 
                     <br>
-                    <div style="padding-left:7px;">
-                        <div class="panel panel-info class">
-                            <div class="panel-heading">
-                                <button type="submit" name="btnfoto" id="btnfoto" class="btn btn-Ligth"><img src="\gop\images\imagem2.png" alt="" width="20" height="20"> Carregar imagem</button>
-                                <a class='btn btn-Light btn-sm' title='Lista de Imagens' href="<?php echo $c_caminho; ?>"><span class='glyphicon glyphicon-list-alt'></span> Listar Imagens</a>
+                    <div style='padding-left:7px;'>
+                        <div class='panel panel-info class'>
+                            <div class='panel-heading'>
+                                <button type='submit' name='btnfoto' id='btnfoto' class='btn btn-Ligth'><img src='\gop\images\imagem2.png'
+                                 alt='' width='20' height='20'> Carregar imagem</button>
+                                <a class='btn btn-Light btn-sm' title='Lista de Imagens' href=' $c_caminho; '><span class='glyphicon glyphicon-list-alt'></span> Listar Imagens</a>
                                 <hr>
-                                <input type="file" name="arquivo" class="form-control-file" id="arquivo" accept="image/*">
+                                <input type='file' name='arquivo' class='form-control-file' id='arquivo' accept='image/*'>
                             </div>
                         </div>
                     </div>
 
-                </div>
+                </div>";
+            ?>
 
-                <div class="panel-body">
-                    <div style="padding-top:5px;">
-                        <table class="table display table-bordered tabimagens">
-                            <thead class="thead">
-                                <tr class="info">
-                                    <th scope="col">No.</th>
-                                    <th scope="col">Data</th>
-                                    <th scope="col">Descrição</th>
-                                    <th scope="col">Pasta</th>
-                                    <th scope="col">Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                // faço a Leitura da tabela com imagens
-                                $c_sql = "SELECT * FROM ordens_imagens where ordens_imagens.id_ordem='$i_id' ORDER BY ordens_imagens.`data` desc";
-                                $result = $conection->query($c_sql);
-                                // verifico se a query foi correto
-                                if (!$result) {
-                                    die("Erro ao Executar Sql!!" . $conection->connect_error);
-                                }
+            <div class="panel-body">
+                <div style="padding-top:5px;">
+                    <table class="table display table-bordered tabimagens">
+                        <thead class="thead">
+                            <tr class="info">
+                                <th scope="col">No.</th>
+                                <th scope="col">Data</th>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Pasta</th>
+                                <th scope="col">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            // faço a Leitura da tabela com imagens
+                            $c_sql = "SELECT * FROM ordens_imagens where ordens_imagens.id_ordem='$i_id' ORDER BY ordens_imagens.`data` desc";
+                            $result = $conection->query($c_sql);
+                            // verifico se a query foi correto
+                            if (!$result) {
+                                die("Erro ao Executar Sql!!" . $conection->connect_error);
+                            }
 
-                                // insiro os registro do banco de dados na tabela 
-                                while ($c_linha = $result->fetch_assoc()) {
-                                    $c_data = DateTime::createFromFormat('Y-m-d', $c_linha['data']);
-                                    $c_data = $c_data->format('d/m/Y');
-                                    echo "
+                            // insiro os registro do banco de dados na tabela 
+                            while ($c_linha = $result->fetch_assoc()) {
+                                $c_data = DateTime::createFromFormat('Y-m-d', $c_linha['data']);
+                                $c_data = $c_data->format('d/m/Y');
+                                echo "
                                         <tr>
                                             <td>$c_linha[id]</td>
                                             <td>$c_data</td>
                                             <td>$c_linha[comentario]</td>
                                             <td>$c_linha[caminho]</td>
                                             <td>
-                                            <a class='btn btn-info btn-sm' title='Visualizar ' href='/gop/ordens/imagens_visualizar.php?id=$c_linha[id]'><img src='\gop\images\imagem2.png' alt='' width='20' height='16'> Visualizar</span></a>
-                                            <a class='btn btn-danger btn-sm' title='Excluir' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                                             
-                                            </td>
-
-                                            </tr>
-                                            ";
-                                }
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
+                                            <a class='btn btn-info btn-sm' title='Visualizar ' href='/gop/ordens/imagens_visualizar.php?id=$c_linha[id]'>
+                                            <img src='\gop\images\imagem2.png' alt='' width='20' height='16'> Visualizar</span></a>";
+                                if ($c_linha_ordem['status'] <> 'C')
+                                    echo
+                                    "<a class='btn btn-danger btn-sm' title='Excluir' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>";
+                                    echo "</td>
+                                    </tr>";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
+
         </form>
     </div>
 

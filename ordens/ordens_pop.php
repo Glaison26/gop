@@ -124,14 +124,20 @@ include('../conexao.php');
 
 
     <div class="container-fluid">
-
-        <div class="panel panel-info class">
-            <div class="panel-heading">
-                <button type="button" title="Inclusão de POP" class="btn btn-success" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
+        <?php
+        if ($c_linha_ordem['status'] <> 'C')
+            echo "
+        <div class='panel panel-info class'>
+            <div class='panel-heading'>
+               
+                <button type='button' title='Inclusão de POP' class='btn btn-success' data-toggle='modal' data-target='#novoModal'>
+                    <span class='glyphicon glyphicon-plus'></span>
                     Incluir POP
                 </button>
+       
             </div>
-        </div>
+        </div>";
+        ?>
 
         <hr>
         <table class="table table display table-bordered tabpops">
@@ -170,9 +176,10 @@ include('../conexao.php');
                     
                    
                     <td>
-                    <a class='btn btn-info btn-sm' href='javascript:func()'onclick='chamada($c_linha[id_pop])'><span class='glyphicon glyphicon-eye-open'></span> Visualizar</a>
-                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao_pop($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
-                    </td>
+                    <a class='btn btn-info btn-sm' href='javascript:func()'onclick='chamada($c_linha[id_pop])'><span class='glyphicon glyphicon-eye-open'></span> Visualizar</a>";
+                    if ($c_linha_ordem['status'] <> 'C')
+                        echo "<a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao_pop($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>";
+                    "</td>
 
                     </tr>
                     ";

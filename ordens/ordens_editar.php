@@ -18,6 +18,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $c_sql = "select * from ordens where id=$i_id";
     $result = $conection->query($c_sql);
     $registro = $result->fetch_assoc();
+    // varuavel para colocar campos em somente leitura para ordens já fechadas
+    if ($registro['status']=='C'){
+      $c_estado = "readonly";
+      $c_ativa = "disabled";
+    }
+    else{
+      $c_estado = "";
+      $c_ativa = "";
+    }
 
     if (!$registro) {
         header('location: /gop/ordens/ordens_lista.php');
@@ -320,7 +329,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">Descritivo</label>
                             <div class="col-sm-6">
-                                <input type="text" maxlength="50" class="form-control" name="descritivo" value="<?php echo $c_descritivo; ?>">
+                                <input type="text" <?php echo $c_estado; ?> maxlength="50" class="form-control" name="descritivo" value="<?php echo $c_descritivo; ?>">
                             </div>
                         </div>
                         <br>
@@ -334,11 +343,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                         <div class="row mb-8">
                             <label class="col-md-2 form-label">Data do Inicio</label>
                             <div class="col-sm-2">
-                                <input type="Date" class="form-control" name="data_inicio" id="data_inicio" value='<?php echo $c_data_inicio; ?>'>
+                                <input type="Date" <?php echo $c_estado; ?> class="form-control" name="data_inicio" id="data_inicio" value='<?php echo $c_data_inicio; ?>'>
                             </div>
                             <label class="col-md-2 form-label">Hora do Inicio</label>
                             <div class="col-sm-2">
-                                <input type="time" class="form-control" name="hora_inicio" id="hora_geracao" value="<?php echo $c_hora_inicio ?>">
+                                <input type="time" <?php echo $c_estado; ?> class="form-control" name="hora_inicio" id="hora_geracao" value="<?php echo $c_hora_inicio ?>">
                             </div>
                         </div>
 
@@ -346,7 +355,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                         <div class="row mb-8">
                             <label class="col-sm-2 col-form-label">Setor </label>
                             <div class="col-sm-3">
-                                <select class="form-select form-select-lg mb-3" id="setor" name="setor">
+                                <select  <?php echo $c_ativa; ?>  class="form-select form-select-lg mb-3" id="setor" name="setor" <?php echo $c_estado; ?>>
 
                                     <?php
                                     // select da tabela de setores
@@ -371,14 +380,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                         <div class="row mb-8">
                             <label class="col-sm-2 col-form-label">Tipo da Ordem</label>
                             <div class="col-sm-2">
-                                <select onchange="verifica(value)" class="form-select form-select-lg mb-3" id="tipo" name="tipo" value="<?php echo $c_tipo; ?>">
+                                <select <?php echo $c_estado; ?> <?php echo $c_ativa; ?>  onchange="verifica(value)" class="form-select form-select-lg mb-3" id="tipo" name="tipo" value="<?php echo $c_tipo; ?>">
                                     <option <?= ($registro['tipo_ordem'] == 'C') ? 'selected' : '' ?> value='C'>Corretiva</option>
                                     <option <?= ($registro['tipo_ordem'] == 'P') ? 'selected' : '' ?> value="P">Preventiva</option>
                                 </select>
                             </div>
                             <label class="col-sm-2 col-form-label">Corretiva</label>
                             <div class="col-sm-2">
-                                <select <?php echo $hab_corretiva ?> class="form-select form-select-lg mb-3" id="tipo_corretiva" name="tipo_corretiva" value="<?php echo $c_tipo_corretiva; ?>">
+                                <select <?php echo $hab_corretiva ?> <?php echo $c_ativa; ?>  class="form-select form-select-lg mb-3" id="tipo_corretiva" name="tipo_corretiva" value="<?php echo $c_tipo_corretiva; ?>">
                                     <option value='P' <?= ($registro['tipo_corretiva'] == 'P') ? 'selected' : '' ?>>Programada</option>
                                     <option value='U' <?= ($registro['tipo_corretiva'] == 'U') ? 'selected' : '' ?>>Urgênte</option>
                                 </select>
@@ -389,7 +398,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                             <label class="col-sm-2 col-form-label">Tipo da Preventiva</label>
                             <div class="col-sm-2">
 
-                                <select <?php echo $hab_preventiva ?> class="form-select form-select-lg mb-3" id="tipo_preventiva" name="tipo_preventiva" value="<?php echo $c_tipo_preventiva; ?>">
+                                <select <?php echo $hab_preventiva ?> <?php echo $c_ativa; ?>  class="form-select form-select-lg mb-3" id="tipo_preventiva" name="tipo_preventiva" value="<?php echo $c_tipo_preventiva; ?>">
                                     <option value='R' <?= ($registro['tipo_corretiva'] == 'R') ? 'selected' : '' ?>>Rotina</option>
                                     <option value='P' <?= ($registro['tipo_corretiva'] == 'P') ? 'selected' : '' ?>>Preditiva</option>
                                     <option value='S' <?= ($registro['tipo_corretiva'] == 'S') ? 'selected' : '' ?>>Sistematica</option>
@@ -409,7 +418,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">Descrição</label>
                             <div class="col-sm-8">
-                                <textarea readonly class="form-control" id="descricao" name="descricao" rows="10"><?php echo $c_descricao ?></textarea>
+                                <textarea <?php echo $c_estado; ?> class="form-control" id="descricao" name="descricao" rows="10"><?php echo $c_descricao ?></textarea>
                             </div>
                         </div>
                     </div>
@@ -421,7 +430,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                             <div class="form-check col-sm-3">
                                 <label class="form-check-label col-form-label">Registro de Mau uso</label>
                                 <div class="col-sm-1">
-                                    <input <?php echo $c_mau_uso ?> class="form-check-input" type="checkbox" value="S" name="chk_mau_uso" id="chk_mau_uso">
+                                    <input <?php echo $c_estado; ?> <?php echo $c_mau_uso ?> class="form-check-input" type="checkbox" value="S" name="chk_mau_uso" id="chk_mau_uso">
                                 </div>
                             </div>
                         </div>
@@ -429,7 +438,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">Oficina </label>
                             <div class="col-sm-3">
-                                <select class="form-select form-select-lg mb-3" id="oficina" name="oficina">
+                                <select <?php echo $c_ativa; ?>  class="form-select form-select-lg mb-3" id="oficina" name="oficina" <?php echo $c_estado; ?>>
 
                                     <?php
                                     // select da tabela de oficinas
@@ -449,22 +458,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                         <div class="row mb-8">
                             <label class="col-md-2 form-label">Data da Entrada</label>
                             <div class="col-sm-2">
-                                <input type="Date" class="form-control" name="data_entrada" id="data_entrada" value='<?php echo $c_data_entrada; ?>'>
+                                <input <?php echo $c_estado; ?> type="Date" class="form-control" name="data_entrada" id="data_entrada" value='<?php echo $c_data_entrada; ?>'>
                             </div>
                             <label class="col-md-2 form-label">Hora da Entrada</label>
                             <div class="col-sm-2">
-                                <input type="time" class="form-control" name="hora_entrada" id="hora_entrada" value="<?php echo $c_hora_entrada ?>">
+                                <input <?php echo $c_estado; ?> type="time" class="form-control" name="hora_entrada" id="hora_entrada" value="<?php echo $c_hora_entrada ?>">
                             </div>
                         </div>
                         <br>
                         <div class="row mb-8">
                             <label class="col-md-2 form-label">Data da Previsão</label>
                             <div class="col-sm-2">
-                                <input type="Date" class="form-control" name="data_previsao" id="data_previsao" value='<?php echo $c_data_previsao; ?>'>
+                                <input <?php echo $c_estado; ?> type="Date" class="form-control" name="data_previsao" id="data_previsao" value='<?php echo $c_data_previsao; ?>'>
                             </div>
                             <label class="col-md-2 form-label">Hora da Previsão</label>
                             <div class="col-sm-2">
-                                <input type="time" class="form-control" name="hora_previsao" id="hora_previsao" value="<?php echo $c_hora_previsao ?>">
+                                <input <?php echo $c_estado; ?> type="time" class="form-control" name="hora_previsao" id="hora_previsao" value="<?php echo $c_hora_previsao ?>">
                             </div>
                         </div>
                         <br>
@@ -472,14 +481,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
 
                             <label class="col-sm-2 col-form-label">Situação</label>
                             <div class="col-sm-2">
-                                <select onchange="conformidade(value)" class="form-select form-select-lg mb-3" id="situacao" name="situacao" value="<?php echo $c_situacao; ?>">
+                                <select  <?php echo $c_estado; ?> <?php echo $c_ativa; ?>  onchange="conformidade(value)" class="form-select form-select-lg mb-3" id="situacao" name="situacao" value="<?php echo $c_situacao; ?>">
                                     <option <?= ($registro['situacao'] == 'C') ? 'selected' : '' ?> value='C'>Conforme</option>
                                     <option <?= ($registro['situacao'] == 'N') ? 'selected' : '' ?> value="N">Não Conforme</option>
                                 </select>
                             </div>
                             <label class="col-sm-2 col-form-label">Motivo de Não Conformidade</label>
                             <div class="col-sm-2">
-                                <select <?php echo $c_hab_nao_conformidade ?> class="form-select form-select-lg mb-3" id="nao_conforme" name="nao_conforme" value="<?php echo $c_nao_conforme; ?>">
+                                <select <?php echo $c_hab_nao_conformidade ?> <?php echo $c_ativa; ?>  class="form-select form-select-lg mb-3" id="nao_conforme" name="nao_conforme" value="<?php echo $c_nao_conforme; ?>">
                                     <option value='N'>Não se aplica</option>
                                     <option <?= ($registro['motivo_naoconformidade'] == 'D') ? 'selected' : '' ?> value='D'>Descontinuidade</option>
                                     <option <?= ($registro['motivo_naoconformidade'] == 'R') ? 'selected' : '' ?> value="R">Re-Classificação</option>
@@ -508,7 +517,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                         <div class="row mb-8">
                             <label class="col-md-2 form-label">Data Entrega</label>
                             <div class="col-sm-2">
-                                <input type="Date" class="form-control" name="data_entrega" id="data_entrega" value='<?php echo $c_data_entrega; ?>'>
+                                <input  type="Date" class="form-control" name="data_entrega" id="data_entrega" value='<?php echo $c_data_entrega; ?>'>
                             </div>
                             <label class="col-md-1 form-label">Hora Entrega</label>
                             <div class="col-sm-2">
@@ -535,9 +544,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                             </div>
                             <label class="col-sm-1 col-form-label">Valor de serviço</label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control" name="valor_servico" id="valor_servico" value="<?php echo $c_valor_servico; ?>">
+                                <input  <?php echo $c_estado; ?> type="text" class="form-control" name="valor_servico" id="valor_servico" value="<?php echo $c_valor_servico; ?>">
                             </div>
-                            <label class="col-sm-1 col-form-label">Valor de Material</label>
+                            <label  <?php echo $c_estado; ?> class="col-sm-1 col-form-label">Valor de Material</label>
                             <div class="col-sm-2">
                                 <input type="text" class="form-control" name="valor_material" id="valor_material" value="<?php echo $c_valor_material; ?>">
                             </div>

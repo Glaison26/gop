@@ -51,8 +51,8 @@
         });
     </script>
 
-    
-<script language="Javascript">
+
+    <script language="Javascript">
         function confirmacao_ferramentas(id) {
             var resposta = confirm("Deseja remover esse registro?");
             if (resposta == true) {
@@ -62,7 +62,7 @@
     </script>
 
 
-<script type="text/javascript">
+    <script type="text/javascript">
         // Função javascript e ajax para inclusão dos dados
 
         $(document).on('submit', '#frmadd_ferramenta', function(e) {
@@ -88,7 +88,7 @@
                             $('#novoModal_ferramenta').modal('hide');
                             location.reload();
                         } else {
-                            alert('falha ao incluir dados'); 
+                            alert('falha ao incluir dados');
                         }
                     }
                 });
@@ -100,14 +100,17 @@
 
     <div class="container-fluid">
         <br>
-        <div class="panel panel-info class">
-            <div class="panel-heading">
-                <button type="button" title="Inclusão de Ferramenta" class="btn btn-success" data-toggle="modal" data-target="#novoModal_ferramenta">
-                    <span class="glyphicon glyphicon-plus"></span>
+        <?php
+        if ($c_linha_ordem['status'] <> 'C')
+            echo "<div class='panel panel-info class'>
+            <div class='panel-heading'>
+                <button type='button' title='Inclusão de Ferramenta' class='btn btn-success' data-toggle='modal' data-target='#novoModal_ferramenta'>
+                    <span class='glyphicon glyphicon-plus'></span>
                     Incluir Ferramenta
                 </button>
             </div>
-        </div>
+        </div>";
+        ?>
         <table class="table display table-hover  table-condensed tabferramentas">
             <thead class="thead">
                 <tr>
@@ -142,14 +145,13 @@
                     <td>$c_linha[descricao]</td>
                     <td>$c_linha[marca]</td>
                     <td>$c_linha[patrimonio]</td>
-                               
-                    <td>
-                    
-                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao_ferramentas($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
-                    </td>
+                    <td>";
+                    if ($c_linha_ordem['status'] <> 'C')
+                        echo
+                    "<a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao_ferramentas($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>";
+                    echo "</td>";
 
-                    </tr>
-                    ";
+                    echo "</tr>";
                 }
                 ?>
             </tbody>

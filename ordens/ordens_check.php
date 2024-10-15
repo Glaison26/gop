@@ -62,7 +62,7 @@ include('../conexao.php');
         });
     </script>
 
-<script language="Javascript">
+    <script language="Javascript">
         function confirmacao_check(id) {
             var resposta = confirm("Deseja remover esse registro?");
             if (resposta == true) {
@@ -71,7 +71,7 @@ include('../conexao.php');
         }
     </script>
 
-<script language="Javascript">
+    <script language="Javascript">
         function chamada_check(id) {
 
             window.location.href = "/gop/ordens/ordens_checklist_visualizar.php?id=" + id;
@@ -105,28 +105,29 @@ include('../conexao.php');
                             $('#novoModal_check').modal('hide');
                             location.reload();
                         } else {
-                            alert('falha ao incluir dados'); 
+                            alert('falha ao incluir dados');
                         }
                     }
                 });
             } else {
-               // alert('Preencha todos os campos obrigatórios');
+                // alert('Preencha todos os campos obrigatórios');
             }
         });
     </script>
 
     <br>
     <div class="container-fluid">
-        <div class="panel panel-info class">
-            <div class="panel-heading">
-                <button type="button" title="Inclusão de CheckList" class="btn btn-success" data-toggle="modal" data-target="#novoModal_check">
-                    <span class="glyphicon glyphicon-plus"></span>
+        <?php
+        if ($c_linha_ordem['status'] <> 'C')
+            echo "<div class='panel panel-info class'>
+            <div class='panel-heading'>
+                <button type='button' title='Inclusão de CheckList' class='btn btn-success' data-toggle='modal' data-target='#novoModal_check'>
+                    <span class='glyphicon glyphicon-plus'></span>
                     Incluir CheckList
                 </button>
             </div>
-        </div>
-
-
+        </div>";
+        ?>
         <hr>
         <table class="table display table-bordered tabchecklist">
             <thead class="thead">
@@ -158,12 +159,12 @@ include('../conexao.php');
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descricao]</td>
                     <td>
-                   <a class='btn btn-info btn-sm' href='javascript:func()'onclick='chamada_check($c_linha[id_check])'><span class='glyphicon glyphicon-eye-open'></span> Visualizar</a>
-                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao_check($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
-                    </td>
+                   <a class='btn btn-info btn-sm' href='javascript:func()'onclick='chamada_check($c_linha[id_check])'><span class='glyphicon glyphicon-eye-open'></span> Visualizar</a>";
+                    if ($c_linha_ordem['status'] <> 'C')
+                        echo "<a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao_check($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>";
+                    echo "</td>";
 
-                    </tr>
-                    ";
+                    "</tr>";
                 }
                 ?>
             </tbody>

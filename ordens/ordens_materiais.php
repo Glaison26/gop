@@ -64,11 +64,16 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
 
 
 <div class="container-fluid">
-    <div class="panel panel-info class">
-        <div class="panel-heading">
-            <a class="btn btn-success" href="/gop/ordens/ordens_materiais_inclusao.php"><span class="glyphicon glyphicon-plus"></span> Incluir Material</a>
+    <?php
+    if ($c_linha_ordem['status'] <> 'C')
+        echo "<div class='panel panel-info class'>
+        <div class='panel-heading'>
+           
+                 <a class='btn btn-success' href='/gop/ordens/ordens_materiais_inclusao.php'><span class='glyphicon glyphicon-plus'></span> Incluir Material</a>
+        
         </div>
-    </div>
+    </div>";
+    ?>
     <hr>
     <table class="table table display table-bordered tabmateriais">
         <thead class="thead">
@@ -105,9 +110,9 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
                     $c_total = $c_linha['valor'] * $c_linha['quantidade'];
                     $c_total = $formatter->formatCurrency($c_total, 'BRL');
                     $c_custo_total = $c_custo_total + $c_linha['valor'] * $c_linha['quantidade'];
-                }else{
-                    $c_custo=0.00;
-                    $c_total=0.00;
+                } else {
+                    $c_custo = 0.00;
+                    $c_total = 0.00;
                 }
 
                 echo "
@@ -118,13 +123,14 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
                     <td>$c_linha[unidade]</td>
                     <td style='text-align: right;'>$c_custo</td>
                     <td style='text-align: right;'>$c_total</td>
-                    <td>
-                    <a class='btn btn-secondary btn-sm' href='/gop/ordens/ordens_materiais_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                    <td>";
+                if ($c_linha_ordem['status'] <> 'C') {
+                    echo "<a class='btn btn-secondary btn-sm' href='/gop/ordens/ordens_materiais_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
-                    </td>
-
-                    </tr>
-                    ";
+                
+                    </td>";
+                }
+                echo "</tr>";
             }
             ?>
         </tbody>
