@@ -101,7 +101,7 @@
     <div class="container-fluid">
         <br>
         <?php
-        if ($c_linha_ordem['status'] <> 'C')
+        if ($c_linha_ordem['status'] <> 'C' && $c_linha_ordem['status'] <> 'S')
             echo "<div class='panel panel-info class'>
             <div class='panel-heading'>
                 <button type='button' title='Inclusão de Ferramenta' class='btn btn-success' data-toggle='modal' data-target='#novoModal_ferramenta'>
@@ -146,7 +146,7 @@
                     <td>$c_linha[marca]</td>
                     <td>$c_linha[patrimonio]</td>
                     <td>";
-                    if ($c_linha_ordem['status'] <> 'C')
+                    if ($c_linha_ordem['status'] <> 'C' && $c_linha_ordem['status'] <> 'S')
                         echo
                     "<a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao_ferramentas($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>";
                     echo "</td>";

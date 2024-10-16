@@ -417,7 +417,7 @@ include('../conexao.php');
                 <div class="modal-body">
                     <p>Opções para emissao :</p>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <input class="form-check-input" type="checkbox" value="" id="chk_materiais">
                         <div style="padding-left:20px;">
                             <label class="form-check-label" for="flexCheckDefault">
                                 Materiais
@@ -425,53 +425,23 @@ include('../conexao.php');
                         </div>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                        <input class="form-check-input" type="checkbox" value="" id="chk_executores">
                         <div style="padding-left:20px;">
                             <label class="form-check-label" for="flexCheckChecked">
                                 Executores
                             </label>
                         </div>
                     </div>
+                  
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                        <div style="padding-left:20px;">
-                            <label class="form-check-label" for="flexCheckChecked">
-                                POP
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                        <div style="padding-left:20px;">
-                            <label class="form-check-label" for="flexCheckChecked">
-                                CheckList
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                        <div style="padding-left:20px;">
-                            <label class="form-check-label" for="flexCheckChecked">
-                                Plano de Ação
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                        <input class="form-check-input" type="checkbox" value="" id="chk_ferramentas">
                         <div style="padding-left:20px;">
                             <label class="form-check-label" for="flexCheckChecked">
                                 Ferramentas
                             </label>
                         </div>
                     </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                        <div style="padding-left:20px;">
-                            <label class="form-check-label" for="flexCheckChecked">
-                                Imagens
-                            </label>
-                        </div>
-                    </div>
+                   
 
                 </div>
                 <div class="modal-footer">

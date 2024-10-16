@@ -92,7 +92,7 @@ $c_caminho = '/gop/ordens/imagens_lista.php?id=' . $i_id;
     <div class="container-fluid">
         <form method="post" enctype="multipart/form-data">
             <?php
-            if ($c_linha_ordem['status'] <> 'C')
+            if ($c_linha_ordem['status'] <> 'C' && $c_linha_ordem['status'] <> 'S')
                 echo "<div class='panel panel-Light'>
 
                     <br>
@@ -147,10 +147,10 @@ $c_caminho = '/gop/ordens/imagens_lista.php?id=' . $i_id;
                                             
                                             <a class='btn btn-info btn-sm' title='Visualizar ' href='/gop/ordens/imagens_visualizar.php?id=$c_linha[id]'>
                                             <img src='\gop\images\imagem2.png' alt='' width='20' height='16'> Visualizar</span></a>";
-                                if ($c_linha_ordem['status'] <> 'C')
+                                if ($c_linha_ordem['status'] <> 'C' && $c_linha_ordem['status'] <> 'S')
                                     echo
                                     "<a class='btn btn-danger btn-sm' title='Excluir' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>";
-                                    echo "</td>
+                                echo "</td>
                                     </tr>";
                             }
                             ?>
@@ -162,7 +162,7 @@ $c_caminho = '/gop/ordens/imagens_lista.php?id=' . $i_id;
         </form>
     </div>
 
-    </div>
+
 
 
 </body>

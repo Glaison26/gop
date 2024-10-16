@@ -118,7 +118,7 @@ include('../conexao.php');
     <br>
     <div class="container-fluid">
         <?php
-        if ($c_linha_ordem['status'] <> 'C')
+        if ($c_linha_ordem['status'] <> 'C' && $c_linha_ordem['status'] <> 'S')
             echo "<div class='panel panel-info class'>
             <div class='panel-heading'>
                 <button type='button' title='Inclusão de CheckList' class='btn btn-success' data-toggle='modal' data-target='#novoModal_check'>
@@ -160,7 +160,7 @@ include('../conexao.php');
                     <td>$c_linha[descricao]</td>
                     <td>
                    <a class='btn btn-info btn-sm' href='javascript:func()'onclick='chamada_check($c_linha[id_check])'><span class='glyphicon glyphicon-eye-open'></span> Visualizar</a>";
-                    if ($c_linha_ordem['status'] <> 'C')
+                    if ($c_linha_ordem['status'] <> 'C' && $c_linha_ordem['status'] <> 'S')
                         echo "<a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao_check($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>";
                     echo "</td>";
 

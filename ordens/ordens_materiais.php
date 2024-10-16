@@ -65,7 +65,7 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
 
 <div class="container-fluid">
     <?php
-    if ($c_linha_ordem['status'] <> 'C')
+    if ($c_linha_ordem['status'] <> 'C' && $c_linha_ordem['status'] <> 'S')
         echo "<div class='panel panel-info class'>
         <div class='panel-heading'>
            
@@ -124,7 +124,7 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
                     <td style='text-align: right;'>$c_custo</td>
                     <td style='text-align: right;'>$c_total</td>
                     <td>";
-                if ($c_linha_ordem['status'] <> 'C') {
+                if ($c_linha_ordem['status'] <> 'C' && $c_linha_ordem['status'] <> 'S') {
                     echo "<a class='btn btn-secondary btn-sm' href='/gop/ordens/ordens_materiais_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                 

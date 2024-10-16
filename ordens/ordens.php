@@ -97,6 +97,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     when ordens.status='A' then 'Aberta'
                     when ordens.status='E' then 'Em Andamento'
                     when ordens.status='C' then 'Concluída'
+                    when ordens.status='S' then 'Suspensa'
                     END AS ordens_status,
                     case
                     when tipo_ordem='C' then 'Corretiva'
@@ -115,6 +116,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     when ordens.status='A' then 'Aberta'
                     when ordens.status='E' then 'Em Andamento'
                     when ordens.status='C' then 'Concluída'
+                     when ordens.status='S' then 'Suspensa'
                     END AS ordens_status,
                     case
                     when tipo_ordem='C' then 'Corretiva'
@@ -131,6 +133,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     when ordens.status='A' then 'Aberta'
                     when ordens.status='E' then 'Em Andamento'
                     when ordens.status='C' then 'Concluída'
+                     when ordens.status='S' then 'Suspensa'
                     END AS ordens_status,
                     case
                     when tipo_ordem='C' then 'Corretiva'
