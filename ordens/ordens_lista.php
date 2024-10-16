@@ -253,6 +253,11 @@ include('../conexao.php');
                                         <span class='glyphicon glyphicon-pencil'></span> Editar</a>
                                         <a class='btn btn-success btn-sm' href='/gop/ordens/ordens_gerenciar.php?id=$c_linha[id]'>
                                         <img src='\gop\images\gerenciamento.png' alt='' width='23' height='18'> Gerenciar</a>
+
+                                         <button type='button' title='Emitir Ordem de serviço' class='btn btn-info' data-toggle='modal' data-target='#modal_emissao'>
+                                            <span class='glyphicon glyphicon-print'></span>
+                                             Emitir
+                                         </button>
                                     </td>
 
                                 </tr>
@@ -311,6 +316,10 @@ include('../conexao.php');
                                         <a class='btn btn-secondary btn-sm' href='/gop/ordens/ordens_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                                         <a class='btn btn-success btn-sm' href='/gop/ordens/ordens_gerenciar.php?id=$c_linha[id]'>
                                         <img src='\gop\images\gerenciamento.png' alt='' width='23' height='18'> Gerenciar</a>
+                                          <button type='button' title='Emitir Ordem de serviço' class='btn btn-info' data-toggle='modal' data-target='#modal_emissao'>
+                                            <span class='glyphicon glyphicon-print'></span>
+                                             Emitir
+                                         </button>
                                     
                                     </td>
 
@@ -371,6 +380,10 @@ include('../conexao.php');
                                         <a class='btn btn-secondary btn-sm' href='/gop/ordens/ordens_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                                       <a class='btn btn-success btn-sm' href='/gop/ordens/ordens_gerenciar.php?id=$c_linha[id]'>
                                         <img src='\gop\images\gerenciamento.png' alt='' width='23' height='18'> Gerenciar</a>
+                                          <button type='button' title='Emitir Ordem de serviço' class='btn btn-info' data-toggle='modal' data-target='#modal_emissao'>
+                                            <span class='glyphicon glyphicon-print'></span>
+                                             Emitir
+                                         </button>
                                      
                                     </td>
 
@@ -390,6 +403,84 @@ include('../conexao.php');
 
     </div>
 
+    <!--  modal para opções de emissão de ordem de serviço -->
+    <!-- Modal -->
+    <div class="modal fade" id="modal_emissao" tabindex="-1" role="dialog" aria-labelledby="modal_emissao" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="emissao"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Opções para emissao :</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <div style="padding-left:20px;">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Materiais
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                        <div style="padding-left:20px;">
+                            <label class="form-check-label" for="flexCheckChecked">
+                                Executores
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                        <div style="padding-left:20px;">
+                            <label class="form-check-label" for="flexCheckChecked">
+                                POP
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                        <div style="padding-left:20px;">
+                            <label class="form-check-label" for="flexCheckChecked">
+                                CheckList
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                        <div style="padding-left:20px;">
+                            <label class="form-check-label" for="flexCheckChecked">
+                                Plano de Ação
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                        <div style="padding-left:20px;">
+                            <label class="form-check-label" for="flexCheckChecked">
+                                Ferramentas
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                        <div style="padding-left:20px;">
+                            <label class="form-check-label" for="flexCheckChecked">
+                                Imagens
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary"> Emitir</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 

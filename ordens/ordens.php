@@ -90,7 +90,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $c_wheretipo_avulso =  " and ordens.tipo='V'";
     $c_where = $c_where = substr($c_where, 0, -5); // tirar o and no final
     // montagem do sql para recursos físicos
-    $c_sql = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
+    $c_sql_recurso = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
                     ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao AS setor,
                     usuarios.nome, recursos.descricao, recursos.patrimonio,
                     case
@@ -107,10 +107,44 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     JOIN usuarios ON ordens.id_solicitante=usuarios.id
                     JOIN recursos on ordens.id_recurso=recursos.id
                     where $c_where";
+                    //
+                    $c_sql_espaco = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
+                    ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao AS setor,
+                    usuarios.nome, 
+                    case
+                    when ordens.status='A' then 'Aberta'
+                    when ordens.status='E' then 'Em Andamento'
+                    when ordens.status='C' then 'Concluída'
+                    END AS ordens_status,
+                    case
+                    when tipo_ordem='C' then 'Corretiva'
+                    when tipo_ordem='P' then 'Preventiva'
+                    END AS ordens_tipo_texto
+                    FROM ordens
+                    JOIN setores ON ordens.id_setor=setores.id
+                    JOIN usuarios ON ordens.id_solicitante=usuarios.id";
+                    //
+                    $c_sql_avulso = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
+                    ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao AS setor,
+                    usuarios.nome,
+                    case
+                    when ordens.status='A' then 'Aberta'
+                    when ordens.status='E' then 'Em Andamento'
+                    when ordens.status='C' then 'Concluída'
+                    END AS ordens_status,
+                    case
+                    when tipo_ordem='C' then 'Corretiva'
+                    when tipo_ordem='P' then 'Preventiva'
+                    END AS ordens_tipo_texto
+                    FROM ordens
+                    JOIN setores ON ordens.id_setor=setores.id
+                    JOIN usuarios ON ordens.id_solicitante=usuarios.id
+ 
+ where $c_where";
     // sql para recurso, espaços e avulsas               
-    $c_sqlrecursos = $c_sql . $c_wheretipo_recurso;
-    $c_sqlespacos = $c_sql . $c_wheretipo_espaco;
-    $c_sqlavulso = $c_sql . $c_wheretipo_avulso;
+    $c_sqlrecursos = $c_sql_recurso . $c_wheretipo_recurso;
+    $c_sqlespacos = $c_sql_espaco . $c_wheretipo_espaco;
+    $c_sqlavulso = $c_sql_avulso . $c_wheretipo_avulso;
     // guardo session para proxima pagina de tabelas
     $_SESSION['sqlrecurso'] = $c_sqlrecursos;
     $_SESSION['sqlespaco'] = $c_sqlespacos;

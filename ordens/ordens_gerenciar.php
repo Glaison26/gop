@@ -45,11 +45,10 @@ $c_linha_ordem = $result->fetch_assoc();
                 <div>
                     <div style="padding-bottom :2px;">
                         <div class="topnav">
-                           
-                            <a title='Emitir Ordem de Serviço' href='#'><img src="\gop\images\registro.png" alt="" width="30" height="25"><span> Emitir</span></a>
+                                                     
                             <a title='Concluir Ordem de Serviço' href='\gop\ordens\ordens_conclusao.php?id=<?php echo $i_id ?>'><img src="\gop\images\concluir.png" alt="" width="30" height="25"><span> Concluir</span></a>
-                            <a title='Cancelar Ordem de Serviço' href='#'><img src="\gop\images\cancelar.png" alt="" width="30" height="25"><span> Cancelar</span></a>
                             <a title='Suspender Ordem de Serviço' href='#'><img src='\gop\images\aguardado.png' alt='' width='30' height='25'><span> Suspender</span></a>
+                            <a title='Cancelar Ordem de Serviço' href='#'><img src="\gop\images\cancelar.png" alt="" width="30" height="25"><span> Cancelar</span></a>
                             <a title='Voltar' href='\gop\ordens\ordens_lista.php'><img src="\gop\images\saida.png" alt="" width="30" height="25"><span> Voltar</span></a>
                         </div>
                     </div>
@@ -92,19 +91,19 @@ $c_linha_ordem = $result->fetch_assoc();
                         <!-- aba de checklist-->
                         <div role="tabpanel" class="tab-pane" id="checklist">
                             <div style="padding-top:15px;padding-left:20px;">
-                               <?php include('ordens_check.php');?>
+                                <?php include('ordens_check.php'); ?>
                             </div>
                         </div>
                         <!-- aba de plano de ação-->
                         <div role="tabpanel" class="tab-pane" id="plano">
                             <div style="padding-top:15px;padding-left:20px;">
-                                <?php include('ordens_plano.php')?>
+                                <?php include('ordens_plano.php') ?>
                             </div>
                         </div>
                         <!-- aba de plano de ação-->
                         <div role="tabpanel" class="tab-pane" id="ferramenta">
                             <div style="padding-top:15px;padding-left:20px;">
-                                <?php include('ordens_ferramentas.php'); 
+                                <?php include('ordens_ferramentas.php');
                                 ?>
                             </div>
                         </div>
@@ -115,11 +114,13 @@ $c_linha_ordem = $result->fetch_assoc();
                                 <?php include('ordens_imagens.php'); ?>
 
                             </div>
-                        </div> 
+                        </div>
                     </div>
                 </div>
 
             </div>
+        </div>
+    </div>
 
 </body>
 
