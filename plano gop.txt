@@ -14,4 +14,12 @@ gerenciar acesso a ordem de serviço e seus anexos quando for fechada ok
 envio de email para o solicitante para ordens de serviços corretiva quando a ordem de serviço for fechada. 
 envio de email para oficina ao gerar ordem de serviço ok
 
+function pergunta(){ 
+   // retorna true se confirmado, ou false se cancelado
+   return confirm('Tem certeza que quer enviar este pedido?');
+}
+<form name='apagar' id='apagar' action='formulario.php' method='post'>
+   <input type=submit value=enviar name=enviarform onclick='return pergunta();'>
+</form>
+
 
