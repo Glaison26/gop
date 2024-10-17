@@ -35,9 +35,14 @@ CREATE TABLE IF NOT EXISTS `centrodecusto` (
   `responsavel` varchar(100) NOT NULL,
   `rateio` float DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.centrodecusto: ~1 rows (aproximadamente)
+-- Copiando dados para a tabela gop.centrodecusto: ~3 rows (aproximadamente)
+REPLACE INTO `centrodecusto` (`id`, `descricao`, `codigo`, `id_espacofisico`, `endereco`, `bairro`, `cidade`, `cep`, `fone1`, `fone2`, `email`, `responsavel`, `rateio`) VALUES
+	(1, 'Meio Ambiente', NULL, 4, '', '', '', '', '(31)4442-3423', '(31)4423-4234', '', 'Prefeitura', 0),
+	(2, 'Almoxarifado Saúde', NULL, 1, '', '', '', '', '(31)3323-4124', '(31)1223-4123', '', 'Prefeitura', 0),
+	(3, 'Estacionamento de Ambulancia', NULL, 2, '', '', '', '', '(31)3434-1344', '(31)3242-1342', '', 'Manoel', 0),
+	(5, 'Prefeitura', NULL, 1, '', '', '', '', '', '', '', 'Patricia', 0);
 
 -- Copiando estrutura para tabela gop.checklist
 CREATE TABLE IF NOT EXISTS `checklist` (
@@ -45,9 +50,45 @@ CREATE TABLE IF NOT EXISTS `checklist` (
   `descricao` varchar(150) NOT NULL DEFAULT '0',
   `descritivo` blob,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.checklist: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela gop.checklist: ~4 rows (aproximadamente)
+REPLACE INTO `checklist` (`id`, `descricao`, `descritivo`) VALUES
+	(1, 'Instalação de Memória SSD', _binary 0x2d2043686176652064652046656e64610d0a2d2050656e20447269766520636f6d2053697374656d61204f7065726163696f6e616c0d0a2d20446973636f2065787465726e6f2070617261206261636b7570),
+	(2, 'Instalação de Ponto de Rede', _binary 0x312043686176652064652066656e64610d0a32205465737461646f72206465204361626f),
+	(3, 'checklist roteador de rede', _binary 0x46657272616d656e746173);
+
+-- Copiando estrutura para tabela gop.diretrizes
+CREATE TABLE IF NOT EXISTS `diretrizes` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(150) NOT NULL DEFAULT '',
+  `texto` blob,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Copiando dados para a tabela gop.diretrizes: ~3 rows (aproximadamente)
+REPLACE INTO `diretrizes` (`id`, `descricao`, `texto`) VALUES
+	(2, 'OPERACIONAL DE SERVIÇOS E OBRAS', _binary 0x506c616e656a616d656e746f204f7065726163696f6e616c206465205365727669c3a76f732065206f62726173),
+	(4, 'Aquisição de Novos Servidores', _binary 0x417175697369c3a7c3a36f206465206e6f766f73207365727669646f726573207061726120736572656d0a7574696c697a61646f73206e6f202061726d617a656e616d656e746f206465206172717569766f732064612072656465),
+	(5, 'Instalação de novos servidores', _binary 0x506c616e656a616d656e746f207061726120496e7374616c61c3a7c3a36f2064650a206e6f766f73207365727669646f726573);
+
+-- Copiando estrutura para tabela gop.diretriz_estrategia
+CREATE TABLE IF NOT EXISTS `diretriz_estrategia` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_estrategia` int DEFAULT NULL,
+  `id_diretriz` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK__estrategias` (`id_estrategia`),
+  KEY `FK__diretrizes` (`id_diretriz`),
+  CONSTRAINT `FK__diretrizes` FOREIGN KEY (`id_diretriz`) REFERENCES `diretrizes` (`id`),
+  CONSTRAINT `FK__estrategias` FOREIGN KEY (`id_estrategia`) REFERENCES `estrategias` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Copiando dados para a tabela gop.diretriz_estrategia: ~4 rows (aproximadamente)
+REPLACE INTO `diretriz_estrategia` (`id`, `id_estrategia`, `id_diretriz`) VALUES
+	(2, 2, 4),
+	(5, 1, 4),
+	(6, 1, 5);
 
 -- Copiando estrutura para tabela gop.enderecos
 CREATE TABLE IF NOT EXISTS `enderecos` (
@@ -59,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `enderecos` (
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Copiando dados para a tabela gop.enderecos: ~15 rows (aproximadamente)
-INSERT INTO `enderecos` (`id`, `logradouro`, `numero`, `usuario_id`) VALUES
+REPLACE INTO `enderecos` (`id`, `logradouro`, `numero`, `usuario_id`) VALUES
 	(1, 'Avenida Winston Churchill', '936', 1),
 	(2, 'Avenida Winston Churchill', '936', 2),
 	(3, 'Avenida Winston Churchill', '936', 3),
@@ -91,9 +132,26 @@ CREATE TABLE IF NOT EXISTS `espacos` (
   `fone1` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `fone2` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.espacos: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela gop.espacos: ~4 rows (aproximadamente)
+REPLACE INTO `espacos` (`id`, `descricao`, `tipo`, `medida`, `endereco`, `bairro`, `cidade`, `cep`, `responsavel`, `email`, `fone1`, `fone2`) VALUES
+	(1, 'Meio Ambiente', 'Instalação', '30', 'Rua da Itendencia 316', 'Centro', 'Sabará', '34505480', 'Prefeitura', 'teste@gmail.com', '', ''),
+	(2, 'Prédio Saúde', 'Edificação', '0', '0', '0', '0', '0', 'Prefeitura', '0', '(31)9855-5555', '(31)5555-8888'),
+	(5, 'Predio da Fazenda segundo andar', 'Instalação', '', 'Rua da Intendência', 'Centro', 'Sabará', '34505-480', 'Sonia Almeida', 'glaison26.queiroz@gmail.com', '(31) 3672-7688', ''),
+	(7, 'Prefeitura', 'Instalação', '', 'Rua da Intendência', 'Centro', 'Sabará', '34505-480', 'Patricia', 'glaison26.queiroz@gmail.com', '(31) 3672-7688', '');
+
+-- Copiando estrutura para tabela gop.estrategias
+CREATE TABLE IF NOT EXISTS `estrategias` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(150) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Copiando dados para a tabela gop.estrategias: ~2 rows (aproximadamente)
+REPLACE INTO `estrategias` (`id`, `descricao`) VALUES
+	(1, 'Estrategia I'),
+	(2, 'Estratégia II');
 
 -- Copiando estrutura para tabela gop.executores
 CREATE TABLE IF NOT EXISTS `executores` (
@@ -125,9 +183,13 @@ CREATE TABLE IF NOT EXISTS `executores` (
   KEY `FK_executores_funcoes` (`id_funcao`),
   CONSTRAINT `FK_executores_funcoes` FOREIGN KEY (`id_funcao`) REFERENCES `funcoes` (`id`),
   CONSTRAINT `FK_executores_oficinas` FOREIGN KEY (`id_oficina`) REFERENCES `oficinas` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.executores: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela gop.executores: ~4 rows (aproximadamente)
+REPLACE INTO `executores` (`id`, `id_oficina`, `id_funcao`, `nome`, `endereco`, `bairro`, `cep`, `cidade`, `uf`, `contato`, `tipo`, `cpf_cnpj`, `email`, `url`, `fone1`, `fone2`, `fone3`, `salario`, `horastrab`, `valorhora`, `escolaridade`, `formacao`, `obs`) VALUES
+	(5, 7, 5, 'Glaison Queiroz', 'Rua da Itendencia 316', 'Centro', '34.505-480', 'Sabará', 'AC', 'Shay lin', 'F', '695.510.226-53', 'suporte@sabara.mg.gov.br', '', '(31)3672-7688', '', '', 0, 0, 150.9, 'Primário', '', _binary 0x7465737465),
+	(6, 1, 2, 'Maria da Silva', 'Rua da Itendencia 316', 'Centro', '34.505-480', 'Sabará', 'MG', 'Antonio Dias', 'F', '695.510.226-53', 'suporte@sabara.mg.gov.br', '', '', '', '', 0, 0, 0, 'Primário', '', _binary ''),
+	(7, 7, 5, 'Juliana Almeida', 'Rua da Intendência', 'Centro', '34505-480', 'Sabará', 'AC', 'Juliana', 'F', '695.510.226-53', 'glaison26.queiroz@gmail.com', '', '(31) 3672-7688', '', '', 0, 0, 0, 'Primário', '', _binary '');
 
 -- Copiando estrutura para tabela gop.fabricantes
 CREATE TABLE IF NOT EXISTS `fabricantes` (
@@ -150,9 +212,13 @@ CREATE TABLE IF NOT EXISTS `fabricantes` (
   `url` varchar(120) NOT NULL,
   `obs` blob NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.fabricantes: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela gop.fabricantes: ~2 rows (aproximadamente)
+REPLACE INTO `fabricantes` (`id`, `descricao`, `razaosocial`, `tipo`, `cep`, `endereco`, `bairro`, `cidade`, `estado`, `cnpj_cpf`, `insc_estad`, `insc_munic`, `fone1`, `fone2`, `contato`, `email`, `url`, `obs`) VALUES
+	(2, 'Epson', 'Epson Ltda', 'Juridica', '', '', '', '', 'MG', '01.846.742/0001-03', '', '', '(23)4143-2412', '(31)5555-8888', 'Shay lin', '', '', _binary 0x7465737465),
+	(3, 'Samsung', 'Samsung do Brasil', 'Juridica', '', '', '', '', 'SP', '01.846.742/0001-03', '', '', '(11)4654-6546', '(11)4565-8789', 'Antonio Dias', '', '', _binary ''),
+	(5, 'Intelbras', 'Intelbras SA', 'Juridica', '34505-480', '', 'Centro', 'Sabará', 'AC', '23.451.301/0001-37', '', '', '(31) 3672-7688', '', 'Glaison', 'glaison26.queiroz@gmail.com', '', _binary '');
 
 -- Copiando estrutura para tabela gop.ferramentas
 CREATE TABLE IF NOT EXISTS `ferramentas` (
@@ -179,9 +245,14 @@ CREATE TABLE IF NOT EXISTS `ferramentas` (
   CONSTRAINT `FK_ferramentas_fornecedores` FOREIGN KEY (`id_fornecedor`) REFERENCES `fornecedores` (`id`),
   CONSTRAINT `FK_ferramentas_marcas` FOREIGN KEY (`id_marca`) REFERENCES `marcas` (`id`),
   CONSTRAINT `FK_ferramentas_oficinas` FOREIGN KEY (`id_oficina`) REFERENCES `oficinas` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.ferramentas: ~1 rows (aproximadamente)
+-- Copiando dados para a tabela gop.ferramentas: ~5 rows (aproximadamente)
+REPLACE INTO `ferramentas` (`id`, `descricao`, `patrimonio`, `serie`, `id_fabricante`, `id_fornecedor`, `notafiscal`, `data_aquisicao`, `valor_aquisicao`, `data_garantia`, `id_marca`, `id_oficina`, `conservacao`, `obs`) VALUES
+	(1, 'Martelo', '3434', '3434', 2, 1, '3423', '2023-01-18', 0, '2023-01-18', 8, 3, 'Bom', _binary 0x7465737465),
+	(5, 'Serra de Madeira', '9000', '452345', 3, 2, '', '2023-01-21', 0, '2023-01-21', 6, 1, 'Ótimo', _binary ''),
+	(6, 'Multimetro', '312222', '2334445', 3, 1, '93993', '2023-01-20', 900, '2024-01-20', 6, 2, 'Ótimo', _binary 0x7465737465),
+	(14, 'Chave de Pressão', '4565465', '5465465', 3, 3, '4546546', '2024-10-02', 0, '2024-10-02', 6, 7, 'Ótimo', _binary '');
 
 -- Copiando estrutura para tabela gop.fornecedores
 CREATE TABLE IF NOT EXISTS `fornecedores` (
@@ -207,9 +278,13 @@ CREATE TABLE IF NOT EXISTS `fornecedores` (
   PRIMARY KEY (`id`),
   KEY `FK__grupos` (`id_grupo`),
   CONSTRAINT `FK__grupos` FOREIGN KEY (`id_grupo`) REFERENCES `grupos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.fornecedores: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela gop.fornecedores: ~4 rows (aproximadamente)
+REPLACE INTO `fornecedores` (`id`, `id_grupo`, `descricao`, `razaosocial`, `cnpj_cpf`, `insc_estad`, `insc_munic`, `tipo`, `endereco`, `bairro`, `cep`, `cidade`, `estado`, `fone1`, `fone2`, `email`, `site`, `contato`, `obs`) VALUES
+	(1, 3, 'Simpress', 'Simpress do Brasil Ltda', '01.846.742/0001-03', '', '', 'Juridica', '', '', '', '', 'MG', '(31)3334-4444', '(31)2444-4444', '', '', 'Antonio Dias da Silva', _binary ''),
+	(2, 1, 'Glaison Queiroz', 'Método Informática SA', '22.998.344/0001-99', '', '', 'Juridica', 'Rua da Intendência', '', '34505-480', 'Sabará', 'MG', '(31)3454-3333', '(31)2453-3332', 'glaison26.queiroz@gmail.com', '', 'Guilherme', _binary 0x7465737465),
+	(3, 7, 'Vilafort', 'vilafort sa.', '23.451.301/0001-37', '', '', 'Juridica', 'Rua da Intendência', 'Centro', '34505-480', 'Sabará', 'MG', '(31) 3672-7688', '', 'glaison26.queiroz@gmail.com', '', 'José', _binary '');
 
 -- Copiando estrutura para tabela gop.funcoes
 CREATE TABLE IF NOT EXISTS `funcoes` (
@@ -217,27 +292,54 @@ CREATE TABLE IF NOT EXISTS `funcoes` (
   `descricao` varchar(120) NOT NULL,
   `ValorHora` double DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.funcoes: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela gop.funcoes: ~7 rows (aproximadamente)
+REPLACE INTO `funcoes` (`id`, `descricao`, `ValorHora`) VALUES
+	(1, 'Técnico em Manutenção', 150),
+	(2, 'Coordenador de Sistemas', 16.4),
+	(4, 'Programador', 0),
+	(5, 'Analista de Sistemas', 200),
+	(6, 'Eletricista', 200),
+	(7, 'Encanador', 90);
 
 -- Copiando estrutura para tabela gop.grupos
 CREATE TABLE IF NOT EXISTS `grupos` (
   `id` int NOT NULL AUTO_INCREMENT,
   `descricao` varchar(120) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.grupos: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela gop.grupos: ~9 rows (aproximadamente)
+REPLACE INTO `grupos` (`id`, `descricao`) VALUES
+	(1, 'Computadores Desktop'),
+	(2, 'NoteBooks'),
+	(3, 'Impressoras'),
+	(4, 'Equipamento de rede'),
+	(5, 'Analista de Sistemas'),
+	(7, 'Câmeras de Vigilancia'),
+	(9, 'Equipamentos Médicos'),
+	(10, 'Insumo');
 
 -- Copiando estrutura para tabela gop.marcas
 CREATE TABLE IF NOT EXISTS `marcas` (
   `id` int NOT NULL AUTO_INCREMENT,
   `descricao` varchar(120) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.marcas: ~1 rows (aproximadamente)
+-- Copiando dados para a tabela gop.marcas: ~10 rows (aproximadamente)
+REPLACE INTO `marcas` (`id`, `descricao`) VALUES
+	(1, 'Dell'),
+	(2, 'samsung'),
+	(3, 'HP'),
+	(4, 'Le Novo'),
+	(5, 'Positivo'),
+	(6, 'Acer'),
+	(8, 'Epson'),
+	(16, 'Intelbras'),
+	(18, 'General Eletric'),
+	(98, 'EngelBras');
 
 -- Copiando estrutura para tabela gop.materiais
 CREATE TABLE IF NOT EXISTS `materiais` (
@@ -265,18 +367,31 @@ CREATE TABLE IF NOT EXISTS `materiais` (
   CONSTRAINT `FK_materiais_marcas` FOREIGN KEY (`id_marca`) REFERENCES `marcas` (`id`),
   CONSTRAINT `FK_materiais_unidades` FOREIGN KEY (`id_unidadeEntrada`) REFERENCES `unidades` (`id`),
   CONSTRAINT `FK_materiais_unidades_2` FOREIGN KEY (`id_unidadeSaida`) REFERENCES `unidades` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.materiais: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela gop.materiais: ~3 rows (aproximadamente)
+REPLACE INTO `materiais` (`id`, `descricao`, `id_grupo`, `id_marca`, `custo`, `qtdmin`, `qtdmax`, `id_unidadeEntrada`, `id_unidadeSaida`, `fator`, `ultimasaida`, `ultimaentrada`, `data_validade`, `quantidadeatual`, `obs`) VALUES
+	(2, 'Parafusos Sextavados', 5, 6, 12.85, 0, 0, 2, 2, 1, '2023-01-26', '2023-01-26', '2023-01-26', 50, _binary 0x20),
+	(3, 'Cabos de rede', 4, 4, 4.5, 0, 0, 8, 1, 1, '2023-01-26', '2023-01-26', '2023-01-26', 12, _binary 0x74657374652020),
+	(4, 'Fita Isolante', 5, 6, 3.5, 0, 0, 8, 2, 1, '2024-10-02', '2024-10-02', '2029-06-22', 10, _binary 0x2020);
 
 -- Copiando estrutura para tabela gop.ocorrencias
 CREATE TABLE IF NOT EXISTS `ocorrencias` (
   `id` int NOT NULL AUTO_INCREMENT,
   `descricao` varchar(150) DEFAULT NULL,
+  `texto` blob,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.ocorrencias: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela gop.ocorrencias: ~8 rows (aproximadamente)
+REPLACE INTO `ocorrencias` (`id`, `descricao`, `texto`) VALUES
+	(1, 'Manutenção de Impressoras', NULL),
+	(2, 'Manutenção PC', NULL),
+	(3, 'Manutenção Elétrica', NULL),
+	(5, 'Criação de conta de email', NULL),
+	(6, 'Telefonia', NULL),
+	(7, 'Criação de Usuários de Rede', NULL),
+	(8, 'Manutenção Eletrônica', NULL);
 
 -- Copiando estrutura para tabela gop.oficinas
 CREATE TABLE IF NOT EXISTS `oficinas` (
@@ -289,12 +404,14 @@ CREATE TABLE IF NOT EXISTS `oficinas` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.oficinas: ~5 rows (aproximadamente)
-INSERT INTO `oficinas` (`id`, `descricao`, `fone1`, `fone2`, `email`, `responsavel`) VALUES
+-- Copiando dados para a tabela gop.oficinas: ~7 rows (aproximadamente)
+REPLACE INTO `oficinas` (`id`, `descricao`, `fone1`, `fone2`, `email`, `responsavel`) VALUES
 	(1, 'Elétrica', '(31) 3672-7688', '(31) 9988-3883', 'eletrica@gmail.com', 'Israel'),
 	(2, 'Eletrônica', '(31) 3672-7688', '(31) 9984-2655', 'glaison26.queiroz@gmail.com', 'Glaison'),
-	(3, 'Informática', '(31) 3672-7688', '(31) 3672-7642', 'Jedean@gmail.com', 'Jedean da Silva'),
-	(8, 'Equipamentos Médicos', '(31) 3672-7688', '(31) 9984-2655', 'glaison26.queiroz@gmail.com', 'Homero'),
+	(3, 'Informática', '(31) 3672-7688', '(31) 3672-7642', 'suporte@sabara.mg.gov.br', 'Glaison Queiroz'),
+	(6, 'Marcenaria 1', NULL, NULL, NULL, NULL),
+	(7, 'Alvenaria', NULL, NULL, NULL, NULL),
+	(8, 'Equipamentos Médicos', NULL, NULL, NULL, NULL),
 	(21, 'Hidráulico', '(31) 3672-7688', '(31) 9984-2655', 'Welligton Jardins', 'suporte@sabara.mg.gov.br');
 
 -- Copiando estrutura para tabela gop.ordens
@@ -310,7 +427,7 @@ CREATE TABLE IF NOT EXISTS `ordens` (
   `hora_entrada` time DEFAULT NULL,
   `data_inicio` date DEFAULT NULL,
   `hora_inicio` time DEFAULT NULL,
-  `data_conclucao` date DEFAULT NULL,
+  `data_conclusao` date DEFAULT NULL,
   `hora_conclusao` time DEFAULT NULL,
   `data_garantia` date DEFAULT NULL,
   `data_entrega` date DEFAULT NULL,
@@ -339,6 +456,10 @@ CREATE TABLE IF NOT EXISTS `ordens` (
   `status` char(1) DEFAULT NULL,
   `id_solicitacao` int DEFAULT NULL,
   `id_ocorrencia` int DEFAULT NULL,
+  `data_cancelamento` date DEFAULT NULL,
+  `motivo_cancelamento` blob,
+  `hora_cancelamento` time DEFAULT NULL,
+  `id_resp_cancelamento` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_ordens_usuarios` (`id_solicitante`),
   KEY `FK_ordens_usuarios_2` (`id_responsavel`),
@@ -350,9 +471,24 @@ CREATE TABLE IF NOT EXISTS `ordens` (
   CONSTRAINT `FK_ordens_setores` FOREIGN KEY (`id_setor`) REFERENCES `setores` (`id`),
   CONSTRAINT `FK_ordens_usuarios` FOREIGN KEY (`id_solicitante`) REFERENCES `usuarios` (`id`),
   CONSTRAINT `FK_ordens_usuarios_2` FOREIGN KEY (`id_responsavel`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.ordens: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela gop.ordens: ~14 rows (aproximadamente)
+REPLACE INTO `ordens` (`id`, `id_solicitante`, `id_responsavel`, `id_setor`, `id_recurso`, `id_espaco`, `id_oficina`, `data_entrada`, `hora_entrada`, `data_inicio`, `hora_inicio`, `data_conclusao`, `hora_conclusao`, `data_garantia`, `data_entrega`, `hora_entrega`, `data_saida`, `previsao_Horas`, `previsao_minutos`, `tipo`, `numero_nota`, `conclusao`, `valor_material`, `valor_servico`, `tipo_ordem`, `tipo_corretiva`, `tipo_preventiva`, `descritivo`, `mau_uso`, `situacao`, `motivo_naoconformidade`, `data_emissao`, `descricao`, `data_geracao`, `hora_geracao`, `data_previsao`, `hora_previsao`, `status`, `id_solicitacao`, `id_ocorrencia`, `data_cancelamento`, `motivo_cancelamento`, `hora_cancelamento`, `id_resp_cancelamento`) VALUES
+	(38, 16, 16, 6, 1, NULL, 3, '2024-10-14', '10:57:00', '2024-10-14', '10:56:00', NULL, NULL, '2024-10-14', '2024-10-14', '11:57:00', '2024-10-14', NULL, NULL, 'R', '46546', NULL, 0, 0, 'C', 'P', '', 'troca de fonte', NULL, 'C', '', NULL, _binary 0x56617272656475726120646520616e7469207669727573, '2024-10-01', '14:41:00', '2024-10-14', '12:56:00', 'A', NULL, 2, NULL, NULL, NULL, NULL),
+	(39, 16, 16, 6, NULL, 1, 3, '2024-10-14', '10:57:00', '2024-10-14', '10:56:00', '2024-10-17', '15:51:00', '2024-10-14', '2024-10-14', '11:57:00', '2024-10-14', NULL, NULL, 'E', '46546', _binary 0x7365727669c3a76f207265616c697a61646f, 0, 385, 'C', 'P', '', 'troca de fonte', NULL, 'C', '', NULL, _binary 0x496e737065c3a7c3a36f20456cc3a9747269636120646f207072c3a964696f, '2024-10-01', '14:41:00', '2024-10-14', '12:56:00', 'C', NULL, 3, NULL, NULL, NULL, NULL),
+	(40, 16, 16, 6, NULL, 2, 3, '2024-10-14', '10:57:00', '2024-10-14', '10:56:00', NULL, NULL, '2024-10-14', '2024-10-14', '11:57:00', '2024-10-14', NULL, NULL, 'E', '46546', NULL, 0, 0, 'C', 'P', '', 'troca de fonte', NULL, 'C', '', NULL, _binary 0x4d616e7574656ec3a7c3a36f20646520726f74696e61206e61207265646520656cc3a9747269636120646f2067616c70c3a36f20646f20616c6d6f786172696661646f206461207361c3ba6465, '2024-10-02', '15:13:00', '2024-10-14', '12:56:00', 'A', NULL, 3, NULL, NULL, NULL, NULL),
+	(41, 16, 16, 6, 1, 0, 3, '2024-10-14', '10:57:00', '2024-10-14', '10:56:00', '2024-10-14', '13:36:00', '2024-10-14', '2024-10-14', '11:57:00', '2024-10-14', NULL, NULL, 'R', '46546', _binary 0x546f64617320617320546f6d6164617320666f72616d2074726f6361646173, 0, 0, 'C', 'P', '', 'troca de fonte', NULL, 'C', '', NULL, _binary 0x496e7374616c61c3a7c3a36f20646520546f6d61646120656cc3a97472696361, '2024-10-02', '16:01:00', '2024-10-14', '12:56:00', 'C', 39, 3, NULL, NULL, NULL, NULL),
+	(43, 16, 16, 6, 1, NULL, 3, '2024-10-14', '10:57:00', '2024-10-14', '10:56:00', '2024-10-17', '14:58:00', '2024-10-14', '2024-10-14', '11:57:00', '2024-10-14', NULL, NULL, 'R', '46546', _binary 0x546f646f73206f732070726f636564696d656e746f73207265616c697a61646f7320636f6d207375636573736f, 0, 0, 'C', 'P', '', 'troca de fonte', NULL, 'C', '', NULL, _binary 0x546573746520636f6d2067657261c3a7c3a36f20636f6d706574612064612070726576656e74697661, '2024-10-03', '16:02:00', '2024-10-14', '12:56:00', 'C', NULL, 5, NULL, NULL, NULL, NULL),
+	(44, 16, 16, 6, 1, NULL, 3, '2024-10-14', '10:57:00', '2024-10-14', '10:56:00', '2024-10-17', '15:00:00', '2024-10-14', '2024-10-14', '11:57:00', '2024-10-14', NULL, NULL, 'R', '46546', _binary 0x746573746520646520636f6e636c7573c3a36f, 270, 0, 'C', 'P', '', 'troca de fonte', NULL, 'C', '', NULL, _binary 0x546573746520636f6d2067657261c3a7c3a36f20636f6d706574612064612070726576656e74697661, '2024-10-03', '16:06:00', '2024-10-14', '12:56:00', 'C', NULL, 5, NULL, NULL, NULL, NULL),
+	(45, 16, 16, 6, 3, NULL, 3, '2024-10-14', '10:57:00', '2024-10-14', '10:56:00', NULL, NULL, '2024-10-14', '2024-10-14', '11:57:00', '2024-10-14', NULL, NULL, 'R', '46546', NULL, 60, 99.166666666667, 'C', 'P', '', 'troca de fonte', NULL, 'C', '', NULL, _binary 0x43686563616167656d20646f2061706172656c686f0d0a736567756e64612067657261c3a7c3a36f2064652070726576656e74697661, '2024-10-03', '16:20:00', '2024-10-14', '12:56:00', 'X', NULL, 8, '2024-10-17', NULL, '15:15:00', 16),
+	(46, 16, 16, 6, NULL, 2, 3, '2024-10-14', '10:57:00', '2024-10-14', '10:56:00', NULL, NULL, '2024-10-14', '2024-10-14', '11:57:00', '2024-10-14', NULL, NULL, 'E', '46546', NULL, 0, 0, 'C', 'P', '', 'troca de fonte', NULL, 'C', '', NULL, _binary 0x496e737065c3a7c3a36f20456cc3a9747269636120646f207072c3a964696f0d0a736567756e64612067657261c3a7c3a36f2064652070726576656e7469766120636f6d2065737061c3a76f2066697369636f, '2024-10-03', '16:20:00', '2024-10-14', '12:56:00', 'A', NULL, 3, NULL, NULL, NULL, NULL),
+	(47, 16, 16, 6, 1, 0, 3, '2024-10-14', '10:57:00', '2024-10-14', '10:56:00', '2024-10-14', '14:01:00', '2024-10-14', '2024-10-14', '11:57:00', '2024-10-14', NULL, NULL, 'R', '46546', _binary 0x54726f636120646120666f6e7465207265616c697a61646120636f6d207375636573736f, 75, 578.83333333333, 'C', 'P', '', 'troca de fonte', NULL, 'C', '', NULL, _binary 0x54726f636120646520666f6e7465, '2024-10-14', '10:56:00', '2024-10-14', '12:56:00', 'C', 41, 2, NULL, NULL, NULL, NULL),
+	(48, 16, 16, 6, 0, 7, 3, NULL, NULL, '2024-10-14', '11:24:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'E', NULL, NULL, NULL, NULL, 'C', 'P', NULL, 'Troca de lampadas', NULL, NULL, NULL, NULL, _binary 0x54726f6361206465206c616d7061646173, '2024-10-14', '11:25:00', '2024-10-14', '11:24:00', 'A', 42, 3, NULL, NULL, NULL, NULL),
+	(49, 16, 16, 4, 0, 0, 3, NULL, NULL, '2024-10-14', '11:42:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'V', NULL, NULL, NULL, NULL, 'C', 'P', NULL, 'teste', NULL, NULL, NULL, NULL, _binary 0x557375c3a172696f206e6f766f206465202072656465, '2024-10-14', '11:42:00', '2024-10-14', '11:42:00', 'A', 40, 7, NULL, NULL, NULL, NULL),
+	(50, 16, 16, 1, 0, 0, 3, NULL, NULL, '2024-10-14', '11:45:00', '2024-10-17', '15:59:00', NULL, NULL, NULL, NULL, NULL, NULL, 'V', NULL, _binary 0x436f6e636c75c3ad646f, NULL, 375, 'C', 'P', NULL, 'teste', NULL, NULL, NULL, NULL, _binary 0x63726961c3a7c3a36f20646520656d61696c20706f6461407361626172612e6d672e676f762e6272, '2024-10-14', '11:45:00', '2024-10-14', '12:45:00', 'C', 38, 2, NULL, NULL, NULL, NULL),
+	(51, 16, 16, 6, 0, 0, 3, NULL, NULL, '2024-10-16', '10:06:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'V', NULL, NULL, NULL, NULL, 'C', 'P', NULL, 'criação de email', NULL, NULL, NULL, NULL, _binary 0x43726961c3a7c3a36f20646520656d61696c, '2024-10-16', '10:06:00', '2024-10-16', '10:06:00', 'A', 45, 5, NULL, NULL, NULL, NULL),
+	(52, 16, 16, 4, 0, 7, 7, NULL, NULL, '2024-10-16', '10:12:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'E', NULL, NULL, NULL, NULL, 'C', 'P', NULL, 'reparo', NULL, NULL, NULL, NULL, _binary 0x72657061726f, '2024-10-16', '10:12:00', '2024-10-16', '10:12:00', 'A', 46, 3, NULL, NULL, NULL, NULL);
 
 -- Copiando estrutura para tabela gop.ordens_check
 CREATE TABLE IF NOT EXISTS `ordens_check` (
@@ -364,9 +500,18 @@ CREATE TABLE IF NOT EXISTS `ordens_check` (
   KEY `FK_ordens_check_checklist` (`id_check`),
   CONSTRAINT `FK_ordens_check_checklist` FOREIGN KEY (`id_check`) REFERENCES `checklist` (`id`),
   CONSTRAINT `FK_ordens_check_ordens` FOREIGN KEY (`id_ordem`) REFERENCES `ordens` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.ordens_check: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela gop.ordens_check: ~5 rows (aproximadamente)
+REPLACE INTO `ordens_check` (`id`, `id_ordem`, `id_check`) VALUES
+	(4, 24, 2),
+	(7, 24, 1),
+	(8, 41, 1),
+	(11, 44, 1),
+	(12, 44, 3),
+	(13, 43, 3),
+	(14, 47, 1),
+	(15, 45, 3);
 
 -- Copiando estrutura para tabela gop.ordens_executores
 CREATE TABLE IF NOT EXISTS `ordens_executores` (
@@ -382,9 +527,23 @@ CREATE TABLE IF NOT EXISTS `ordens_executores` (
   KEY `FK_ordens_executores_executores` (`id_executor`),
   CONSTRAINT `FK_ordens_executores_executores` FOREIGN KEY (`id_executor`) REFERENCES `executores` (`id`),
   CONSTRAINT `FK_ordens_executores_ordens` FOREIGN KEY (`id_ordem`) REFERENCES `ordens` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.ordens_executores: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela gop.ordens_executores: ~8 rows (aproximadamente)
+REPLACE INTO `ordens_executores` (`id`, `id_ordem`, `id_executor`, `tempo_horas`, `tempo_minutos`, `valor_hora`, `valor_total`) VALUES
+	(6, 24, 6, 4, 30, 15, 67.5),
+	(7, 24, 5, 12, 20, 150, 1850),
+	(9, 24, 5, 3, 35, 140, 501.66666666667),
+	(10, 24, 5, 2, 30, 20, 50),
+	(11, 38, 6, 2, 30, 150, 375),
+	(12, 41, 7, 3, 40, 85, 311.66666666667),
+	(17, 44, 5, 2, 40, 150, 400),
+	(18, 44, 7, NULL, NULL, NULL, NULL),
+	(19, 43, 7, 1, 30, 70, 105),
+	(20, 47, 7, 3, 50, 151, 578.83333333333),
+	(21, 45, 5, 1, 10, 85, 99.166666666667),
+	(22, 39, 6, 3, 40, 105, 385),
+	(23, 50, 5, 2, 30, 150, 375);
 
 -- Copiando estrutura para tabela gop.ordens_ferramentas
 CREATE TABLE IF NOT EXISTS `ordens_ferramentas` (
@@ -396,9 +555,16 @@ CREATE TABLE IF NOT EXISTS `ordens_ferramentas` (
   KEY `FK_ordens_ferramentas_ferramentas` (`id_ferramenta`),
   CONSTRAINT `FK_ordens_ferramentas_ferramentas` FOREIGN KEY (`id_ferramenta`) REFERENCES `ferramentas` (`id`),
   CONSTRAINT `FK_ordens_ferramentas_ordens` FOREIGN KEY (`id_ordem`) REFERENCES `ordens` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.ordens_ferramentas: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela gop.ordens_ferramentas: ~4 rows (aproximadamente)
+REPLACE INTO `ordens_ferramentas` (`id`, `id_ordem`, `id_ferramenta`) VALUES
+	(1, 24, 6),
+	(4, 41, 6),
+	(5, 44, 6),
+	(6, 44, 1),
+	(7, 47, 6),
+	(8, 45, 5);
 
 -- Copiando estrutura para tabela gop.ordens_imagens
 CREATE TABLE IF NOT EXISTS `ordens_imagens` (
@@ -410,12 +576,18 @@ CREATE TABLE IF NOT EXISTS `ordens_imagens` (
   PRIMARY KEY (`id`),
   KEY `FK_ordens_imagens_ordens` (`id_ordem`),
   CONSTRAINT `FK_ordens_imagens_ordens` FOREIGN KEY (`id_ordem`) REFERENCES `ordens` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.ordens_imagens: ~2 rows (aproximadamente)
-INSERT INTO `ordens_imagens` (`id`, `id_ordem`, `caminho`, `data`, `comentario`) VALUES
+-- Copiando dados para a tabela gop.ordens_imagens: ~8 rows (aproximadamente)
+REPLACE INTO `ordens_imagens` (`id`, `id_ordem`, `caminho`, `data`, `comentario`) VALUES
 	(3, 38, 'img/computador.jpeg', '2024-10-04', 'Primeira manutenção do equipamento'),
-	(4, 38, 'img/placamae.jpeg', '2024-10-04', 'Imagem da placa mãe');
+	(4, 38, 'img/placamae.jpeg', '2024-10-04', 'Imagem da placa mãe'),
+	(5, 43, 'img/computador.jpeg', '2024-10-08', 'Situação do equipamento no atendimento'),
+	(6, 47, 'img/placamae.jpeg', '2024-10-14', 'troca da placa máe'),
+	(7, 41, 'img/computador.jpeg', '2024-10-15', NULL),
+	(8, 41, 'img/computador.jpeg', '2024-10-15', NULL),
+	(9, 41, 'img/computador.jpeg', '2024-10-15', NULL),
+	(10, 45, 'img/computador.jpeg', '2024-10-15', NULL);
 
 -- Copiando estrutura para tabela gop.ordens_materiais
 CREATE TABLE IF NOT EXISTS `ordens_materiais` (
@@ -432,9 +604,40 @@ CREATE TABLE IF NOT EXISTS `ordens_materiais` (
   CONSTRAINT `FK_ordens_materiais_materiais` FOREIGN KEY (`id_material`) REFERENCES `materiais` (`id`),
   CONSTRAINT `FK_ordens_materiais_ordens` FOREIGN KEY (`id_ordem`) REFERENCES `ordens` (`id`),
   CONSTRAINT `FK_ordens_materiais_unidades` FOREIGN KEY (`id_unidade`) REFERENCES `unidades` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.ordens_materiais: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela gop.ordens_materiais: ~8 rows (aproximadamente)
+REPLACE INTO `ordens_materiais` (`id`, `id_ordem`, `id_material`, `id_unidade`, `quantidade`, `valor`) VALUES
+	(8, 24, 2, 8, 100, 1.5),
+	(13, 24, 3, 10, 2, 17.5),
+	(14, 38, 3, 2, 1, 120),
+	(15, 38, 2, 8, 6, 1.5),
+	(16, 41, 4, 8, 10, 1.7),
+	(17, 41, 2, 8, 15, 1.5),
+	(22, 44, 4, 10, 5, 6),
+	(23, 44, 2, 8, 120, 2),
+	(24, 43, 4, 10, 1, 3.5),
+	(25, 43, 2, 8, 15, 1.5),
+	(26, 47, 3, 10, 5, 15),
+	(27, 45, 3, 10, 5, 12);
+
+-- Copiando estrutura para tabela gop.ordens_plano
+CREATE TABLE IF NOT EXISTS `ordens_plano` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_plano` int DEFAULT NULL,
+  `id_ordem` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_ordens_plano_planejamento` (`id_plano`),
+  KEY `FK_ordens_plano_ordens` (`id_ordem`),
+  CONSTRAINT `FK_ordens_plano_ordens` FOREIGN KEY (`id_ordem`) REFERENCES `ordens` (`id`),
+  CONSTRAINT `FK_ordens_plano_planejamento` FOREIGN KEY (`id_plano`) REFERENCES `planejamento` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Copiando dados para a tabela gop.ordens_plano: ~0 rows (aproximadamente)
+REPLACE INTO `ordens_plano` (`id`, `id_plano`, `id_ordem`) VALUES
+	(2, 1, 38),
+	(3, 1, 47),
+	(4, 1, 45);
 
 -- Copiando estrutura para tabela gop.ordens_pop
 CREATE TABLE IF NOT EXISTS `ordens_pop` (
@@ -446,9 +649,81 @@ CREATE TABLE IF NOT EXISTS `ordens_pop` (
   KEY `FK_ordens_pop_pops` (`id_pop`),
   CONSTRAINT `FK_ordens_pop_ordens` FOREIGN KEY (`id_ordem`) REFERENCES `ordens` (`id`),
   CONSTRAINT `FK_ordens_pop_pops` FOREIGN KEY (`id_pop`) REFERENCES `pops` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.ordens_pop: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela gop.ordens_pop: ~5 rows (aproximadamente)
+REPLACE INTO `ordens_pop` (`id`, `id_ordem`, `id_pop`) VALUES
+	(1, 24, 2),
+	(5, 24, 4),
+	(7, 41, 4),
+	(10, 44, 2),
+	(11, 44, 4),
+	(13, 43, 2),
+	(14, 47, 2),
+	(15, 45, 4);
+
+-- Copiando estrutura para tabela gop.ordens_suspensao
+CREATE TABLE IF NOT EXISTS `ordens_suspensao` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_ordem` int DEFAULT NULL,
+  `data_suspensao` date DEFAULT NULL,
+  `hora_suspensao` time DEFAULT NULL,
+  `data_retirada` date DEFAULT NULL,
+  `hora_retirada` time DEFAULT NULL,
+  `motivo` blob,
+  PRIMARY KEY (`id`),
+  KEY `FK_ordens_suspensao_ordens` (`id_ordem`),
+  CONSTRAINT `FK_ordens_suspensao_ordens` FOREIGN KEY (`id_ordem`) REFERENCES `ordens` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Copiando dados para a tabela gop.ordens_suspensao: ~0 rows (aproximadamente)
+REPLACE INTO `ordens_suspensao` (`id`, `id_ordem`, `data_suspensao`, `hora_suspensao`, `data_retirada`, `hora_retirada`, `motivo`) VALUES
+	(3, 38, '2024-10-17', '10:58:00', '2024-10-17', '10:59:00', _binary 0x46616c7461206465204d6174657269616c);
+
+-- Copiando estrutura para tabela gop.planejamento
+CREATE TABLE IF NOT EXISTS `planejamento` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_setor` int DEFAULT NULL,
+  `data` date DEFAULT NULL,
+  `gerencia` varchar(120) DEFAULT NULL,
+  `descritivo` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `meta` blob,
+  PRIMARY KEY (`id`),
+  KEY `FK_planejamento_setores` (`id_setor`),
+  CONSTRAINT `FK_planejamento_setores` FOREIGN KEY (`id_setor`) REFERENCES `setores` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Copiando dados para a tabela gop.planejamento: ~1 rows (aproximadamente)
+REPLACE INTO `planejamento` (`id`, `id_setor`, `data`, `gerencia`, `descritivo`, `meta`) VALUES
+	(1, 6, '2024-10-09', 'Informática', 'Implantação de sistema 1doc', _binary 0x496d706c617461c3a7c3a36f2064652073697374656d61203120646f63206e612070726566656974757261);
+
+-- Copiando estrutura para tabela gop.planejamento_diretrizes
+CREATE TABLE IF NOT EXISTS `planejamento_diretrizes` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_planejamento` int DEFAULT NULL,
+  `id_diretriz` int DEFAULT NULL,
+  `id_estrategia` int DEFAULT NULL,
+  `prazo` varchar(50) DEFAULT NULL,
+  `local` varchar(120) DEFAULT NULL,
+  `responsavel` varchar(120) DEFAULT NULL,
+  `custo` double DEFAULT NULL,
+  `situacao` char(1) DEFAULT NULL,
+  `motivo` blob,
+  `metodologia` blob,
+  `observacao` blob,
+  PRIMARY KEY (`id`),
+  KEY `FK_planejamento_diretrizes_diretrizes` (`id_diretriz`),
+  KEY `FK_planejamento_diretrizes_estrategias` (`id_estrategia`),
+  KEY `FK_planejamento_diretrizes_planejamento` (`id_planejamento`),
+  CONSTRAINT `FK_planejamento_diretrizes_diretrizes` FOREIGN KEY (`id_diretriz`) REFERENCES `diretrizes` (`id`),
+  CONSTRAINT `FK_planejamento_diretrizes_estrategias` FOREIGN KEY (`id_estrategia`) REFERENCES `estrategias` (`id`),
+  CONSTRAINT `FK_planejamento_diretrizes_planejamento` FOREIGN KEY (`id_planejamento`) REFERENCES `planejamento` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Copiando dados para a tabela gop.planejamento_diretrizes: ~1 rows (aproximadamente)
+REPLACE INTO `planejamento_diretrizes` (`id`, `id_planejamento`, `id_diretriz`, `id_estrategia`, `prazo`, `local`, `responsavel`, `custo`, `situacao`, `motivo`, `metodologia`, `observacao`) VALUES
+	(7, 1, 4, 1, '30 dias', 'Prefeitura', 'Alexandra', 1400, 'N', _binary '', _binary '', _binary ''),
+	(8, 1, 5, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- Copiando estrutura para tabela gop.pops
 CREATE TABLE IF NOT EXISTS `pops` (
@@ -479,9 +754,12 @@ CREATE TABLE IF NOT EXISTS `pops` (
   CONSTRAINT `FK_pops_espacos` FOREIGN KEY (`id_espaco`) REFERENCES `espacos` (`id`),
   CONSTRAINT `FK_pops_oficinas` FOREIGN KEY (`id_oficina`) REFERENCES `oficinas` (`id`),
   CONSTRAINT `FK_pops_recursos` FOREIGN KEY (`id_recurso`) REFERENCES `recursos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.pops: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela gop.pops: ~2 rows (aproximadamente)
+REPLACE INTO `pops` (`id`, `id_recurso`, `id_espaco`, `id_oficina`, `tipo`, `descricao`, `revisado`, `preparado`, `resultadoesperado`, `materialnecessario`, `descritivo`, `atividadecritica`, `cuidados`, `anc`, `data`, `dataemissao`, `processo`, `objetivo`, `risco`, `refbibliografica`) VALUES
+	(2, 1, 2, 3, '1', 'Instalação Super Nova', 'Marcos', 'Glaison', _binary 0x61636573736f20616f207365727669646f722064612073757065726e6f766120652061636573736f20616f207265737065637469766f73206dc3b364756c6f73, _binary 0x706173746120636f6d206f206172717569766f20646520696e7374616c61c3a7c3a36f20646973706f6ec3ad76656c206e61207061737461207574696c73, _binary 0x496e7374616c61c3a7c3a36f2070617261206f2061636573736f20646f2073697374656d612073757065726e6f7661206e6f20706320636c69656e746520, _binary 0x6e656e68756d61, _binary 0x696e7374616c6172206e6f206c6f67696e20646f20757375c3a172696f20717565206972c3a1207574696c697a6172206f2073697374656d61, _binary 0x5061737361722070617261206f207375706f72746520646520746920646120656d707265736120496e6f7661, '2024-09-04', NULL, _binary 0x2d20636f7069617220612070617374612073757065726e6f766120646973706f6e6976656c206e61207061737461207574696c7320646120726564650d0a2d20496e7374616c61206f2061706c6963617469766f20617070636f6e74726f6c65720d0a2d206372696172206174616c686f206e6120c3a17265612064652074726162616c686f, _binary 0x41636573736f20616f2073697374656d6120646f2073757065726e6f7661, _binary '', _binary 0x6e656e68756d61),
+	(4, 1, 1, 7, '1', 'Configurar PC no Dominio', '', '', _binary '', _binary '', _binary '', _binary '', _binary '', _binary '', '2024-09-22', NULL, _binary '', _binary '', _binary '', _binary '');
 
 -- Copiando estrutura para tabela gop.preventivas
 CREATE TABLE IF NOT EXISTS `preventivas` (
@@ -514,9 +792,17 @@ CREATE TABLE IF NOT EXISTS `preventivas` (
   CONSTRAINT `FK_preventivas_oficinas` FOREIGN KEY (`id_oficina`) REFERENCES `oficinas` (`id`),
   CONSTRAINT `FK_preventivas_recursos` FOREIGN KEY (`id_recurso`) REFERENCES `recursos` (`id`),
   CONSTRAINT `FK_preventivas_setores` FOREIGN KEY (`id_setor`) REFERENCES `setores` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.preventivas: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela gop.preventivas: ~6 rows (aproximadamente)
+REPLACE INTO `preventivas` (`id`, `id_recurso`, `id_espaco`, `id_oficina`, `id_centrodecusto`, `id_ocorrencia`, `id_setor`, `tipo`, `tipo_preventiva`, `data_cadastro`, `periodicidade_geracao`, `data_prox_realizacao`, `data_ult_realizacao`, `calibracao`, `descritivo`, `gerar`) VALUES
+	(4, 1, NULL, 3, 2, 2, 3, 'R', 'R', '2024-10-01', 30, '2024-10-13', '2024-09-13', 'N', _binary 0x56617272656475726120646520616e7469207669727573, 'Sim'),
+	(5, NULL, 2, 1, 2, 3, 3, 'E', 'R', '2024-10-01', 20, '2024-10-12', '2024-09-22', 'N', _binary 0x496e737065c3a7c3a36f20456cc3a9747269636120646f207072c3a964696f0d0a736567756e64612067657261c3a7c3a36f2064652070726576656e7469766120636f6d2065737061c3a76f2066697369636f, 'Sim'),
+	(6, 1, NULL, 7, 2, 3, 4, 'R', 'R', '2024-10-02', 20, '2024-10-22', '2024-10-02', 'N', _binary 0x7465737465, 'Sim'),
+	(7, NULL, 2, 1, 2, 3, 4, 'E', 'R', '2024-10-02', 20, '2024-10-14', '2024-09-24', 'N', _binary 0x4d616e7574656ec3a7c3a36f20646520726f74696e61206e61207265646520656cc3a9747269636120646f2067616c70c3a36f20646f20616c6d6f786172696661646f206461207361c3ba6465, 'Sim'),
+	(8, 1, NULL, 7, 2, 5, 4, 'R', 'R', '2024-10-02', 30, '2024-11-01', '2024-10-02', 'N', _binary 0x546573746520636f6d2067657261c3a7c3a36f20636f6d706574612064612070726576656e74697661, 'Sim'),
+	(9, 3, NULL, 2, 1, 8, 1, 'R', 'P', '2024-10-02', 45, '2024-11-06', '2024-09-22', 'N', _binary 0x43686563616167656d20646f2061706172656c686f0d0a736567756e64612067657261c3a7c3a36f2064652070726576656e74697661, 'Sim'),
+	(10, 3, NULL, 3, 2, 8, 4, 'R', 'S', '2024-10-04', 30, '2024-08-31', '2024-08-01', 'N', _binary 0x636865636167656d2064652074656e73c3a36f, 'Sim');
 
 -- Copiando estrutura para tabela gop.preventivas_checklist
 CREATE TABLE IF NOT EXISTS `preventivas_checklist` (
@@ -528,9 +814,12 @@ CREATE TABLE IF NOT EXISTS `preventivas_checklist` (
   KEY `FK_preventivas_checklist_preventivas` (`id_preventiva`),
   CONSTRAINT `FK_preventivas_checklist_checklist` FOREIGN KEY (`id_check`) REFERENCES `checklist` (`id`),
   CONSTRAINT `FK_preventivas_checklist_preventivas` FOREIGN KEY (`id_preventiva`) REFERENCES `preventivas` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.preventivas_checklist: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela gop.preventivas_checklist: ~2 rows (aproximadamente)
+REPLACE INTO `preventivas_checklist` (`id`, `id_check`, `id_preventiva`) VALUES
+	(2, 1, 8),
+	(5, 3, 8);
 
 -- Copiando estrutura para tabela gop.preventivas_executores
 CREATE TABLE IF NOT EXISTS `preventivas_executores` (
@@ -544,7 +833,12 @@ CREATE TABLE IF NOT EXISTS `preventivas_executores` (
   CONSTRAINT `FK_preventivas_executores_preventivas` FOREIGN KEY (`id_preventiva`) REFERENCES `preventivas` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.preventivas_executores: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela gop.preventivas_executores: ~4 rows (aproximadamente)
+REPLACE INTO `preventivas_executores` (`id`, `id_preventiva`, `id_executor`) VALUES
+	(12, 4, 6),
+	(13, 4, 5),
+	(14, 8, 5),
+	(15, 8, 7);
 
 -- Copiando estrutura para tabela gop.preventivas_ferramentas
 CREATE TABLE IF NOT EXISTS `preventivas_ferramentas` (
@@ -556,9 +850,12 @@ CREATE TABLE IF NOT EXISTS `preventivas_ferramentas` (
   KEY `FK__preventivas` (`id_preventiva`),
   CONSTRAINT `FK__ferramentas` FOREIGN KEY (`id_ferramenta`) REFERENCES `ferramentas` (`id`),
   CONSTRAINT `FK__preventivas` FOREIGN KEY (`id_preventiva`) REFERENCES `preventivas` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.preventivas_ferramentas: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela gop.preventivas_ferramentas: ~2 rows (aproximadamente)
+REPLACE INTO `preventivas_ferramentas` (`id`, `id_ferramenta`, `id_preventiva`) VALUES
+	(1, 6, 8),
+	(3, 1, 8);
 
 -- Copiando estrutura para tabela gop.preventivas_materiais
 CREATE TABLE IF NOT EXISTS `preventivas_materiais` (
@@ -576,7 +873,11 @@ CREATE TABLE IF NOT EXISTS `preventivas_materiais` (
   CONSTRAINT `FK_preventivas_materiais_unidades` FOREIGN KEY (`id_unidade`) REFERENCES `unidades` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.preventivas_materiais: ~1 rows (aproximadamente)
+-- Copiando dados para a tabela gop.preventivas_materiais: ~3 rows (aproximadamente)
+REPLACE INTO `preventivas_materiais` (`id`, `id_preventiva`, `id_material`, `id_unidade`, `quantidade`) VALUES
+	(16, 4, 2, 8, 15),
+	(17, 8, 4, 10, 5),
+	(18, 8, 2, 8, 120);
 
 -- Copiando estrutura para tabela gop.preventivas_pop
 CREATE TABLE IF NOT EXISTS `preventivas_pop` (
@@ -588,9 +889,12 @@ CREATE TABLE IF NOT EXISTS `preventivas_pop` (
   KEY `FK_preventivas_pop_preventivas` (`id_preventiva`),
   CONSTRAINT `FK_preventivas_pop_pops` FOREIGN KEY (`id_pop`) REFERENCES `pops` (`id`),
   CONSTRAINT `FK_preventivas_pop_preventivas` FOREIGN KEY (`id_preventiva`) REFERENCES `preventivas` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.preventivas_pop: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela gop.preventivas_pop: ~2 rows (aproximadamente)
+REPLACE INTO `preventivas_pop` (`id`, `id_pop`, `id_preventiva`) VALUES
+	(1, 2, 8),
+	(3, 4, 8);
 
 -- Copiando estrutura para tabela gop.recursos
 CREATE TABLE IF NOT EXISTS `recursos` (
@@ -639,7 +943,11 @@ CREATE TABLE IF NOT EXISTS `recursos` (
   CONSTRAINT `FK_recursos_setores` FOREIGN KEY (`id_setor`) REFERENCES `setores` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.recursos: ~1 rows (aproximadamente)
+-- Copiando dados para a tabela gop.recursos: ~3 rows (aproximadamente)
+REPLACE INTO `recursos` (`id`, `id_espacofisico`, `id_fabricante`, `id_fornecedor`, `id_grupo`, `id_centrodecusto`, `id_oficina`, `id_setor`, `id_marca`, `descricao`, `patrimonio`, `modelo`, `numeroserie`, `estado`, `notafiscal`, `datacadastro`, `datagarantia`, `valoraquisicao`, `valordepreciado`, `ultimapreventiva`, `ultimamanutencao`, `dataaquisicao`, `ativo`, `motivoinativo`, `reganvisa`, `obs`) VALUES
+	(1, 2, 3, 1, 1, 3, 1, 1, 6, 'computador DeskTop', '1222', 'asdA', '3423234', 'Razoável', '234', '2023-02-08', '2023-02-08', 3000, 23, '2023-02-08', '2023-02-08', '2023-02-08', 'S', 'DDD', '3333', _binary ''),
+	(2, 1, 3, 2, 7, 2, 3, 1, 6, 'Servidor Dell 15456', '54654654', 'ALtPLAN', '546546', 'Ótimo', '324444', '2009-02-23', '2023-02-09', 0, 0, '2023-02-09', '2023-02-09', '2023-02-09', 'S', '', '', NULL),
+	(3, 1, 2, 2, 7, 2, 1, 1, 6, 'Estabilizador Z3', '84848484', 'ALtPLAN', '546546', 'Ótimo', '412324', '2023-09-02', '2023-02-09', 0, 0, '2023-02-09', '2023-02-09', '2023-02-09', 'S', '', '', NULL);
 
 -- Copiando estrutura para tabela gop.servico_instalacao
 CREATE TABLE IF NOT EXISTS `servico_instalacao` (
@@ -684,9 +992,14 @@ CREATE TABLE IF NOT EXISTS `setores` (
   PRIMARY KEY (`id`),
   KEY `FK_setores_centrodecusto` (`id_centrodecusto`),
   CONSTRAINT `FK_setores_centrodecusto` FOREIGN KEY (`id_centrodecusto`) REFERENCES `centrodecusto` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.setores: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela gop.setores: ~4 rows (aproximadamente)
+REPLACE INTO `setores` (`id`, `descricao`, `id_centrodecusto`, `Responsavel`, `fone1`, `fone2`, `email`, `prioritario`, `nivelprioridade`) VALUES
+	(1, 'Poda e Corte de Árvores', 1, 'Prefeitura', '(31)3672-9844', '(42)3423-4234', '', 'NÃO', '4'),
+	(3, 'Secretaria de Saúde', 2, 'Patricia', '(31) 3-3333', '', 'glaison26.queiroz@gmail.com', 'SIM', '1'),
+	(4, 'Almoxarifado da Saúde', 2, 'Alexandra', '(31) 3672-7688', '', '', 'SIM', '1'),
+	(6, 'Prefeitura de Sabará', 5, 'Prefeitura', '', '', '', 'SIM', '1');
 
 -- Copiando estrutura para tabela gop.solicitacao
 CREATE TABLE IF NOT EXISTS `solicitacao` (
@@ -714,9 +1027,26 @@ CREATE TABLE IF NOT EXISTS `solicitacao` (
   CONSTRAINT `FK_solicitacao_recursos` FOREIGN KEY (`id_recursos`) REFERENCES `recursos` (`id`),
   CONSTRAINT `FK_solicitacao_setores` FOREIGN KEY (`id_setor`) REFERENCES `setores` (`id`),
   CONSTRAINT `FK_solicitacao_usuarios` FOREIGN KEY (`id_solicitante`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.solicitacao: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela gop.solicitacao: ~13 rows (aproximadamente)
+REPLACE INTO `solicitacao` (`id`, `id_setor`, `id_solicitante`, `id_recursos`, `id_espaco`, `id_ocorrencia`, `data_abertura`, `hora_abertura`, `status`, `tipo`, `descricao`, `classificacao`, `id_ordem`) VALUES
+	(31, 3, 16, 1, NULL, 2, '2024-09-18', '16:14:00', 'E', 'P', _binary 0x466f726d617461c3a7c3a36f20646f205043, 'R', NULL),
+	(32, 3, 16, 1, NULL, 2, '2024-09-18', '16:31:00', 'E', 'P', _binary 0x466f6d617461c3a7c3a36f, 'R', NULL),
+	(33, 1, 16, NULL, 1, 3, '2024-09-18', '16:34:00', 'E', 'P', _binary 0x746f6d61646173, 'E', NULL),
+	(34, 3, 16, NULL, NULL, 5, '2024-09-18', '16:36:00', 'E', 'P', _binary 0x43726961c3a7c3a36f20646520636f6e746120646520656d61696c20207465737465407361626172612e636f6d2e6272, 'V', NULL),
+	(35, 3, 16, NULL, NULL, 7, '2024-09-18', '20:13:00', 'E', 'P', _binary 0x43726961c3a7c3a36f20646520757375c3a172696f207061726120616365737361207061737461206461207361c3ba64650d0a0d0a4d617269612064652046c3a174696d61206d6174726963756c612030303039333933, 'V', NULL),
+	(36, 3, 16, 3, NULL, 1, '2024-09-18', '20:36:00', 'E', 'P', _binary 0x496d70726573736f726120626f7272616e646f, 'R', NULL),
+	(37, 1, 16, NULL, 1, 1, '2024-09-18', '20:39:00', 'E', 'P', _binary 0x496d70726573736f7261, 'E', NULL),
+	(38, 1, 16, NULL, NULL, 2, '2024-09-18', '20:40:00', 'C', 'P', _binary 0x63726961c3a7c3a36f20646520656d61696c20706f6461407361626172612e6d672e676f762e6272, 'V', 50),
+	(39, 4, 16, 1, NULL, 3, '2024-10-02', '15:53:00', 'E', 'P', _binary 0x496e7374616c61c3a7c3a36f20646520546f6d61646120656cc3a97472696361, 'R', NULL),
+	(40, 4, 16, NULL, NULL, 7, '2024-10-02', '16:03:00', 'E', 'P', _binary 0x557375c3a172696f206e6f766f206465202072656465, 'V', 49),
+	(41, 6, 16, 1, NULL, 2, '2024-10-14', '10:55:00', 'C', 'P', _binary 0x54726f636120646520666f6e7465, 'R', 47),
+	(42, 6, 16, NULL, 7, 3, '2024-10-14', '11:24:00', 'E', 'P', _binary 0x54726f6361206465206c616d7061646173, 'E', 48),
+	(43, 6, 16, NULL, NULL, 5, '2024-10-14', '11:47:00', 'A', 'P', _binary 0x74657373, 'V', NULL),
+	(44, 3, 16, NULL, NULL, 5, '2024-10-15', '14:15:00', 'A', 'P', _binary 0x63726961c3a7c3a36f20646520636f6e7461206465206d61696c, 'V', NULL),
+	(45, 6, 16, NULL, NULL, 5, '2024-10-16', '10:05:00', 'E', 'P', _binary 0x43726961c3a7c3a36f20646520656d61696c, 'V', 51),
+	(46, 4, 16, NULL, 7, 3, '2024-10-16', '10:11:00', 'E', 'P', _binary 0x72657061726f, 'E', 52);
 
 -- Copiando estrutura para tabela gop.unidades
 CREATE TABLE IF NOT EXISTS `unidades` (
@@ -724,10 +1054,10 @@ CREATE TABLE IF NOT EXISTS `unidades` (
   `descricao` varchar(120) NOT NULL DEFAULT '0',
   `abreviatura` varchar(6) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.unidades: ~8 rows (aproximadamente)
-INSERT INTO `unidades` (`id`, `descricao`, `abreviatura`) VALUES
+-- Copiando dados para a tabela gop.unidades: ~9 rows (aproximadamente)
+REPLACE INTO `unidades` (`id`, `descricao`, `abreviatura`) VALUES
 	(1, 'Metro Quadrado', 'M2'),
 	(2, 'Centímetro', 'cm'),
 	(3, 'Kilo', 'KG'),
@@ -735,7 +1065,8 @@ INSERT INTO `unidades` (`id`, `descricao`, `abreviatura`) VALUES
 	(5, 'Litro', 'LT'),
 	(8, 'Unidade', 'UN'),
 	(9, 'Metro Cúbico', 'M3'),
-	(10, 'Metro', 'm');
+	(10, 'Metro', 'm'),
+	(11, 'Milimetro', 'MM');
 
 -- Copiando estrutura para tabela gop.usuarios
 CREATE TABLE IF NOT EXISTS `usuarios` (
@@ -752,16 +1083,17 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   PRIMARY KEY (`id`),
   KEY `FK_usuarios_setores` (`id_setor`),
   CONSTRAINT `FK_usuarios_setores` FOREIGN KEY (`id_setor`) REFERENCES `setores` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela gop.usuarios: ~6 rows (aproximadamente)
-INSERT INTO `usuarios` (`id`, `id_perfil`, `id_setor`, `nome`, `login`, `senha`, `ativo`, `cpf`, `tipo`, `email`) VALUES
+REPLACE INTO `usuarios` (`id`, `id_perfil`, `id_setor`, `nome`, `login`, `senha`, `ativo`, `cpf`, `tipo`, `email`) VALUES
 	(16, NULL, NULL, 'Glaison Queiroz', 'Glaison', 'dGFpb2JhMjYxMA==', 'S', '695.510.226-53', 'Administrador', 'glaison26.queiroz@gmail.com'),
 	(17, NULL, NULL, 'Manoel da Silva Braga', 'ManuelBraga', 'MTIzNDU2ZmRnZGZnc2Y=', 'N', '695.510.226-53', 'Administrador', NULL),
 	(19, NULL, NULL, 'Itamar Franco', 'Franco', 'OTk5OTk5OTk5', 'S', '695.510.226-53', 'Administrador', NULL),
 	(21, NULL, NULL, 'Manoel de Nobrega', 'Manoel', 'dGFpb2JhMTIz', 'S', '695.510.226-53', 'Operador', 'manoel@gmail.com'),
 	(22, NULL, NULL, 'Solicitante', 'Solicitante', 'MTIzNDU2Nzg=', 'S', '69551022653', 'Solicitante', 'glaison26.queiroz@gmail.com'),
-	(23, NULL, NULL, 'Adm', 'Adm', 'MTIzNDU2Nzg=', 'S', '69551022653', 'Administrador', 'glaison26.queiroz@gmail.com');
+	(23, NULL, NULL, 'Adm', 'Adm', 'MTIzNDU2Nzg=', 'S', '69551022653', 'Administrador', 'glaison26.queiroz@gmail.com'),
+	(24, NULL, NULL, 'Maria Joana', 'MJ', 'MTIzNDU2Nzg=', 'S', '69551022653', 'Solicitante', 'glaison26.queiroz@gmail.com');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
