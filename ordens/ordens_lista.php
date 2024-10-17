@@ -206,7 +206,7 @@ include('../conexao.php');
             <!-- aba da recurso fisico-->
             <div role="tabpanel" class="tab-pane active" id="recurso">
                 <div style="padding-top:15px;padding-left:20px;">
-                    <table class="table table display table-bordered tabordens_recursos">
+                    <table class="table table display table-bordered table-striped table-active tabordens_recursos">
                         <thead class="thead">
                             <tr>
                                 <th scope="col">#</th>
@@ -236,15 +236,25 @@ include('../conexao.php');
                             while ($c_linha = $result->fetch_assoc()) {
                                 $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_geracao'])));
                                 $c_hora = date("H:i", strtotime($c_linha['hora_geracao']));
+                                $c_cor = "";
+                                if ($c_linha['status'] == 'X')
+                                    $c_cor = "class='table-danger'";
+                                if ($c_linha['status'] == 'A')
+                                    $c_cor = "class='table-info'";
+                                if ($c_linha['status'] == 'C')
+                                    $c_cor = "class='table-success'";
+                                if ($c_linha['status'] == 'S')
+                                    $c_cor = "class='table-warning'";
+
                                 echo "
-                                <tr class='info'>
+                                <tr>
                                     <td>$c_linha[id]</td>
                                     <td>$c_linha[id_solicitacao]</td>
                                     <td>$c_data</td>
                                     <td>$c_hora</td>
                                     <td>$c_linha[descritivo]</td>
                                     <td>$c_linha[patrimonio]</td>
-                                    <td>$c_linha[ordens_status]</td>
+                                    <td $c_cor style='text-align:center'>$c_linha[ordens_status]</td>
                                     <td>$c_linha[setor]</td>
                                     <td>$c_linha[ordens_tipo_texto]</td>
                                     
@@ -272,7 +282,7 @@ include('../conexao.php');
             <!-- aba da espaco fisico-->
             <div role="tabpanel" class="tab-pane" id="espaco">
                 <div style="padding-top:15px;padding-left:20px;">
-                    <table class="table table display table-bordered tabordens_espacos">
+                    <table class="table table display table-bordered table-striped table-active tabordens_espacos">
                         <thead class="thead">
                             <tr>
                                 <th scope="col">#</th>
@@ -301,14 +311,22 @@ include('../conexao.php');
                             while ($c_linha = $result->fetch_assoc()) {
                                 $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_geracao'])));
                                 $c_hora = date("H:i", strtotime($c_linha['hora_geracao']));
+                                if ($c_linha['status'] == 'X')
+                                    $c_cor = "class='table-danger'";
+                                if ($c_linha['status'] == 'A')
+                                    $c_cor = "class='table-info'";
+                                if ($c_linha['status'] == 'C')
+                                    $c_cor = "class='table-success'";
+                                if ($c_linha['status'] == 'S')
+                                    $c_cor = "class='table-warning'";
                                 echo "
-                                <tr class='info'>
+                                <tr>
                                    <td>$c_linha[id]</td>
                                    <td>$c_linha[id_solicitacao]</td>
                                     <td>$c_data</td>
                                     <td>$c_hora</td>
                                     <td>$c_linha[descritivo]</td>
-                                    <td>$c_linha[ordens_status]</td>
+                                    <td $c_cor style='text-align:center'>$c_linha[ordens_status]</td>
                                     <td>$c_linha[setor]</td>
                                     <td>$c_linha[ordens_tipo_texto]</td>
                                     
@@ -336,7 +354,7 @@ include('../conexao.php');
             <div role="tabpanel" class="tab-pane" id="avulsas">
                 <div style="padding-top:15px;padding-left:20px;">
 
-                    <table class="table table display table-bordered tabordens_avulsas">
+                    <table class="table table display table-bordered table-striped table-active tabordens_avulsas">
                         <thead class="thead">
                             <tr>
                                 <th scope="col">#</th>
@@ -365,14 +383,22 @@ include('../conexao.php');
                             while ($c_linha = $result->fetch_assoc()) {
                                 $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_geracao'])));
                                 $c_hora = date("H:i", strtotime($c_linha['hora_geracao']));
+                                if ($c_linha['status'] == 'X')
+                                    $c_cor = "class='table-danger'";
+                                if ($c_linha['status'] == 'A')
+                                    $c_cor = "class='table-info'";
+                                if ($c_linha['status'] == 'C')
+                                    $c_cor = "class='table-success'";
+                                if ($c_linha['status'] == 'S')
+                                    $c_cor = "class='table-warning'";
                                 echo "
-                                <tr class='info'>
+                                <tr>
                                     <td>$c_linha[id]</td>
                                     <td>$c_linha[id_solicitacao]</td>
                                     <td>$c_data</td>
                                     <td>$c_linha[hora_geracao]</td>
                                     <td>$c_hora</td>
-                                    <td>$c_linha[ordens_status]</td>
+                                    <td $c_cor style='text-align:center'>$c_linha[ordens_status]</td>
                                     <td>$c_linha[setor]</td>
                                     <td>$c_linha[ordens_tipo_texto]</td>
                                     
@@ -432,7 +458,7 @@ include('../conexao.php');
                             </label>
                         </div>
                     </div>
-                  
+
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="chk_ferramentas">
                         <div style="padding-left:20px;">
@@ -441,7 +467,7 @@ include('../conexao.php');
                             </label>
                         </div>
                     </div>
-                   
+
 
                 </div>
                 <div class="modal-footer">

@@ -30,17 +30,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $msg_erro = "Campo de motivo deve ser preenchido !!!";
             break;
         }
+        // pego a id do usuário logado que está cancelando a ordem
+        $c_solicitante = $_SESSION['c_usuario'];
+        $c_sql_solicitante = "Select id,email from usuarios where login='$c_solicitante'";
+        $result_solicitante = $conection->query($c_sql_solicitante);
+        $registro_solicitante = $result_solicitante->fetch_assoc();
+        $i_solicitante = $registro_solicitante['id'];
         // cancelo a ordem de serviço
-       
+
         // atualizo o status da ordem de servico e colo data hora e texto de conclusão
-        $c_data_suspensao = $_POST['data_suspensao'];
-        $c_hora_suspensao = $_POST['hora_suspensao'];
+        $c_data_cancelamento = $_POST['data_cancelamento'];
+        $c_hora_cancelamento = $_POST['hora_cancelamento'];
         $c_motivo = $_POST['motivo'];
-        $c_sql_up = "update ordens set status='S' where id=$i_id";
+        $c_sql_up = "update ordens set status='X', data_cancelamento='$c_data_cancelamento', hora_cancelamento='$c_hora_cancelamento',
+         id_resp_cancelamento='$i_solicitante' where id=$i_id";
         $result_up = $conection->query($c_sql_up);
-        // incluir dados da suspensão na tabela de históricos da suspensão
-        $c_sql = "insert into ordens_suspensao (id_ordem,data_suspensao,hora_suspensao,motivo) value ('$i_id','$c_data_suspensao', '$c_hora_suspensao', '$c_motivo')";
-        $result = $conection->query($c_sql);
+       
         header('location: /gop/ordens/ordens_gerenciar.php');
     } while (false);
 }
@@ -57,6 +62,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body>
+    <script>
+        function pergunta() {
+            // retorna true se confirmado, ou false se cancelado
+            return confirm('Tem certerza que deseja Cancelar a Ordem de Serviço?');
+        }
+    </script>
+
     <div class="container -my5">
         <div style="padding-top:5px;">
             <div class="panel panel-primary class">
@@ -92,11 +104,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-8">
                 <label class="col-md-2 form-label">Data Cancelamento</label>
                 <div class="col-sm-2">
-                    <input type="Date" class="form-control" name="data_suspensao" id="data_conclusao" value='<?php echo $c_data ?>'>
+                    <input type="Date" class="form-control" name="data_cancelamento" id="data_conclusao" value='<?php echo $c_data ?>'>
                 </div>
                 <label class="col-md-2 form-label">Hora Cancelamento</label>
                 <div class="col-sm-2">
-                    <input type="time" class="form-control" name="hora_suspensao" id="hora_conclusao" value="<?php echo $agora ?>">
+                    <input type="time" class="form-control" name="hora_cancelamento" id="hora_conclusao" value="<?php echo $agora ?>">
                 </div>
             </div>
             <br>
@@ -109,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <hr>
             <div class="row mb-3">
                 <div class="offset-sm-0 col-sm-3">
-                    <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-ok'></span> Cancelar</button>
+                    <button type="submit" class="btn btn-primary" onclick='return pergunta();'><span class='glyphicon glyphicon-ok'></span> Confirma</button>
                     <a class='btn btn-danger' href='/gop/ordens/ordens_gerenciar.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
                 </div>
             </div>

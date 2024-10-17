@@ -46,11 +46,11 @@ $c_linha_ordem = $result->fetch_assoc();
                 <div style="padding-bottom :2px;">
                     <div class="topnav">
                         <?php
-                        if ($c_linha_ordem['status'] <> 'C' && $c_linha_ordem['status'] <> 'S') {
+                        if ($c_linha_ordem['status'] <> 'C' && $c_linha_ordem['status'] <> 'S' && $c_linha_ordem['status'] <> 'X') {
                             echo
                             "<a title='Concluir Ordem de Serviço' href='\gop\ordens\ordens_conclusao.php?id=<?php echo $i_id ?>'><img src='\gop\images\concluir.png' alt='' width='30' height='25'><span> Concluir</span></a>
                         <a title='Suspender Ordem de Serviço' href='\gop\ordens\ordens_suspender.php?id=<?php echo $i_id ?>'><img src='\gop\images\aguardado.png' alt='' width='30' height='25'><span> Suspender</span></a>
-                        <a title='Cancelar Ordem de Serviço' href='#'><img src='\gop\images\cancelar.png' alt='' width='30' height='25'><span> Cancelar</span></a>";
+                        <a title='Cancelar Ordem de Serviço' href='\gop\ordens\ordens_cancelar.php?id=<?php echo $i_id ?>'><img src='\gop\images\cancelar.png' alt='' width='30' height='25'><span> Cancelar</span></a>";
                         }
                         if ($c_linha_ordem['status'] == 'S')
                             echo "<a title='Tirar Suspensão' href='\gop\ordens\ordens_tirar_suspensao.php?id=<?php echo $i_id ?>'><img src='\gop\images\undo.png' alt='' width='30' height='25'><span> Tirar Suspensão</span></a>";                            

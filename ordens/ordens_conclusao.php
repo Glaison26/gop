@@ -11,7 +11,7 @@ include('../links2.php');
 include('../conexao.php');
 date_default_timezone_set('America/Sao_Paulo');
 
-$i_id = $_GET["id"]; // id da ordem de serviço
+$i_id = $_SESSION['id_ordem']; // id da ordem de serviço
 $c_conclusao = "";
 $msg_erro = "";
 
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
            hora_conclusao='$c_hora_conclusao', conclusao='$c_conclusao' where id=$i_id";
         $result_up = $conection->query($c_sql_up);
         // envio de email para o usuário solicitante
-        
+
         header('location: /gop/ordens/ordens_gerenciar.php');
     } while (false);
 }
@@ -67,6 +67,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body>
+    <script>
+        // função para confirmar coonclusão
+        function pergunta() {
+            // retorna true se confirmado, ou false se cancelado
+            return confirm('Tem certerza que deseja Concluir a Ordem de Serviço?');
+        }
+    </script>
+    
     <div class="container -my5">
         <div style="padding-top:5px;">
             <div class="panel panel-primary class">
@@ -119,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <hr>
             <div class="row mb-3">
                 <div class="offset-sm-0 col-sm-3">
-                    <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-ok'></span> Fechar</button>
+                    <button type="submit" class="btn btn-primary" onclick='return pergunta();'><span class='glyphicon glyphicon-ok'></span> Concluir</button>
                     <a class='btn btn-danger' href='/gop/ordens/ordens_gerenciar.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
                 </div>
             </div>

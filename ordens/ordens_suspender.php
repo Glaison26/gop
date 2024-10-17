@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
         }
         // suspendo a ordem de serviço
-       
+
         // atualizo o status da ordem de servico e colo data hora e texto de conclusão
         $c_data_suspensao = $_POST['data_suspensao'];
         $c_hora_suspensao = $_POST['hora_suspensao'];
@@ -57,6 +57,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body>
+    <script>
+        // função para confirmar coonclusão
+        function pergunta() {
+            // retorna true se confirmado, ou false se cancelado
+            return confirm('Tem certerza que deseja Suspender a Ordem de Serviço?');
+        }
+    </script>
+
     <div class="container -my5">
         <div style="padding-top:5px;">
             <div class="panel panel-primary class">
@@ -71,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
             </div>
-            <h4>Preencha os dados abaixo e clique no botão confirmar para Suspender  a ordem de serviço No. <?php echo $i_id ?></h4>
+            <h4>Preencha os dados abaixo e clique no botão confirmar para Suspender a ordem de serviço No. <?php echo $i_id ?></h4>
         </div>
 
         <br>
@@ -109,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <hr>
             <div class="row mb-3">
                 <div class="offset-sm-0 col-sm-3">
-                    <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-ok'></span> Suspender</button>
+                    <button type="submit" class="btn btn-primary" onclick='return pergunta();'><span class='glyphicon glyphicon-ok'></span> Suspender</button>
                     <a class='btn btn-danger' href='/gop/ordens/ordens_gerenciar.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
                 </div>
             </div>
