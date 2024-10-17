@@ -1,7 +1,7 @@
 <?php
-/////////////////////////////////////////////
-// Rotina de suspensão de ordem de serviço
-////////////////////////////////////////////
+/////////////////////////////////////////////////
+// Rotina de Tirar Suspensão de ordem de serviço
+////////////////////////////////////////////////
 session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
@@ -11,9 +11,26 @@ include('../links2.php');
 include('../conexao.php');
 date_default_timezone_set('America/Sao_Paulo');
 
-$i_id =  $_SESSION['id_ordem']; // id da ordem de serviço
+$i_id = $_SESSION['id_ordem']; // id da ordem de serviço
+
 $c_motivo = "";
 $msg_erro = "";
+
+// sql para registro da suspensao
+$c_sql_susp =  "SELECT ordens_suspensao.data_suspensao, ordens_suspensao.hora_suspensao, ordens_suspensao.data_retirada,
+ordens_suspensao.hora_retirada, ordens_suspensao.motivo 
+FROM ordens_suspensao 
+WHERE ordens_suspensao.id_ordem='$i_id' 
+AND ordens_suspensao.data_retirada IS null 
+ORDER BY ordens_suspensao.data_suspensao desc";
+//echo $c_sql_susp;
+$result = $conection->query($c_sql_susp);
+$registro = $result->fetch_assoc();
+
+$c_data_suspensao = $registro['data_suspensao'];
+$c_hora_suspensao = $registro['hora_suspensao'];
+$c_motivo = $registro['motivo'];
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     do {
@@ -22,8 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $result = $conection->query($c_sql);
         $registro = $result->fetch_assoc();
         // data da conclusão inferior a data da abertura
-        if ($registro['data_geracao'] > $_POST['data_suspensao']) {
-            $msg_erro = "Data da suspensão deve ser igual ou superior a data da Geração !!!";
+        if ($registro['data_geracao'] > $_POST['data_retirada']) {
+            $msg_erro = "Data da retirada deve ser igual ou superior a data da Geração !!!";
             break;
         }
         if (empty($_POST['motivo'])) {
@@ -31,15 +48,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
         }
         // suspendo a ordem de serviço
-       
+
         // atualizo o status da ordem de servico e colo data hora e texto de conclusão
-        $c_data_suspensao = $_POST['data_suspensao'];
-        $c_hora_suspensao = $_POST['hora_suspensao'];
+        $c_data_retirada = $_POST['data_retirada'];
+        $c_hora_retirada = $_POST['hora_retirada'];
         $c_motivo = $_POST['motivo'];
-        $c_sql_up = "update ordens set status='S' where id=$i_id";
+        $c_sql_up = "update ordens set status='A' where id=$i_id";
         $result_up = $conection->query($c_sql_up);
         // incluir dados da suspensão na tabela de históricos da suspensão
-        $c_sql = "insert into ordens_suspensao (id_ordem,data_suspensao,hora_suspensao,motivo) value ('$i_id','$c_data_suspensao', '$c_hora_suspensao', '$c_motivo')";
+        $c_sql = "update ordens_suspensao set data_retirada='$c_data_retirada', hora_retirada='$c_hora_retirada', motivo='$c_motivo'";
         $result = $conection->query($c_sql);
         header('location: /gop/ordens/ordens_gerenciar.php');
     } while (false);
@@ -62,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
                     <h4>GOP - Gestão Operacional</h4>
-                    <h5>Suspensão de Ordem de serviço</h5>
+                    <h5>Retirar Suspensão de Ordem de serviço</h5>
                 </div>
             </div>
         </div>
@@ -71,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
             </div>
-            <h4>Preencha os dados abaixo e clique no botão confirmar para Suspender  a ordem de serviço No. <?php echo $i_id ?></h4>
+            <h4>Preencha os dados abaixo e clique no botão confirmar para retirar a Suspensão da ordem de serviço No. <?php echo $i_id ?></h4>
         </div>
 
         <br>
@@ -85,18 +102,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             ";
         }
-        $agora = date('H:i');
-        $c_data = date('Y-m-d');
+        $agora_retirada = date('H:i');
+        $c_data_retirada = date('Y-m-d');
         ?>
         <form method="post">
             <div class="row mb-8">
                 <label class="col-md-2 form-label">Data Suspensão</label>
                 <div class="col-sm-2">
-                    <input type="Date" class="form-control" name="data_suspensao" id="data_conclusao" value='<?php echo $c_data ?>'>
+                    <input readonly type="Date" class="form-control" name="data_suspensao" id="data_suspensao" value='<?php echo $c_data_suspensao ?>'>
                 </div>
                 <label class="col-md-2 form-label">Hora Suspensão</label>
                 <div class="col-sm-2">
-                    <input type="time" class="form-control" name="hora_suspensao" id="hora_conclusao" value="<?php echo $agora ?>">
+                    <input readonly type="time" class="form-control" name="hora_suspensao" id="hora_suspensao" value="<?php echo $c_hora_suspensao ?>">
+                </div>
+            </div>
+            <br>
+            <div class="row mb-8">
+                <label class="col-md-2 form-label">Data Retirada</label>
+                <div class="col-sm-2">
+                    <input type="Date" class="form-control" name="data_retirada" id="data_retirada" value='<?php echo $c_data_retirada ?>'>
+                </div>
+                <label class="col-md-2 form-label">Hora Retirada</label>
+                <div class="col-sm-2">
+                    <input type="time" class="form-control" name="hora_retirada" id="hora_retirada" value="<?php echo $agora_retirada ?>">
                 </div>
             </div>
             <br>
@@ -107,9 +135,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             </div>
             <hr>
-            <div class="row mb-3">
-                <div class="offset-sm-0 col-sm-3">
-                    <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-ok'></span> Suspender</button>
+            <div class="row mb-6">
+                <div class="offset-sm-0 col-sm-6">
+                    <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-ok'></span> Retirar Suspensão</button>
                     <a class='btn btn-danger' href='/gop/ordens/ordens_gerenciar.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
                 </div>
             </div>

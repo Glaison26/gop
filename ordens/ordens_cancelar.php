@@ -1,6 +1,6 @@
 <?php
 /////////////////////////////////////////////
-// Rotina de conclusão de ordem de serviço
+// Rotina de cancelamento de ordem de serviço
 ////////////////////////////////////////////
 session_start();
 if (!isset($_SESSION['newsession'])) {
@@ -11,8 +11,8 @@ include('../links2.php');
 include('../conexao.php');
 date_default_timezone_set('America/Sao_Paulo');
 
-$i_id = $_GET["id"]; // id da ordem de serviço
-$c_conclusao = "";
+$i_id =  $_SESSION['id_ordem']; // id da ordem de serviço
+$c_motivo = "";
 $msg_erro = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -22,35 +22,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $result = $conection->query($c_sql);
         $registro = $result->fetch_assoc();
         // data da conclusão inferior a data da abertura
-        if ($registro['data_geracao'] > $_POST['data_conclusao']) {
-            $msg_erro = "Data da Conclusão deve ser igual ou superior a data da Geração !!!";
+        if ($registro['data_geracao'] > $_POST['data_cancelamento']) {
+            $msg_erro = "Data do cancelamento deve ser igual ou superior a data da Geração !!!";
             break;
         }
-        if (empty($_POST['conclusao'])) {
-            $msg_erro = "Campo de conclusão deve ser preenchido !!!";
+        if (empty($_POST['motivo'])) {
+            $msg_erro = "Campo de motivo deve ser preenchido !!!";
             break;
         }
-        // fecho a ordem de serviço
-        // verifico se houve solicitação para a ordem de serviço
-        if ($registro['tipo_ordem'] == 'C') {
-            $c_sql = "select * from solicitacao where id_ordem = '$i_id'";
-            $result = $conection->query($c_sql);
-            $i_total = mysqli_num_rows($result);
-            if ($i_total > 0) {
-                // atualizo o status da solicitação
-                $c_sql_up = "update solicitacao set status='C' where id_ordem = '$i_id'";
-                $result_up = $conection->query($c_sql_up);
-            }
-        }
+        // cancelo a ordem de serviço
+       
         // atualizo o status da ordem de servico e colo data hora e texto de conclusão
-        $c_data_conclusao = $_POST['data_conclusao'];
-        $c_hora_conclusao = $_POST['hora_conclusao'];
-        $c_conclusao = $_POST['conclusao'];
-        $c_sql_up = "update ordens set status='C', data_conclusao='$c_data_conclusao', 
-           hora_conclusao='$c_hora_conclusao', conclusao='$c_conclusao' where id=$i_id";
+        $c_data_suspensao = $_POST['data_suspensao'];
+        $c_hora_suspensao = $_POST['hora_suspensao'];
+        $c_motivo = $_POST['motivo'];
+        $c_sql_up = "update ordens set status='S' where id=$i_id";
         $result_up = $conection->query($c_sql_up);
-        // envio de email para o usuário solicitante
-        
+        // incluir dados da suspensão na tabela de históricos da suspensão
+        $c_sql = "insert into ordens_suspensao (id_ordem,data_suspensao,hora_suspensao,motivo) value ('$i_id','$c_data_suspensao', '$c_hora_suspensao', '$c_motivo')";
+        $result = $conection->query($c_sql);
         header('location: /gop/ordens/ordens_gerenciar.php');
     } while (false);
 }
@@ -72,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
                     <h4>GOP - Gestão Operacional</h4>
-                    <h5>Fechamento de Ordem de Serviço</h5>
+                    <h5>Cancelamento de Ordem de serviço</h5>
                 </div>
             </div>
         </div>
@@ -81,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
             </div>
-            <h4>Preencha os dados abaixo e clique no botão confirmar para fechar a ordem de serviço No. <?php echo $i_id ?></h4>
+            <h4>Preencha os dados abaixo e clique no botão confirmar para Cancelar a ordem de serviço No. <?php echo $i_id ?></h4>
         </div>
 
         <br>
@@ -100,26 +90,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ?>
         <form method="post">
             <div class="row mb-8">
-                <label class="col-md-2 form-label">Data Conclusão</label>
+                <label class="col-md-2 form-label">Data Cancelamento</label>
                 <div class="col-sm-2">
-                    <input type="Date" class="form-control" name="data_conclusao" id="data_conclusao" value='<?php echo $c_data ?>'>
+                    <input type="Date" class="form-control" name="data_suspensao" id="data_conclusao" value='<?php echo $c_data ?>'>
                 </div>
-                <label class="col-md-2 form-label">Hora Conclusão</label>
+                <label class="col-md-2 form-label">Hora Cancelamento</label>
                 <div class="col-sm-2">
-                    <input type="time" class="form-control" name="hora_conclusao" id="hora_conclusao" value="<?php echo $agora ?>">
+                    <input type="time" class="form-control" name="hora_suspensao" id="hora_conclusao" value="<?php echo $agora ?>">
                 </div>
             </div>
             <br>
             <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Conclusão</label>
+                <label class="col-sm-2 col-form-label">Motivo Cancelamento</label>
                 <div class="col-sm-8">
-                    <textarea class="form-control" id="conclusao" name="conclusao" rows="6"><?php echo $c_conclusao ?></textarea>
+                    <textarea class="form-control" id="motivo" name="motivo" rows="6"><?php echo $c_motivo ?></textarea>
                 </div>
             </div>
             <hr>
             <div class="row mb-3">
                 <div class="offset-sm-0 col-sm-3">
-                    <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-ok'></span> Fechar</button>
+                    <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-ok'></span> Cancelar</button>
                     <a class='btn btn-danger' href='/gop/ordens/ordens_gerenciar.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
                 </div>
             </div>

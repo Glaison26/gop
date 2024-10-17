@@ -1,7 +1,10 @@
 restante dos anexos da preventiva (executor com modal) ok
 geração de ordens preventiva com os anexos ok
 colocar telefones, responsável e email no cadastro de oficinas ok
-conclusão ok, emissão , suspensão e cancelamento de ordem de serviço 
+conclusão ok,
+ emissão 
+, suspensão ok
+e cancelamento de ordem de serviço 
 cadastro de plano de ações e sua inclusão ok
 nos anexos de ordens de serviços e preventivas (depende do homero) ok
 
