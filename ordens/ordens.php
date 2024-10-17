@@ -5,6 +5,7 @@ if (!isset($_SESSION['newsession'])) {
 }
 include("../conexao.php");
 include("../links2.php");
+date_default_timezone_set('America/Sao_Paulo');
 
 // rotina para montagem do sql com as opções selecionadas
 if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {

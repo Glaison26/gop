@@ -5,10 +5,18 @@ if (!isset($_SESSION['newsession'])) {
 }
 include("../conexao.php");
 include("../links2.php");
+$c_solicitacao = $_SESSION['ocorrencia'];
+$c_ocorrencia = $_SESSION['valor_ocorrencia'];
 
 if ($_SESSION['tiposolicitacao'] == 'R') { // recurso fisico
     // pego id do recurso selecionado na página anterior
-    $i_id_recurso = $_GET["id"];
+    if (isset($_GET['id'])) {
+        $i_id_recurso = $_GET['id'];
+        $_SESSION['id_recurso'] = $i_id_recurso;
+    } else {
+        $i_id_recurso = $_SESSION['id_recurso'];
+    }
+    //$i_id_recurso = $_GET["id"];
     // sql para pegar nome
     $c_sql = "SELECT recursos.id, recursos.descricao FROM recursos where recursos.id='$i_id_recurso'";
     $result = $conection->query($c_sql);
@@ -17,7 +25,12 @@ if ($_SESSION['tiposolicitacao'] == 'R') { // recurso fisico
 }
 if ($_SESSION['tiposolicitacao'] == 'E') {  // espaço físico
     // pego id do recurso selecionado na página anterior
-    $i_id_espaco = $_GET["id"];
+    if (isset($_GET['id'])) {
+        $i_id_espaco = $_GET['id'];
+        $_SESSION['id_espaco'] = $i_id_espaco;
+    } else {
+        $i_id_espaco = $_SESSION['id_espaco'];
+    }
     // sql para pegar nome
     $c_sql = "SELECT espacos.id, espacos.descricao FROM espacos where espacos.id='$i_id_espaco'";
     $result = $conection->query($c_sql);
@@ -25,9 +38,7 @@ if ($_SESSION['tiposolicitacao'] == 'E') {  // espaço físico
     $c_espaco = $registro['descricao'];
 }
 
-$c_solicitacao = "";
-
-// inclusão da solicitação no banco de dados
+//$c_solicitacao = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -88,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         echo $c_sql;
         $result = $conection->query($c_sql);
-        $c_email_oficina="";
+        $c_email_oficina = "";
         // verifico se a query foi correto
         if (!$result) {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
@@ -126,6 +137,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body>
+    <script>
+        // chama arquivo para pegar ocorrencia
+        function verifica(value) {
+            window.location.href = "/gop/solicitacao/verifica_ocorrencia.php?id=" + value;
+        }
+    </script>
+
+
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
@@ -150,7 +169,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ";
         }
         ?>
-        <form method="post">
+        <form method="post" name="frm_solicitacao">
+            <div class="row mb-3">
+
+                <label class="col-sm-3 col-form-label">Ocorrencia </label>
+                <div class="col-sm-7">
+
+                    <select onchange="verifica(value)" class="form-select form-select-lg mb-3" id="ocorrencia" name="ocorrencia" value="<?php echo $c_ocorrencia ?>">
+
+                        <option></option>
+                        <?php
+                        // select da tabela de ocorrencia
+                        $c_sql_setor = "SELECT ocorrencias.id, ocorrencias.descricao FROM ocorrencias ORDER BY ocorrencias.descricao";
+                        $result_setor = $conection->query($c_sql_setor);
+                        while ($c_linha = $result_setor->fetch_assoc()) {
+                            if (!empty($_SESSION['valor_ocorrencia'])) {
+                                if ($_SESSION['valor_ocorrencia'] == $c_linha['descricao'])
+                                    $op = 'selected';
+                                else
+                                    $op = "";
+                            }
+                            echo "  
+          <option $op>$c_linha[descricao]</option>
+        ";
+                        }
+                        ?>
+                    </select>
+
+                </div>
+            </div>
 
 
             <div class="row mb-3">
@@ -180,25 +227,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </select>
                 </div>
 
-            </div>
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Ocorrencia </label>
-                <div class="col-sm-7">
-                    <select class="form-select form-select-lg mb-3" id="ocorrencia" name="ocorrencia">
-                        <option></option>
-                        <?php
-                        // select da tabela de ocorrencia
-                        $c_sql_setor = "SELECT ocorrencias.id, ocorrencias.descricao FROM ocorrencias ORDER BY ocorrencias.descricao";
-                        $result_setor = $conection->query($c_sql_setor);
-                        while ($c_linha = $result_setor->fetch_assoc()) {
-                            echo "  
-                          <option>$c_linha[descricao]</option>
-                        ";
-                        }
-                        ?>
-                    </select>
-
-                </div>
             </div>
             <div style="padding-top:5px;">
 

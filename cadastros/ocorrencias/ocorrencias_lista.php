@@ -78,6 +78,7 @@ include("../../links.php");
         $(document).on('submit', '#frmadd', function(e) {
             e.preventDefault();
             var c_descricao = $('#add_descricaoField').val();
+            var c_texto = $('#add_textoField').val();
 
             if (c_descricao != '') {
 
@@ -85,7 +86,8 @@ include("../../links.php");
                     url: "ocorrencias_novo.php",
                     type: "post",
                     data: {
-                        c_descricao: c_descricao
+                        c_descricao: c_descricao,
+                        c_texto : c_texto
 
                     },
                     success: function(data) {
@@ -126,8 +128,7 @@ include("../../links.php");
 
                 $('#up_idField').val(data[0]);
                 $('#up_descricaoField').val(data[1]);
-
-
+                $('#up_textoField').val(data[2]);
             });
         });
     </script>
@@ -138,6 +139,7 @@ include("../../links.php");
             e.preventDefault();
             var c_id = $('#up_idField').val();
             var c_descricao = $('#up_descricaoField').val();
+            var c_texto = $('#up_textoField').val();
 
             if (c_descricao != '') {
 
@@ -146,7 +148,8 @@ include("../../links.php");
                     type: "post",
                     data: {
                         c_id: c_id,
-                        c_descricao: c_descricao
+                        c_descricao: c_descricao,
+                        c_texto:c_texto
                     },
                     success: function(data) {
                         var json = JSON.parse(data);
@@ -190,6 +193,7 @@ include("../../links.php");
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Descrição</th>
+                    <th scope="col">Texto Padrão</th>
                     <th scope="col">Opções</th>
                 </tr>
             </thead>
@@ -197,7 +201,7 @@ include("../../links.php");
                 <?php
 
                 // faço a Leitura da tabela com sql
-                $c_sql = "SELECT ocorrencias.id, ocorrencias.descricao FROM ocorrencias ORDER BY ocorrencias.descricao";
+                $c_sql = "SELECT ocorrencias.id, ocorrencias.descricao, ocorrencias.texto FROM ocorrencias ORDER BY ocorrencias.descricao";
                 $result = $conection->query($c_sql);
                 // verifico se a query foi correto
                 if (!$result) {
@@ -211,6 +215,7 @@ include("../../links.php");
                     <tr class='info'>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descricao]</td>
+                    <td>$c_linha[texto]</td>
                     <td>
                     <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Ocorrência'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
@@ -241,6 +246,12 @@ include("../../links.php");
                             <label for="add_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" id="add_descricaoField" name="add_dscricaoField">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Texto Padrão</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" id="add_textoField" name="add_textoField" rows="8"></textarea>
                             </div>
                         </div>
 
@@ -274,6 +285,12 @@ include("../../links.php");
                             <label for="up_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" id="up_descricaoField" name="up_dscricaoField">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Texto Padrão</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" id="up_textoField" name="up_textoField" rows="8"></textarea>
                             </div>
                         </div>
 
