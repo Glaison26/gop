@@ -11,7 +11,7 @@ $c_id = $_GET["id"];
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no formulário
 
     if (!isset($_GET["id"])) {
-        header('location: /gop/ordens/ordens_gerenciar.php');
+        header('location: /gop/ordens/ordens_lista.php');
         exit;
     }
 
@@ -36,12 +36,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
 </head>
 
 <body>
-    <div class="container  -my5">
+    <div class="container-fluid">
         <div style="padding-top:5px;">
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
                     <h4>GOP - Gestão Operacional</h4>
-                    <h5>Visualizar Planejamento<h5>
+                    <h5>Emissão de Ordem de Serviço<h5>
                 </div>
             </div>
         </div>
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
             </div>
-            <h5>Visualização do Planejamento Selecionado do Plano de Ação</h5>
+            <h5>Emissao de ordem de Serviço No. <?php echo $c_id?></h5>
         </div>
         <hr>
         <?php

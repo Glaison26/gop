@@ -19,6 +19,14 @@ include('../conexao.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
+<script language="Javascript">
+    function emissao() {
+        var resposta = confirm("Deseja Emitir Ordem de serviço?");
+        if (resposta == true) {
+            window.location.href = "/gop/ordens/ordens_emissao.php";
+        }
+    }
+</script>
 <!-- script da tabela de recursos -->
 <script>
     $(document).ready(function() {
@@ -264,10 +272,8 @@ include('../conexao.php');
                                         <a class='btn btn-success btn-sm' href='/gop/ordens/ordens_gerenciar.php?id=$c_linha[id]'>
                                         <img src='\gop\images\gerenciamento.png' alt='' width='23' height='18'> Gerenciar</a>
 
-                                         <button type='button' title='Emitir Ordem de serviço' class='btn btn-info' data-toggle='modal' data-target='#modal_emissao'>
-                                            <span class='glyphicon glyphicon-print'></span>
-                                             Emitir
-                                         </button>
+                                        <a class='btn btn-secondary btn-sm' href='/gop/ordens/ordens_emissao.php?id=$c_linha[id]'>
+                                        <span class='glyphicon glyphicon-print'></span> Emitir</a>
                                     </td>
 
                                 </tr>
@@ -467,11 +473,9 @@ include('../conexao.php');
                             </label>
                         </div>
                     </div>
-
-
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary"> Emitir</button>
+                    <button type="button" class='btn btn-success btn-sm'  onclick='emissao()'><span class='glyphicon glyphicon-ok'></span> Emitir</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                 </div>
             </div>
