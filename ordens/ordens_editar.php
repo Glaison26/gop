@@ -334,7 +334,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                         </div>
                         <br>
                         <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label">Responsável</label>
+                            <label class="col-sm-2 col-form-label">Solicitante</label>
                             <div class="col-sm-6">
                                 <input type="text" readonly maxlength="50" class="form-control" name="responsavel" value="<?php echo $c_nome_responsavel; ?>">
                             </div>

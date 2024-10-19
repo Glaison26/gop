@@ -48,6 +48,12 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     if ($_POST['status'] == "Concluída") {
         $c_where = $c_where . "ordens.status='C' and ";
     }
+    if ($_POST['status'] == "Suspensa") {
+        $c_where = $c_where . "ordens.status='S' and ";
+    }
+    if ($_POST['status'] == "Cancelada") {
+        $c_where = $c_where . "ordens.status='X' and ";
+    }
 
     // sql para solicitante
     if ($_POST["solicitante"] <> "Todos") {
@@ -358,6 +364,8 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                         <option>Todos</option>
                         <option>Aberta</option>
                         <option>Concluída</option>
+                        <option>Suspensa</option>
+                        <option>Cancelada</option>
                     </select>
                 </div>
             </div>

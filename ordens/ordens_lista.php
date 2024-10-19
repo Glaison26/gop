@@ -272,7 +272,7 @@ include('../conexao.php');
                                         <a class='btn btn-success btn-sm' href='/gop/ordens/ordens_gerenciar.php?id=$c_linha[id]'>
                                         <img src='\gop\images\gerenciamento.png' alt='' width='23' height='18'> Gerenciar</a>
 
-                                        <a class='btn btn-secondary btn-sm' href='/gop/ordens/ordens_emissao.php?id=$c_linha[id]'>
+                                        <a class='btn btn-info btn-sm' href='/gop/ordens/ordens_emissao.php?id=$c_linha[id]'>
                                         <span class='glyphicon glyphicon-print'></span> Emitir</a>
                                     </td>
 
@@ -340,10 +340,8 @@ include('../conexao.php');
                                         <a class='btn btn-secondary btn-sm' href='/gop/ordens/ordens_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                                         <a class='btn btn-success btn-sm' href='/gop/ordens/ordens_gerenciar.php?id=$c_linha[id]'>
                                         <img src='\gop\images\gerenciamento.png' alt='' width='23' height='18'> Gerenciar</a>
-                                          <button type='button' title='Emitir Ordem de serviço' class='btn btn-info' data-toggle='modal' data-target='#modal_emissao'>
-                                            <span class='glyphicon glyphicon-print'></span>
-                                             Emitir
-                                         </button>
+                                        <a class='btn btn-info btn-sm' href='/gop/ordens/ordens_emissao.php?id=$c_linha[id]'>
+                                        <span class='glyphicon glyphicon-print'></span> Emitir</a>
                                     
                                     </td>
 
@@ -412,10 +410,8 @@ include('../conexao.php');
                                         <a class='btn btn-secondary btn-sm' href='/gop/ordens/ordens_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                                       <a class='btn btn-success btn-sm' href='/gop/ordens/ordens_gerenciar.php?id=$c_linha[id]'>
                                         <img src='\gop\images\gerenciamento.png' alt='' width='23' height='18'> Gerenciar</a>
-                                          <button type='button' title='Emitir Ordem de serviço' class='btn btn-info' data-toggle='modal' data-target='#modal_emissao'>
-                                            <span class='glyphicon glyphicon-print'></span>
-                                             Emitir
-                                         </button>
+                                           <a class='btn btn-info btn-sm' href='/gop/ordens/ordens_emissao.php?id=$c_linha[id]'>
+                                        <span class='glyphicon glyphicon-print'></span> Emitir</a>
                                      
                                     </td>
 

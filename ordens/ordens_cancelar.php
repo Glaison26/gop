@@ -42,7 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $c_data_cancelamento = $_POST['data_cancelamento'];
         $c_hora_cancelamento = $_POST['hora_cancelamento'];
         $c_motivo = $_POST['motivo'];
-        $c_sql_up = "update ordens set status='X', data_cancelamento='$c_data_cancelamento', hora_cancelamento='$c_hora_cancelamento',
+        $c_sql_up = "update ordens set status='X', motivo_cancelamento='$c_motivo', data_cancelamento='$c_data_cancelamento',
+         hora_cancelamento='$c_hora_cancelamento',
          id_resp_cancelamento='$i_solicitante' where id=$i_id";
         $result_up = $conection->query($c_sql_up);
        
