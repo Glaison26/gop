@@ -197,7 +197,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         <form method="post">
             <input type="hidden" name="id" value="<?php echo $c_id; ?>">
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Nome </label>
+                <label class="col-sm-3 col-form-label">Nome (*)</label>
                 <div class="col-sm-6">
                     <input type="text" maxlength="120" class="form-control" name="nome" value="<?php echo $c_nome; ?>">
                 </div>
@@ -211,7 +211,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                         <option <?= ($c_tipo == 'F') ? 'selected' : '' ?>>Física</option>
                     </select>
                 </div>
-                <label class="col-sm-2 col-form-label">CNPJ/CPF</label>
+                <label class="col-sm-2 col-form-label">CNPJ/CPF (*)</label>
                 <div class="col-sm-2">
                     <input type="text" maxlength="18" class="form-control" name="cpfcnpj" placeholder="somente números" value="<?php echo $c_cnpj_cpf; ?>">
                 </div>
@@ -269,7 +269,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             </div>
 
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Fone I</label>
+                <label class="col-sm-3 col-form-label">Fone I (*)</label>
                 <div class="col-sm-2">
                     <input type="tel" maxlength="20" onkeyup="handlePhone(event)" id="fone1" class="form-control" name="fone1" value="<?php echo $c_fone1; ?>">
                 </div>
@@ -280,21 +280,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             </div>
 
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Endereço</label>
+                <label class="col-sm-3 col-form-label">Endereço (*)</label>
                 <div class="col-sm-6">
                     <input type="text" maxlength="120" id="endereco" class="form-control" name="endereco" value="<?php echo $c_endereco; ?>">
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Bairro</label>
+                <label class="col-sm-3 col-form-label">Bairro (*)</label>
                 <div class="col-sm-6">
                     <input type="text" maxlength="100" id="bairro" class="form-control" name="bairro" value="<?php echo $c_bairro; ?>">
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Cidade</label>
+                <label class="col-sm-3 col-form-label">Cidade (*)</label>
                 <div class="col-sm-6">
                     <input type="text" maxlength="100" id="cidade" class="form-control" name="cidade" value="<?php echo $c_cidade; ?>">
                 </div>
@@ -333,7 +333,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                         <option value="TO" <?= ($c_estado == 'TO') ? 'selected' : '' ?>>Tocantis</option>
                     </select>
                 </div>
-                <label class="col-sm-2 col-form-label">CEP</label>
+                <label class="col-sm-2 col-form-label">CEP (*)</label>
                 <div class="col-sm-2">
                     <input type="text" maxlength="10" id="cep" class="form-control" name="cep" value="<?php echo $c_cep; ?>">
                 </div>

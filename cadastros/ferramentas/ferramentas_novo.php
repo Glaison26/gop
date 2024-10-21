@@ -145,14 +145,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form method="post">
 
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Descrição</label>
+                <label class="col-sm-3 col-form-label">Descrição (*)</label>
                 <div class="col-sm-6">
                     <input type="text" maxlength="120" class="form-control" name="descricao" value="<?php echo $c_descricao; ?>">
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Patrimônio</label>
+                <label class="col-sm-3 col-form-label">Patrimônio (*)</label>
                 <div class="col-sm-2">
                     <input type="text" maxlength="15" class="form-control" name="patrimonio" value="<?php echo $c_patrimonio; ?>">
                 </div>
@@ -247,7 +247,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
 
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Data da Aquisição</label>
+                <label class="col-sm-3 col-form-label">Data da Aquisição (*)</label>
                 <div class="col-sm-2">
                     <input type="date" maxlength="10" class="form-control" id="dataaquisicao" name="dataaquisicao" value="<?php echo $d_dataaquisicao; ?>">
                 </div>

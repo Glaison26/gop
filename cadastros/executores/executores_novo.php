@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $c_contato = $_POST['contato'];
     $c_fone1 = $_POST['fone1'];
     $c_fone2 = $_POST['fone2'];
-    $c_fone3 = $_POST['fone3'];
+    //$c_fone3 = $_POST['fone3'];
     $n_salario = $_POST['salario'];
     $i_horastrab = $_POST['horastrab'];
     $n_valorhora = $_POST['valorhora'];
@@ -204,7 +204,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ?>
         <form method="post">
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Nome </label>
+                <label class="col-sm-3 col-form-label">Nome (*)</label>
                 <div class="col-sm-6">
                     <input type="text" maxlength="120" class="form-control" name="nome" value="<?php echo $c_nome; ?>">
                 </div>
@@ -218,7 +218,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <option>Física</option>
                     </select>
                 </div>
-                <label class="col-sm-2 col-form-label">CNPJ/CPF</label>
+                <label class="col-sm-2 col-form-label">CNPJ/CPF (*)</label>
                 <div class="col-sm-2">
                     <input type="text" maxlength="18" class="form-control" name="cpfcnpj" placeholder="somente números" value="<?php echo $c_cnpj_cpf; ?>">
                 </div>
@@ -269,7 +269,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
            
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Fone I</label>
+                <label class="col-sm-3 col-form-label">Fone I (*)</label>
                 <div class="col-sm-2">
                     <input type="tel" onkeyup="handlePhone(event)" maxlength="20" id="fone1" class="form-control" name="fone1" value="<?php echo $c_fone1; ?>">
                 </div>
@@ -280,21 +280,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
 
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Endereço</label>
+                <label class="col-sm-3 col-form-label">Endereço (*)</label>
                 <div class="col-sm-6">
                     <input type="text" maxlength="120" id="endereco" class="form-control" name="endereco" value="<?php echo $c_endereco; ?>">
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Bairro</label>
+                <label class="col-sm-3 col-form-label">Bairro (*)</label>
                 <div class="col-sm-6">
                     <input type="text" maxlength="100" id="bairro" class="form-control" name="bairro" value="<?php echo $c_bairro; ?>">
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Cidade</label>
+                <label class="col-sm-3 col-form-label">Cidade (*)</label>
                 <div class="col-sm-6">
                     <input type="text" maxlength="100" id="cidade" class="form-control" name="cidade" value="<?php echo $c_cidade; ?>">
                 </div>
@@ -334,7 +334,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </select>
 
                 </div>
-                <label class="col-sm-1 col-form-label">CEP</label>
+                <label class="col-sm-1 col-form-label">CEP (*)</label>
                 <div class="col-sm-2">
                     <input type="text" maxlength="10" id="cep" class="form-control" name="cep" value="<?php echo $c_cep; ?>">
                 </div>

@@ -131,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             <input type="hidden" name="id" value="<?php echo $c_id; ?>">
 
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Descrição</label>
+                <label class="col-sm-3 col-form-label">Descrição (*)</label>
                 <div class="col-sm-6">
                     <input type="text" maxlength="120" class="form-control" name="descricao" value="<?php echo $c_descricao; ?>">
                 </div>
@@ -161,7 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             </div>
 
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Responsável</label>
+                <label class="col-sm-3 col-form-label">Responsável (*)</label>
                 <div class="col-sm-6">
                     <input type="text" maxlength="100" class="form-control" name="responsavel" value="<?php echo $c_responsavel; ?>">
                 </div>
