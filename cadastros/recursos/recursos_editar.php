@@ -643,9 +643,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                                 <div class="col-sm-2">
                                     <select class="form-select form-select-lg mb-3" id="treinamento" name="treinamento" value="<?php echo $c_treinamento; ?>">
                                         <option Value='A' <?= ($c_treinamento == "A") ? 'selected' : '' ?>>A</option>
-                                        <option Value='B' <?= ($c_treinamento == "A") ? 'selected' : '' ?>>B</option>
-                                        <option Value='C' <?= ($c_treinamento == "A") ? 'selected' : '' ?>>C</option>
-                                        <option Value='D' <?= ($c_treinamento == "A") ? 'selected' : '' ?>>D</option>
+                                        <option Value='B' <?= ($c_treinamento == "B") ? 'selected' : '' ?>>B</option>
+                                        <option Value='C' <?= ($c_treinamento == "C") ? 'selected' : '' ?>>C</option>
+                                        <option Value='D' <?= ($c_treinamento == "D") ? 'selected' : '' ?>>D</option>
 
                                     </select>
                                 </div>
