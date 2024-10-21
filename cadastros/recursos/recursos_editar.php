@@ -92,6 +92,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $i_oficina = $registro['id_oficina'];
     $i_setor = $registro['id_setor'];
     $i_marca = $registro['id_marca'];
+    //
+    $c_comodato = $registro['tipo_comodato'];
+    $c_alugado = $registro['tipo_alugado'];
+    $c_equip_medico = $registro['tipo_medico'];
+    //
+    $c_empresa_loc = $registro['empresa_locacao'];
+    $c_medico = $registro['medico'];
+    $c_emp_comodato = $registro['empresa_comodato'];
+    //
+    $c_mantenabilidade = $registro['mantenabilidade'];
+    $c_treinamento = $registro['treinamento'];
 } else {
     // metodo post para atualizar dados
     $c_id = $_POST["id"];
@@ -135,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     do {
         if (empty($c_descricao) || empty($c_patrimonio) || empty($c_modelo) || empty($c_notafiscal)) {
             $msg_erro = "Campos Descrição, patrimonio, modelo, nota fiscal devem ser preenchidos!!";
-            
+
             break;
             if (($d_dataaquisicao == null)) {
                 $msg_erro = "Campos data da aquisição deve ser informado!!";
@@ -574,7 +585,73 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                                     <input type="text" maxlength="20" class="form-control" name="anvisa" value="<?php echo $c_anvisa; ?>">
                                 </div>
                             </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-3 col-form-label">Comodato</label>
+                                <div class="col-sm-2">
+                                    <select class="form-select form-select-lg mb-3" id="comodato" name="comodato" value="<?php echo $c_comodato; ?>">
+                                        <option value="N" <?= ($c_comodato == "N") ? 'selected' : '' ?>>Não</option>
+                                        <option Value='S' <?= ($c_comodato == "S") ? 'selected' : '' ?>>Sim</option>
+                                    </select>
+                                </div>
+                                <label class="col-sm-1 col-form-label">Emp. Comodato</label>
+                                <div class="col-sm-3">
+                                    <input type="text" maxlength="20" class="form-control" name="emp_comodato" value="<?php echo $c_emp_comodato; ?>">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-3 col-form-label">Equip Médico</label>
+                                <div class="col-sm-2">
+                                    <select class="form-select form-select-lg mb-3" id="equip_medico" name="equip_medico" value="<?php echo $c_equip_medico; ?>">
+                                        <option Value='N' <?= ($c_equip_medico == "N") ? 'selected' : '' ?>>Não</option>
+                                        <option Value='S' <?= ($c_equip_medico == "S") ? 'selected' : '' ?>>Sim</option>
+
+                                    </select>
+                                </div>
+                                <label class="col-sm-1 col-form-label">Médico</label>
+                                <div class="col-sm-3">
+                                    <input type="text" maxlength="20" class="form-control" name="medico" value="<?php echo $c_medico; ?>">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-3 col-form-label">Alugado</label>
+                                <div class="col-sm-2">
+                                    <select class="form-select form-select-lg mb-3" id="equip_alugado" name="equip_alugado" value="<?php echo $c_alugado; ?>">
+                                        <option Value='N' <?= ($c_alugado == "N") ? 'selected' : '' ?>>Não</option>
+                                        <option Value='S' <?= ($c_alugado == "S") ? 'selected' : '' ?>>Sim</option>
+
+                                    </select>
+                                </div>
+                                <label class="col-sm-1 col-form-label">Empresa</label>
+                                <div class="col-sm-3">
+                                    <input type="text" maxlength="20" class="form-control" name="empresa_loc" value="<?php echo $c_empresa_loc; ?>">
+                                </div>
+
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-3 col-form-label">Mantenabilidade</label>
+                                <div class="col-sm-1">
+                                    <select class="form-select form-select-lg mb-3" id="mantenabilidade" name="mantenabilidade" value="<?php echo $c_mantenabilidade; ?>">
+                                        <option Value='A' <?= ($c_mantenabilidade == "A") ? 'selected' : '' ?>>A</option>
+                                        <option Value='B' <?= ($c_mantenabilidade == "B") ? 'selected' : '' ?>>B</option>
+                                        <option Value='C' <?= ($c_mantenabilidade == "C") ? 'selected' : '' ?>>C</option>
+                                        <option Value='D' <?= ($c_mantenabilidade == "D") ? 'selected' : '' ?>>D</option>
+
+                                    </select>
+                                </div>
+                                <label class="col-sm-2 col-form-label">Treinamento</label>
+                                <div class="col-sm-2">
+                                    <select class="form-select form-select-lg mb-3" id="treinamento" name="treinamento" value="<?php echo $c_treinamento; ?>">
+                                        <option Value='A' <?= ($c_treinamento == "A") ? 'selected' : '' ?>>A</option>
+                                        <option Value='B' <?= ($c_treinamento == "A") ? 'selected' : '' ?>>B</option>
+                                        <option Value='C' <?= ($c_treinamento == "A") ? 'selected' : '' ?>>C</option>
+                                        <option Value='D' <?= ($c_treinamento == "A") ? 'selected' : '' ?>>D</option>
+
+                                    </select>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
 
                 </div> <!-- fim da aba de outros -->

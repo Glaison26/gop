@@ -76,6 +76,10 @@ $c_fabricante = '';
 $c_espaco = '';
 $c_centrodecusto = '';
 $c_oficina = '';
+$c_empresa_loc  = '';
+$c_medico = '';
+$c_emp_comodato = '';
+
 $c_obs = '';
 
 
@@ -122,6 +126,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $c_oficina = $_POST['oficina'];
     $c_setor = $_POST['setor'];
     $c_obs = $_POST['obs'];
+    $c_comodato = $_POST['comodato'];
+    $c_alugado = $_POST['equip_alugado'];
+    $c_equip_medico = $_POST['equip_medico'];
+    //
+    $c_empresa_loc = $_POST['empresa_loc'];
+    $c_medico = $_POST['medico'];
+    $c_emp_comodato = $_POST['emp_comodato'];
+    //
+    $c_mantenabilidade = $_POST['mantenabilidade'];
+    $c_treinamento = $_POST['treinamento'];
 
     do {
         if (empty($c_descricao) || empty($c_patrimonio) || empty($c_modelo) || empty($c_notafiscal)) {
@@ -197,9 +211,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // faço a inclusão da tabela com sql
         $c_sql = "INSERT INTO recursos (id_espacofisico, id_fabricante, id_fornecedor, id_grupo, id_centrodecusto, id_oficina, id_setor, id_marca, descricao, patrimonio," .
             " modelo, numeroserie, estado, notafiscal, datacadastro, datagarantia, valoraquisicao, valordepreciado, ultimapreventiva, ultimamanutencao," .
-            " dataaquisicao, ativo, motivoinativo, reganvisa, obs) VALUES ('$i_espaco', '$i_fabricante', '$i_fornecedor', '$i_grupo', '$i_centrodecusto', '$i_oficina', '$i_setor'," .
+            " dataaquisicao, ativo, motivoinativo, reganvisa, obs, tipo_comodato, tipo_medico, tipo_alugado, 
+            empresa_locacao, medico, empresa_comodato, mantenabilidade,treinamento) 
+            VALUES ('$i_espaco', '$i_fabricante', '$i_fornecedor', '$i_grupo', '$i_centrodecusto', '$i_oficina', '$i_setor'," .
             " '$i_marca', '$c_descricao', '$c_patrimonio' ,'$c_modelo', '$c_numeroserie', '$c_estado', '$c_notafiscal', '$d_datacadastro', '$d_datagarantia', '$n_valoraquisicao'," .
-            " '$n_valordepreciado', '$d_ultimapreventiva', '$d_dataultimamanutencao', '$d_dataaquisicao','$c_ativo','$c_motivo', '$c_anvisa', '$c_obs')";
+            " '$n_valordepreciado', '$d_ultimapreventiva', '$d_dataultimamanutencao', '$d_dataaquisicao','$c_ativo','$c_motivo', '$c_anvisa', '$c_obs',
+            '$c_comodato','$c_equip_medico','$c_alugado', '$c_empresa_loc','$c_medico','$c_emp_comodato', '$c_mantenabilidade', '$c_treinamento')";
 
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
@@ -536,6 +553,71 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="col-sm-3">
                                     <input type="text" maxlength="20" class="form-control" name="anvisa" value="<?php echo $c_anvisa; ?>">
                                 </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-3 col-form-label">Comodato</label>
+                                <div class="col-sm-2">
+                                    <select class="form-select form-select-lg mb-3" id="comodato" name="comodato" value="<?php echo $c_comodato; ?>">
+                                        <option Value='N'>Não</option>
+                                        <option Value='S'>Sim</option>
+                                    </select>
+                                </div>
+                                <label class="col-sm-1 col-form-label">Emp. Comodato</label>
+                                <div class="col-sm-3">
+                                    <input type="text" maxlength="20" class="form-control" name="emp_comodato" value="<?php echo $c_emp_comodato; ?>">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-3 col-form-label">Equip Médico</label>
+                                <div class="col-sm-2">
+                                    <select class="form-select form-select-lg mb-3" id="equip_medico" name="equip_medico" value="<?php echo $c_equip_medico; ?>">
+                                        <option Value='N'>Não</option>
+                                        <option Value='S'>Sim</option>
+
+                                    </select>
+                                </div>
+                                <label class="col-sm-1 col-form-label">Médico</label>
+                                <div class="col-sm-3">
+                                    <input type="text" maxlength="20" class="form-control" name="medico" value="<?php echo $c_medico; ?>">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-3 col-form-label">Alugado</label>
+                                <div class="col-sm-2">
+                                    <select class="form-select form-select-lg mb-3" id="equip_alugado" name="equip_alugado" value="<?php echo $c_equip_alugado; ?>">
+                                        <option Value='N'>Não</option>
+                                        <option Value='S'>Sim</option>
+
+                                    </select>
+                                </div>
+                                <label class="col-sm-1 col-form-label">Empresa</label>
+                                <div class="col-sm-3">
+                                    <input type="text" maxlength="20" class="form-control" name="empresa_loc" value="<?php echo $c_empresa_loc; ?>">
+                                </div>
+
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-3 col-form-label">Mantenabilidade</label>
+                                <div class="col-sm-1">
+                                    <select class="form-select form-select-lg mb-3" id="mantenabilidade" name="mantenabilidade" value="<?php echo $c_mantenabilidade; ?>">
+                                        <option Value='A'>A</option>
+                                        <option Value='B'>B</option>
+                                        <option Value='C'>C</option>
+                                        <option Value='D'>D</option>
+
+                                    </select>
+                                </div>
+                                <label class="col-sm-2 col-form-label">Treinamento</label>
+                                <div class="col-sm-2">
+                                    <select class="form-select form-select-lg mb-3" id="treinamento" name="treinamento" value="<?php echo $c_treinamento; ?>">
+                                        <option Value='A'>A</option>
+                                        <option Value='B'>B</option>
+                                        <option Value='C'>C</option>
+                                        <option Value='D'>D</option>
+
+                                    </select>
+                                </div>
+                               
                             </div>
                         </div>
                     </div>
