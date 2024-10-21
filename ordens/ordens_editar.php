@@ -19,13 +19,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $result = $conection->query($c_sql);
     $registro = $result->fetch_assoc();
     // varuavel para colocar campos em somente leitura para ordens já fechadas
-    if ($registro['status']=='C'){
-      $c_estado = "readonly";
-      $c_ativa = "disabled";
-    }
-    else{
-      $c_estado = "";
-      $c_ativa = "";
+    if ($registro['status'] == 'C' || $registro['status'] == 'X') {
+        $c_estado = "readonly";
+        $c_ativa = "disabled";
+    } else {
+        $c_estado = "";
+        $c_ativa = "";
     }
 
     if (!$registro) {
@@ -38,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         $c_sql_recurso = "Select id, descricao, patrimonio from recursos where id='$i_recurso'";
         $result_recurso = $conection->query($c_sql_recurso);
         $registro_recurso = $result_recurso->fetch_assoc();
-        $c_recurso = $registro_recurso['patrimonio'].' - '.$registro_recurso['descricao'];
+        $c_recurso = $registro_recurso['patrimonio'] . ' - ' . $registro_recurso['descricao'];
     }
     // sql para pegar espaço fisico se os for de espaço fisico
     if ($registro['tipo'] == 'E') {
@@ -285,6 +284,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                 <li role="presentation"><a href="#aba_solicitacao" aria-controls="aba_solicitacao" role="tab" data-toggle="tab">Informação da Solicitação</a></li>
                 <li role="presentation"><a href="#aba_atendimento" aria-controls="aba_atendimento" role="tab" data-toggle="tab">Informações do Atendimento</a></li>
                 <li role="presentation"><a href="#aba_conclusao" aria-controls="aba_conclusao" role="tab" data-toggle="tab">Informações da Conclusão</a></li>
+                <?php
+                if ($registro['status'] == 'X')
+                    echo '<li role="presentation"><a href="#aba_cancelamento" aria-controls="aba_cancelamento" role="tab" data-toggle="tab">Cancelamento</a></li>';
+                ?>
             </ul>
             <div class="tab-content">
                 <!-- aba de informações da ordem-->
@@ -355,7 +358,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                         <div class="row mb-8">
                             <label class="col-sm-2 col-form-label">Setor </label>
                             <div class="col-sm-3">
-                                <select  <?php echo $c_ativa; ?>  class="form-select form-select-lg mb-3" id="setor" name="setor" <?php echo $c_estado; ?>>
+                                <select <?php echo $c_ativa; ?> class="form-select form-select-lg mb-3" id="setor" name="setor" <?php echo $c_estado; ?>>
 
                                     <?php
                                     // select da tabela de setores
@@ -380,14 +383,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                         <div class="row mb-8">
                             <label class="col-sm-2 col-form-label">Tipo da Ordem</label>
                             <div class="col-sm-2">
-                                <select <?php echo $c_estado; ?> <?php echo $c_ativa; ?>  onchange="verifica(value)" class="form-select form-select-lg mb-3" id="tipo" name="tipo" value="<?php echo $c_tipo; ?>">
+                                <select <?php echo $c_estado; ?> <?php echo $c_ativa; ?> onchange="verifica(value)" class="form-select form-select-lg mb-3" id="tipo" name="tipo" value="<?php echo $c_tipo; ?>">
                                     <option <?= ($registro['tipo_ordem'] == 'C') ? 'selected' : '' ?> value='C'>Corretiva</option>
                                     <option <?= ($registro['tipo_ordem'] == 'P') ? 'selected' : '' ?> value="P">Preventiva</option>
                                 </select>
                             </div>
                             <label class="col-sm-2 col-form-label">Corretiva</label>
                             <div class="col-sm-2">
-                                <select <?php echo $hab_corretiva ?> <?php echo $c_ativa; ?>  class="form-select form-select-lg mb-3" id="tipo_corretiva" name="tipo_corretiva" value="<?php echo $c_tipo_corretiva; ?>">
+                                <select <?php echo $hab_corretiva ?> <?php echo $c_ativa; ?> class="form-select form-select-lg mb-3" id="tipo_corretiva" name="tipo_corretiva" value="<?php echo $c_tipo_corretiva; ?>">
                                     <option value='P' <?= ($registro['tipo_corretiva'] == 'P') ? 'selected' : '' ?>>Programada</option>
                                     <option value='U' <?= ($registro['tipo_corretiva'] == 'U') ? 'selected' : '' ?>>Urgênte</option>
                                 </select>
@@ -398,7 +401,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                             <label class="col-sm-2 col-form-label">Tipo da Preventiva</label>
                             <div class="col-sm-2">
 
-                                <select <?php echo $hab_preventiva ?> <?php echo $c_ativa; ?>  class="form-select form-select-lg mb-3" id="tipo_preventiva" name="tipo_preventiva" value="<?php echo $c_tipo_preventiva; ?>">
+                                <select <?php echo $hab_preventiva ?> <?php echo $c_ativa; ?> class="form-select form-select-lg mb-3" id="tipo_preventiva" name="tipo_preventiva" value="<?php echo $c_tipo_preventiva; ?>">
                                     <option value='R' <?= ($registro['tipo_corretiva'] == 'R') ? 'selected' : '' ?>>Rotina</option>
                                     <option value='P' <?= ($registro['tipo_corretiva'] == 'P') ? 'selected' : '' ?>>Preditiva</option>
                                     <option value='S' <?= ($registro['tipo_corretiva'] == 'S') ? 'selected' : '' ?>>Sistematica</option>
@@ -438,7 +441,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">Oficina </label>
                             <div class="col-sm-3">
-                                <select <?php echo $c_ativa; ?>  class="form-select form-select-lg mb-3" id="oficina" name="oficina" <?php echo $c_estado; ?>>
+                                <select <?php echo $c_ativa; ?> class="form-select form-select-lg mb-3" id="oficina" name="oficina" <?php echo $c_estado; ?>>
 
                                     <?php
                                     // select da tabela de oficinas
@@ -481,14 +484,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
 
                             <label class="col-sm-2 col-form-label">Situação</label>
                             <div class="col-sm-2">
-                                <select  <?php echo $c_estado; ?> <?php echo $c_ativa; ?>  onchange="conformidade(value)" class="form-select form-select-lg mb-3" id="situacao" name="situacao" value="<?php echo $c_situacao; ?>">
+                                <select <?php echo $c_estado; ?> <?php echo $c_ativa; ?> onchange="conformidade(value)" class="form-select form-select-lg mb-3" id="situacao" name="situacao" value="<?php echo $c_situacao; ?>">
                                     <option <?= ($registro['situacao'] == 'C') ? 'selected' : '' ?> value='C'>Conforme</option>
                                     <option <?= ($registro['situacao'] == 'N') ? 'selected' : '' ?> value="N">Não Conforme</option>
                                 </select>
                             </div>
                             <label class="col-sm-2 col-form-label">Motivo de Não Conformidade</label>
                             <div class="col-sm-2">
-                                <select <?php echo $c_hab_nao_conformidade ?> <?php echo $c_ativa; ?>  class="form-select form-select-lg mb-3" id="nao_conforme" name="nao_conforme" value="<?php echo $c_nao_conforme; ?>">
+                                <select <?php echo $c_hab_nao_conformidade ?> <?php echo $c_ativa; ?> class="form-select form-select-lg mb-3" id="nao_conforme" name="nao_conforme" value="<?php echo $c_nao_conforme; ?>">
                                     <option value='N'>Não se aplica</option>
                                     <option <?= ($registro['motivo_naoconformidade'] == 'D') ? 'selected' : '' ?> value='D'>Descontinuidade</option>
                                     <option <?= ($registro['motivo_naoconformidade'] == 'R') ? 'selected' : '' ?> value="R">Re-Classificação</option>
@@ -517,7 +520,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                         <div class="row mb-8">
                             <label class="col-md-2 form-label">Data Entrega</label>
                             <div class="col-sm-2">
-                                <input  type="Date" class="form-control" name="data_entrega" id="data_entrega" value='<?php echo $c_data_entrega; ?>'>
+                                <input type="Date" class="form-control" name="data_entrega" id="data_entrega" value='<?php echo $c_data_entrega; ?>'>
                             </div>
                             <label class="col-md-1 form-label">Hora Entrega</label>
                             <div class="col-sm-2">
@@ -544,11 +547,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                             </div>
                             <label class="col-sm-1 col-form-label">Valor de serviço</label>
                             <div class="col-sm-2">
-                                <input  <?php echo $c_estado; ?> type="text" class="form-control" name="valor_servico" id="valor_servico" value="<?php echo $c_valor_servico; ?>">
+                                <input <?php echo $c_estado; ?> type="text" class="form-control" name="valor_servico" id="valor_servico" value="<?php echo $c_valor_servico; ?>">
                             </div>
-                            <label  <?php echo $c_estado; ?> class="col-sm-1 col-form-label">Valor de Material</label>
+                            <label class="col-sm-1 col-form-label">Valor de Material</label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control" name="valor_material" id="valor_material" value="<?php echo $c_valor_material; ?>">
+                                <input <?php echo $c_estado; ?> type="text" class="form-control" name="valor_material" id="valor_material" value="<?php echo $c_valor_material; ?>">
                             </div>
                         </div>
                         <br>
@@ -557,15 +560,63 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                             <div class="col-sm-8">
                                 <textarea readonly class="form-control" id="conclusao" name="conclusao" rows="6"><?php echo $c_conclusao ?></textarea>
                             </div>
+
                         </div>
                         <br>
+                    </div>
+                </div>
+                <!-- aba de informações de cancelamento quando houver-->
+                <?php
+                if ($registro['status'] == 'X') {
+                    $i_canc = $registro['id_resp_cancelamento'];
+                    $c_sql_canc = "select nome from usuarios where id='$i_canc'";
+                    $result_canc = $conection->query($c_sql_canc);
+                    $c_linha_canc = $result_canc->fetch_assoc();
+                    $c_resp_cancelamento = $c_linha_canc['nome'];
+                    //
+                    $c_data_cancelamento = $registro['data_cancelamento'];
+                    $c_hora_cancelamento = $registro['hora_cancelamento'];
+                    $c_motivo_cancelamento = $registro['motivo_cancelamento'];
+                }
+                ?>
+
+                <div role="tabpanel" class="tab-pane" id="aba_cancelamento">
+                    <div style="padding-top:15px;padding-left:20px;">
+                        <div class="row mb-8">
+                            <label <?php echo $c_estado; ?> class="col-sm-2 col-form-label">Cancelado por</label>
+                            <div class="col-sm-6">
+                                <input readonly type="text" class="form-control" name="resp_cancelamento" id="resp_cancelamento" value="<?php echo $c_resp_cancelamento; ?>">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row mb-8">
+                            <label class="col-md-2 form-label">Data Cancelamento</label>
+                            <div class="col-sm-2">
+                                <input readonly type="Date" class="form-control" name="data_cancelamento" id="hora_cancelamento" value='<?php echo $c_data_cancelamento; ?>'>
+                            </div>
+                            <label class="col-md-2 form-label">Hora Cancelamento</label>
+                            <div class="col-sm-2">
+                                <input readonly type="time" class="form-control" name="hora_cancelamento" id="hora_cancelamento" value="<?php echo $c_hora_cancelamento ?>">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Motivo</label>
+                            <div class="col-sm-8">
+                                <textarea readonly class="form-control" id="motivo_cancelamento" name="motivo_cancelamento" rows="6"><?php echo $c_motivo_cancelamento ?></textarea>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
             <hr>
             <div class="row mb-3">
                 <div class="offset-sm-0 col-sm-3">
-                    <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
+                    <?php
+                    if ($registro['status'] <> 'X')
+                        echo '<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-saved"></span> Salvar</button>';
+                    ?>
                     <a class='btn btn-danger' href='/gop/ordens/ordens_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
                 </div>
             </div>
