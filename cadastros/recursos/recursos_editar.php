@@ -142,6 +142,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $c_oficina = $_POST['oficina'];
     $c_setor = $_POST['setor'];
     $c_obs = $_POST['obs'];
+    $c_comodato = $_POST['comodato'];
+    $c_alugado = $_POST['equip_alugado'];
+    $c_equip_medico = $_POST['equip_medico'];
+    //
+    $c_empresa_loc = $_POST['empresa_loc'];
+    $c_medico = $_POST['medico'];
+    $c_emp_comodato = $_POST['emp_comodato'];
+    //
+    $c_mantenabilidade = $_POST['mantenabilidade'];
+    $c_treinamento = $_POST['treinamento'];
 
     do {
         if (empty($c_descricao) || empty($c_patrimonio) || empty($c_modelo) || empty($c_notafiscal)) {
@@ -219,10 +229,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         $c_sql = "Update recursos" .
             " SET id_espacofisico='$i_espaco', id_fabricante='$i_fabricante', id_fornecedor='$i_fornecedor', id_grupo='$i_grupo', id_centrodecusto='$i_centrodecusto'," .
             " id_oficina='$i_oficina', id_setor='$i_setor', id_marca='$i_marca', descricao='$c_descricao', patrimonio='$c_patrimonio'," .
-            " modelo='$c_modelo', numeroserie='$c_numeroserie', estado='$c_estado', notafiscal='$c_notafiscal', datacadastro='$d_dataaquisicao', datagarantia='$d_datagarantia'," .
-            " valoraquisicao='$n_valoraquisicao', valordepreciado='$n_valordepreciado', ultimapreventiva='$d_ultimapreventiva', ultimamanutencao='$d_dataultimamanutencao'," .
-            " dataaquisicao='$d_dataaquisicao', ativo='$c_ativo', motivoinativo='$c_motivo', reganvisa='$c_anvisa', obs='$c_obs'" .
-            " where id=$c_id";
+            " modelo='$c_modelo', numeroserie='$c_numeroserie', estado='$c_estado', notafiscal='$c_notafiscal',
+             datacadastro='$d_dataaquisicao', datagarantia='$d_datagarantia'," .
+            " valoraquisicao='$n_valoraquisicao', valordepreciado='$n_valordepreciado', ultimapreventiva='$d_ultimapreventiva',
+             ultimamanutencao='$d_dataultimamanutencao'," .
+            " dataaquisicao='$d_dataaquisicao', ativo='$c_ativo', motivoinativo='$c_motivo', reganvisa='$c_anvisa', obs='$c_obs'," .
+            "tipo_comodato = '$c_comodato', tipo_medico='$c_equip_medico', tipo_alugado='$c_alugado', empresa_locacao='$c_empresa_loc',
+             medico='$c_medico', empresa_comodato='$c_emp_comodato', mantenabilidade='$c_mantenabilidade',treinamento='$c_treinamento'". 
+             " where id=$c_id";
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
         if (!$result) {
@@ -278,7 +292,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             <!-- abas de cadastro e cadstro de recursos -->
             <input type="hidden" name="id" value="<?php echo $c_id; ?>">
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#apresentacao" aria-controls="apresentacao" role="tab" data-toggle="tab">Apresentção</a></li>
+                <li role="presentation" class="active"><a href="#apresentacao" aria-controls="apresentacao" role="tab" data-toggle="tab">Apresentação</a></li>
                 <li role="presentation"><a href="#definicao" aria-controls="cadastro" role="tab" data-toggle="tab">Definição e Localização</a></li>
                 <li role="presentation"><a href="#outras" aria-controls="definicao" role="tab" data-toggle="tab">Outras Informações</a></li>
                 <li role="presentation"><a href="#obs" aria-controls="obs" role="tab" data-toggle="tab">Observações</a></li>

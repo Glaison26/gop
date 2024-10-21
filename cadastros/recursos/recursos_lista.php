@@ -5,6 +5,7 @@ if (!isset($_SESSION['newsession'])) {
 }
 include("../../conexao.php");
 include("../../links.php");
+// 
 ?>
 <!doctype html>
 <html lang="en">
@@ -135,6 +136,7 @@ include("../../links.php");
                    
                     <td>
                     <a class='btn btn-secondary btn-sm' href='/gop/cadastros/recursos/recursos_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                    <a class='btn btn-success btn-sm' href='/gop/cadastros/recursos/recursos_historico.php?id=$c_linha[id]'><img src='\gop\images\historia.png' alt='20' width='20' height='20'> Histórico</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
