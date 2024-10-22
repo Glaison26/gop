@@ -77,8 +77,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $d_dataultimamanutencao = new DateTime($registro['ultimamanutencao']);
     $d_dataultimamanutencao = $d_dataultimamanutencao->format('Y-m-d');
 
-    $n_valordepreciado = $registro['valordepreciado'];
-    $n_valoraquisicao = $registro['valoraquisicao'];
+    $n_valordepreciado = number_format($registro['valordepreciado'], 2, '.', '');
+    
+    $n_valoraquisicao =  number_format($registro['valoraquisicao'], 2, '.', '');
     $c_ativo = $registro['ativo'];
     $c_motivo = $registro['motivoinativo'];
     $c_anvisa = $registro['reganvisa'];

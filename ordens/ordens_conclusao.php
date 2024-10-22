@@ -14,6 +14,13 @@ date_default_timezone_set('America/Sao_Paulo');
 $i_id = $_SESSION['id_ordem']; // id da ordem de serviço
 $c_conclusao = "";
 $msg_erro = "";
+// pego outros dados da ordem de servico
+$c_sql_ordem = "select ordens.id, ordens.id, ordens.tipo, ordens.id_recurso, ordens.valor_servico, ordens.valor_material from ordens where ordens.id='$i_id'";
+$result = $conection->query($c_sql_ordem);
+$c_linha_ordem = $result->fetch_assoc();
+//echo $c_sql_ordem;
+
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     do {
@@ -42,14 +49,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $result_up = $conection->query($c_sql_up);
             }
         }
-        // atualizo o status da ordem de servico e colo data hora e texto de conclusão
-        $c_data_conclusao = $_POST['data_conclusao'];
-        $c_hora_conclusao = $_POST['hora_conclusao'];
-        $c_conclusao = $_POST['conclusao'];
-        $c_sql_up = "update ordens set status='C', data_conclusao='$c_data_conclusao', 
-           hora_conclusao='$c_hora_conclusao', conclusao='$c_conclusao' where id=$i_id";
-        $result_up = $conection->query($c_sql_up);
+       
         // envio de email para o usuário solicitante
+        // 
+        // envio valores de materiais e serviços para valordepreciado
+        if ($c_linha_ordem['tipo'] == 'R') {
+            $n_valor_total = $c_linha_ordem['valor_material'] + $c_linha_ordem['valor_servico'];
+            // atualizo valordepreciado
+            $i_id_recurso = $c_linha_ordem['id_recurso'];
+            $c_sql_up = "update recursos set valordepreciado=(valordepreciado+'$n_valor_total') where recursos.id='$i_id_recurso'";
+            $result = $conection->query($c_sql_up);
+
+        }
+       
+         // atualizo o status da ordem de servico e colo data hora e texto de conclusão
+         $c_data_conclusao = $_POST['data_conclusao'];
+         $c_hora_conclusao = $_POST['hora_conclusao'];
+         $c_conclusao = $_POST['conclusao'];
+ 
+         $c_sql_up = "update ordens set status='C', data_conclusao='$c_data_conclusao', 
+            hora_conclusao='$c_hora_conclusao', conclusao='$c_conclusao' where id=$i_id";
+         $result_up = $conection->query($c_sql_up);
 
         header('location: /gop/ordens/ordens_gerenciar.php');
     } while (false);
@@ -74,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             return confirm('Tem certerza que deseja Concluir a Ordem de Serviço?');
         }
     </script>
-    
+
     <div class="container -my5">
         <div style="padding-top:5px;">
             <div class="panel panel-primary class">
