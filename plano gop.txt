@@ -22,4 +22,15 @@ function pergunta(){
    <input type=submit value=enviar name=enviarform onclick='return pergunta();'>
 </form>
 
+function mostrarLegenda()
+{
+    var div;
+    var estilo;
+    div = document.getElementById("MostraLegenda");
+    estilo = div.style.display;
+    div.style.display = (estilo == 'none') ? 'none' : 'block';
+
+    return true;
+}
+
 

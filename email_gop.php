@@ -37,7 +37,6 @@ try {
     $mail->Subject = $c_assunto;
     $mail->Body    = $c_body;
 
-
     $mail->send();
     echo 'Message has been sent';
 } catch (Exception $e) {

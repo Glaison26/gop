@@ -106,8 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         // chamo o envio de email
         // barra de progresso
-        
-        
+
         if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
             $c_sql =    "SELECT MAX(solicitacao.ID) AS id_solicitacao FROM solicitacao";
 
@@ -120,10 +119,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             include('../email_gop.php');
         }
         header('location: /gop/solicitacao/solicitacao_gerada.php?id_recurso=$i_id_recurso');
-
-
-
-      
     } while (false);
 }
 ?>
@@ -147,7 +142,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     </script>
 
-
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
@@ -161,6 +155,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
             </div>
             <h5>Digite as informações da solicitação e clique em finalizar para gravar a solicitação. Todos os Campos são obrigatórios</h5>
+        </div>
+        <div class="container" style ="display: none">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="progress blue">
+                        <span class="progress-left">
+                            <span class="progress-bar"></span>
+                        </span>
+                        <span class="progress-right">
+                            <span class="progress-bar"></span>
+                        </span>
+                        <div class="progress-value">Gerando...</div>
+                    </div>
+                </div>
+            </div>
         </div>
         <?php
         if (!empty($msg_erro)) {
