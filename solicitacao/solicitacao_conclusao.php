@@ -107,6 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // chamo o envio de email
         // barra de progresso
         
+        
         if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
             $c_sql =    "SELECT MAX(solicitacao.ID) AS id_solicitacao FROM solicitacao";
 
