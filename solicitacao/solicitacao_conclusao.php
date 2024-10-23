@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             status, classificacao,tipo,descricao, id_ocorrencia) value ('$i_setor', '$i_solicitante', '$i_id_espaco', '$d_data_abertura', 
             '$c_agora', 'A', 'E', '$c_tipo', '$c_descricao', $i_ocorrencia)";
         }
-        echo $c_sql;
+        //echo $c_sql;
         $result = $conection->query($c_sql);
         $c_email_oficina = "";
         // verifico se a query foi correto
@@ -105,7 +105,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
         }
         // chamo o envio de email
-
+        // barra de progresso
+        
         if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
             $c_sql =    "SELECT MAX(solicitacao.ID) AS id_solicitacao FROM solicitacao";
 
@@ -121,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 
-        //header('location: /gop/menu.php');
+      
     } while (false);
 }
 ?>
@@ -133,6 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../css/style2.css" rel="stylesheet" />
 
 </head>
 
