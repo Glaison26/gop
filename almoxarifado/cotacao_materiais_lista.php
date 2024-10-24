@@ -183,21 +183,19 @@ include("../links.php");
     <br>
     <div class="container-fluid">
 
-        <button type="button" title="Inclusão de Nova Cotação" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
+        <button type="button" title="Inclusão de Novo Material para Cotar" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
             Incluir
         </button>
-        <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
+        <a class="btn btn-secondary btn-sm" href="/gop/almoxarifado/cotacao_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
         <table class="table table display table-bordered tabunidades">
             <thead class="thead">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Descritivo</th>
-                    <th scope="col">Data</th>
-                    <th scope="col">Responsável</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Encerramento</th>
+                    <th scope="col">Material</th>
+                    <th scope="col">Quantidade</th>
+                    <th scope="col">Unidade</th>
                     <th scope="col">Opções</th>
                 </tr>
             </thead>
@@ -236,7 +234,7 @@ include("../links.php");
                     <td>$c_encerramento</td>
                     <td>
                     <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Cotação'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
-                    <a class='btn btn-info btn-sm' href='/gop/almoxarifado/cotacao_materiais_lista.php?id=$c_linha[id]'><img src='\gop\images\materiais_cotacao.png' alt='16' width='25' height='16'> Meteriais</a>
+                    <a class='btn btn-info btn-sm' href='#'><img src='\gop\images\materiais_cotacao.png' alt='16' width='25' height='16'> Meteriais</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
