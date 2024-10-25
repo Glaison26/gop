@@ -5,7 +5,7 @@ if (!isset($_SESSION['newsession'])) {
 }
 include("../conexao.php");
 include("../links2.php");
-$i_id = $_GET["id"];
+
 
 if (isset($_GET['id'])) {
     $i_id = $_GET['id'];
@@ -82,7 +82,7 @@ if (isset($_GET['id'])) {
         });
     </script>
 
-    
+
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
@@ -100,9 +100,8 @@ if (isset($_GET['id'])) {
             <h5>Materiais para a Cotação No. <?php echo $i_id;
                                                 echo $_SESSION['sql'] ?> </h5>
         </div>
-        <button type="button" title="Inclusão de Novo Material para Cotar" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
-            Incluir
-        </button>
+
+        <a class="btn btn-success btn-sm" href="/gop/almoxarifado/cotacao_materiais_novo.php"><span class="glyphicon glyphicon-plus"></span>Incluir</a>
         <a class="btn btn-info btn-sm" href="/gop/almoxarifado/cotacao_lista.php"><img src='\gop\images\ofornecedor.png' alt='16' width='30' height='16'>Fornecedores</a>
         <a class="btn btn-secondary btn-sm" href="/gop/almoxarifado/cotacao_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
@@ -119,7 +118,6 @@ if (isset($_GET['id'])) {
             </thead>
             <tbody>
                 <?php
-
                 // faço a Leitura da tabela com sql
                 $c_sql = "SELECT cotacao_materiais.id, materiais.descricao AS material, unidades.descricao AS unidade,
                 cotacao_materiais.quantidade
@@ -133,7 +131,6 @@ if (isset($_GET['id'])) {
                 if (!$result) {
                     die("Erro ao Executar Sql!!" . $conection->connect_error);
                 }
-
                 // insiro os registro do banco de dados na tabela 
                 while ($c_linha = $result->fetch_assoc()) {
 
@@ -145,7 +142,7 @@ if (isset($_GET['id'])) {
                     <td>$c_linha[unidade]</td>
                   
                     <td>
-                    <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Cotação'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
+                    <a class='btn btn-secondary btn-sm' href='/gop/almoxarifado/cotacao_materiais_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
@@ -159,114 +156,6 @@ if (isset($_GET['id'])) {
         </table>
     </div>
 
-    <!-- janela Modal para inclusão de registro -->
-    <div class="modal fade" class="modal-dialog modal-lg" id="novoModal" name="novoModal" tabindex="-1" role="dialog" aria-labelledby="novoModal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Inclusão de novo Material para Cotação</h4>
-                </div>
-                <div class="modal-body">
-                    <div class='alert alert-warning' role='alert'>
-                        <h5>Campos com (*) são obrigatórios</h5>
-                    </div>
-                    <form id="frmadd" action="">
-
-                        <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label">Material</label>
-                            <div class="col-sm-10">
-                                <select class="form-select form-select-lg mb-3" id="add_material" name="add_material">
-
-                                    <?php
-                                    if ($c_indice == '')
-                                        echo "<option></option>";
-                                    // select da tabela de Material
-                                    $c_sql_material = "SELECT materiais.id, materiais.descricao FROM materiais ORDER BY materiais.descricao";
-                                    $result_material = $conection->query($c_sql_material);
-                                    while ($c_linha = $result_material->fetch_assoc()) {
-
-                                        echo "  
-                          <option $op>$c_linha[descricao]</option>
-                        ";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label">Quantidade</label>
-                            <div class="col-sm-3">
-                                <input type="text" class="form-control" id="add_quantidade" name="add_quantidade">
-                            </div>
-                           
-                        </div>
-                        <div  class="row mb-3">
-                            <label class="col-sm-2 col-form-label">Unidade</label>
-                            <div class="col-sm-4">
-                                <select class="form-select form-select-lg mb-3" id="add_unidade" name="add_unidade">
-
-                                    <?php
-
-                                    // select da tabela de Unidades
-                                    $c_sql_unidade = "SELECT unidades.id, unidades.descricao FROM unidades ORDER BY unidades.descricao";
-                                    $result_unidade = $conection->query($c_sql_unidade);
-                                    while ($c_linha = $result_unidade->fetch_assoc()) {
-
-                                        echo "  
-                          <option>$c_linha[descricao]</option>
-                        ";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Fechar</button>
-
-                        </div>
-                    </form>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Modal para edição dos dados -->
-    <div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="editmodal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Editar Cotação</h4>
-                </div>
-                <div class="modal-body">
-                    <div class='alert alert-warning' role='alert'>
-                        <h5>Campos com (*) são obrigatórios</h5>
-                    </div>
-                    <form id="frmup" method="POST" action="">
-                        <input type="hidden" id="up_idField" name="up_idField">
-
-
-                        <div class="row mb-3">
-                            <label class="col-md-2 form-label">Descritivo (*)</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="up_descritivo" id="up_descritivo">
-                            </div>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                            <button class="btn btn-secondary" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Fechar</button>
-                        </div>
-                    </form>
-                </div>
-
-            </div>
-        </div>
-    </div>
 
 </body>
 
