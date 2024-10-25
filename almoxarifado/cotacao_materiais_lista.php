@@ -6,6 +6,14 @@ if (!isset($_SESSION['newsession'])) {
 include("../conexao.php");
 include("../links2.php");
 $i_id = $_GET["id"];
+
+if (isset($_GET['id'])) {
+    $i_id = $_GET['id'];
+    $_SESSION['id_cotacao'] = $i_id;
+} else {
+    $i_id = $_SESSION['id_cotacao'];
+}
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -74,108 +82,7 @@ $i_id = $_GET["id"];
         });
     </script>
 
-    </script>
-    <!-- Função javascript e ajax para inclusão dos dados -->
-    <script type="text/javascript">
-        $(document).on('submit', '#frmadd', function(e) {
-            e.preventDefault();
-            var c_material = $('#add_material').val();
-            var c_quantidade = $('#add_quantidade').val();
-            var c_unidade = $('#add_unidade').val();
-
-
-            if (c_material != '') {
-
-                $.ajax({
-                    url: "cotacao_materiais_novo.php",
-                    type: "post",
-                    data: {
-                        c_material: c_material,
-                        c_quantidade: c_quantidade,
-                        c_unidade:c_unidade
-
-                    },
-                    success: function(data) {
-                        var json = JSON.parse(data);
-                        var status = json.status;
-
-                        location.reload();
-                        if (status == 'true') {
-
-                            $('#novoModal').modal('hide');
-                            location.reload();
-                        } else {
-                            alert('falha ao incluir dados');
-                        }
-                    }
-                });
-            } else {
-                alert('Preencha todos os campos obrigatórios');
-            }
-        });
-    </script>
-
-    <!-- Coleta dados da tabela para edição do registro -->
-    <script>
-        $(document).ready(function() {
-
-            $('.editbtn').on('click', function() {
-
-                $('#editmodal').modal('show');
-
-                $tr = $(this).closest('tr');
-
-                var data = $tr.children("td").map(function() {
-                    return $(this).text();
-                }).get();
-
-                console.log(data);
-
-                $('#up_idField').val(data[0]);
-                $('#up_descritivo').val(data[1]);
-
-            });
-        });
-    </script>
-
-    <script type="text/javascript">
-        ~
-        // Função javascript e ajax para Alteração dos dados
-        $(document).on('submit', '#frmup', function(e) {
-            e.preventDefault();
-            var c_id = $('#up_idField').val();
-            var c_descritivo = $('#up_descritivo').val();
-
-
-            if (c_descritivo != '') {
-
-                $.ajax({
-                    url: "cotacao_editar.php",
-                    type: "post",
-                    data: {
-                        c_id: c_id,
-                        c_descritivo: c_descritivo,
-
-                    },
-                    success: function(data) {
-                        var json = JSON.parse(data);
-                        var status = json.status;
-                        if (status == 'true') {
-                            $('#editmodal').modal('hide');
-                            location.reload();
-                        } else {
-                            alert('falha ao alterar dados');
-                        }
-                    }
-                });
-
-            } else {
-                alert('Todos os campos devem ser preenchidos!!');
-            }
-        });
-    </script>
-
-
+    
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
@@ -190,7 +97,8 @@ $i_id = $_GET["id"];
 
             </div>
 
-            <h5>Materiais para a Cotação No. <?php echo $i_id ?> </h5>
+            <h5>Materiais para a Cotação No. <?php echo $i_id;
+                                                echo $_SESSION['sql'] ?> </h5>
         </div>
         <button type="button" title="Inclusão de Novo Material para Cotar" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
             Incluir
@@ -289,21 +197,24 @@ $i_id = $_GET["id"];
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">Quantidade</label>
                             <div class="col-sm-3">
-                                <input type="number" class="form-control" id="add_quantidade" name="add_quantidade">
+                                <input type="text" class="form-control" id="add_quantidade" name="add_quantidade">
                             </div>
+                           
+                        </div>
+                        <div  class="row mb-3">
                             <label class="col-sm-2 col-form-label">Unidade</label>
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 <select class="form-select form-select-lg mb-3" id="add_unidade" name="add_unidade">
 
                                     <?php
 
                                     // select da tabela de Unidades
-                                    $c_sql_unidade = "SELECT unidades.id, unidades.abreviatura FROM unidades ORDER BY unidades.abreviatura";
+                                    $c_sql_unidade = "SELECT unidades.id, unidades.descricao FROM unidades ORDER BY unidades.descricao";
                                     $result_unidade = $conection->query($c_sql_unidade);
                                     while ($c_linha = $result_unidade->fetch_assoc()) {
 
                                         echo "  
-                          <option>$c_linha[abreviatura]</option>
+                          <option>$c_linha[descricao]</option>
                         ";
                                     }
                                     ?>

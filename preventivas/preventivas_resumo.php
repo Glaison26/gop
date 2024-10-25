@@ -9,6 +9,7 @@ if (!isset($_SESSION['newsession'])) {
 }
 include("../conexao.php");
 include("../links2.php");
+date_default_timezone_set('America/Sao_Paulo');
 // pegar ordens geradas
 $c_data = date('Y/m/d');
 $c_sql =  "SELECT ordens.id, ordens.descritivo FROM ordens

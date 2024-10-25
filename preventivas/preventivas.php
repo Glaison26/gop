@@ -6,6 +6,7 @@ if (!isset($_SESSION['newsession'])) {
 }
 include("../conexao.php");
 include("../links2.php");
+date_default_timezone_set('America/Sao_Paulo');
 $_SESSION['pesquisamenu'] = false;
 // click no botão de pesquisa
 if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {

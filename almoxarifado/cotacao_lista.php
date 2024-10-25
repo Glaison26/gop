@@ -5,6 +5,7 @@ if (!isset($_SESSION['newsession'])) {
 }
 include("../conexao.php");
 include("../links.php");
+$_SESSION['sql']="select";
 
 ?>
 <!doctype html>
