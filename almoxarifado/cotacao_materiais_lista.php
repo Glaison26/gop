@@ -4,8 +4,8 @@ if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
 include("../conexao.php");
-include("../links.php");
-
+include("../links2.php");
+$i_id = $_GET["id"];
 ?>
 <!doctype html>
 <html lang="en">
@@ -30,13 +30,13 @@ include("../links.php");
 
     <script>
         $(document).ready(function() {
-            $('.tabunidades').DataTable({
+            $('.tabmateriais').DataTable({
                 // 
                 "iDisplayLength": -1,
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,
-                    'aTargets': [3]
+                    'aTargets': [4]
                 }, {
                     'aTargets': [0],
                     "visible": true
@@ -79,18 +79,20 @@ include("../links.php");
     <script type="text/javascript">
         $(document).on('submit', '#frmadd', function(e) {
             e.preventDefault();
-            var c_data = $('#add_data').val();
-            var c_descritivo = $('#add_descritivo').val();
+            var c_material = $('#add_material').val();
+            var c_quantidade = $('#add_quantidade').val();
+            var c_unidade = $('#add_unidade').val();
 
 
-            if (c_descritivo != '') {
+            if (c_material != '') {
 
                 $.ajax({
-                    url: "cotacao_novo.php",
+                    url: "cotacao_materiais_novo.php",
                     type: "post",
                     data: {
-                        c_descritivo: c_descritivo,
-                        c_data: c_data
+                        c_material: c_material,
+                        c_quantidade: c_quantidade,
+                        c_unidade:c_unidade
 
                     },
                     success: function(data) {
@@ -131,7 +133,7 @@ include("../links.php");
 
                 $('#up_idField').val(data[0]);
                 $('#up_descritivo').val(data[1]);
-               
+
             });
         });
     </script>
@@ -143,7 +145,7 @@ include("../links.php");
             e.preventDefault();
             var c_id = $('#up_idField').val();
             var c_descritivo = $('#up_descritivo').val();
-           
+
 
             if (c_descritivo != '') {
 
@@ -153,7 +155,7 @@ include("../links.php");
                     data: {
                         c_id: c_id,
                         c_descritivo: c_descritivo,
-                       
+
                     },
                     success: function(data) {
                         var json = JSON.parse(data);
@@ -177,19 +179,27 @@ include("../links.php");
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
-            <h5>Lista de cotaçoes<h5>
+            <h5>Lista de Materiais para Cotação<h5>
         </div>
     </div>
     <br>
     <div class="container-fluid">
+        <div class='alert alert-info' role='alert'>
+            <div style="padding-left:15px;">
+                <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
+            </div>
+
+            <h5>Materiais para a Cotação No. <?php echo $i_id ?> </h5>
+        </div>
         <button type="button" title="Inclusão de Novo Material para Cotar" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
             Incluir
         </button>
+        <a class="btn btn-info btn-sm" href="/gop/almoxarifado/cotacao_lista.php"><img src='\gop\images\ofornecedor.png' alt='16' width='30' height='16'>Fornecedores</a>
         <a class="btn btn-secondary btn-sm" href="/gop/almoxarifado/cotacao_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
-        <table class="table table display table-bordered tabunidades">
+        <table class="table table display table-bordered tabmateriais">
             <thead class="thead">
                 <tr>
                     <th scope="col">#</th>
@@ -203,14 +213,13 @@ include("../links.php");
                 <?php
 
                 // faço a Leitura da tabela com sql
-                $c_sql = "SELECT cotacao.id, cotacao.descritivo, cotacao.`data`, usuarios.nome AS responsavel, cotacao.`status`, cotacao.data_encerramento,
-                        case
-                        when cotacao.status='A' then 'Aberta'
-                        when cotacao.status='C' then 'Concluída'
-                        END AS cotacao_status
-                        FROM cotacao
-                        JOIN usuarios ON  cotacao.id_responsavel=usuarios.id
-                        ORDER BY cotacao.`data` desc";
+                $c_sql = "SELECT cotacao_materiais.id, materiais.descricao AS material, unidades.descricao AS unidade,
+                cotacao_materiais.quantidade
+                FROM cotacao_materiais
+                JOIN materiais ON cotacao_materiais.id_material=materiais.id
+                JOIN unidades ON cotacao_materiais.id_unidade=unidades.id
+                WHERE cotacao_materiais.id_cotacao='$i_id'
+                ORDER BY materiais.descricao";
                 $result = $conection->query($c_sql);
                 // verifico se a query foi correto
                 if (!$result) {
@@ -219,22 +228,16 @@ include("../links.php");
 
                 // insiro os registro do banco de dados na tabela 
                 while ($c_linha = $result->fetch_assoc()) {
-                    $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data'])));
-                    if (!empty($c_linha['data_encerramento']))
-                        $c_encerramento = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_encerramento'])));
-                    else
-                        $c_encerramento = "-";
+
                     echo "
                     <tr class='info'>
                     <td>$c_linha[id]</td>
-                    <td>$c_linha[descritivo]</td>
-                    <td>$c_data</td>
-                    <td>$c_linha[responsavel]</td>
-                    <td>$c_linha[cotacao_status]</td>
-                    <td>$c_encerramento</td>
+                    <td>$c_linha[material]</td>
+                    <td>$c_linha[quantidade]</td>
+                    <td>$c_linha[unidade]</td>
+                  
                     <td>
                     <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Cotação'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
-                    <a class='btn btn-info btn-sm' href='#'><img src='\gop\images\materiais_cotacao.png' alt='16' width='25' height='16'> Meteriais</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
@@ -253,7 +256,7 @@ include("../links.php");
         <div class="modal-dialog modal-dialog-centered" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Inclusão de nova Cotação</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Inclusão de novo Material para Cotação</h4>
                 </div>
                 <div class="modal-body">
                     <div class='alert alert-warning' role='alert'>
@@ -262,18 +265,51 @@ include("../links.php");
                     <form id="frmadd" action="">
 
                         <div class="row mb-3">
-                            <label class="col-md-2 form-label">Data (*)</label>
-                            <div class="col-sm-4">
-                                <input type="Date" class="form-control" name="add_data" id="add_data" value='<?php echo date("Y-m-d"); ?>' onkeypress="mascaraData(this)">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label class="col-md-2 form-label">Descritivo (*)</label>
+                            <label class="col-sm-2 col-form-label">Material</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="add_descritivo" id="add_descritivo">
+                                <select class="form-select form-select-lg mb-3" id="add_material" name="add_material">
+
+                                    <?php
+                                    if ($c_indice == '')
+                                        echo "<option></option>";
+                                    // select da tabela de Material
+                                    $c_sql_material = "SELECT materiais.id, materiais.descricao FROM materiais ORDER BY materiais.descricao";
+                                    $result_material = $conection->query($c_sql_material);
+                                    while ($c_linha = $result_material->fetch_assoc()) {
+
+                                        echo "  
+                          <option $op>$c_linha[descricao]</option>
+                        ";
+                                    }
+                                    ?>
+                                </select>
                             </div>
                         </div>
 
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Quantidade</label>
+                            <div class="col-sm-3">
+                                <input type="number" class="form-control" id="add_quantidade" name="add_quantidade">
+                            </div>
+                            <label class="col-sm-2 col-form-label">Unidade</label>
+                            <div class="col-sm-3">
+                                <select class="form-select form-select-lg mb-3" id="add_unidade" name="add_unidade">
+
+                                    <?php
+
+                                    // select da tabela de Unidades
+                                    $c_sql_unidade = "SELECT unidades.id, unidades.abreviatura FROM unidades ORDER BY unidades.abreviatura";
+                                    $result_unidade = $conection->query($c_sql_unidade);
+                                    while ($c_linha = $result_unidade->fetch_assoc()) {
+
+                                        echo "  
+                          <option>$c_linha[abreviatura]</option>
+                        ";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
 
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
@@ -301,8 +337,8 @@ include("../links.php");
                     </div>
                     <form id="frmup" method="POST" action="">
                         <input type="hidden" id="up_idField" name="up_idField">
-                       
-                      
+
+
                         <div class="row mb-3">
                             <label class="col-md-2 form-label">Descritivo (*)</label>
                             <div class="col-sm-10">
