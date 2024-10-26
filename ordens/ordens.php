@@ -133,7 +133,8 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     END AS ordens_tipo_texto
                     FROM ordens
                     JOIN setores ON ordens.id_setor=setores.id
-                    JOIN usuarios ON ordens.id_solicitante=usuarios.id";
+                    JOIN usuarios ON ordens.id_solicitante=usuarios.id
+                     where $c_where";
                     //
                     $c_sql_avulso = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
                     ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao AS setor,
