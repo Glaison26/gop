@@ -97,8 +97,7 @@ if (isset($_GET['id'])) {
 
             </div>
 
-            <h5>Materiais para a Cotação No. <?php echo $i_id;
-                                                echo $_SESSION['sql'] ?> </h5>
+            <h5>Materiais para a Cotação No. <?php echo $i_id ?> </h5>
         </div>
 
         <a class="btn btn-success btn-sm" href="/gop/almoxarifado/cotacao_materiais_novo.php"><span class="glyphicon glyphicon-plus"></span>Incluir</a>

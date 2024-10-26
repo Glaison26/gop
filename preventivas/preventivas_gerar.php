@@ -15,7 +15,7 @@ $agora = date('Y-m-d');
 $c_sql_recurso = "SELECT preventivas.id, preventivas.id_oficina, preventivas.id_setor, preventivas.tipo,
  preventivas.periodicidade_geracao, preventivas.calibracao, preventivas.id_recurso, recursos.descricao as recurso,
 preventivas.data_ult_realizacao, preventivas.data_prox_realizacao, preventivas.tipo_preventiva, 
-preventivas.descritivo, preventivas.gerar, preventivas.id_ocorrencia,
+preventivas.descritivo, preventivas.gerar, preventivas.id_ocorrencia, prazo_atendimento,
 case
 when preventivas.calibracao ='S' then 'Sim'
 when preventivas.calibracao ='N' then 'Não'
@@ -29,7 +29,7 @@ ORDER BY preventivas.data_prox_realizacao desc";
 $c_sql_espaco = "SELECT preventivas.id, preventivas.tipo, preventivas.id_oficina, preventivas.tipo_preventiva, 
 preventivas.periodicidade_geracao, preventivas.descritivo, preventivas.id_setor, preventivas.calibracao, preventivas.id_espaco, 
 espacos.descricao as espaco, preventivas.data_ult_realizacao, preventivas.data_prox_realizacao,
- preventivas.gerar, preventivas.id_ocorrencia,
+ preventivas.gerar, preventivas.id_ocorrencia, prazo_atendimento,
 case
 when preventivas.calibracao ='S' then 'Sim'
 when preventivas.calibracao ='N' then 'Não'
@@ -75,11 +75,16 @@ while ($c_linha = $result->fetch_assoc()) {
     $c_descricao = 'Preventiva de ' . $c_linha['recurso'];
     $c_tipo_preventiva = $c_linha['tipo_preventiva'];
     $i_id_preventiva = $c_linha['id'];
+    $c_prazo = $c_linha['prazo_atendimento'];
+    $c_dias = '+' . $c_prazo . ' days';
+    $d_data_previsao = date('y-m-d', strtotime($c_dias, strtotime($d_data_geracao))); // incremento 1 dia a data do loop
+
     // inserir dados da preventiva na tabela de ordens de serviços
     $c_sql = "insert into ordens (id_solicitante, id_responsavel, id_recurso, id_oficina, id_setor, data_inicio, hora_inicio, tipo,
-    tipo_ordem, tipo_preventiva, descricao,  data_geracao, hora_geracao, status, id_ocorrencia, descritivo)
+    tipo_ordem, tipo_preventiva, descricao,  data_geracao, hora_geracao, status, id_ocorrencia, descritivo, data_previsao, hora_geracao)
     value ('$i_id_solicitante', '$i_id_solicitante', '$i_id_recurso', '$i_id_oficina','$i_id_setor', '$d_data_inicio', '$d_hora_inicio',
-    'R', 'P', '$c_tipo_preventiva', '$c_descritivo', '$d_data_geracao', '$d_hora_geracao', 'A', '$i_id_ocorrencia', '$c_descricao')";
+    'R', 'P', '$c_tipo_preventiva', '$c_descritivo', '$d_data_geracao', '$d_hora_geracao', 'A',
+    '$i_id_ocorrencia', '$c_descricao', '$d_data_previsao', '$d_hora_geracao')";
     $resultado = $conection->query($c_sql);
     if (!$resultado) {
         die("Erro ao Executar Sql!!" . $conection->connect_error);
@@ -167,13 +172,17 @@ while ($c_linha = $result->fetch_assoc()) {
     $c_descritivo = $c_linha['descritivo'];
     $c_descricao = 'Preventiva de ' . $c_linha['espaco'];
     $c_tipo_preventiva = $c_linha['tipo_preventiva'];
-
+    $c_prazo = $c_linha['prazo_atendimento'];
+    $c_dias = '+' . $c_prazo . ' days';
+    $d_data_previsao = date('y-m-d', strtotime($c_dias, strtotime($d_data_geracao))); // incremento 1 dia a data do loop
+    
     $i_id_preventiva = $c_linha['id'];
     // inserir dados da preventiva na tabela de ordens de serviços
     $c_sql = "insert into ordens (id_solicitante, id_responsavel, id_espaco, id_oficina, id_setor, data_inicio, hora_inicio, tipo,
-    tipo_ordem, tipo_preventiva, descricao,  data_geracao, hora_geracao, status, id_ocorrencia, descritivo)
+    tipo_ordem, tipo_preventiva, descricao,  data_geracao, hora_geracao, status, id_ocorrencia, descritivo, data_previsao, hora_previsao)
     value ('$i_id_solicitante', '$i_id_solicitante', '$i_id_espaco', '$i_id_oficina', '$i_id_setor', '$d_data_inicio', '$d_hora_inicio',
-    'E', 'P', '$c_tipo_preventiva', '$c_descritivo', '$d_data_geracao', '$d_hora_geracao', 'A', $i_id_ocorrencia, '$c_descricao')";
+    'E', 'P', '$c_tipo_preventiva', '$c_descritivo', '$d_data_geracao', '$d_hora_geracao', 'A',
+     $i_id_ocorrencia, '$c_descricao', '$d_data_previsao', $d_hora_geracao)";
     $resultado = $conection->query($c_sql);
     if (!$resultado) {
         die("Erro ao Executar Sql!!" . $conection->connect_error);

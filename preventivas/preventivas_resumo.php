@@ -12,7 +12,8 @@ include("../links2.php");
 date_default_timezone_set('America/Sao_Paulo');
 // pegar ordens geradas
 $c_data = date('Y/m/d');
-$c_sql =  "SELECT ordens.id, ordens.descritivo FROM ordens
+$c_sql =  "SELECT ordens.id, ordens.id_oficina, ordens.descritivo, oficinas.descricao as oficina FROM ordens
+JOIN oficinas ON ordens.id_oficina=oficinas.id
 WHERE ordens.data_geracao='$c_data' ORDER BY ordens.id desc";
 //echo $c_sql;
 $result = $conection->query($c_sql);
@@ -54,6 +55,7 @@ if (!$result) {
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Descritivo</th>
+                    <th scope="col">Oficina</th>
                 </tr>
             </thead>
             <tbody>
@@ -74,6 +76,7 @@ if (!$result) {
                                 <tr class='info'>
                                     <td>$c_linha[id]</td>
                                     <td>$c_linha[descritivo]</td>
+                                    <td>$c_linha[oficina]</td>
 
                                 </tr>
                                 ";

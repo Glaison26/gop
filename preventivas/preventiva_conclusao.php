@@ -42,6 +42,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $msg_erro = "Valor de periodicidade inválido !!";
             break;
         }
+        if (!is_numeric($_POST['prazo'])) {
+            $msg_erro = "Valor de prazo de atendimento inválido !!";
+            break;
+        }
         // setores
         // procuro setor selecionado
         $c_setor = $_POST['setor'];
@@ -70,6 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $i_periodicidade = $_POST['periodicidade'];
         $c_data_ultima = new DateTime($_POST['data_ultima']);
         $c_data_ultima = $c_data_ultima->format('Y-m-d');
+        $c_prazo = $_POST['prazo'];
         // 
         // 
         $c_ocorrencia = $_POST['ocorrencia'];
@@ -88,16 +93,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // sql para inclusão do registro
         if ($_SESSION['tiposolicitacao'] == 'R') // sql para recursos fisicos
             $c_sql = "Insert into preventivas (id_recurso,id_oficina, id_setor, id_centrodecusto,tipo,tipo_preventiva, data_cadastro
-                    , periodicidade_geracao, data_prox_realizacao, data_ult_realizacao, calibracao,descritivo, gerar,  id_ocorrencia) 
+                    , periodicidade_geracao, data_prox_realizacao, data_ult_realizacao, calibracao,descritivo, gerar,  id_ocorrencia, prazo_atendimento) 
                     value ('$i_id_recurso', '$i_id_oficina', '$i_setor', '$i_id_centrodecusto', 'R', '$c_tipopreventiva',
-                    '$d_data_cadastro', '$i_periodicidade', '$d_data_proxima', '$c_data_ultima','$c_calibracao', '$c_descritivo', 'Sim', '$i_id_ocorrencia')";
+                    '$d_data_cadastro', '$i_periodicidade', '$d_data_proxima', '$c_data_ultima','$c_calibracao',
+                     '$c_descritivo', 'Sim', '$i_id_ocorrencia', $c_prazo)";
         //
         if ($_SESSION['tiposolicitacao'] == 'E') // sql para espacos fisicos
             $c_sql = "Insert into preventivas (id_espaco,id_oficina, id_setor, id_centrodecusto,tipo,tipo_preventiva, data_cadastro
-                      , periodicidade_geracao, data_prox_realizacao, data_ult_realizacao, calibracao,descritivo, gerar,  id_ocorrencia ) 
+                      , periodicidade_geracao, data_prox_realizacao, data_ult_realizacao, calibracao,descritivo, gerar,  id_ocorrencia, prazo_atendimento ) 
                       value ('$i_id_espaco', '$i_id_oficina', '$i_setor', '$i_id_centrodecusto', 'E', '$c_tipopreventiva',
-                     '$d_data_cadastro', '$i_periodicidade', '$d_data_proxima', '$c_data_ultima','$c_calibracao', '$c_descritivo', 'Sim', '$i_id_ocorrencia')";
-        
+                     '$d_data_cadastro', '$i_periodicidade', '$d_data_proxima', '$c_data_ultima','$c_calibracao',
+                      '$c_descritivo', 'Sim', '$i_id_ocorrencia', $c_prazo)";
+
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
         if (!$result) {
@@ -151,120 +158,128 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form method="post">
             <br>
 
-            <div style="padding-left :15px;" class="row mb-3">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="chk_calibracao">
-                    <label class="form-check-label" for="chk_calibracao">
-                        Calibração
-                    </label>
+            <div style="padding-left :30px;" class="row mb-3">
+                <div class="row mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="chk_calibracao">
+                        <label class="form-check-label" for="chk_calibracao">
+                            Calibração
+                        </label>
+                    </div>
+
                 </div>
             </div>
-            <br>
+            
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Prazo de Atendimento</label>
+                <div class="col-sm-2">
+                    <input type="number" placeholder="no. de dias" class="form-control" id="prazo" name="prazo">
+                </div>
+            </div>
+            
+
             <div class="row mb-3">
 
-                <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Data de Cadastro</label>
+                <div class="col-sm-3">
+                    <input type="date" class="form-control" id="datacadastro" name="datacadastro" value='<?php echo date("Y-m-d"); ?>'>
+                </div>
+                <label class="col-sm-2 col-form-label">Tipo Preventiva</label>
+                <div class="col-sm-3">
+                    <select class="form-select form-select-lg mb-3" id="tipo_preventiva" name="tipo_preventiva" value="<?php echo $c_tipo_preventiva; ?>">
+                        <option></option>
+                        <option value="R">Rotina</option>
+                        <option value="P">Preditiva</option>
+                        <option value="S">Sistematica</option>
+                    </select>
+                </div>
+            </div>
 
-                    <label class="col-sm-2 col-form-label">Data de Cadastro</label>
-                    <div class="col-sm-3">
-                        <input type="date" class="form-control" id="datacadastro" name="datacadastro" value='<?php echo date("Y-m-d"); ?>'>
-                    </div>
-                    <label class="col-sm-2 col-form-label">Tipo Preventiva</label>
-                    <div class="col-sm-3">
-                        <select class="form-select form-select-lg mb-3" id="tipo_preventiva" name="tipo_preventiva" value="<?php echo $c_tipo_preventiva; ?>">
-                            <option></option>
-                            <option value="R">Rotina</option>
-                            <option value="P">Preditiva</option>
-                            <option value="S">Sistematica</option>
-                        </select>
-                    </div>
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Oficina </label>
+                <div class="col-sm-3">
+                    <select class="form-select form-select-lg mb-3" id="oficina" name="oficina">
+                        <option></option>
+                        <?php
+                        // select da tabela de oficinas
+                        $c_sql_oficina = "SELECT oficinas.id, oficinas.descricao FROM oficinas ORDER BY oficinas.descricao";
+                        $result_oficina = $conection->query($c_sql_oficina);
+                        while ($c_linha = $result_oficina->fetch_assoc()) {
+                            $op = "";
+                            if ($c_linha['id'] == $registro['id_oficina']) {
+                                $op = "selected";
+                            }
+                            echo "<option $op>$c_linha[descricao]</option>";
+                        }
+                        ?>
+                    </select>
                 </div>
 
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">Oficina </label>
-                    <div class="col-sm-3">
-                        <select class="form-select form-select-lg mb-3" id="oficina" name="oficina">
-                            <option></option>
-                            <?php
-                            // select da tabela de oficinas
-                            $c_sql_oficina = "SELECT oficinas.id, oficinas.descricao FROM oficinas ORDER BY oficinas.descricao";
-                            $result_oficina = $conection->query($c_sql_oficina);
-                            while ($c_linha = $result_oficina->fetch_assoc()) {
-                                $op = "";
-                                if ($c_linha['id'] == $registro['id_oficina']) {
-                                    $op = "selected";
-                                }
-                                echo "<option $op>$c_linha[descricao]</option>";
-                            }
-                            ?>
-                        </select>
-                    </div>
-
-                    <label class="col-sm-2 col-form-label">Centro de Custo </label>
-                    <div class="col-sm-3">
-                        <select class="form-select form-select-lg mb-3" id="centrodecusto" name="centrodecusto">
-                            <option></option>
-                            <?php
-                            // select da tabela de centro de custo
-                            $c_sql_custo = "SELECT centrodecusto.id, centrodecusto.descricao FROM centrodecusto ORDER BY centrodecusto.descricao";
-                            $result_custo = $conection->query($c_sql_custo);
-                            while ($c_linha = $result_custo->fetch_assoc()) {
+                <label class="col-sm-2 col-form-label">Centro de Custo </label>
+                <div class="col-sm-3">
+                    <select class="form-select form-select-lg mb-3" id="centrodecusto" name="centrodecusto">
+                        <option></option>
+                        <?php
+                        // select da tabela de centro de custo
+                        $c_sql_custo = "SELECT centrodecusto.id, centrodecusto.descricao FROM centrodecusto ORDER BY centrodecusto.descricao";
+                        $result_custo = $conection->query($c_sql_custo);
+                        while ($c_linha = $result_custo->fetch_assoc()) {
+                            $op = '';
+                            if ($c_linha['id'] == $i_centrodecusto) {
+                                $op = 'selected';
+                            } else {
                                 $op = '';
-                                if ($c_linha['id'] == $i_centrodecusto) {
-                                    $op = 'selected';
-                                } else {
-                                    $op = '';
-                                }
-
-                                echo "<option $op>$c_linha[descricao]</option>";
                             }
 
-                            ?>
-                        </select>
-                    </div>
+                            echo "<option $op>$c_linha[descricao]</option>";
+                        }
+
+                        ?>
+                    </select>
                 </div>
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">Periodicidade</label>
-                    <div class="col-sm-3">
-                        <input type="number" class="form-control" placeholder="no. de dias" name="periodicidade" value="<?php echo $c_periodicidade; ?>">
-                    </div>
-                    <label class="col-sm-2 col-form-label">Ultima Realização</label>
-                    <div class="col-sm-3">
-                        <input type="date" class="form-control" id="data_ultima" name="data_ultima" value="<?php echo $d_dataultima; ?>">
-                    </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Periodicidade</label>
+                <div class="col-sm-3">
+                    <input type="number" class="form-control" placeholder="no. de dias" name="periodicidade" value="<?php echo $c_periodicidade; ?>">
                 </div>
-
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">Setor </label>
-                    <div class="col-sm-3">
-                        <select class="form-select form-select-lg mb-3" id="setor" name="setor">
-                            <option></option>
-                            <?php
-                            // select da tabela de setores
-                            $c_sql_setor = "SELECT setores.id, setores.descricao FROM setores ORDER BY setores.descricao";
-                            $result_setor = $conection->query($c_sql_setor);
-                            while ($c_linha = $result_setor->fetch_assoc()) {
-                                echo "  
+                <label class="col-sm-2 col-form-label">Ultima Realização</label>
+                <div class="col-sm-3">
+                    <input type="date" class="form-control" id="data_ultima" name="data_ultima" value="<?php echo $d_dataultima; ?>">
+                </div>
+            </div>
+            
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Setor </label>
+                <div class="col-sm-3">
+                    <select class="form-select form-select-lg mb-3" id="setor" name="setor">
+                        <option></option>
+                        <?php
+                        // select da tabela de setores
+                        $c_sql_setor = "SELECT setores.id, setores.descricao FROM setores ORDER BY setores.descricao";
+                        $result_setor = $conection->query($c_sql_setor);
+                        while ($c_linha = $result_setor->fetch_assoc()) {
+                            echo "  
                           <option>$c_linha[descricao]</option>";
-                            }
-                            ?>
-                        </select>
-                    </div>
-                    <label class="col-sm-2 col-form-label">Ocorrencia </label>
-                    <div class="col-sm-3">
-                        <select class="form-select form-select-lg mb-3" id="ocorrencia" name="ocorrencia">
-                            <option></option>
-                            <?php
-                            // select da tabela de ocorrencia
-                            $c_sql_setor = "SELECT ocorrencias.id, ocorrencias.descricao FROM ocorrencias ORDER BY ocorrencias.descricao";
-                            $result_setor = $conection->query($c_sql_setor);
-                            while ($c_linha = $result_setor->fetch_assoc()) {
-                                echo "  
+                        }
+                        ?>
+                    </select>
+                </div>
+                <label class="col-sm-2 col-form-label">Ocorrencia </label>
+                <div class="col-sm-3">
+                    <select class="form-select form-select-lg mb-3" id="ocorrencia" name="ocorrencia">
+                        <option></option>
+                        <?php
+                        // select da tabela de ocorrencia
+                        $c_sql_setor = "SELECT ocorrencias.id, ocorrencias.descricao FROM ocorrencias ORDER BY ocorrencias.descricao";
+                        $result_setor = $conection->query($c_sql_setor);
+                        while ($c_linha = $result_setor->fetch_assoc()) {
+                            echo "  
                           <option>$c_linha[descricao]</option>";
-                            }
-                            ?>
-                        </select>
+                        }
+                        ?>
+                    </select>
 
-                    </div>
                 </div>
 
                 <hr>
