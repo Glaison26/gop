@@ -29,14 +29,16 @@ CREATE TABLE IF NOT EXISTS `cotacao` (
   `status` char(50) DEFAULT NULL,
   `data_encerramento` date DEFAULT NULL,
   `observacao` blob,
+  `tipo` char(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_cotacao_usuarios` (`id_responsavel`),
   CONSTRAINT `FK_cotacao_usuarios` FOREIGN KEY (`id_responsavel`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.cotacao: ~1 rows (aproximadamente)
-REPLACE INTO `cotacao` (`id`, `id_responsavel`, `descritivo`, `data`, `valor`, `status`, `data_encerramento`, `observacao`) VALUES
-	(1, 16, 'Cotação de Materia', '2024-10-24', NULL, 'A', '2024-10-24', _binary 0x7465737465);
+-- Copiando dados para a tabela gop.cotacao: ~0 rows (aproximadamente)
+INSERT INTO `cotacao` (`id`, `id_responsavel`, `descritivo`, `data`, `valor`, `status`, `data_encerramento`, `observacao`, `tipo`) VALUES
+	(1, 16, 'Cotação de Material de Construção', '2024-10-24', NULL, 'A', '2024-10-24', _binary 0x7465737465, 'M'),
+	(4, 16, 'Contratação de serviço de Pintura', '2024-10-28', NULL, 'A', NULL, NULL, 'S');
 
 -- Copiando estrutura para tabela gop.cotacao_fornecedor
 CREATE TABLE IF NOT EXISTS `cotacao_fornecedor` (
@@ -68,9 +70,12 @@ CREATE TABLE IF NOT EXISTS `cotacao_materiais` (
   CONSTRAINT `FK_cotacao_materiais_cotacao` FOREIGN KEY (`id_cotacao`) REFERENCES `cotacao` (`id`),
   CONSTRAINT `FK_cotacao_materiais_materiais` FOREIGN KEY (`id_material`) REFERENCES `materiais` (`id`),
   CONSTRAINT `FK_cotacao_materiais_unidades` FOREIGN KEY (`id_unidade`) REFERENCES `unidades` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela gop.cotacao_materiais: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela gop.cotacao_materiais: ~1 rows (aproximadamente)
+INSERT INTO `cotacao_materiais` (`id`, `id_cotacao`, `id_material`, `id_unidade`, `quantidade`) VALUES
+	(1, 1, 3, 10, 15),
+	(2, 1, 4, 8, 12);
 
 -- Copiando estrutura para tabela gop.cotacao_materiais_fornecedor
 CREATE TABLE IF NOT EXISTS `cotacao_materiais_fornecedor` (
@@ -87,6 +92,20 @@ CREATE TABLE IF NOT EXISTS `cotacao_materiais_fornecedor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela gop.cotacao_materiais_fornecedor: ~0 rows (aproximadamente)
+
+-- Copiando estrutura para tabela gop.cotacao_servicos
+CREATE TABLE IF NOT EXISTS `cotacao_servicos` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_cotacao` int DEFAULT NULL,
+  `descricao` blob,
+  PRIMARY KEY (`id`),
+  KEY `FK_cotacao_servicos_cotacao` (`id_cotacao`),
+  CONSTRAINT `FK_cotacao_servicos_cotacao` FOREIGN KEY (`id_cotacao`) REFERENCES `cotacao` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Copiando dados para a tabela gop.cotacao_servicos: ~0 rows (aproximadamente)
+INSERT INTO `cotacao_servicos` (`id`, `id_cotacao`, `descricao`) VALUES
+	(1, 4, _binary 0x5365727669c3a76f2064652050696e74757261206465207061726564652064652045646966696361c3a7c3a36f2064650a3930206d6574726f7320717561647261646f73);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

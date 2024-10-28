@@ -5,21 +5,12 @@ if (!isset($_SESSION['newsession'])) {
 }
 // conexão dom o banco de dados
 include("../conexao.php");
-// sql para responsavel (usuário logado)
-// procuro solicitante
-$c_responsavel = $_SESSION['c_usuario'];
-$c_sql = "Select id from usuarios where login='$c_responsavel'";
-$result = $conection->query($c_sql);
-$registro = $result->fetch_assoc();
-$id_responsavel = $registro['id'];
 
 // rotina de inclusão
 $c_descritivo = rtrim($_POST['c_descritivo']);
-$c_data = $_POST['c_data'];
-$c_tipo = $_POST['c_tipo'];
-
-$c_sql = "Insert into cotacao (descritivo, data, id_responsavel, status, tipo) Value 
-('$c_descritivo', '$c_data','$id_responsavel', 'A', '$c_tipo')";
+$i_id_cotacao = $_SESSION['id_cotacao']; // pego o id da cotação
+$c_sql = "Insert into cotacao_servicos (id_cotacao, descricao) Value 
+('$i_id_cotacao','$c_descritivo')";
 $result = $conection->query($c_sql);
 
 if($result ==true)

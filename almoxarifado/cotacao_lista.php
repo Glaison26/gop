@@ -4,8 +4,8 @@ if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
 include("../conexao.php");
-include("../links.php");
-$_SESSION['sql']="select";
+include("../links2.php");
+$_SESSION['sql'] = "select";
 
 ?>
 <!doctype html>
@@ -82,6 +82,7 @@ $_SESSION['sql']="select";
             e.preventDefault();
             var c_data = $('#add_data').val();
             var c_descritivo = $('#add_descritivo').val();
+            var c_tipo = $('#add_tipo').val();
 
 
             if (c_descritivo != '') {
@@ -91,7 +92,8 @@ $_SESSION['sql']="select";
                     type: "post",
                     data: {
                         c_descritivo: c_descritivo,
-                        c_data: c_data
+                        c_data: c_data,
+                        c_tipo: c_tipo
 
                     },
                     success: function(data) {
@@ -132,7 +134,8 @@ $_SESSION['sql']="select";
 
                 $('#up_idField').val(data[0]);
                 $('#up_descritivo').val(data[1]);
-               
+                $('#up_tipo').val(data[3]);
+
             });
         });
     </script>
@@ -144,7 +147,8 @@ $_SESSION['sql']="select";
             e.preventDefault();
             var c_id = $('#up_idField').val();
             var c_descritivo = $('#up_descritivo').val();
-           
+            var c_tipo = $('#up_tipo').val();
+
 
             if (c_descritivo != '') {
 
@@ -154,7 +158,8 @@ $_SESSION['sql']="select";
                     data: {
                         c_id: c_id,
                         c_descritivo: c_descritivo,
-                       
+                        c_tipo: c_tipo
+
                     },
                     success: function(data) {
                         var json = JSON.parse(data);
@@ -196,6 +201,7 @@ $_SESSION['sql']="select";
                     <th scope="col">#</th>
                     <th scope="col">Descritivo</th>
                     <th scope="col">Data</th>
+                    <th scope="col">Tipo</th>
                     <th scope="col">Responsável</th>
                     <th scope="col">Status</th>
                     <th scope="col">Encerramento</th>
@@ -206,11 +212,16 @@ $_SESSION['sql']="select";
                 <?php
 
                 // faço a Leitura da tabela com sql
-                $c_sql = "SELECT cotacao.id, cotacao.descritivo, cotacao.`data`, usuarios.nome AS responsavel, cotacao.`status`, cotacao.data_encerramento,
+                $c_sql = "SELECT cotacao.id, cotacao.tipo, cotacao.descritivo, cotacao.`data`,
+                usuarios.nome AS responsavel, cotacao.`status`, cotacao.data_encerramento,
                         case
                         when cotacao.status='A' then 'Aberta'
                         when cotacao.status='C' then 'Concluída'
-                        END AS cotacao_status
+                        END AS cotacao_status,
+                        case
+                        when cotacao.tipo = 'M' then 'Material'
+                        when cotacao.tipo = 'S' then 'Serviço'
+                        END AS cotacao_tipo
                         FROM cotacao
                         JOIN usuarios ON  cotacao.id_responsavel=usuarios.id
                         ORDER BY cotacao.`data` desc";
@@ -232,21 +243,23 @@ $_SESSION['sql']="select";
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descritivo]</td>
                     <td>$c_data</td>
+                    <td>$c_linha[cotacao_tipo]</td>
                     <td>$c_linha[responsavel]</td>
                     <td>$c_linha[cotacao_status]</td>
                     <td>$c_encerramento</td>
                     <td>
-                    <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Cotação'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
-                    <a class='btn btn-info btn-sm' href='/gop/almoxarifado/cotacao_materiais_lista.php?id=$c_linha[id]'><img src='\gop\images\materiais_cotacao.png' alt='16' width='25' height='16'> Meteriais</a>
-                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
-                    </td>
+                    <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Cotação'><span class='glyphicon glyphicon-pencil'></span> Editar</button>";
+                    if ($c_linha['tipo'] == 'M')
+                        echo "<a class='btn btn-info btn-sm' href='/gop/almoxarifado/cotacao_materiais_lista.php?id=$c_linha[id]'><img src='\gop\images\servicotecnico.png' alt='16' width='25' height='16'> Itens a Cotar</a>";
+                    else
+                        echo "<a class='btn btn-info btn-sm' href='cotacao_servicos_lista.php?id=$c_linha[id]'><img src='\gop\images\servicotecnico.png' alt='16' width='25' height='16'> Itens a Cotar</a>";
+                    echo "<a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>";
+                    echo "</td>
 
                     </tr>
                     ";
                 }
                 ?>
-
-
             </tbody>
         </table>
     </div>
@@ -263,20 +276,28 @@ $_SESSION['sql']="select";
                         <h5>Campos com (*) são obrigatórios</h5>
                     </div>
                     <form id="frmadd" action="">
-
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Tipo Cotação</label>
+                            <div class="col-sm-4">
+                                <select class="form-select form-select-lg mb-3" id="add_tipo" name="add_tipo">
+                                    <option value='M'>Material</option>
+                                    <option value='S'>Serviço</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="row mb-3">
                             <label class="col-md-2 form-label">Data (*)</label>
                             <div class="col-sm-4">
                                 <input type="Date" class="form-control" name="add_data" id="add_data" value='<?php echo date("Y-m-d"); ?>' onkeypress="mascaraData(this)">
                             </div>
                         </div>
+
                         <div class="row mb-3">
                             <label class="col-md-2 form-label">Descritivo (*)</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="add_descritivo" id="add_descritivo">
                             </div>
                         </div>
-
 
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
@@ -304,8 +325,16 @@ $_SESSION['sql']="select";
                     </div>
                     <form id="frmup" method="POST" action="">
                         <input type="hidden" id="up_idField" name="up_idField">
-                       
-                      
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Tipo Cotação</label>
+                            <div class="col-sm-4">
+                                <select class="form-select form-select-lg mb-3" id="up_tipo" name="up_tipo">
+                                    <option>Material</option>
+                                    <option>Serviço</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="row mb-3">
                             <label class="col-md-2 form-label">Descritivo (*)</label>
                             <div class="col-sm-10">

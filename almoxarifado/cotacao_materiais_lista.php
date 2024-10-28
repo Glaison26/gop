@@ -13,6 +13,10 @@ if (isset($_GET['id'])) {
 } else {
     $i_id = $_SESSION['id_cotacao'];
 }
+// dados da cotação
+$c_sql_cotacao = "select * from cotacao where cotacao.id = $i_id";
+$result_cotacao = $conection->query("$c_sql_cotacao");
+$c_linha_cotacao = $result_cotacao->fetch_assoc();
 
 ?>
 <!doctype html>
@@ -24,7 +28,7 @@ if (isset($_GET['id'])) {
         function confirmacao(id) {
             var resposta = confirm("Deseja remover esse registro?");
             if (resposta == true) {
-                window.location.href = "/gop/almoxarifado/cotacao_excluir.php?id=" + id;
+                window.location.href = "/gop/almoxarifado/cotacao_material_excluir.php?id=" + id;
             }
         }
     </script>
@@ -97,11 +101,11 @@ if (isset($_GET['id'])) {
 
             </div>
 
-            <h5>Materiais para a Cotação No. <?php echo $i_id ?> </h5>
+            <h5>Materiais para a Cotação No. <?php echo $i_id. ' - '. $c_linha_cotacao['descritivo'] ?> </h5>
         </div>
 
         <a class="btn btn-success btn-sm" href="/gop/almoxarifado/cotacao_materiais_novo.php"><span class="glyphicon glyphicon-plus"></span>Incluir</a>
-        <a class="btn btn-info btn-sm" href="/gop/almoxarifado/cotacao_lista.php"><img src='\gop\images\ofornecedor.png' alt='16' width='30' height='16'>Fornecedores</a>
+        <a class="btn btn-info btn-sm" href="/gop/almoxarifado/cotacao_lista.php"><img src='\gop\images\ofornecedor.png' alt='18' width='30' height='18'>Fornecedores</a>
         <a class="btn btn-secondary btn-sm" href="/gop/almoxarifado/cotacao_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
