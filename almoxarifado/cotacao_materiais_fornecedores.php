@@ -1,4 +1,4 @@
-<?php // controle de acesso ao formulário
+<?php
 session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
@@ -6,22 +6,22 @@ if (!isset($_SESSION['newsession'])) {
 include("../conexao.php");
 include("../links2.php");
 
-
 if (isset($_GET['id'])) {
-    $i_id = $_GET['id'];
-    $_SESSION['id_cotacao'] = $i_id;
+    $i_id_cotacao = $_GET['id'];
+    $_SESSION['id_cotacao'] = $i_id_cotacao;
 } else {
-    $i_id = $_SESSION['id_cotacao'];
+    $i_id_cotacao = $_SESSION['id_cotacao'];
 }
-// dados da cotação
-$c_sql_cotacao = "select * from cotacao where cotacao.id = $i_id";
-$result_cotacao = $conection->query("$c_sql_cotacao");
-$c_linha_cotacao = $result_cotacao->fetch_assoc();
-$_SESSION['descritivo_cotacao'] = $c_linha_cotacao['descritivo'];
-
 ?>
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
 
 <body>
 
@@ -34,16 +34,9 @@ $_SESSION['descritivo_cotacao'] = $c_linha_cotacao['descritivo'];
         }
     </script>
 
-    <script language="Javascript">
-        function mensagem(msg) {
-            alert(msg);
-        }
-    </script>
-
-
     <script>
         $(document).ready(function() {
-            $('.tabmateriais').DataTable({
+            $('.tabfornecedores').DataTable({
                 // 
                 "iDisplayLength": -1,
                 "order": [1, 'asc'],
@@ -52,7 +45,7 @@ $_SESSION['descritivo_cotacao'] = $c_linha_cotacao['descritivo'];
                     'aTargets': [4]
                 }, {
                     'aTargets': [0],
-                    "visible": true
+                    "visible": false
                 }],
                 "oLanguage": {
                     "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -86,67 +79,81 @@ $_SESSION['descritivo_cotacao'] = $c_linha_cotacao['descritivo'];
 
         });
     </script>
-
-
-    <div class="panel panel-primary class">
-        <div class="panel-heading text-center">
-            <h4>GOP - Gestão Operacional</h4>
-            <h5>Lista de Materiais para Cotação<h5>
-        </div>
-    </div>
-    <br>
     <div class="container-fluid">
+        <div class="panel panel-primary class">
+            <div class="panel-heading text-center">
+                <h4>GOP - Gestão Operacional</h4>
+                <h5>Lista de Fornecedores para Cotação<h5>
+            </div>
+        </div>
+
         <div class='alert alert-info' role='alert'>
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
             </div>
 
-            <h5>Materiais para a Cotação No. <?php echo $i_id. ' - '. $_SESSION['descritivo_cotacao']  ?> </h5>
+            <h5>Fornecedores participantes para a Cotação No. <?php echo $i_id_cotacao . ' - ' . $_SESSION['descritivo_cotacao']  ?> </h5>
         </div>
-
-        <a class="btn btn-success btn-sm" href="/gop/almoxarifado/cotacao_materiais_novo.php"><span class="glyphicon glyphicon-plus"></span>Incluir</a>
-        <a class="btn btn-info btn-sm" href="/gop/almoxarifado/cotacao_materiais_fornecedores.php?id=<?php echo $i_id ?>"><img src='\gop\images\ofornecedor.png' alt='18' width='30' height='18'>Fornecedores</a>
+        <a class="btn btn-success btn-sm" href="/gop/almoxarifado/cotacao_materiais_fornecedores_novo.php"><span class="glyphicon glyphicon-plus"></span>Incluir</a>
         <a class="btn btn-secondary btn-sm" href="/gop/almoxarifado/cotacao_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
-
         <hr>
-        <table class="table table display table-bordered tabmateriais">
+        <table class="table table display table-bordered tabfornecedores">
             <thead class="thead">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Material</th>
-                    <th scope="col">Quantidade</th>
-                    <th scope="col">Unidade</th>
+                    <th scope="col">Fornecedor</th>
+                    <th scope="col">Vendedor</th>
+                    <th scope="col">Valor Total Cotado</th>
+                    <th scope="col">Valor Frete</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Prazo em dias</th>
+                    <th scope="col">Forma de Pagamento</th>
                     <th scope="col">Opções</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 // faço a Leitura da tabela com sql
-                $c_sql = "SELECT cotacao_materiais.id, materiais.descricao AS material, unidades.descricao AS unidade,
-                cotacao_materiais.quantidade
-                FROM cotacao_materiais
-                JOIN materiais ON cotacao_materiais.id_material=materiais.id
-                JOIN unidades ON cotacao_materiais.id_unidade=unidades.id
-                WHERE cotacao_materiais.id_cotacao='$i_id'
-                ORDER BY materiais.descricao";
+                $c_sql = "SELECT cotacao_fornecedor.id, fornecedores.descricao AS fornecedor, cotacao_fornecedor.valor_total,
+                cotacao_fornecedor.frete, cotacao_fornecedor.prazo, forma_pagamento, cotacao_fornecedor.vendedor,
+                case when status='P' then 'Participante' when status='V' then 'Vencedor' END AS status_texto
+                FROM cotacao_fornecedor
+                JOIN fornecedores ON cotacao_fornecedor.id_fornecedor=fornecedores.id
+                WHERE cotacao_fornecedor.id_cotacao='$i_id_cotacao'
+                ORDER BY fornecedores.descricao";
+
                 $result = $conection->query($c_sql);
                 // verifico se a query foi correto
                 if (!$result) {
                     die("Erro ao Executar Sql!!" . $conection->connect_error);
                 }
                 // insiro os registro do banco de dados na tabela 
+                $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
                 while ($c_linha = $result->fetch_assoc()) {
-
+                    if ($c_linha['valor_total'] > 0)
+                     $c_valor = $formatter->formatCurrency($c_linha['valor_total'], 'BRL');
+                    else 
+                      $c_valor = 'R$ 0,00';
+                    if ($c_linha['frete'] > 0)
+                     $c_frete = $formatter->formatCurrency($c_linha['frete'], 'BRL');
+                    else 
+                      $c_frete = 'R$ 0,00';
+                    $c_prazo = $c_linha['prazo'] . ' dias';
                     echo "
                     <tr class='info'>
                     <td>$c_linha[id]</td>
-                    <td>$c_linha[material]</td>
-                    <td>$c_linha[quantidade]</td>
-                    <td>$c_linha[unidade]</td>
+                    <td>$c_linha[fornecedor]</td>
+                    <td>$c_linha[vendedor]</td>
+                    <td style='text-align: right;'>$c_valor</td>
+                    <td style='text-align: right;'>$c_frete</td>
+                    <td>$c_linha[status_texto]</td>
+                    <td>$c_prazo</td>
+                    <td>$c_linha[forma_pagamento]</td>
                   
                     <td>
-                    <a class='btn btn-secondary btn-sm' href='/gop/almoxarifado/cotacao_materiais_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                    <a class='btn btn-secondary btn-sm' href='/gop/almoxarifado/cotacao_materiais_fornecedores_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                    <a class='btn btn-success btn-sm' href='/gop/almoxarifado/cotacao_materiais_fornecedores_editar.php?id=$c_linha[id]'><img src='\gop\images\omadaprecos.png' alt='17' width='25' height='17'> Cotações</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
@@ -158,7 +165,9 @@ $_SESSION['descritivo_cotacao'] = $c_linha_cotacao['descritivo'];
 
             </tbody>
         </table>
+
     </div>
+
 
 
 </body>
