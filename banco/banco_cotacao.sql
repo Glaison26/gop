@@ -100,19 +100,20 @@ CREATE TABLE IF NOT EXISTS `cotacao_materiais_fornecedor` (
   `valor_unitario` double DEFAULT NULL,
   `prazo_entrega` date DEFAULT NULL,
   `valor_total` double DEFAULT NULL,
+  `quantidade` double DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK__materiais` (`id_material`),
   KEY `FK_cotacao_materiais_fornecedor_fornecedores` (`id_fornecedor`),
   KEY `FK_cotacao_materiais_fornecedor_cotacao_fornecedor` (`id_cotacao_fornecedor`),
   CONSTRAINT `FK_cotacao_materiais_fornecedor_cotacao_fornecedor` FOREIGN KEY (`id_cotacao_fornecedor`) REFERENCES `cotacao_fornecedor` (`id`),
   CONSTRAINT `FK_cotacao_materiais_fornecedor_fornecedores` FOREIGN KEY (`id_fornecedor`) REFERENCES `fornecedores` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela gop.cotacao_materiais_fornecedor: ~3 rows (aproximadamente)
-REPLACE INTO `cotacao_materiais_fornecedor` (`id`, `id_material`, `id_fornecedor`, `id_cotacao_fornecedor`, `valor_unitario`, `prazo_entrega`, `valor_total`) VALUES
-	(1, 4, 2, 3, NULL, NULL, NULL),
-	(2, 3, 2, 3, NULL, NULL, NULL),
-	(3, 2, 2, 3, NULL, NULL, NULL);
+REPLACE INTO `cotacao_materiais_fornecedor` (`id`, `id_material`, `id_fornecedor`, `id_cotacao_fornecedor`, `valor_unitario`, `prazo_entrega`, `valor_total`, `quantidade`) VALUES
+	(4, 4, 2, 3, 15.4, '2024-10-22', 30.8, 2),
+	(5, 3, 2, 3, 150.5, '2024-10-30', 301, 2),
+	(6, 2, 2, 3, 16.8, '2024-11-28', 168, 10);
 
 -- Copiando estrutura para tabela gop.cotacao_servicos
 CREATE TABLE IF NOT EXISTS `cotacao_servicos` (

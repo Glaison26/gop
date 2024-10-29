@@ -23,7 +23,6 @@ $c_linha_fornec = $result_fornec->fetch_assoc();
 $i_id_fornecedor = $c_linha_fornec['id_fornecedor'];
 // verifico se já existem dados para o fornecedor 
 $c_sql_conta = "SELECT COUNT(*) AS registros FROM cotacao_materiais_fornecedor where id_cotacao_fornecedor=' $i_id' and id_fornecedor='$i_id_fornecedor'";
-
 $result_conta = $conection->query($c_sql_conta);
 $c_linha = $result_conta->fetch_assoc();
 //
@@ -36,7 +35,7 @@ if ($c_linha['registros'] == 0) {
                     FROM cotacao_materiais
                     WHERE cotacao_materiais.id_cotacao='$i_id_cotacao'";
     $result = $conection->query($c_sql);
-    echo $c_sql;
+    // echo $c_sql;
     // verifico se a query foi correto
     if (!$result) {
         die("Erro ao Executar Sql!!" . $conection->connect_error);
@@ -44,8 +43,10 @@ if ($c_linha['registros'] == 0) {
     // loop para inclusão dos materias nata tabea de cotação X materiais
     while ($c_linha = $result->fetch_assoc()) {
         $i_id_material = $c_linha['id_material'];
+        $n_quantidade = $c_linha['quantidade'];
         // insiro registro com os dados dos materiais selecionados
-        $c_sql_add = "Insert into cotacao_materiais_fornecedor (id_cotacao_fornecedor,id_fornecedor, id_material) values ('$i_id', '$i_id_fornecedor', '$i_id_material' )";
+        $c_sql_add = "Insert into cotacao_materiais_fornecedor (id_cotacao_fornecedor,id_fornecedor, id_material, quantidade) 
+        values ('$i_id', '$i_id_fornecedor', '$i_id_material', $n_quantidade)";
         $result_add = $conection->query($c_sql_add);
         // verifico se a query foi correto
         if (!$result_add) {
@@ -66,6 +67,218 @@ if ($c_linha['registros'] == 0) {
 
 <body>
 
+    <script>
+        $(document).ready(function() {
+            $('.tabcotacao').DataTable({
+                // 
+                "iDisplayLength": -1,
+                "order": [1, 'asc'],
+                "aoColumnDefs": [{
+                    'bSortable': false,
+                    'aTargets': [6]
+                }, {
+                    'aTargets': [0],
+                    "visible": true
+                }],
+                "oLanguage": {
+                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                    "sLengthMenu": "_MENU_ resultados por página",
+                    "sInfoFiltered": " - filtrado de _MAX_ registros",
+                    "oPaginate": {
+                        "spagingType": "full_number",
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLoadingRecords": "Carregando...",
+                        "sProcessing": "Processando...",
+                        "sZeroRecords": "Nenhum registro encontrado",
+
+                        "sLast": "Último"
+                    },
+                    "sSearch": "Pesquisar",
+                    "sLengthMenu": 'Mostrar <select>' +
+                        '<option value="5">5</option>' +
+                        '<option value="10">10</option>' +
+                        '<option value="20">20</option>' +
+                        '<option value="30">30</option>' +
+                        '<option value="40">40</option>' +
+                        '<option value="50">50</option>' +
+                        '<option value="-1">Todos</option>' +
+                        '</select> Registros'
+
+                }
+
+            });
+
+        });
+    </script>
+    <!-- Coleta dados da tabela para edição do registro -->
+    <script>
+        $(document).ready(function() {
+
+            $('.editbtn').on('click', function() {
+
+                $('#editmodal').modal('show');
+
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function() {
+                    return $(this).text();
+                }).get();
+
+                console.log(data);
+
+                $('#up_idField').val(data[0]);
+                $('#up_qtd').val(data[3]);
+                $('#up_valor_unitario').val(data[4]);
+                $('#up_prazo').val(data[5]);
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        
+        // Função javascript e ajax para Alteração dos dados
+        $(document).on('submit', '#frmup', function(e) {
+            e.preventDefault();
+            var c_id = $('#up_idField').val();
+            var c_valor_unitario = $('#up_valor_unitario').val();
+            var c_prazo = $('#up_prazo').val();
+            var c_qtd = $('#up_qtd').val();
+            
+
+            if (c_valor_unitario != '') {
+
+                $.ajax({
+                    url: "cotacao_material_editar.php",
+                    type: "post",
+                    data: {
+                        c_id: c_id,
+                        c_valor_unitario: c_valor_unitario,
+                        c_prazo: c_prazo,
+                        c_qtd:c_qtd
+                    },
+                    success: function(data) {
+                        var json = JSON.parse(data);
+                        var status = json.status;
+                        if (status == 'true') {
+                            $('#editmodal').modal('hide');
+                            location.reload();
+                        } else {
+                            alert('falha ao alterar dados');
+                        }
+                    }
+                });
+
+            } else {
+                alert('Todos os campos devem ser preenchidos!!');
+            }
+        });
+    </script>
+
+    <div class="container-fluid">
+        <div class="panel panel-primary class">
+            <div class="panel-heading text-center">
+                <h4>GOP - Gestão Operacional</h4>
+                <h5>Lista de cotaçoes<h5>
+            </div>
+        </div>
+        <br>
+
+        <a class="btn btn-secondary btn-sm" href="/gop/almoxarifado/cotacao_materiais_fornecedores.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
+        <hr>
+        <table class="table table display table-bordered tabcotacao">
+            <thead class="thead">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Material</th>
+                    <th scope="col">Prazo de Entrega</th>
+                    <th scope="col">Quantidade</th>
+                    <th scope="col">Valor Unitário</th>
+                    <th scope="col">Valor Total</th>
+                   
+                    <th scope="col">Opções</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+
+                // faço a Leitura da tabela com sql
+                $c_sql = "SELECT cotacao_materiais_fornecedor.id, materiais.descricao AS material, cotacao_materiais_fornecedor.valor_unitario,
+                        cotacao_materiais_fornecedor.valor_total, cotacao_materiais_fornecedor.prazo_entrega,cotacao_materiais_fornecedor.quantidade
+                        FROM cotacao_materiais_fornecedor
+                        JOIN materiais ON cotacao_materiais_fornecedor.id_material=materiais.id
+                        where id_cotacao_fornecedor='$i_id' and id_fornecedor='$i_id_fornecedor'";
+                $result = $conection->query($c_sql);
+                // verifico se a query foi correto
+                if (!$result) {
+                    die("Erro ao Executar Sql!!" . $conection->connect_error);
+                }
+
+                // insiro os registro do banco de dados na tabela 
+                while ($c_linha = $result->fetch_assoc()) {
+                    if (!empty($c_linha['prazo_entrega']))
+                        $c_data_prazo = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['prazo_entrega'])));
+                    else
+                        $c_data_prazo = "-";
+
+                    echo "
+                    <tr class='info'>
+                    <td>$c_linha[id]</td>
+                    <td>$c_linha[material]</td>
+                    <td>$c_data_prazo</td>
+                    <td>$c_linha[quantidade]</td>
+                    <td>$c_linha[valor_unitario]</td>
+                    <td>$c_linha[valor_total]</td>
+                    
+                    <td>
+                    <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Cotação'><span class='glyphicon glyphicon-pencil'></span> Editar</button>&nbsp;";
+                    "</td>
+                    </tr>
+                    ";
+                }
+                ?>
+            </tbody>
+        </table>
+
+    </div>
+    <!-- Modal para edição dos dados -->
+    <div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="editmodal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">Editar registro de Cotação</h4>
+                </div>
+                <div class="modal-body">
+                    <div class='alert alert-warning' role='alert'>
+                        <h5>Entre com valor unitário e prazo da cotação</h5>
+                    </div>
+                    <form id="frmup" method="POST" action="">
+                        <input type="hidden" id="up_idField" name="up_idField">
+                        <input type="hidden" id="up_qtd" name="up_qtd">
+                        <div class="mb-3 row">
+                            <label for="up_descricaoField" class="col-md-3 form-label">Valor Unitário</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="up_valor_unitario" name="up_valor_unitario">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="up_descricaoField" class="col-md-3 form-label">Prazo de Entrega</label>
+                            <div class="col-md-9">
+                                <input type="date" class="form-control" id="up_prazo" name="up_prazo">
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
+                            <button class="btn btn-secondary" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Fechar</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
