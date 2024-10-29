@@ -130,7 +130,8 @@ if ($c_linha['registros'] == 0) {
 
                 $('#up_idField').val(data[0]);
                 $('#up_qtd').val(data[3]);
-                $('#up_valor_unitario').val(data[4]);
+                
+                $('#up_valor_unitario').val(data[4].replace('R$', '').replace(',', '.'));
                 $('#up_prazo').val(data[5]);
             });
         });
@@ -145,8 +146,9 @@ if ($c_linha['registros'] == 0) {
             var c_valor_unitario = $('#up_valor_unitario').val();
             var c_prazo = $('#up_prazo').val();
             var c_qtd = $('#up_qtd').val();
-            
-
+            //c_valor_unitario = c_valor_unitario.replace('R$', '');
+            //c_valor_unitario = c_valor_unitario.replace(',', '.');
+            //c_valor_unitario = trim(c_valor_unitario);
             if (c_valor_unitario != '') {
 
                 $.ajax({
@@ -194,8 +196,8 @@ if ($c_linha['registros'] == 0) {
                     <th scope="col">Material</th>
                     <th scope="col">Prazo de Entrega</th>
                     <th scope="col">Quantidade</th>
-                    <th scope="col">Valor Unitário</th>
-                    <th scope="col">Valor Total</th>
+                    <th scope="col" style='text-align: right;'>Valor Unitário</th>
+                    <th scope="col" style='text-align: right;'>Valor Total</th>
                    
                     <th scope="col">Opções</th>
                 </tr>
@@ -216,20 +218,28 @@ if ($c_linha['registros'] == 0) {
                 }
 
                 // insiro os registro do banco de dados na tabela 
+                $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
                 while ($c_linha = $result->fetch_assoc()) {
                     if (!empty($c_linha['prazo_entrega']))
                         $c_data_prazo = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['prazo_entrega'])));
                     else
                         $c_data_prazo = "-";
-
+                        if ($c_linha['valor_unitario'] > 0)
+                        $c_valor_unitario = $formatter->formatCurrency($c_linha['valor_unitario'], 'BRL');
+                       else 
+                         $c_valor_unitario = 'R$ 0,00';
+                       if ($c_linha['valor_total'] > 0)
+                        $c_valor_total = $formatter->formatCurrency($c_linha['valor_total'], 'BRL');
+                       else 
+                         $c_valor_total = 'R$ 0,00';
                     echo "
                     <tr class='info'>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[material]</td>
                     <td>$c_data_prazo</td>
                     <td>$c_linha[quantidade]</td>
-                    <td>$c_linha[valor_unitario]</td>
-                    <td>$c_linha[valor_total]</td>
+                    <td style='text-align: right;'>$c_valor_unitario</td>
+                    <td style='text-align: right;'>$c_valor_total</td>
                     
                     <td>
                     <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Cotação'><span class='glyphicon glyphicon-pencil'></span> Editar</button>&nbsp;";

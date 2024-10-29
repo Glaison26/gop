@@ -9,7 +9,7 @@ include("../conexao.php");
 
 // rotina de edição
 $c_id = $_POST['c_id'];
-$c_valor_unitario = $_POST['c_valor_unitario'];
+$c_valor_unitario = ltrim($_POST['c_valor_unitario']);
 $c_prazo = $_POST['c_prazo'];
 $c_qtd = $_POST['c_qtd'];
 $c_total = $c_qtd*$c_valor_unitario;
