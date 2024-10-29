@@ -37,7 +37,7 @@ $_SESSION['sql'] = "select";
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,
-                    'aTargets': [3]
+                    'aTargets': [7]
                 }, {
                     'aTargets': [0],
                     "visible": true
@@ -250,9 +250,10 @@ $_SESSION['sql'] = "select";
                     <td>
                     <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Cotação'><span class='glyphicon glyphicon-pencil'></span> Editar</button>";
                     if ($c_linha['tipo'] == 'M')
-                        echo "<a class='btn btn-info btn-sm' href='/gop/almoxarifado/cotacao_materiais_lista.php?id=$c_linha[id]'><img src='\gop\images\servicotecnico.png' alt='16' width='25' height='16'> Itens a Cotar</a>";
+                        echo "<a class='btn btn-info btn-sm' href='/gop/almoxarifado/cotacao_materiais_lista.php?id=$c_linha[id]'><span><img src='\gop\images\servicotecnico.png' alt='16' width='25' height='16'></span> Itens a Cotar</a>";
                     else
                         echo "<a class='btn btn-info btn-sm' href='cotacao_servicos_lista.php?id=$c_linha[id]'><img src='\gop\images\servicotecnico.png' alt='16' width='25' height='16'> Itens a Cotar</a>";
+                    echo "<a class='btn btn-success btn-sm' href='/gop/almoxarifado/cotacao_materiais_fornecedores.php?id=$c_linha[id]'><img src='\gop\images\ga.png' alt='16' width='30' height='16'> Fornecedores</a>";
                     echo "<a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>";
                     echo "</td>
 

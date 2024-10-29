@@ -106,7 +106,7 @@ $_SESSION['descritivo_cotacao'] = $c_linha_cotacao['descritivo'];
         </div>
 
         <a class="btn btn-success btn-sm" href="/gop/almoxarifado/cotacao_materiais_novo.php"><span class="glyphicon glyphicon-plus"></span>Incluir</a>
-        <a class="btn btn-info btn-sm" href="/gop/almoxarifado/cotacao_materiais_fornecedores.php?id=<?php echo $i_id ?>"><img src='\gop\images\ofornecedor.png' alt='18' width='30' height='18'>Fornecedores</a>
+       
         <a class="btn btn-secondary btn-sm" href="/gop/almoxarifado/cotacao_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
