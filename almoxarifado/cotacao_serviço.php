@@ -1,7 +1,7 @@
 <?php
 ////////////////////////////////////////////////////////////
-// rotina verifica se os itens foram anexados ao fornecedor.
-// se não inclui os itens já inclui a cotação por fornecedor
+// rotina verifica se os serviços foram anexados ao fornecedor.
+// se não inclui os serviços já inclui a cotação por fornecedor
 ////////////////////////////////////////////////////////////
 session_start();
 if (!isset($_SESSION['newsession'])) {
@@ -12,7 +12,7 @@ include("../links2.php");
 
 if (isset($_GET['id'])) {
     $i_id = $_GET['id'];
-    $_SESSION['id_material_fornecedor'] = $i_id;
+    $_SESSION['id_servico_fornecedor'] = $i_id;
 } else {
     $i_id = $_SESSION['id_material_fornecedor'];
 }

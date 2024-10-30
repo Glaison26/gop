@@ -253,11 +253,11 @@ $_SESSION['sql'] = "select";
                     <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Cotação'><span class='glyphicon glyphicon-pencil'></span> Editar</button>&nbsp;";
                     if ($c_linha['tipo'] == 'M') {
                         echo "<a class='btn btn-info btn-sm' href='/gop/almoxarifado/cotacao_materiais_lista.php?id=$c_linha[id]'><span><img src='\gop\images\servicotecnico.png' alt='16' width='20' height='16'></span> Itens</a>
-                         <a class='btn btn-success btn-sm' href='/gop/almoxarifado/cotacao_materiais_fornecedores.php?id=$c_linha[id]'><img src='\gop\images\ga.png' alt='16' width='20' height='16'> Fornecedores</a>
+                         <a class='btn btn-success btn-sm' href='/gop/almoxarifado/cotacao_fornecedores.php?id=$c_linha[id]'><img src='\gop\images\ga.png' alt='16' width='20' height='16'> Fornecedores</a>
                      <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>";
                     } else {
                         echo "<a class='btn btn-info btn-sm' href='cotacao_servicos_lista.php?id=$c_linha[id]'><img src='\gop\images\servicotecnico.png' alt='16' width='20' height='16'> Itens</a>
-                     <a class='btn btn-success btn-sm' href='/gop/almoxarifado/cotacao_materiais_fornecedores.php?id=$c_linha[id]'><img src='\gop\images\ga.png' alt='16' width='20' height='16'> Fornecedores</a>
+                     <a class='btn btn-success btn-sm' href='/gop/almoxarifado/cotacao_fornecedores.php?id=$c_linha[id]'><img src='\gop\images\ga.png' alt='16' width='20' height='16'> Fornecedores</a>
                      <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>";
                     }
                     "</td>

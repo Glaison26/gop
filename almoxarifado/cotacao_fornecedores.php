@@ -101,7 +101,7 @@ $c_linha_cotacao= $result->fetch_assoc();
 
             <h4>Fornecedores participantes para a Cotação No. <?php echo $i_id_cotacao . ' - ' . $c_linha_cotacao['descritivo'];  ?> </h4>
         </div>
-        <a class="btn btn-success btn-sm" href="/gop/almoxarifado/cotacao_materiais_fornecedores_novo.php"><span class="glyphicon glyphicon-plus"></span>Incluir</a>
+        <a class="btn btn-success btn-sm" href="/gop/almoxarifado/cotacao_fornecedores_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
         <a class="btn btn-secondary btn-sm" href="/gop/almoxarifado/cotacao_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
         <hr>
         <table class="table table display table-bordered tabfornecedores">
@@ -156,11 +156,14 @@ $c_linha_cotacao= $result->fetch_assoc();
                     <td>$c_linha[status_texto]</td>
                     <td>$c_prazo</td>
                     <td>$c_linha[forma_pagamento]</td>
-                  
                     <td>
-                    <a class='btn btn-secondary btn-sm' href='/gop/almoxarifado/cotacao_materiais_fornecedores_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
-                    <a class='btn btn-success btn-sm' href='/gop/almoxarifado/cotacao_material.php?id=$c_linha[id]'><img src='\gop\images\omadaprecos.png' alt='17' width='25' height='17'> Cotações</a>
-                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
+
+                    <a class='btn btn-secondary btn-sm' href='/gop/almoxarifado/cotacao_fornecedores_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>&nbsp;";
+                    if ($c_linha_cotacao['tipo']=='M') // cotação para materiais
+                    echo "<a class='btn btn-success btn-sm' href='/gop/almoxarifado/cotacao_material.php?id=$c_linha[id]'><img src='\gop\images\omadaprecos.png' alt='17' width='25' height='17'> Cotações</a>&nbsp;";
+                     else  // cotação para serviços
+                    echo "<a class='btn btn-success btn-sm' href='/gop/almoxarifado/cotacao_servico.php?id=$c_linha[id]'><img src='\gop\images\omadaprecos.png' alt='17' width='25' height='17'> Cotações</a>&nbsp;";
+                    echo "<a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
                     </tr>

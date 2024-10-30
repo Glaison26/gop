@@ -202,7 +202,7 @@ $c_linha_cotacao = $result_cotacao->fetch_assoc();
         <button type="button" title="Inclusão de Nova Cotação" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
             Incluir
         </button>
-        <a class="btn btn-info btn-sm" href="/gop/almoxarifado/cotacao_lista.php"><img src='\gop\images\ofornecedor.png' alt='18' width='30' height='18'>Fornecedores</a>
+        
         <a class="btn btn-secondary btn-sm" href="/gop/almoxarifado/cotacao_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>

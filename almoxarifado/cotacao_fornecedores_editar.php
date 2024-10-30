@@ -1,27 +1,49 @@
-<?php
-// controle de acesso ao formulário
+<?php // controle de acesso ao formulário
 session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
 
-include("../conexao.php");
-include("../links2.php");
-include_once "../lib_gop.php";
+include("..\conexao.php");
+include("..\links2.php");
 
-$c_fornecedor = "";
-$c_observacao = "";
-$c_prazo = "";
-$c_forma_pagamento = "";
-$c_vendedor = "";
-$n_frete = 0;
+include_once "..\lib_gop.php";
+
+// rotina de post dos dados do formuário
+$c_id = "";
+
 
 // variaveis para mensagens de erro e suscessso da gravação
 $msg_gravou = "";
 $msg_erro = "";
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no formulário
 
+    if (!isset($_GET["id"])) {
+        header('location: /gop/almoxarifado/cotacao_fornecedores.php');
+        exit;
+    }
+
+    $c_id= $_GET["id"];
+    // leitura através de sql usando id passada
+    $c_sql = "select * from cotacao_fornecedor where id=$c_id";
+    $result = $conection->query($c_sql);
+    $registro = $result->fetch_assoc();
+
+    if (!$registro) {
+        header('location: /gop/almoxarifado/cotacao_fornecedores.php');
+        exit;
+    }
+
+    $i_id_fornecedor = $registro['id_fornecedor'];
+    $n_frete = $registro['frete'];
+    $c_prazo = $registro['prazo'];
+    $c_forma_pagamento = $registro['forma_pagamento'];
+    $c_vendedor = $registro['vendedor'];
+    $c_observacao = $registro['observacao'];
+} else {
+    // metodo post para atualizar dados
+    $c_id = $_POST["id"];
     $c_fornecedor = $_POST['fornecedor'];
     $c_observacao = $_POST["observacao"];
     $c_prazo = $_POST['prazo'];
@@ -41,25 +63,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $c_registro = $result->fetch_assoc();
         $i_id_fornecedor = $c_registro['id'];
 
-        // rotina de inclusão
-
-        $i_id_cotacao = $_SESSION['id_cotacao']; // pego o id da cotação
-        $c_sql = "Insert into cotacao_fornecedor (id_cotacao, id_fornecedor, prazo, frete, forma_pagamento, 
-        vendedor, status, observacao) 
-        Value ('$i_id_cotacao', '$i_id_fornecedor', '$c_prazo', '$n_frete', '$c_forma_pagamento', '$c_vendedor', 'P', '$c_observacao' )";
+        // grava dados no banco
+        // faço a Leitura da tabela com sql
+        $c_sql = "update cotacao_fornecedor set  id_fornecedor='$i_id_fornecedor', prazo='$c_prazo', frete='$n_frete',
+        forma_pagamento = '$c_forma_pagamento', vendedor='$c_vendedor', observacao='$c_observacao' where id='$c_id'";
+              
         $result = $conection->query($c_sql);
-
-
         if (!$result) {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
         }
 
-        $msg_gravou = "Dados Gravados com Sucesso!!";
-
-        header('location: /gop/almoxarifado/cotacao_materiais_fornecedores.php');
+        header('location: /gop/almoxarifado/cotacao_fornecedores.php');
     } while (false);
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -68,16 +84,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
 
+
 </head>
 
-
 <body>
+
     <div class="container  -my5">
         <div style="padding-top:5px;">
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
                     <h4>GOP - Gestão Operacional</h4>
-                    <h5>Novo Fornecedor para Cotação de Material<h5>
+                    <h5>Editar dados de Fornecedor para Cotação de Serviço<h5>
                 </div>
             </div>
         </div>
@@ -88,21 +105,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <h5>Campos com (*) são obrigatórios</h5>
         </div>
-
-        <br>
         <?php
         if (!empty($msg_erro)) {
             echo "
             <div class='alert alert-warning' role='alert'>
-                <div style='padding-left:15px;'>
-                    <h5><img Align='left' src='\gop\images\aviso.png' alt='30' height='35'> $msg_erro</h5>
-                </div>
-                
+                <h4>$msg_erro</h4>
             </div>
-            ";
+                ";
         }
         ?>
+
         <form method="post">
+            <input type="hidden" name="id" value="<?php echo $c_id; ?>">
             <br>
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Fornecedor (*)</label>
@@ -116,7 +130,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $c_sql_fornecedor = "SELECT fornecedores.id, fornecedores.descricao FROM fornecedores ORDER BY fornecedores.descricao";
                         $result_fornecedor = $conection->query($c_sql_fornecedor);
                         while ($c_linha = $result_fornecedor->fetch_assoc()) {
-
+                            $op = "";
+                            if ($c_linha['id']==$i_id_fornecedor)
+                              $op = "selected";
                             echo "  
                           <option $op>$c_linha[descricao]</option>
                         ";
@@ -129,41 +145,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Valor Frete</label>
                 <div class="col-sm-2">
-                    <input type="text" class="form-control" id="frete" name="frete">
+                    <input type="text" class="form-control" id="frete" name="frete" value = '<?php echo $n_frete ?>'>
                 </div>
 
             </div>
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Prazo de entrega</label>
                 <div class="col-sm-2">
-                    <input type="number"  placeholder="em no. de dias " class="form-control" id="prazo" name="prazo">
+                    <input type="number"  placeholder="em no. de dias " class="form-control" id="prazo" name="prazo" value = '<?php echo $c_prazo ?>'>
                 </div>
             </div>
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Forma de Pagamento</label>
                 <div class="col-sm-3">
-                    <input type="text" class="form-control" id="forma_pagamento" name="forma_pagamento">
+                    <input type="text" class="form-control" id="forma_pagamento" name="forma_pagamento" value = '<?php echo $c_forma_pagamento ?>'>
                 </div>
             </div>
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Vendedor (*)</label>
                 <div class="col-sm-3">
-                    <input type="text" class="form-control" id="vendedor" name="vendedor">
+                    <input type="text" class="form-control" id="vendedor" name="vendedor" value = '<?php echo $c_vendedor ?>'>
                 </div>
             </div>
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Observação</label>
                 <div class="col-sm-6">
-                    <textarea class="form-control" id="observacao" name="observacao" rows="06"></textarea>
+                    <textarea class="form-control" id="observacao" name="observacao" rows="06"><?php echo $c_observacao ?></textarea>
                 </div>
             </div>
+
+            <br>
             <div class="row mb-3">
                 <div class="offset-sm-0 col-sm-3">
                     <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                    <a class='btn btn-danger' href='/gop/almoxarifado/cotacao_materiais_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                    <a class='btn btn-danger' href='/gop/almoxarifado/cotacao_fornecedores.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
                 </div>
 
             </div>
+
         </form>
     </div>
 
