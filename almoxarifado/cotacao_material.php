@@ -212,7 +212,6 @@ if ($c_linha['registros'] == 0) {
                     <th scope="col">Quantidade</th>
                     <th scope="col" style='text-align: right;'>Valor Unitário</th>
                     <th scope="col" style='text-align: right;'>Valor Total</th>
-                   
                     <th scope="col">Opções</th>
                 </tr>
             </thead>
