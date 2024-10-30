@@ -27,9 +27,14 @@ $result_conta = $conection->query($c_sql_conta);
 $c_linha = $result_conta->fetch_assoc();
 //
 $i_id_cotacao = $_SESSION['id_cotacao'];
+// pego fornecedor
+$c_sql_fornecdor = "select fornecedores.id, fornecedores.descricao from fornecedores where id = '$i_id_fornecedor'";
+$result_fornec = $conection->query($c_sql_fornecdor);
+$c_linha_fornec = $result_fornec->fetch_assoc();
+$c_fornecedor = $c_linha_fornec['descricao'];
 // checo se existem registros
 if ($c_linha['registros'] == 0) {
-    
+
     // monto sql para pegar os materias incluido para cotação
     $c_sql = "SELECT cotacao_materiais.id, cotacao_materiais.id_material, cotacao_materiais.id_unidade,
                      cotacao_materiais.quantidade
@@ -54,8 +59,7 @@ if ($c_linha['registros'] == 0) {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
         }
     }
-    
-}else{
+} else {
     // faço somatorio dos valores e edito na tabela do fornecedor da cotação
     $c_sql_soma = "SELECT SUM(cotacao_materiais_fornecedor.valor_total) AS total FROM cotacao_materiais_fornecedor
     where id_cotacao_fornecedor=' $i_id' and id_fornecedor='$i_id_fornecedor'";
@@ -145,16 +149,15 @@ if ($c_linha['registros'] == 0) {
 
                 $('#up_idField').val(data[0]);
                 $('#up_qtd').val(data[3]);
-                
+
                 $('#up_valor_unitario').val(data[4].replace('R$', '').replace(',', '.').replace(/^\s+|\s+$/g, ''));
-                $('#up_prazo').val(data[2].getFullYear()+ "-" +((data[2].getMonth() + 1))+ "-" + 
-            (data[2].getDate()));
+                $('#up_prazo').val(data[2].getFullYear() + "-" + ((data[2].getMonth() + 1)) + "-" +
+                    (data[2].getDate()));
             });
         });
     </script>
 
     <script type="text/javascript">
-        
         // Função javascript e ajax para Alteração dos dados
         $(document).on('submit', '#frmup', function(e) {
             e.preventDefault();
@@ -162,7 +165,7 @@ if ($c_linha['registros'] == 0) {
             var c_valor_unitario = $('#up_valor_unitario').val();
             var c_prazo = $('#up_prazo').val();
             var c_qtd = $('#up_qtd').val();
-            
+
             if (c_valor_unitario != '') {
 
                 $.ajax({
@@ -172,7 +175,7 @@ if ($c_linha['registros'] == 0) {
                         c_id: c_id,
                         c_valor_unitario: c_valor_unitario,
                         c_prazo: c_prazo,
-                        c_qtd:c_qtd
+                        c_qtd: c_qtd
                     },
                     success: function(data) {
                         var json = JSON.parse(data);
@@ -200,7 +203,13 @@ if ($c_linha['registros'] == 0) {
             </div>
         </div>
         <br>
+        <div class='alert alert-info' role='alert'>
+            <div style="padding-left:15px;">
+                <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
+            </div>
+            <h4>Cotação No. <?php echo $i_id_cotacao .'  Fornecedor participante: '.$c_fornecedor ?> </h4>
+        </div>
         <a class="btn btn-secondary btn-sm" href="/gop/almoxarifado/cotacao_materiais_fornecedores.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
         <hr>
         <table class="table table display table-bordered tabcotacao">
@@ -237,14 +246,14 @@ if ($c_linha['registros'] == 0) {
                         $c_data_prazo = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['prazo_entrega'])));
                     else
                         $c_data_prazo = "-";
-                        if ($c_linha['valor_unitario'] > 0)
+                    if ($c_linha['valor_unitario'] > 0)
                         $c_valor_unitario = $formatter->formatCurrency($c_linha['valor_unitario'], 'BRL');
-                       else 
-                         $c_valor_unitario = 'R$ 0,00';
-                       if ($c_linha['valor_total'] > 0)
+                    else
+                        $c_valor_unitario = 'R$ 0,00';
+                    if ($c_linha['valor_total'] > 0)
                         $c_valor_total = $formatter->formatCurrency($c_linha['valor_total'], 'BRL');
-                       else 
-                         $c_valor_total = 'R$ 0,00';
+                    else
+                        $c_valor_total = 'R$ 0,00';
                     echo "
                     <tr class='info'>
                     <td>$c_linha[id]</td>

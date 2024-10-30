@@ -99,7 +99,7 @@ $c_linha_cotacao= $result->fetch_assoc();
 
             </div>
 
-            <h5>Fornecedores participantes para a Cotação No. <?php echo $i_id_cotacao . ' - ' . $c_linha_cotacao['descritivo'];  ?> </h5>
+            <h4>Fornecedores participantes para a Cotação No. <?php echo $i_id_cotacao . ' - ' . $c_linha_cotacao['descritivo'];  ?> </h4>
         </div>
         <a class="btn btn-success btn-sm" href="/gop/almoxarifado/cotacao_materiais_fornecedores_novo.php"><span class="glyphicon glyphicon-plus"></span>Incluir</a>
         <a class="btn btn-secondary btn-sm" href="/gop/almoxarifado/cotacao_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
