@@ -26,14 +26,15 @@ $c_sql_conta = "SELECT COUNT(*) AS registros FROM cotacao_materiais_fornecedor w
 $result_conta = $conection->query($c_sql_conta);
 $c_linha = $result_conta->fetch_assoc();
 //
+$i_id_cotacao = $_SESSION['id_cotacao'];
 // checo se existem registros
 if ($c_linha['registros'] == 0) {
-    $i_id_cotacao = $_SESSION['id_cotacao'];
+    
     // monto sql para pegar os materias incluido para cotação
     $c_sql = "SELECT cotacao_materiais.id, cotacao_materiais.id_material, cotacao_materiais.id_unidade,
-                    cotacao_materiais.quantidade
-                    FROM cotacao_materiais
-                    WHERE cotacao_materiais.id_cotacao='$i_id_cotacao'";
+                     cotacao_materiais.quantidade
+                     FROM cotacao_materiais
+                     WHERE cotacao_materiais.id_cotacao='$i_id_cotacao'";
     $result = $conection->query($c_sql);
     // echo $c_sql;
     // verifico se a query foi correto
@@ -53,6 +54,20 @@ if ($c_linha['registros'] == 0) {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
         }
     }
+    
+}else{
+    // faço somatorio dos valores e edito na tabela do fornecedor da cotação
+    $c_sql_soma = "SELECT SUM(cotacao_materiais_fornecedor.valor_total) AS total FROM cotacao_materiais_fornecedor
+    where id_cotacao_fornecedor=' $i_id' and id_fornecedor='$i_id_fornecedor'";
+    //echo $c_sql_soma;
+    $result_soma = $conection->query($c_sql_soma);
+    $c_linha_soma = $result_soma->fetch_assoc();
+    $n_soma = $c_linha_soma['total'];
+    // edito valor de soma no registro do fornecedor
+    $c_sql_up = "update cotacao_fornecedor set valor_total='$n_soma' where id_cotacao=$i_id_cotacao
+    and id_fornecedor =$i_id_fornecedor";
+    //echo $c_sql_up;
+    $result_up = $conection->query($c_sql_up);
 }
 ?>
 
@@ -131,8 +146,9 @@ if ($c_linha['registros'] == 0) {
                 $('#up_idField').val(data[0]);
                 $('#up_qtd').val(data[3]);
                 
-                $('#up_valor_unitario').val(data[4].replace('R$', '').replace(',', '.'));
-                $('#up_prazo').val(data[5]);
+                $('#up_valor_unitario').val(data[4].replace('R$', '').replace(',', '.').replace(/^\s+|\s+$/g, ''));
+                $('#up_prazo').val(data[2].getFullYear()+ "-" +((data[2].getMonth() + 1))+ "-" + 
+            (data[2].getDate()));
             });
         });
     </script>
@@ -146,9 +162,7 @@ if ($c_linha['registros'] == 0) {
             var c_valor_unitario = $('#up_valor_unitario').val();
             var c_prazo = $('#up_prazo').val();
             var c_qtd = $('#up_qtd').val();
-            //c_valor_unitario = c_valor_unitario.replace('R$', '');
-            //c_valor_unitario = c_valor_unitario.replace(',', '.');
-            //c_valor_unitario = trim(c_valor_unitario);
+            
             if (c_valor_unitario != '') {
 
                 $.ajax({
@@ -240,7 +254,6 @@ if ($c_linha['registros'] == 0) {
                     <td>$c_linha[quantidade]</td>
                     <td style='text-align: right;'>$c_valor_unitario</td>
                     <td style='text-align: right;'>$c_valor_total</td>
-                    
                     <td>
                     <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Cotação'><span class='glyphicon glyphicon-pencil'></span> Editar</button>&nbsp;";
                     "</td>
@@ -261,7 +274,7 @@ if ($c_linha['registros'] == 0) {
                 </div>
                 <div class="modal-body">
                     <div class='alert alert-warning' role='alert'>
-                        <h5>Entre com valor unitário e prazo da cotação</h5>
+                        <h5>Entre com valor unitário e a data de entrega do material</h5>
                     </div>
                     <form id="frmup" method="POST" action="">
                         <input type="hidden" id="up_idField" name="up_idField">

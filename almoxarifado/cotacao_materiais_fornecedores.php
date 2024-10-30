@@ -1,4 +1,7 @@
 <?php
+
+use LDAP\Result;
+
 session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
@@ -12,6 +15,9 @@ if (isset($_GET['id'])) {
 } else {
     $i_id_cotacao = $_SESSION['id_cotacao'];
 }
+$c_sql = "Select * from cotacao where id='$i_id_cotacao'";
+$result = $conection->query($c_sql);
+$c_linha_cotacao= $result->fetch_assoc();
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +51,7 @@ if (isset($_GET['id'])) {
                     'aTargets': [4]
                 }, {
                     'aTargets': [0],
-                    "visible": true
+                    "visible": false
                 }],
                 "oLanguage": {
                     "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -93,7 +99,7 @@ if (isset($_GET['id'])) {
 
             </div>
 
-            <h5>Fornecedores participantes para a Cotação No. <?php echo $i_id_cotacao . ' - ' . $_SESSION['descritivo_cotacao']  ?> </h5>
+            <h5>Fornecedores participantes para a Cotação No. <?php echo $i_id_cotacao . ' - ' . $c_linha_cotacao['descritivo'];  ?> </h5>
         </div>
         <a class="btn btn-success btn-sm" href="/gop/almoxarifado/cotacao_materiais_fornecedores_novo.php"><span class="glyphicon glyphicon-plus"></span>Incluir</a>
         <a class="btn btn-secondary btn-sm" href="/gop/almoxarifado/cotacao_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>

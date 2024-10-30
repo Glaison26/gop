@@ -180,6 +180,9 @@ $_SESSION['sql'] = "select";
     </script>
 
 
+   
+    <div class="container-fluid">
+
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
@@ -187,7 +190,6 @@ $_SESSION['sql'] = "select";
         </div>
     </div>
     <br>
-    <div class="container-fluid">
 
         <button type="button" title="Inclusão de Nova Cotação" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
             Incluir
@@ -250,12 +252,12 @@ $_SESSION['sql'] = "select";
                     <td>
                     <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Cotação'><span class='glyphicon glyphicon-pencil'></span> Editar</button>&nbsp;";
                     if ($c_linha['tipo'] == 'M') {
-                        echo "<a class='btn btn-info btn-sm' href='/gop/almoxarifado/cotacao_materiais_lista.php?id=$c_linha[id]'><span><img src='\gop\images\servicotecnico.png' alt='16' width='25' height='16'></span> Itens a Cotar</a>
-                         <a class='btn btn-success btn-sm' href='/gop/almoxarifado/cotacao_materiais_fornecedores.php?id=$c_linha[id]'><img src='\gop\images\ga.png' alt='16' width='30' height='16'> Fornecedores</a>
+                        echo "<a class='btn btn-info btn-sm' href='/gop/almoxarifado/cotacao_materiais_lista.php?id=$c_linha[id]'><span><img src='\gop\images\servicotecnico.png' alt='16' width='20' height='16'></span> Itens</a>
+                         <a class='btn btn-success btn-sm' href='/gop/almoxarifado/cotacao_materiais_fornecedores.php?id=$c_linha[id]'><img src='\gop\images\ga.png' alt='16' width='20' height='16'> Fornecedores</a>
                      <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>";
                     } else {
-                        echo "<a class='btn btn-info btn-sm' href='cotacao_servicos_lista.php?id=$c_linha[id]'><img src='\gop\images\servicotecnico.png' alt='16' width='25' height='16'> Itens a Cotar</a>
-                     <a class='btn btn-success btn-sm' href='/gop/almoxarifado/cotacao_materiais_fornecedores.php?id=$c_linha[id]'><img src='\gop\images\ga.png' alt='16' width='30' height='16'> Fornecedores</a>
+                        echo "<a class='btn btn-info btn-sm' href='cotacao_servicos_lista.php?id=$c_linha[id]'><img src='\gop\images\servicotecnico.png' alt='16' width='20' height='16'> Itens</a>
+                     <a class='btn btn-success btn-sm' href='/gop/almoxarifado/cotacao_materiais_fornecedores.php?id=$c_linha[id]'><img src='\gop\images\ga.png' alt='16' width='20' height='16'> Fornecedores</a>
                      <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>";
                     }
                     "</td>
