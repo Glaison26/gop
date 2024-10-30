@@ -51,7 +51,7 @@ $c_linha_cotacao= $result->fetch_assoc();
                     'aTargets': [4]
                 }, {
                     'aTargets': [0],
-                    "visible": false
+                    "visible": true
                 }],
                 "oLanguage": {
                     "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -162,7 +162,7 @@ $c_linha_cotacao= $result->fetch_assoc();
                     if ($c_linha_cotacao['tipo']=='M') // cotação para materiais
                     echo "<a class='btn btn-success btn-sm' href='/gop/almoxarifado/cotacao_material.php?id=$c_linha[id]'><img src='\gop\images\omadaprecos.png' alt='17' width='25' height='17'> Cotações</a>&nbsp;";
                      else  // cotação para serviços
-                    echo "<a class='btn btn-success btn-sm' href='/gop/almoxarifado/cotacao_servico.php?id=$c_linha[id]'><img src='\gop\images\omadaprecos.png' alt='17' width='25' height='17'> Cotações</a>&nbsp;";
+                    echo "<a class='btn btn-success btn-sm' href='/gop/almoxarifado/cotacao_fornecedor_servico.php?id=$c_linha[id]'><img src='\gop\images\omadaprecos.png' alt='17' width='25' height='17'> Cotações</a>&nbsp;";
                     echo "<a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
