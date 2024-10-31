@@ -68,10 +68,12 @@ if ($c_linha['registros'] == 0) {
     $c_linha_soma = $result_soma->fetch_assoc();
     $n_soma = $c_linha_soma['total'];
     // edito valor de soma no registro do fornecedor
-    $c_sql_up = "update cotacao_fornecedor set valor_total='$n_soma' where id_cotacao=$i_id_cotacao
-    and id_fornecedor =$i_id_fornecedor";
-    //echo $c_sql_up;
-    $result_up = $conection->query($c_sql_up);
+    if ($n_soma > 0) {
+        $c_sql_up = "update cotacao_fornecedor set valor_total='$n_soma' where id_cotacao=$i_id_cotacao
+                    and id_fornecedor =$i_id_fornecedor";
+        //echo $c_sql_up;
+        $result_up = $conection->query($c_sql_up);
+    }
 }
 ?>
 
@@ -199,7 +201,7 @@ if ($c_linha['registros'] == 0) {
         <div class="panel panel-primary class">
             <div class="panel-heading text-center">
                 <h4>GOP - Gestão Operacional</h4>
-                <h5>Lista de cotaçoes<h5>
+                <h5>Lista de cotaçoes por Fornecedor<h5>
             </div>
         </div>
         <br>
@@ -208,9 +210,11 @@ if ($c_linha['registros'] == 0) {
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
             </div>
-            <h4>Cotação No. <?php echo $i_id_cotacao .'  Fornecedor participante: '.$c_fornecedor ?> </h4>
+            <h4>Cotação No. <?php echo $i_id_cotacao . '  Fornecedor participante: ' . $c_fornecedor ?> </h4>
         </div>
         <a class="btn btn-secondary btn-sm" href="/gop/almoxarifado/cotacao_fornecedores.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
+        <button type='submit' name="btnincluir" class='btn btn-success btn-sm'  title='Novo Item na cotação'><span class='glyphicon glyphicon-plus'></span> Novo Item</button>
+        
         <hr>
         <table class="table table display table-bordered tabcotacao">
             <thead class="thead">
@@ -254,6 +258,7 @@ if ($c_linha['registros'] == 0) {
                         $c_valor_total = $formatter->formatCurrency($c_linha['valor_total'], 'BRL');
                     else
                         $c_valor_total = 'R$ 0,00';
+                    
                     echo "
                     <tr class='info'>
                     <td>$c_linha[id]</td>

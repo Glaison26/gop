@@ -112,6 +112,7 @@ $c_linha_cotacao= $result->fetch_assoc();
                     <th scope="col">Vendedor</th>
                     <th scope="col">Valor Total Cotado</th>
                     <th scope="col">Valor Frete</th>
+                    <th scope="col">Total</th>
                     <th scope="col">Status</th>
                     <th scope="col">Prazo em dias</th>
                     <th scope="col">Forma de Pagamento</th>
@@ -146,6 +147,12 @@ $c_linha_cotacao= $result->fetch_assoc();
                     else 
                       $c_frete = 'R$ 0,00';
                     $c_prazo = $c_linha['prazo'] . ' dias';
+                    $c_total = $c_linha['valor_total']+$c_linha['frete'];
+                    if ($c_total > 0)
+                     $c_total = $formatter->formatCurrency($c_total, 'BRL');
+                    else 
+                      $c_total = 'R$ 0,00';
+
                     echo "
                     <tr class='info'>
                     <td>$c_linha[id]</td>
@@ -153,6 +160,7 @@ $c_linha_cotacao= $result->fetch_assoc();
                     <td>$c_linha[vendedor]</td>
                     <td style='text-align: right;'>$c_valor</td>
                     <td style='text-align: right;'>$c_frete</td>
+                    <td style='text-align: right;'>$c_total</td>
                     <td>$c_linha[status_texto]</td>
                     <td>$c_prazo</td>
                     <td>$c_linha[forma_pagamento]</td>
