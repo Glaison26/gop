@@ -32,6 +32,39 @@ $c_sql_fornecdor = "select fornecedores.id, fornecedores.descricao from forneced
 $result_fornec = $conection->query($c_sql_fornecdor);
 $c_linha_fornec = $result_fornec->fetch_assoc();
 $c_fornecedor = $c_linha_fornec['descricao'];
+
+// rotina para atualização de itens caso seja colocado item novo
+if (isset($_POST['btnincluir'])) {
+
+    $c_sql2 = "SELECT cotacao_materiais.id, cotacao_materiais.id_material, cotacao_materiais.id_unidade,
+    cotacao_materiais.quantidade
+    FROM cotacao_materiais
+    WHERE cotacao_materiais.id_cotacao='$i_id_cotacao'";
+    $result2 = $conection->query($c_sql2);
+    // loop para verificar se exite item novo
+    while ($c_linha2 = $result2->fetch_assoc()) {
+        // procuro material na tabela de material por fornecedor
+        $i_id_material = $c_linha2['id_material'];
+        $c_sql3 = "select count(*) as registro_material from cotacao_materiais_fornecedor 
+        where id_cotacao_fornecedor = '$i_id' and id_material='$i_id_material'";
+        $result3 = $conection->query($c_sql3);
+        $c_linha3 = $result3->fetch_assoc();
+
+        // não achou material inclui no cadastro
+        if ($c_linha3['registro_material'] == 0) {
+            $i_id_material = $c_linha2['id_material'];
+            $n_quantidade = $c_linha2['quantidade'];
+            // insiro registro com os dados dos materiais selecionados
+            $c_sql_add = "Insert into cotacao_materiais_fornecedor (id_cotacao_fornecedor,id_fornecedor, id_material, quantidade) 
+        values ('$i_id', '$i_id_fornecedor', '$i_id_material', $n_quantidade)";
+            $result_add = $conection->query($c_sql_add);
+            // verifico se a query foi correto
+            if (!$result_add) {
+                die("Erro ao Executar Sql!!" . $conection->connect_error);
+            }
+        }
+    }
+}
 // checo se existem registros
 if ($c_linha['registros'] == 0) {
 
@@ -87,6 +120,14 @@ if ($c_linha['registros'] == 0) {
 </head>
 
 <body>
+    <script language="Javascript">
+        function confirmacao(id) {
+            var resposta = confirm("Deseja remover esse registro?");
+            if (resposta == true) {
+                window.location.href = "/gop/almoxarifado/cotacao_material_fornecedores_excluir.php?id=" + id;
+            }
+        }
+    </script>
 
     <script>
         $(document).ready(function() {
@@ -212,9 +253,11 @@ if ($c_linha['registros'] == 0) {
             </div>
             <h4>Cotação No. <?php echo $i_id_cotacao . '  Fornecedor participante: ' . $c_fornecedor ?> </h4>
         </div>
-        <a class="btn btn-secondary btn-sm" href="/gop/almoxarifado/cotacao_fornecedores.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
-        <button type='submit' name="btnincluir" class='btn btn-success btn-sm'  title='Novo Item na cotação'><span class='glyphicon glyphicon-plus'></span> Novo Item</button>
-        
+
+        <form method="post">
+            <a class="btn btn-secondary btn-sm" href="/gop/almoxarifado/cotacao_fornecedores.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
+            <button type='submit' id="btnincluir" name="btnincluir" class='btn btn-success btn-sm' title='Atualizar item na cotação'><span class='glyphicon glyphicon-refresh'></span> Atualizar Itens</button>
+        </form>
         <hr>
         <table class="table table display table-bordered tabcotacao">
             <thead class="thead">
@@ -258,7 +301,7 @@ if ($c_linha['registros'] == 0) {
                         $c_valor_total = $formatter->formatCurrency($c_linha['valor_total'], 'BRL');
                     else
                         $c_valor_total = 'R$ 0,00';
-                    
+
                     echo "
                     <tr class='info'>
                     <td>$c_linha[id]</td>
@@ -268,7 +311,8 @@ if ($c_linha['registros'] == 0) {
                     <td style='text-align: right;'>$c_valor_unitario</td>
                     <td style='text-align: right;'>$c_valor_total</td>
                     <td>
-                    <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Cotação'><span class='glyphicon glyphicon-pencil'></span> Editar</button>&nbsp;";
+                    <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Cotação'><span class='glyphicon glyphicon-pencil'></span> Editar</button>&nbsp;
+                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>";
                     "</td>
                     </tr>
                     ";
