@@ -15,9 +15,45 @@ if (isset($_GET['id'])) {
 } else {
     $i_id_cotacao = $_SESSION['id_cotacao'];
 }
+
+// rotina para anlise da cotação (prazo de enterga e menor preço)
+
+if (isset($_POST['btn_analise'])) {
+    // seleção por prazo
+    $c_sql_prazo = "SELECT cotacao_fornecedor.id
+                    FROM cotacao_fornecedor
+                    WHERE cotacao_fornecedor.id_cotacao='$i_id_cotacao'
+                    ORDER BY cotacao_fornecedor.prazo";
+    // seleção por valor         
+    $c_sql_valor = "SELECT cotacao_fornecedor.id
+                    FROM cotacao_fornecedor
+                    WHERE cotacao_fornecedor.id_cotacao='$i_id_cotacao'
+                    ORDER BY cotacao_fornecedor.valor_total";
+    // prazo                  
+    $result_prazo = $conection->query($c_sql_prazo);
+    $registro_prazo = $result_prazo->fetch_assoc();
+    $i_id_cotacao_prazo = $registro_prazo['id'];
+    // valor
+    $result_valor = $conection->query($c_sql_valor);
+    $registro_valor = $result_valor->fetch_assoc();
+    $i_id_cotacao_valor = $registro_valor['id'];
+    // edita o status
+    // Coloco por defalt todos como participantes
+    $sql_up = "update cotacao_fornecedor set status='P' where id_cotacao=$i_id_cotacao";
+    if ($i_id_cotacao_valor == $i_id_cotacao_prazo) {
+        $c_sql_up = "update cotacao_fornecedor set status='B' where id='$i_id_cotacao_valor'";
+        $result_up = $conection->query($c_sql_up);
+    }else{
+        $c_sql_up = "update cotacao_fornecedor set status='C' where id='$i_id_cotacao_valor'";
+        $result_up = $conection->query($c_sql_up); 
+        $c_sql_up = "update cotacao_fornecedor set status='Z' where id='$i_id_cotacao_prazo'";
+        $result_up = $conection->query($c_sql_up); 
+    }
+}
+
 $c_sql = "Select * from cotacao where id='$i_id_cotacao'";
 $result = $conection->query($c_sql);
-$c_linha_cotacao= $result->fetch_assoc();
+$c_linha_cotacao = $result->fetch_assoc();
 ?>
 
 <!DOCTYPE html>
@@ -40,6 +76,16 @@ $c_linha_cotacao= $result->fetch_assoc();
         }
     </script>
 
+<script language="Javascript">
+        function confirmacao_compra(id) {
+            var resposta = confirm("Confirma geração de compra para esta cotação?");
+            if (resposta == true) {
+               // window.location.href = "/gop/almoxarifado/cotacao_material_excluir.php?id=" + id;
+               window.location.href = "#";
+            }
+        }
+    </script>
+
     <script>
         $(document).ready(function() {
             $('.tabfornecedores').DataTable({
@@ -51,7 +97,7 @@ $c_linha_cotacao= $result->fetch_assoc();
                     'aTargets': [4]
                 }, {
                     'aTargets': [0],
-                    "visible": true
+                    "visible": false
                 }],
                 "oLanguage": {
                     "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -101,16 +147,20 @@ $c_linha_cotacao= $result->fetch_assoc();
 
             <h4>Fornecedores participantes para a Cotação No. <?php echo $i_id_cotacao . ' - ' . $c_linha_cotacao['descritivo'];  ?> </h4>
         </div>
-        <a class="btn btn-success btn-sm" href="/gop/almoxarifado/cotacao_fornecedores_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
-        <a class="btn btn-secondary btn-sm" href="/gop/almoxarifado/cotacao_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
+        <form method="POST">
+            <a class="btn btn-success btn-sm" href="/gop/almoxarifado/cotacao_fornecedores_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
+            <a class="btn btn-info btn-sm" href="/gop/almoxarifado/cotacao_mapa.php"><span class="glyphicon glyphicon-map-marker"></span> Mapa da Cotação</a>
+            <button type='submit' id="btn_analise" name="btn_analise" class='btn btn-primary btn-sm' title='Atualizar item na cotação'><span class='glyphicon glyphicon-refresh'></span> Análise</button>
+            <a class="btn btn-secondary btn-sm" href="/gop/almoxarifado/cotacao_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
+        </form>
         <hr>
-        <table class="table table display table-bordered tabfornecedores">
+        <table class="table table display table-bordered table-striped table-active tabfornecedores">
             <thead class="thead">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Fornecedor</th>
                     <th scope="col">Vendedor</th>
-                    <th scope="col">Valor Total Cotado</th>
+                    <th scope="col">Valor Total</th>
                     <th scope="col">Valor Frete</th>
                     <th scope="col">Total</th>
                     <th scope="col">Status</th>
@@ -124,7 +174,13 @@ $c_linha_cotacao= $result->fetch_assoc();
                 // faço a Leitura da tabela com sql
                 $c_sql = "SELECT cotacao_fornecedor.id, fornecedores.descricao AS fornecedor, cotacao_fornecedor.valor_total,
                 cotacao_fornecedor.frete, cotacao_fornecedor.prazo, forma_pagamento, cotacao_fornecedor.vendedor,
-                case when status='P' then 'Participante' when status='V' then 'Vencedor' END AS status_texto
+                case 
+                when status='P' then 'Participante'
+                when status='V' then 'Vencedor'
+                when status='B' then 'Melhor Preço e Prazo'
+                when status='C' then 'Melhor Preço'
+                when status='Z' then 'Melhor Prazo'
+                END AS status_texto
                 FROM cotacao_fornecedor
                 JOIN fornecedores ON cotacao_fornecedor.id_fornecedor=fornecedores.id
                 WHERE cotacao_fornecedor.id_cotacao='$i_id_cotacao'
@@ -139,19 +195,19 @@ $c_linha_cotacao= $result->fetch_assoc();
                 $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
                 while ($c_linha = $result->fetch_assoc()) {
                     if ($c_linha['valor_total'] > 0)
-                     $c_valor = $formatter->formatCurrency($c_linha['valor_total'], 'BRL');
-                    else 
-                      $c_valor = 'R$ 0,00';
+                        $c_valor = $formatter->formatCurrency($c_linha['valor_total'], 'BRL');
+                    else
+                        $c_valor = 'R$ 0,00';
                     if ($c_linha['frete'] > 0)
-                     $c_frete = $formatter->formatCurrency($c_linha['frete'], 'BRL');
-                    else 
-                      $c_frete = 'R$ 0,00';
+                        $c_frete = $formatter->formatCurrency($c_linha['frete'], 'BRL');
+                    else
+                        $c_frete = 'R$ 0,00';
                     $c_prazo = $c_linha['prazo'] . ' dias';
-                    $c_total = $c_linha['valor_total']+$c_linha['frete'];
+                    $c_total = $c_linha['valor_total'] + $c_linha['frete'];
                     if ($c_total > 0)
-                     $c_total = $formatter->formatCurrency($c_total, 'BRL');
-                    else 
-                      $c_total = 'R$ 0,00';
+                        $c_total = $formatter->formatCurrency($c_total, 'BRL');
+                    else
+                        $c_total = 'R$ 0,00';
 
                     echo "
                     <tr class='info'>
@@ -167,11 +223,12 @@ $c_linha_cotacao= $result->fetch_assoc();
                     <td>
 
                     <a class='btn btn-secondary btn-sm' href='/gop/almoxarifado/cotacao_fornecedores_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>&nbsp;";
-                    if ($c_linha_cotacao['tipo']=='M') // cotação para materiais
-                    echo "<a class='btn btn-success btn-sm' href='/gop/almoxarifado/cotacao_material.php?id=$c_linha[id]'><img src='\gop\images\omadaprecos.png' alt='17' width='25' height='17'> Cotações</a>&nbsp;";
-                     else  // cotação para serviços
-                    echo "<a class='btn btn-success btn-sm' href='/gop/almoxarifado/cotacao_fornecedor_servico.php?id=$c_linha[id]'><img src='\gop\images\omadaprecos.png' alt='17' width='25' height='17'> Cotações</a>&nbsp;";
-                    echo "<a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
+                    if ($c_linha_cotacao['tipo'] == 'M') // cotação para materiais
+                        echo "<a class='btn btn-success btn-sm' href='/gop/almoxarifado/cotacao_material.php?id=$c_linha[id]'><img src='\gop\images\omadaprecos.png' alt='17' width='25' height='17'> Cotações</a>&nbsp;";
+                    else  // cotação para serviços
+                        echo "<a class='btn btn-success btn-sm' href='/gop/almoxarifado/cotacao_fornecedor_servico.php?id=$c_linha[id]'><img src='\gop\images\omadaprecos.png' ' width='30' height='17'> Cotações</a>&nbsp;";
+                    echo "<a class='btn btn-primary btn-sm' href='javascript:func()'onclick='confirmacao_compra($c_linha[id])'><span class='glyphicon glyphicon-shopping-cart'></span> Gerar Compra</a>
+                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
                     </tr>

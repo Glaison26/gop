@@ -141,9 +141,9 @@
                              <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Almoxarifado</a>
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
                                  
-                                 <a class='dropdown-item' href='/gop/almoxarifado/cotacao_lista.php'><img src='\gop\images\cotacao.png' alt='25' width='25' height='25'> Cotações</a>
-                                 <a class='dropdown-item' href=''><img src='\gop\images\compras.png' alt='25' width='25' height='25'> Compras Efetivas</a>
-                                 <a class='dropdown-item' href=''><img src='\gop\images\dispensa.png' alt='20' height=20> Dispensações</a>
+                                 <a class='dropdown-item' href='/gop/almoxarifado/cotacao_lista.php'><img src='\gop\images\cotacao.png' alt='25' width='25' height='25'> Cadastro de Cotações</a>
+                                 <a class='dropdown-item' href=''><img src='\gop\images\compras.png' alt='25' width='25' height='25'> Cadastro de Compras</a>
+                                 <a class='dropdown-item' href=''><img src='\gop\images\dispensa.png' alt='20' height=20> Dispensação de Materiais</a>
                                  <a class='dropdown-item' href='/gop/cadastros/materiais/materiais_lista.php'><img src='\gop\images\materiais.png' alt='25' width='25' height='25'>Cadastro de Materiais</a>
                                  <a class='dropdown-item' href='/gop/cadastros/unidades/unidades_lista.php'><img src='\gop\images\peso.png' alt='25' width='25' height='25'> Unidades e Medidas</a>
                              </div>

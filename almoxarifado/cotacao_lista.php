@@ -8,6 +8,10 @@ include("../links2.php");
 $_SESSION['sql'] = "select";
 
 ?>
+
+
+
+
 <!doctype html>
 <html lang="en">
 
@@ -197,7 +201,7 @@ $_SESSION['sql'] = "select";
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
-        <table class="table table display table-bordered tabunidades">
+        <table class="table table display table-bordered table-striped table-active tabunidades">
             <thead class="thead">
                 <tr>
                     <th scope="col">#</th>
