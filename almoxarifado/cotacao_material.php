@@ -195,8 +195,7 @@ if ($c_linha['registros'] == 0) {
                 $('#up_qtd').val(data[3]);
 
                 $('#up_valor_unitario').val(data[4].replace('R$', '').replace(',', '.').replace(/^\s+|\s+$/g, ''));
-                $('#up_prazo').val(data[2].getFullYear() + "-" + ((data[2].getMonth() + 1)) + "-" +
-                    (data[2].getDate()));
+                $('#up_prazo').val(data[2]);
             });
         });
     </script>
