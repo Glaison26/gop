@@ -21,6 +21,7 @@ $c_sql_fornec = "select id_fornecedor from cotacao_fornecedor where id='$i_id '"
 $result_fornec = $conection->query($c_sql_fornec);
 $c_linha_fornec = $result_fornec->fetch_assoc();
 $i_id_fornecedor = $c_linha_fornec['id_fornecedor'];
+$_SESSION['id_fornecedor'] = $i_id_fornecedor;
 // verifico se já existem dados para o fornecedor 
 $c_sql_conta = "SELECT COUNT(*) AS registros FROM cotacao_materiais_fornecedor where id_cotacao_fornecedor=' $i_id' and id_fornecedor='$i_id_fornecedor'";
 $result_conta = $conection->query($c_sql_conta);

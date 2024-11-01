@@ -39,7 +39,8 @@ if (isset($_POST['btn_analise'])) {
     $i_id_cotacao_valor = $registro_valor['id'];
     // edita o status
     // Coloco por defalt todos como participantes
-    $sql_up = "update cotacao_fornecedor set status='P' where id_cotacao=$i_id_cotacao";
+    $c_sql_up = "update cotacao_fornecedor set status='P' where id_cotacao=$i_id_cotacao";
+    $result_up = $conection->query($c_sql_up); 
     if ($i_id_cotacao_valor == $i_id_cotacao_prazo) {
         $c_sql_up = "update cotacao_fornecedor set status='B' where id='$i_id_cotacao_valor'";
         $result_up = $conection->query($c_sql_up);
@@ -97,7 +98,7 @@ $c_linha_cotacao = $result->fetch_assoc();
                     'aTargets': [4]
                 }, {
                     'aTargets': [0],
-                    "visible": false
+                    "visible": true
                 }],
                 "oLanguage": {
                     "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -149,7 +150,7 @@ $c_linha_cotacao = $result->fetch_assoc();
         </div>
         <form method="POST">
             <a class="btn btn-success btn-sm" href="/gop/almoxarifado/cotacao_fornecedores_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
-            <a class="btn btn-info btn-sm" href="/gop/almoxarifado/cotacao_mapa.php"><span class="glyphicon glyphicon-map-marker"></span> Mapa da Cotação</a>
+            <a class="btn btn-info btn-sm" href="/gop/almoxarifado/cotacao_mapa.php" target="_blank"><span class="glyphicon glyphicon-map-marker"></span> Mapa da Cotação</a>
             <button type='submit' id="btn_analise" name="btn_analise" class='btn btn-primary btn-sm' title='Atualizar item na cotação'><span class='glyphicon glyphicon-refresh'></span> Análise</button>
             <a class="btn btn-secondary btn-sm" href="/gop/almoxarifado/cotacao_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
         </form>

@@ -272,7 +272,7 @@ include('../conexao.php');
                                         <a class='btn btn-success btn-sm' href='/gop/ordens/ordens_gerenciar.php?id=$c_linha[id]'>
                                         <img src='\gop\images\gerenciamento.png' alt='' width='23' height='18'> Gerenciar</a>
 
-                                        <a class='btn btn-info btn-sm' href='/gop/ordens/ordens_emissao.php?id=$c_linha[id]'>
+                                        <a class='btn btn-info btn-sm' href='/gop/ordens/ordens_emissao.php?id=$c_linha[id]'  target='_blank'>
                                         <span class='glyphicon glyphicon-print'></span> Emitir</a>
                                     </td>
 
