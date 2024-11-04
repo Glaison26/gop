@@ -128,7 +128,10 @@ $result = $conection->query($c_sql);
 
 
             var options = {
-                title: 'Cotação de Preços por Fornecedor (Valores Cotados)'
+                legend: {
+                    position: 'none'
+                }
+
             };
 
             var chart = new google.visualization.LineChart(document.getElementById('linechart1'));
@@ -168,7 +171,10 @@ $result = $conection->query($c_sql);
 
 
             var options = {
-                title: 'Cotação de Preços Total por Fornecedor (Valores Cotados + Frete)'
+                legend: {
+                    position: 'none'
+                }
+
             };
 
             var chart = new google.visualization.LineChart(document.getElementById('linechart2'));
@@ -208,7 +214,9 @@ $result = $conection->query($c_sql);
 
 
             var options = {
-                title: 'Cotação de Preços por Fornecedor - Frete'
+                legend: {
+                    position: 'none'
+                }
             };
 
             var chart = new google.visualization.LineChart(document.getElementById('linechart3'));
@@ -249,7 +257,10 @@ $result = $conection->query($c_sql);
 
 
             var options = {
-                title: 'Prazos de entrega por Fornecedor'
+                legend: {
+                    position: 'none'
+                }
+
             };
 
             var chart = new google.visualization.LineChart(document.getElementById('linechart4'));
@@ -259,22 +270,23 @@ $result = $conection->query($c_sql);
         }
     </script>
 
-
-
     <div>
+        <h3 class="text-center">Gráfico de Valores da Cotação por Fornecedor</h3>
         <div id="linechart1" style="width: 900px; height: 500px;"></div>
     </div>
 
-
     <div>
+        <h3 class="text-center">Cotação de Preços Total por Fornecedor (Valores Cotados + Frete)</h3>
         <div id="linechart2" style="width: 900px; height: 500px;"></div>
     </div>
 
     <div>
+        <h3 class="text-center">Cotação de Preços por Fornecedor - Frete </h3>
         <div id="linechart3" style="width: 900px; height: 500px;"></div>
     </div>
 
     <div>
+        <h3 class="text-center">Prazos de entrega por Fornecedor</h3>
         <div id="linechart4" style="width: 900px; height: 500px;"></div>
     </div>
 

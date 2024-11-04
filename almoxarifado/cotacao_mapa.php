@@ -54,7 +54,7 @@ $result = $conection->query($c_sql);
                     '<strong> Valor Total :</strong>' . $formatter->formatCurrency($c_linha['frete'] + $c_linha['valor_total'], 'BRL') . '<br>';
                 echo '<strong> Prazo de Enterga :</strong> ' .  $c_linha['prazo'] . ' dias    ' .
                     '<strong> Condição de Pagamento: </strong>' . $c_linha['forma_pagamento'] . '<br>';
-                echo '<strong> Status : </strong>' . $c_linha['status_texto'] .'<br>';
+                echo '<strong> Status : </strong>' . $c_linha['status_texto'] . '<br>';
                 echo '<strong>Observação :</strong> ' . $c_linha['observacao'] . '<br>';
                 echo '<br><br>';
                 // loop para pegar os itens da cotação do fornecedor
@@ -103,7 +103,7 @@ $result = $conection->query($c_sql);
         function drawChart() {
 
             var data = google.visualization.arrayToDataTable([
-                ['Fornecedores', 'Valor da Cotação'],
+                ['Fornecedores', 'Valor da Cotação', {role:'style'}],
 
                 <?php
                 $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
@@ -117,17 +117,21 @@ $result = $conection->query($c_sql);
                 while ($registro3 = $result3->fetch_assoc()) {
                     $c_local = $registro3['fornecedor'];
                     $c_qtd =  $registro3['valor_total'];
+                    
+                    
 
-                ?>['<?php echo $c_local ?>', <?php echo  $c_qtd ?>],
+                ?>['<?php echo $c_local ?>', <?php echo $c_qtd ?>,'green'],
                 <?php } ?>
             ]);
 
 
             var options = {
-                title: 'Cotação de Preços por Fornecedor (Valores Cotados)'
+                legend: {
+                    position: 'none'
+                }
             };
 
-            var chart = new google.visualization.LineChart(document.getElementById('linechart1'));
+            var chart = new google.visualization.ColumnChart(document.getElementById('linechart1'));
 
             chart.draw(data, options);
         }
@@ -143,7 +147,7 @@ $result = $conection->query($c_sql);
         function drawChart() {
 
             var data = google.visualization.arrayToDataTable([
-                ['Fornecedores', 'Valor da Cotação'],
+                ['Fornecedores', 'Valor da Cotação', {role:'style'}],
 
                 <?php
                 $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
@@ -158,16 +162,18 @@ $result = $conection->query($c_sql);
                     $c_local = $registro3['fornecedor'];
                     $c_qtd =  $registro3['valor_total'] + $registro3['frete'];
 
-                ?>['<?php echo $c_local ?>', <?php echo  $c_qtd ?>],
+                ?>['<?php echo $c_local ?>', <?php echo  $c_qtd ?>, 'red'],
                 <?php } ?>
             ]);
 
 
             var options = {
-                title: 'Cotação de Preços Total por Fornecedor (Valores Cotados + Frete)'
+                legend: {
+                    position: 'none'
+                }
             };
 
-            var chart = new google.visualization.LineChart(document.getElementById('linechart2'));
+            var chart = new google.visualization.ColumnChart(document.getElementById('linechart2'));
 
             chart.draw(data, options);
         }
@@ -183,7 +189,7 @@ $result = $conection->query($c_sql);
         function drawChart() {
 
             var data = google.visualization.arrayToDataTable([
-                ['Fornecedores', 'Valor da Cotação'],
+                ['Fornecedores', 'Valor da Cotação', {role:'style'}],
 
                 <?php
                 $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
@@ -198,22 +204,24 @@ $result = $conection->query($c_sql);
                     $c_local = $registro3['fornecedor'];
                     $c_qtd =  $registro3['frete'];
 
-                ?>['<?php echo $c_local ?>', <?php echo  $c_qtd ?>],
+                ?>['<?php echo $c_local ?>', <?php echo  $c_qtd ?>, '#ff8000'],
                 <?php } ?>
             ]);
 
 
             var options = {
-                title: 'Cotação de Preços por Fornecedor - Frete'
+                legend: {
+                    position: 'none'
+                }
             };
 
-            var chart = new google.visualization.LineChart(document.getElementById('linechart3'));
+            var chart = new google.visualization.ColumnChart(document.getElementById('linechart3'));
 
             chart.draw(data, options);
         }
     </script>
 
-<script type="text/javascript">
+    <script type="text/javascript">
         // gráfico por Valor
         google.charts.load('current', {
             'packages': ['corechart']
@@ -245,33 +253,38 @@ $result = $conection->query($c_sql);
 
 
             var options = {
-                title: 'Prazos de entrega por Fornecedor'
+                legend: {
+                    position: 'none'
+                } 
             };
 
-            var chart = new google.visualization.LineChart(document.getElementById('linechart4'));
+            var chart = new google.visualization.ColumnChart(document.getElementById('linechart4'));
 
             chart.draw(data, options);
         }
     </script>
 
 
-
     <div>
+        <h3 class="text-center">Gráfico de Valores da Cotação por Fornecedor</h3>
         <div id="linechart1" style="width: 900px; height: 500px;"></div>
     </div>
 
-
     <div>
+        <h3 class="text-center">Cotação de Preços Total por Fornecedor (Valores Cotados + Frete)</h3>
         <div id="linechart2" style="width: 900px; height: 500px;"></div>
     </div>
 
     <div>
+        <h3 class="text-center">Cotação de Preços por Fornecedor - Frete </h3>
         <div id="linechart3" style="width: 900px; height: 500px;"></div>
     </div>
 
     <div>
+        <h3 class="text-center">Prazos de entrega por Fornecedor</h3>
         <div id="linechart4" style="width: 900px; height: 500px;"></div>
     </div>
+
 
 
 </body>
