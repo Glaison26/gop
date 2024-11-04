@@ -54,6 +54,7 @@ $result = $conection->query($c_sql);
                     '<strong> Valor Total :</strong>' . $formatter->formatCurrency($c_linha['frete'] + $c_linha['valor_total'], 'BRL') . '<br>';
                 echo '<strong> Prazo de Enterga :</strong> ' .  $c_linha['prazo'] . ' dias    ' .
                     '<strong> Condição de Pagamento: </strong>' . $c_linha['forma_pagamento'] . '<br>';
+                echo '<strong> Status : </strong>' . $c_linha['status_texto'] .'<br>';
                 echo '<strong>Observação :</strong> ' . $c_linha['observacao'] . '<br>';
                 echo '<br><br>';
                 // loop para pegar os itens da cotação do fornecedor
@@ -89,6 +90,187 @@ $result = $conection->query($c_sql);
             ?>
         </div>
     </div>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+    <script type="text/javascript">
+        // gráfico por Valor
+        google.charts.load('current', {
+            'packages': ['corechart']
+        });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            var data = google.visualization.arrayToDataTable([
+                ['Fornecedores', 'Valor da Cotação'],
+
+                <?php
+                $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
+                $c_sql3 = "SELECT cotacao_fornecedor.id, fornecedores.descricao as fornecedor, valor_total
+                        FROM cotacao_fornecedor
+                        JOIN fornecedores ON cotacao_fornecedor.id_fornecedor=fornecedores.id
+                        WHERE cotacao_fornecedor.id_cotacao='$i_id_cotacao'
+                        ORDER BY cotacao_fornecedor.valor_total";
+                $result3 = $conection->query($c_sql3);
+                // percorre resultado da query para para montar gráfico
+                while ($registro3 = $result3->fetch_assoc()) {
+                    $c_local = $registro3['fornecedor'];
+                    $c_qtd =  $registro3['valor_total'];
+
+                ?>['<?php echo $c_local ?>', <?php echo  $c_qtd ?>],
+                <?php } ?>
+            ]);
+
+
+            var options = {
+                title: 'Cotação de Preços por Fornecedor (Valores Cotados)'
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('linechart1'));
+
+            chart.draw(data, options);
+        }
+    </script>
+
+    <script type="text/javascript">
+        // gráfico por Valor
+        google.charts.load('current', {
+            'packages': ['corechart']
+        });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            var data = google.visualization.arrayToDataTable([
+                ['Fornecedores', 'Valor da Cotação'],
+
+                <?php
+                $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
+                $c_sql3 = "SELECT cotacao_fornecedor.id, fornecedores.descricao as fornecedor, valor_total, frete
+                        FROM cotacao_fornecedor
+                        JOIN fornecedores ON cotacao_fornecedor.id_fornecedor=fornecedores.id
+                        WHERE cotacao_fornecedor.id_cotacao='$i_id_cotacao'
+                        ORDER BY cotacao_fornecedor.valor_total+cotacao_fornecedor.frete";
+                $result3 = $conection->query($c_sql3);
+                // percorre resultado da query para para montar gráfico
+                while ($registro3 = $result3->fetch_assoc()) {
+                    $c_local = $registro3['fornecedor'];
+                    $c_qtd =  $registro3['valor_total'] + $registro3['frete'];
+
+                ?>['<?php echo $c_local ?>', <?php echo  $c_qtd ?>],
+                <?php } ?>
+            ]);
+
+
+            var options = {
+                title: 'Cotação de Preços Total por Fornecedor (Valores Cotados + Frete)'
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('linechart2'));
+
+            chart.draw(data, options);
+        }
+    </script>
+
+    <script type="text/javascript">
+        // gráfico por Valor
+        google.charts.load('current', {
+            'packages': ['corechart']
+        });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            var data = google.visualization.arrayToDataTable([
+                ['Fornecedores', 'Valor da Cotação'],
+
+                <?php
+                $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
+                $c_sql3 = "SELECT cotacao_fornecedor.id, fornecedores.descricao as fornecedor, valor_total, frete
+                        FROM cotacao_fornecedor
+                        JOIN fornecedores ON cotacao_fornecedor.id_fornecedor=fornecedores.id
+                        WHERE cotacao_fornecedor.id_cotacao='$i_id_cotacao'
+                        ORDER BY cotacao_fornecedor.frete";
+                $result3 = $conection->query($c_sql3);
+                // percorre resultado da query para para montar gráfico
+                while ($registro3 = $result3->fetch_assoc()) {
+                    $c_local = $registro3['fornecedor'];
+                    $c_qtd =  $registro3['frete'];
+
+                ?>['<?php echo $c_local ?>', <?php echo  $c_qtd ?>],
+                <?php } ?>
+            ]);
+
+
+            var options = {
+                title: 'Cotação de Preços por Fornecedor - Frete'
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('linechart3'));
+
+            chart.draw(data, options);
+        }
+    </script>
+
+<script type="text/javascript">
+        // gráfico por Valor
+        google.charts.load('current', {
+            'packages': ['corechart']
+        });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            var data = google.visualization.arrayToDataTable([
+                ['Fornecedores', 'Prazo de Entrega em dias'],
+
+                <?php
+                $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
+                $c_sql3 = "SELECT cotacao_fornecedor.id, fornecedores.descricao as fornecedor, valor_total, frete,
+                        prazo
+                        FROM cotacao_fornecedor
+                        JOIN fornecedores ON cotacao_fornecedor.id_fornecedor=fornecedores.id
+                        WHERE cotacao_fornecedor.id_cotacao='$i_id_cotacao'
+                        ORDER BY cotacao_fornecedor.prazo";
+                $result3 = $conection->query($c_sql3);
+                // percorre resultado da query para para montar gráfico
+                while ($registro3 = $result3->fetch_assoc()) {
+                    $c_local = $registro3['fornecedor'];
+                    $c_qtd =  $registro3['prazo'];
+
+                ?>['<?php echo $c_local ?>', <?php echo  $c_qtd ?>],
+                <?php } ?>
+            ]);
+
+
+            var options = {
+                title: 'Prazos de entrega por Fornecedor'
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('linechart4'));
+
+            chart.draw(data, options);
+        }
+    </script>
+
+
+
+    <div>
+        <div id="linechart1" style="width: 900px; height: 500px;"></div>
+    </div>
+
+
+    <div>
+        <div id="linechart2" style="width: 900px; height: 500px;"></div>
+    </div>
+
+    <div>
+        <div id="linechart3" style="width: 900px; height: 500px;"></div>
+    </div>
+
+    <div>
+        <div id="linechart4" style="width: 900px; height: 500px;"></div>
     </div>
 
 
