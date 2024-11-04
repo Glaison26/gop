@@ -40,21 +40,23 @@ if (isset($_POST['btn_analise'])) {
     // edita o status
     // Coloco por defalt todos como participantes
     $c_sql_up = "update cotacao_fornecedor set status='P' where id_cotacao=$i_id_cotacao";
-    $result_up = $conection->query($c_sql_up); 
+    $result_up = $conection->query($c_sql_up);
     if ($i_id_cotacao_valor == $i_id_cotacao_prazo) {
         $c_sql_up = "update cotacao_fornecedor set status='B' where id='$i_id_cotacao_valor'";
         $result_up = $conection->query($c_sql_up);
-    }else{
+    } else {
         $c_sql_up = "update cotacao_fornecedor set status='C' where id='$i_id_cotacao_valor'";
-        $result_up = $conection->query($c_sql_up); 
+        $result_up = $conection->query($c_sql_up);
         $c_sql_up = "update cotacao_fornecedor set status='Z' where id='$i_id_cotacao_prazo'";
-        $result_up = $conection->query($c_sql_up); 
+        $result_up = $conection->query($c_sql_up);
     }
 }
 
 $c_sql = "Select * from cotacao where id='$i_id_cotacao'";
+
 $result = $conection->query($c_sql);
 $c_linha_cotacao = $result->fetch_assoc();
+$c_tipo = $c_linha_cotacao['tipo'] ;
 ?>
 
 <!DOCTYPE html>
@@ -77,12 +79,12 @@ $c_linha_cotacao = $result->fetch_assoc();
         }
     </script>
 
-<script language="Javascript">
+    <script language="Javascript">
         function confirmacao_compra(id) {
             var resposta = confirm("Confirma geração de compra para esta cotação?");
             if (resposta == true) {
-               // window.location.href = "/gop/almoxarifado/cotacao_material_excluir.php?id=" + id;
-               window.location.href = "#";
+                // window.location.href = "/gop/almoxarifado/cotacao_material_excluir.php?id=" + id;
+                window.location.href = "#";
             }
         }
     </script>
@@ -150,7 +152,13 @@ $c_linha_cotacao = $result->fetch_assoc();
         </div>
         <form method="POST">
             <a class="btn btn-success btn-sm" href="/gop/almoxarifado/cotacao_fornecedores_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
-            <a class="btn btn-info btn-sm" href="/gop/almoxarifado/cotacao_mapa.php" target="_blank"><span class="glyphicon glyphicon-map-marker"></span> Mapa da Cotação</a>
+            <?php
+            
+            if ($c_tipo == 'M') // mapa de materiais
+                echo "<a class='btn btn-info btn-sm' href='/gop/almoxarifado/cotacao_mapa.php' target='_blank'><span class='glyphicon glyphicon-map-marker'></span> Mapa da Cotação</a>";
+            else // mapa de serviços
+                echo "<a class='btn btn-info btn-sm' href='/gop/almoxarifado/cotacao_mapa_servicos.php' target='_blank'><span class='glyphicon glyphicon-map-marker'></span> Mapa da Cotação</a>";
+            ?>
             <button type='submit' id="btn_analise" name="btn_analise" class='btn btn-primary btn-sm' title='Atualizar item na cotação'><span class='glyphicon glyphicon-refresh'></span> Análise</button>
             <a class="btn btn-secondary btn-sm" href="/gop/almoxarifado/cotacao_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
         </form>

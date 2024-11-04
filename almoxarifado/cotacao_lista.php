@@ -184,16 +184,16 @@ $_SESSION['sql'] = "select";
     </script>
 
 
-   
+
     <div class="container-fluid">
 
-    <div class="panel panel-primary class">
-        <div class="panel-heading text-center">
-            <h4>GOP - Gestão Operacional</h4>
-            <h5>Lista de cotaçoes<h5>
+        <div class="panel panel-primary class">
+            <div class="panel-heading text-center">
+                <h4>GOP - Gestão Operacional</h4>
+                <h5>Lista de cotaçoes<h5>
+            </div>
         </div>
-    </div>
-    <br>
+        <br>
 
         <button type="button" title="Inclusão de Nova Cotação" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
             Incluir
