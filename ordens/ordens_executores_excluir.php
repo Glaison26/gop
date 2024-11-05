@@ -15,8 +15,8 @@ $c_id = $_GET["id"];
 $c_id_ordem = $_SESSION['id_ordem'];
 
 // Exclusão do registro
-$c_sql = "delete from ordens_executores where id=$c_id";
-$result = $conection->query($c_sql);
+$c_sql2 = "delete from ordens_executores where id=$c_id";
+$result2 = $conection->query($c_sql2);
  // somatório dos valores de custo de material
  $c_sql = "SELECT SUM(ordens_executores.valor_total) AS total
  FROM ordens_executores

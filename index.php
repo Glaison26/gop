@@ -91,14 +91,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 <div class="form-group row" class="form-control">
                     <label class="col-sm-3 col-form-label">Login</label>
                     <div class="col-xs-12">
-                        <input type="text" maxlength="40" class="form-control" name="login" placeholder="Digite o login">
+                        <input type="text" maxlength="40" class="form-control" name="login" placeholder="Digite o login" required>
                     </div>
                 </div>
 
                 <div class="form-group row" class="form-control">
                     <label class="col-sm-3 col-form-label">Senha</label>
                     <div class="col-xs-12">
-                        <input type="password" maxlength="32" class="form-control" name="senha" placeholder="Entre com a senha">
+                        <input type="password" maxlength="32" class="form-control" name="senha" placeholder="Entre com a senha" required>
                     </div>
                 </div>
 
