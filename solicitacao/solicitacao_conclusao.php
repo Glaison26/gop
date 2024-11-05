@@ -187,7 +187,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label class="col-sm-3 col-form-label">Ocorrencia </label>
                 <div class="col-sm-7">
 
-                    <select onchange="verifica(value)" class="form-select form-select-lg mb-3" id="ocorrencia" name="ocorrencia" value="<?php echo $c_ocorrencia ?>">
+                    <select onchange="verifica(value)" class="form-select form-select-lg mb-3" id="ocorrencia" name="ocorrencia" value="<?php echo $c_ocorrencia ?>" required>
 
                         <option></option>
                         <?php
@@ -215,7 +215,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Tipo de Solicitação</label>
                 <div class="col-sm-2">
-                    <select class="form-select form-select-lg mb-3" id="tipo" name="tipo" value="<?php echo $c_tipo; ?>">
+                    <select class="form-select form-select-lg mb-3" id="tipo" name="tipo" value="<?php echo $c_tipo; ?>" required>
                         <option></option>
                         <option>Programada</option>
                         <option>Urgência</option>
@@ -224,7 +224,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
                 <label class="col-sm-2 col-form-label">Setor </label>
                 <div class="col-sm-3">
-                    <select class="form-select form-select-lg mb-3" id="setor" name="setor">
+                    <select class="form-select form-select-lg mb-3" id="setor" name="setor" required>
                         <option></option>
                         <?php
                         // select da tabela de setores
@@ -243,7 +243,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div style="padding-top:5px;">
 
                 <div class="row mb-7">
-                    <label class="col-sm-3 col-form-label">Descrição</label>
+                    <label class="col-sm-3 col-form-label">Descrição </label>
                     <div class="col-sm-7">
                         <textarea class="form-control" id="solicitacao" name="solicitacao" rows="10"><?php echo $c_solicitacao; ?></textarea>
                     </div>

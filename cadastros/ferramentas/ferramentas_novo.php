@@ -147,14 +147,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Descrição (*)</label>
                 <div class="col-sm-6">
-                    <input type="text" maxlength="120" class="form-control" name="descricao" value="<?php echo $c_descricao; ?>">
+                    <input type="text" maxlength="120" class="form-control" name="descricao" value="<?php echo $c_descricao; ?>" required>
                 </div>
             </div>
 
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Patrimônio (*)</label>
                 <div class="col-sm-2">
-                    <input type="text" maxlength="15" class="form-control" name="patrimonio" value="<?php echo $c_patrimonio; ?>">
+                    <input type="text" maxlength="15" class="form-control" name="patrimonio" value="<?php echo $c_patrimonio; ?>" required>
                 </div>
                 <label class="col-sm-2 col-form-label">No. de Série</label>
                 <div class="col-sm-2">
@@ -249,7 +249,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Data da Aquisição (*)</label>
                 <div class="col-sm-2">
-                    <input type="date" maxlength="10" class="form-control" id="dataaquisicao" name="dataaquisicao" value="<?php echo $d_dataaquisicao; ?>">
+                    <input type="date" maxlength="10" class="form-control" id="dataaquisicao" name="dataaquisicao" value="<?php echo $d_dataaquisicao; ?>" required>
                 </div>
                 <label class="col-sm-2 col-form-label">Valor da Aquisição</label>
                 <div class="col-sm-2">

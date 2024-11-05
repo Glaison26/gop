@@ -155,14 +155,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Nome (*)</label>
                 <div class="col-sm-6">
-                    <input type="text" maxlength="120" class="form-control" name="nome" value="<?php echo $c_nome; ?>">
+                    <input type="text" maxlength="120" class="form-control" name="nome" value="<?php echo $c_nome; ?>" required>
                 </div>
             </div>
 
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Login (*)</label>
                 <div class="col-sm-3">
-                    <input type="text" maxlength="40" class="form-control" name="login" value="<?php echo $c_login; ?>">
+                    <input type="text" maxlength="40" class="form-control" name="login" value="<?php echo $c_login; ?>" required>
                 </div>
 
             </div>
@@ -181,25 +181,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">CPF (*)</label>
                 <div class="col-sm-2">
-                    <input type="text" id="cpf" maxlength="14" class="form-control" name="cpf" value="<?php echo $c_cpf; ?>">
+                    <input type="text" id="cpf" maxlength="14" class="form-control" name="cpf" value="<?php echo $c_cpf; ?>" required>
                 </div>
             </div>
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">e-mail (*)</label>
                 <div class="col-sm-6">
-                    <input type="email" id="email" class="form-control" name="email" value="<?php echo $c_email; ?>">
+                    <input type="email" id="email" class="form-control" name="email" value="<?php echo $c_email; ?>" required>
                 </div>
             </div>
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Senha (*)</label>
                 <div class="col-sm-2">
-                    <input type="password" maxlength="32" class="form-control" name="senha" value="<?php echo $c_senha; ?>">
+                    <input type="password" maxlength="32" class="form-control" name="senha" value="<?php echo $c_senha; ?>" required>
                 </div>
             </div>
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Senha Confirmação (*)</label>
                 <div class="col-sm-2">
-                    <input type="password" maxlength="32" class="form-control" name="senha2" value="<?php echo $c_senha2; ?>">
+                    <input type="password" maxlength="32" class="form-control" name="senha2" value="<?php echo $c_senha2; ?>" required>
                 </div>
             </div>
 

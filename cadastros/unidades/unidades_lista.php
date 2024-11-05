@@ -246,13 +246,13 @@ include("../../links.php");
                         <div class="mb-3 row">
                             <label for="add_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" id="add_descricaoField" name="add_dscricaoField">
+                                <input type="text" class="form-control" id="add_descricaoField" name="add_dscricaoField" required>
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="add_abreviaturaField" class="col-md-3 form-label">Abreviatura</label>
+                            <label for="add_abreviaturaField" class="col-md-3 form-label">Abreviatura (*)</label>
                             <div class="col-md-3">
-                                <input type="text" class="form-control" id="add_abreviaturaField" name="add_abreviaturaField">
+                                <input type="text" class="form-control" id="add_abreviaturaField" name="add_abreviaturaField" required>
                             </div>
                         </div>
 
@@ -285,13 +285,13 @@ include("../../links.php");
                         <div class="mb-3 row">
                             <label for="up_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" id="up_descricaoField" name="up_dscricaoField">
+                                <input type="text" class="form-control" id="up_descricaoField" name="up_dscricaoField" required>
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="up_abreviaturaField" class="col-md-3 form-label">Abreviatura</label>
+                            <label for="up_abreviaturaField" class="col-md-3 form-label">Abreviatura (*)</label>
                             <div class="col-md-3">
-                                <input type="text" class="form-control" id="up_abreviaturaField" name="up_abreviaturaField">
+                                <input type="text" class="form-control" id="up_abreviaturaField" name="up_abreviaturaField" required>
                             </div>
                         </div>
 

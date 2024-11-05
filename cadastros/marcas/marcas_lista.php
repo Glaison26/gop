@@ -239,7 +239,7 @@ include("../../links.php");
                         <div class="mb-3 row">
                             <label for="add_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" id="add_descricaoField" name="add_dscricaoField">
+                                <input type="text" class="form-control" id="add_descricaoField" name="add_dscricaoField" required>
                             </div>
                         </div>
 
@@ -272,7 +272,7 @@ include("../../links.php");
                         <div class="mb-3 row">
                             <label for="up_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" id="up_descricaoField" name="up_dscricaoField">
+                                <input type="text" class="form-control" id="up_descricaoField" name="up_dscricaoField" required>
                             </div>
                         </div>
 

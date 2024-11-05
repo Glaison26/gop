@@ -148,7 +148,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Vendedor (*)</label>
                 <div class="col-sm-3">
-                    <input type="text" class="form-control" id="vendedor" name="vendedor">
+                    <input type="text" class="form-control" id="vendedor" name="vendedor" required>
                 </div>
             </div>
             <div class="row mb-3">

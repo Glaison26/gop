@@ -311,14 +311,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Descrição (*)</label>
                             <div class="col-sm-6">
-                                <input type="text" maxlength="120" class="form-control" name="descricao" value="<?php echo $c_descricao; ?>">
+                                <input type="text" maxlength="120" class="form-control" name="descricao" value="<?php echo $c_descricao; ?>" required>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Patrimônio no. (*)</label>
                             <div class="col-sm-3">
-                                <input type="text" maxlength="20" class="form-control" name="patrimonio" value="<?php echo $c_patrimonio; ?>">
+                                <input type="text" maxlength="20" class="form-control" name="patrimonio" value="<?php echo $c_patrimonio; ?>" required>
                             </div>
                             <label class="col-sm-1 col-form-label">No. Série</label>
                             <div class="col-sm-2">
@@ -329,14 +329,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Modelo (*)</label>
                             <div class="col-sm-6">
-                                <input type="text" maxlength="90" class="form-control" name="modelo" value="<?php echo $c_modelo; ?>">
+                                <input type="text" maxlength="90" class="form-control" name="modelo" value="<?php echo $c_modelo; ?>" required>
                             </div>
                         </div>
                         <hr>
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Fornecedor </label>
                             <div class="col-sm-6">
-                                <select class="form-select form-select-lg mb-3" id="fornecedor" name="fornecedor">
+                                <select class="form-select form-select-lg mb-3" id="fornecedor" name="fornecedor" required>
                                     <?php
                                     // select da tabela de fornecedores
                                     $c_sql_fornecedores = "SELECT fornecedores.id, fornecedores.descricao FROM fornecedores ORDER BY fornecedores.descricao";
@@ -354,7 +354,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Fabricante </label>
                             <div class="col-sm-6">
-                                <select class="form-select form-select-lg mb-3" id="fabricante" name="fabricante">
+                                <select class="form-select form-select-lg mb-3" id="fabricante" name="fabricante" required>
                                     <?php
                                     // select da tabela de fabricantes
                                     $c_sql_fabricante = "SELECT fabricantes.id, fabricantes.descricao FROM fabricantes ORDER BY fabricantes.descricao";
@@ -378,7 +378,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Oficina </label>
                             <div class="col-sm-2">
-                                <select class="form-select form-select-lg mb-3" id="oficina" name="oficina">
+                                <select class="form-select form-select-lg mb-3" id="oficina" name="oficina" required>
                                     <?php
                                     // select da tabela de oficinas
                                     $c_sql_oficina = "SELECT oficinas.id, oficinas.descricao FROM oficinas ORDER BY oficinas.descricao";
@@ -410,7 +410,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Espaço Físico </label>
                             <div class="col-sm-4">
-                                <select class="form-select form-select-lg mb-3" id="espaco" name="espaco">
+                                <select class="form-select form-select-lg mb-3" id="espaco" name="espaco" required>
                                     <?php
                                     // select da tabela de espacos fisicos
                                     $c_sql_espacos = "SELECT espacos.id, espacos.descricao FROM espacos ORDER BY espacos.descricao";
@@ -480,7 +480,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Nota Fiscal (*)</label>
                             <div class="col-sm-2">
-                                <input type="text" maxlength="20" class="form-control" name="notafiscal" value="<?php echo $c_notafiscal; ?>">
+                                <input type="text" maxlength="20" class="form-control" name="notafiscal" value="<?php echo $c_notafiscal; ?>" required>
                             </div>
                             <label class="col-sm-2 col-form-label">Data de Aquisição</label>
                             <div class="col-sm-2">
