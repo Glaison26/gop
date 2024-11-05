@@ -43,6 +43,7 @@ $result = $conection->query($c_sql);
 
             <?php
             while ($c_linha = $result->fetch_assoc()) {
+                $i_id_cotacaogaficos = $c_linha['id_cotacao'];
                 echo '<div class="panel-body">';
                 $i_id_fornecedor = $c_linha['fornecedor_id'];
                 $i_id_cotacao = $c_linha['id'];
@@ -110,7 +111,7 @@ $result = $conection->query($c_sql);
                 $c_sql3 = "SELECT cotacao_fornecedor.id, fornecedores.descricao as fornecedor, valor_total
                         FROM cotacao_fornecedor
                         JOIN fornecedores ON cotacao_fornecedor.id_fornecedor=fornecedores.id
-                        WHERE cotacao_fornecedor.id_cotacao='$i_id_cotacao'
+                        WHERE cotacao_fornecedor.id_cotacao='$i_id_cotacaogaficos'
                         ORDER BY cotacao_fornecedor.valor_total";
                 $result3 = $conection->query($c_sql3);
                 // percorre resultado da query para para montar gráfico
@@ -154,7 +155,7 @@ $result = $conection->query($c_sql);
                 $c_sql3 = "SELECT cotacao_fornecedor.id, fornecedores.descricao as fornecedor, valor_total, frete
                         FROM cotacao_fornecedor
                         JOIN fornecedores ON cotacao_fornecedor.id_fornecedor=fornecedores.id
-                        WHERE cotacao_fornecedor.id_cotacao='$i_id_cotacao'
+                        WHERE cotacao_fornecedor.id_cotacao='$i_id_cotacaogaficos'
                         ORDER BY cotacao_fornecedor.valor_total+cotacao_fornecedor.frete";
                 $result3 = $conection->query($c_sql3);
                 // percorre resultado da query para para montar gráfico
@@ -196,7 +197,7 @@ $result = $conection->query($c_sql);
                 $c_sql3 = "SELECT cotacao_fornecedor.id, fornecedores.descricao as fornecedor, valor_total, frete
                         FROM cotacao_fornecedor
                         JOIN fornecedores ON cotacao_fornecedor.id_fornecedor=fornecedores.id
-                        WHERE cotacao_fornecedor.id_cotacao='$i_id_cotacao'
+                        WHERE cotacao_fornecedor.id_cotacao='$i_id_cotacaogaficos'
                         ORDER BY cotacao_fornecedor.frete";
                 $result3 = $conection->query($c_sql3);
                 // percorre resultado da query para para montar gráfico
@@ -239,7 +240,7 @@ $result = $conection->query($c_sql);
                         prazo
                         FROM cotacao_fornecedor
                         JOIN fornecedores ON cotacao_fornecedor.id_fornecedor=fornecedores.id
-                        WHERE cotacao_fornecedor.id_cotacao='$i_id_cotacao'
+                        WHERE cotacao_fornecedor.id_cotacao='$i_id_cotacaogaficos'
                         ORDER BY cotacao_fornecedor.prazo";
                 $result3 = $conection->query($c_sql3);
                 // percorre resultado da query para para montar gráfico
