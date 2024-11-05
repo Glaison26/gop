@@ -107,7 +107,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label class="col-sm-2 col-form-label">Material</label>
                 <div class="col-sm-6">
                     <select class="form-select form-select-lg mb-3" id="material" name="material">
-
                         <?php
                         if ($c_indice == '')
                             echo "<option></option>";
@@ -128,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Quantidade</label>
                 <div class="col-sm-2">
-                    <input type="number" class="form-control" id="quantidade" name="quantidade">
+                    <input type="number" class="form-control" id="quantidade" name="quantidade" required>
                 </div>
 
             </div>

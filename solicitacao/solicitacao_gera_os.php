@@ -175,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
                 <label class="col-md-1 form-label">Hora</label>
                 <div class="col-sm-2">
-                    <input type="time" class="form-control" name="hora_inicio" id="hora_inicio">
+                    <input type="time" class="form-control" name="hora_inicio" id="hora_inicio" required>
                 </div>
             </div>
             <br>
@@ -186,14 +186,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
                 <label class="col-md-1 form-label">Hora</label>
                 <div class="col-sm-2">
-                    <input type="time" class="form-control" name="hora_sla" id="hora_sla">
+                    <input type="time" class="form-control" name="hora_sla" id="hora_sla" required>
                 </div>
             </div>
             <br>
             <div class="row mb-6">
                 <label class="col-md-2 form-label">Descritivo</label>
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" name="descritivo" id="descritivo">
+                    <input type="text" class="form-control" name="descritivo" id="descritivo" required>
                 </div>
                 <br>
             </div>
@@ -201,7 +201,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-6">
                 <label class="col-sm-2 col-form-label">Oficina </label>
                 <div class="col-sm-3">
-                    <select class="form-select form-select-lg mb-3" id="oficina" name="oficina">
+                    <select class="form-select form-select-lg mb-3" id="oficina" name="oficina" required>
                         <?php
                         // select da tabela de setores
                         $c_sql_setor = "SELECT oficinas.id, oficinas.descricao FROM oficinas ORDER BY oficinas.descricao";

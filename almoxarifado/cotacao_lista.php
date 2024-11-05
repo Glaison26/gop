@@ -305,7 +305,7 @@ $_SESSION['sql'] = "select";
                         <div class="row mb-3">
                             <label class="col-md-2 form-label">Descritivo (*)</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="add_descritivo" id="add_descritivo">
+                                <input type="text" class="form-control" name="add_descritivo" id="add_descritivo" required>
                             </div>
                         </div>
 

@@ -173,14 +173,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Nome do Fabricante (*)</label>
                 <div class="col-sm-6">
-                    <input type="text" maxlength="120" class="form-control" name="descricao" value="<?php echo $c_descricao; ?>">
+                    <input type="text" maxlength="120" class="form-control" name="descricao" value="<?php echo $c_descricao; ?>" required>
                 </div>
             </div>
 
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Razão Social (*)</label>
                 <div class="col-sm-6">
-                    <input type="text" maxlength="120" class="form-control" name="razaosocial" value="<?php echo $c_razao; ?>">
+                    <input type="text" maxlength="120" class="form-control" name="razaosocial" value="<?php echo $c_razao; ?>" required>
                 </div>
             </div>
 
@@ -194,14 +194,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
                 <label class="col-sm-2 col-form-label">CNPJ/CPF (*)</label>
                 <div class="col-sm-2">
-                    <input type="text" maxlength="18" class="form-control" name="cnpj_cpf" placeholder="somente números" value="<?php echo $c_cnpj_cpf; ?>">
+                    <input type="text" maxlength="18" class="form-control" name="cnpj_cpf" placeholder="somente números" value="<?php echo $c_cnpj_cpf; ?>" required>
                 </div>
             </div>
 
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Contato (*)</label>
                 <div class="col-sm-6">
-                    <input type="text" maxlength="100" class="form-control" name="contato" value="<?php echo $c_contato; ?>">
+                    <input type="text" maxlength="100" class="form-control" name="contato" value="<?php echo $c_contato; ?>" required>
                 </div>
             </div>
            

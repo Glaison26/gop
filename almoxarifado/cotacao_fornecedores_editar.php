@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Fornecedor (*)</label>
                 <div class="col-sm-6">
-                    <select class="form-select form-select-lg mb-3" id="fornecedor" name="fornecedor">
+                    <select class="form-select form-select-lg mb-3" id="fornecedor" name="fornecedor" required>
 
                         <?php
                         if ($c_indice == '')
@@ -164,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Vendedor (*)</label>
                 <div class="col-sm-3">
-                    <input type="text" class="form-control" id="vendedor" name="vendedor" value = '<?php echo $c_vendedor ?>'>
+                    <input type="text" class="form-control" id="vendedor" name="vendedor" value = '<?php echo $c_vendedor ?>' required>
                 </div>
             </div>
             <div class="row mb-3">

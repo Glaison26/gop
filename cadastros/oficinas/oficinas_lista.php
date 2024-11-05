@@ -288,7 +288,7 @@ include("../../links.php");
                         <div class="mb-3 row">
                             <label for="add_descricaoField" class="col-md-3 form-label">Oficina (*)</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" id="add_descricaoField" name="add_descricaoField">
+                                <input type="text" class="form-control" id="add_descricaoField" name="add_descricaoField" required>
                             </div>
                         </div>
                         <div class="mb-3 row">
@@ -306,7 +306,7 @@ include("../../links.php");
                         <div class="mb-3 row">
                             <label for="add_descricaoField" class="col-md-3 form-label">e-mail</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" id="add_emailField" name="add_emailField">
+                                <input type="email" class="form-control" id="add_emailField" name="add_emailField">
                             </div>
                         </div>
                         <div class="mb-3 row">
