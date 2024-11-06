@@ -118,10 +118,7 @@ $result = $conection->query($c_sql);
                 while ($registro3 = $result3->fetch_assoc()) {
                     $c_local = $registro3['fornecedor'];
                     $c_qtd =  $registro3['valor_total'];
-                    
-                    
-
-                ?>['<?php echo $c_local ?>', <?php echo $c_qtd ?>,'green'],
+                    ?>['<?php echo $c_local ?>', <?php echo $c_qtd ?>,'green'],
                 <?php } ?>
             ]);
 
