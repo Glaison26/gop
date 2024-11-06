@@ -153,10 +153,12 @@
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
                                  
                                  <a class='dropdown-item' href='/gop/almoxarifado/cotacao_lista.php'> Ocorrências Padrões</a>
-                                
+                                 <a class='dropdown-item' href='/gop/almoxarifado/cotacao_lista.php'> Horas Trabalhadas por Executor</a>
+                                 <a class='dropdown-item' href='/gop/almoxarifado/cotacao_lista.php'> Custos da Manutenção</a>
+                                 <a class='dropdown-item' href='/gop/almoxarifado/cotacao_lista.php'> Indicadores da Manutenção</a>
                              </div>
                          </li>
-                         	<li class='nav-item'><a href='#' class='nav-link'>Configurações</a></li>
+                         	<li class='nav-item'><a href='/gop/configuracoes.php' class='nav-link'>Configurações</a></li>
                         
                          ";
                                         }
