@@ -147,7 +147,18 @@
                                  <a class='dropdown-item' href='/gop/cadastros/materiais/materiais_lista.php'><img src='\gop\images\materiais.png' alt='25' width='25' height='25'>Cadastro de Materiais</a>
                                  <a class='dropdown-item' href='/gop/cadastros/unidades/unidades_lista.php'><img src='\gop\images\peso.png' alt='25' width='25' height='25'> Unidades e Medidas</a>
                              </div>
-                         </li>";
+                         </li>
+                          <li class='nav-item dropdown'>
+                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Relatórios e Indicadores</a>
+                             <div class='dropdown-menu' aria-labelledby='dropdown01'>
+                                 
+                                 <a class='dropdown-item' href='/gop/almoxarifado/cotacao_lista.php'> Ocorrências Padrões</a>
+                                
+                             </div>
+                         </li>
+                         	<li class='nav-item'><a href='#' class='nav-link'>Configurações</a></li>
+                        
+                         ";
                                         }
                                         ?>
                              <li class='nav-item dropdown'>
