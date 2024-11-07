@@ -152,7 +152,7 @@
                              <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Relatórios e Indicadores</a>
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
                                  
-                                 <a class='dropdown-item' href='/gop/almoxarifado/cotacao_lista.php'> Ocorrências Padrões</a>
+                                 <a class='dropdown-item' href='/gop/relatorios/ocorrencias_query.php'> Ocorrências Padrões</a>
                                  <a class='dropdown-item' href='/gop/almoxarifado/cotacao_lista.php'> Horas Trabalhadas por Executor</a>
                                  <a class='dropdown-item' href='/gop/almoxarifado/cotacao_lista.php'> Custos da Manutenção</a>
                                  <a class='dropdown-item' href='/gop/almoxarifado/cotacao_lista.php'> Indicadores da Manutenção</a>

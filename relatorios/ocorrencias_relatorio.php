@@ -1,0 +1,100 @@
+<?php
+// emissão de mapa de cotação
+session_start();
+if (!isset($_SESSION['newsession'])) {
+    die('Acesso não autorizado!!!');
+}
+include("../conexao.php");
+include("../links2.php");
+$c_sql = $_SESSION['sql'];
+$result = $conection->query($c_sql);
+$result_grafico = $result;
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="text-center">Relatório de Ocorrências de Manutenção por Período</h2><br>
+        <div class="panel panel-default">
+            <div class="panel-heading text-center"><strong>Período :</strong></div>
+            <hr>
+            <table class="table table display table-bordered table-striped table-active tabocorrencias">
+                <thead class="thead">
+                    <tr>
+
+                        <th scope="col">Ocorrência</th>
+                        <th scope="col">No de Chamados</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+
+                    while ($c_linha = $result->fetch_assoc()) {
+                        echo "
+                            <tr class='info'>
+                            <td>$c_linha[descricao]</td>
+                            <td>$c_linha[total]</td>
+                          
+                            </tr>
+                            ";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <hr>
+    <!-- gráficos das ocorrencias -->
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+    <script type="text/javascript">
+        // gráfico por Valor
+        google.charts.load('current', {
+            'packages': ['corechart']
+        });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            var data = google.visualization.arrayToDataTable([
+                ['Ocorrencias', 'chamados'],
+
+                <?php
+                $result_grafico = $conection->query($c_sql);
+                // percorre resultado da query para para montar gráfico
+                while ($registro = $result_grafico->fetch_assoc()) {
+                    $c_ocorrencia = $registro['descricao'];
+                    $c_qtd =  $registro['total'];
+                ?>['<?php echo $c_ocorrencia ?>', <?php echo $c_qtd ?>],
+                <?php } ?>
+            ]);
+
+            var options = {
+                
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('chart1'));
+
+            chart.draw(data, options);
+        }
+    </script>
+
+    <div style="padding-left:400px;">
+        <h3 class="text-center">Gráfico de Ocorrências da Manutenção</h3>
+        <div id="chart1" style="width: 900px; height: 500px;"></div>
+    </div>
+
+</body>
+
+</html>
