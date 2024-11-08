@@ -9,6 +9,9 @@ include("../links2.php");
 $c_sql = $_SESSION['sql'];
 $result = $conection->query($c_sql);
 $result_grafico = $result;
+$c_periodo = $_SESSION['periodo'];
+$c_query = $_SESSION['query'];
+
 ?>
 
 <!DOCTYPE html>
@@ -23,22 +26,22 @@ $result_grafico = $result;
 <body>
     <div class="container">
         <h2 class="text-center">Relatório de Ocorrências de Manutenção por Período</h2><br>
+        <h5 class="text-left">Filtros :<?php echo $c_query;?></h5><br>
         <div class="panel panel-default">
-            <div class="panel-heading text-center"><strong>Período :</strong></div>
+            <div class="panel-heading text-center"><strong>Período :<?php echo $c_periodo?> </strong></div>
             <hr>
             <table class="table table display table-bordered table-striped table-active tabocorrencias">
                 <thead class="thead">
                     <tr>
-
                         <th scope="col">Ocorrência</th>
                         <th scope="col">No de Chamados</th>
-
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-
+                    $i_chamados = 0;
                     while ($c_linha = $result->fetch_assoc()) {
+                        $i_chamados += $c_linha['total'];
                         echo "
                             <tr class='info'>
                             <td>$c_linha[descricao]</td>
@@ -50,6 +53,7 @@ $result_grafico = $result;
                     ?>
                 </tbody>
             </table>
+            <div><?php echo "Total de Chamados : ". $i_chamados?></div>
         </div>
     </div>
     <hr>

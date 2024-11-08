@@ -6,10 +6,11 @@ if (!isset($_SESSION['newsession'])) {
 include("../conexao.php");
 include("../links2.php");
 date_default_timezone_set('America/Sao_Paulo');
-
+$c_query = "";
 // rotina para montagem do sql com as opções selecionadas
 if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     // formatação de datas para o sql
+    $_SESSION['periodo'] = ' de ' . date("d-m-Y", strtotime(str_replace('/', '-', $_POST['data1']))) . ' a ' . date("d-m-Y", strtotime(str_replace('/', '-', $_POST['data2'])));
     $d_data1 = $_POST['data1'];
     $d_data1 = date("Y-m-d", strtotime(str_replace('/', '-', $d_data1)));
     $d_data2 = $_POST['data2'];
@@ -24,35 +25,44 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
 
     if ($c_tipo_atendimento == "1") {  // corretiva
         $c_where = $c_where . "ordens.tipo_ordem='C' and ";
+        $c_query = $c_query . 'Corretivas -';
         // sql para tipo de ordem corretiva (programada ou urgência)
         $c_tipo = $_POST['tipo_corretiva'];
         if ($c_tipo == "Programada") {
             $c_where = $c_where . "ordens.tipo_corretiva='P' and ";
+            $c_query = $c_query . 'Programadas -';
         }
         if ($c_tipo == "Urgênte") {
             $c_where = $c_where . "ordens.tipo_corretiva='U' and ";
+            $c_query = $c_query . 'Urgêntes -';
         }
     }
     // preventiva
     if ($c_tipo_atendimento == "2") { // preventiva
         $c_where = $c_where . "ordens.tipo_ordem='P' and ";
+        $c_query = $c_query . 'Preventivas -';
     }
     // sql para status
     $c_status = $_POST['status'];
     if ($c_status == "Aberta") {
         $c_where = $c_where . "ordens.status='A' and ";
+        $c_query = $c_query . 'Abertas -';
     }
     if ($_POST['status'] == "Em Andamento") {
         $c_where = $c_where . "ordens.status='E' and ";
+        $c_query = $c_query . 'Em andamento -';
     }
     if ($_POST['status'] == "Concluída") {
         $c_where = $c_where . "ordens.status='C' and ";
+        $c_query = $c_query . 'Concluídas -';
     }
     if ($_POST['status'] == "Suspensa") {
         $c_where = $c_where . "ordens.status='S' and ";
+        $c_query = $c_query . 'Suspensas -';
     }
     if ($_POST['status'] == "Cancelada") {
         $c_where = $c_where . "ordens.status='X' and ";
+        $c_query = $c_query . 'Canceladas -';
     }
 
     // sql para solicitante
@@ -63,6 +73,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
         $c_linha = $result->fetch_assoc();
         $i_id_solicitante = $c_linha['id'];
         $c_where = $c_where . "ordens.id_solicitante='$i_id_solicitante' and ";
+        $c_query = $c_query . 'Solicitante:'. $c_linha['id']. '-';
     }
     // sql para setor
     if ($_POST["setor"] <> "Todos") {
@@ -72,6 +83,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
         $c_linha = $result->fetch_assoc();
         $i_id_setor = $c_linha['id'];
         $c_where = $c_where . "ordens.id_setor='$i_id_setor' and ";
+        $c_query = $c_query . 'Setor:'. $c_linha['descricao']. '-';
     }
     // sql para oficinas
     if ($_POST['oficina'] <> "Todas") {
@@ -81,6 +93,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
         $c_linha = $result->fetch_assoc();
         $i_id_oficina = $c_linha['id'];
         $c_where = $c_where . "ordens.id_oficina='$i_id_oficina' and ";
+        $c_query = $c_query . 'Oficina:'. $c_linha['descricao']. '-';
     }
 
     $c_where = $c_where = substr($c_where, 0, -5); // tirar o and no final
@@ -93,8 +106,12 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
 
     // guardo session para proxima pagina de tabelas
     $_SESSION['sql'] = $c_sql;
+    if (empty($c_query))
+        $_SESSION['query'] = "Nenhum";
+    else
+        $_SESSION['query'] = $c_query;
     //echo $c_sql;
-    header('location: /gop/relatorios/ocorrencias_relatorio.php');
+    echo "<script> window.open('/gop/relatorios/ocorrencias_relatorio.php?id=', '_blank');</script>";
 }
 
 
@@ -109,6 +126,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
+
 
 <script>
     // função para verificas selct do tipo de solicitação e desebilita/ habilitar espaco fisico ou recurso
@@ -163,7 +181,6 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                 </div>
             </div>
 
-
             <div class="row mb-3">
 
                 <label class="col-md-2 form-label">De</label>
@@ -176,8 +193,6 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                 </div>
 
             </div>
-
-
 
             <div class="row mb-3">
 
