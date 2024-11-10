@@ -99,10 +99,10 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $c_where = $c_where = substr($c_where, 0, -5); // tirar o and no final
     // montagem do sql para recursos físicos
     //
-    $c_sql = "SELECT ordens.id_ocorrencia, ocorrencias.descricao, SUM(ordens.id_ocorrencia) AS total
+    $c_sql = "SELECT ordens.id_ocorrencia, ocorrencias.descricao, count(ordens.id_ocorrencia) AS total
             FROM ordens 
             JOIN ocorrencias ON ordens.id_ocorrencia=ocorrencias.id
-            where $c_where GROUP BY ordens.id_ocorrencia";
+            where $c_where GROUP BY ordens.id_ocorrencia order by total desc";
 
     // guardo session para proxima pagina de tabelas
     $_SESSION['sql'] = $c_sql;

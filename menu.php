@@ -15,12 +15,12 @@
     date_default_timezone_set('America/Sao_Paulo');
     $agora = date('d/m/Y H:i');
     $c_data = date('Y-m-d');
-    
+
     $c_sql = "select COUNT(*) AS preventivas FROM preventivas WHERE data_prox_realizacao<='$c_data'";
     $result = $conection->query($c_sql);
     $registro = $result->fetch_assoc();
     $c_preventivas = $registro['preventivas'];
-    
+
     ?>
  <!DOCTYPE html>
  <html lang="en">
@@ -73,7 +73,7 @@
 
                      </div>
                  </div>
-                 
+
                  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-blue ftco-navbar-light" id="ftco-navbar">
                      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                          <span class="fa fa-bars">Menu</span>
@@ -151,11 +151,16 @@
                           <li class='nav-item dropdown'>
                              <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Relatórios e Indicadores</a>
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
-                                 
+                                 <a class='dropdown-item' href='#'> DashBoard da Manutenção</a>
                                  <a class='dropdown-item' href='/gop/relatorios/ocorrencias_query.php'> Ocorrências Padrões</a>
+                                 <a class='dropdown-item' href='/gop/relatorios/oficinas_query.php'> Ocorrências por Oficinas</a>
+                                 <a class='dropdown-item' href='/gop/relatorios/solicitantes_query.php'> Ocorrências por Solicitantes</a>
+                                 <a class='dropdown-item' href='/gop/relatorios/setores_query.php'> Ocorrências por Setor</a>
+                                 <a class='dropdown-item' href='#'> Ocorrências por Centro de Custo</a>
                                  <a class='dropdown-item' href='/gop/relatorios/executores_query.php'> Horas Trabalhadas por Executor</a>
-                                 <a class='dropdown-item' href='/gop/almoxarifado/cotacao_lista.php'> Custos da Manutenção</a>
-                                 <a class='dropdown-item' href='/gop/almoxarifado/cotacao_lista.php'> Indicadores da Manutenção</a>
+                                 <a class='dropdown-item' href='#'> Custos da Manutenção</a>
+                                 <a class='dropdown-item' href='#'> Indicadores da Manutenção</a>
+                                
                              </div>
                          </li>
                          	<li class='nav-item'><a href='/gop/configuracoes.php' class='nav-link'>Configurações</a></li>
@@ -175,7 +180,7 @@
                                      <a class='dropdown-item' href=''><img src='\gop\images\trocasenha.png' alt='25' width='25' height='25'>Troca de Senha</a>
                                  </div>
                              </li>
-                             
+
                          </ul>
                      </div>
 
@@ -198,7 +203,7 @@
 
                  <div class="panel default class">
                      <div class="alert alert-success">
-                                                   
+
                          <strong>Login efetuado! - </strong>Bem vindo <?php echo ' ' . $_SESSION['c_usuario'] . ' - ' . $agora . ' '; ?>
                          <label for="usuario"></label>
                      </div>

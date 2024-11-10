@@ -96,7 +96,7 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
         </div>
         <?php
         $c_id_ordem = $registro["id"];
-        if ($_SESSION['tipo'] <> 'Solicitante')
+        if ($_SESSION['tipo'] <> 'Solicitante'&& $registro['status']== 'A')
         echo '<a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_gera_os.php?id='.$c_id_ordem.'"><img src="\gop\images\ordem.png" alt="" width="25" height="25"> Gerar OS</a>';
         ?>
        

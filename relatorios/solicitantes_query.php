@@ -65,16 +65,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
         $c_query = $c_query . 'Canceladas -';
     }
 
-    // sql para solicitante
-    if ($_POST["solicitante"] <> "Todos") {
-        $c_solicitante = $_POST["solicitante"];
-        $c_sql_solicitante = "select usuarios.id, usuarios.nome from usuarios where usuarios.nome = '$c_solicitante'";
-        $result = $conection->query($c_sql_solicitante);
-        $c_linha = $result->fetch_assoc();
-        $i_id_solicitante = $c_linha['id'];
-        $c_where = $c_where . "ordens.id_solicitante='$i_id_solicitante' and ";
-        $c_query = $c_query . 'Solicitante:' . $c_linha['id'] . '-';
-    }
+   
     // sql para setor
     if ($_POST["setor"] <> "Todos") {
         $c_setor = $_POST["setor"];
@@ -83,7 +74,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
         $c_linha = $result->fetch_assoc();
         $i_id_setor = $c_linha['id'];
         $c_where = $c_where . "ordens.id_setor='$i_id_setor' and ";
-        $c_query = $c_query . 'Setor:' . $c_linha['descricao'] . '-';
+        $c_query = $c_query . 'Setor:'. $c_linha['descricao']. '-';
     }
     // sql para oficinas
     if ($_POST['oficina'] <> "Todas") {
@@ -93,53 +84,25 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
         $c_linha = $result->fetch_assoc();
         $i_id_oficina = $c_linha['id'];
         $c_where = $c_where . "ordens.id_oficina='$i_id_oficina' and ";
-        $c_query = $c_query . 'Oficina:' . $c_linha['descricao'] . '-';
+        $c_query = $c_query . 'Oficina:'. $c_linha['descricao']. '-';
     }
 
     $c_where = $c_where = substr($c_where, 0, -5); // tirar o and no final
     // montagem do sql para recursos físicos
-    // limpo tabela temporária
-    $c_sql_del = "delete from temp_horas";
-    $result_del = $conection->query($c_sql_del);
-    // rotina para montar tabela de horas e minutos com totais
-    $c_sql = "SELECT ordens_executores.id_executor, executores.nome, SUM(ordens_executores.tempo_horas) as total_horas,
-   SUM(ordens_executores.tempo_minutos) as total_minutos FROM ordens
-   JOIN ordens_executores ON ordens.id=ordens_executores.id_ordem
-   JOIN executores ON ordens_executores.id_executor=executores.id
-   where $c_where GROUP BY  ordens_executores.id_executor order by executores.nome";
-    $result = $conection->query($c_sql);
-    // calculos de horas para montaegem da tabela temporária
-    $horas = 0;
-    $minutos = 0;
-    while ($c_linha = $result->fetch_assoc()) {
-        if (!empty($c_linha['total_horas']))
-            $horas = $c_linha['total_horas'];
-        if (!empty($c_linha['total_minutos']))
-            $minutos = $c_linha['total_minutos'];
-        $c_executor = $c_linha['nome'];
-        if ($minutos > 60) {
-            while ($minutos > 60) {
-                $minutos = $minutos - 60;
-                $horas = $horas + 1;
-            }
-        }
-        $n_tempo_grafico = $horas + ($minutos / 60);
-        // insiro dados na tabela temporária
-        $c_sql_ins = "insert into temp_horas (horas, minutos, executor, tempo_grafico)
-         values ('$horas','$minutos','$c_executor', '$n_tempo_grafico')";
-        //echo $c_sql_ins;
-        //echo $c_sql;
-        $result_ins = $conection->query($c_sql_ins);
-    }
-
+    //
+    $c_sql = "SELECT ordens.id_solicitante, usuarios.nome, count(ordens.id_solicitante) AS total
+            FROM ordens 
+            JOIN usuarios ON ordens.id_solicitante=usuarios.id
+            where $c_where 
+            GROUP BY ordens.id_solicitante order by total desc";
     // guardo session para proxima pagina de tabelas
-
+    $_SESSION['sql'] = $c_sql;
     if (empty($c_query))
         $_SESSION['query'] = "Nenhum";
     else
         $_SESSION['query'] = $c_query;
     //echo $c_sql;
-    echo "<script> window.open('/gop/relatorios/executores_relatorio.php?id=', '_blank');</script>";
+    echo "<script> window.open('/gop/relatorios/solicitantes_relatorio.php?id=', '_blank');</script>";
 }
 
 
@@ -179,7 +142,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
-            <h5>Opções para Relatório de Horas trabalhadas por Executor<h5>
+            <h5>Opções para Relatório de Solicitantes<h5>
         </div>
     </div>
 
@@ -189,7 +152,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
             </div>
-            <h5>Realize um filtro com as opções de Ordens de Serviço abaixo</h5>
+            <h5>Realize uma pesquisa com as opções de pesquisa de Ordens de Serviço abaixo</h5>
         </div>
         <form method="post">
             <div class="panel panel-primary">
@@ -224,23 +187,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
 
             <div class="row mb-3">
 
-                <label class="col-sm-2 col-form-label">Solicitante </label>
-                <div class="col-sm-3">
-                    <select class="form-select form-select-lg mb-3" id="solicitante" name="solicitante">
-                        <option>Todos</option>
-                        <?php
-                        // select da tabela de solicitantes
-                        $c_sql_sol = "SELECT usuarios.id, usuarios.nome FROM usuarios ORDER BY usuarios.nome";
-                        $result_sol = $conection->query($c_sql_sol);
-                        while ($c_linha = $result_sol->fetch_assoc()) {
-                            echo "  
-                          <option>$c_linha[nome]</option>
-                        ";
-                        }
-                        ?>
-                    </select>
-                </div>
-                <label class="col-sm-1 col-form-label">Setor </label>
+                <label class="col-sm-2 col-form-label">Setor </label>
                 <div class="col-sm-3">
                     <select class="form-select form-select-lg mb-3" id="setor" name="setor">
                         <option>Todos</option>
@@ -256,10 +203,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                         ?>
                     </select>
                 </div>
-
-            </div>
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Oficina </label>
+                <label class="col-sm-1 col-form-label">Oficina </label>
                 <div class="col-sm-3">
                     <select class="form-select form-select-lg mb-3" id="oficina" name="oficina">
                         <option>Todas</option>
@@ -275,27 +219,31 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                         ?>
                     </select>
                 </div>
-                <label class="col-sm-1 col-form-label">Tipo</label>
-                <div class="col-sm-2">
+            </div>
+            <div class="row mb-3">
+                
+                <label class="col-sm-2 col-form-label">Tipo</label>
+                <div class="col-sm-3">
                     <select onchange="verifica(value)" class="form-select form-select-lg mb-3" id="tipo" name="tipo" value="<?php echo $c_tipo; ?>">
                         <option value="0">Todas</option>
                         <option value="1">Corretiva</option>
                         <option value="2">Preventiva</option>
                     </select>
                 </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Tipo Corretiva</label>
-                <div class="col-sm-2">
+                <label class="col-sm-1 col-form-label">Tipo Corretiva</label>
+                <div class="col-sm-3">
                     <select disabled class="form-select form-select-lg mb-3" id="tipo_corretiva" name="tipo_corretiva" value="<?php echo $c_tipo_corretiva; ?>">
                         <option>Todos</option>
                         <option>Programada</option>
                         <option>Urgênte</option>
                     </select>
                 </div>
+            </div>
+
+            <div class="row mb-3">
+              
                 <label class="col-sm-2 col-form-label">Tipo Preventiva</label>
-                <div class="col-sm-2">
+                <div class="col-sm-3">
                     <select disabled class="form-select form-select-lg mb-3" id="tipo_preventiva" name="tipo_preventiva" value="<?php echo $c_tipo_preventiva; ?>">
                         <option>Todas</option>
                         <option>Rotina</option>
@@ -303,11 +251,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                         <option>Sistematica</option>
                     </select>
                 </div>
-            </div>
-
-
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Status</label>
+                <label class="col-sm-1 col-form-label">Status</label>
                 <div class="col-sm-3">
                     <select class="form-select form-select-lg mb-3" id="status" name="status" value="<?php echo $c_status; ?>">
                         <option>Todos</option>
@@ -318,6 +262,8 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     </select>
                 </div>
             </div>
+
+
         </form>
     </div>
 
