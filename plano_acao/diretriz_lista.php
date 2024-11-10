@@ -196,7 +196,7 @@ $c_texto = "";
         </button>
         <?php
         if ($_SESSION['voltadiretriz']=='N') 
-          echo "<a class='btn btn-secondary btn-sm' href='/gop/menu.php'><span class='glyphicon glyphicon-off'></span> Voltar</a>";
+          echo "<a class='btn btn-secondary btn-sm' href='/gop/plano_acao/planos_menu.php'><span class='glyphicon glyphicon-off'></span> Voltar</a>";
         else 
           echo "<a class='btn btn-secondary btn-sm' href='/gop/plano_acao/estrategia_diretrizes_lista.php'><span class='glyphicon glyphicon-off'></span> Voltar</a>";
         ?>

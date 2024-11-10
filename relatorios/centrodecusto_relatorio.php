@@ -25,7 +25,7 @@ $c_query = $_SESSION['query'];
 
 <body>
     <div class="container">
-        <h2 class="text-center">Relatório de Manutenções por Oficinas no Período</h2><br>
+        <h2 class="text-center">Relatório de Manutenção por Centro de Custo no Período</h2><br>
         <h5 class="text-left">Filtros :<?php echo $c_query;?></h5><br>
         <div class="panel panel-default">
             <div class="panel-heading text-center"><strong>Período :<?php echo $c_periodo?> </strong></div>
@@ -33,7 +33,7 @@ $c_query = $_SESSION['query'];
             <table class="table table display table-bordered table-striped table-active tabocorrencias">
                 <thead class="thead">
                     <tr>
-                        <th scope="col">Oficina</th>
+                        <th scope="col">Centro de Custo</th>
                         <th scope="col">No de Chamados</th>
                     </tr>
                 </thead>
@@ -72,15 +72,15 @@ $c_query = $_SESSION['query'];
         function drawChart() {
 
             var data = google.visualization.arrayToDataTable([
-                ['Oficina', 'chamados'],
+                ['Centros de Custo', 'chamados'],
 
                 <?php
                 $result_grafico = $conection->query($c_sql);
                 // percorre resultado da query para para montar gráfico
                 while ($registro = $result_grafico->fetch_assoc()) {
-                    $c_oficina = $registro['descricao'];
+                    $c_centrodecusto = $registro['descricao'];
                     $c_qtd =  $registro['total'];
-                ?>['<?php echo $c_oficina ?>', <?php echo $c_qtd ?>],
+                ?>['<?php echo $c_centrodecusto ?>', <?php echo $c_qtd ?>],
                 <?php } ?>
             ]);
 
@@ -95,7 +95,7 @@ $c_query = $_SESSION['query'];
     </script>
 
     <div style="padding-left:400px;">
-        <h3 class="text-center">Gráfico de Manutenções por oficina no período </h3>
+        <h3 class="text-center">Gráfico de Manutenção por Centro de Custo no Período</h3>
         <div id="chart1" style="width: 900px; height: 500px;"></div>
     </div>
 

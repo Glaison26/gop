@@ -191,7 +191,7 @@ $c_texto = "";
             <span class="glyphicon glyphicon-plus"></span>
             Incluir
         </button>
-        <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
+        <a class="btn btn-secondary btn-sm" href="/gop/plano_acao/planos_menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
         <table class="table table display table-bordered tabestrategia">

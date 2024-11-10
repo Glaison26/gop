@@ -96,17 +96,17 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
         </div>
         <?php
         $c_id_ordem = $registro["id"];
-        if ($_SESSION['tipo'] <> 'Solicitante'&& $registro['status']== 'A')
-        echo '<a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_gera_os.php?id='.$c_id_ordem.'"><img src="\gop\images\ordem.png" alt="" width="25" height="25"> Gerar OS</a>';
+        if ($_SESSION['tipo'] <> 'Solicitante' && $registro['status'] == 'A')
+            echo '<a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_gera_os.php?id=' . $c_id_ordem . '"><img src="\gop\images\ordem.png" alt="" width="25" height="25"> Gerar OS</a>';
         ?>
-       
+
         <a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_lista.php"><img src="\gop\images\saida.png" alt="" width="25" height="25"> Voltar</a>
         <hr>
         <!-- abas de solicitações por recursos físicos -->
         <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#descritivo" aria-controls="descritivo" role="tab" data-toggle="tab">Descrição do Serviço</a></li>
-        <li role="presentation" ><a href="#detalhe" aria-controls="detalhe" role="tab" data-toggle="tab">Detalhe da Solicitação</a></li>
-        
+            <li role="presentation" class="active"><a href="#descritivo" aria-controls="descritivo" role="tab" data-toggle="tab">Descrição do Serviço</a></li>
+            <li role="presentation"><a href="#detalhe" aria-controls="detalhe" role="tab" data-toggle="tab">Detalhe da Solicitação</a></li>
+
         </ul>
 
         <div class="tab-content">
@@ -134,7 +134,6 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
                                       <input  type='text' readonly class='form-control' name='recurso' id='recurso' value=' $c_recurso'>
                                 </div>
                               </div>";
-                                                     
                     }
                     ?>
                     <?php
@@ -147,8 +146,6 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
                                       <input  type='text' readonly class='form-control' name='espaco' id='espaco' value=' $c_espaco'>
                                 </div>
                                 </div>";
-                               
-                            
                     }
                     ?>
                     <div class="row mb-3">
@@ -187,7 +184,7 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
                         <div class="col-sm-6">
                             <input type="text" readonly class="form-control" name="ocorrencia" id="ocorrencia" value='<?php echo $c_ocorrencia; ?>'>
                         </div>
-                        
+
                     </div>
 
                 </div>

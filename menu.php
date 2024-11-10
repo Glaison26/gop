@@ -112,15 +112,6 @@
                                  <a class='dropdown-item' href='/gop/cadastros/checklist/checklist_lista.php'><img src='\gop\images\checklist.png' alt='25' width='25' height='25'> Cadastro de Cheklist</a>
                                  
                              </div>
-                         </li>
-                            
-                         <li class='nav-item dropdown'>
-                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Planos de Ação</a>
-                             <div class='dropdown-menu' aria-labelledby='dropdown01'>
-                                 <a class='dropdown-item' href='/gop/plano_acao/diretriz_lista.php'><img src='\gop\images\diretrizes.png' alt='25' width='25' height='25'> Diretrizes</a>
-                                 <a class='dropdown-item' href='/gop/plano_acao/estrategias_lista.php'><img src='\gop\images\iconeestrategia.png' alt='25' width='25' height='25'> Estratégias</a>
-                                 <a class='dropdown-item' href='/gop/plano_acao/planejamento_lista.php'><img src='\gop\images\planejamento.png' alt='25' width='25' height='25'> Planejamento</a>
-                                 </div>
                          </li>";
                                 }
                                 ?>
@@ -134,6 +125,7 @@
                                             echo "<a class='dropdown-item' href='/gop/ordens/ordens.php'><img src='\gop\images\ordem.png' alt='25' width='25' height='25'> Ordens de Serviços</a>
                                   <a class='dropdown-item' href='/gop/preventivas/preventivas.php'><img src='\gop\images\preventivo.png' alt='25' width='25' height='25'> Preventivas </a>
                                   <a class='dropdown-item' href='/gop/cadastros/ocorrencias/ocorrencias_lista.php'><img src='\gop\images\incidente.png' alt='25' width='25' height='25'> Ocorrências Padrões</a>
+                                  <a class='dropdown-item' href='/gop/plano_acao/planos_menu.php'><img src='\gop\images\plano.png' alt='25' width='25' height='25'> Planos de Ação</a>
                                   </div>
                          </li>
 
@@ -149,17 +141,29 @@
                              </div>
                          </li>
                           <li class='nav-item dropdown'>
-                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Relatórios e Indicadores</a>
+                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Indicadores</a>
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
-                                 <a class='dropdown-item' href='#'> DashBoard da Manutenção</a>
                                  <a class='dropdown-item' href='/gop/relatorios/ocorrencias_query.php'> Ocorrências Padrões</a>
                                  <a class='dropdown-item' href='/gop/relatorios/oficinas_query.php'> Ocorrências por Oficinas</a>
                                  <a class='dropdown-item' href='/gop/relatorios/solicitantes_query.php'> Ocorrências por Solicitantes</a>
                                  <a class='dropdown-item' href='/gop/relatorios/setores_query.php'> Ocorrências por Setor</a>
-                                 <a class='dropdown-item' href='#'> Ocorrências por Centro de Custo</a>
+                                 <a class='dropdown-item' href='/gop/relatorios/centrodecusto_query.php'> Ocorrências por Centro de Custo</a>
                                  <a class='dropdown-item' href='/gop/relatorios/executores_query.php'> Horas Trabalhadas por Executor</a>
-                                 <a class='dropdown-item' href='#'> Custos da Manutenção</a>
                                  <a class='dropdown-item' href='#'> Indicadores da Manutenção</a>
+                                
+                             </div>
+                         </li>
+                           <li class='nav-item dropdown'>
+                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Custos da Manutenção</a>
+                             <div class='dropdown-menu' aria-labelledby='dropdown01'>
+                                 
+                                 <a class='dropdown-item' href='/gop/custos/ocorrencias_custo_query.php'> Por Ocorrências Padrões</a>
+                                 <a class='dropdown-item' href='#'> Por Oficinas</a>
+                                 <a class='dropdown-item' href='#'> Por Solicitantes</a>
+                                 <a class='dropdown-item' href='#'> Por Setor</a>
+                                 <a class='dropdown-item' href='#'> Por Centro de Custo</a>
+                                 <a class='dropdown-item' href='#'> Por Executor</a>
+                                
                                 
                              </div>
                          </li>
