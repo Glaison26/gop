@@ -89,7 +89,8 @@ $c_query = $_SESSION['query'];
             if ($n_custo > 0)
                 $c_custo_servico = $formatter->formatCurrency($n_custo_servico, 'BRL');
             ?>
-            <div><?php echo "<b>" . "Total Material :   " . $c_custo_material . " Total Serviço :    " . $c_custo_servico . " Custo Total :   " . $c_custo . "</b>" ?></div>
+            <div><?php echo "<b>" . "Total Material :   " . $c_custo_material . " Total Serviço :    " .
+             $c_custo_servico . " Custo Total :   " . $c_custo . "</b>" ?></div>
 
         </div>
     </div>
