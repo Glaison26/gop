@@ -53,7 +53,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
         $c_where = $c_where . "ordens.id_solicitante='$i_id_solicitante' and ";
         $c_query = $c_query . 'Solicitante:' . $c_linha['id'] . '-';
     }
-   
+
     // sql para oficinas
     if ($_POST['oficina'] <> "Todas") {
         $c_oficina = $_POST["oficina"];
@@ -80,9 +80,16 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     // loop para montagem da tabela
     while ($c_linha = $result->fetch_assoc()) {
         // insiro registro em tabela temporária
-        $n_total = $c_linha['total_material'] + $c_linha['total_servico'];
+        $c_material = 0;
+        $c_servico = 0;
+        if ($c_linha['total_material'] > 0)
+            $c_material = $c_linha['total_material'];
+        if ($c_linha['total_servico'] > 0)
+            $c_servico = $c_linha['total_servico'];
+        // insiro registro em tabela temporária
+        $n_total = $c_material + $c_servico;
         $c_sql_ins = "insert into temp_custos (valor_material, valor_servico, valor_total, descricao)
-         values ('$c_linha[total_material]','$c_linha[total_servico]',
+         values ('$c_material','$c_servico',
          '$n_total', '$c_linha[descricao]')";
         $result_ins = $conection->query($c_sql_ins);
     }
