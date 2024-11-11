@@ -195,7 +195,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             data_previsao='$c_data_previsao', hora_previsao='$c_hora_previsao', situacao='$c_situacao', 
             motivo_naoconformidade ='$c_motivo', data_entrega='$c_data_entrega', hora_entrega='$c_hora_entrega',
             data_saida='$c_data_saida', data_garantia='$c_data_garantia', numero_nota='$c_nota',
-            valor_servico = '$c_valor_servico', valor_material='$c_valor_material', descritivo='$c_descritivo'";
+            valor_servico = '$c_valor_servico', valor_material='$c_valor_material', descritivo='$c_descritivo'
+            where id='$i_id'";
 
         $result = $conection->query($c_sql);
 

@@ -158,9 +158,9 @@
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
                                  
                                  <a class='dropdown-item' href='/gop/custos/ocorrencias_custo_query.php'> Por Ocorrências Padrões</a>
-                                 <a class='dropdown-item' href='#'> Por Oficinas</a>
-                                 <a class='dropdown-item' href='#'> Por Solicitantes</a>
-                                 <a class='dropdown-item' href='#'> Por Setor</a>
+                                 <a class='dropdown-item' href='/gop/custos/oficinas_custo_query.php'> Por Oficinas</a>
+                                 <a class='dropdown-item' href='/gop/custos/solicitantes_custo_query.php'> Por Solicitantes</a>
+                                 <a class='dropdown-item' href='/gop/custos/setores_custo_query.php''> Por Setor</a>
                                  <a class='dropdown-item' href='#'> Por Centro de Custo</a>
                                  <a class='dropdown-item' href='#'> Por Executor</a>
                                 

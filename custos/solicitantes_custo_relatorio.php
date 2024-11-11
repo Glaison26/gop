@@ -25,7 +25,7 @@ $c_query = $_SESSION['query'];
 
 <body>
     <div class="container">
-        <h2 class="text-center">Relatório de Custos por Ocorrências</h2><br>
+        <h2 class="text-center">Relatório de Custos por Solicitantes</h2><br>
         <h5 class="text-left">Filtros :<?php echo $c_query; ?></h5><br>
         <div class="panel panel-default">
             <div class="panel-heading text-center"><strong>Período :<?php echo $c_periodo ?> </strong></div>
@@ -33,7 +33,7 @@ $c_query = $_SESSION['query'];
             <table class="table table display table-bordered table-striped table-active tabocorrencias">
                 <thead class="thead">
                     <tr>
-                        <th scope="col">Ocorrência</th>
+                        <th scope="col">Solicitantes</th>
                         <th scope="col">Valor Material</th>
                         <th scope="col">Valor Serviços</th>
                         <th scope="col">Valor Total</th>
@@ -111,15 +111,15 @@ $c_query = $_SESSION['query'];
         function drawChart() {
 
             var data = google.visualization.arrayToDataTable([
-                ['Ocorrencia', 'Valor'],
+                ['Solicitante', 'Valor'],
 
                 <?php
                 $result_grafico = $conection->query($c_sql);
                 // percorre resultado da query para para montar gráfico
                 while ($registro = $result_grafico->fetch_assoc()) {
-                    $c_ocorrencia = $registro['descricao'];
+                    $c_solicitante = $registro['descricao'];
                     $c_valor_total =  $registro['valor_total'];
-                ?>['<?php echo $c_ocorrencia ?>', <?php echo $c_valor_total ?>],
+                ?>['<?php echo $c_solicitante ?>', <?php echo $c_valor_total ?>],
                 <?php } ?>
             ]);
 
@@ -147,15 +147,15 @@ $c_query = $_SESSION['query'];
         function drawChart() {
 
             var data = google.visualization.arrayToDataTable([
-                ['Ocorrencia', 'Valor'],
+                ['Solicitante', 'Valor'],
 
                 <?php
                 $result_grafico = $conection->query($c_sql);
                 // percorre resultado da query para para montar gráfico
                 while ($registro = $result_grafico->fetch_assoc()) {
-                    $c_ocorrencia = $registro['descricao'];
+                    $c_solicitante = $registro['descricao'];
                     $c_valor_material =  $registro['valor_material'];
-                ?>['<?php echo $c_ocorrencia ?>', <?php echo $c_valor_material ?>],
+                ?>['<?php echo $c_solicitante ?>', <?php echo $c_valor_material ?>],
                 <?php } ?>
             ]);
 
@@ -182,15 +182,15 @@ $c_query = $_SESSION['query'];
         function drawChart() {
 
             var data = google.visualization.arrayToDataTable([
-                ['Ocorrencia', 'Valor'],
+                ['Solicitante', 'Valor'],
 
                 <?php
                 $result_grafico = $conection->query($c_sql);
                 // percorre resultado da query para para montar gráfico
                 while ($registro = $result_grafico->fetch_assoc()) {
-                    $c_ocorrencia = $registro['descricao'];
+                    $c_solicitante = $registro['descricao'];
                     $c_valor_servico =  $registro['valor_servico'];
-                ?>['<?php echo $c_ocorrencia ?>', <?php echo $c_valor_servico ?>],
+                ?>['<?php echo $c_solicitante ?>', <?php echo $c_valor_servico ?>],
                 <?php } ?>
             ]);
 
@@ -248,17 +248,17 @@ $c_query = $_SESSION['query'];
     </script>
 
     <div style="padding-left:300px;">
-        <h5 class="text-left">Gráfico Custos por Ocorrências no Período - Valor Total</h5>
+        <h5 class="text-left">Gráfico Custos por Solicitantes no Período - Valor Total</h5>
         <div id="chart1" style="width: 400px; height: 300px;"></div>
     </div>
 
     <div style="padding-left:300px;">
-        <h5 class="text-left">Gráfico Custos por Ocorrências no Período - Valor Material</h5>
+        <h5 class="text-left">Gráfico Custos por Solicitantes no Período - Valor Material</h5>
         <div id="chart2" style="width: 400px; height: 300px;"></div>
     </div>
 
     <div style="padding-left:300px;">
-        <h5 class="text-left">Gráfico Custos por Ocorrências no Período - Valor Serviço</h5>
+        <h5 class="text-left">Gráfico Custos por Solicitantes no Período - Valor Serviço</h5>
         <div id="chart3" style="width: 400px; height: 300px;"></div>
     </div>
     <br>
