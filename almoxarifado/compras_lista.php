@@ -70,7 +70,7 @@ include("../links2.php");
         <div class="panel panel-primary class">
             <div class="panel-heading text-center">
                 <h4>GOP - Gestão Operacional</h4>
-                <h5>Lista de Compras<h5>
+                <h5>Lista de Pedidos de Compras<h5>
             </div>
         </div>
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>

@@ -83,8 +83,8 @@ $c_tipo = $c_linha_cotacao['tipo'] ;
         function confirmacao_compra(id) {
             var resposta = confirm("Confirma geração de compra para esta cotação?");
             if (resposta == true) {
-                // window.location.href = "/gop/almoxarifado/cotacao_material_excluir.php?id=" + id;
-                window.location.href = "#";
+                 window.location.href = "/gop/almoxarifado/cotacao_gera_pedido.php?id=" + id;
+                
             }
         }
     </script>
