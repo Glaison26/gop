@@ -122,7 +122,10 @@ include("../links2.php");
                 $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
                 while ($c_linha = $result->fetch_assoc()) {
                     $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data'])));
-                    $c_vencimento = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['vencimento'])));
+                    if (!empty($c_linha['vencimento']))
+                        $c_vencimento = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['vencimento'])));
+                    else
+                       $c_vencimento="";
                     if ($c_linha['valor'] > 0)
                         $c_valor = $formatter->formatCurrency($c_linha['valor'], 'BRL');
                     else

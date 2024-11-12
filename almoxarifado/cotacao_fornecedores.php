@@ -236,7 +236,7 @@ $c_tipo = $c_linha_cotacao['tipo'] ;
                         echo "<a class='btn btn-success btn-sm' href='/gop/almoxarifado/cotacao_material.php?id=$c_linha[id]'><img src='\gop\images\omadaprecos.png' alt='17' width='25' height='17'> Cotações</a>&nbsp;";
                     else  // cotação para serviços
                         echo "<a class='btn btn-success btn-sm' href='/gop/almoxarifado/cotacao_fornecedor_servico.php?id=$c_linha[id]'><img src='\gop\images\omadaprecos.png' ' width='30' height='17'> Cotações</a>&nbsp;";
-                    echo "<a class='btn btn-primary btn-sm' href='javascript:func()'onclick='confirmacao_compra($c_linha[id])'><span class='glyphicon glyphicon-shopping-cart'></span> Gerar Compra</a>
+                    echo "<a class='btn btn-primary btn-sm' href='/gop/almoxarifado/cotacao_gera_pedido.php?id=$c_linha[id]'><span class='glyphicon glyphicon-shopping-cart'></span> Gerar Compra</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
