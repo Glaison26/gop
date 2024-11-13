@@ -117,7 +117,7 @@ $c_linha_compra = $result_compra->fetch_assoc();
                     <th scope="col">Unidade</th>
                     <th scope="col">Valor Unitário</th>
                     <th scope="col">Valor Total</th>
-                    <th scope="col">Opções</th>
+                   
                 </tr>
             </thead>
             <tbody>
@@ -158,10 +158,7 @@ $c_linha_compra = $result_compra->fetch_assoc();
                     <td>$c_valor_total</td>
 
                   
-                    <td>
-                    <a class='btn btn-secondary btn-sm' href='/gop/almoxarifado/cotacao_materiais_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
-                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
-                    </td>
+                  
 
                     </tr>
                     ";
