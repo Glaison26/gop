@@ -136,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Prazo de entrega</label>
                 <div class="col-sm-2">
-                    <input type="number"  placeholder="em no. de dias " class="form-control" id="prazo" name="prazo">
+                    <input type="number"  placeholder="em no. de dias " class="form-control" id="prazo" name="prazo" required>
                 </div>
             </div>
             <div class="row mb-3">

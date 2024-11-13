@@ -84,9 +84,11 @@ if ($c_linha['registros'] == 0) {
     while ($c_linha = $result->fetch_assoc()) {
         $i_id_material = $c_linha['id_material'];
         $n_quantidade = $c_linha['quantidade'];
+        $i_id_unidade = $c_linha['id_unidade'];
         // insiro registro com os dados dos materiais selecionados
-        $c_sql_add = "Insert into cotacao_materiais_fornecedor (id_cotacao_fornecedor,id_fornecedor, id_material, quantidade) 
-        values ('$i_id', '$i_id_fornecedor', '$i_id_material', $n_quantidade)";
+        $c_sql_add = "Insert into cotacao_materiais_fornecedor (id_cotacao_fornecedor,id_fornecedor, id_material,
+         quantidade, id_unidade) 
+        values ('$i_id', '$i_id_fornecedor', '$i_id_material', '$n_quantidade', '$i_id_unidade')";
         $result_add = $conection->query($c_sql_add);
         // verifico se a query foi correto
         if (!$result_add) {

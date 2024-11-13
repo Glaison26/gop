@@ -27,10 +27,10 @@ include("../links2.php");
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,
-                    'aTargets': [12]
+                    'aTargets': [9]
                 }, {
                     'aTargets': [0],
-                    "visible": false
+                    "visible": true
                 }],
                 "oLanguage": {
                     "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -84,11 +84,8 @@ include("../links2.php");
                     <th scope="col">Data</th>
                     <th scope="col">Tipo da ordem</th>
                     <th scope="col">Tipo</th>
-                    <th scope="col">Nota</th>
-                    <th scope="col">Cond. de Pag</th>
-                    <th scope="col">Vencimento</th>
                     <th scope="col">Comprador</th>
-                    <th scope="col">Prazo</th>
+                    <th scope="col">Frete</th>
                     <th scope="col">Valor Total</th>
                     <th scope="col">Status</th>
                     <th scope="col">Opções</th>
@@ -108,7 +105,7 @@ include("../links2.php");
                 when compras.status='C' then 'Concluída'
                 END AS compras_status,
                 compras.nota, compras.condicoes_pag, compras.vencimento, compras.comprador, compras.prazo,
-                compras.valor
+                compras.valor, compras.valor_frete
                 FROM compras
                 JOIN fornecedores ON compras.id_fornecedor=fornecedores.id
                 ORDER BY compras.`data` desc";
@@ -125,11 +122,15 @@ include("../links2.php");
                     if (!empty($c_linha['vencimento']))
                         $c_vencimento = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['vencimento'])));
                     else
-                       $c_vencimento="";
+                        $c_vencimento = "";
                     if ($c_linha['valor'] > 0)
                         $c_valor = $formatter->formatCurrency($c_linha['valor'], 'BRL');
                     else
                         $c_valor = 'R$ 0,00';
+                    if ($c_linha['valor_frete'] > 0)
+                        $c_frete = $formatter->formatCurrency($c_linha['valor_frete'], 'BRL');
+                    else
+                        $c_frete = 'R$ 0,00';
                     $c_prazo = $c_linha['prazo'] . ' dias';
                     echo "
                     <tr class='info'>
@@ -138,17 +139,14 @@ include("../links2.php");
                     <td>$c_data</td>
                     <td>$c_linha[tipo]</td>
                     <td>$c_linha[compras_tipo]</td>
-                    <td>$c_linha[nota]</td>
-                    <td>$c_linha[condicoes_pag]</td>
-                    <td>$c_vencimento</td>
                     <td>$c_linha[comprador]</td>
-                    <td>$c_prazo</td>
+                    <td>$c_frete</td>
                     <td>$c_valor</td>
                     <td>$c_linha[compras_status]</td>
                     <td>
                     <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Cotação'><span class='glyphicon glyphicon-pencil'></span> Editar</button>&nbsp;";
-                    if ($c_linha['tipo'] == 'M') {
-                        echo "<a class='btn btn-info btn-sm' href='/gop/almoxarifado/cotacao_materiais_lista.php?id=$c_linha[id]'><span><img src='\gop\images\servicotecnico.png' alt='16' width='20' height='16'></span> Itens</a>
+                    if ($c_linha['compras_tipo'] == 'Material') {
+                        echo "<a class='btn btn-info btn-sm' href='/gop/almoxarifado/compras_materiais_lista.php?id=$c_linha[id]'><span><img src='\gop\images\servicotecnico.png' alt='16' width='20' height='16'></span> Itens</a>
                         <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>";
                     } else {
                         echo "<a class='btn btn-info btn-sm' href='cotacao_servicos_lista.php?id=$c_linha[id]'><img src='\gop\images\servicotecnico.png' alt='16' width='20' height='16'> Itens</a>

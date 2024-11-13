@@ -134,6 +134,7 @@ $c_tipo = $c_linha_cotacao['tipo'] ;
 
         });
     </script>
+    
     <div class="container-fluid">
         <div class="panel panel-primary class">
             <div class="panel-heading text-center">

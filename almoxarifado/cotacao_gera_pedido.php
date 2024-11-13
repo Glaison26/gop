@@ -32,7 +32,11 @@ include("../links2.php");
             <h5>Entre com as informações para geração do Pedido de Compra</h5>
         </div>
 
-        <form method="POST">
+        <form method="POST" onsubmit="return confirm('Confirma geração do Pedido de Compra?')">
+            <hr>
+            <button type="submit" class="btn btn btn-sm" name="btnpedido" id="btnpedido" href=""><img src="\gop\images\compras.png" alt="" width="25" height="25"> Gerar Pedido de Compra</button>
+            <a class="btn btn btn-sm" href="\gop\almoxarifado\cotacao_fornecedores.php"><img src="\gop\images\saida.png" alt="" width="25" height="25"> Voltar</a>
+            <hr>
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Tipo do pedido</label>
                 <div class="col-sm-5">
@@ -65,7 +69,7 @@ include("../links2.php");
 </html>
 
 
-<?php // controle de acesso ao formulário
+<?php
 
 $c_data = date('Y-m-d');
 // rotina para gerar pedido a apartir de uma cotação realizada
@@ -81,9 +85,34 @@ if (isset($_POST['btnpedido']) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $result2 = $conection->query($c_sql);
     $c_linha2 = $result2->fetch_assoc();
     // insiro dados na tabela de compras
-    $c_sql_ins = "insert into compras (id_fornecedor, id_cotacao_fornecedor, data, condicoes_pag, prazo, valor, valor_frete, tipo_compra) 
-value ('$c_linha[id_fornecedor]', '$i_id','$c_data','$c_linha[forma_pagamento]','$c_linha[prazo]','$c_linha[valor_total]','$c_linha[frete]','$c_linha2[tipo]')";
+    $c_sql_ins = "insert into compras (id_fornecedor, id_cotacao_fornecedor, data, condicoes_pag, prazo,
+     valor, valor_frete, tipo_compra, comprador,tipo, status) 
+value ('$c_linha[id_fornecedor]', '$i_id','$c_data','$c_linha[forma_pagamento]','$c_linha[prazo]',
+'$c_linha[valor_total]','$c_linha[frete]','$c_linha2[tipo]', '$_POST[comprador]','$_POST[tipo]','A' )";
+    //echo $c_sql_ins;    
     $result_ins = $conection->query($c_sql_ins);
+    // insiro materiais da cotação
+    // pego a ultima compra gerada
+    $c_sql_ult = "SELECT MAX(compras.ID) AS id_compra FROM compras";
+    $result_ult = $conection->query($c_sql_ult);
+    $registro_compra = $result_ult->fetch_assoc();
+    //
+    $c_sql = "SELECT * FROM cotacao_materiais_fornecedor 
+    WHERE cotacao_materiais_fornecedor.id_cotacao_fornecedor='$i_id'";
+    $result = $conection->query($c_sql);
+    while ($c_linha = $result->fetch_assoc()) {
+        // inserir na tabela de materias de compra
+        $c_sql_ins = "insert into compras_materiais (id_compra, id_material, quantidade, valor_unitario,
+        valor_total, data_entrega, id_unidade) 
+        value ('$registro_compra[id_compra]', '$c_linha[id_material]', '$c_linha[quantidade]', 
+        '$c_linha[valor_unitario]', '$c_linha[valor_total]', '$c_linha[prazo_entrega]', '$c_linha[id_unidade]')";
+        $result_compras = $conection->query($c_sql_ins);
+
+    }
+
+    echo "<script>alert('Pedido de Compra gerado com Sucesso!!')</script>";
+    //header('location: /gop/almoxarifado/cotacao_fornecedores.php');
+
 }
 
 ?>
