@@ -199,7 +199,7 @@ if ($c_linha['registros'] == 0) {
         <div class="panel panel-primary class">
             <div class="panel-heading text-center">
                 <h4>GOP - Gestão Operacional</h4>
-                <h5>Lista de cotaçoes<h5>
+                <h5>Lista de cotaçoes de servicos<h5>
             </div>
         </div>
        

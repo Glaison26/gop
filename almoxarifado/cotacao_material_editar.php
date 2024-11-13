@@ -10,14 +10,14 @@ include("../conexao.php");
 // rotina de edição
 $c_id = $_POST['c_id'];
 $c_valor_unitario = ltrim($_POST['c_valor_unitario']);
-$c_prazo = new DateTime($_POST['c_prazo']);
-$c_prazo = $c_prazo->format('Y-m-d');
+//$c_prazo = new DateTime($_POST['c_prazo']);
+//$c_prazo = $c_prazo->format('Y-m-d');
 //
 $c_qtd = $_POST['c_qtd'];
 $c_total = $c_qtd*$c_valor_unitario;
 
 $c_sql = "Update cotacao_materiais_fornecedor" .
-    " SET valor_unitario = '$c_valor_unitario', prazo_entrega='$c_prazo', valor_total = '$c_total' where id=$c_id";
+    " SET valor_unitario = '$c_valor_unitario', valor_total = '$c_total' where id=$c_id";
 
 $result = $conection->query($c_sql);
 

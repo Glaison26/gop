@@ -140,7 +140,7 @@ if ($c_linha['registros'] == 0) {
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,
-                    'aTargets': [6]
+                    'aTargets': [5]
                 }, {
                     'aTargets': [0],
                     "visible": true
@@ -194,10 +194,10 @@ if ($c_linha['registros'] == 0) {
                 console.log(data);
 
                 $('#up_idField').val(data[0]);
-                $('#up_qtd').val(data[3]);
+                $('#up_qtd').val(data[2]);
 
                 $('#up_valor_unitario').val(data[4].replace('R$', '').replace(',', '.').replace(/^\s+|\s+$/g, ''));
-                $('#up_prazo').val(data[2]);
+                //$('#up_prazo').val(data[2]);
             });
         });
     </script>
@@ -208,7 +208,7 @@ if ($c_linha['registros'] == 0) {
             e.preventDefault();
             var c_id = $('#up_idField').val();
             var c_valor_unitario = $('#up_valor_unitario').val();
-            var c_prazo = $('#up_prazo').val();
+            //var c_prazo = $('#up_prazo').val();
             var c_qtd = $('#up_qtd').val();
 
             if (c_valor_unitario != '') {
@@ -219,7 +219,7 @@ if ($c_linha['registros'] == 0) {
                     data: {
                         c_id: c_id,
                         c_valor_unitario: c_valor_unitario,
-                        c_prazo: c_prazo,
+                        //c_prazo: c_prazo,
                         c_qtd: c_qtd
                     },
                     success: function(data) {
@@ -266,8 +266,8 @@ if ($c_linha['registros'] == 0) {
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Material</th>
-                    <th scope="col">Prazo de Entrega</th>
                     <th scope="col">Quantidade</th>
+                    <th scope="col">Unidade</th>
                     <th scope="col" style='text-align: right;'>Valor Unitário</th>
                     <th scope="col" style='text-align: right;'>Valor Total</th>
                     <th scope="col">Opções</th>
@@ -278,9 +278,10 @@ if ($c_linha['registros'] == 0) {
 
                 // faço a Leitura da tabela com sql
                 $c_sql = "SELECT cotacao_materiais_fornecedor.id, materiais.descricao AS material, cotacao_materiais_fornecedor.valor_unitario,
-                        cotacao_materiais_fornecedor.valor_total, cotacao_materiais_fornecedor.prazo_entrega,cotacao_materiais_fornecedor.quantidade
+                        cotacao_materiais_fornecedor.valor_total, unidades.descricao as unidade, cotacao_materiais_fornecedor.prazo_entrega,cotacao_materiais_fornecedor.quantidade
                         FROM cotacao_materiais_fornecedor
                         JOIN materiais ON cotacao_materiais_fornecedor.id_material=materiais.id
+                         JOIN unidades ON cotacao_materiais_fornecedor.id_unidade=unidades.id
                         where id_cotacao_fornecedor='$i_id' and id_fornecedor='$i_id_fornecedor'";
                 $result = $conection->query($c_sql);
                 // verifico se a query foi correto
@@ -308,8 +309,8 @@ if ($c_linha['registros'] == 0) {
                     <tr class='info'>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[material]</td>
-                    <td>$c_data_prazo</td>
                     <td>$c_linha[quantidade]</td>
+                    <td>$c_linha[unidade]</td>
                     <td style='text-align: right;'>$c_valor_unitario</td>
                     <td style='text-align: right;'>$c_valor_total</td>
                     <td>
@@ -333,7 +334,7 @@ if ($c_linha['registros'] == 0) {
                 </div>
                 <div class="modal-body">
                     <div class='alert alert-warning' role='alert'>
-                        <h5>Entre com valor unitário e a data de entrega do material</h5>
+                        <h5>Entre com valor unitário do material</h5>
                     </div>
                     <form id="frmup" method="POST" action="">
                         <input type="hidden" id="up_idField" name="up_idField">
@@ -344,12 +345,7 @@ if ($c_linha['registros'] == 0) {
                                 <input type="text" class="form-control" id="up_valor_unitario" name="up_valor_unitario">
                             </div>
                         </div>
-                        <div class="mb-3 row">
-                            <label for="up_descricaoField" class="col-md-3 form-label">Prazo de Entrega</label>
-                            <div class="col-md-9">
-                                <input type="date" class="form-control" id="up_prazo" name="up_prazo">
-                            </div>
-                        </div>
+                      
 
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>

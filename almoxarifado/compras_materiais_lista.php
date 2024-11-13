@@ -104,7 +104,7 @@ $c_linha_compra = $result_compra->fetch_assoc();
 
             <h5>Materiais para a Compra No. <?php echo $c_linha_compra['id']  ?> </h5>
         </div>
-       
+
         <a class="btn btn-secondary btn-sm" href="/gop/almoxarifado/compras_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
@@ -136,7 +136,17 @@ $c_linha_compra = $result_compra->fetch_assoc();
                     die("Erro ao Executar Sql!!" . $conection->connect_error);
                 }
                 // insiro os registro do banco de dados na tabela 
+                $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
                 while ($c_linha = $result->fetch_assoc()) {
+
+                    if ($c_linha['valor_unitario'] > 0)
+                        $c_valor_unitario = $formatter->formatCurrency($c_linha['valor_unitario'], 'BRL');
+                    else
+                        $c_valor_unitario = 'R$ 0,00';
+                    if ($c_linha['valor_total'] > 0)
+                        $c_valor_total = $formatter->formatCurrency($c_linha['valor_total'], 'BRL');
+                    else
+                        $c_valor_total = 'R$ 0,00';
 
                     echo "
                     <tr class='info'>
@@ -144,8 +154,8 @@ $c_linha_compra = $result_compra->fetch_assoc();
                     <td>$c_linha[material]</td>
                     <td>$c_linha[quantidade]</td>
                     <td>$c_linha[unidade]</td>
-                    <td>$c_linha[valor_unitario]</td>
-                    <td>$c_linha[valor_total]</td>
+                    <td>$c_valor_unitario</td>
+                    <td>$c_valor_total</td>
 
                   
                     <td>
