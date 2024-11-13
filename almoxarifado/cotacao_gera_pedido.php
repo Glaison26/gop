@@ -81,13 +81,13 @@ if (isset($_POST['btnpedido']) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $result = $conection->query($c_sql);
     $c_linha = $result->fetch_assoc();
     // capturo cotação de origem para pegar o tipo (M=material/S==serviços)
-    $c_sql = "select cotacao.id, cotacao.tipo from cotacao where id ='$c_linha[id_cotacao]'";
+    $c_sql = "select cotacao.id, cotacao.tipo, cotacao.descritivo from cotacao where id ='$c_linha[id_cotacao]'";
     $result2 = $conection->query($c_sql);
     $c_linha2 = $result2->fetch_assoc();
     // insiro dados na tabela de compras
-    $c_sql_ins = "insert into compras (id_fornecedor, id_cotacao_fornecedor, data, condicoes_pag, prazo,
+    $c_sql_ins = "insert into compras (id_fornecedor, descritivo, id_cotacao_fornecedor, data, condicoes_pag, prazo,
      valor, valor_frete, tipo_compra, comprador,tipo, status) 
-value ('$c_linha[id_fornecedor]', '$i_id','$c_data','$c_linha[forma_pagamento]','$c_linha[prazo]',
+value ('$c_linha[id_fornecedor]', '$c_linha2[descritivo]', '$i_id','$c_data','$c_linha[forma_pagamento]','$c_linha[prazo]',
 '$c_linha[valor_total]','$c_linha[frete]','$c_linha2[tipo]', '$_POST[comprador]','$_POST[tipo]','A' )";
     //echo $c_sql_ins;    
     $result_ins = $conection->query($c_sql_ins);
@@ -97,22 +97,21 @@ value ('$c_linha[id_fornecedor]', '$i_id','$c_data','$c_linha[forma_pagamento]',
     $result_ult = $conection->query($c_sql_ult);
     $registro_compra = $result_ult->fetch_assoc();
     //
-    $c_sql = "SELECT * FROM cotacao_materiais_fornecedor 
+    if ($c_linha2['tipo'] == 'M') {
+        $c_sql = "SELECT * FROM cotacao_materiais_fornecedor 
     WHERE cotacao_materiais_fornecedor.id_cotacao_fornecedor='$i_id'";
-    $result = $conection->query($c_sql);
-    while ($c_linha = $result->fetch_assoc()) {
-        // inserir na tabela de materias de compra
-        $c_sql_ins = "insert into compras_materiais (id_compra, id_material, quantidade, valor_unitario,
+        $result = $conection->query($c_sql);
+        while ($c_linha = $result->fetch_assoc()) {
+            // inserir na tabela de materias de compra
+            $c_sql_ins = "insert into compras_materiais (id_compra, id_material, quantidade, valor_unitario,
         valor_total,  id_unidade, fator_conversao) 
         value ('$registro_compra[id_compra]', '$c_linha[id_material]', '$c_linha[quantidade]', 
         '$c_linha[valor_unitario]', '$c_linha[valor_total]', '$c_linha[id_unidade]', 1)";
-        $result_compras = $conection->query($c_sql_ins);
+            $result_compras = $conection->query($c_sql_ins);
+        }
 
+        echo "<script>alert('Pedido de Compra gerado com Sucesso!!')</script>";
     }
-
-    echo "<script>alert('Pedido de Compra gerado com Sucesso!!')</script>";
-    //header('location: /gop/almoxarifado/cotacao_fornecedores.php');
-
 }
 
 ?>

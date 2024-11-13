@@ -227,6 +227,7 @@ $c_linha_compra = $result_compra->fetch_assoc();
             </tbody>
         </table>
     </div>
+    
     <!-- Modal para edição dos dados -->
     <div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="editmodal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">

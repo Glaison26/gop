@@ -81,6 +81,7 @@ include("../links2.php");
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Fornecedor</th>
+                    <th scope="col">Descritivo</th>
                     <th scope="col">Data</th>
                     <th scope="col">Tipo da ordem</th>
                     <th scope="col">Tipo</th>
@@ -95,7 +96,7 @@ include("../links2.php");
                 <?php
 
                 // faço a Leitura da tabela com sql
-                $c_sql = "SELECT compras.id, fornecedores.descricao as fornecedor, compras.`data`, compras.tipo,
+                $c_sql = "SELECT compras.id, fornecedores.descricao as fornecedor, compras.`data`, compras.tipo, compras.descritivo,
                 case
                 when compras.tipo_compra = 'M' then 'Material'
                 when compras.tipo_compra = 'S' then 'Serviço'
@@ -136,6 +137,7 @@ include("../links2.php");
                     <tr class='info'>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[fornecedor]</td>
+                    <td>$c_linha[descritivo]</td>
                     <td>$c_data</td>
                     <td>$c_linha[tipo]</td>
                     <td>$c_linha[compras_tipo]</td>
@@ -149,8 +151,7 @@ include("../links2.php");
                         echo "<a class='btn btn-info btn-sm' href='/gop/almoxarifado/compras_materiais_lista.php?id=$c_linha[id]'><span><img src='\gop\images\servicotecnico.png' alt='16' width='20' height='16'></span> Itens</a>
                         <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>";
                     } else {
-                        echo "<a class='btn btn-info btn-sm' href='cotacao_servicos_lista.php?id=$c_linha[id]'><img src='\gop\images\servicotecnico.png' alt='16' width='20' height='16'> Itens</a>
-                        <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>";
+                        echo "<a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>";
                     }
                     "</td>
 
