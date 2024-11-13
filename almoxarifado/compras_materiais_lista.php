@@ -49,7 +49,7 @@ $c_linha_compra = $result_compra->fetch_assoc();
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,
-                    'aTargets': [4]
+                    'aTargets': [7]
                 }, {
                     'aTargets': [0],
                     "visible": true
@@ -87,6 +87,64 @@ $c_linha_compra = $result_compra->fetch_assoc();
         });
     </script>
 
+    <!-- Coleta dados da tabela para edição do registro -->
+    <script>
+        $(document).ready(function() {
+
+            $('.editbtn').on('click', function() {
+
+                $('#editmodal').modal('show');
+
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function() {
+                    return $(this).text();
+                }).get();
+
+                console.log(data);
+
+                $('#up_idField').val(data[0]);
+                $('#up_fator').val(data[4]);
+
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        // Função javascript e ajax para Alteração dos dados
+        $(document).on('submit', '#frmup', function(e) {
+            e.preventDefault();
+            var c_id = $('#up_idField').val();
+            var c_fator = $('#up_fator').val();
+           
+            if (c_fator != '') {
+
+                $.ajax({
+                    url: "compras_material_editar.php",
+                    type: "post",
+                    data: {
+                        c_id: c_id,
+                        c_fator: c_fator
+                    },
+                    success: function(data) {
+                        var json = JSON.parse(data);
+                        var status = json.status;
+                        if (status == 'true') {
+                            $('#editmodal').modal('hide');
+                            location.reload();
+                        } else {
+                            alert('falha ao alterar dados');
+                        }
+                    }
+                });
+
+            } else {
+                alert('Todos os campos devem ser preenchidos!!');
+            }
+        });
+    </script>
+
+
 
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
@@ -115,16 +173,18 @@ $c_linha_compra = $result_compra->fetch_assoc();
                     <th scope="col">Material</th>
                     <th scope="col">Quantidade</th>
                     <th scope="col">Unidade</th>
+                    <th scope="col">Fator</th>
                     <th scope="col">Valor Unitário</th>
                     <th scope="col">Valor Total</th>
-                   
+                    <th scope="col">Opções</th>
+
                 </tr>
             </thead>
             <tbody>
                 <?php
                 // faço a Leitura da tabela com sql
                 $c_sql = "SELECT compras_materiais.id, materiais.descricao AS material, unidades.descricao AS unidade,
-                compras_materiais.quantidade, compras_materiais.valor_unitario, compras_materiais.valor_total
+                compras_materiais.quantidade, compras_materiais.valor_unitario, compras_materiais.valor_total, compras_materiais.fator_conversao
                 FROM compras_materiais
                 JOIN materiais ON compras_materiais.id_material=materiais.id
                 JOIN unidades ON compras_materiais.id_unidade=unidades.id
@@ -154,14 +214,12 @@ $c_linha_compra = $result_compra->fetch_assoc();
                     <td>$c_linha[material]</td>
                     <td>$c_linha[quantidade]</td>
                     <td>$c_linha[unidade]</td>
+                     <td>$c_linha[fator_conversao]</td>
                     <td>$c_valor_unitario</td>
                     <td>$c_valor_total</td>
-
-                  
-                  
-
-                    </tr>
-                    ";
+                   
+                    <td><button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Fator'>
+                    <span class='glyphicon glyphicon-pencil'></span> Editar Fator</button></td></tr>";
                 }
                 ?>
 
@@ -169,8 +227,40 @@ $c_linha_compra = $result_compra->fetch_assoc();
             </tbody>
         </table>
     </div>
+    <!-- Modal para edição dos dados -->
+    <div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="editmodal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">Editar Fator de Conversão do Material</h4>
+                </div>
+                <div class="modal-body">
+                    <div class='alert alert-warning' role='alert'>
+                        <h5>Altere o valor do fator para conversão de entrada do Item</h5>
+                    </div>
+                    <form id="frmup" method="POST" action="">
+                        <input type="hidden" id="up_idField" name="up_idField">
+
+                        <div class="mb-4 row">
+                            <label for="up_fator" class="col-md-5 form-label">Fator de Conversao</label>
+                            <div class="col-md-3">
+                                <input type="number" class="form-control" id="up_fator" name="up_fator" required>
+                            </div>
+                        </div>
 
 
-</body>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
+                            <button class="btn btn-secondary" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Fechar</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <
+
+        </body>
 
 </html>
