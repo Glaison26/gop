@@ -119,6 +119,7 @@ include("../links2.php");
                 // insiro os registro do banco de dados na tabela 
                 $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
                 while ($c_linha = $result->fetch_assoc()) {
+                    // formatação de variáveis
                     $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data'])));
                     if (!empty($c_linha['vencimento']))
                         $c_vencimento = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['vencimento'])));
@@ -133,6 +134,7 @@ include("../links2.php");
                     else
                         $c_frete = 'R$ 0,00';
                     $c_prazo = $c_linha['prazo'] . ' dias';
+                    // montagem da tabela
                     echo "
                     <tr class='info'>
                     <td>$c_linha[id]</td>
@@ -146,7 +148,8 @@ include("../links2.php");
                     <td>$c_valor</td>
                     <td>$c_linha[compras_status]</td>
                     <td>
-                    <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Cotação'><span class='glyphicon glyphicon-pencil'></span> Editar</button>&nbsp;";
+                    <a class='btn btn-secondary btn-sm' href='/gop/almoxarifado/compras_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>&nbsp;
+                    <a class='btn btn-success btn-sm' href='/gop/almoxarifado/compras_fechamento.php?id=$c_linha[id]'><span class='glyphicon glyphicon-check'></span> Fechamento</a>&nbsp;";
                     if ($c_linha['compras_tipo'] == 'Material') {
                         echo "<a class='btn btn-info btn-sm' href='/gop/almoxarifado/compras_materiais_lista.php?id=$c_linha[id]'><span><img src='\gop\images\servicotecnico.png' alt='16' width='20' height='16'></span> Itens</a>
                         <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>";
