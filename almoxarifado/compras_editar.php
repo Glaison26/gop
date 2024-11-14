@@ -13,8 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         header('location: /gop/almoxarifado/compras_lista.php');
         exit;
     }
-
-
     // sql para pegar os campos
     $c_sql = "SELECT *, fornecedores.descricao AS fornecedor FROM compras
     JOIN fornecedores ON compras.id_fornecedor=fornecedores.id where compras.id='$c_id'";
@@ -85,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-md-3 form-label">Data </label>
+                <label class="col-md-3 form-label">Data</label>
                 <div class="col-sm-2">
                     <input readonly type="Date" readonly class="form-control" name="data" id="data" value='<?php echo $registro['data']; ?>'>
                 </div>

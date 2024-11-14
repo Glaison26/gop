@@ -108,9 +108,9 @@ if (isset($_POST['btnpedido']) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
         while ($c_linha = $result->fetch_assoc()) {
             // inserir na tabela de materias de compra
             $c_sql_ins = "insert into compras_materiais (id_compra, id_material, quantidade, valor_unitario,
-            valor_total,  id_unidade, fator_conversao) 
+            valor_total,  id_unidade, fator_conversao, receber) 
             value ('$registro_compra[id_compra]', '$c_linha[id_material]', '$c_linha[quantidade]', 
-            '$c_linha[valor_unitario]', '$c_linha[valor_total]', '$c_linha[id_unidade]', 1)";
+            '$c_linha[valor_unitario]', '$c_linha[valor_total]', '$c_linha[id_unidade]', 1, 'S')";
             $result_compras = $conection->query($c_sql_ins);
         }
         echo "<script>alert('Pedido de Compra gerado com Sucesso!!')</script>";
