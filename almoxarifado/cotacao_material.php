@@ -55,9 +55,11 @@ if (isset($_POST['btnincluir'])) {
         if ($c_linha3['registro_material'] == 0) {
             $i_id_material = $c_linha2['id_material'];
             $n_quantidade = $c_linha2['quantidade'];
+            $i_id_unidade = $c_linha2['id_unidade'];
             // insiro registro com os dados dos materiais selecionados
-            $c_sql_add = "Insert into cotacao_materiais_fornecedor (id_cotacao_fornecedor,id_fornecedor, id_material, quantidade) 
-        values ('$i_id', '$i_id_fornecedor', '$i_id_material', $n_quantidade)";
+            $c_sql_add = "Insert into cotacao_materiais_fornecedor (id_cotacao_fornecedor,id_fornecedor, id_material, 
+            quantidade, id_unidade) 
+        values ('$i_id', '$i_id_fornecedor', '$i_id_material', $n_quantidade, '$i_id_unidade')";
             $result_add = $conection->query($c_sql_add);
             // verifico se a query foi correto
             if (!$result_add) {

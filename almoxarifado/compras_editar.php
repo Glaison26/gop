@@ -22,9 +22,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $d_vencimento = new DateTime($_POST['vencimento']);
+    $d_vencimento = $d_vencimento->format('Y-m-d');
     // Gravo informações editadas
     $c_sql_up = "update compras set tipo='$_POST[tipo]', nota= '$_POST[nota]', 
-   vencimento = '$_POST[vencimento]', prazo='$_POST[prazo]', condicoes_pag='$_POST[cond]', comprador='$_POST[comprador]', observacao='$_POST[obs]'
+   vencimento = '$d_vencimento', prazo='$_POST[prazo]', condicoes_pag='$_POST[cond]', comprador='$_POST[comprador]', observacao='$_POST[obs]'
    where id='$c_id'";
     $result_up = $conection->query($c_sql_up);
     header('location: /gop/almoxarifado/compras_lista.php');

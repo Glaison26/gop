@@ -40,7 +40,7 @@ include("../links2.php");
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,
-                    'aTargets': [7]
+                    'aTargets': [5]
                 }, {
                     'aTargets': [0],
                     "visible": true
@@ -208,8 +208,7 @@ include("../links2.php");
                     <th scope="col">Data</th>
                     <th scope="col">Tipo</th>
                     <th scope="col">Responsável</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Encerramento</th>
+                   
                     <th scope="col">Opções</th>
                 </tr>
             </thead>
@@ -250,8 +249,8 @@ include("../links2.php");
                     <td>$c_data</td>
                     <td>$c_linha[cotacao_tipo]</td>
                     <td>$c_linha[responsavel]</td>
-                    <td>$c_linha[cotacao_status]</td>
-                    <td>$c_encerramento</td>
+                  
+                   
                     <td>
                     <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Cotação'><span class='glyphicon glyphicon-pencil'></span> Editar</button>&nbsp;";
                     if ($c_linha['tipo'] == 'M') {

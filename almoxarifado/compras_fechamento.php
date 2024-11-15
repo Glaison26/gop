@@ -16,9 +16,61 @@ if (isset($_GET['id'])) {
     $c_id = $_SESSION['id_compra'];
 }
 // sql para pegar dados da nota e vencimento
-$c_sql = "select nota,vencimento from compras where id='$c_id'";
-$result = $conection->query($c_sql);
+$c_sql2 = "select nota,vencimento from compras where id='$c_id'";
+$result = $conection->query($c_sql2);
 $registro = $result->fetch_assoc();
+$d_vencimento = $registro['vencimento'];
+$c_nota = $registro['nota'];
+
+//////////////////////////////////////////////////////////////////////////
+// Rotina para fechamento de compra
+/////////////////////////////////////////////////////////////////////////
+
+if (isset($_POST['btn_fechar']) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
+    // pega itens a serem gerados
+    $c_sql_fechamento = "SELECT compras_materiais.id, materiais.descricao AS material, unidades.descricao AS unidade,
+    compras_materiais.quantidade, compras_materiais.valor_unitario, compras_materiais.valor_total,
+    compras_materiais.fator_conversao, compras_materiais.receber, compras_materiais.recebido, compras_materiais.id_material
+    FROM compras_materiais
+    JOIN materiais ON compras_materiais.id_material=materiais.id
+    JOIN unidades ON compras_materiais.id_unidade=unidades.id
+    WHERE compras_materiais.id_compra='$c_id'
+    ORDER BY materiais.descricao";
+    $result_lista = $conection->query($c_sql_fechamento);
+    //echo $c_sql;
+    // loop com itens
+    while ($registro = $result_lista->fetch_assoc()) {
+
+        // verifica se está marcado como receber
+        if ($registro['receber'] == 'S' && $registro['recebido'] == 'N') {
+            // atualizo o saldo do material no cadastro
+            $c_sql_up = "UPDATE materiais SET 
+                        materiais.quantidadeatual=materiais.quantidadeatual+
+                        ($registro[quantidade]/$registro[fator_conversao])
+                        WHERE id='$registro[id_material]'";
+            $result_up = $conection->query($c_sql_up);
+            // atualizo o recebido
+            $c_sql_up = "update compras_materiais set recebido='S' where id='$registro[id]'";
+            $result_up = $conection->query($c_sql_up);
+        }
+    }
+    // verifico se todos os materiais foram atualizados
+   
+    $c_sql_conta = "select count(*) as total from compras_materiais 
+    where compras_materiais.id_compra='$c_id' and recebido='N'";
+    $result_conta = $conection->query($c_sql_conta);
+    $registro_conta = $result_conta->fetch_assoc();
+    if ($registro_conta['total'] == 0) {  // nenum item sem receber fecho a compra
+        $c_sql_fechar = "update compras set status='C' where compras.id='$c_id'";
+       
+        $result_fechar = $conection->query($c_sql_fechar);
+        echo "<script>alert('Operação realizada com sucesso. Pedido Fechado!!')";
+    } else
+        echo "<script>alert('Operação realizada com sucesso. Pedido NÃO foi fechado pois existem itens a receber!!')</script>";
+    
+       header('location: /gop/almoxarifado/compras_lista.php');
+       
+}
 ?>
 
 <!DOCTYPE html>
@@ -101,25 +153,28 @@ $registro = $result->fetch_assoc();
                 ";
         }
         ?>
-        <div class="row mb-3">
-            <div class="offset-sm-0 col-sm-3">
-                <a class="btn btn-secondary btn-sm" href="/gop/almoxarifado/compras_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
+        <form method="POST" onsubmit="return confirm('Confirma Fechamento da Compra?')">
+            <div class="row mb-3">
+
+                <div class="offset-sm-0 col-sm-3">
+                    <button type="submit" name="btn_fechar" class="btn btn-primary btn-sm"><span class='glyphicon glyphicon-ok-circle'></span> Finalizar</button>
+                    <a class="btn btn-secondary btn-sm" href="/gop/almoxarifado/compras_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
+                </div>
             </div>
-        </div>
-        <hr>
-        <form>
+            <hr>
+
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">No. da Nota</label>
                 <div class="col-sm-2">
-                    <input type="text" maxlength="20" class="form-control" name="nota" value="<?php echo $registro['nota']; ?>">
+                    <input type="text" maxlength="20" class="form-control" name="nota" value="<?php echo $c_nota; ?>" required>
                 </div>
                 <label class="col-sm-2 col-form-label">Vencimento</label>
                 <div class="col-sm-2">
-                    <input type="date" class="form-control" name="vencimento" value="<?php echo $registro['vencimento']; ?>">
+                    <input type="date" class="form-control" name="vencimento" value="<?php echo $d_vencimento; ?>" required>
                 </div>
                 <hr>
-                <div class="panel panel-default">
-                    <div class="panel-heading text-center"><strong>Tabela de Materiais para Entrada</strong></div>
+                <div class="panel panel text-center">
+                    <strong>Tabela de Materiais para Entrada</strong>
                 </div>
 
             </div>
@@ -134,6 +189,8 @@ $registro = $result->fetch_assoc();
                         <th scope="col">Valor Unitário</th>
                         <th scope="col">Valor Total</th>
                         <th scope="col">Receber</th>
+                        <th scope="col">Recebido</th>
+
                         <th scope="col">Opções</th>
 
                     </tr>
@@ -143,7 +200,7 @@ $registro = $result->fetch_assoc();
                     // faço a Leitura da tabela com sql
                     $c_sql = "SELECT compras_materiais.id, materiais.descricao AS material, unidades.descricao AS unidade,
                 compras_materiais.quantidade, compras_materiais.valor_unitario, compras_materiais.valor_total,
-                compras_materiais.fator_conversao, compras_materiais.receber
+                compras_materiais.fator_conversao, compras_materiais.receber, compras_materiais.recebido, compras_materiais.id_material
                 FROM compras_materiais
                 JOIN materiais ON compras_materiais.id_material=materiais.id
                 JOIN unidades ON compras_materiais.id_unidade=unidades.id
@@ -170,6 +227,10 @@ $registro = $result->fetch_assoc();
                             $c_receber = "Sim";
                         else
                             $c_receber = "Não";
+                        if ($c_linha['recebido'] == 'S')
+                            $c_recebido = "Sim";
+                        else
+                            $c_recebido = "Não";
 
                         echo "
                     <tr class='info'>
@@ -181,6 +242,7 @@ $registro = $result->fetch_assoc();
                     <td>$c_valor_unitario</td>
                     <td>$c_valor_total</td>
                     <td>$c_receber</td>
+                    <td>$c_recebido</td>
                    
                     <td><a class='btn btn-success btn-sm' href='/gop/almoxarifado/compras_selecionar.php?id=$c_linha[id]'><img src='\gop\images\selecionar.png' alt='' width='25' height='25'> Marcar/Desmarcar</a></td></tr>";
                     }
