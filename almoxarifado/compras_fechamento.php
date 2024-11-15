@@ -9,6 +9,8 @@ if (!isset($_SESSION['newsession'])) {
 include("../conexao.php");
 include("../links2.php");
 
+$hoje = date('Y-m-d');
+
 if (isset($_GET['id'])) {
     $c_id = $_GET['id'];
     $_SESSION['id_compra'] = $c_id;
@@ -46,7 +48,7 @@ if (isset($_POST['btn_fechar']) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
             // atualizo o saldo do material no cadastro
             $c_sql_up = "UPDATE materiais SET 
                         materiais.quantidadeatual=materiais.quantidadeatual+
-                        ($registro[quantidade]/$registro[fator_conversao])
+                        ($registro[quantidade]*$registro[fator_conversao]), ultimaentrada = '$hoje'
                         WHERE id='$registro[id_material]'";
             $result_up = $conection->query($c_sql_up);
             // atualizo o recebido

@@ -101,7 +101,8 @@ if (isset($_POST['btnpedido']) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $registro_compra = $result_ult->fetch_assoc();
     //
     if ($c_linha2['tipo'] == 'M') { // apenas cotações de materiais
-        $c_sql = "SELECT * FROM cotacao_materiais_fornecedor 
+        $c_sql = "SELECT *, materiais.fator FROM cotacao_materiais_fornecedor 
+        join materiais on cotacao_materiais_fornecedor.id_material=materiais.id
         WHERE cotacao_materiais_fornecedor.id_cotacao_fornecedor='$i_id'";
         $result = $conection->query($c_sql);
         // loop para capturar os itens da cotação
@@ -110,7 +111,7 @@ if (isset($_POST['btnpedido']) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
             $c_sql_ins = "insert into compras_materiais (id_compra, id_material, quantidade, valor_unitario,
             valor_total,  id_unidade, fator_conversao, receber, recebido) 
             value ('$registro_compra[id_compra]', '$c_linha[id_material]', '$c_linha[quantidade]', 
-            '$c_linha[valor_unitario]', '$c_linha[valor_total]', '$c_linha[id_unidade]', 1, 'S', 'N')";
+            '$c_linha[valor_unitario]', '$c_linha[valor_total]', '$c_linha[id_unidade]', $c_linha[fator], 'S', 'N')";
             $result_compras = $conection->query($c_sql_ins);
         }
         echo "<script>alert('Pedido de Compra gerado com Sucesso!!')</script>";

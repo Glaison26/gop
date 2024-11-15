@@ -50,13 +50,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $n_custo = $registro['custo'];
     $n_qtdmin = $registro['qtdmin'];
     $n_qtdmax = $registro['qtdmax'];
-    $d_ultimasaida = new DateTime($registro['ultimasaida']);
-    $d_ultimasaida = $d_ultimasaida->format('y-m-d');
-    $d_ultimaentrada = new DateTime($registro['ultimaentrada']);
-    $d_ultimaentrada = $d_ultimaentrada->format('y-m-d');
+    $d_ultimasaida = $registro['ultimasaida'];
+    $d_ultimaentrada = $registro['ultimaentrada'];
+    
     $n_quantidadeatual = $registro['quantidadeatual'];
-    $d_validade = new DateTime($registro['data_validade']);
-    $d_validade = $d_validade->format('y-m-d');
+    $d_validade = $registro['data_validade'];
+    
     $c_fator = $registro['fator'];
     $c_obs = $registro['obs'];
 } else {
@@ -307,18 +306,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Ultima Saida</label>
                 <div class="col-sm-2">
-                    <input type="text" maxlength="20" class="form-control" name="ultimasaida" value="<?php echo $d_ultimasaida; ?>">
+                    <input type="date" maxlength="20" class="form-control" name="ultimasaida" value="<?php echo $d_ultimasaida; ?>">
                 </div>
                 <label class="col-sm-2 col-form-label">Ultima Entrada</label>
                 <div class="col-sm-2">
-                    <input type="text" maxlength="20" class="form-control" name="ultimaentrada" value="<?php echo $d_ultimaentrada; ?>">
+                    <input type="date" maxlength="20" class="form-control" name="ultimaentrada" value="<?php echo $d_ultimaentrada; ?>">
                 </div>
             </div>
 
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Data de Validade</label>
                 <div class="col-sm-2">
-                    <input type="text" maxlength="20" class="form-control" name="validade" value="<?php echo $d_validade; ?>">
+                    <input type="date" maxlength="20" class="form-control" name="validade" value="<?php echo $d_validade; ?>">
                 </div>
                 <label class="col-sm-2 col-form-label">Fator Conversão</label>
                 <div class="col-sm-2">

@@ -166,8 +166,10 @@
                                 
                                 
                              </div>
-                         </li>
-                         	<li class='nav-item'><a href='/gop/configuracoes.php' class='nav-link'>Configurações</a></li>
+                         </li>";
+                         if ($_SESSION['tipo'] == 'Administrador') 
+                         echo
+                         	"<li class='nav-item'><a href='/gop/configuracoes.php' class='nav-link'>Configurações</a></li>
                         
                          ";
                                         }
@@ -176,7 +178,7 @@
                                  <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Usuários</a>
                                  <div class='dropdown-menu' aria-labelledby='dropdown01'>
                                      <?php
-                                        if ($_SESSION['tipo'] <> 'Solicitante') {
+                                        if ($_SESSION['tipo'] == 'Administrador') {
                                             echo "<a class='dropdown-item' href='/gop/cadastros/usuarios/usuarios_lista.php'><img src='\gop\images\usuario.png' alt='25' width='25' height='25'> Cadastro de Usuários</a>
                                  <a class='dropdown-item' href=''><img src='\gop\images\acessos.png' alt='25' width='25' height='25'> Perfis de Usuários</a>";
                                         }

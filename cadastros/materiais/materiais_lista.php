@@ -93,7 +93,7 @@ include_once "../../lib_gop.php";
                     <th scope="col">Código</th>
                     <th scope="col">Descrição</th>
                     <th scope="col">Saldo</th>
-                    <th scope="col">Unidade</th>
+                    <th scope="col">Unidade Saída</th>
                     <th scope="col">Grupo</th>
                     <th scope="col">Marca</th>
                     <th scope="col">Custo</th>
@@ -107,7 +107,7 @@ include_once "../../lib_gop.php";
                 $c_sql = "SELECT materiais.id, materiais.descricao, materiais.quantidadeatual, materiais.custo, unidades.descricao AS unidade," .
                     " marcas.descricao AS marca, grupos.descricao AS grupo" .
                     " FROM materiais" .
-                    " JOIN  unidades on materiais.id_unidadeEntrada=unidades.id" .
+                    " JOIN  unidades on materiais.id_unidadeSaida=unidades.id" .
                     " JOIN  marcas on materiais.id_marca=marcas.id" .
                     " JOIN  grupos on materiais.id_grupo=grupos.id" .
                     " ORDER BY materiais.descricao";
