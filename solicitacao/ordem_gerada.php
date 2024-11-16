@@ -15,6 +15,10 @@ $ordem = $c_linha['id_ordem'];
 if (!$result) {
     die("Erro ao Executar Sql!!" . $conection->connect_error);
 }
+if (isset($_POST['btn_acessar']) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
+    $_SESSION['consulta_ordem'] = $c_linha['id_ordem'];
+    header('location: /gop/ordens/ordens.php');
+ }
 ?>
 
 <!DOCTYPE html>
@@ -40,10 +44,12 @@ if (!$result) {
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
             </div>
-            <h3>Ordem de serviço No. <?php echo $ordem?> foi gerada com sucesso!  Clique em encerrar para voltar ao menu.</h3>
+            <h3>Ordem de serviço No. <?php echo $ordem?> foi gerada com sucesso!  Clique em encerrar para voltar ao menu ou em acessar para consultar Ordem a gerada.</h3>
         </div>
-      
+        <form method="post" action="">
+        <button type="submit" name="btn_acessar" class="btn btn-primary"><span class='glyphicon glyphicon-share-alt'></span> Acessar</button>
         <a class="btn btn btn-success" href="/gop/solicitacao/solicitacao_lista.php"><span class="glyphicon glyphicon-off"></span> Encerrar</a>
+        </form>
     </div>
 </body>
 

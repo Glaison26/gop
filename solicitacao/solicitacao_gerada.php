@@ -15,6 +15,10 @@ $solicitacao = $c_linha['id_solicitacao'];
 if (!$result) {
     die("Erro ao Executar Sql!!" . $conection->connect_error);
 }
+if (isset($_POST['btn_acessar']) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
+   $_SESSION['consulta_solicitacao'] = $c_linha['id_solicitacao'];
+   header('location: /gop/solicitacao/solicitacao.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -39,11 +43,16 @@ if (!$result) {
         <div class='alert alert-info' role='alert'>
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
+                <h3>Solicitação de serviço No. <?php echo $solicitacao ?> foi gerada com sucesso! Clique em encerrar para voltar ao menu ou acessar para consultar a solicitação feita.</h3>
             </div>
-            <h3>Solicitação de serviço No. <?php echo $solicitacao ?> foi gerada com sucesso! Clique em encerrar para voltar ao menu.</h3>
-        </div>
 
-        <a class="btn btn btn-success" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Encerrar</a>
+        </div>
+        <form method="POST">
+            <button type="submit" name="btn_acessar" class="btn btn-primary"><span class='glyphicon glyphicon-share-alt'></span> Acessar</button>
+            <a class="btn btn btn-success" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Encerrar</a>
+        </form>
+
+
     </div>
 </body>
 

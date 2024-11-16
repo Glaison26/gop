@@ -7,6 +7,12 @@ include("../conexao.php");
 include("../links2.php");
 date_default_timezone_set('America/Sao_Paulo');
 
+$c_numero = "";
+if (!empty($_SESSION['consulta_ordem'])){
+    $c_numero = $_SESSION['consulta_ordem'];
+    $_SESSION['consulta_ordem'] = "";
+}
+
 // rotina para montagem do sql com as opções selecionadas
 if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     // formatação de datas para o sql
@@ -250,7 +256,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
 
                 <label class="col-md-2 form-label">No. da Ordem</label>
                 <div class="col-sm-2">
-                    <input type="text" class="form-control" name="numero" id="numero">
+                    <input type="text" class="form-control" name="numero" id="numero" value = '<?php echo $c_numero ?>'>
                 </div>
             </div>
 

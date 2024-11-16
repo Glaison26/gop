@@ -6,6 +6,8 @@
     }
     include('conexao.php');
     $_SESSION['voltadiretriz'] = 'N';
+    $_SESSION['consulta_solicitacao'] = "";
+    $_SESSION['consulta_ordem'] = "";
     // verifico numero de solicitações em aberto
     $c_sql = "select COUNT(*) AS aberta_solicitacao FROM solicitacao WHERE STATUS = 'A'";
     $result = $conection->query($c_sql);

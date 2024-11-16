@@ -145,9 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
 
                 </div>
 
-                <div class="col-sm-2">
-                    <button type="submit" name="btncusto" id="btncusto" class="btn btn-primary btn-sm"><span class='glyphicon glyphicon-usd'></span> Capturar Custo</button>
-                </div>
+             
 
             </div>
 
@@ -176,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
                 </div>
             </div>
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label">Valor Unitário</label>
+                <label class="col-sm-2 col-form-label">Custo Unitário</label>
                 <div class="col-sm-3">
                     <input placeholder="valor em Real" type="text" data-thousands="." data-decimal=","
                         data-prefix="R$ " class="form-control" id="valorunitario" name="valorunitario" value="<?php echo $c_valor ?>">

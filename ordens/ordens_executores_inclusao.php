@@ -3,11 +3,13 @@ session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
-
+// 36-24-31
 include('../links2.php');
 include('../conexao.php');
 
 $c_id = $_SESSION['id_ordem'];
+$c_executor_lista = $_SESSION['nome_executor'];
+$c_executor_valor = $_SESSION['valor_executor'];
 
 $c_valor = "0";
 $c_indice = '';
@@ -88,6 +90,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
 </head>
 
 <body>
+<script>
+        // chama arquivo para pegar ocorrencia
+        function verifica(value) {
+            window.location.href = "/gop/ordens/ordens_verifica_executor_valor.php?id=" + value;
+        }
+    </script>
+
     <div class="container -my5">
         <div style="padding-top:5px;">
             <div class="panel panel-primary class">
@@ -124,16 +133,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Executor</label>
                 <div class="col-sm-5">
-                    <select class="form-select form-select-lg mb-3" id="executor" name="executor">
+                    <select onchange="verifica(value)"  class="form-select form-select-lg mb-3" id="executor" name="executor" value="<?php echo $c_executor_lista ?>" required>
 
                         <?php
-                        if ($c_indice == '')
+                        
                             echo "<option></option>";
-                        // select da tabela de Material
+                        // select da tabela de executores
                         $c_sql_executor = "SELECT executores.id, executores.nome FROM executores ORDER BY executores.nome";
                         $result_executor = $conection->query($c_sql_executor);
                         while ($c_linha = $result_executor->fetch_assoc()) {
-
+                            if (!empty($_SESSION['nome_executor'])) {
+                                if ($_SESSION['nome_executor'] == $c_linha['nome'])
+                                    $op = 'selected';
+                                else
+                                    $op = "";
+                            }
                             echo "  
                           <option $op>$c_linha[nome]</option>
                         ";
@@ -157,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
                 <label class="col-sm-2 col-form-label">Valor hora</label>
                 <div class="col-sm-3">
                     <input placeholder="valor em Real" type="text" data-thousands="." data-decimal=","
-                        data-prefix="R$ " class="form-control" id="valor_hora" name="valor_hora" value="<?php echo $c_valor ?>">
+                        data-prefix="R$ " class="form-control" id="valor_hora" name="valor_hora" value="<?php echo $c_executor_valor ?>">
                 </div>
             </div>
             <hr>
