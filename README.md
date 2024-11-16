@@ -23,4 +23,9 @@ incluir campos
 recebe char(1) S ou N
 recebido char(1) S ou N
 
+// 
+rotina de perfil de usuários operadores
+dar baixa nos saldos dos materiais na conclusão da ordem de serviço
+checar as rotinas de email com os emails da configuração
+
 

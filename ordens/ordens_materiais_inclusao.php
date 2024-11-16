@@ -141,12 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
                         }
                         ?>
                     </select>
-
-
                 </div>
-
-             
-
             </div>
 
             <div class="row mb-3">
