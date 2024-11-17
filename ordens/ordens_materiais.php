@@ -6,7 +6,30 @@
 include_once "../lib_gop.php";
 $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
 
+// baixar materiais no cadastro
+if (isset($_POST['btn_baixa']) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
+    $c_sql_baixa =  "SELECT ordens_materiais.id, ordens_materiais.id_material, ordens_materiais.quantidade,
+  ordens_materiais.baixa FROM ordens_materiais
+  WHERE ordens_materiais.id_ordem='$i_id'";
+    $result_baixa = $conection->query($c_sql_baixa);
+    // loop para dar baixa
+    while ($registro = $result_baixa->fetch_assoc()) {
+        if ($registro['baixa'] == 'N') {
+        $c_sql_up = "update materiais set quantidadeatual = quantidadeatual-$registro[quantidade]
+         where materiais.id='$registro[id_material]'";
+         //echo $c_sql_up;
+        $result_up = $conection->query($c_sql_up);
+        $c_sql_up2 = "update ordens_materiais set baixa='S' where id='$registro[id]'";
+        $result_up2 = $conection->query($c_sql_up2);
+        }
+    }
+
+  echo "<script>alert('Baixas Realizadas com sucesso!!');</script>"  ;
+}
+
 ?>
+
+
 <script language="Javascript">
     function confirmacao(id) {
         var resposta = confirm("Deseja remover esse registro?");
@@ -64,16 +87,18 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
 
 
 <div class="container-fluid">
-    <?php
-    if ($c_linha_ordem['status'] <> 'C' && $c_linha_ordem['status'] <> 'S')
-        echo "<div class='panel panel-info class'>
-        <div class='panel-heading'>
-           
-                 <a class='btn btn-success' href='/gop/ordens/ordens_materiais_inclusao.php'><span class='glyphicon glyphicon-plus'></span> Incluir Material</a>
-        
-        </div>
-    </div>";
-    ?>
+    <form method="post" onsubmit="return confirm('Confirma baixa dos Materiais?')">
+        <?php
+        if ($c_linha_ordem['status'] <> 'C' && $c_linha_ordem['status'] <> 'S')
+            echo "<div class='panel panel-info class'>
+                    <div class='panel-heading'>
+            
+                         <a class='btn btn-success' href='/gop/ordens/ordens_materiais_inclusao.php'><span class='glyphicon glyphicon-plus'></span> Incluir Material</a>
+                         <button type='submit' name='btn_baixa' id='btn_baixa' class='btn btn-warning'><img src='\gop\images\itabela.png' alt='' width='20' height='20'></span> Baixa de Materiais</button>
+                    </div>
+            </div>";
+        ?>
+    </form>
     <hr>
     <table class="table table display table-bordered tabmateriais">
         <thead class="thead">
@@ -81,6 +106,7 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
                 <th scope="col">#</th>
                 <th scope="col">Material</th>
                 <th scope="col">Qtd.</th>
+                <th scope="col">Baixou</th>
                 <th scope="col">Unidade</th>
                 <th scope="col">Valor</th>
                 <th scope="cod">Vlr. Total</th>
@@ -92,7 +118,7 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
 
             // faço a Leitura da tabela com sql
             $c_sql = "SELECT ordens_materiais.id, materiais.descricao as material, unidades.abreviatura as unidade, ordens_materiais.quantidade,
-                    ordens_materiais.valor FROM ordens_materiais
+                    ordens_materiais.valor, ordens_materiais.baixa FROM ordens_materiais
                     JOIN materiais ON ordens_materiais.id_material=materiais.id
                     JOIN unidades ON ordens_materiais.id_unidade=unidades.id
                     WHERE ordens_materiais.id_ordem='$i_id'";
@@ -114,12 +140,17 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
                     $c_custo = 0.00;
                     $c_total = 0.00;
                 }
+                if ($c_linha['baixa'] == 'N')
+                    $c_baixa = 'Não';
+                else
+                    $c_baixa = 'Sim';
 
                 echo "
                     <tr class='info'>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[material]</td>
                     <td>$c_linha[quantidade]</td>
+                    <td>$c_baixa</td>
                     <td>$c_linha[unidade]</td>
                     <td style='text-align: right;'>$c_custo</td>
                     <td style='text-align: right;'>$c_total</td>

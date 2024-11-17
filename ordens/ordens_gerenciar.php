@@ -13,9 +13,12 @@ if (isset($_GET['id'])) {
 } else {
     $i_id = $_SESSION['id_ordem'];
 }
-// sessio para pegar valor da hora do executor
+// session para pegar valor da hora do executor
 $_SESSION['nome_executor'] = "";
 $_SESSION['valor_executor'] = "";
+// session para pegar valor de custo do material na OS
+$_SESSION['nome_material'] = "";
+$_SESSION['valor_material'] = "";
 //
 $c_sql_ordem = "select status from ordens where id='$i_id'";
 $result = $conection->query($c_sql_ordem);

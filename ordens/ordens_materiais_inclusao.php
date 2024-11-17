@@ -8,6 +8,9 @@ include('../links2.php');
 include('../conexao.php');
 
 $c_id = $_SESSION['id_ordem'];
+// seção para material e valor
+$c_material_lista = $_SESSION['nome_material'];
+$c_material_valor = $_SESSION['valor_material'];
 
 $c_valor = "0";
 $c_indice = '';
@@ -28,8 +31,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
     $c_quantidade = $_POST['quantidade'];
     $c_unidade = $_POST['unidade'];
     $c_material = $_POST['material'];
-
-
     //
     do {
         if (empty($c_material) || empty($_POST['unidade']) || empty($_POST['quantidade'])) {
@@ -57,8 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
         $c_linha = $result_material->fetch_assoc();
         $i_id_material = $c_linha['id'];
 
-        $c_sql = "Insert into ordens_materiais (id_material, id_unidade, quantidade, valor, id_ordem)
-                 Value ('$i_id_material', '$i_id_unidade', '$c_quantidade', '$c_custo','$c_id')";
+        $c_sql = "Insert into ordens_materiais (id_material, id_unidade, quantidade, valor, id_ordem, baixa)
+                 Value ('$i_id_material', '$i_id_unidade', '$c_quantidade', '$c_custo','$c_id', 'N')";
         $result = $conection->query($c_sql);
         // somatório dos valores de custo de material
         $c_sql = "SELECT SUM(ordens_materiais.quantidade * ordens_materiais.valor) AS total
@@ -89,6 +90,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
 </head>
 
 <body>
+    <script>
+        // chama arquivo para pegar material
+        function verifica(value) {
+            window.location.href = "/gop/ordens/ordens_verifica_material_valor.php?id=" + value;
+        }
+    </script>
+
     <div class="container -my5">
         <div style="padding-top:5px;">
             <div class="panel panel-primary class">
@@ -125,16 +133,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Material</label>
                 <div class="col-sm-5">
-                    <select class="form-select form-select-lg mb-3" id="material" name="material">
+                    <select onchange="verifica(value)" class="form-select form-select-lg mb-3" id="material" name="material" value="<?php echo $c_material_lista ?>" required>
 
                         <?php
-                        if ($c_indice == '')
-                            echo "<option></option>";
+
+                        echo "<option></option>";
                         // select da tabela de Material
                         $c_sql_material = "SELECT materiais.id, materiais.descricao FROM materiais ORDER BY materiais.descricao";
                         $result_material = $conection->query($c_sql_material);
                         while ($c_linha = $result_material->fetch_assoc()) {
-
+                            if (!empty($_SESSION['nome_material'])) {
+                                if ($_SESSION['nome_material'] == $c_linha['descricao'])
+                                    $op = 'selected';
+                                else
+                                    $op = "";
+                            }
                             echo "  
                           <option $op>$c_linha[descricao]</option>
                         ";
@@ -172,7 +185,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
                 <label class="col-sm-2 col-form-label">Custo Unitário</label>
                 <div class="col-sm-3">
                     <input placeholder="valor em Real" type="text" data-thousands="." data-decimal=","
-                        data-prefix="R$ " class="form-control" id="valorunitario" name="valorunitario" value="<?php echo $c_valor ?>">
+                        data-prefix="R$ " class="form-control" id="valorunitario" name="valorunitario" value="<?php echo $c_material_valor ?>">
                 </div>
             </div>
             <hr>
