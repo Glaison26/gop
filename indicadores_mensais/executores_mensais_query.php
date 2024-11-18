@@ -5,6 +5,7 @@ if (!isset($_SESSION['newsession'])) {
 }
 include("../conexao.php");
 include("../links2.php");
+include("../lib_gop.php");
 date_default_timezone_set('America/Sao_Paulo');
 $c_query = "";
 $_SESSION['titulo_rel'] = "Relatório Comparativo Mensal de Ocorrências de Manutenção por Período";
@@ -97,23 +98,56 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
         $c_where = $c_where . "ordens.id_oficina='$i_id_oficina' and ";
         $c_query = $c_query . 'Oficina:' . $c_linha['descricao'] . '-';
     }
-    // sql para pegar id da Ocorrencia
-    $c_ocorrencia = $_POST['ocorrencia'];
-    $c_sql_pega_ocorrencia = "select ocorrencias.id, ocorrencias.descricao from ocorrencias where ocorrencias.descricao = '$c_ocorrencia'";
-    $result = $conection->query($c_sql_pega_ocorrencia);
+    // sql para executores
+
+    $c_executor = $_POST["executor"];
+    $c_sql_executor = "select executores.id, executores.nome from executores where executores.nome = '$c_executor'";
+    $result = $conection->query($c_sql_executor);
     $c_linha = $result->fetch_assoc();
-    $i_id_ocorrencia = $c_linha['id'];
-    $c_query = $c_query . 'Ocorrencia:' . $c_linha['descricao'] . '-';
-    $c_where = $c_where . "ordens.id_ocorrencia='$i_id_ocorrencia' and ";
+    $i_id_executor = $c_linha['id'];
+    $c_where = $c_where . "ordens_executores.id_executor='$i_id_executor' and ";
+    $c_query = $c_query . 'Executor:' . $c_linha['nome'] . '-';
 
     $c_where = $c_where = substr($c_where, 0, -5); // tirar o and no final
-    // montagem do sql para recursos físicos
+    
     //
-    $c_sql = "Select extract(month FROM ordens.data_geracao) AS mes, ordens.id_ocorrencia, ocorrencias.descricao, COUNT(ordens.id_ocorrencia) as total
-            FROM ordens 
-            JOIN ocorrencias ON ordens.id_ocorrencia=ocorrencias.id
-            where $c_where GROUP BY extract(month FROM ordens.data_geracao), ordens.id_ocorrencia order by mes";
-
+     // limpo tabela temporária
+     $c_sql_del = "delete from tempo_horas_mes";
+     // montagem do sql para horas por mes do executor
+     $result_del = $conection->query($c_sql_del);
+    $c_sql = "SELECT extract(month FROM ordens.data_geracao) AS mes, ordens_executores.id_executor, executores.nome, 
+            SUM(ordens_executores.tempo_horas) as total_horas,
+            SUM(ordens_executores.tempo_minutos) as total_minutos FROM ordens
+            JOIN ordens_executores ON ordens.id=ordens_executores.id_ordem
+            JOIN executores ON ordens_executores.id_executor=executores.id
+            where $c_where
+            GROUP BY extract(month FROM ordens.data_geracao), ordens_executores.id_executor";
+    //echo $c_sql;        
+    $result = $conection->query($c_sql);
+ // calculos de horas para montaegem da tabela temporária
+    $horas = 0;
+    $minutos = 0;
+    while ($c_linha = $result->fetch_assoc()) {
+        $c_mes = $c_linha['mes'];
+         if (!empty($c_linha['total_horas']))
+             $horas = $c_linha['total_horas'];
+        if (!empty($c_linha['total_minutos']))
+             $minutos = $c_linha['total_minutos'];
+        
+        if ($minutos > 60) {
+             while ($minutos > 60) {
+                 $minutos = $minutos - 60;
+                $horas = $horas + 1;
+            }
+        }
+        $n_tempo_grafico = $horas + ($minutos / 60);
+        // insiro dados na tabela temporária
+        $c_sql_ins = "insert into tempo_horas_mes (horas, minutos, mes, tempo_grafico)
+                     values ('$horas','$minutos','$c_mes', '$n_tempo_grafico')";
+        //echo $c_sql_ins;
+        //echo $c_sql;
+        $result_ins = $conection->query($c_sql_ins);
+    }
     // guardo session para proxima pagina de tabelas
     $_SESSION['sql'] = $c_sql;
     if (empty($c_query))
@@ -121,8 +155,9 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     else
         $_SESSION['query'] = $c_query;
     //echo $c_sql;
-    echo "<script> window.open('/gop/indicadores_mensais/mensais_relatorio.php?id=', '_blank');</script>";
-}
+    echo "<script> window.open('/gop/indicadores_mensais/executores_mensais_relatorio.php?id=', '_blank');</script>";
+    }
+
 
 
 ?>
@@ -216,7 +251,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     </select>
                 </div>
             </div>
-          
+
 
             <div class="row mb-3">
 
@@ -231,9 +266,9 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
 
             </div>
 
-            
 
-           
+
+
 
 
             <div class="row mb-3">
