@@ -151,8 +151,11 @@
                                  <a class='dropdown-item' href='/gop/relatorios/solicitantes_query.php'> Ocorrências por Solicitantes</a>
                                  <a class='dropdown-item' href='/gop/indicadores_mensais/solicitantes_mensais_query.php'> Comparativo Mensal por Solicitante</a>
                                  <a class='dropdown-item' href='/gop/relatorios/setores_query.php'> Ocorrências por Setor</a>
+                                 <a class='dropdown-item' href='/gop/indicadores_mensais/setores_mensais_query.php'> Comparativo Mensal por Setor</a>
                                  <a class='dropdown-item' href='/gop/relatorios/centrodecusto_query.php'> Ocorrências por Centro de Custo</a>
+                                 <a class='dropdown-item' href='/gop/indicadores_mensais/centrodecusto_mensais_query.php'> Comparativo Mensal por Centro de Custo</a>
                                  <a class='dropdown-item' href='/gop/relatorios/executores_query.php'> Horas Trabalhadas por Executor</a>
+                                 <a class='dropdown-item' href='/gop/indicadores_mensais/executores_mensais_query.php'> Comparativo Mensal de Horas por Executor</a>
                                  <a class='dropdown-item' href='#'> Indicadores da Manutenção</a>
                                 
                              </div>
