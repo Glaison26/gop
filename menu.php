@@ -145,8 +145,11 @@
                              <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Indicadores</a>
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
                                  <a class='dropdown-item' href='/gop/relatorios/ocorrencias_query.php'> Ocorrências Padrões</a>
+                                 <a class='dropdown-item' href='/gop/indicadores_mensais/ocorrencias_mensais_query.php'> Comparativo Mensal de Ocorrências Padrões</a>
                                  <a class='dropdown-item' href='/gop/relatorios/oficinas_query.php'> Ocorrências por Oficinas</a>
+                                 <a class='dropdown-item' href='/gop/indicadores_mensais/oficinas_mensais_query.php'> Comparativo Mensal por Oficina</a>
                                  <a class='dropdown-item' href='/gop/relatorios/solicitantes_query.php'> Ocorrências por Solicitantes</a>
+                                 <a class='dropdown-item' href='/gop/indicadores_mensais/solicitantes_mensais_query.php'> Comparativo Mensal por Solicitante</a>
                                  <a class='dropdown-item' href='/gop/relatorios/setores_query.php'> Ocorrências por Setor</a>
                                  <a class='dropdown-item' href='/gop/relatorios/centrodecusto_query.php'> Ocorrências por Centro de Custo</a>
                                  <a class='dropdown-item' href='/gop/relatorios/executores_query.php'> Horas Trabalhadas por Executor</a>
