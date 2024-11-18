@@ -19,6 +19,6 @@ if ($c_linha['receber'] == 'S')
 else
     $c_status = 'S';
 // alteração do campo de geração de registro da preventiva
-$c_sql = "update compras_materiais  set receber='$c_status' where id=$c_id";
+$c_sql = "update compras_materiais set receber='$c_status' where id=$c_id";
 $result = $conection->query($c_sql);
 header('location: /gop/almoxarifado/compras_fechamento.php');
