@@ -166,13 +166,13 @@
                                  <a class='dropdown-item' href='/gop/custos/ocorrencias_custo_query.php'>1. Custos por Ocorrências Padrões</a>
                                  <a class='dropdown-item' href='/gop/custos/oficinas_custo_query.php'>2. Custos por Oficinas</a>
                                  <a class='dropdown-item' href='/gop/custos/solicitantes_custo_query.php'>3. Custos por Solicitantes</a> 
-                                 <a class='dropdown-item' href='/gop/custos/setores_custo_query.php''>Custos por Setor</a>
-                                 <a class='dropdown-item' href='/gop/custos/centrodecusto_custo_query.php'>4. Custos por Centro de Custo</a>
-                                 <a class='dropdown-item' href='/gop/custos/executores_custos_query.php'>5. Custos por Executor</a>
-                                 <a class='dropdown-item' href='/gop/custos_mensais/ocorrencias_custo_mensal_query.php'>6. Comparativo mensal de Custos por Ocorrências Padrões</a>
-                                 <a class='dropdown-item' href='/gop/custos_mensais/oficinas_custo_mensal_query.php'>7. Comparativo mensal de Custos por Oficina</a>
-                                 <a class='dropdown-item' href='/gop/custos_mensais/solicitantes_custo_mensal_query.php'>8. Comparativo mensal de Custos por Solicitante</a>
-                                 <a class='dropdown-item' href='/gop/custos_mensais/setores_custo_mensal_query.php'>9. Comparativo mensal de Custos por Setor</a>
+                                 <a class='dropdown-item' href='/gop/custos/setores_custo_query.php''>4. Custos por Setor</a>
+                                 <a class='dropdown-item' href='/gop/custos/centrodecusto_custo_query.php'>5. Custos por Centro de Custo</a>
+                                 <a class='dropdown-item' href='/gop/custos/executores_custos_query.php'>6. Custos por Executor</a>
+                                 <a class='dropdown-item' href='/gop/custos_mensais/ocorrencias_custo_mensal_query.php'>7. Comparativo mensal de Custos por Ocorrências Padrões</a>
+                                 <a class='dropdown-item' href='/gop/custos_mensais/oficinas_custo_mensal_query.php'>8. Comparativo mensal de Custos por Oficina</a>
+                                 <a class='dropdown-item' href='/gop/custos_mensais/solicitantes_custo_mensal_query.php'>9. Comparativo mensal de Custos por Solicitante</a>
+                                 <a class='dropdown-item' href='/gop/custos_mensais/setores_custo_mensal_query.php'>10. Comparativo mensal de Custos por Setor</a>
                                 
                                 
                              </div>
