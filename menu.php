@@ -165,7 +165,9 @@
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
                                  
                                  <a class='dropdown-item' href='/gop/custos/ocorrencias_custo_query.php'> Por Ocorrências Padrões</a>
+                                 <a class='dropdown-item' href='/gop/custos_mensais/ocorrencias_custo_mensal_query.php'> Comparativo mensal de Custos por Ocorrências Padrões</a>
                                  <a class='dropdown-item' href='/gop/custos/oficinas_custo_query.php'> Por Oficinas</a>
+                                 <a class='dropdown-item' href='/gop/custos_mensais/oficinas_custo_mensal_query.php'> Comparativo mensal de Custos por Oficina</a>
                                  <a class='dropdown-item' href='/gop/custos/solicitantes_custo_query.php'> Por Solicitantes</a>
                                  <a class='dropdown-item' href='/gop/custos/setores_custo_query.php''> Por Setor</a>
                                  <a class='dropdown-item' href='/gop/custos/centrodecusto_custo_query.php'> Por Centro de Custo</a>

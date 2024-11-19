@@ -5,11 +5,11 @@ if (!isset($_SESSION['newsession'])) {
 }
 include("../conexao.php");
 include("../links2.php");
-include("../lib_gop.php");
 date_default_timezone_set('America/Sao_Paulo');
 $c_query = "";
-$_SESSION['titulo_rel'] = "Relatório Comparativo Mensal de Ocorrências de Manutenção por Período";
-$_SESSION['titulo_graf'] = "Gráfico Comparativo Mensal de Ocorrências de Manutenção por Período";
+$_SESSION['titulo_rel'] = "Relatório de Custos Comparativos Mensal de Oficinas da Manutenção por Período" ;
+$_SESSION['titulo_graf'] = "Gráfico de Custos Comparativos Mensal de Oficinas da Manutenção por Período";
+
 // rotina para montagem do sql com as opções selecionadas
 if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     // formatação de datas para o sql
@@ -88,66 +88,25 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
         $c_where = $c_where . "ordens.id_setor='$i_id_setor' and ";
         $c_query = $c_query . 'Setor:' . $c_linha['descricao'] . '-';
     }
+
     // sql para oficinas
-    if ($_POST['oficina'] <> "Todas") {
-        $c_oficina = $_POST["oficina"];
-        $c_sql_oficina = "select oficinas.id, oficinas.descricao from oficinas where oficinas.descricao = '$c_oficina'";
-        $result = $conection->query($c_sql_oficina);
-        $c_linha = $result->fetch_assoc();
-        $i_id_oficina = $c_linha['id'];
-        $c_where = $c_where . "ordens.id_oficina='$i_id_oficina' and ";
-        $c_query = $c_query . 'Oficina:' . $c_linha['descricao'] . '-';
-    }
-    // sql para executores
 
-    $c_executor = $_POST["executor"];
-    $c_sql_executor = "select executores.id, executores.nome from executores where executores.nome = '$c_executor'";
-    $result = $conection->query($c_sql_executor);
+    $c_oficina = $_POST["oficina"];
+    $c_sql_oficina = "select oficinas.id, oficinas.descricao from oficinas where oficinas.descricao = '$c_oficina'";
+    $result = $conection->query($c_sql_oficina);
     $c_linha = $result->fetch_assoc();
-    $i_id_executor = $c_linha['id'];
-    $c_where = $c_where . "ordens_executores.id_executor='$i_id_executor' and ";
-    $c_query = $c_query . 'Executor:' . $c_linha['nome'] . '-';
-
+    $i_id_oficina = $c_linha['id'];
+    $c_where = $c_where . "ordens.id_oficina='$i_id_oficina' and ";
+    $c_query = $c_query . 'Oficina:' . $c_linha['descricao'] . '-';
     $c_where = $c_where = substr($c_where, 0, -5); // tirar o and no final
-    
+    // montagem do sql para recursos físicos
     //
-     // limpo tabela temporária
-     $c_sql_del = "delete from tempo_horas_mes";
-     // montagem do sql para horas por mes do executor
-     $result_del = $conection->query($c_sql_del);
-    $c_sql = "SELECT extract(month FROM ordens.data_geracao) AS mes, ordens_executores.id_executor, executores.nome, 
-            SUM(ordens_executores.tempo_horas) as total_horas,
-            SUM(ordens_executores.tempo_minutos) as total_minutos FROM ordens
-            JOIN ordens_executores ON ordens.id=ordens_executores.id_ordem
-            JOIN executores ON ordens_executores.id_executor=executores.id
-            where $c_where
-            GROUP BY extract(month FROM ordens.data_geracao), ordens_executores.id_executor";
-    //echo $c_sql;        
-    $result = $conection->query($c_sql);
- // calculos de horas para montaegem da tabela temporária
-    $horas = 0;
-    $minutos = 0;
-    while ($c_linha = $result->fetch_assoc()) {
-        $c_mes = $c_linha['mes'];
-         if (!empty($c_linha['total_horas']))
-             $horas = $c_linha['total_horas'];
-        if (!empty($c_linha['total_minutos']))
-             $minutos = $c_linha['total_minutos'];
-        
-        if ($minutos > 60) {
-             while ($minutos > 60) {
-                 $minutos = $minutos - 60;
-                $horas = $horas + 1;
-            }
-        }
-        $n_tempo_grafico = $horas + ($minutos / 60);
-        // insiro dados na tabela temporária
-        $c_sql_ins = "insert into tempo_horas_mes (horas, minutos, mes, tempo_grafico)
-                     values ('$horas','$minutos','$c_mes', '$n_tempo_grafico')";
-        //echo $c_sql_ins;
-        //echo $c_sql;
-        $result_ins = $conection->query($c_sql_ins);
-    }
+    $c_sql = "SELECT extract(month FROM ordens.data_geracao) AS mes, ordens.id_oficina, oficinas.descricao, 
+            SUM(ordens.valor_material) as total_material, SUM(ordens.valor_servico) AS total_servico, SUM(ordens.valor_material)+SUM(ordens.valor_servico) AS total
+            FROM ordens 
+            JOIN oficinas ON ordens.id_oficina=oficinas.id
+            WHERE $c_where
+            GROUP BY extract(month FROM ordens.data_geracao), ordens.id_oficina ORDER BY mes";
     // guardo session para proxima pagina de tabelas
     $_SESSION['sql'] = $c_sql;
     if (empty($c_query))
@@ -155,10 +114,8 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     else
         $_SESSION['query'] = $c_query;
     //echo $c_sql;
-    // chamada do relatório do executor por mes
-    echo "<script> window.open('/gop/indicadores_mensais/executores_mensais_relatorio.php?id=', '_blank');</script>";
-    }
-
+    echo "<script> window.open('/gop/custos_mensais/mensais_custos_relatorio.php?id=', '_blank');</script>";
+}
 
 
 ?>
@@ -197,7 +154,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
-            <h5>Opções de Relatório para comparativos de Horas Mensais Trabalhadas por Executor<h5>
+            <h5>Opções de Relatório de Custos mensais comparativos de Oficinas<h5>
         </div>
     </div>
 
@@ -228,31 +185,23 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
             </div>
 
             <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Executor</label>
+                <label class="col-sm-2 col-form-label">Oficina </label>
                 <div class="col-sm-7">
-                    <select class="form-select form-select-lg mb-3" id="executor" name="executor" required>
-
+                    <select class="form-select form-select-lg mb-3" id="oficina" name="oficina" required>
+                        <option></option>
                         <?php
-                        echo "<option></option>";
-                        // select da tabela de executores
-                        $c_sql_executor = "SELECT executores.id, executores.nome FROM executores ORDER BY executores.nome";
-                        $result_executor = $conection->query($c_sql_executor);
-                        while ($c_linha = $result_executor->fetch_assoc()) {
-                            if (!empty($_SESSION['nome_executor'])) {
-                                if ($_SESSION['nome_executor'] == $c_linha['nome'])
-                                    $op = 'selected';
-                                else
-                                    $op = "";
-                            }
+                        // select da tabela de setores
+                        $c_sql_setor = "SELECT oficinas.id, oficinas.descricao FROM oficinas ORDER BY oficinas.descricao";
+                        $result_setor = $conection->query($c_sql_setor);
+                        while ($c_linha = $result_setor->fetch_assoc()) {
                             echo "  
-                          <option $op>$c_linha[nome]</option>
+                          <option>$c_linha[descricao]</option>
                         ";
                         }
                         ?>
                     </select>
                 </div>
             </div>
-
 
             <div class="row mb-3">
 
@@ -266,11 +215,6 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                 </div>
 
             </div>
-
-
-
-
-
 
             <div class="row mb-3">
 
@@ -309,43 +253,29 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
 
             </div>
             <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Oficina </label>
+
+                <label class="col-sm-2 col-form-label">Tipo</label>
                 <div class="col-sm-3">
-                    <select class="form-select form-select-lg mb-3" id="oficina" name="oficina">
-                        <option>Todas</option>
-                        <?php
-                        // select da tabela de setores
-                        $c_sql_setor = "SELECT oficinas.id, oficinas.descricao FROM oficinas ORDER BY oficinas.descricao";
-                        $result_setor = $conection->query($c_sql_setor);
-                        while ($c_linha = $result_setor->fetch_assoc()) {
-                            echo "  
-                          <option>$c_linha[descricao]</option>
-                        ";
-                        }
-                        ?>
-                    </select>
-                </div>
-                <label class="col-sm-1 col-form-label">Tipo</label>
-                <div class="col-sm-2">
                     <select onchange="verifica(value)" class="form-select form-select-lg mb-3" id="tipo" name="tipo" value="<?php echo $c_tipo; ?>">
                         <option value="0">Todas</option>
                         <option value="1">Corretiva</option>
                         <option value="2">Preventiva</option>
                     </select>
                 </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Tipo Corretiva</label>
-                <div class="col-sm-2">
+                <label class="col-sm-1 col-form-label">Tipo Corretiva</label>
+                <div class="col-sm-3">
                     <select disabled class="form-select form-select-lg mb-3" id="tipo_corretiva" name="tipo_corretiva" value="<?php echo $c_tipo_corretiva; ?>">
                         <option>Todos</option>
                         <option>Programada</option>
                         <option>Urgênte</option>
                     </select>
                 </div>
+            </div>
+
+            <div class="row mb-3">
+
                 <label class="col-sm-2 col-form-label">Tipo Preventiva</label>
-                <div class="col-sm-2">
+                <div class="col-sm-3">
                     <select disabled class="form-select form-select-lg mb-3" id="tipo_preventiva" name="tipo_preventiva" value="<?php echo $c_tipo_preventiva; ?>">
                         <option>Todas</option>
                         <option>Rotina</option>
@@ -353,10 +283,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                         <option>Sistematica</option>
                     </select>
                 </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Status</label>
+                <label class="col-sm-1 col-form-label">Status</label>
                 <div class="col-sm-3">
                     <select class="form-select form-select-lg mb-3" id="status" name="status" value="<?php echo $c_status; ?>">
                         <option>Todos</option>
@@ -367,6 +294,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     </select>
                 </div>
             </div>
+
         </form>
     </div>
 
