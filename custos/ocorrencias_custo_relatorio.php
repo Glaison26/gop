@@ -249,22 +249,22 @@ $c_query = $_SESSION['query'];
 
     <div style="padding-left:300px;">
         <h5 class="text-left">Gráfico Custos por Ocorrências no Período - Valor Total</h5>
-        <div id="chart1" style="width: 400px; height: 300px;"></div>
+        <div id="chart1" style="width: 500px; height: 400px;"></div>
     </div>
 
     <div style="padding-left:300px;">
         <h5 class="text-left">Gráfico Custos por Ocorrências no Período - Valor Material</h5>
-        <div id="chart2" style="width: 400px; height: 300px;"></div>
+        <div id="chart2" style="width: 500px; height: 400px;"></div>
     </div>
 
     <div style="padding-left:300px;">
         <h5 class="text-left">Gráfico Custos por Ocorrências no Período - Valor Serviço</h5>
-        <div id="chart3" style="width: 400px; height: 300px;"></div>
+        <div id="chart3" style="width: 500px; height: 400px;"></div>
     </div>
     <br>
     <div style="padding-left:300px;">
         <h5 class="text-left">Gráfico Custos no Período - Valor Serviço e Material</h5>
-        <div id="chart4" style="width: 400px; height: 300px;"></div>
+        <div id="chart4" style="width: 500px; height: 400px;"></div>
     </div>
 
 

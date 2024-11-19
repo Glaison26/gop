@@ -144,34 +144,35 @@
                           <li class='nav-item dropdown'>
                              <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Indicadores</a>
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
-                                 <a class='dropdown-item' href='/gop/relatorios/ocorrencias_query.php'> Ocorrências Padrões</a>
-                                 <a class='dropdown-item' href='/gop/indicadores_mensais/ocorrencias_mensais_query.php'> Comparativo Mensal de Ocorrências Padrões</a>
-                                 <a class='dropdown-item' href='/gop/relatorios/oficinas_query.php'> Ocorrências por Oficinas</a>
-                                 <a class='dropdown-item' href='/gop/indicadores_mensais/oficinas_mensais_query.php'> Comparativo Mensal por Oficina</a>
-                                 <a class='dropdown-item' href='/gop/relatorios/solicitantes_query.php'> Ocorrências por Solicitantes</a>
-                                 <a class='dropdown-item' href='/gop/indicadores_mensais/solicitantes_mensais_query.php'> Comparativo Mensal por Solicitante</a>
-                                 <a class='dropdown-item' href='/gop/relatorios/setores_query.php'> Ocorrências por Setor</a>
-                                 <a class='dropdown-item' href='/gop/indicadores_mensais/setores_mensais_query.php'> Comparativo Mensal por Setor</a>
-                                 <a class='dropdown-item' href='/gop/relatorios/centrodecusto_query.php'> Ocorrências por Centro de Custo</a>
-                                 <a class='dropdown-item' href='/gop/indicadores_mensais/centrodecusto_mensais_query.php'> Comparativo Mensal por Centro de Custo</a>
-                                 <a class='dropdown-item' href='/gop/relatorios/executores_query.php'> Horas Trabalhadas por Executor</a>
-                                 <a class='dropdown-item' href='/gop/indicadores_mensais/executores_mensais_query.php'> Comparativo Mensal de Horas por Executor</a>
-                                 <a class='dropdown-item' href='#'> Indicadores da Manutenção</a>
+                                 <a class='dropdown-item' href='/gop/relatorios/ocorrencias_query.php'>1. Ocorrências Padrões</a>
+                                 <a class='dropdown-item' href='/gop/relatorios/oficinas_query.php'>2. Ocorrências por Oficinas</a>
+                                 <a class='dropdown-item' href='/gop/relatorios/solicitantes_query.php'>3. Ocorrências por Solicitantes</a>
+                                 <a class='dropdown-item' href='/gop/relatorios/setores_query.php'>4. Ocorrências por Setor</a>
+                                 <a class='dropdown-item' href='/gop/relatorios/centrodecusto_query.php'>5. Ocorrências por Centro de Custo</a>
+                                 <a class='dropdown-item' href='/gop/relatorios/executores_query.php'>6. Horas Trabalhadas por Executor</a>
+                                 <a class='dropdown-item' href='/gop/indicadores_mensais/ocorrencias_mensais_query.php'>7. Comparativo Mensal de Ocorrências Padrões</a>
+                                 <a class='dropdown-item' href='/gop/indicadores_mensais/oficinas_mensais_query.php'>8. Comparativo Mensal por Oficina</a>
+                                 <a class='dropdown-item' href='/gop/indicadores_mensais/solicitantes_mensais_query.php'>9. Comparativo Mensal por Solicitante</a>
+                                 <a class='dropdown-item' href='/gop/indicadores_mensais/setores_mensais_query.php'>10. Comparativo Mensal por Setor</a>
+                                 <a class='dropdown-item' href='/gop/indicadores_mensais/centrodecusto_mensais_query.php'>11. Comparativo Mensal por Centro de Custo</a>
+                                 <a class='dropdown-item' href='/gop/indicadores_mensais/executores_mensais_query.php'>12. Comparativo Mensal de Horas por Executor</a>
+                                 <a class='dropdown-item' href='#'>13. Indicadores da Manutenção</a>
                                 
                              </div>
                          </li>
                            <li class='nav-item dropdown'>
                              <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Custos da Manutenção</a>
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
-                                 
-                                 <a class='dropdown-item' href='/gop/custos/ocorrencias_custo_query.php'> Por Ocorrências Padrões</a>
-                                 <a class='dropdown-item' href='/gop/custos_mensais/ocorrencias_custo_mensal_query.php'> Comparativo mensal de Custos por Ocorrências Padrões</a>
-                                 <a class='dropdown-item' href='/gop/custos/oficinas_custo_query.php'> Por Oficinas</a>
-                                 <a class='dropdown-item' href='/gop/custos_mensais/oficinas_custo_mensal_query.php'> Comparativo mensal de Custos por Oficina</a>
-                                 <a class='dropdown-item' href='/gop/custos/solicitantes_custo_query.php'> Por Solicitantes</a>
-                                 <a class='dropdown-item' href='/gop/custos/setores_custo_query.php''> Por Setor</a>
-                                 <a class='dropdown-item' href='/gop/custos/centrodecusto_custo_query.php'> Por Centro de Custo</a>
-                                 <a class='dropdown-item' href='/gop/custos/executores_custos_query.php'> Por Executor</a>
+                                 <a class='dropdown-item' href='/gop/custos/ocorrencias_custo_query.php'>1. Custos por Ocorrências Padrões</a>
+                                 <a class='dropdown-item' href='/gop/custos/oficinas_custo_query.php'>2. Custos por Oficinas</a>
+                                 <a class='dropdown-item' href='/gop/custos/solicitantes_custo_query.php'>3. Custos por Solicitantes</a> 
+                                 <a class='dropdown-item' href='/gop/custos/setores_custo_query.php''>Custos por Setor</a>
+                                 <a class='dropdown-item' href='/gop/custos/centrodecusto_custo_query.php'>4. Custos por Centro de Custo</a>
+                                 <a class='dropdown-item' href='/gop/custos/executores_custos_query.php'>5. Custos por Executor</a>
+                                 <a class='dropdown-item' href='/gop/custos_mensais/ocorrencias_custo_mensal_query.php'>6. Comparativo mensal de Custos por Ocorrências Padrões</a>
+                                 <a class='dropdown-item' href='/gop/custos_mensais/oficinas_custo_mensal_query.php'>7. Comparativo mensal de Custos por Oficina</a>
+                                 <a class='dropdown-item' href='/gop/custos_mensais/solicitantes_custo_mensal_query.php'>8. Comparativo mensal de Custos por Solicitante</a>
+                                 <a class='dropdown-item' href='/gop/custos_mensais/setores_custo_mensal_query.php'>9. Comparativo mensal de Custos por Setor</a>
                                 
                                 
                              </div>

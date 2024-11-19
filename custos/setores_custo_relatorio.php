@@ -79,7 +79,7 @@ $c_query = $_SESSION['query'];
                 </tbody>
             </table>
             <?php
-            $n_custo_total = $n_custo_material+$n_custo_servico;
+            $n_custo_total = $n_custo_material + $n_custo_servico;
             $c_custo = "";
             $c_custo_material = "";
             $c_custo_servico = "";
@@ -91,7 +91,7 @@ $c_query = $_SESSION['query'];
                 $c_custo_servico = $formatter->formatCurrency($n_custo_servico, 'BRL');
             ?>
             <div><?php echo "<b>" . "Total Material :   " . $c_custo_material . " Total Serviço :    " .
-             $c_custo_servico . " Custo Total :   " . $c_custo . "</b>" ?></div>
+                        $c_custo_servico . " Custo Total :   " . $c_custo . "</b>" ?></div>
 
         </div>
     </div>
@@ -99,7 +99,6 @@ $c_query = $_SESSION['query'];
 
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
     <!--   Valor Total -->
     <script type="text/javascript">
         // gráfico por Valor
@@ -171,6 +170,7 @@ $c_query = $_SESSION['query'];
             chart.draw(data, options);
         }
     </script>
+
     <!--   Valor Serviço -->
     <script type="text/javascript">
         // gráfico por Valor
@@ -206,7 +206,6 @@ $c_query = $_SESSION['query'];
             chart.draw(data, options);
         }
     </script>
-
 
 
     <!--   grafico pizza com custo total -->

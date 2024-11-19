@@ -47,16 +47,25 @@ $c_query = $_SESSION['query'];
                     <?php
 
                     while ($c_linha = $result->fetch_assoc()) {
-                        if (is_numeric($c_linha['total_material']))
+
+                        if (is_numeric($c_linha['total_material'])) {
                             $c_material = $formatter->formatCurrency($c_linha['total_material'], 'BRL');
-                        else
+                            $n_material = $c_linha['total_material'];
+                        } else {
                             $c_material = 'R$ 0,00';
-                        if (is_numeric($c_linha['total_servico']))
+                            $n_material = 0;
+                        }
+                        if (is_numeric($c_linha['total_servico'])) {
                             $c_servico = $formatter->formatCurrency($c_linha['total_servico'], 'BRL');
-                        else
+                            $n_servico = $c_linha['total_servico'];
+                        } else {
                             $c_servico = 'R$ 0,00';
-                        if (is_numeric($c_linha['total']))
-                            $c_total = $formatter->formatCurrency($c_linha['total'], 'BRL');
+                            $n_servico = 0;
+                        }
+                        $n_soma = $n_material + $n_servico;
+                        
+                        if (is_numeric($n_soma))
+                            $c_total = $formatter->formatCurrency($n_soma, 'BRL');
                         else
                             $c_total = 'R$ 0,00';
 
@@ -190,26 +199,26 @@ $c_query = $_SESSION['query'];
         }
     </script>
 
-    <div style="padding-left:100px;">
+    <div style="padding-left:150px;">
         <h4 class="text-center"><?php echo $_SESSION['titulo_graf'] ?></h4>
         <h5 class="text-center">Custos de Materiais</h5>
-        <div id="chart1" style="width: 900px; height: 500px;"></div>
+        <div id="chart1" style="width: 400px; height: 300px;"></div>
     </div>
 
-    <br>
 
-    <div style="padding-left:100px;">
+
+    <div style="padding-left:150px;">
         <h4 class="text-center"><?php echo $_SESSION['titulo_graf'] ?></h4>
         <h5 class="text-center">Custos de Serviços</h5>
-        <div id="chart2" style="width: 900px; height: 500px;"></div>
+        <div id="chart2" style="width: 400px; height: 300px;"></div>
     </div>
 
-    <br>
 
-    <div style="padding-left:100px;">
+
+    <div style="padding-left:150px;">
         <h4 class="text-center"><?php echo $_SESSION['titulo_graf'] ?></h4>
         <h5 class="text-center">Custo Total</h5>
-        <div id="chart3" style="width: 900px; height: 500px;"></div>
+        <div id="chart3" style="width: 400px; height: 300px;"></div>
     </div>
 
 
