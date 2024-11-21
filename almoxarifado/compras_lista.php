@@ -149,8 +149,10 @@ include("../links2.php");
                     <td>$c_linha[compras_status]</td>
                     <td>
                     <a class='btn btn-secondary btn-sm' href='/gop/almoxarifado/compras_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>&nbsp;";
+                    echo "<a class='btn btn-primary btn-sm' href='/gop/almoxarifado/compras_emissao.php?id=$c_linha[id]'><span class='glyphicon glyphicon-print'></span> Emitir Pedido</a>&nbsp;";
                     if ($c_linha['compras_status'] == 'Aberta')
                         echo "<a class='btn btn-success btn-sm' href='/gop/almoxarifado/compras_fechamento.php?id=$c_linha[id]'><span class='glyphicon glyphicon-check'></span> Fechamento</a>&nbsp;";
+
                     if ($c_linha['compras_tipo'] == 'Material') {
                         echo "<a class='btn btn-info btn-sm' href='/gop/almoxarifado/compras_materiais_lista.php?id=$c_linha[id]'><span><img src='\gop\images\servicotecnico.png' alt='16' width='20' height='16'></span> Itens</a>
                         <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>";
