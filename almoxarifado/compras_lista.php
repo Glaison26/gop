@@ -144,12 +144,12 @@ include("../links2.php");
                     <td>$c_linha[tipo]</td>
                     <td>$c_linha[compras_tipo]</td>
                   
-                    <td>$c_frete</td>
+                    <td>$c_frete</td>  
                     <td>$c_valor</td>
                     <td>$c_linha[compras_status]</td>
                     <td>
                     <a class='btn btn-secondary btn-sm' href='/gop/almoxarifado/compras_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>&nbsp;";
-                    echo "<a class='btn btn-primary btn-sm' href='/gop/almoxarifado/compras_emissao.php?id=$c_linha[id]'><span class='glyphicon glyphicon-print'></span> Emitir Pedido</a>&nbsp;";
+                    echo "<a class='btn btn-primary btn-sm' href='/gop/almoxarifado/compras_emissao.php?id=$c_linha[id]' target='_blank'><span class='glyphicon glyphicon-print'></span> Emitir Pedido</a>&nbsp;";
                     if ($c_linha['compras_status'] == 'Aberta')
                         echo "<a class='btn btn-success btn-sm' href='/gop/almoxarifado/compras_fechamento.php?id=$c_linha[id]'><span class='glyphicon glyphicon-check'></span> Fechamento</a>&nbsp;";
 
