@@ -21,9 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
    
 
     do {
-     
-       
-
+ 
         // grava dados no banco
 
         // faço a Leitura da tabela com sql
@@ -79,7 +77,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <h5>Campos com (*) são obrigatórios</h5>
         </div>
-
         <br>
         <?php
         if (!empty($msg_erro)) {
