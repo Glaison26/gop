@@ -101,8 +101,8 @@
                                  
                                  <a class='dropdown-item' href='/gop/cadastros/fornecedores/fornecedores_lista.php'><img src='\gop\images\ofornecedor.png' alt='25' width='25' height='25'> Fornecedores </a>
                                  <a class='dropdown-item' href='/gop/cadastros/fabricantes/fabricantes_lista.php'><img src='\gop\images\ofabricante.png' alt='25' width='25' height='25'> Fabricantes</a>
-                                 <a class='dropdown-item' href='/gop/cadastros/executores/executores_lista.php'><img src='\gop\images\oexecutores.png' alt='25' width='25' height='25'> Executores</a>
-                                 <a class='dropdown-item' href='/gop/cadastros/funcoes/funcoes_lista.php'><img src='\gop\images\oemprego.png' alt='25' width='25' height='25'> Funções e Cargos</a>
+                                 <a class='dropdown-item' href='/gop/cadastros/executores/executores_lista.php'><img src='\gop\images\operario.png' alt='25' width='25' height='25'> Executores</a>
+                                 <a class='dropdown-item' href='/gop/cadastros/funcoes/funcoes_lista.php'><img src='\gop\images\profissao.png' alt='25' width='25' height='25'> Funções e Cargos</a>
                                  <a class='dropdown-item' href='/gop/cadastros/oficinas/oficinas_lista.php'><img src='\gop\images\oficina.png' alt='25' width='25' height='25'> Oficinas</a>
                                  <a class='dropdown-item' href='/gop/cadastros/centrodecustos/centrodecusto_lista.php'><img src='\gop\images\centrodecusto.png' alt='25' width='25' height='25'> Centros de Custos</a>
                                  <a class='dropdown-item' href='/gop/cadastros/setores/setores_lista.php'><img src='\gop\images\setores.png' alt='25' width='25' height='25'> Setores</a>
