@@ -28,7 +28,7 @@ campo baixa char(1)
 // 
 trazer custo para material da os na seleção ok
 rotina de perfil de usuários operadores
-dar baixa nos saldos dos materiais na conclusão da ordem de serviço
+dar baixa nos saldos dos materiais na conclusão da ordem de serviço ok
 checar as rotinas de email com os emails da configuração
 
 

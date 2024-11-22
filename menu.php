@@ -190,7 +190,7 @@
                                      <?php
                                         if ($_SESSION['tipo'] == 'Administrador') {
                                             echo "<a class='dropdown-item' href='/gop/cadastros/usuarios/usuarios_lista.php'><img src='\gop\images\usuario.png' alt='25' width='25' height='25'> Cadastro de Usuários</a>
-                                 <a class='dropdown-item' href=''><img src='\gop\images\acessos.png' alt='25' width='25' height='25'> Perfis de Usuários</a>";
+                                 <a class='dropdown-item' href='/gop/cadastros/usuarios/usuarios_perfil_lista.php'><img src='\gop\images\acessos.png' alt='25' width='25' height='25'> Perfis de Usuários</a>";
                                         }
                                         ?>
                                      <a class='dropdown-item' href=''><img src='\gop\images\trocasenha.png' alt='25' width='25' height='25'>Troca de Senha</a>
