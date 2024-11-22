@@ -101,10 +101,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <input type="text" maxlength="120" class="form-control" name="descricao" value="<?php echo $c_descricao; ?>" required>
                 </div>
             </div>
-
-           
-
-
             <?php
             if (!empty($msg_gravou)) {
                 echo "
