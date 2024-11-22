@@ -18,10 +18,10 @@ $msg_erro = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $c_nome = $_POST['descricao'];
-   
+
 
     do {
- 
+
         // grava dados no banco
 
         // faço a Leitura da tabela com sql
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         ?>
         <form method="post">
-            
+
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Descrição (*)</label>
                 <div class="col-sm-6">
@@ -121,8 +121,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             </div>
         </form>
-</div>
 
-</body>
+
+    </body>
+</div>
 
 </html>
