@@ -17,15 +17,24 @@ $msg_gravou = "";
 $msg_erro = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $c_nome = $_POST['descricao'];
-
-
+ 
     do {
 
+        $c_descricao = $_POST['add_descricaoField'];
+        if (isset($_POST['chkativo'])) {
+            $c_ativo = 'S';
+        } else {
+            $c_ativo = 'N';
+        }
+        if (isset($_POST['chkrecursosfisicos'])) {
+            $c_chkrecursosfisicos = 'S';
+        } else {
+            $c_chkrecursosfisicos = 'N';
+        }
         // grava dados no banco
 
         // faço a Leitura da tabela com sql
-        $c_sql = "Insert into usuarios (descricao)" .
+        $c_sql = "Insert into perfil_usuarios (descricao)" .
             "Value ('$c_descricao')";
 
         $result = $conection->query($c_sql);
@@ -92,26 +101,252 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ?>
         <form method="post">
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Descrição (*)</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="120" class="form-control" name="descricao" value="<?php echo $c_descricao; ?>" required>
-                </div>
-            </div>
-            <?php
-            if (!empty($msg_gravou)) {
-                echo "
-                    <div class='row mb-3'>
-                        <div class='offset-sm-3 col-sm-6'>
-                             <div class='alert alert-success alert-dismissible fade show' role='alert'>
-                                <strong>$msg_gravou</strong>
+            <form method="post">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#descricao" aria-controls="home" role="tab" data-toggle="tab">Descrição</a></li>
+                    <li role="presentation"><a href="#cadastro" aria-controls="cadastro" role="tab" data-toggle="tab">Cadastros</a></li>
+                    <li role="presentation"><a href="#servico" aria-controls="servico" role="tab" data-toggle="tab">Serviços</a></li>
+                    <li role="presentation"><a href="#almoxarifado" aria-controls="almoxarifado" role="tab" data-toggle="tab">Almoxarifado</a></li>
+                    <li role="presentation"><a href="#indicadores" aria-controls="indicadores" role="tab" data-toggle="tab">Indicadores</a></li>
+                    <li role="presentation"><a href="#custo" aria-controls="custo" role="tab" data-toggle="tab">Custos da Manutenção</a></li>
 
-                             </div>
-                        </div>     
-                    </div>    
-                ";
-            }
-            ?>
+                </ul>
+                <div class="tab-content">
+                    <!-- aba de descrição -->
+                    <div role="tabpanel" class="tab-pane active" id="descricao">
+                        <div style="padding-top:20px;">
+                            <div class="row mb-3">
+                                <div class="form-check col-sm-2">
+                                    <label class="form-check-label col-form-label">Perfil Ativo</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkativo" id="chkativo" checked>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="mb-3 row">
+                                <label for="add_descricaoField" class="col-md-2 form-label">Descrição do Perfil (*)</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" id="add_descricaoField" name="add_descricaoField" required Value="<?php echo $c_descricao; ?>">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="cadastro">
+                        <div style="padding-top:20px;">
+                            <div class="row mb-3">
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Recursos Físicos</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkrecursosfisicos" id="chkrecursosfisicos" checked>
+                                    </div>
+                                </div>
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Espaços Físicos</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkespacosfisicos" id="chkespacosfisicos" checked>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Fornecedores</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkfornecedores" id="chkfornecedores" checked>
+                                    </div>
+                                </div>
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Fabricantes</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkfabricantes" id="chkfabricantes" checked>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Executores</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkexecutores" id="chkexecutores" checked>
+                                    </div>
+                                </div>
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Cargos e Funções</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkfcargosfuncoes" id="chkfcargosfuncoes" checked>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Oficinas</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkoficinas" id="chkoficinas" checked>
+                                    </div>
+                                </div>
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Centros de Custo</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkcentrosdecusto" id="chkcentrosdecusto" checked>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Setores</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chksetores" id="chksetores" checked>
+                                    </div>
+                                </div>
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Ferramentas</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkferramentas" id="chkferramentas" checked>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Grupos de Recursos</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkgruposrecursos" id="chkgruposrecursos" checked>
+                                    </div>
+                                </div>
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Marcas de Recursos</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkmarcasrecursos" id="chkmarcasrecursos" checked>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">POP</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkpop" id="chkpop" checked>
+                                    </div>
+                                </div>
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">CheckList</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkchecklist" id="chkchecklist" checked>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="servico">
+                        <div style="padding-top:20px;">
+                            <div class="row mb-3">
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Solicitações de Serviço</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chksolicitacoes" id="chksolicitacoes" checked>
+                                    </div>
+                                </div>
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Ordens de Serviços</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkordens" id="chkordens" checked>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Preventivas</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkpreventivas" id="chkpreventivas" checked>
+                                    </div>
+                                </div>
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Ocorrencias Padrões</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkocorrencias" id="chkocorrencias" checked>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Planos de Ação</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkplanosacao" id="chkplanoacao" checked>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="almoxarifado">
+                        <div style="padding-top:20px;">
+                            <div class="row mb-3">
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Cotações</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkcotacao" id="chkcotacao" checked>
+                                    </div>
+                                </div>
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Pedidos de Compra</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkpedidodecompra" id="chkpedidodecompra" checked>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Cadastro de Materiais</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkmateriais" id="chkmateriais" checked>
+                                    </div>
+                                </div>
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Unidades e Medidas</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkunidades" id="chkunidades" checked>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="indicadores">
+                        <div style="padding-top:20px;">
+                            <div class="row mb-3">
+                                <div class="form-check col-sm-4">
+                                    <label class="form-check-label col-form-label">Contagem de Ocorrências</label>
+                                    <div class="col-sm-2">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkcontagem" id="chkcontagem" checked>
+                                    </div>
+                                </div>
+                                <div class="form-check col-sm-4">
+                                    <label class="form-check-label col-form-label">Comparativos de Ocorrências</label>
+                                    <div class="col-sm-2">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkcomparativo" id="chkcomparativo" checked>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="custo">
+                        <div style="padding-top:20px;">
+                        <div class="row mb-3">
+                                <div class="form-check col-sm-4">
+                                    <label class="form-check-label col-form-label">Custos individuais da Manutenção</label>
+                                    <div class="col-sm-2">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkcustoindividual" id="chkcustoindividual" checked>
+                                    </div>
+                                </div>
+                                <div class="form-check col-sm-4">
+                                    <label class="form-check-label col-form-label">Comparativos de Custos</label>
+                                    <div class="col-sm-2">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkcomparativocustos" id="chkcomparativocustos" checked>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
             <hr>
             <div class="row mb-3">
                 <div class="offset-sm-0 col-sm-3">
