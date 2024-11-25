@@ -48,8 +48,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $i_tamsenha = strlen($c_senha);
         if (($i_tamsenha < 8) || ($i_tamsenha > 30)) {
             $msg_erro = "Campo Senha deve ter no mínimo 8 caracteres e no máximo 30 caracteres";
-
             break;
+        }
+        // consiste se senha tem pelo menos 1 caracter numérico
+        if (filter_var($c_senha, FILTER_SANITIZE_NUMBER_INT) == ''){
+            $msg_erro = "Campo Senha deve ter pelo menos (1) caracter numérico";
+            break;
+        }
+        if (ctype_digit($c_senha)){
+            $msg_erro = "Campo Senha deve conter pelo menos uma letra do Alfabeto";
+            break;
+
         }
         // consistencia se já existe login cadastrado
         $c_sql = "select usuarios.login from usuarios where login='$c_login'";
@@ -126,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
             </div>
-            <h5>Campos com (*) são obrigatórios</h5>
+            <h5>Campos com (*) são obrigatórios. A senha do usário deve conter pelo menos 1 letra do alfabeto, 1 caracter numérico, no  mínimo 8 caracteres e no máximo 30 caracteres</h5>
         </div>
 
         <br>
@@ -220,7 +229,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ?>
             <hr>
             <div class="row mb-3">
-                <div class="offset-sm-3 col-sm-3">
+                <div class="offset-sm-0 col-sm-3">
                     <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
                     <a class='btn btn-danger' href='/gop/cadastros/usuarios/usuarios_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
                 </div>

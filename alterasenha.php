@@ -55,6 +55,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $msg_erro = "Campo Senha diferente de senha de confirmação!!";
             break;
         }
+        // consiste se senha tem pelo menos 1 caracter numérico
+        if (filter_var($c_senhanova, FILTER_SANITIZE_NUMBER_INT) == '') {
+            $msg_erro = "Campo Senha deve ter pelo menos (1) caracter numérico";
+            break;
+        }
+        if (ctype_digit($c_senhanova)) {
+            $msg_erro = "Campo Senha deve conter pelo menos uma letra do Alfabeto";
+            break;
+        }
         // criptografo a senha digitada
         $c_senhanova = base64_encode($c_senhanova);
         // grava dados no banco
@@ -100,7 +109,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <h4>Alteração de Senha</h4>
         </div>
     </div>
+    <div class='alert alert-info' role='alert'>
+        <div style="padding-left:15px;">
+            <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
+        </div>
+        <h5>A senha do usário deve conter pelo menos 1 letra do alfabeto, 1 caracter numérico, no mínimo 8 caracteres e no máximo 30 caracteres</h5>
+    </div>
 
     <br>
     <?php
@@ -154,7 +169,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
                 <div class="row mb-3">
-                <div class="offset-sm-3 col-sm-3">
+                    <div class="offset-sm-0 col-sm-3">
                         <button name="btnentra" type="submit" class="btn btn-primary btn-sm"><span class='glyphicon glyphicon-check'></span> Confirma</button>
                         <a class='btn btn-dark btn-sm' href='/gop/menu.php'><span class='glyphicon glyphicon-log-out'></span> Voltar</a>
                     </div>

@@ -72,7 +72,6 @@
                              </h1>
 
                          </div>
-
                      </div>
                  </div>
 
@@ -177,9 +176,9 @@
                                 
                              </div>
                          </li>";
-                         if ($_SESSION['tipo'] == 'Administrador') 
-                         echo
-                         	"<li class='nav-item'><a href='/gop/configuracoes.php' class='nav-link'>Configurações</a></li>
+                                            if ($_SESSION['tipo'] == 'Administrador')
+                                                echo
+                                                "<li class='nav-item'><a href='/gop/configuracoes.php' class='nav-link'>Configurações</a></li>
                         
                          ";
                                         }
