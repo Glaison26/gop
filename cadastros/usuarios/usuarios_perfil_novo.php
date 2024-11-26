@@ -31,10 +31,179 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $c_chkrecursosfisicos = 'N';
         }
+        //
+        if (isset($_POST['chkespacosfisicos'])) {
+            $c_chkespacosfisicos = 'S';
+        } else {
+            $c_chkespacosfisicos = 'N';
+        }
+        //
+        if (isset($_POST['chkfornecedores'])) {
+            $c_chkfornecedores = 'S';
+        } else {
+            $c_chkfornecedores = 'N';
+        }
+        //
+        if (isset($_POST['chkespacosfisicos'])) {
+            $c_chkespacosfisicos = 'S';
+        } else {
+            $c_chkespacosfisicos = 'N';
+        }
+        //
+        if (isset($_POST['chkespacosfisicos'])) {
+            $c_chkespacosfisicos = 'S';
+        } else {
+            $c_chkespacosfisicos = 'N';
+        }
+        //
+        if (isset($_POST['chkespacosfisicos'])) {
+            $c_chkespacosfisicos = 'S';
+        } else {
+            $c_chkespacosfisicos = 'N';
+        }
+        //
+        if (isset($_POST['chkfabricantes'])) {
+            $c_cchkfabricantes = 'S';
+        } else {
+            $c_chkfabricantes = 'N';
+        }
+        //
+        if (isset($_POST['chkexecutores'])) {
+            $c_chkexecutores = 'S';
+        } else {
+            $c_chkexecutores = 'N';
+        }
+        //
+        if (isset($_POST['chkfcargosfuncoes'])) {
+            $c_chkfcargosfuncoes = 'S';
+        } else {
+            $c_chkfcargosfuncoes = 'N';
+        }
+        //
+        if (isset($_POST['chkoficinas'])) {
+            $c_chkoficinas = 'S';
+        } else {
+            $c_chkoficinas = 'N';
+        }
+        //
+        if (isset($_POST['chkcentrosdecusto'])) {
+            $c_chkcentrosdecusto = 'S';
+        } else {
+            $c_chkcentrosdecusto = 'N';
+        }
+        //
+        if (isset($_POST['chksetores'])) {
+            $c_chksetores = 'S';
+        } else {
+            $c_chksetores = 'N';
+        }
+        //
+        if (isset($_POST['chkferramentas'])) {
+            $c_chkferramentas = 'S';
+        } else {
+            $c_chkferramentas = 'N';
+        }
+        //
+        if (isset($_POST['chkgruposrecursos'])) {
+            $c_chkgruposrecursos = 'S';
+        } else {
+            $c_chkgruposrecursos = 'N';
+        }
+        //
+        if (isset($_POST['chkmarcasrecursos'])) {
+            $c_chkmarcasrecursos = 'S';
+        } else {
+            $c_chkmarcasrecursos = 'N';
+        }
+        //
+        if (isset($_POST['chkpop'])) {
+            $c_chkpop = 'S';
+        } else {
+            $c_chkpop = 'N';
+        }
+        //
+        if (isset($_POST['chksolicitacoes'])) {
+            $c_chksolicitacoes = 'S';
+        } else {
+            $c_chksolicitacoes = 'N';
+        }
+        //
+        if (isset($_POST['chkordens'])) {
+            $c_chkordens = 'S';
+        } else {
+            $c_chkordens = 'N';
+        }
+        //
+        if (isset($_POST['chkpreventivas'])) {
+            $c_chkpreventivas = 'S';
+        } else {
+            $c_chkpreventivas = 'N';
+        }
+        //
+        if (isset($_POST['chkocorrencias'])) {
+            $c_chkocorrencias = 'S';
+        } else {
+            $c_chkocorrencias = 'N';
+        }
+        //
+        if (isset($_POST['chkplanoacao'])) {
+            $c_chkplanoacao = 'S';
+        } else {
+            $c_chkplanoacao = 'N';
+        }
+        //
+        if (isset($_POST['chkcotacao'])) {
+            $c_chkespacosfisicos = 'S';
+        } else {
+            $c_chkespacosfisicos = 'N';
+        }
+        //
+        if (isset($_POST['chkpedidodecompra'])) {
+            $c_chkpedidodecompra = 'S';
+        } else {
+            $c_chkpedidodecompra = 'N';
+        }
+        //
+        if (isset($_POST['chkmateriais'])) {
+            $c_chkmateriais = 'S';
+        } else {
+            $c_chkmateriais = 'N';
+        }
+        //
+        if (isset($_POST['chkunidades'])) {
+            $c_chkunidades = 'S';
+        } else {
+            $c_chkunidades = 'N';
+        }
+        //
+        if (isset($_POST['chkcontagem'])) {
+            $c_chkcontagem = 'S';
+        } else {
+            $c_chkcontagem = 'N';
+        }
+        //
+        if (isset($_POST['chkcomparativo'])) {
+            $c_chkcomparativo = 'S';
+        } else {
+            $c_chkcomparativo = 'N';
+        }
+         //
+         if (isset($_POST['chkcustoindividual'])) {
+            $c_chkcustoindividual = 'S';
+        } else {
+            $c_chkcustoindividual = 'N';
+        }
+         //
+         if (isset($_POST['chkcomparativocustos'])) {
+            $c_chkcomparativocustos = 'S';
+        } else {
+            $c_chkcomparativocustos = 'N';
+        }
+        //
         // grava dados no banco
 
         // faço a Leitura da tabela com sql
-        $c_sql = "Insert into perfil_usuarios (descricao)" .
+        $c_sql = "Insert into perfil_usuarios (descricao, )" .
             "Value ('$c_descricao')";
 
         $result = $conection->query($c_sql);
