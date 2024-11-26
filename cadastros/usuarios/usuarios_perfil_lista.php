@@ -35,7 +35,7 @@ include("../../links.php");
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,
-                    'aTargets': [6]
+                    'aTargets': [2]
                 }, {
                     'aTargets': [0],
                     "visible": false
@@ -115,7 +115,7 @@ include("../../links.php");
                     <td>$c_linha[descricao]</td>
           
                     <td>
-                    <a class='btn btn-secondary btn-sm' href='/gop/cadastros/usuarios/perfil_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                    <a class='btn btn-secondary btn-sm' href='/gop/cadastros/usuarios/usuarios_perfil_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
