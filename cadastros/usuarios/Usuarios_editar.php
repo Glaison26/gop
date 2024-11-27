@@ -39,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $c_tipo = $registro['tipo'];
     $c_email = $registro['email'];
     $c_senha2 = base64_decode($registro['senha']);  // senha descriptografia;
+    $i_id_perfil = $registro['id_perfil'];
 
     if ($c_ativo == 'S') {
         $c_statusativo = 'checked';
@@ -55,6 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $c_senha2 = $_POST['senha2'];
     $c_tipo = $_POST['tipo'];
     $c_email = $_POST['email'];
+
     if (!isset($_POST['chkativo'])) {
         $c_ativo = 'N';
     } else {
@@ -76,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
 
             break;
         }
-       
+
         // valido o cpf informado
         if (!validaCPF($c_cpf)) {
             $msg_erro = "CPF Inválido! Favor verificar.";
@@ -85,14 +87,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         }
 
         // consiste se senha tem pelo menos 1 caracter numérico
-        if (filter_var($c_senha, FILTER_SANITIZE_NUMBER_INT) == ''){
+        if (filter_var($c_senha, FILTER_SANITIZE_NUMBER_INT) == '') {
             $msg_erro = "Campo Senha deve ter pelo menos (1) caracter numérico";
             break;
         }
-        if (ctype_digit($c_senha)){
+        if (ctype_digit($c_senha)) {
             $msg_erro = "Campo Senha deve conter pelo menos uma letra do Alfabeto";
             break;
-
         }
         // grava dados no banco
         // criptografo senha
@@ -138,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
             </div>
-            <h5>Campos com (*) são obrigatórios. A senha do usário deve conter pelo menos 1 letra do alfabeto, 1 caracter numérico, no  mínimo 8 caracteres e no máximo 30 caracteres</h5>
+            <h5>Campos com (*) são obrigatórios. A senha do usário deve conter pelo menos 1 letra do alfabeto, 1 caracter numérico, no mínimo 8 caracteres e no máximo 30 caracteres</h5>
         </div>
 
         <br>
@@ -201,6 +202,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                         <option <?php echo $op1 ?>>Operador</option>
                         <option <?php echo $op2 ?>>Solicitante</option>
                         <option <?php echo $op3 ?>>Administrador</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">Perfil</label>
+                <div class="col-sm-3">
+                    <select class="form-select form-select-lg mb-3" id="perfil" name="perfil" required>
+                       
+                        <?php
+                        $c_sql_perfil = "select perfil_usuarios.id, perfil_usuarios.descricao from perfil_usuarios order by perfil_usuarios.descricao";
+                        $result_perfil = $conection->query($c_sql_perfil);
+                        //
+                        while ($registro2 = $result_perfil->fetch_assoc()) {
+                            $op = "";
+                            if ($registro2['id'] == $i_id_perfil)
+                                $op = 'selected';
+                            echo "<option $op>$registro2[descricao]</option>";
+                        }
+                        ?>
+
                     </select>
                 </div>
             </div>
