@@ -93,6 +93,7 @@ include("../../links.php");
                     <th scope="col">Nome</th>
                     <th scope="col">Login</th>
                     <th scope="col">Tipo de acesso</th>
+                    <th scope="col">Perfil</th>
                     <th scope="col">CPF</th>
                     <th scope="col">Ativo</th>
                     <th scope="col">Opções</th>
@@ -104,7 +105,9 @@ include("../../links.php");
                
                 // faço a Leitura da tabela com sql
                 $c_sql = "SELECT usuarios.id, usuarios.nome, usuarios.login, usuarios.senha,
-               usuarios.ativo, usuarios.cpf, usuarios.tipo FROM usuarios ORDER BY usuarios.nome";
+                usuarios.ativo, usuarios.cpf, usuarios.tipo, perfil_usuarios.descricao as perfil
+                FROM usuarios 
+                join perfil_usuarios on usuarios.id_perfil=perfil_usuarios.id ORDER BY usuarios.nome";
                 $result = $conection->query($c_sql);
                 // verifico se a query foi correto
                 if (!$result) {
@@ -127,6 +130,7 @@ include("../../links.php");
                     <td>$c_linha[nome]</td>
                     <td>$c_linha[login]</td>
                     <td>$c_linha[tipo]</td>
+                    <td>$c_linha[perfil]
                     <td>$c_linha[cpf]</td>
                     <td>$c_ativo</td>
                     <td>

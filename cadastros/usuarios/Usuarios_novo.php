@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $c_senha2 = $_POST['senha2'];
     $c_tipo = $_POST['tipo'];
     $c_email = $_POST['email'];
+    $c_perfil = $_POST['perfil'];
     if (!isset($_POST['chkativo'])) {
         $c_ativo = 'N';
     } else {
@@ -80,13 +81,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $msg_erro = "Campo Senha deve ter no mínimo 8 caracteres e no máximo 32 caracteres";
             break;
         }
+        // pego a id do perfil para gravar no usuário
+        
+        $c_sql_perfil = "select id from perfil_usuarios where perfil_usuarios.descricao='$_POST[perfil]'";
+        $result_perfil = $conection->query($c_sql_perfil);
+        $registro = $result_perfil->fetch_assoc();
+        $i_id_perfil = $registro['id'];
         // criptografo a senha digitada
         $c_senha = base64_encode($c_senha);
         // grava dados no banco
 
         // faço a Leitura da tabela com sql
-        $c_sql = "Insert into usuarios (nome,login,senha, ativo, cpf, tipo, email)" .
-            "Value ('$c_nome', '$c_login', '$c_senha', '$c_ativo','$c_cpf', '$c_tipo', '$c_email' )";
+        $c_sql = "Insert into usuarios (nome,login,senha, ativo, cpf, tipo, email, id_perfil)" .
+            "Value ('$c_nome', '$c_login', '$c_senha', '$c_ativo','$c_cpf', '$c_tipo', '$c_email','$i_id_perfil')";
 
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
@@ -183,6 +190,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <option>Operador</option>
                         <option>Solicitante</option>
                         <option>Administrador</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">Perfil</label>
+                <div class="col-sm-3">
+                    <select class="form-select form-select-lg mb-3" id="perfil" name="perfil" required>
+                        <option></option>
+                        <?php
+                        $c_sql_perfil = "select perfil_usuarios.id, perfil_usuarios.descricao from perfil_usuarios order by perfil_usuarios.descricao";
+                        $result_perfil = $conection->query($c_sql_perfil);
+                        while ($registro = $result_perfil->fetch_assoc()){
+                            echo "<option>$registro[descricao]</option>";
+                        }
+                        ?>
+                       
                     </select>
                 </div>
             </div>

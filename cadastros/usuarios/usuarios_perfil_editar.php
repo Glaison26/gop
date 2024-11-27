@@ -374,8 +374,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     do {
       
         // gravo os dados com sql
-        $c_sql = "Update perfil_usuarios set descricao='$c_descricao'
-                where id='$c_id'";
+        $c_sql = "Update perfil_usuarios set descricao='$c_descricao', cadastros_recursosfisicos='$c_chkrecursosfisicos', cadastros_espacosfisicos='$c_chkespacosfisicos',
+        cadastros_fornecedores='$c_chkfornecedores', cadastros_fabricantes='$c_chkfabricantes', cadastros_executores='$c_chkexecutores',
+        cadastros_cargosfuncoes='$c_chkfcargosfuncoes',cadastros_oficinas='$c_chkoficinas', cadastro_centrosdecusto='$c_chkcentrosdecusto',
+        cadastros_setores='$c_chksetores', cadastros_ferramentas='$c_chkferramentas', cadastros_grupos='$c_chkgruposrecursos',
+        cadastros_marcas='$c_chkmarcasrecursos', cadastros_pop='$c_chkpop', cadastros_checklist='$c_chkchecklist',
+        servicos_solicitacoes='$c_chksolicitacoes', servicos_ordens='$c_chkordens',servicos_preventivas='$c_chkpreventivas',
+        servicos_ocorrencias_padroes='$c_chkocorrencias',servicos_plano_acao='$c_chkplanoacao',
+        almoxarifado_cotacoes='$c_chkcotacao', almoxarifado_pedidodecompra='$c_chkpedidodecompra', almoxarifado_materiais='$c_chkmateriais',
+        almoxarifado_unidadesmedidas='$c_chkunidades', indicadores_ocorrencias='$c_chkcontagem', indicadores_comparativos='$c_chkcomparativo',
+        custos_ocorrencias='$c_chkcustoindividual', custos_comparativos='$c_chkcomparativocustos' 
+        where id='$c_id'";
         //echo $c_sql;
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
@@ -384,7 +393,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         // fim de gravação
         $msg_gravou = "Dados Gravados com Sucesso!!";
-        //header('location: /gop/cadastros/usuarios/usuarios_perfil_lista.php');
+        header('location: /gop/cadastros/usuarios/usuarios_perfil_lista.php');
     } while (false);
 }
 ?>
