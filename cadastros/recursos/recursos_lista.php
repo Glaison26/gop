@@ -11,7 +11,7 @@ $i_id_usuario = $_SESSION["id_usuario"];
 $c_sql_acesso = "select usuarios.tipo, perfil_usuarios.cadastros_recursosfisicos FROM usuarios
 JOIN perfil_usuarios ON usuarios.id_perfil=perfil_usuarios.id
 WHERE usuarios.id='$i_id_usuario'";
-echo $c_sql_acesso;
+
 $result_acesso = $conection->query($c_sql_acesso);
 $registro_acesso = $result_acesso->fetch_assoc();
 if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_recursosfisicos'] == 'N') {

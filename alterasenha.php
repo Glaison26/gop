@@ -4,8 +4,10 @@ session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
-
+include('links2.php');
+include('conexao.php');
 include_once "lib_gop.php";
+
 
 
 $c_senhaatual = "";
@@ -139,12 +141,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form method="post" class="row g-3">
             </br>
             </br>
-            <div class="panel panel-primary class">
+          
                 <div class="panel-heading text-center">
                     <h5>Troca de Senha </h5>
                 </div>
-            </div>
-
+           
             <div class="well" style="width:400px">
                 <div class="form-group row" class="form-control">
                     <label class="col-sm-6 col-form-label">Senha Atual</label>
@@ -169,9 +170,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
                 <div class="row mb-3">
-                    <div class="offset-sm-0 col-sm-3">
-                        <button name="btnentra" type="submit" class="btn btn-primary btn-sm"><span class='glyphicon glyphicon-check'></span> Confirma</button>
-                        <a class='btn btn-dark btn-sm' href='/gop/menu.php'><span class='glyphicon glyphicon-log-out'></span> Voltar</a>
+                    <div class="offset-sm-0 col-sm-6">
+                        <button name="btnentra" type="submit" class="btn btn-success btn-sm"><span class='glyphicon glyphicon-check'></span> Confirma</button>
+                        <a class='btn btn-primary btn-sm' href='/gop/menu.php'><span class='glyphicon glyphicon-log-out'></span> Voltar</a>
                     </div>
 
                 </div>
