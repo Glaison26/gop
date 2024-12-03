@@ -5,7 +5,7 @@ if (!isset($_SESSION['newsession'])) {
 }
 
 if (!isset($_GET["id"])) {
-    header('location: /gop/cadastros/grupos/grupos_lista.php');
+    header('location: /gop/cadastros/tipos/tipos_lista.php');
     exit;
 }
 $c_id = "";
@@ -22,9 +22,9 @@ if ($conection->connect_error) {
     die("Erro na Conexão com o Banco de Dados!! " . $conection->connect_error);
 }
 // Exclusão do registro
-$c_sql = "delete from grupos where id=$c_id";
+$c_sql = "delete from tipos where id=$c_id";
 echo $c_sql;
 echo $c_id;
 $result = $conection->query($c_sql);
 
-header('location: /gop/cadastros/grupos/grupos_lista.php');
+header('location: /gop/cadastros/tipos/tipos_lista.php');

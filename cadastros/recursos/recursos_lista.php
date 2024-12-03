@@ -109,7 +109,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_recurs
                     <th scope="col">Fornecedor</th>
                     <th scope="col">Marca</th>
                     <th scope="col">Setor</th>
-                    <th scope="col">Grupo</th>
+                    <th scope="col">Tipo</th>
                     <th scope="col">Opções</th>
                 </tr>
             </thead>
@@ -118,12 +118,12 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_recurs
 
                 // faço a Leitura da tabela com sql
                 $c_sql = "SELECT recursos.id, recursos.descricao, recursos.patrimonio, fabricantes.descricao as fabricante, fornecedores.descricao as fornecedor," .
-                    " marcas.descricao as marca, grupos.descricao as grupo, setores.descricao as setor" .
+                    " marcas.descricao as marca, tipos.descricao as tipo, setores.descricao as setor" .
                     " FROM recursos" .
                     " JOIN fabricantes ON recursos.id_fabricante=fabricantes.id" .
                     " JOIN fornecedores ON recursos.id_fornecedor=fornecedores.id" .
                     " JOIN marcas ON recursos.id_marca=marcas.id" .
-                    " JOIN grupos ON recursos.id_grupo=grupos.id" .
+                    " JOIN tipos ON recursos.id_tipo=tipos.id" .
                     " JOIN setores ON recursos.id_setor=setores.id" .
                     " ORDER BY recursos.descricao";
 
@@ -145,7 +145,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_recurs
                     <td>$c_linha[fornecedor]</td>
                     <td>$c_linha[marca]</td>
                     <td>$c_linha[setor]</td>
-                    <td>$c_linha[grupo]</td>
+                    <td>$c_linha[tipo]</td>
                    
                     <td>
                     <a class='btn btn-secondary btn-sm' href='/gop/cadastros/recursos/recursos_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>

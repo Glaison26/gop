@@ -4,7 +4,7 @@ if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
 include("../../conexao.php");
-include("../../links.php");
+include("../../links2.php");
 ?>
 <!doctype html>
 <html lang="en">
@@ -14,7 +14,7 @@ include("../../links.php");
         function confirmacao(id) {
             var resposta = confirm("Deseja remover esse registro?");
             if (resposta == true) {
-                window.location.href = "/gop/cadastros/grupos/grupos_excluir.php?id=" + id;
+                window.location.href = "/gop/cadastros/tipos/tipos_excluir.php?id=" + id;
             }
         }
     </script>
@@ -28,13 +28,13 @@ include("../../links.php");
 
     <script>
         $(document).ready(function() {
-            $('.tabgrupos').DataTable({
+            $('.tabtipos').DataTable({
                 // 
                 "iDisplayLength": -1,
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,
-                    'aTargets': [2]
+                    'aTargets': [3]
                 }, {
                     'aTargets': [0],
                     "visible": true
@@ -76,14 +76,16 @@ include("../../links.php");
         $(document).on('submit', '#frmadd', function(e) {
             e.preventDefault();
             var c_descricao = $('#add_descricaoField').val();
+            var c_classe = $('#add_classeField').val();
 
             if (c_descricao != '') {
 
                 $.ajax({
-                    url: "grupos_novo.php",
+                    url: "tipos_novo.php",
                     type: "post",
                     data: {
-                        c_descricao: c_descricao
+                        c_descricao: c_descricao,
+                        c_classe:c_classe
 
                     },
                     success: function(data) {
@@ -124,6 +126,7 @@ include("../../links.php");
 
                 $('#up_idField').val(data[0]);
                 $('#up_descricaoField').val(data[1]);
+                $('#up_classeField').val(data[2]);
 
 
             });
@@ -137,15 +140,17 @@ include("../../links.php");
             e.preventDefault();
             var c_id = $('#up_idField').val();
             var c_descricao = $('#up_descricaoField').val();
+            var c_classe = $('#up_classeField').val();
 
             if (c_descricao != '') {
 
                 $.ajax({
-                    url: "grupos_editar.php",
+                    url: "tipos_editar.php",
                     type: "post",
                     data: {
                         c_id: c_id,
-                        c_descricao: c_descricao
+                        c_descricao: c_descricao,
+                        c_classe:c_classe
                     },
                     success: function(data) {
                         var json = JSON.parse(data);
@@ -169,23 +174,24 @@ include("../../links.php");
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
-            <h5>Lista de Grupos<h5>
+            <h5>Lista de Tipos de Recursos Físicos<h5>
         </div>
     </div>
 
     <div class="container-fluid">
         <br>
-        <button type="button" title="Inclusão de Novo Grupo" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
+        <button type="button" title="Inclusão de Novo Tipo" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
             Incluir
         </button>
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
-        <table class="table table display table-bordered tabgrupos">
+        <table class="table table display table-bordered tabtipos">
             <thead class="thead">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Descrição</th>
+                    <th scope="col">Classe</th>
                     <th scope="col">Opções</th>
                 </tr>
             </thead>
@@ -193,7 +199,7 @@ include("../../links.php");
                 <?php
 
                 // faço a Leitura da tabela com sql
-                $c_sql = "SELECT grupos.id, grupos.descricao FROM grupos ORDER BY grupos.descricao";
+                $c_sql = "SELECT tipos.id, tipos.descricao, tipos.classe FROM tipos ORDER BY tipos.descricao";
                 $result = $conection->query($c_sql);
                 // verifico se a query foi correto
                 if (!$result) {
@@ -207,8 +213,9 @@ include("../../links.php");
                     <tr class='info'>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descricao]</td>
+                    <td>$c_linha[classe]</td>
                     <td>
-                    <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Grupos'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
+                    <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Tipo'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
@@ -225,7 +232,7 @@ include("../../links.php");
         <div class="modal-dialog modal-dialog-centered" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Inclusão de novo Grupo</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Inclusão de novo Tipo</h4>
                 </div>
                 <div class="modal-body">
                     <div class='alert alert-warning' role='alert'>
@@ -236,6 +243,19 @@ include("../../links.php");
                             <label for="add_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" id="add_descricaoField" name="add_dscricaoField" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label">Classe (*)</label>
+                            <div class="col-sm-6">
+                                <select class="form-select form-select-lg mb-3" id="add_classeField" name="add_classeField" required>
+                                    <option></option>
+                                    <option>Clinico</option>
+                                    <option>Infra Estrutura</option>
+                                    <option>Médico</option>
+                                    <option>Operacional</option>
+
+                                </select>
                             </div>
                         </div>
 
@@ -257,7 +277,7 @@ include("../../links.php");
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Editar Grupo</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Editar Tipo</h4>
                 </div>
                 <div class="modal-body">
                     <div class='alert alert-warning' role='alert'>
@@ -269,6 +289,18 @@ include("../../links.php");
                             <label for="up_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" id="up_descricaoField" name="up_dscricaoField" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label">Classe (*)</label>
+                            <div class="col-sm-6">
+                                <select class="form-select form-select-lg mb-3" id="up_classeField" name="up_classeField" required>
+                                    <option>Clinico</option>
+                                    <option>Infra Estrutura</option>
+                                    <option>Médico</option>
+                                    <option>Operacional</option>
+
+                                </select>
                             </div>
                         </div>
 

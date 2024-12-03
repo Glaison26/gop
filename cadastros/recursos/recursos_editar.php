@@ -25,7 +25,7 @@ $d_dataaquisicao = '';
 $c_ativo = '';
 $c_motivo = '';
 $c_anvisa = '';
-$c_grupo = '';
+$c_tipo = '';
 $c_marca = '';
 $c_fornecedor = '';
 $c_fabricante = '';
@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     // variaveis para montagem de combobox
     $i_fornecedor = $registro['id_fornecedor'];
     $i_fabricante = $registro['id_fabricante'];
-    $i_grupo = $registro['id_grupo'];
+    $i_tipo = $registro['id_tipo'];
     $i_espacofisico = $registro['id_espacofisico'];
     $i_centrodecusto = $registro['id_centrodecusto'];
     $i_oficina = $registro['id_oficina'];
@@ -134,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $c_ativo = $_POST['ativo'];
     $c_motivo = $_POST['motivo'];
     $c_anvisa = $_POST['anvisa'];
-    $c_grupo = $_POST['grupo'];
+    $c_tipo = $_POST['tipo'];
     $c_marca = $_POST['marca'];
     $c_fornecedor = $_POST['fornecedor'];
     $c_fabricante = $_POST['fabricante'];
@@ -185,11 +185,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         // monto sql para atabelas primarias para pegar a id
         // localizo o id do valor do combobox de centro de custos
         // select da tabela de oficinas para pegar codigo
-        // verifico a id do grupo selecionado no combo
-        $c_sql_secundario = "SELECT grupos.id FROM grupos where grupos.descricao='$c_grupo' ORDER BY grupos.descricao";
+        // verifico a id do tipo selecionado no combo
+        $c_sql_secundario = "SELECT tipos.id FROM tipos where tipos.descricao='$c_tipo' ORDER BY tipos.descricao";
         $result_secundario = $conection->query($c_sql_secundario);
         $registro_secundario = $result_secundario->fetch_assoc();
-        $i_grupo = $registro_secundario['id'];
+        $i_tipo = $registro_secundario['id'];
         // verifico a id do marca selecionado no combo 
         $c_sql_secundario = "SELECT marcas.id FROM marcas where marcas.descricao='$c_marca' ORDER BY marcas.descricao";
         $result_secundario = $conection->query($c_sql_secundario);
@@ -228,7 +228,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         // grava dados no banco
         // faço a Leitura da tabela com sql
         $c_sql = "Update recursos" .
-            " SET id_espacofisico='$i_espaco', id_fabricante='$i_fabricante', id_fornecedor='$i_fornecedor', id_grupo='$i_grupo', id_centrodecusto='$i_centrodecusto'," .
+            " SET id_espacofisico='$i_espaco', id_fabricante='$i_fabricante', id_fornecedor='$i_fornecedor', id_tipo='$i_tipo', id_centrodecusto='$i_centrodecusto'," .
             " id_oficina='$i_oficina', id_setor='$i_setor', id_marca='$i_marca', descricao='$c_descricao', patrimonio='$c_patrimonio'," .
             " modelo='$c_modelo', numeroserie='$c_numeroserie', estado='$c_estado', notafiscal='$c_notafiscal',
              datacadastro='$d_dataaquisicao', datagarantia='$d_datagarantia'," .
@@ -480,16 +480,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Grupo </label>
+                            <label class="col-sm-3 col-form-label">Tipo </label>
                             <div class="col-sm-4">
-                                <select class="form-select form-select-lg mb-3" id="grupo" name="grupo">
+                                <select class="form-select form-select-lg mb-3" id="tipo" name="tipo">
                                     <?php
-                                    // select da tabela de grupos
-                                    $c_sql_grupo = "SELECT grupos.id, grupos.descricao FROM grupos ORDER BY grupos.descricao";
-                                    $result_grupo = $conection->query($c_sql_grupo);
-                                    while ($c_linha = $result_grupo->fetch_assoc()) {
+                                    // select da tabela de tipos
+                                    $c_sql_tipo = "SELECT tipos.id, tipos.descricao FROM tipos ORDER BY tipos.descricao";
+                                    $result_tipo = $conection->query($c_sql_tipo);
+                                    while ($c_linha = $result_tipo->fetch_assoc()) {
                                         $op = '';
-                                        if ($c_linha['id'] == $i_grupo) {
+                                        if ($c_linha['id'] == $i_tipo) {
                                             $op = 'selected';
                                         } else {
                                             $op = '';

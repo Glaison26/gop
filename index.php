@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $c_linha = $result->fetch_assoc();
     if ($c_login == 'Glaison') {
         $_SESSION["newsession"] = "gop";
+        $_SESSION["id_usuario"] = 16;
         $_SESSION['c_usuario'] = $c_login;
         $_SESSION['tipo'] = 'Administrador';
         header('location: /gop/menu.php');

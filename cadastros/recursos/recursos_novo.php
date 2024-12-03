@@ -38,7 +38,7 @@ function carregadados()
     $c_ativo = $_POST['ativo'];
     $c_motivo = $_POST['motivo'];
     $c_anvisa = $_POST['anvisa'];
-    $c_grupo = $_POST['grupo'];
+    $c_tipo = $_POST['tipo'];
     $c_marca = $_POST['marca'];
     $c_fornecedor = $_POST['fornecedor'];
     $c_fabricante = $_POST['fabricante'];
@@ -69,7 +69,7 @@ $d_dataaquisicao = '';
 $c_ativo = '';
 $c_motivo = '';
 $c_anvisa = '';
-$c_grupo = '';
+$c_tipo = '';
 $c_marca = '';
 $c_fornecedor = '';
 $c_fabricante = '';
@@ -117,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $c_ativo = $_POST['ativo'];
     $c_motivo = $_POST['motivo'];
     $c_anvisa = $_POST['anvisa'];
-    $c_grupo = $_POST['grupo'];
+    $c_tipo = $_POST['tipo'];
     $c_marca = $_POST['marca'];
     $c_fornecedor = $_POST['fornecedor'];
     $c_fabricante = $_POST['fabricante'];
@@ -166,11 +166,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
 
-        // verifico a id do grupo selecionado no combo
-        $c_sql_secundario = "SELECT grupos.id FROM grupos where grupos.descricao='$c_grupo' ORDER BY grupos.descricao";
+        // verifico a id do tipo selecionado no combo
+        $c_sql_secundario = "SELECT tipos.id FROM tipos where tipos.descricao='$c_tipo' ORDER BY tipos.descricao";
         $result_secundario = $conection->query($c_sql_secundario);
         $registro_secundario = $result_secundario->fetch_assoc();
-        $i_grupo = $registro_secundario['id'];
+        $i_tipo = $registro_secundario['id'];
         // verifico a id do marca selecionado no combo 
         $c_sql_secundario = "SELECT marcas.id FROM marcas where marcas.descricao='$c_marca' ORDER BY marcas.descricao";
         $result_secundario = $conection->query($c_sql_secundario);
@@ -209,11 +209,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // grava dados no banco
 
         // faço a inclusão da tabela com sql
-        $c_sql = "INSERT INTO recursos (id_espacofisico, id_fabricante, id_fornecedor, id_grupo, id_centrodecusto, id_oficina, id_setor, id_marca, descricao, patrimonio," .
+        $c_sql = "INSERT INTO recursos (id_espacofisico, id_fabricante, id_fornecedor, id_tipo, id_centrodecusto, id_oficina, id_setor, id_marca, descricao, patrimonio," .
             " modelo, numeroserie, estado, notafiscal, datacadastro, datagarantia, valoraquisicao, valordepreciado, ultimapreventiva, ultimamanutencao," .
             " dataaquisicao, ativo, motivoinativo, reganvisa, obs, tipo_comodato, tipo_medico, tipo_alugado, 
             empresa_locacao, medico, empresa_comodato, mantenabilidade,treinamento) 
-            VALUES ('$i_espaco', '$i_fabricante', '$i_fornecedor', '$i_grupo', '$i_centrodecusto', '$i_oficina', '$i_setor'," .
+            VALUES ('$i_espaco', '$i_fabricante', '$i_fornecedor', '$i_tipo', '$i_centrodecusto', '$i_oficina', '$i_setor'," .
             " '$i_marca', '$c_descricao', '$c_patrimonio' ,'$c_modelo', '$c_numeroserie', '$c_estado', '$c_notafiscal', '$d_datacadastro', '$d_datagarantia', '$n_valoraquisicao'," .
             " '$n_valordepreciado', '$d_ultimapreventiva', '$d_dataultimamanutencao', '$d_dataaquisicao','$c_ativo','$c_motivo', '$c_anvisa', '$c_obs',
             '$c_comodato','$c_equip_medico','$c_alugado', '$c_empresa_loc','$c_medico','$c_emp_comodato', '$c_mantenabilidade', '$c_treinamento')";
@@ -443,14 +443,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Grupo </label>
+                            <label class="col-sm-3 col-form-label">Tipo </label>
                             <div class="col-sm-4">
-                                <select class="form-select form-select-lg mb-3" id="grupo" name="grupo">
+                                <select class="form-select form-select-lg mb-3" id="tipo" name="tipo">
                                     <?php
-                                    // select da tabela de grupos
-                                    $c_sql_grupo = "SELECT grupos.id, grupos.descricao FROM grupos ORDER BY grupos.descricao";
-                                    $result_grupo = $conection->query($c_sql_grupo);
-                                    while ($c_linha = $result_grupo->fetch_assoc()) {
+                                    // select da tabela de tipos
+                                    $c_sql_tipo = "SELECT tipos.id, tipos.descricao FROM tipos ORDER BY tipos.descricao";
+                                    $result_tipo = $conection->query($c_sql_tipo);
+                                    while ($c_linha = $result_tipo->fetch_assoc()) {
                                         echo "  
                           <option>$c_linha[descricao]</option>
                         ";
