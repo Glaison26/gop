@@ -185,13 +185,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             $op1 = '';
             $op2 = '';
             $op3 = '';
-            if (($c_tipo = '') || ($c_tipo = 'Operador')) {
+            if (($c_tipo == '') || ($c_tipo == 'Operador')) {
                 $op1 = 'Selected';
             }
-            if ($c_tipo = 'Solicitante') {
+            if ($c_tipo == 'Solicitante') {
                 $op2 = 'Selected';
             }
-            if ($c_tipo = 'Administrador') {
+            if ($c_tipo == 'Administrador') {
                 $op3 = 'Selected';
             }
             ?>

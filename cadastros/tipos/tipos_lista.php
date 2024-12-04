@@ -77,6 +77,7 @@ include("../../links2.php");
             e.preventDefault();
             var c_descricao = $('#add_descricaoField').val();
             var c_classe = $('#add_classeField').val();
+            var c_horas = $('#add_horasField').val();
 
             if (c_descricao != '') {
 
@@ -85,7 +86,8 @@ include("../../links2.php");
                     type: "post",
                     data: {
                         c_descricao: c_descricao,
-                        c_classe:c_classe
+                        c_classe:c_classe,
+                        c_horas:c_horas
 
                     },
                     success: function(data) {
@@ -127,8 +129,7 @@ include("../../links2.php");
                 $('#up_idField').val(data[0]);
                 $('#up_descricaoField').val(data[1]);
                 $('#up_classeField').val(data[2]);
-
-
+                $('#up_horasField').val(data[3]);
             });
         });
     </script>
@@ -141,6 +142,7 @@ include("../../links2.php");
             var c_id = $('#up_idField').val();
             var c_descricao = $('#up_descricaoField').val();
             var c_classe = $('#up_classeField').val();
+            var c_horas = $('#up_horasField').val();
 
             if (c_descricao != '') {
 
@@ -150,7 +152,8 @@ include("../../links2.php");
                     data: {
                         c_id: c_id,
                         c_descricao: c_descricao,
-                        c_classe:c_classe
+                        c_classe:c_classe,
+                        c_horas:c_horas
                     },
                     success: function(data) {
                         var json = JSON.parse(data);
@@ -192,6 +195,7 @@ include("../../links2.php");
                     <th scope="col">#</th>
                     <th scope="col">Descrição</th>
                     <th scope="col">Classe</th>
+                    <th scope="col">Horas em Operação</th>
                     <th scope="col">Opções</th>
                 </tr>
             </thead>
@@ -199,7 +203,7 @@ include("../../links2.php");
                 <?php
 
                 // faço a Leitura da tabela com sql
-                $c_sql = "SELECT tipos.id, tipos.descricao, tipos.classe FROM tipos ORDER BY tipos.descricao";
+                $c_sql = "SELECT tipos.id, tipos.descricao, tipos.classe, tipos.horas_operacao FROM tipos ORDER BY tipos.descricao";
                 $result = $conection->query($c_sql);
                 // verifico se a query foi correto
                 if (!$result) {
@@ -208,12 +212,13 @@ include("../../links2.php");
 
                 // insiro os registro do banco de dados na tabela 
                 while ($c_linha = $result->fetch_assoc()) {
-
+                      
                     echo "
                     <tr class='info'>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descricao]</td>
                     <td>$c_linha[classe]</td>
+                    <td>$c_linha[horas_operacao]</td>
                     <td>
                     <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Tipo'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
@@ -254,8 +259,13 @@ include("../../links2.php");
                                     <option>Infra Estrutura</option>
                                     <option>Médico</option>
                                     <option>Operacional</option>
-
                                 </select>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="add_descricaoField" class="col-md-3 form-label">Horas em Operação (*)</label>
+                            <div class="col-md-4">
+                                <input type="number" class="form-control" id="add_horasField" name="add_horasField">
                             </div>
                         </div>
 
@@ -301,6 +311,12 @@ include("../../links2.php");
                                     <option>Operacional</option>
 
                                 </select>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="add_descricaoField" class="col-md-3 form-label">Horas em Operação (*)</label>
+                            <div class="col-md-4">
+                                <input type="number" class="form-control" id="up_horasField" name="up_horasField">
                             </div>
                         </div>
 

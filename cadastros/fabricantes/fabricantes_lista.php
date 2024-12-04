@@ -5,7 +5,19 @@ if (!isset($_SESSION['newsession'])) {
 }
 include("../../conexao.php");
 include("../../links.php");
+// verifico se usuário e operador de tem autorização de acesso
+$i_id_usuario = $_SESSION["id_usuario"];
+$c_sql_acesso = "select usuarios.tipo, perfil_usuarios.cadastros_fabricantes FROM usuarios
+JOIN perfil_usuarios ON usuarios.id_perfil=perfil_usuarios.id
+WHERE usuarios.id='$i_id_usuario'";
+$result_acesso = $conection->query($c_sql_acesso);
+$registro_acesso = $result_acesso->fetch_assoc();
+if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_fabricantes'] == 'N') {
+   header('location: /gop/acesso.php');
+}
 ?>
+
+
 <!doctype html>
 <html lang="en">
 

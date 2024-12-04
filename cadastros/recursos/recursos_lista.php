@@ -16,7 +16,7 @@ $result_acesso = $conection->query($c_sql_acesso);
 $registro_acesso = $result_acesso->fetch_assoc();
 if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_recursosfisicos'] == 'N') {
    
-    header('location: /gop/menu.php');
+    header('location: /gop/acesso.php');
 }
 
 ?>
