@@ -135,7 +135,7 @@ include("../../links.php");
                     <td>$c_ativo</td>
                     <td>
                     <a class='btn btn-secondary btn-sm' href='/gop/cadastros/usuarios/Usuarios_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
-                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
+                    
                     </td>
 
                     </tr>
@@ -149,25 +149,6 @@ include("../../links.php");
     </div>
 </body>
 
-<div class="modal fade" id="deleteModal" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Confirma Exclusão</h4>
-                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-            </div>
-            <div class="modal-body">
-                <label>
-                    <h4>Confirma Exclusão do Registro?<h4>
-                </label>
-            </div>
-            <div class="modal-footer">
 
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancela</button>
-                <a href="deletar?id=1" onclick="return confirm('Tem certeza que deseja deletar este registro?')">Excluir</a>
-            </div>
-        </div>
-    </div>
-</div>
 
 </html>
