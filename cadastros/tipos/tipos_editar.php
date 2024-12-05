@@ -11,9 +11,10 @@ include("../../conexao.php");
 $c_id = $_POST['c_id'];
 $c_descricao = rtrim($_POST['c_descricao']);
 $c_classe = $_POST['c_classe'];
+$c_horas = $_POST['c_horas'];
 
 $c_sql = "Update tipos" .
-    " SET descricao = '$c_descricao', classe='$c_classe' where id=$c_id";
+    " SET descricao = '$c_descricao', classe='$c_classe', horas_operacao='$c_horas' where id=$c_id";
 
 $result = $conection->query($c_sql);
 
