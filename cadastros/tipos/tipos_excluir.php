@@ -1,31 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-</head>
-
-<body>
-    <div class="panel panel-primary class">
-        <div class="panel-heading text-center">
-            <h4>GOP - Gestão Operacional</h4>
-            <h5>Erro de Exclusão de Registro<h5>
-        </div>
-    </div>
-    <div class='alert alert-info' role='alert'>
-        <div style="padding-left:15px;">
-            <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
-
-        </div>
-        <h5>Houve um erro ao excluir o registro selecionado!</h5>
-    </div>
-
-</body>
-
-</html>
-
 
 <?php // controle de acesso ao formulário
 session_start();
@@ -42,6 +14,7 @@ $c_id = $_GET["id"];
 // conexão dom o banco de dados
 include("../../conexao.php");
 include("../../links2.php");
+include('../../cabec_exclusao.php');
 
 // Exclusão do registro
 // verico se elxistem recursos com o tipo no cadastro
@@ -54,5 +27,7 @@ if ($registro['nregistros'] == 0) {
     header('location: /gop/cadastros/tipos/tipos_lista.php');
 } else {
     echo "<script>alert('Não é possivel excluir registro!')</script>";
-    echo "<a class='btn btn-secondary' href='/gop/cadastros/tipos/tipos_lista.php'><span class='glyphicon glyphicon-off'></span> Voltar</a>";
+    echo "<div class='container-fluid'>
+     <a class='btn btn-primary' href='/gop/cadastros/tipos/tipos_lista.php'><span class='glyphicon glyphicon-off'></span> Voltar a Lista</a>
+    </div>";
 }
