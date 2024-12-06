@@ -11,17 +11,10 @@ if (!isset($_GET["id"])) {
 }
 $c_id = "";
 $c_id = $_GET["id"];
-// conexão dom o banco de dados
-$servername = $_SESSION['local'];
-$username = $_SESSION['usuario'];
-$password =  $_SESSION['senha'];
-$database = $_SESSION['banco'];
-// criando a conexão com banco de dados
-$conection = new mysqli($servername, $username, $password, $database);
-// checo erro na conexão
-if ($conection->connect_error) {
-    die("Erro na Conexão com o Banco de Dados!! " . $conection->connect_error);
-}
+include("../../conexao.php");
+include("../../links2.php");
+include('../../cabec_exclusao.php');
+
 // Exclusão do registro
 $c_sql = "delete from setores where id=$c_id";
 echo $c_sql;

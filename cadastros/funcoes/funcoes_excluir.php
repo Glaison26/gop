@@ -11,19 +11,21 @@ if (!isset($_GET["id"])) {
 $c_id = "";
 $c_id = $_GET["id"];
 // conexão dom o banco de dados
-$servername = $_SESSION['local'];
-$username = $_SESSION['usuario'];
-$password =  $_SESSION['senha'];
-$database = $_SESSION['banco'];
-// criando a conexão com banco de dados
-$conection = new mysqli($servername, $username, $password, $database);
-// checo erro na conexão
-if ($conection->connect_error) {
-    die("Erro na Conexão com o Banco de Dados!! " . $conection->connect_error);
-}
+include("../../conexao.php");
+include("../../links2.php");
+include('../../cabec_exclusao.php');
 // Exclusão do registro
-$c_sql = "delete from funcoes where id=$c_id";
-echo $c_sql;
-echo $c_id;
-$result = $conection->query($c_sql);
-header('location: /gop/cadastros/funcoes/funcoes_lista.php');
+// verico se elxistem recursos com o tipo no cadastro
+$c_sql_conta = "select count(*) nregistros from executores where id_funcao=$c_id";  // verifico em executores
+$result = $conection->query($c_sql_conta);
+$registro = $result->fetch_assoc();
+if ($registro['nregistros'] == 0) {
+    $c_sql = "delete from funcoes where id=$c_id";
+    $result = $conection->query($c_sql);
+    header('location: /gop/cadastros/funcoes/funcoes_lista.php');
+} else {
+    echo "<script>alert('Não é possivel excluir registro!')</script>";
+    echo "<div class='container-fluid'>
+     <a class='btn btn-primary' href='/gop/cadastros/funcoes/funcoes_lista.php'><span class='glyphicon glyphicon-off'></span> Voltar a Lista</a>
+    </div>";
+}

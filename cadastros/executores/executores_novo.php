@@ -213,7 +213,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Tipo Executor </label>
                 <div class="col-sm-2">
-                    <select class="form-select form-select-lg mb-3" id="tipo" name="tipo">
+                    <select class="form-select form-select-lg mb-3" id="tipo" name="tipo" required>
+                        <option></option>
                         <option>Juridica</option>
                         <option>Física</option>
                     </select>
@@ -410,9 +411,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 ";
             }
             ?>
-            <br>
+            <hr>
             <div class="row mb-3">
-                <div class="offset-sm-3 col-sm-3">
+                <div class="offset-sm-0 col-sm-3">
                     <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
                     <a class='btn btn-danger' href='/gop/cadastros/executores/executores_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
                 </div>
