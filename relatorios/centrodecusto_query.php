@@ -5,6 +5,16 @@ if (!isset($_SESSION['newsession'])) {
 }
 include("../conexao.php");
 include("../links2.php");
+// verifico se usuário e operador de tem autorização de acesso
+$i_id_usuario = $_SESSION["id_usuario"];
+$c_sql_acesso = "select usuarios.tipo, perfil_usuarios.indicadores_ocorrencias FROM usuarios
+JOIN perfil_usuarios ON usuarios.id_perfil=perfil_usuarios.id
+WHERE usuarios.id='$i_id_usuario'";
+$result_acesso = $conection->query($c_sql_acesso);
+$registro_acesso = $result_acesso->fetch_assoc();
+if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['indicadores_ocorrencias'] == 'N') {
+    header('location: /gop/acesso.php');
+}
 date_default_timezone_set('America/Sao_Paulo');
 $c_query = "";
 // rotina para montagem do sql com as opções selecionadas
@@ -17,9 +27,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $d_data2 = date("Y-m-d", strtotime(str_replace('/', '-', $d_data2)));
     // expressão sql inicia para recursos fisicos
     // data de abertura
-
     $c_where = "(data_geracao>='$d_data1' and data_geracao<='$d_data2') and ";
-
     // sql para tipo de atendimento (programada ou urgência)
     $c_tipo_atendimento = $_POST['tipo'];
 

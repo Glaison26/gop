@@ -5,6 +5,7 @@ if (!isset($_SESSION['newsession'])) {
 }
 include("../../conexao.php");
 include("../../links2.php");
+
 ?>
 <!doctype html>
 <html lang="en">

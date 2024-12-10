@@ -16,15 +16,15 @@ include("../../links2.php");
 include('../../cabec_exclusao.php');
 // conexão dom o banco de dados
 // verico se elxistem recursos com o tipo no cadastro
-$c_sql_conta = "select count(*) nregistros from cotacao_materiais_fornecedor where id_unidade=$c_id";  // verifico em recursos fisicos
+$c_sql_conta = "select count(*) nregistros from cotacao_materiais_fornecedor where id_unidade=$c_id";  // verifico em materiais X fornecedor
 $result = $conection->query($c_sql_conta);
 $registro = $result->fetch_assoc();
 // verico se elxistem recursos com o tipo no cadastro
-$c_sql_conta = "select count(*) nregistros from ordens_materiais where id_unidade=$c_id";  // verifico em recursos fisicos
+$c_sql_conta = "select count(*) nregistros from ordens_materiais where id_unidade=$c_id";  // verifico em ordens de materiais
 $result = $conection->query($c_sql_conta);
 $registro2 = $result->fetch_assoc();
 // verico se elxistem recursos com o tipo no cadastro
-$c_sql_conta = "select count(*) nregistros from preventivas_materiais where id_unidade=$c_id";  // verifico em recursos fisicos
+$c_sql_conta = "select count(*) nregistros from preventivas_materiais where id_unidade=$c_id";  // verifico em preventivas
 $result = $conection->query($c_sql_conta);
 $registro3 = $result->fetch_assoc();
 if ($registro['nregistros'] + $registro2['nregistros'] + $registro3['nregistros'] == 0) {

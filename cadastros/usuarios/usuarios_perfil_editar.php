@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         exit;
     }
 
-    
+
     // leitura do convenio através de sql usando id passada
     $c_sql = "select * from perfil_usuarios where id=$c_id";
     $result = $conection->query($c_sql);
@@ -107,6 +107,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     } else {
         $c_chkpop = 'N';
     }
+    if ($registro['cadastros_tipos'] == 'S') {
+        $c_chktipo = 'checked';
+    } else {
+        $c_chktipo = 'N';
+    }
     if ($registro['cadastros_checklist'] == 'S') {
         $c_chkchecklist = 'checked';
     } else {
@@ -195,7 +200,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
 }
 // Metodo post para gravação dos dados editados
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  
+
     $c_descricao = $_POST['up_descricaoField'];
     if (isset($_POST['chkativo'])) {
         $c_ativo = 'S';
@@ -287,6 +292,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $c_chkpop = 'N';
     }
     //
+    if (isset($_POST['chktipo'])) {
+        $c_chktipo = 'S';
+    } else {
+        $c_chktipo = 'N';
+    }
+    //
     if (isset($_POST['chkchecklist'])) {
         $c_chkchecklist = 'S';
     } else {
@@ -372,7 +383,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     do {
-      
+
         // gravo os dados com sql
         $c_sql = "Update perfil_usuarios set descricao='$c_descricao', cadastros_recursosfisicos='$c_chkrecursosfisicos', cadastros_espacosfisicos='$c_chkespacosfisicos',
         cadastros_fornecedores='$c_chkfornecedores', cadastros_fabricantes='$c_chkfabricantes', cadastros_executores='$c_chkexecutores',
@@ -383,7 +394,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         servicos_ocorrencias_padroes='$c_chkocorrencias',servicos_plano_acao='$c_chkplanoacao',
         almoxarifado_cotacoes='$c_chkcotacao', almoxarifado_pedidodecompra='$c_chkpedidodecompra', almoxarifado_materiais='$c_chkmateriais',
         almoxarifado_unidadesmedidas='$c_chkunidades', indicadores_ocorrencias='$c_chkcontagem', indicadores_comparativos='$c_chkcomparativo',
-        custos_ocorrencias='$c_chkcustoindividual', custos_comparativos='$c_chkcomparativocustos' 
+        custos_ocorrencias='$c_chkcustoindividual', custos_comparativos='$c_chkcomparativocustos', cadastros_tipos='$c_chktipo' 
         where id='$c_id'";
         //echo $c_sql;
         $result = $conection->query($c_sql);
@@ -467,7 +478,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Recursos Físicos</label>
                                     <div class="col-sm-3">
-                                        <input class="form-check-input" type="checkbox" value="S" name="chkrecursosfisicos" id="chkrecursosfisicos" <?php echo $c_chkrecursosfisicos ?> >
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkrecursosfisicos" id="chkrecursosfisicos" <?php echo $c_chkrecursosfisicos ?>>
                                     </div>
                                 </div>
                                 <div class="form-check col-sm-3">
@@ -495,13 +506,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Executores</label>
                                     <div class="col-sm-3">
-                                        <input class="form-check-input" type="checkbox" value="S" name="chkexecutores" id="chkexecutores" <?php echo $c_chkexecutores ?> >
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkexecutores" id="chkexecutores" <?php echo $c_chkexecutores ?>>
                                     </div>
                                 </div>
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Cargos e Funções</label>
                                     <div class="col-sm-3">
-                                        <input class="form-check-input" type="checkbox" value="S" name="chkfcargosfuncoes" id="chkcargosfuncoes" <?php echo $c_chkfcargosfuncoes ?> >
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkfcargosfuncoes" id="chkcargosfuncoes" <?php echo $c_chkfcargosfuncoes ?>>
                                     </div>
                                 </div>
                             </div>
@@ -509,13 +520,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Oficinas</label>
                                     <div class="col-sm-3">
-                                        <input class="form-check-input" type="checkbox" value="S" name="chkoficinas" id="chkoficinas" <?php echo $c_chkoficinas ?> >
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkoficinas" id="chkoficinas" <?php echo $c_chkoficinas ?>>
                                     </div>
                                 </div>
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Centros de Custo</label>
                                     <div class="col-sm-3">
-                                        <input class="form-check-input" type="checkbox" value="S" name="chkcentrosdecusto" id="chkcentrosdecusto" <?php echo $c_chkcentrosdecusto ?> >
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkcentrosdecusto" id="chkcentrosdecusto" <?php echo $c_chkcentrosdecusto ?>>
                                     </div>
                                 </div>
                             </div>
@@ -523,27 +534,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Setores</label>
                                     <div class="col-sm-3">
-                                        <input class="form-check-input" type="checkbox" value="S" name="chksetores" id="chksetores" <?php echo $c_chksetores ?> >
+                                        <input class="form-check-input" type="checkbox" value="S" name="chksetores" id="chksetores" <?php echo $c_chksetores ?>>
                                     </div>
                                 </div>
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Ferramentas</label>
                                     <div class="col-sm-3">
-                                        <input class="form-check-input" type="checkbox" value="S" name="chkferramentas" id="chkferramentas"  <?php echo $c_chkferramentas ?>>
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkferramentas" id="chkferramentas" <?php echo $c_chkferramentas ?>>
                                     </div>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="form-check col-sm-3">
-                                    <label class="form-check-label col-form-label">Grupos de Recursos</label>
-                                    <div class="col-sm-3">
-                                        <input class="form-check-input" type="checkbox" value="S" name="chkgruposrecursos" id="chkgruposrecursos" <?php echo $c_chkgruposrecursos ?> >
-                                    </div>
-                                </div>
+
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Marcas de Recursos</label>
                                     <div class="col-sm-3">
-                                        <input class="form-check-input" type="checkbox" value="S" name="chkmarcasrecursos" id="chkmarcasrecursos" <?php echo $c_chkmarcasrecursos?>>
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkmarcasrecursos" id="chkmarcasrecursos" <?php echo $c_chkmarcasrecursos ?>>
+                                    </div>
+
+                                </div>
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Tipos de Recursos</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chktipo" id="chktipo" <?php echo $c_chktipo ?>>
                                     </div>
                                 </div>
                             </div>
@@ -557,7 +570,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">CheckList</label>
                                     <div class="col-sm-3">
-                                        <input class="form-check-input" type="checkbox" value="S" name="chkchecklist" id="chkchecklist" <?php echo $c_chkchecklist ?> >
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkchecklist" id="chkchecklist" <?php echo $c_chkchecklist ?>>
                                     </div>
                                 </div>
                             </div>
@@ -576,7 +589,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Ordens de Serviços</label>
                                     <div class="col-sm-3">
-                                        <input class="form-check-input" type="checkbox" value="S" name="chkordens" id="chkordens" <?php echo $c_chkordens ?> >
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkordens" id="chkordens" <?php echo $c_chkordens ?>>
                                     </div>
                                 </div>
                             </div>
@@ -584,13 +597,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Preventivas</label>
                                     <div class="col-sm-3">
-                                        <input class="form-check-input" type="checkbox" value="S" name="chkpreventivas" id="chkpreventivas" <?php echo $c_chkpreventivas ?> >
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkpreventivas" id="chkpreventivas" <?php echo $c_chkpreventivas ?>>
                                     </div>
                                 </div>
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Ocorrencias Padrões</label>
                                     <div class="col-sm-3">
-                                        <input class="form-check-input" type="checkbox" value="S" name="chkocorrencias" id="chkocorrencias" <?php echo $c_chkocorrencias?>>
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkocorrencias" id="chkocorrencias" <?php echo $c_chkocorrencias ?>>
                                     </div>
                                 </div>
                             </div>
@@ -598,7 +611,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Planos de Ação</label>
                                     <div class="col-sm-3">
-                                        <input class="form-check-input" type="checkbox" value="S" name="chkplanosacao" id="chkplanoacao" <?php echo $c_chkplanoacao ?> >
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkplanosacao" id="chkplanoacao" <?php echo $c_chkplanoacao ?>>
                                     </div>
                                 </div>
 
@@ -612,13 +625,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Cotações</label>
                                     <div class="col-sm-3">
-                                        <input class="form-check-input" type="checkbox" value="S" name="chkcotacao" id="chkcotacao" <?php echo $c_chkcotacao ?> >
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkcotacao" id="chkcotacao" <?php echo $c_chkcotacao ?>>
                                     </div>
                                 </div>
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Pedidos de Compra</label>
                                     <div class="col-sm-3">
-                                        <input class="form-check-input" type="checkbox" value="S" name="chkpedidodecompra" id="chkpedidodecompra" <?php echo $c_chkpedidodecompra?> >
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkpedidodecompra" id="chkpedidodecompra" <?php echo $c_chkpedidodecompra ?>>
                                     </div>
                                 </div>
                             </div>
@@ -626,9 +639,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Cadastro de Materiais</label>
                                     <div class="col-sm-3">
-                                        <input class="form-check-input" type="checkbox" value="S" name="chkmateriais" id="chkmateriais" <?php echo $c_chkmateriais ?> >
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkmateriais" id="chkmateriais" <?php echo $c_chkmateriais ?>>
                                     </div>
                                 </div>
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Grupos de Materiais</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkgruposrecursos" id="chkgruposrecursos" <?php echo $c_chkgruposrecursos ?>>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row mb-3">
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Unidades e Medidas</label>
                                     <div class="col-sm-3">
@@ -650,7 +672,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="form-check col-sm-4">
                                     <label class="form-check-label col-form-label">Comparativos de Ocorrências</label>
                                     <div class="col-sm-2">
-                                        <input class="form-check-input" type="checkbox" value="S" name="chkcomparativo" id="chkcomparativo" <?php echo $c_chkcomparativo?> >
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkcomparativo" id="chkcomparativo" <?php echo $c_chkcomparativo ?>>
                                     </div>
                                 </div>
                             </div>
@@ -662,13 +684,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="form-check col-sm-4">
                                     <label class="form-check-label col-form-label">Custos individuais da Manutenção</label>
                                     <div class="col-sm-2">
-                                        <input class="form-check-input" type="checkbox" value="S" name="chkcustoindividual" id="chkcustoindividual" <?php echo $c_chkcustoindividual ?> >
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkcustoindividual" id="chkcustoindividual" <?php echo $c_chkcustoindividual ?>>
                                     </div>
                                 </div>
                                 <div class="form-check col-sm-4">
                                     <label class="form-check-label col-form-label">Comparativos de Custos</label>
                                     <div class="col-sm-2">
-                                        <input class="form-check-input" type="checkbox" value="S" name="chkcomparativocustos" id="chkcomparativocustos" <?php echo $c_chkcomparativocustos ?> >
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkcomparativocustos" id="chkcomparativocustos" <?php echo $c_chkcomparativocustos ?>>
                                     </div>
                                 </div>
                             </div>

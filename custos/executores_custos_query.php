@@ -5,6 +5,16 @@ if (!isset($_SESSION['newsession'])) {
 }
 include("../conexao.php");
 include("../links2.php");
+// verifico se usuário e operador de tem autorização de acesso
+$i_id_usuario = $_SESSION["id_usuario"];
+$c_sql_acesso = "select usuarios.tipo, perfil_usuarios.custos_ocorrencias FROM usuarios
+JOIN perfil_usuarios ON usuarios.id_perfil=perfil_usuarios.id
+WHERE usuarios.id='$i_id_usuario'";
+$result_acesso = $conection->query($c_sql_acesso);
+$registro_acesso = $result_acesso->fetch_assoc();
+if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['custos_ocorrencias'] == 'N') {
+    header('location: /gop/acesso.php');
+}
 date_default_timezone_set('America/Sao_Paulo');
 $c_query = "";
 // rotina para montagem do sql com as opções selecionadas

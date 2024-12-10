@@ -5,6 +5,16 @@ if (!isset($_SESSION['newsession'])) {
 }
 include("../conexao.php");
 include("../links2.php");
+// verifico se usuário e operador de tem autorização de acesso
+$i_id_usuario = $_SESSION["id_usuario"];
+$c_sql_acesso = "select usuarios.tipo, perfil_usuarios.custos_comparativos FROM usuarios
+JOIN perfil_usuarios ON usuarios.id_perfil=perfil_usuarios.id
+WHERE usuarios.id='$i_id_usuario'";
+$result_acesso = $conection->query($c_sql_acesso);
+$registro_acesso = $result_acesso->fetch_assoc();
+if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['custos_comparativos'] == 'N') {
+    header('location: /gop/acesso.php');
+}
 $_SESSION['titulo_rel'] = "Relatório Comparativo de Custos Mensais por Solicitantes da Manutenção por Período" ;
 $_SESSION['titulo_graf'] = "Gráfico Comparativo de Custos Mensais por Solicitantes da Manutenção por Período";
 //
