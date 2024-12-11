@@ -45,8 +45,8 @@
                     } else {
                         echo "<img src='\gop\images\certo.png' alt='25' height='25'>";
                     } ?>
-                <h4><strong>Existem <?php echo $c_ordens_sla; ?> Ordens de Serviço fora do prazo SLA</h4></strong></p><br>
-                <a href="#" class="btn btn-primary">Clique para Visualizar</a>
+                <h4><strong>Existem <?php echo $c_ordens_sla; ?> Ordens de Serviço aberta(s) e  fora do prazo SLA</h4></strong></p><br>
+                <a href="/gop/chama_fora_sla.php" class="btn btn-primary">Clique para Visualizar</a>
             </div>
 
         </div>

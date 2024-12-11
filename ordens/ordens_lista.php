@@ -401,7 +401,7 @@ include('../conexao.php');
                                     <td>$c_linha[id_solicitacao]</td>
                                     <td>$c_data</td>
                                     <td>$c_linha[hora_geracao]</td>
-                                    <td>$c_hora</td>
+                                    <td>$c_linha[descritivo]</td>
                                     <td $c_cor style='text-align:center'>$c_linha[ordens_status]</td>
                                     <td>$c_linha[setor]</td>
                                     <td>$c_linha[ordens_tipo_texto]</td>
