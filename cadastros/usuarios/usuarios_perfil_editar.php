@@ -419,8 +419,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
-            <h4>SmartMed - Sistema Médico</h4>
-            <h5>Novo Perfil de Usuários do Sistema<h5>
+            <h4>GOP - Gestão Operacional</h4>
+            <h5>Editar Perfil para Usuários do Sistema<h5>
         </div>
     </div>
     <br>
