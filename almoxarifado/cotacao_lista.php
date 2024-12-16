@@ -197,7 +197,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['almoxarifado_cot
         <div class="panel panel-primary class">
             <div class="panel-heading text-center">
                 <h4>GOP - Gestão Operacional</h4>
-                <h5>Lista de cotaçoes<h5>
+                <h5>Lista de cotaçoes</h5>
             </div>
         </div>
         <br>
