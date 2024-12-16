@@ -4,7 +4,7 @@ if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
 include("../conexao.php");
-include("../links2.php");
+include("../links.php");
 // verifico se usuário e operador de tem autorização de acesso
 $i_id_usuario = $_SESSION["id_usuario"];
 $c_sql_acesso = "select usuarios.tipo, perfil_usuarios.almoxarifado_pedidodecompra FROM usuarios
@@ -69,15 +69,15 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['almoxarifado_ped
 
         });
     </script>
-
+    <div class="panel panel-primary class">
+        <div class="panel-heading text-center">
+            <h4>GOP - Gestão Operacional</h4>
+            <h5>Lista de Pedidos de Compras</h5>
+        </div>
+    </div>
     <div class="container-fluid">
 
-        <div class="panel panel-primary class">
-            <div class="panel-heading text-center">
-                <h4>GOP - Gestão Operacional</h4>
-                <h5>Lista de Pedidos de Compras</h5>
-            </div>
-        </div>
+
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
         <br>
         <hr>
