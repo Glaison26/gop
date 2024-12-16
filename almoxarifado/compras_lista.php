@@ -21,11 +21,6 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['almoxarifado_ped
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-</head>
 
 <body>
 
@@ -80,7 +75,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['almoxarifado_ped
         <div class="panel panel-primary class">
             <div class="panel-heading text-center">
                 <h4>GOP - Gestão Operacional</h4>
-                <h5>Lista de Pedidos de Compras<h5>
+                <h5>Lista de Pedidos de Compras</h5>
             </div>
         </div>
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
