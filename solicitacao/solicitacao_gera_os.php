@@ -17,6 +17,12 @@ $i_id = $_GET["id"];
 
 // rotina para geração de ordem de serviço
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    echo "<div style='padding-top:250px;'>
+        <div class='d-flex justify-content-center mb-3'>
+
+            <div class='spinner-border text-info' style='width: 20rem; height: 20rem;'></div>
+        </div>
+    </div>";
     $msg_erro = "";
     // procuro oficina selecionado
     $c_oficina = $_POST['oficina'];

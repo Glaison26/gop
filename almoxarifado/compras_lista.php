@@ -21,11 +21,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['almoxarifado_ped
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-</head>
 
 <body>
 
@@ -84,7 +80,6 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['almoxarifado_ped
             </div>
         </div>
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
-        <br>
         <hr>
         <table class="table table display table-bordered table-striped table-active tabcompras">
             <thead class="thead">
