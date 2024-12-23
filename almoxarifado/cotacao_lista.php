@@ -86,7 +86,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['almoxarifado_cot
         });
     </script>
 
-    </script>
+   
     <!-- Função javascript e ajax para inclusão dos dados -->
     <script type="text/javascript">
         $(document).on('submit', '#frmadd', function(e) {

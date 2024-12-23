@@ -21,6 +21,10 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['almoxarifado_ped
 <!DOCTYPE html>
 <html lang="en">
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 2c675fefed44ee7a8dc278e45a62cdefb03f7e55
 
 <body>
 
@@ -79,7 +83,6 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['almoxarifado_ped
 
 
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
-        <br>
         <hr>
         <table class="table table display table-bordered table-striped table-active tabcompras">
             <thead class="thead">
