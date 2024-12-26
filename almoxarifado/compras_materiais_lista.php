@@ -144,9 +144,7 @@ $c_linha_compra = $result_compra->fetch_assoc();
         });
     </script>
 
-
-
-    <div class="panel panel-primary class">
+    <div class="panel panel-primary class ">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
             <h5>Lista de Materiais para Pedido de Compra<h5>
