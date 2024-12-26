@@ -21,11 +21,6 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['almoxarifado_ped
 <!DOCTYPE html>
 <html lang="en">
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 2c675fefed44ee7a8dc278e45a62cdefb03f7e55
-
 <body>
 
     <script>
