@@ -114,8 +114,6 @@
                                  <a class='dropdown-item' href='/gop/cadastros/ferramentas/ferramentas_lista.php'><img src='\gop\images\caixa_ferramentas.png' alt='25' width='25' height='25'> Ferramentas</a>
                                  <a class='dropdown-item' href='/gop/cadastros/tipos/tipos_lista.php'><img src='\gop\images\grupo.png' alt='25' width='25' height='25'> Tipos de Recurso</a>
                                  <a class='dropdown-item' href='/gop/cadastros/marcas/marcas_lista.php'><img src='\gop\images\marca.png' alt='25' width='25' height='25'> Marcas de Recursos</a>
-                                                                 
-                                 <a class='dropdown-item' href='/gop/cadastros/pop/pops_lista.php'><img src='\gop\images\degraus.png' alt='25' width='25' height='25'> Cadastro de POP</a>
                                  <a class='dropdown-item' href='/gop/cadastros/checklist/checklist_lista.php'><img src='\gop\images\checklist.png' alt='25' width='25' height='25'> Cadastro de Cheklist</a>
                                  
                              </div>
@@ -132,7 +130,7 @@
                                             echo "<a class='dropdown-item' href='/gop/ordens/ordens.php'><img src='\gop\images\ordem.png' alt='25' width='25' height='25'> Ordens de Serviços</a>
                                   <a class='dropdown-item' href='/gop/preventivas/preventivas.php'><img src='\gop\images\preventivo.png' alt='25' width='25' height='25'> Preventivas </a>
                                   <a class='dropdown-item' href='/gop/cadastros/ocorrencias/ocorrencias_lista.php'><img src='\gop\images\incidente.png' alt='25' width='25' height='25'> Ocorrências Padrões</a>
-                                  <a class='dropdown-item' href='/gop/plano_acao/planos_menu.php'><img src='\gop\images\plano.png' alt='25' width='25' height='25'> Planos de Ação</a>
+                                  
                                   </div>
                          </li>
 
@@ -143,10 +141,19 @@
                                  <a class='dropdown-item' href='/gop/almoxarifado/cotacao_lista.php'><img src='\gop\images\cotacao.png' alt='25' width='25' height='25'> Cadastro de Cotações</a>
                                  <a class='dropdown-item' href='/gop/almoxarifado/compras_lista.php'><img src='\gop\images\compras.png' alt='25' width='25' height='25'> Pedidos de Compra</a>
                                  <a class='dropdown-item' href='/gop/cadastros/materiais/materiais_lista.php'><img src='\gop\images\materiais.png' alt='25' width='25' height='25'>Cadastro de Materiais</a>
-                                <a class='dropdown-item' href='/gop/cadastros/grupos/grupos_lista.php'><img src='\gop\images\grupomaterial.png' alt='25' width='25' height='25'> Grupos de Materiais</a>
+                                 <a class='dropdown-item' href='/gop/cadastros/grupos/grupos_lista.php'><img src='\gop\images\grupomaterial.png' alt='25' width='25' height='25'> Grupos de Materiais</a>
                                  <a class='dropdown-item' href='/gop/cadastros/unidades/unidades_lista.php'><img src='\gop\images\peso.png' alt='25' width='25' height='25'> Unidades e Medidas</a>
                              </div>
                          </li>
+                         
+                         <li class='nav-item dropdown'>
+                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Outros</a>
+                             <div class='dropdown-menu' aria-labelledby='dropdown01'>
+                                  <a class='dropdown-item' href='/gop/plano_acao/planos_menu.php'><img src='\gop\images\plano.png' alt='25' width='25' height='25'> Planos de Ação</a>
+                                  <a class='dropdown-item' href='/gop/cadastros/pop/pops_lista.php'><img src='\gop\images\degraus.png' alt='25' width='25' height='25'> Cadastro de POP</a>
+                                  <a class='dropdown-item' href='/gop/obras/obras_menu.php'><img src='\gop\images\ooadwork.png' alt='25' width='30' height='25'> Gestão de Obras</a>
+                             </div>
+                          </li>
                           <li class='nav-item dropdown'>
                              <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Indicadores</a>
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
