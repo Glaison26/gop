@@ -36,7 +36,7 @@ include("../links2.php");
             <div class="topnav">
                 <a href="\gop\recurso_pesquisa.php"><img src="\gop\images\ooadwork.png" alt="" width="30" height="35">
                     Lançamentos de Obras</a>
-                <a href="\gop\espaco_pesquisa.php"><img src="\gop\images\pedreiro.png" alt="" width="30" height="35">
+                <a href="\gop\obras\obras_itens_lista.php"><img src="\gop\images\pedreiro.png" alt="" width="30" height="35">
                     Itens de Obras</a>
                 <a href="\gop\obras\obras_grupos_lista.php"><img src="\gop\images\construcao2.png" alt="" width="30" height="35">
                     Grupos de Itens de Obras</a>
