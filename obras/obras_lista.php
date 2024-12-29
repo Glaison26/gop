@@ -44,7 +44,7 @@ include("../links.php");
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,
-                    'aTargets': [2]
+                    'aTargets': [3]
                 }, {
                     'aTargets': [0],
                     "visible": true
@@ -86,6 +86,7 @@ include("../links.php");
         $(document).on('submit', '#frmadd', function(e) {
             e.preventDefault();
             var c_descricao = $('#add_descricaoField').val();
+            var c_observacao = $('#add_obsField').val();
 
             if (c_descricao != '') {
 
@@ -93,7 +94,8 @@ include("../links.php");
                     url: "obras_novo.php",
                     type: "post",
                     data: {
-                        c_descricao: c_descricao
+                        c_descricao: c_descricao,
+                        c_observacao: c_observacao
 
                     },
                     success: function(data) {
@@ -134,6 +136,7 @@ include("../links.php");
 
                 $('#up_idField').val(data[0]);
                 $('#up_descricaoField').val(data[1]);
+                $('#up_obsField').val(data[2]);
 
 
             });
@@ -147,6 +150,7 @@ include("../links.php");
             e.preventDefault();
             var c_id = $('#up_idField').val();
             var c_descricao = $('#up_descricaoField').val();
+            var c_observacao = $('#up_obsField').val();
 
             if (c_descricao != '') {
 
@@ -155,7 +159,8 @@ include("../links.php");
                     type: "post",
                     data: {
                         c_id: c_id,
-                        c_descricao: c_descricao
+                        c_descricao: c_descricao,
+                        c_observacao: c_observacao
                     },
                     success: function(data) {
                         var json = JSON.parse(data);
@@ -196,6 +201,7 @@ include("../links.php");
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Descrição</th>
+                    <th scope="col">Observação</th>
                     <th scope="col">Opções</th>
                 </tr>
             </thead>
@@ -203,7 +209,7 @@ include("../links.php");
                 <?php
 
                 // faço a Leitura da tabela com sql
-                $c_sql = "SELECT obra.id, obra.descricao FROM obra ORDER BY obra.descricao";
+                $c_sql = "SELECT obra.id, obra.descricao, obra.observacao FROM obra ORDER BY obra.descricao";
                 $result = $conection->query($c_sql);
                 // verifico se a query foi correto
                 if (!$result) {
@@ -217,6 +223,7 @@ include("../links.php");
                     <tr class='info'>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descricao]</td>
+                    <td>$c_linha[observacao]</td>
                     <td>
                     <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Obra'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
                     <a class='btn btn-primary btn-sm' href='/gop/obras/obras_insumos_lista.php?id=$c_linha[id]'><span class='glyphicon glyphicon-list-alt'></span> Insumos</a>
@@ -247,6 +254,12 @@ include("../links.php");
                             <label for="add_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" id="add_descricaoField" name="add_dscricaoField" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="add_obsField" class="col-md-3 form-label">Observação</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" id="add_obsField" name="add_obsField" rows="5"></textarea>
                             </div>
                         </div>
 
@@ -280,6 +293,12 @@ include("../links.php");
                             <label for="up_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" id="up_descricaoField" name="up_dscricaoField" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="up_obsField" class="col-md-3 form-label">Observação</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" id="up_obsField" name="up_obsField" rows="5"></textarea>
                             </div>
                         </div>
 
