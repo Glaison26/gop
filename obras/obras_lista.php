@@ -24,7 +24,7 @@ include("../links.php");
         function confirmacao(id) {
             var resposta = confirm("Deseja remover esse registro?");
             if (resposta == true) {
-                window.location.href = "/gop/obras/obras_grupos_excluir.php?id=" + id;
+                window.location.href = "/gop/obras/obras_excluir.php?id=" + id;
             }
         }
     </script>
@@ -90,7 +90,7 @@ include("../links.php");
             if (c_descricao != '') {
 
                 $.ajax({
-                    url: "obras_grupos_novo.php",
+                    url: "obras_novo.php",
                     type: "post",
                     data: {
                         c_descricao: c_descricao
@@ -151,7 +151,7 @@ include("../links.php");
             if (c_descricao != '') {
 
                 $.ajax({
-                    url: "obras_grupos_editar.php",
+                    url: "obras_editar.php",
                     type: "post",
                     data: {
                         c_id: c_id,
@@ -179,7 +179,7 @@ include("../links.php");
         <div class="panel panel-primary class">
             <div class="panel-heading text-center">
                 <h4>GOP - Gestão Operacional</h4>
-                <h5>Lista de Grupos de Itens de Obras<h5>
+                <h5>Lista de Obras Cadastradas<h5>
             </div>
         </div>
 
@@ -203,7 +203,7 @@ include("../links.php");
                 <?php
 
                 // faço a Leitura da tabela com sql
-                $c_sql = "SELECT obras_grupo.id, obras_grupo.descricao FROM obras_grupo ORDER BY obras_grupo.descricao";
+                $c_sql = "SELECT obra.id, obra.descricao FROM obra ORDER BY obra.descricao";
                 $result = $conection->query($c_sql);
                 // verifico se a query foi correto
                 if (!$result) {
@@ -218,7 +218,8 @@ include("../links.php");
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descricao]</td>
                     <td>
-                    <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Grupos'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
+                    <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Obra'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
+                    <a class='btn btn-primary btn-sm' href='/gop/obras/obras_insumos_lista.php?id=$c_linha[id]'><span class='glyphicon glyphicon-list-alt'></span> Insumos</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
@@ -235,7 +236,7 @@ include("../links.php");
         <div class="modal-dialog modal-dialog-centered" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Inclusão de novo Grupo de Obras</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Inclusão de nova Obra</h4>
                 </div>
                 <div class="modal-body">
                     <div class='alert alert-warning' role='alert'>
