@@ -138,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
                         <?php
 
                         echo "<option></option>";
-                        // select da tabela de Material
+                        // select da tabela de Material com captura de valores
                         $c_sql_material = "SELECT materiais.id, materiais.descricao FROM materiais ORDER BY materiais.descricao";
                         $result_material = $conection->query($c_sql_material);
                         while ($c_linha = $result_material->fetch_assoc()) {
@@ -149,7 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
                                     $op = "";
                             }
                             echo "  
-                          <option $op>$c_linha[descricao]</option>
+                          <option  $op>$c_linha[descricao]</option>
                         ";
                         }
                         ?>

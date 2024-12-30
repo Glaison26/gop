@@ -1,13 +1,19 @@
 <?php
+session_start();
+if (!isset($_SESSION['newsession'])) {
+    die('Acesso não autorizado!!!');
+}
 include("../conexao.php");
 include("../links2.php");
 $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
-if (!isset($_GET["id"])) {
-    header('location: /gop/obras/obras_lista.php');
-    exit;
+
+if (isset($_GET['id'])) {
+    $c_id = $_GET['id'];
+    $_SESSION['id_obra'] = $c_id;
+} else {
+    $c_id = $_SESSION['id_obra'];
 }
-// captura id do registro de obra
-$c_id = $_GET["id"];
+
 // pego descrição da obra via sql
 $c_sql = "select * from obra where id = '$c_id'";
 $result = $conection->query($c_sql);
@@ -16,7 +22,7 @@ $c_descricao_obra = $c_linha['descricao'];
 ?>
 
 <!--
-parte de frontend
+**********************  frontend  ***********
 -->
 
 
@@ -107,7 +113,7 @@ parte de frontend
             </div>
             <h5>Insumos da Obra : <?php echo $c_descricao_obra ?></h5>
         </div>
-        <a class="btn btn-success btn-sm" href="/gop/obras/obras_insumo_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
+        <a class="btn btn-success btn-sm" href="/gop/obras/obras_insumos_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
         <a class="btn btn-secondary btn-sm" href="/gop/obras/obras_menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
         <hr>
         <table class="table table display table-bordered tabgrupos">
