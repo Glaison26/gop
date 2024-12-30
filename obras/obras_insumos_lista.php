@@ -14,6 +14,8 @@ if (isset($_GET['id'])) {
     $c_id = $_SESSION['id_obra'];
 }
 
+$_SESSION['id_grupo_select'] = 0;
+
 // pego descrição da obra via sql
 $c_sql = "select * from obra where id = '$c_id'";
 $result = $conection->query($c_sql);
@@ -114,7 +116,7 @@ $c_descricao_obra = $c_linha['descricao'];
             <h5>Insumos da Obra : <?php echo $c_descricao_obra ?></h5>
         </div>
         <a class="btn btn-success btn-sm" href="/gop/obras/obras_insumos_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
-        <a class="btn btn-secondary btn-sm" href="/gop/obras/obras_menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
+        <a class="btn btn-secondary btn-sm" href="/gop/obras/obras_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
         <hr>
         <table class="table table display table-bordered tabgrupos">
             <thead class="thead">
@@ -143,6 +145,7 @@ $c_descricao_obra = $c_linha['descricao'];
                 JOIN obras_itens ON obras_insumos.id_item = obras_itens.id
                 JOIN unidades ON obras_insumos.id_unidade = unidades.id
                 JOIN obras_grupo ON obras_itens.id_grupo = obras_grupo.id
+                where id_obra= '$c_id' 
                 ORDER BY obras_itens.descricao";
                 $result = $conection->query($c_sql);
                 // verifico se a query foi correto
@@ -154,10 +157,10 @@ $c_descricao_obra = $c_linha['descricao'];
                 while ($c_linha = $result->fetch_assoc()) {
                     $n_maodeobra = $formatter->formatCurrency($c_linha['valor_maodeobra'], 'BRL');
                     $n_material = $formatter->formatCurrency($c_linha['valor_material'], 'BRL');
-                    $n_total_maodeobra = $formatter->formatCurrency($c_linha['valor_maodeobra']*$c_linha['quantidade'], 'BRL'); 
-                    $n_total_material = $formatter->formatCurrency($c_linha['valor_material']*$c_linha['quantidade'], 'BRL'); 
-                    $n_total = ($c_linha['valor_maodeobra']*$c_linha['quantidade'])+($c_linha['valor_material']*$c_linha['quantidade']);
-                    $n_total = $formatter->formatCurrency($n_total, 'BRL');  
+                    $n_total_maodeobra = $formatter->formatCurrency($c_linha['valor_maodeobra'] * $c_linha['quantidade'], 'BRL');
+                    $n_total_material = $formatter->formatCurrency($c_linha['valor_material'] * $c_linha['quantidade'], 'BRL');
+                    $n_total = ($c_linha['valor_maodeobra'] * $c_linha['quantidade']) + ($c_linha['valor_material'] * $c_linha['quantidade']);
+                    $n_total = $formatter->formatCurrency($n_total, 'BRL');
                     echo "
                     <tr class='info'>
                     <td>$c_linha[id]</td>
@@ -171,7 +174,7 @@ $c_descricao_obra = $c_linha['descricao'];
                     <td>$n_total_material</td>
                     <td>$n_total</td>
                     <td>
-                    <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Insumo de Obra'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
+                    <a class='btn btn-secondary btn-sm' href='/gop/obras/obras_insumos_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 

@@ -9,19 +9,11 @@ include_once "../lib_gop.php";
 include("../conexao.php");
 include("../links2.php");
 
-$_SESSION['insumo_crud'] = 'I';
-
-$c_item = '';
-$c_grupo = '';
-$n_maodeobra = '';
-$n_material = '';
-$c_unidade = '';
-$n_quantidade = 1;
-
-$c_id_obra = $_SESSION['id_obra'];  // capturo o id da obra
 // variaveis para mensagens de erro e suscessso da gravação
 $msg_gravou = "";
 $msg_erro = "";
+
+$_SESSION['insumo_crud'] = 'E';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -34,7 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     do {
         if (!is_numeric($n_maodeobra) || !is_numeric($n_material)) {
-
             $msg_erro = "Valor de Mão de Obra ou Material Inválido !!";
             break;
         }
@@ -52,9 +43,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $i_unidade = $registro_unidade['id'];
         // grava dados no banco
         // faço a Leitura da tabela com sql
-        $c_sql = "Insert into obras_insumos (id_obra, id_item, id_unidade, quantidade, valor_maodeobra, valor_material)" .
-            "Value ('$c_id_obra', '$i_item', '$i_unidade','$n_quantidade','$n_maodeobra','$n_material')";
-
+        $c_sql = "update obras_insumos set id_item='$i_item', id_unidade='$i_unidade', quantidade='$n_quantidade',
+         valor_maodeobra='$n_maodeobra', valor_material='$n_material'";
+         echo $c_sql;
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
         if (!$result) {
@@ -63,6 +54,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         header('location: /gop/obras/obras_insumos_lista.php');
     } while (false);
+} else {  // leitura dos dados usando método GET
+
+    if (!isset($_GET["id"])) {
+        header('location: /gop/obras/obras_insumos_lista.php');
+        exit;
+    }
+    $c_id = $_GET["id"];
+    // leitura do item através de sql usando id passada
+    $c_sql = "SELECT obras_insumos.id, obras_insumos.id_item, obras_insumos.id_obra,obras_insumos.id_unidade, obras_insumos.quantidade, 
+            obras_insumos.valor_maodeobra, obras_insumos.valor_material, obras_grupo.id AS id_grupo from obras_insumos
+            JOIN obras_itens ON obras_insumos.id_item=obras_itens.id
+            JOIN obras_grupo ON obras_itens.id_grupo=obras_grupo.id where obras_insumos.id=$c_id";
+    $result = $conection->query($c_sql);
+    $registro = $result->fetch_assoc();
+
+    if (!$registro) {
+        header('location: /gop/obras/obras_insumos_lista.php');
+        exit;
+    }
+    $c_item = $registro['id_item'];
+    $c_grupo = $registro['id_grupo'];
+    $c_unidade = $registro['id_unidade'];
+    $n_quantidade = $registro['quantidade'];
+    $n_maodeobra = $registro['valor_maodeobra'];
+    $n_material = $registro['valor_material'];
 }
 
 ?>
@@ -87,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
                     <h4>GOP - Gestão Operacional</h4>
-                    <h5>Novo insumo para Obra<h5>
+                    <h5>Editar dados de insumo para Obra<h5>
                 </div>
             </div>
         </div>
@@ -117,7 +133,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label class="col-sm-3 col-form-label">Grupo</label>
                 <div class="col-sm-6">
                     <select onchange="verifica(value)" class="form-select form-select-lg mb-3" id="grupo" name="grupo" required>
-                        <option></option>
                         <?php
                         // select da tabela de grupos
                         $c_sql_grupo = "SELECT obras_grupo.id, obras_grupo.descricao FROM obras_grupo ORDER BY obras_grupo.descricao";
@@ -130,8 +145,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     $op = 'selected';
                                 }
                                 echo "<option $op>$c_linha[descricao]</option>";
-                            } else
-                                echo "<option $op>$c_linha[descricao]</option>";
+                            } else {
+                                $op2 = '';
+                                if ($c_linha['id'] == $c_grupo)
+                                    $op2 = 'selected';
+                                echo "<option $op2>$c_linha[descricao]</option>";
+                            }
                         }
                         ?>
                     </select>
@@ -146,13 +165,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <?php
                         // select da tabela de grupos
                         if ($_SESSION['id_grupo_select'] == 0)
-                            $c_sql_item = "SELECT obras_itens.id, obras_itens.descricao FROM obras_itens ORDER BY obras_itens.descricao";
+                            $c_sql_item = "SELECT obras_itens.id, obras_itens.descricao FROM obras_itens where obras_itens.id_grupo='$c_grupo' ORDER BY obras_itens.descricao";
                         else
                             $c_sql_item = "SELECT obras_itens.id, obras_itens.descricao FROM obras_itens where obras_itens.id_grupo='$_SESSION[id_grupo_select]' ORDER BY obras_itens.descricao";
                         $result_item = $conection->query($c_sql_item);
                         while ($c_linha = $result_item->fetch_assoc()) {
+                            $op = '';
+                            if ($c_linha['id'] == $c_item)
+                                $op = 'selected';
                             echo "  
-                          <option>$c_linha[descricao]</option>
+                          <option $op>$c_linha[descricao]</option>
                         ";
                         }
                         ?>
@@ -174,8 +196,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $c_sql_unidades = "SELECT unidades.id, unidades.descricao FROM unidades ORDER BY unidades.descricao";
                         $result_unidades = $conection->query($c_sql_unidades);
                         while ($c_linha = $result_unidades->fetch_assoc()) {
+                            $op = '';
+                            if ($c_linha['id'] == $c_unidade)
+                                $op = 'selected';
                             echo "  
-                          <option>$c_linha[descricao]</option>
+                          <option $op>$c_linha[descricao]</option>
                         ";
                         }
                         ?>
