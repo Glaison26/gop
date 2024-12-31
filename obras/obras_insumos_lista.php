@@ -21,6 +21,16 @@ $c_sql = "select * from obra where id = '$c_id'";
 $result = $conection->query($c_sql);
 $c_linha = $result->fetch_assoc();
 $c_descricao_obra = $c_linha['descricao'];
+// apuração do total do custo da obra
+$c_sql_custo = "SELECT SUM((valor_maodeobra * quantidade) + (valor_material * quantidade))  as custo_total FROM obras_insumos
+                WHERE obras_insumos.id_obra = '$c_id'";
+$resultado_custo = $conection->query($c_sql_custo);
+$c_linha_custo = $resultado_custo->fetch_assoc();
+if ($c_linha_custo['custo_total']== null) {
+    $n_custo = 0;
+} else
+    $n_custo = $c_linha_custo['custo_total'];
+
 ?>
 
 <!--
@@ -109,15 +119,18 @@ $c_descricao_obra = $c_linha['descricao'];
             </div>
         </div>
 
+
+        <a class="btn btn-success btn-sm" href="/gop/obras/obras_insumos_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
+        <a class="btn btn-info btn-sm" href="/gop/obras/obras_lista.php"><span class="glyphicon glyphicon-print"></span> Relatório</a>
+        <a class="btn btn-secondary btn-sm" href="/gop/obras/obras_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
+        <hr>
         <div class='alert alert-info' role='alert'>
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
             </div>
-            <h5>Insumos da Obra : <?php echo $c_descricao_obra ?></h5>
+            <h5><strong>Insumos da Obra : <?php echo $c_descricao_obra ?> - Custo total da Obra:
+                    <?php echo $formatter->formatCurrency($n_custo, 'BRL') ?></strong></h5>
         </div>
-        <a class="btn btn-success btn-sm" href="/gop/obras/obras_insumos_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
-        <a class="btn btn-secondary btn-sm" href="/gop/obras/obras_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
-        <hr>
         <table class="table table display table-bordered tabgrupos">
             <thead class="thead">
                 <tr>
@@ -154,6 +167,7 @@ $c_descricao_obra = $c_linha['descricao'];
                 }
 
                 // insiro os registro do banco de dados na tabela 
+                $n_total_obra = 0; // inicializo variavel de apuração de custo total da obra
                 while ($c_linha = $result->fetch_assoc()) {
                     $n_maodeobra = $formatter->formatCurrency($c_linha['valor_maodeobra'], 'BRL');
                     $n_material = $formatter->formatCurrency($c_linha['valor_material'], 'BRL');

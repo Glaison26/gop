@@ -44,14 +44,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // grava dados no banco
         // faço a Leitura da tabela com sql
         $c_sql = "update obras_insumos set id_item='$i_item', id_unidade='$i_unidade', quantidade='$n_quantidade',
-         valor_maodeobra='$n_maodeobra', valor_material='$n_material'";
+         valor_maodeobra='$n_maodeobra', valor_material='$n_material' where id='$c_id'";
          echo $c_sql;
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
         if (!$result) {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
         }
-
         header('location: /gop/obras/obras_insumos_lista.php');
     } while (false);
 } else {  // leitura dos dados usando método GET
