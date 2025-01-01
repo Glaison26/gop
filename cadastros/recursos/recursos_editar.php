@@ -81,6 +81,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     
     $n_valoraquisicao =  number_format($registro['valoraquisicao'], 2, '.', '');
     $c_ativo = $registro['ativo'];
+    if ($c_ativo=='S')
+      $c_ativo_chk = 'checked';
+    else
+      $c_ativo_chk = '';
     $c_motivo = $registro['motivoinativo'];
     $c_anvisa = $registro['reganvisa'];
     $c_obs = $registro['obs'];
@@ -307,7 +311,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                                 <div class="col-sm-6">
                                     <label class="form-check-label col-form-label">Recurso Ativo</label>
                                     <div class="col-sm-3">
-                                        <input class="form-check-input" type="checkbox" value="S" name="ativo" id="ativo" checked>
+                                        <input class="form-check-input" type="checkbox" value="S" name="ativo" id="ativo" <?php echo $c_ativo_chk ?>>
                                     </div>
                                 </div>
                             </div>

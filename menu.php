@@ -146,14 +146,6 @@
                              </div>
                          </li>
                          
-                         <li class='nav-item dropdown'>
-                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Outros</a>
-                             <div class='dropdown-menu' aria-labelledby='dropdown01'>
-                                  <a class='dropdown-item' href='/gop/plano_acao/planos_menu.php'><img src='\gop\images\plano.png' alt='25' width='25' height='25'> Planos de Ação</a>
-                                  <a class='dropdown-item' href='/gop/cadastros/pop/pops_lista.php'><img src='\gop\images\degraus.png' alt='25' width='25' height='25'> Cadastro de POP</a>
-                                  <a class='dropdown-item' href='/gop/obras/obras_menu.php'><img src='\gop\images\ooadwork.png' alt='25' width='30' height='25'> Gestão de Obras</a>
-                             </div>
-                          </li>
                           <li class='nav-item dropdown'>
                              <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Indicadores</a>
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
@@ -186,10 +178,19 @@
                                  <a class='dropdown-item' href='/gop/custos_mensais/oficinas_custo_mensal_query.php'>8. Comparativo mensal de Custos por Oficina</a>
                                  <a class='dropdown-item' href='/gop/custos_mensais/solicitantes_custo_mensal_query.php'>9. Comparativo mensal de Custos por Solicitante</a>
                                  <a class='dropdown-item' href='/gop/custos_mensais/setores_custo_mensal_query.php'>10. Comparativo mensal de Custos por Setor</a>
-                                
-                                
+                                               
                              </div>
-                         </li>";
+                         </li>
+                         <li class='nav-item dropdown'>
+                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Outros</a>
+                             <div class='dropdown-menu' aria-labelledby='dropdown01'>
+                                  <a class='dropdown-item' href='/gop/plano_acao/planos_menu.php'><img src='\gop\images\plano.png' alt='25' width='25' height='25'> Planos de Ação</a>
+                                  <a class='dropdown-item' href='/gop/cadastros/pop/pops_lista.php'><img src='\gop\images\degraus.png' alt='25' width='25' height='25'> Cadastro de POP</a>
+                                  <a class='dropdown-item' href='/gop/obras/obras_menu.php'><img src='\gop\images\ooadwork.png' alt='25' width='30' height='25'> Custos de Obras</a>
+                             </div>
+                          </li>
+
+                         ";
                                             if ($_SESSION['tipo'] == 'Administrador')
                                                 echo
                                                 "<li class='nav-item'><a href='/gop/configuracoes.php' class='nav-link'>Configurações</a></li>

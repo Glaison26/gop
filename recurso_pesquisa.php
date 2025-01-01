@@ -19,7 +19,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) { 
                 JOIN setores ON recursos.id_setor=setores.id
                 JOIN marcas ON recursos.id_marca=marcas.id";
     if ($c_pesquisa != ' ') {
-        $c_sql = $c_sql . " where recursos.descricao LIKE " .  "'" . $c_pesquisa . "%'";
+        $c_sql = $c_sql . " where recursos.ativo='S' and recursos.descricao LIKE " .  "'" . $c_pesquisa . "%'";
     }
     $c_sql = $c_sql . " order by recursos.descricao";
     $result = $conection->query($c_sql);

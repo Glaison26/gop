@@ -197,6 +197,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         $c_chkcomparativocustos = 'N';
     }
     //
+    if ($registro['obras'] == 'S') {
+        $c_chkobras = 'checked';
+    } else {
+        $c_chkobras = 'N';
+    }
+    //
 }
 // Metodo post para gravação dos dados editados
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -381,6 +387,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         $c_chkcomparativocustos = 'N';
     }
+    //
+    if (isset($_POST['chkobras'])) {
+        $c_chkobras = 'S';
+    } else {
+        $c_chkobras = 'N';
+    }
 
     do {
 
@@ -394,7 +406,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         servicos_ocorrencias_padroes='$c_chkocorrencias',servicos_plano_acao='$c_chkplanoacao',
         almoxarifado_cotacoes='$c_chkcotacao', almoxarifado_pedidodecompra='$c_chkpedidodecompra', almoxarifado_materiais='$c_chkmateriais',
         almoxarifado_unidadesmedidas='$c_chkunidades', indicadores_ocorrencias='$c_chkcontagem', indicadores_comparativos='$c_chkcomparativo',
-        custos_ocorrencias='$c_chkcustoindividual', custos_comparativos='$c_chkcomparativocustos', cadastros_tipos='$c_chktipo' 
+        custos_ocorrencias='$c_chkcustoindividual', custos_comparativos='$c_chkcomparativocustos', cadastros_tipos='$c_chktipo',
+        obras='$c_chkobras'
         where id='$c_id'";
         //echo $c_sql;
         $result = $conection->query($c_sql);
@@ -449,7 +462,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <li role="presentation"><a href="#almoxarifado" aria-controls="almoxarifado" role="tab" data-toggle="tab">Almoxarifado</a></li>
                     <li role="presentation"><a href="#indicadores" aria-controls="indicadores" role="tab" data-toggle="tab">Indicadores</a></li>
                     <li role="presentation"><a href="#custo" aria-controls="custo" role="tab" data-toggle="tab">Custos da Manutenção</a></li>
-
+                    <li role="presentation"><a href="#outros" aria-controls="outros" role="tab" data-toggle="tab">Outros</a></li>
                 </ul>
                 <div class="tab-content">
                     <!-- aba de descrição -->
@@ -457,9 +470,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div style="padding-top:20px;">
                             <div class="row mb-3">
                                 <div class="form-check col-sm-2">
-                                    <label class="form-check-label col-form-label">Perfil Ativo</label>
-                                    <div class="col-sm-3">
-                                        <input class="form-check-input" type="checkbox" value="S" name="chkativo" id="chkativo" checked>
+                                    <div style="padding-left:20px;">
+                                        <label class="form-check-label col-form-label">Perfil Ativo</label>
+                                        <div class="col-sm-3">
+                                            <input class="form-check-input" type="checkbox" value="S" name="chkativo" id="chkativo" checked>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -561,16 +576,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="form-check col-sm-3">
-                                    <label class="form-check-label col-form-label">POP</label>
-                                    <div class="col-sm-3">
-                                        <input class="form-check-input" type="checkbox" value="S" name="chkpop" id="chkpop" <?php echo $c_chkpop ?>>
-                                    </div>
-                                </div>
+
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">CheckList</label>
                                     <div class="col-sm-3">
                                         <input class="form-check-input" type="checkbox" value="S" name="chkchecklist" id="chkchecklist" <?php echo $c_chkchecklist ?>>
+                                    </div>
+                                </div>
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Unidades e Medidas</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkunidades" id="chkunidades" <?php echo $c_chkunidades ?>>
                                     </div>
                                 </div>
                             </div>
@@ -607,15 +623,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <div class="form-check col-sm-3">
-                                    <label class="form-check-label col-form-label">Planos de Ação</label>
-                                    <div class="col-sm-3">
-                                        <input class="form-check-input" type="checkbox" value="S" name="chkplanosacao" id="chkplanoacao" <?php echo $c_chkplanoacao ?>>
-                                    </div>
-                                </div>
 
-                            </div>
 
                         </div>
                     </div>
@@ -650,14 +658,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 </div>
 
                             </div>
-                            <div class="row mb-3">
-                                <div class="form-check col-sm-3">
-                                    <label class="form-check-label col-form-label">Unidades e Medidas</label>
-                                    <div class="col-sm-3">
-                                        <input class="form-check-input" type="checkbox" value="S" name="chkunidades" id="chkunidades" <?php echo $c_chkunidades ?>>
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="indicadores">
@@ -696,7 +697,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </div>
                         </div>
                     </div>
+
+                    <div role="tabpanel" class="tab-pane" id="outros">
+                        <div style="padding-top:20px;">
+                            <div class="row mb-3">
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Planos de Ação</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkplanosacao" id="chkplanoacao" <?php echo $c_chkplanoacao ?>>
+                                    </div>
+                                </div>
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">POP</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkpop" id="chkpop" <?php echo $c_chkpop ?>>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="form-check col-sm-4">
+                                <label class="form-check-label col-form-label">Custos de Obras</label>
+                                <div class="col-sm-2">
+                                    <input class="form-check-input" type="checkbox" value="S" name="chkobras" id="chkobras" <?php echo $c_chkobras ?>>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
                 </div>
+
 
                 <hr>
                 <div class="row mb-3">

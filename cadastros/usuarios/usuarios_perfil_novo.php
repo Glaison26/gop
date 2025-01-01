@@ -200,6 +200,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $c_chkcomparativocustos = 'N';
         }
         //
+        if (isset($_POST['chkobras'])) {
+            $c_chkobras = 'S';
+        } else {
+            $c_chkobras = 'N';
+        }
         // grava dados no banco
 
         // faço a Leitura da tabela com sql
@@ -208,13 +213,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         cadastros_setores, cadastros_ferramentas, cadastros_grupos, cadastros_marcas, cadastros_pop, cadastros_checklist,
         servicos_solicitacoes, servicos_ordens,servicos_preventivas,servicos_ocorrencias_padroes,servicos_plano_acao,
         almoxarifado_cotacoes, almoxarifado_pedidodecompra, almoxarifado_materiais, almoxarifado_unidadesmedidas,
-        indicadores_ocorrencias, indicadores_comparativos, custos_ocorrencias, custos_comparativos, cadastros_tipos) value
+        indicadores_ocorrencias, indicadores_comparativos, custos_ocorrencias, custos_comparativos, cadastros_tipos, obras) value
         ('$c_descricao','$c_chkrecursosfisicos', '$c_chkespacosfisicos', '$c_chkfornecedores', '$c_chkfabricantes',
         '$c_chkexecutores', '$c_chkexecutores', '$c_chkfcargosfuncoes', '$c_chkoficinas', '$c_chkcentrosdecusto', '$c_chksetores',
         '$c_chkferramentas', '$c_chkgruposrecursos', '$c_chkmarcasrecursos','$c_chkpop', '$c_chksolicitacoes', '$c_chkordens',
         '$c_chkpreventivas', '$c_chkocorrencias', '$c_chkplanoacao','$c_chkcotacao','$c_chkpedidodecompra','$c_chkmateriais', '$c_chkunidades',
-        '$c_chkcontagem', '$c_chkcomparativo', '$c_chkcustoindividual', '$c_chkcomparativocustos', '$c_chktipo')";
-
+        '$c_chkcontagem', '$c_chkcomparativo', '$c_chkcustoindividual', '$c_chkcomparativocustos', '$c_chktipo', '$c_chkobras')";
 
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
@@ -287,7 +291,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <li role="presentation"><a href="#almoxarifado" aria-controls="almoxarifado" role="tab" data-toggle="tab">Almoxarifado</a></li>
                 <li role="presentation"><a href="#indicadores" aria-controls="indicadores" role="tab" data-toggle="tab">Indicadores</a></li>
                 <li role="presentation"><a href="#custo" aria-controls="custo" role="tab" data-toggle="tab">Custos da Manutenção</a></li>
-
+                <li role="presentation"><a href="#outros" aria-controls="outros" role="tab" data-toggle="tab">Outros</a></li>
             </ul>
             <div class="tab-content">
                 <!-- aba de descrição -->
@@ -295,9 +299,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div style="padding-top:20px;">
                         <div class="row mb-3">
                             <div class="form-check col-sm-2">
-                                <label class="form-check-label col-form-label">Perfil Ativo</label>
-                                <div class="col-sm-3">
-                                    <input class="form-check-input" type="checkbox" value="S" name="chkativo" id="chkativo" checked>
+                                <div style="padding-left:20px;">
+                                    <label class="form-check-label col-form-label">Perfil Ativo</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkativo" id="chkativo" checked>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -399,15 +405,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                         <div class="row mb-3">
                             <div class="form-check col-sm-3">
-                                <label class="form-check-label col-form-label">POP</label>
-                                <div class="col-sm-3">
-                                    <input class="form-check-input" type="checkbox" value="S" name="chkpop" id="chkpop" checked>
-                                </div>
-                            </div>
-                            <div class="form-check col-sm-3">
                                 <label class="form-check-label col-form-label">CheckList</label>
                                 <div class="col-sm-3">
                                     <input class="form-check-input" type="checkbox" value="S" name="chkchecklist" id="chkchecklist" checked>
+                                </div>
+                            </div>
+                            <div class="form-check col-sm-3">
+                                <label class="form-check-label col-form-label">Unidades e Medidas</label>
+                                <div class="col-sm-3">
+                                    <input class="form-check-input" type="checkbox" value="S" name="chkunidades" id="chkunidades" checked>
                                 </div>
                             </div>
                         </div>
@@ -444,15 +450,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 </div>
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <div class="form-check col-sm-3">
-                                <label class="form-check-label col-form-label">Planos de Ação</label>
-                                <div class="col-sm-3">
-                                    <input class="form-check-input" type="checkbox" value="S" name="chkplanosacao" id="chkplanoacao" checked>
-                                </div>
-                            </div>
 
-                        </div>
 
                     </div>
                 </div>
@@ -487,14 +485,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </div>
 
                         </div>
-                        <div class="row mb-3">
-                            <div class="form-check col-sm-3">
-                                <label class="form-check-label col-form-label">Unidades e Medidas</label>
-                                <div class="col-sm-3">
-                                    <input class="form-check-input" type="checkbox" value="S" name="chkunidades" id="chkunidades" checked>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="indicadores">
@@ -533,6 +524,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                     </div>
                 </div>
+                <div role="tabpanel" class="tab-pane" id="outros">
+                    <div style="padding-top:20px;">
+                        <div class="row mb-3">
+                            <div class="form-check col-sm-3">
+                                <label class="form-check-label col-form-label">Planos de Ação</label>
+                                <div class="col-sm-3">
+                                    <input class="form-check-input" type="checkbox" value="S" name="chkplanosacao" id="chkplanoacao" checked>
+                                </div>
+                            </div>
+                            <div class="form-check col-sm-3">
+                                <label class="form-check-label col-form-label">POP</label>
+                                <div class="col-sm-3">
+                                    <input class="form-check-input" type="checkbox" value="S" name="chkpop" id="chkpop" checked>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row mb-3">
+                            <div class="form-check col-sm-4">
+                                <label class="form-check-label col-form-label">Custos de Obras</label>
+                                <div class="col-sm-2">
+                                    <input class="form-check-input" type="checkbox" value="S" name="chkpbras" id="chkobras" checked>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
             <hr>
