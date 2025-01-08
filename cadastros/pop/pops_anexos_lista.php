@@ -7,25 +7,58 @@ include("../../conexao.php");
 include("../../links.php");
 // verifico se usuário e operador de tem autorização de acesso
 $i_id_usuario = $_SESSION["id_usuario"];
-$c_sql_acesso = "select usuarios.tipo, perfil_usuarios.cadastros_marcas FROM usuarios
+$c_sql_acesso = "select usuarios.tipo, perfil_usuarios.cadastros_pop FROM usuarios
 JOIN perfil_usuarios ON usuarios.id_perfil=perfil_usuarios.id
 WHERE usuarios.id='$i_id_usuario'";
 $result_acesso = $conection->query($c_sql_acesso);
 $registro_acesso = $result_acesso->fetch_assoc();
-if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_marcas'] == 'N') {
+if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_pop'] == 'N') { // acesso não permitido
     header('location: /gop/acesso.php');
 }
+// captura a id do pop selecionado na página anterior
+
+if (isset($_GET['id'])) {
+    $id_pop = $_GET['id'];
+    $_SESSION['id_pop_s'] = $id_pop;
+} else {
+    $id_pop = $_SESSION['id_pop_s'];
+}
+// sql para buscar descrição do POP
+$c_sql_pop = "Select id, descricao from pops where id='$id_pop'";
+$result_pop = $conection->query($c_sql_pop);
+$registro_pop = $result_pop->fetch_assoc();
+
+date_default_timezone_set('America/Sao_Paulo');
+
+if ((isset($_POST["btnarquivo"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  // botão para incluir imagem
+    $dir = "anexos/";
+    $arquivo = $_FILES['arquivo'];
+    $_SESSION['c_nomearquivo'] = $_FILES['arquivo']['name'];
+
+    $c_nomearquivo = $arquivo["name"];
+    if (!empty($c_nomearquivo)) {
+        move_uploaded_file($arquivo["tmp_name"], "$dir/" . $arquivo["name"]);
+        //echo $c_nomefoto;
+        // incluir registro da arquivo no banco de dados
+        $c_pasta = $dir . $c_nomearquivo;
+
+        $d_data = date('Y-m-d');
+        $c_sql = "insert into pop_anexos (id_pop, path, data) value ('$id_pop', '$c_pasta', '$d_data')";
+        $result = $conection->query($c_sql);
+    }
+}
+
 ?>
 <!doctype html>
 <html lang="en">
 
-<body>
 
+<body>
     <script language="Javascript">
         function confirmacao(id) {
             var resposta = confirm("Deseja remover esse registro?");
             if (resposta == true) {
-                window.location.href = "/gop/cadastros/marcas/marcas_excluir.php?id=" + id;
+                window.location.href = "/gop/cadastros/pop/pops_anexos_excluir.php?id=" + id;
             }
         }
     </script>
@@ -39,13 +72,13 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_marcas
 
     <script>
         $(document).ready(function() {
-            $('.tabmarcas').DataTable({
+            $('.tabpops').DataTable({
                 // 
                 "iDisplayLength": -1,
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,
-                    'aTargets': [2]
+                    'aTargets': [5]
                 }, {
                     'aTargets': [0],
                     "visible": true
@@ -83,40 +116,6 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_marcas
         });
     </script>
 
-    <!-- Função javascript e ajax para inclusão dos dados -->
-    <script type="text/javascript">
-        $(document).on('submit', '#frmadd', function(e) {
-            e.preventDefault();
-            var c_descricao = $('#add_descricaoField').val();
-
-            if (c_descricao != '') {
-
-                $.ajax({
-                    url: "marcas_novo.php",
-                    type: "post",
-                    data: {
-                        c_descricao: c_descricao
-
-                    },
-                    success: function(data) {
-                        var json = JSON.parse(data);
-                        var status = json.status;
-
-                        location.reload();
-                        if (status == 'true') {
-
-                            $('#novoModal').modal('hide');
-                            location.reload();
-                        } else {
-                            alert('falha ao incluir dados');
-                        }
-                    }
-                });
-            } else {
-                alert('Preencha todos os campos obrigatórios');
-            }
-        });
-    </script>
 
     <!--  script javascript Coleta dados da tabela para edição do registro -->
     <script>
@@ -136,28 +135,30 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_marcas
 
                 $('#up_idField').val(data[0]);
                 $('#up_descricaoField').val(data[1]);
-
+                $('#up_resposavelField').val(data[4]);
 
             });
         });
     </script>
 
-    <script type="text/javascript">
+<script type="text/javascript">
         ~
         // Função javascript e ajax para Alteração dos dados
         $(document).on('submit', '#frmup', function(e) {
             e.preventDefault();
             var c_id = $('#up_idField').val();
             var c_descricao = $('#up_descricaoField').val();
+            var c_responsavel = $('#up_resposavelField').val();
 
             if (c_descricao != '') {
 
                 $.ajax({
-                    url: "marcas_editar.php",
+                    url: "pops_anexos_editar.php",
                     type: "post",
                     data: {
                         c_id: c_id,
-                        c_descricao: c_descricao
+                        c_descricao: c_descricao,
+                        c_responsavel: c_responsavel
                     },
                     success: function(data) {
                         var json = JSON.parse(data);
@@ -172,97 +173,94 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_marcas
                 });
 
             } else {
-                alert('Todos os campos devem ser preenchidos!!');
+                alert('Campo Descrição deve ser preenchido!!');
             }
         });
     </script>
 
+
+
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
-            <h5>Lista de Marcas<h5>
+            <h5>Lista de Anexo(s) ao POP<h5>
         </div>
     </div>
     <br>
 
     <div class="container-fluid">
 
-        <button type="button" title="Inclusão de Nova Marca" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
-            Incluir
-        </button>
-        <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
-
+        <form method="post" enctype="multipart/form-data">
+        <a class="btn btn-secondary btn-sm" href="/gop/cadastros/pop/pops_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
         <hr>
-        <table class="table table display table-bordered tabmarcas">
-            <thead class="thead">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Descrição</th>
-                    <th scope="col">Opções</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
+            <div class='panel panel-Light'>
+                <div class='panel panel-info class'>
+                    <div class='panel-heading'>
+                        <button type='submit' name='btnarquivo' id='btnarquivo' class='btn btn-Ligth'><img src='\gop\images\pasta.png'
+                                alt='' width='20' height='20'> Carregar Anexo</button>
 
-                // faço a Leitura da tabela com sql
-                $c_sql = "SELECT marcas.id, marcas.descricao FROM marcas ORDER BY marcas.descricao";
-                $result = $conection->query($c_sql);
-                // verifico se a query foi correto
-                if (!$result) {
-                    die("Erro ao Executar Sql!!" . $conection->connect_error);
-                }
+                        <hr>
+                        <input type='file' name='arquivo' class='form-control-file' id='arquivo' accept='image/*,.pdf'>
+                    </div>
 
-                // insiro os registro do banco de dados na tabela 
-                while ($c_linha = $result->fetch_assoc()) {
+                </div>
 
-                    echo "
+            </div>
+            <div class='alert alert-info' role='alert'>
+                <div style="padding-left:15px;">
+                    <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
+                </div>
+                <h5><strong>Descrição do POP : <?php echo $registro_pop['descricao'] ?></strong></h5>
+            </div>
+
+            <table class="table table display table-bordered tabpops">
+                <thead class="thead">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Descrição</th>
+                        <th scope="col">Arquivo</th>
+                        <th scope="col">Data</th>
+                        <th scope="col">Responsável</th>
+                        <th scope="col">Opções</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+
+                    // faço a Leitura da tabela com sql
+                    $c_sql = "SELECT * from pop_anexos where id_pop='$id_pop'";
+                    $result = $conection->query($c_sql);
+                    // verifico se a query foi correto
+                    if (!$result) {
+                        die("Erro ao Executar Sql!!" . $conection->connect_error);
+                    }
+
+                    // insiro os registro do banco de dados na tabela 
+                    while ($c_linha = $result->fetch_assoc()) {
+                        $c_data =  new DateTime($c_linha['data']);
+                        $c_data = $c_data->format('d-m-Y');
+                        echo "
                     <tr class='info'>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descricao]</td>
+                    <td>$c_linha[path]</td>
+                    <td>$c_data</td>
+                    <td>$c_linha[responsavel]</td>
+                    
+                   
                     <td>
                     <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Marcas'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
+                    <a class='btn btn-primary btn-sm' href='/gop/cadastros/pop/pops_baixar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-download-alt'></span> download</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
                     </tr>
                     ";
-                }
-                ?>
-
-
-            </tbody>
-        </table>
-    </div>
-
-    <!-- janela Modal para inclusão de registro -->
-    <div class="modal fade" class="modal-dialog modal-lg" id="novoModal" name="novoModal" tabindex="-1" role="dialog" aria-labelledby="novoModal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Inclusão de nova Marca</h4>
-                </div>
-                <div class="modal-body">
-                    <div class='alert alert-warning' role='alert'>
-                        <h5>Campos com (*) são obrigatórios</h5>
-                    </div>
-                    <form id="frmadd" action="">
-                        <div class="mb-3 row">
-                            <label for="add_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" id="add_descricaoField" name="add_dscricaoField" required>
-                            </div>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Fechar</button>
-
-                        </div>
-                    </form>
-                </div>
-
-            </div>
-        </div>
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </form>
     </div>
 
 
@@ -271,19 +269,26 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_marcas
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Editar Marca</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Editar Dados do Anexo ao POP</h4>
                 </div>
                 <div class="modal-body">
                     <div class='alert alert-warning' role='alert'>
-                        <h5>Campos com (*) são obrigatórios</h5>
+                        <h5>Preeencha os campos abaixo</h5>
                     </div>
                     <form id="frmup" method="POST" action="">
                         <input type="hidden" id="up_idField" name="up_idField">
                         <div class="mb-3 row">
-                            <label for="up_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
+                            <label for="up_descricaoField" class="col-md-3 form-label">Descrição</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" id="up_descricaoField" name="up_dscricaoField" required>
+                                <input type="text" class="form-control" id="up_descricaoField" name="up_descricaoField">
                             </div>
+                        </div>
+                        <div class="mb-3 row">
+                        <label for="up_responsavelField" class="col-md-3 form-label">Responsável</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="up_resposavelField" name="up_responsavelField">
+                            </div>
+
                         </div>
 
                         <div class="modal-footer">

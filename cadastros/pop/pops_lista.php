@@ -134,6 +134,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_pop'] 
                    
                     <td>
                     <a class='btn btn-secondary btn-sm' href='/gop/cadastros/pop/pops_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                    <a class='btn btn-primary btn-sm' href='/gop/cadastros/pop/pops_anexos_lista.php?id=$c_linha[id]'><span class='glyphicon glyphicon-paperclip'></span> Anexos</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
