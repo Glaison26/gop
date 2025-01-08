@@ -30,21 +30,27 @@ $registro_pop = $result_pop->fetch_assoc();
 
 date_default_timezone_set('America/Sao_Paulo');
 
-if ((isset($_POST["btnarquivo"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  // botão para incluir imagem
+if ((isset($_POST["btnarquivo"]))) {  // botão para incluir imagem
     $dir = "anexos/";
     $arquivo = $_FILES['arquivo'];
     $_SESSION['c_nomearquivo'] = $_FILES['arquivo']['name'];
 
     $c_nomearquivo = $arquivo["name"];
     if (!empty($c_nomearquivo)) {
-        move_uploaded_file($arquivo["tmp_name"], "$dir/" . $arquivo["name"]);
-        //echo $c_nomefoto;
-        // incluir registro da arquivo no banco de dados
         $c_pasta = $dir . $c_nomearquivo;
+        // verifico se arquivo já foi incluido no banco de dados
+        $c_sql_file = "Select count(*) as quantidade from pop_anexos where pop_anexos.path = '$c_pasta'";
+        $result_file = $conection->query($c_sql_file);
+        $registro_file = $result_file->fetch_assoc();
+        if ($registro_file['quantidade'] == 0) {
+            move_uploaded_file($arquivo["tmp_name"], "$dir/" . $arquivo["name"]);
+            //echo $c_nomefoto;
+            // incluir registro da arquivo no banco de dados
 
-        $d_data = date('Y-m-d');
-        $c_sql = "insert into pop_anexos (id_pop, path, data) value ('$id_pop', '$c_pasta', '$d_data')";
-        $result = $conection->query($c_sql);
+            $d_data = date('Y-m-d');
+            $c_sql = "insert into pop_anexos (id_pop, path, data) value ('$id_pop', '$c_pasta', '$d_data')";
+            $result = $conection->query($c_sql);
+        }
     }
 }
 
@@ -141,7 +147,7 @@ if ((isset($_POST["btnarquivo"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  
         });
     </script>
 
-<script type="text/javascript">
+    <script type="text/javascript">
         ~
         // Função javascript e ajax para Alteração dos dados
         $(document).on('submit', '#frmup', function(e) {
@@ -191,8 +197,8 @@ if ((isset($_POST["btnarquivo"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  
     <div class="container-fluid">
 
         <form method="post" enctype="multipart/form-data">
-        <a class="btn btn-secondary btn-sm" href="/gop/cadastros/pop/pops_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
-        <hr>
+            <a class="btn btn-secondary btn-sm" href="/gop/cadastros/pop/pops_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
+            <hr>
             <div class='panel panel-Light'>
                 <div class='panel panel-info class'>
                     <div class='panel-heading'>
@@ -284,7 +290,7 @@ if ((isset($_POST["btnarquivo"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  
                             </div>
                         </div>
                         <div class="mb-3 row">
-                        <label for="up_responsavelField" class="col-md-3 form-label">Responsável</label>
+                            <label for="up_responsavelField" class="col-md-3 form-label">Responsável</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" id="up_resposavelField" name="up_responsavelField">
                             </div>

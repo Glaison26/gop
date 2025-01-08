@@ -17,6 +17,8 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_pop'] 
 }
 
 ?>
+
+
 <!doctype html>
 <html lang="en">
 
