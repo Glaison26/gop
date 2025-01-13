@@ -236,7 +236,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['almoxarifado_cot
                         END AS cotacao_tipo
                         FROM cotacao
                         JOIN usuarios ON  cotacao.id_responsavel=usuarios.id
-                        ORDER BY cotacao.`data` desc";
+                        ORDER BY cotacao.id desc";
                 $result = $conection->query($c_sql);
                 // verifico se a query foi correto
                 if (!$result) {

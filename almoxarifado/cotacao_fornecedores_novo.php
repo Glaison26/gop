@@ -34,6 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $msg_erro = "Todos os campos  com (*) devem ser preenchidos!!";
             break;
         }
+        // consistencia de valor de frete
+        if (!is_numeric($n_frete)) {
+
+            $msg_erro = "Valor de frete inválido inválido !!";
+            break;
+        }
 
         // sql para pegar o id do fornecedor
         $c_sql = "select id, descricao from fornecedores where descricao = '$c_fornecedor'";
