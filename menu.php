@@ -5,6 +5,11 @@
         die('Acesso não autorizado!!!');
     }
     include('conexao.php');
+
+    date_default_timezone_set('America/Sao_Paulo');
+    $agora = date('d/m/Y H:i');
+    $c_data = date('Y-m-d');
+    //
     $_SESSION['voltadiretriz'] = 'N';
     $_SESSION['consulta_solicitacao'] = "";
     $_SESSION['consulta_ordem'] = "";
@@ -14,9 +19,6 @@
     $registro = $result->fetch_assoc();
     $c_solicitacao_aberta = $registro['aberta_solicitacao'];
     $c_ordens_sla = 0;
-    date_default_timezone_set('America/Sao_Paulo');
-    $agora = date('d/m/Y H:i');
-    $c_data = date('Y-m-d');
     //verifoco numero de preventivas a serem geradas
     $c_sql = "select COUNT(*) AS preventivas FROM preventivas WHERE data_prox_realizacao<='$c_data'";
     $result = $conection->query($c_sql);
