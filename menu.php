@@ -27,6 +27,11 @@
     $result = $conection->query($c_sql);
     $registro = $result->fetch_assoc();
     $c_ordens_sla = $registro['sla'];
+    // verifico ordens de serviço que encontran-se em aberto
+    $c_sql = "select COUNT(*) AS abertas FROM ordens WHERE  ordens.`status`='A'";
+    $result = $conection->query($c_sql);
+    $registro = $result->fetch_assoc();
+    $c_ordens_abertas = $registro['abertas'];
 
 
     ?>

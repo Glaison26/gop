@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         exit;
     }
 
-    $i_id = $_GET["id"];
+    $i_id = $_SESSION['id_ordem'];
     // leitura do cliente através de sql usando id passada
     $c_sql = "select * from ordens where id=$i_id";
     $result = $conection->query($c_sql);
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     }
 
     if (!$registro) {
-        header('location: /gop/ordens/ordens_lista.php');
+        header('location: /gop/ordens/ordens_gerenciar.php');
         exit;
     }
     // sql para pegar recurso fisico se os for de recurso fisico
@@ -204,7 +204,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         if (!$result) {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
         }
-        header('location: /gop/ordens/ordens_lista.php');
+        header('location: /gop/ordens/ordens_gerenciar.php');
     } while (false);
 }
 
@@ -618,7 +618,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                     if ($registro['status'] <> 'X')
                         echo '<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-saved"></span> Salvar</button>';
                     ?>
-                    <a class='btn btn-danger' href='/gop/ordens/ordens_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                    <a class='btn btn-danger' href='/gop/ordens/ordens_gerenciar.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
                 </div>
             </div>
 

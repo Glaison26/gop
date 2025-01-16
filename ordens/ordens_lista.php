@@ -267,8 +267,7 @@ include('../conexao.php');
                                     <td>$c_linha[ordens_tipo_texto]</td>
                                     
                                     <td>
-                                        <a class='btn btn-secondary btn-sm' href='/gop/ordens/ordens_editar.php?id=$c_linha[id]'>
-                                        <span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                                        
                                         <a class='btn btn-success btn-sm' href='/gop/ordens/ordens_gerenciar.php?id=$c_linha[id]'>
                                         <img src='\gop\images\gerenciamento.png' alt='' width='23' height='18'> Gerenciar</a>
 
@@ -337,7 +336,7 @@ include('../conexao.php');
                                     <td>$c_linha[ordens_tipo_texto]</td>
                                     
                                     <td>
-                                        <a class='btn btn-secondary btn-sm' href='/gop/ordens/ordens_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                                        
                                         <a class='btn btn-success btn-sm' href='/gop/ordens/ordens_gerenciar.php?id=$c_linha[id]'>
                                         <img src='\gop\images\gerenciamento.png' alt='' width='23' height='18'> Gerenciar</a>
                                         <a class='btn btn-info btn-sm' href='/gop/ordens/ordens_emissao.php?id=$c_linha[id]'>
@@ -407,7 +406,7 @@ include('../conexao.php');
                                     <td>$c_linha[ordens_tipo_texto]</td>
                                     
                                     <td>
-                                        <a class='btn btn-secondary btn-sm' href='/gop/ordens/ordens_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                                        
                                       <a class='btn btn-success btn-sm' href='/gop/ordens/ordens_gerenciar.php?id=$c_linha[id]'>
                                         <img src='\gop\images\gerenciamento.png' alt='' width='23' height='18'> Gerenciar</a>
                                            <a class='btn btn-info btn-sm' href='/gop/ordens/ordens_emissao.php?id=$c_linha[id]' target='_blank'>
