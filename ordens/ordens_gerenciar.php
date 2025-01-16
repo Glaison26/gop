@@ -53,6 +53,7 @@ $c_linha_ordem = $result->fetch_assoc();
                 <div style="padding-bottom :2px;">
                     <div class="topnav">
                         <?php
+                        // cabeçalho do gerenciar
                         if ($c_linha_ordem['status'] <> 'C' && $c_linha_ordem['status'] <> 'S' && $c_linha_ordem['status'] <> 'X') {
                             echo "<a title='Editar Ordem de serviço' href='\gop\ordens\ordens_editar.php?id=<?php echo $i_id ?>'><img src='\gop\images\xxxescrever.png' alt='' width='30' height='25'><span> Editar</span></a>
                             <a title='Concluir Ordem de Serviço' href='gop\ordens\ordens_conclusao.php?id=<?php echo $i_id ?>'><img src='\gop\images\concluir.png' alt='' width='30' height='25'><span> Concluir</span></a>

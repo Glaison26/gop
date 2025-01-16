@@ -17,7 +17,7 @@ $c_wheretipo_avulso =  " and ordens.tipo='V'";
 // montagem do sql para recursos físicos
 $c_sql_recurso = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
                     ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao AS setor,
-                    usuarios.nome, recursos.descricao, recursos.patrimonio,
+                    usuarios.nome, recursos.descricao, ordens.data_previsao, recursos.patrimonio,
                     case
                     when ordens.status='A' then 'Aberta'
                     when ordens.status='E' then 'Em Andamento'
@@ -36,7 +36,7 @@ $c_sql_recurso = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, 
                     where $c_where";
 // sql de espaços fisico
 $c_sql_espaco = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
-                    ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao AS setor,
+                    ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao AS setor, ordens.data_previsao,
                     usuarios.nome, 
                     case
                     when ordens.status='A' then 'Aberta'
@@ -55,7 +55,7 @@ $c_sql_espaco = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, o
                      where $c_where";
 // sql para abertas
 $c_sql_avulso = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
-                    ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao AS setor,
+                    ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao AS setor,ordens.data_previsao,
                     usuarios.nome,
                     case
                     when ordens.status='A' then 'Aberta'

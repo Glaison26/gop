@@ -202,8 +202,6 @@ include('../conexao.php');
 
             <h5>Resultado das Ordens de Serviço Selecionadas</h5>
         </div>
-
-
         <!-- abas de solicitações por recursos físicos, Espaços físicos e avulsos -->
         <ul class="nav nav-tabs nav-tabs-responsive" role="tablist">
             <li role="presentation" class="active"><a href="#recurso" aria-controls="recurso" role="tab" data-toggle="tab">Ordens de Serviço em Recurso Físico</a></li>
@@ -221,6 +219,7 @@ include('../conexao.php');
                                 <th scope="col"># Sol.</th>
                                 <th scope="col">Data</th>
                                 <th scope="col">Hora</th>
+                                <th scope="col">Data SLA</th>
                                 <th scope="col">Descritivo</th>
                                 <th scope="col">Patrimônio</th>
                                 <th scope="col">Status</th>
@@ -243,6 +242,10 @@ include('../conexao.php');
                             // insiro os registro do banco de dados na tabela 
                             while ($c_linha = $result->fetch_assoc()) {
                                 $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_geracao'])));
+                                if (!empty($c_linha['data_previsao']))
+                                    $c_data_sla = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_previsao'])));
+                                else
+                                    $c_data_sla = '';
                                 $c_hora = date("H:i", strtotime($c_linha['hora_geracao']));
                                 $c_cor = "";
                                 if ($c_linha['status'] == 'X')
@@ -260,6 +263,7 @@ include('../conexao.php');
                                     <td>$c_linha[id_solicitacao]</td>
                                     <td>$c_data</td>
                                     <td>$c_hora</td>
+                                    <td>$c_data_sla</td>
                                     <td>$c_linha[descritivo]</td>
                                     <td>$c_linha[patrimonio]</td>
                                     <td $c_cor style='text-align:center'>$c_linha[ordens_status]</td>
@@ -294,6 +298,7 @@ include('../conexao.php');
                                 <th scope="col"># Sol.</th>
                                 <th scope="col">Data</th>
                                 <th scope="col">Hora</th>
+                                <th scope="col">Data SLA</th>
                                 <th scope="col">Descritivo</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Setor</th>
@@ -315,6 +320,10 @@ include('../conexao.php');
                             // insiro os registro do banco de dados na tabela 
                             while ($c_linha = $result->fetch_assoc()) {
                                 $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_geracao'])));
+                                if (!empty($c_linha['data_previsao']))
+                                    $c_data_sla = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_previsao'])));
+                                else
+                                    $c_data_sla = '';
                                 $c_hora = date("H:i", strtotime($c_linha['hora_geracao']));
                                 if ($c_linha['status'] == 'X')
                                     $c_cor = "class='table-danger'";
@@ -328,12 +337,13 @@ include('../conexao.php');
                                 <tr>
                                    <td>$c_linha[id]</td>
                                    <td>$c_linha[id_solicitacao]</td>
-                                    <td>$c_data</td>
-                                    <td>$c_hora</td>
-                                    <td>$c_linha[descritivo]</td>
-                                    <td $c_cor style='text-align:center'>$c_linha[ordens_status]</td>
-                                    <td>$c_linha[setor]</td>
-                                    <td>$c_linha[ordens_tipo_texto]</td>
+                                   <td>$c_data</td>
+                                   <td>$c_hora</td>
+                                   <td>$c_data_sla</td>
+                                   <td>$c_linha[descritivo]</td>
+                                   <td $c_cor style='text-align:center'>$c_linha[ordens_status]</td>
+                                   <td>$c_linha[setor]</td>
+                                   <td>$c_linha[ordens_tipo_texto]</td>
                                     
                                     <td>
                                         
@@ -364,6 +374,7 @@ include('../conexao.php');
                                 <th scope="col"># Sol.</th>
                                 <th scope="col">Data</th>
                                 <th scope="col">Hora</th>
+                                <th scope="col">Data SLA</th>
                                 <th scope="col">Descritivo</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Setor</th>
@@ -385,6 +396,10 @@ include('../conexao.php');
                             // insiro os registro do banco de dados na tabela 
                             while ($c_linha = $result->fetch_assoc()) {
                                 $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_geracao'])));
+                                if (!empty($c_linha['data_previsao']))
+                                    $c_data_sla = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_previsao'])));
+                                else
+                                    $c_data_sla = '';
                                 $c_hora = date("H:i", strtotime($c_linha['hora_geracao']));
                                 if ($c_linha['status'] == 'X')
                                     $c_cor = "class='table-danger'";
@@ -400,6 +415,7 @@ include('../conexao.php');
                                     <td>$c_linha[id_solicitacao]</td>
                                     <td>$c_data</td>
                                     <td>$c_linha[hora_geracao]</td>
+                                    <td>$c_data_sla</td>
                                     <td>$c_linha[descritivo]</td>
                                     <td $c_cor style='text-align:center'>$c_linha[ordens_status]</td>
                                     <td>$c_linha[setor]</td>
@@ -470,7 +486,7 @@ include('../conexao.php');
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class='btn btn-success btn-sm'  onclick='emissao()'><span class='glyphicon glyphicon-ok'></span> Emitir</button>
+                    <button type="button" class='btn btn-success btn-sm' onclick='emissao()'><span class='glyphicon glyphicon-ok'></span> Emitir</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                 </div>
             </div>
