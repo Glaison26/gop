@@ -34,7 +34,7 @@ $c_sql_recurso = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, 
                     JOIN usuarios ON ordens.id_solicitante=usuarios.id
                     JOIN recursos on ordens.id_recurso=recursos.id
                     where $c_where";
-//
+// sql de espaços fisico
 $c_sql_espaco = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
                     ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao AS setor,
                     usuarios.nome, 
@@ -53,7 +53,7 @@ $c_sql_espaco = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, o
                     JOIN setores ON ordens.id_setor=setores.id
                     JOIN usuarios ON ordens.id_solicitante=usuarios.id
                      where $c_where";
-//
+// sql para abertas
 $c_sql_avulso = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
                     ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao AS setor,
                     usuarios.nome,
