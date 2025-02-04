@@ -99,6 +99,30 @@
             </div>
         </div>
 
+        <div class="col-xl-4 col-md-6">
+            <div class="card text-dark bg-light mb-3" style="width: 18rem;">
+                <div class="card-header">
+                    <h4>Suspensas</h4>
+                </div>
+
+                <div class="card-body">
+
+                    <p class="card-text">
+                        <?php
+                        if ($c_ordens_suspensas > 0) {
+                            echo "<img src='\gop\images\alerta.png' alt='25' height='25'>";
+                        } else {
+                            echo "<img src='\gop\images\certo.png' alt='25' height='25'>";
+                        } ?>
+
+                    <h4><strong>Existem <?php echo $c_ordens_suspensas ?> Ordens Suspensas</h4></strong></p><br><br>
+                    <a href="/gop/chama_suspensas.php" class="btn btn-primary">Clique para Visualizar</a>
+                </div>
+
+            </div>
+        </div>
+
+
     </div>
 </body>
 

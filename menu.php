@@ -34,6 +34,12 @@
     $result = $conection->query($c_sql);
     $registro = $result->fetch_assoc();
     $c_ordens_abertas = $registro['abertas'];
+    // verifico ordens de servico que encontran-se suspensas
+    $c_sql = "select COUNT(*) as suspensas from ordens where ordens.status='S'";
+    $result = $conection->query($c_sql);
+    $registro = $result->fetch_assoc();
+    $c_ordens_suspensas = $registro['suspensas'];
+    //
 
 
     ?>
