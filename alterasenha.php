@@ -8,8 +8,6 @@ include('links2.php');
 include('conexao.php');
 include_once "lib_gop.php";
 
-
-
 $c_senhaatual = "";
 $c_senhanova = "";
 $c_senhaconfirma = "";
