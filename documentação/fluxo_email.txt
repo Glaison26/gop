@@ -1,0 +1,27 @@
+fluxo de envio de email
+
+abertura de solicitação :
+
+envio email para o e-mail do solicitante e o e-mail da manutenção contendo texto do chamado
+e numero da solicitação.
+
+geração da ordem de serviço :
+
+envio de e-mail para o solicitante, e e-mail da manutenção, e-mail da oficina contendo prazo de sla, texto do chamado e número da
+ordem de serviço.  
+
+suspensão da ordem de serviço :
+
+envio de e-mail para solicitante, manutenção e oficina comunicando o número da ordem de serviço e o motivo da suspensão.
+
+Retirada da suspensão :
+
+envio de e-mail para solicitante, manutenção e oficina comunicando o número da ordem de serviço a cumunicação da retirada da suspensão.
+
+Cancelamento da ordem de servico :
+
+envio de e-mail para solicitante, manutenção e oficina comunicando o número da ordem de serviço e o motivo do cancelamento
+
+Fechamento da Ordem de serviço :
+
+envio de e-mail para solicitante, manutenção e oficina comunicando o número da ordem de serviço com o texto da conclusão

@@ -190,7 +190,6 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     header('location: /gop/ordens/ordens_lista.php');
 }
 
-
 ?>
 
 
