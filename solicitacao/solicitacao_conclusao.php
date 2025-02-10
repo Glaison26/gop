@@ -114,8 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
 
         if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
-            $c_sql =    "SELECT MAX(solicitacao.ID) AS id_solicitacao FROM solicitacao";
-
+            $c_sql = "SELECT MAX(solicitacao.ID) AS id_solicitacao FROM solicitacao";
             $result = $conection->query($c_sql);
             $c_linha = $result->fetch_assoc();
             $solicitacao = $c_linha['id_solicitacao'];

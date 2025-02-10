@@ -71,6 +71,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             hora_conclusao='$c_hora_conclusao', conclusao='$c_conclusao' where id=$i_id";
          $result_up = $conection->query($c_sql_up);
 
+         // rotina de envio de email da conclusão para solicitante, manutenção e oficina
+         // pego o email da manutenção
+        $c_sql_config = "select email_manutencao from configuracoes";
+        $result = $conection->query($c_sql_config);
+        $c_linha_email = $result->fetch_assoc();
+        $c_email_manutencao = $c_linha_email['email_manutencao'];
+        //echo $c_email_oficina;
+        
+        // chamo o envio de email ordem de serviço gerada
+        if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
+          
+            $ordem = $i_id;
+            $c_data_conclusao = new DateTime($_POST['data_conclusao']);
+            $c_data_conclusao = $c_data_conclusao->format('Y-m-d');
+            
+            
+            $c_assunto = "Fechamento de Ordem  de Serviço no GOP";
+            $c_body = "A Ordem de serviço No.<b> $ordem </b> foi concluida com suceso!<br>"
+                . "Descrição da Solicitação :" . $c_descricao . "<br>" .
+                "Descrição da Conclusão:<br>".
+                $c_conclusao;
+
+            include('../email_gop.php');
+        }
+
         header('location: /gop/ordens/ordens_gerenciar.php');
     } while (false);
 }

@@ -56,7 +56,7 @@ $c_linha_ordem = $result->fetch_assoc();
                         // cabeçalho do gerenciar
                         if ($c_linha_ordem['status'] <> 'C' && $c_linha_ordem['status'] <> 'S' && $c_linha_ordem['status'] <> 'X') {
                             echo "<a title='Editar Ordem de serviço' href='\gop\ordens\ordens_editar.php?id=<?php echo $i_id ?>'><img src='\gop\images\xxxescrever.png' alt='' width='30' height='25'><span> Editar</span></a>
-                            <a title='Concluir Ordem de Serviço' href='gop\ordens\ordens_conclusao.php?id=<?php echo $i_id ?>'><img src='\gop\images\concluir.png' alt='' width='30' height='25'><span> Concluir</span></a>
+                            <a title='Concluir Ordem de Serviço' href='\gop\ordens\ordens_conclusao.php?id=<?php echo $i_id ?>'><img src='\gop\images\concluir.png' alt='' width='30' height='25'><span> Concluir</span></a>
                         <a title='Suspender Ordem de Serviço' href='\gop\ordens\ordens_suspender.php?id=<?php echo $i_id ?>'><img src='\gop\images\aguardado.png' alt='' width='30' height='25'><span> Suspender</span></a>
                         <a title='Cancelar Ordem de Serviço' href='\gop\ordens\ordens_cancelar.php?id=<?php echo $i_id ?>'><img src='\gop\images\cancelar.png' alt='' width='30' height='25'><span> Cancelar</span></a>";
                         }

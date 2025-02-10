@@ -41,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // incluir dados da suspensão na tabela de históricos da suspensão
         $c_sql = "insert into ordens_suspensao (id_ordem,data_suspensao,hora_suspensao,motivo) value ('$i_id','$c_data_suspensao', '$c_hora_suspensao', '$c_motivo')";
         $result = $conection->query($c_sql);
+        
         header('location: /gop/ordens/ordens_gerenciar.php');
     } while (false);
 }
