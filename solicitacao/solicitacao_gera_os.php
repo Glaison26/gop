@@ -106,6 +106,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $registro_solicitante = $result_solicitante->fetch_assoc();
         $c_email = $registro_solicitante['email']; // email do solicitante
         $c_email_oficina = $registro_oficina['email']; // email da oficina selecionada na ordem de serviço
+        // pego o email da manutenção
+        $c_sql_config = "select email_manutencao from configuracoes";
+        $result = $conection->query($c_sql_config);
+        $c_linha_email = $result->fetch_assoc();
+        $c_email_manutencao = $c_linha_email['email_manutencao'];
         //echo $c_email_oficina;
         
         // chamo o envio de email ordem de serviço gerada

@@ -2,13 +2,13 @@ fluxo de envio de email
 
 abertura de solicitação :
 
-envio email para o e-mail do solicitante e o e-mail da manutenção contendo texto do chamado
-e numero da solicitação.
+envio email para o e-mail do solicitante e o e-mail da manutenção contendo texto do chamado  
+e numero da solicitação.  ok - feito
 
 geração da ordem de serviço :
 
-envio de e-mail para o solicitante, e e-mail da manutenção, e-mail da oficina contendo prazo de sla, texto do chamado e número da
-ordem de serviço.  
+envio de e-mail para o solicitante ok, e e-mail da manutenção , e-mail da oficina contendo prazo de sla ok, texto do chamado e número da
+ordem de serviço.  ok feito
 
 suspensão da ordem de serviço :
 

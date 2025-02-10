@@ -104,8 +104,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!$result) {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
         }
+        // pego o email da manutenção
+        $c_sql_config = "select email_manutencao from configuracoes";
+        $result = $conection->query($c_sql_config);
+        $c_linha_email = $result->fetch_assoc();
+        $c_email_manutencao = $c_linha_email['email_manutencao'];
         // chamo o envio de email
         // barra de progresso
+        
 
         if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
             $c_sql =    "SELECT MAX(solicitacao.ID) AS id_solicitacao FROM solicitacao";

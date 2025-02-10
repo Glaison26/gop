@@ -18,6 +18,7 @@ $mail = new PHPMailer(true);
 try {
     //Server settings
     //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+    $c_email_envio = 'glaison26.queiroz@gmail.com';
     $mail->CharSet = 'UTF-8';
     $mail->isSMTP();                                            //Send using SMTP
     $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
@@ -28,7 +29,7 @@ try {
     $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
     //$mail->Port       = 587; 
     //Recipients
-    $mail->setFrom($c_email, 'GOP');
+    $mail->setFrom($c_email_envio, 'GOP');
     $mail->addAddress($c_email, 'GOP');     // endereco para onde será enviado
     if (!empty($c_email_oficina))
         $mail->addCC($c_email_oficina, 'GOP');
@@ -39,6 +40,10 @@ try {
 
     $mail->send();
     echo 'Message has been sent';
+    // configuração para envio para manutenção
+    $mail->ClearAddresses();
+    $mail->addAddress($c_email_manutencao, 'GOP');     // endereco da manutenção para onde será enviado
+    $mail->send();
 } catch (Exception $e) {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
