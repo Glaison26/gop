@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $c_data_conclusao = new DateTime($_POST['data_conclusao']);
             $c_data_conclusao = $c_data_conclusao->format('Y-m-d');
                     
-            $c_assunto = "Fechamento de Ordem  de Serviço no GOP";
+            $c_assunto = "Fechamento de Ordem de Serviço no GOP";
             $c_body = "A Ordem de serviço No.<b> $ordem </b> foi concluida com suceso!<br>"
                 . "Descrição da Solicitação :" . $c_descricao . "<br>" .
                 "Descrição da Conclusão:<br>".
