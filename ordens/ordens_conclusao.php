@@ -93,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               
         // chamo o envio de email ordem de serviço gerada
         if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
-            header('location: /gop/acesso.php');
+            
             $ordem = $i_id;
             $c_data_conclusao = new DateTime($_POST['data_conclusao']);
             $c_data_conclusao = $c_data_conclusao->format('Y-m-d');

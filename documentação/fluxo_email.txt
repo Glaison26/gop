@@ -25,3 +25,7 @@ envio de e-mail para solicitante, manutenção e oficina comunicando o número d
 Fechamento da Ordem de serviço :
 
 envio de e-mail para solicitante, manutenção e oficina comunicando o número da ordem de serviço com o texto da conclusão
+
+geração de preventivas :
+
+enviar e-mail com as preventivas geradas para o e-mail da manutenção
