@@ -78,15 +78,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $c_linha_email = $result->fetch_assoc();
         $c_email_manutencao = $c_linha_email['email_manutencao'];
         //echo $c_email_oficina;
+        // procuro solicitante para enviar e-mail
         
+        $c_sql_sol = "select id_solicitante from ordens where id=$i_id";
+        $result_sol = $conection->query($c_sql_sol);
+        $registro_sol = $result_sol->fetch_assoc();
+        $i_id_solicitante = $registro_sol['id_solicitante'];
+        // procuro o email do solicitante
+        $c_sql_sol = "select email from usuarios where id= '$i_id_solicitante'";
+        $result_sol = $conection->query($c_sql_sol);
+        $registro_sol = $result_sol->fetch_assoc();
+        $c_email = $registro_sol['email'];
+        $c_descricao = $registro['descricao'];
+              
         // chamo o envio de email ordem de serviço gerada
         if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
-          
+            header('location: /gop/acesso.php');
             $ordem = $i_id;
             $c_data_conclusao = new DateTime($_POST['data_conclusao']);
             $c_data_conclusao = $c_data_conclusao->format('Y-m-d');
-            
-            
+                    
             $c_assunto = "Fechamento de Ordem  de Serviço no GOP";
             $c_body = "A Ordem de serviço No.<b> $ordem </b> foi concluida com suceso!<br>"
                 . "Descrição da Solicitação :" . $c_descricao . "<br>" .
@@ -125,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
                     <h4>GOP - Gestão Operacional</h4>
-                    <h5>Fechamento de Ordem de Serviço</h5>
+                    <h5>Fechamentos de Ordem de Serviço</h5>
                 </div>
             </div>
         </div>

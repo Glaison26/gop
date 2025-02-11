@@ -30,6 +30,8 @@ try {
     //$mail->Port       = 587; 
     //Recipients
     $mail->setFrom($c_email_envio, 'GOP');
+    //echo $c_email;
+    //die;
     $mail->addAddress($c_email, 'GOP');     // endereco para onde será enviado
     if (!empty($c_email_oficina))
         $mail->addCC($c_email_oficina, 'GOP');
