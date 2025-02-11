@@ -20,7 +20,7 @@ $result = $conection->query($c_sql_ordem);
 $c_linha_ordem = $result->fetch_assoc();
 //echo $c_sql_ordem;
 
-
+// post para fechar a ordem de serviço
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     do {
