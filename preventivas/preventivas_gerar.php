@@ -182,8 +182,10 @@ while ($c_linha = $result->fetch_assoc()) {
     tipo_ordem, tipo_preventiva, descricao,  data_geracao, hora_geracao, status, id_ocorrencia, descritivo, data_previsao, hora_previsao)
     value ('$i_id_solicitante', '$i_id_solicitante', '$i_id_espaco', '$i_id_oficina', '$i_id_setor', '$d_data_inicio', '$d_hora_inicio',
     'E', 'P', '$c_tipo_preventiva', '$c_descritivo', '$d_data_geracao', '$d_hora_geracao', 'A',
-     $i_id_ocorrencia, '$c_descricao', '$d_data_previsao', $d_hora_geracao)";
+     $i_id_ocorrencia, '$c_descricao', '$d_data_previsao', '$d_hora_geracao')";
+     //echo $c_sql;
     $resultado = $conection->query($c_sql);
+    
     if (!$resultado) {
         die("Erro ao Executar Sql!!" . $conection->connect_error);
     }
