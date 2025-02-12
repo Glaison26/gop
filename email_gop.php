@@ -7,7 +7,6 @@ use PHPMailer\PHPMailer\Exception;
 
 //Load Composer's autoloader
 require 'vendor/autoload.php';
-require 'vendor/autoload.php';
 
 //echo $c_email;
 //die();
@@ -17,7 +16,7 @@ $mail = new PHPMailer(true);
 
 try {
     //Server settings
-    //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
     $c_email_envio = 'glaison26.queiroz@gmail.com';
     $mail->CharSet = 'UTF-8';
     $mail->isSMTP();                                            //Send using SMTP
