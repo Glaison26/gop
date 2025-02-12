@@ -42,7 +42,7 @@
 
                     <p class="card-text">
                         <?php
-                        if ($c_ordens_sla > 0) {
+                        if ($c_ordens_abertas > 0) {
                             echo "<img src='\gop\images\alerta.png' alt='25' height='25'>";
                         } else {
                             echo "<img src='\gop\images\certo.png' alt='25' height='25'>";
