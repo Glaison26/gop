@@ -106,7 +106,7 @@
                              </div>
                          </div>
 
-                         <ul class="navbar-nav ml-auto">
+                         <ul class="navbar-nav mr-auto">
                              <?php
                                 if ($_SESSION['tipo'] <> 'Solicitante') {
                                     echo "<li class='nav-item dropdown'>
