@@ -24,6 +24,28 @@ $c_linha = $result->fetch_assoc();
 if (!$result) {
     die("Erro ao Executar Sql!!" . $conection->connect_error);
 }
+
+// rotina para enviar e-mail para as oficinas e manutenção
+// pego email de configuração via sql
+$c_sql_config = 'select * from config';
+$result = $conection->query($c_sql_config);
+$c_linha_conf = $result->fetch_assoc();
+$c_email = $c_linha_conf['email'];
+// loop para capturar preventivas geradas no dia
+while ($c_linha = $result->fetch_assoc()) {
+    // variaveis para envio de e-mail 
+
+    if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
+        $c_sql = "SELECT MAX(solicitacao.ID) AS id_solicitacao FROM solicitacao";
+        $result = $conection->query($c_sql);
+        $c_linha = $result->fetch_assoc();
+        $solicitacao = $c_linha['id_solicitacao'];
+        $c_assunto = "Abertura de Solicitação de Serviço no GOP";
+        $c_body = "Solicitação No.<b> $solicitacao </b> foi gerada com suceso! Aguarde o atendimento <br>"
+            . "Descrição da Solicitação :" . $c_descricao;
+        include('../email_gop.php');
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -48,9 +70,9 @@ if (!$result) {
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
             </div>
-            <h4>Lista de Ordens de Serviço Geradas pelas preventivas do dia <?php echo date('d/m/y');?> </h4>
+            <h4>Lista de Ordens de Serviço Geradas pelas preventivas do dia <?php echo date('d/m/y'); ?> </h4>
         </div>
-        
+
         <table class="table table display table-bordered tabordens">
             <thead class="thead">
                 <tr>
