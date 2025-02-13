@@ -25,7 +25,6 @@ if (!$result) {
     die("Erro ao Executar Sql!!" . $conection->connect_error);
 }
 
-
 ?>
 
 <!DOCTYPE html>
@@ -92,7 +91,7 @@ if (!$result) {
             <button type="submit" class="btn btn-info"><span class='glyphicon glyphicon-envelope'></span> enviar e-mail</button>&nbsp;
             <a class="btn btn btn-primary" href="/gop/preventivas/preventivas.php"><span class="glyphicon glyphicon-off"></span> Finalizar</a>
         </ul>
-
+        <br>
     </div>
 
 </body>
