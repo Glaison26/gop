@@ -194,8 +194,7 @@ while ($c_linha = $result->fetch_assoc()) {
     $c_dias = '+' . $i_periodicidade . ' days';
     $d_data_anterior = $c_linha['data_prox_realizacao'];
     $d_data_proxima = date('y-m-d', strtotime($c_dias, strtotime($c_linha['data_prox_realizacao']))); // incremento 1 dia a data do loop
-
-
+    //
     $c_sql = "update preventivas set data_prox_realizacao='$d_data_proxima', data_ult_realizacao='$d_data_anterior'
     where id='$i_id_preventiva' ";
     $resultado = $conection->query($c_sql);

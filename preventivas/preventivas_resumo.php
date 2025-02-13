@@ -25,27 +25,7 @@ if (!$result) {
     die("Erro ao Executar Sql!!" . $conection->connect_error);
 }
 
-// rotina para enviar e-mail para as oficinas e manutenção
-// pego email de configuração via sql
-$c_sql_config = 'select * from config';
-$result = $conection->query($c_sql_config);
-$c_linha_conf = $result->fetch_assoc();
-$c_email = $c_linha_conf['email'];
-// loop para capturar preventivas geradas no dia
-while ($c_linha = $result->fetch_assoc()) {
-    // variaveis para envio de e-mail 
 
-    if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
-        $c_sql = "SELECT MAX(solicitacao.ID) AS id_solicitacao FROM solicitacao";
-        $result = $conection->query($c_sql);
-        $c_linha = $result->fetch_assoc();
-        $solicitacao = $c_linha['id_solicitacao'];
-        $c_assunto = "Abertura de Solicitação de Serviço no GOP";
-        $c_body = "Solicitação No.<b> $solicitacao </b> foi gerada com suceso! Aguarde o atendimento <br>"
-            . "Descrição da Solicitação :" . $c_descricao;
-        include('../email_gop.php');
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -108,9 +88,11 @@ while ($c_linha = $result->fetch_assoc()) {
 
             </tbody>
         </table>
-        <div style="padding-bottom:15px;">
-            <a class="btn btn btn-primary" href="/gop/preventivas/preventivas.php"><span class="glyphicon glyphicon-off"></span> Finalizar</a><br>
-        </div>
+        <ul class="nav nav-tabs" role="tablist">
+            <button type="submit" class="btn btn-info"><span class='glyphicon glyphicon-envelope'></span> enviar e-mail</button>&nbsp;
+            <a class="btn btn btn-primary" href="/gop/preventivas/preventivas.php"><span class="glyphicon glyphicon-off"></span> Finalizar</a>
+        </ul>
+
     </div>
 
 </body>
