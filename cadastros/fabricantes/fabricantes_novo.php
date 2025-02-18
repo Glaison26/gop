@@ -187,7 +187,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Tipo Fornecedor (*)</label>
                 <div class="col-sm-2">
-                    <select class="form-select form-select-lg mb-3" id="tipo" name="tipo">
+                    <select class="form-select form-select-lg mb-3" id="tipo" name="tipo" required>
+                        <option></option>
                         <option>Juridica</option>
                         <option>Física</option>
                     </select>
@@ -204,7 +205,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <input type="text" maxlength="100" class="form-control" name="contato" value="<?php echo $c_contato; ?>" required>
                 </div>
             </div>
-           
+
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Insc. Estadual</label>
                 <div class="col-sm-2">
@@ -252,6 +253,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label class="col-sm-3 col-form-label">Estado</label>
                 <div class="col-sm-3">
                     <select class="form-select form-select-lg mb-3" id="estado" name="estado">
+                        <option></option>
                         <option value="AC">Acre</option>
                         <option value="AL">Alagoas</option>
                         <option value="AP">Amapa</option>
@@ -264,7 +266,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <option value="MA">Maranhão</option>
                         <option value="MT">Mato Grosso</option>
                         <option value="MS">Mato Grosso do Sul</option>
-                        <option value="MG">Minas Gerais</option>
+                        <option selected value="MG">Minas Gerais</option>
                         <option value="PA">Para</option>
                         <option value="PB">Paraiba</option>
                         <option value="PR">Parana</option>

@@ -215,6 +215,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="col-sm-2">
                     <select class="form-select form-select-lg mb-3" id="tipo" name="tipo" required>
                         <option></option>
+
                         <option>Juridica</option>
                         <option>Física</option>
                     </select>
@@ -235,7 +236,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Função/Cargo </label>
                 <div class="col-sm-3">
-                    <select class="form-select form-select-lg mb-3" id="funcao" name="funcao">
+                    <select class="form-select form-select-lg mb-3" id="funcao" name="funcao" required>
+                        <option></option>
                         <?php
                         // select da tabela de funções
                         $c_sql_secundario = "SELECT funcoes.id, funcoes.descricao FROM funcoes ORDER BY funcoes.descricao";
@@ -250,7 +252,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
                 <label class="col-sm-1 col-form-label">Oficina </label>
                 <div class="col-sm-2">
-                    <select class="form-select form-select-lg mb-3" id="oficina" name="oficina">
+                    <select class="form-select form-select-lg mb-3" id="oficina" name="oficina" required>
+                        <option></option>
                         <?php
                         // select da tabela de oficinas
                         $c_sql_oficina = "SELECT oficinas.id, oficinas.descricao FROM oficinas ORDER BY oficinas.descricao";
@@ -268,7 +271,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
 
             </div>
-           
+
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Fone I (*)</label>
                 <div class="col-sm-2">
@@ -317,7 +320,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <option value="MA">Maranhão</option>
                         <option value="MT">Mato Grosso</option>
                         <option value="MS">Mato Grosso do Sul</option>
-                        <option value="MG">Minas Gerais</option>
+                        <option selected value="MG">Minas Gerais</option>
                         <option value="PA">Para</option>
                         <option value="PB">Paraiba</option>
                         <option value="PR">Parana</option>
@@ -367,6 +370,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label class="col-sm-3 col-form-label">Escolaridade</label>
                 <div class="col-sm-2">
                     <select class="form-select form-select-lg mb-3" id="escolaridade" name="escolaridade">
+                    <option></option>
                         <option>Primário</option>
                         <option>1o. Grau</option>
                         <option>2o. Grau</option>
@@ -390,7 +394,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
 
             </div>
-          
+
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Observação</label>
                 <div class="col-sm-6">

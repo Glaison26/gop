@@ -157,6 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label class="col-sm-3 col-form-label">Espaço Físico (*) </label>
                 <div class="col-sm-6">
                     <select class="form-select form-select-lg mb-3" id="espaco" name="espaco" required>
+                        <option></option>
                         <?php
                         // select da tabela de espacos fisicos
                         $c_sql_espacos = "SELECT espacos.id, espacos.descricao FROM espacos ORDER BY espacos.descricao";
@@ -248,7 +249,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ?>
             <br>
             <div class="row mb-3">
-                <div class="offset-sm-3 col-sm-3">
+                <div class="offset-sm-0 col-sm-3">
                     <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
                     <a class='btn btn-danger' href='/gop/cadastros/centrodecustos/centrodecusto_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
                 </div>

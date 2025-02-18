@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!$result) {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
         }
-     
+
         $msg_gravou = "Dados Gravados com Sucesso!!";
 
         header('location: /gop/cadastros/setores/setores_lista.php');
@@ -129,7 +129,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Centro de Custo </label>
                 <div class="col-sm-6">
-                    <select class="form-select form-select-lg mb-3" id="centrocusto" name="centrocusto">
+                    <select class="form-select form-select-lg mb-3" id="centrocusto" name="centrocusto" required>
+                        <option></option>
                         <?php
                         // select da tabela de espacos fisicos
                         $c_sql_centro = "SELECT centrodecusto.id, centrodecusto.descricao FROM centrodecusto ORDER BY centrodecusto.descricao";

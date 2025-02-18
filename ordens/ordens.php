@@ -262,6 +262,12 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                         <input class="form-check-input" type="checkbox" value="S" name="chk_sla" id="chk_sla">
                     </div>
                 </div>
+                <div class="form-check col-sm-4">
+                    <label class="form-check-label col-form-label">Ignorar período</label>
+                    <div class="col-sm-2">
+                        <input class="form-check-input" type="checkbox" value="S" name="chk_sla" id="chk_sla">
+                    </div>
+                </div>
 
 
                 <label class="col-md-2 form-label">No. da Ordem</label>
