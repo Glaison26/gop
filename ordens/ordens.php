@@ -19,7 +19,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_ordens'
 date_default_timezone_set('America/Sao_Paulo');
 
 $c_numero = "";
-if (!empty($_SESSION['consulta_ordem'])){
+if (!empty($_SESSION['consulta_ordem'])) {
     $c_numero = $_SESSION['consulta_ordem'];
     $_SESSION['consulta_ordem'] = "";
 }
@@ -133,8 +133,8 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     JOIN usuarios ON ordens.id_solicitante=usuarios.id
                     JOIN recursos on ordens.id_recurso=recursos.id
                     where $c_where";
-                    //
-                    $c_sql_espaco = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
+    //
+    $c_sql_espaco = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
                     ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao AS setor,
                     usuarios.nome, ordens.data_previsao,
                     case
@@ -152,8 +152,8 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     JOIN setores ON ordens.id_setor=setores.id
                     JOIN usuarios ON ordens.id_solicitante=usuarios.id
                      where $c_where";
-                    //
-                    $c_sql_avulso = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
+    //
+    $c_sql_avulso = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
                     ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao AS setor,
                     usuarios.nome,ordens.data_previsao,
                     case
@@ -255,24 +255,27 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                 </div>
             </div>
             <div class="row mb-3">
-
-                <div class="form-check col-sm-4">
-                    <label class="form-check-label col-form-label">Fora de SLA</label>
-                    <div class="col-sm-2">
-                        <input class="form-check-input" type="checkbox" value="S" name="chk_sla" id="chk_sla">
-                    </div>
-                </div>
                 <div class="form-check col-sm-4">
                     <label class="form-check-label col-form-label">Ignorar período</label>
                     <div class="col-sm-2">
+                        <input class="form-check-input" type="checkbox" value="S" name="chk_ignora" id="chk_ignora" checked>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+
+                <div class="form-check col-sm-3">
+                    <label class="form-check-label col-form-label">Fora de SLA</label>
+                    <div class="col-sm-3">
                         <input class="form-check-input" type="checkbox" value="S" name="chk_sla" id="chk_sla">
                     </div>
                 </div>
+
 
 
                 <label class="col-md-2 form-label">No. da Ordem</label>
                 <div class="col-sm-2">
-                    <input type="text" class="form-control" name="numero" id="numero" value = '<?php echo $c_numero ?>'>
+                    <input type="text" class="form-control" name="numero" id="numero" value='<?php echo $c_numero ?>'>
                 </div>
             </div>
 
