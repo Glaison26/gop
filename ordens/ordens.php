@@ -33,9 +33,15 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $d_data2 = date("Y-m-d", strtotime(str_replace('/', '-', $d_data2)));
     // expressão sql inicia para recursos fisicos
     // data de abertura
-    if ($_POST['numero'] == '') {
-        $c_where = "(data_geracao>='$d_data1' and data_geracao<='$d_data2') and ";
-    }
+    $l_intervalo = true;
+    if (isset($_POST['chk_ignora']))
+        $l_intervalo = false;
+    if ($l_intervalo == true) {
+        if ($_POST['numero'] == '') {  // ignora intervalo de datas se marcado para ignora
+            $c_where = "(data_geracao>='$d_data1' and data_geracao<='$d_data2') and ";
+        }
+    } else
+     
     // sql para tipo de atendimento (programada ou urgência)
     $c_tipo_atendimento = $_POST['tipo'];
 
