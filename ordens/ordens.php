@@ -31,17 +31,18 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $d_data1 = date("Y-m-d", strtotime(str_replace('/', '-', $d_data1)));
     $d_data2 = $_POST['data2'];
     $d_data2 = date("Y-m-d", strtotime(str_replace('/', '-', $d_data2)));
+    $c_where = '';
     // expressão sql inicia para recursos fisicos
     // data de abertura
     $l_intervalo = true;
     if (isset($_POST['chk_ignora']))
         $l_intervalo = false;
-    if ($l_intervalo == true) {
-        if ($_POST['numero'] == '') {  // ignora intervalo de datas se marcado para ignora
-            $c_where = "(data_geracao>='$d_data1' and data_geracao<='$d_data2') and ";
-        }
-    } else
-     
+
+    if ($_POST['numero'] == '' && $l_intervalo == true) {  // ignora intervalo de datas se marcado para ignora
+        $c_where = "(data_geracao>='$d_data1' and data_geracao<='$d_data2') and ";
+    }
+
+
     // sql para tipo de atendimento (programada ou urgência)
     $c_tipo_atendimento = $_POST['tipo'];
 
@@ -118,7 +119,8 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $c_wheretipo_recurso =  " and ordens.tipo='R'";
     $c_wheretipo_espaco =  " and ordens.tipo='E'";
     $c_wheretipo_avulso =  " and ordens.tipo='V'";
-    $c_where = $c_where = substr($c_where, 0, -5); // tirar o and no final
+    if (!empty($c_where))
+        $c_where = $c_where = substr($c_where, 0, -5); // tirar o and no final
     // montagem do sql para recursos físicos
     $c_sql_recurso = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
                     ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao AS setor,
@@ -137,8 +139,9 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     FROM ordens
                     JOIN setores ON ordens.id_setor=setores.id
                     JOIN usuarios ON ordens.id_solicitante=usuarios.id
-                    JOIN recursos on ordens.id_recurso=recursos.id
-                    where $c_where";
+                    JOIN recursos on ordens.id_recurso=recursos.id";
+    if (!empty($c_where))
+        $c_sql_recurso = $c_sql_recurso . ' where ' . $c_where;
     //
     $c_sql_espaco = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
                     ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao AS setor,
@@ -156,8 +159,10 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     END AS ordens_tipo_texto
                     FROM ordens
                     JOIN setores ON ordens.id_setor=setores.id
-                    JOIN usuarios ON ordens.id_solicitante=usuarios.id
-                     where $c_where";
+                    JOIN usuarios ON ordens.id_solicitante=usuarios.id";
+    if (!empty($c_where))
+        $c_sql_espaco = $c_sql_espaco . ' where ' . $c_where;
+
     //
     $c_sql_avulso = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
                     ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao AS setor,
@@ -175,9 +180,11 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     END AS ordens_tipo_texto
                     FROM ordens
                     JOIN setores ON ordens.id_setor=setores.id
-                    JOIN usuarios ON ordens.id_solicitante=usuarios.id
- 
- where $c_where";
+                    JOIN usuarios ON ordens.id_solicitante=usuarios.id";
+
+    if (!empty($c_where))
+        $c_sql_avulso = $c_sql_avulso . ' where ' . $c_where;
+
     // sql para recurso, espaços e avulsas               
     $c_sqlrecursos = $c_sql_recurso . $c_wheretipo_recurso;
     $c_sqlespacos = $c_sql_espaco . $c_wheretipo_espaco;
@@ -261,24 +268,22 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                 </div>
             </div>
             <div class="row mb-3">
-                <div class="form-check col-sm-4">
+                <div class="form-check col-sm-2">
                     <label class="form-check-label col-form-label">Ignorar período</label>
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="checkbox" value="S" name="chk_ignora" id="chk_ignora" checked>
+                        <input class="form-check-input" type="checkbox" value="S" name="chk_ignora" id="chk_ignora">
                     </div>
                 </div>
-            </div>
-            <div class="row mb-3">
-
-                <div class="form-check col-sm-3">
+                <div class="form-check col-sm-2">
                     <label class="form-check-label col-form-label">Fora de SLA</label>
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <input class="form-check-input" type="checkbox" value="S" name="chk_sla" id="chk_sla">
                     </div>
                 </div>
-
-
-
+            </div>
+          
+            <br>
+            <div class="row mb-3">
                 <label class="col-md-2 form-label">No. da Ordem</label>
                 <div class="col-sm-2">
                     <input type="text" class="form-control" name="numero" id="numero" value='<?php echo $c_numero ?>'>

@@ -232,7 +232,7 @@ include('../conexao.php');
                             <?php
 
                             // faço a Leitura da tabela com sql
-                            echo $c_sql_recurso;
+                            //echo $c_sql_recurso;
                             $result = $conection->query($c_sql_recurso);
                             // verifico se a query foi correto
                             if (!$result) {
