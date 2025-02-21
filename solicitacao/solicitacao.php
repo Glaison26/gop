@@ -32,7 +32,11 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $d_data2 = $_POST['data2'];
     $d_data2 = date("Y-m-d", strtotime(str_replace('/', '-', $d_data2)));
     // expressão sql inicia para recursos fisicos
+    // checa se check de ignorar periodo marcado
+    if (isset($_POST['chk_ignora']))
+    $l_intervalo = false;
     // data de abertura
+
     if ($_POST['numero'] == '') {
         $c_where = "(data_abertura>='$d_data1' and data_abertura<='$d_data2') and ";
     }
@@ -202,6 +206,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                         <h5>Opções de Consulta<h5>
                     </div>
                 </div>
+                
                 <div class="row mb-3">
 
                     <label class="col-md-2 form-label">No. da Solicitação</label>
