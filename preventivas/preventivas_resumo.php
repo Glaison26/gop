@@ -25,6 +25,30 @@ if (!$result) {
     die("Erro ao Executar Sql!!" . $conection->connect_error);
 }
 
+// rotina para envio de e-mail para oficinas com as preventivas geradas
+if (isset($post['btn_email'])) {
+    // leio todas as oficinas com sql
+    $c_sql_oficinas = "SELECT oficinas.id, oficinas.descricao FROM oficinas ORDER BY oficinas.descricao";
+    $result_oficina = $conection->query($c_sql_oficinas);
+    while ($c_linha_oficina = $result_oficina->fetch_assoc()){
+       // Faço sql com as preventivas com a oficina do loop
+       $i_id_oficina = $c_linha_oficina['id'];  // pego a id da oficina no loop da tabela de oficinas
+       $c_sql_geradas = "SELECT ordens.id, ordens.id_oficina, ordens.descritivo, oficinas.descricao as oficina FROM ordens
+                        JOIN oficinas ON ordens.id_oficina=oficinas.id
+                        WHERE ordens.data_geracao='$c_data' and ordens.id_oficina='$i_id_oficina' ORDER BY ordens.id desc";
+       $result_registro = $conection->query($c_sql_geradas);
+        // segundo loop com os registro por oficina a serem enviados po e-mail
+       while ($c_linha_registro = $result_registro->fetch_assoc()){
+          // pego parametros para enviar o e-mail
+          
+          // chamo rotina para enviar o e-mail com as preventivas
+
+        }                ;
+                        
+    }
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -88,7 +112,7 @@ if (!$result) {
             </tbody>
         </table>
         <ul class="nav nav-tabs" role="tablist">
-            <button type="submit" class="btn btn-info"><span class='glyphicon glyphicon-envelope'></span> enviar e-mail</button>&nbsp;
+            <button type="submit" name="btn_email" class="btn btn-info"><span class='glyphicon glyphicon-envelope'></span> enviar e-mail</button>&nbsp;
             <a class="btn btn btn-primary" href="/gop/preventivas/preventivas.php"><span class="glyphicon glyphicon-off"></span> Finalizar</a>
         </ul>
         <br>
