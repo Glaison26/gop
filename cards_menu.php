@@ -47,9 +47,9 @@ else
 <body>
     <div class="row mx-auto h-25" style="max-width: 750px;">
         <div class="col-xl-4 col-md-6">
-            <div class="<?php echo "$c_cor_solicitacoes_abertas"?>" style="width: 18rem;">
+            <div class="<?php echo "$c_cor_solicitacoes_abertas" ?>" style="width: 18rem;">
                 <div class="card-header">
-                    <h4>Solicitações de Serviço</h4>
+                    <h4>Solicitações de Serviço Abertas</h4>
                 </div>
                 <div class="card-body">
 
@@ -61,8 +61,9 @@ else
                             echo "<img src='\gop\images\certo.png' alt='25' height='25'>";
                         }
                         ?>
-
-                    <h4><strong><?php echo $c_solicitacao_aberta; ?> Solicitações registradas como abertas</strong></h4>
+                    <div style="padding-left:50px;">
+                        <h1><strong><?php echo $c_solicitacao_aberta; ?> </strong></h1>
+                    </div>
                     </p>
                     <a href="/gop/chama_solicitacoes_menu.php" class="btn btn-success">Clique para Visualizar</a>
                 </div>
@@ -70,7 +71,7 @@ else
         </div>
 
         <div class="col-xl-4 col-md-6">
-            <div class="<?php echo "$c_cor_ordens_abertas"?>" style="width: 18rem;">
+            <div class="<?php echo "$c_cor_ordens_abertas" ?>" style="width: 18rem;">
                 <div class="card-header">
                     <h4>Ordens de Serviço Abertas</h4>
                 </div>
@@ -84,7 +85,9 @@ else
                         } else {
                             echo "<img src='\gop\images\certo.png' alt='25' height='25'>";
                         } ?>
-                    <h4><strong><?php echo $c_ordens_abertas; ?> Ordens em aberto</h4></strong></p><br>
+                    <div style="padding-left:50px;">
+                        <h1><strong><?php echo $c_ordens_abertas; ?></h1></strong></p>
+                    </div>
                     <a href="/gop/chama_abertas.php" class="btn btn-success">Clique para Visualizar</a>
                 </div>
 
@@ -93,7 +96,7 @@ else
 
         <div class="col-xl-4 col-md-6">
 
-            <div class="<?php echo "$c_cor_ordens_sla"?>" style="width: 18rem;">
+            <div class="<?php echo "$c_cor_ordens_sla" ?>" style="width: 18rem;">
                 <div class="card-header">
                     <h4>Ordens de Serviço fora de SLA</h4>
                 </div>
@@ -107,14 +110,16 @@ else
                         } else {
                             echo "<img src='\gop\images\certo.png' alt='25' height='25'>";
                         } ?>
-                    <h4><strong><?php echo $c_ordens_sla; ?> Ordens fora do prazo de SLA</h4></strong></p>
-                    <a href="/gop/chama_fora_sla.php" class="btn btn-success">Clique para Visualizar</a><br>
+                    <div style="padding-left:50px;">
+                        <h1><strong><?php echo $c_ordens_sla; ?></h1></strong></p>
+                    </div>
+                    <a href="/gop/chama_fora_sla.php" class="btn btn-success">Clique para Visualizar</a>
                 </div>
 
             </div>
         </div>
         <div class="col-xl-4 col-md-6">
-            <div class="<?php echo "$c_cor_preventivas_pendentes"?>" style="width: 18rem;">
+            <div class="<?php echo "$c_cor_preventivas_pendentes" ?>" style="width: 18rem;">
                 <div class="card-header">
                     <h4>Preventivas Pendentes</h4>
                 </div>
@@ -128,16 +133,17 @@ else
                         } else {
                             echo "<img src='\gop\images\certo.png' alt='25' height='25'>";
                         } ?>
-
-                    <h4><strong><?php echo $c_preventivas ?> Preventivas a serem geradas</h4></strong></p><br>
+                    <div style="padding-left:50px;">
+                        <h1><strong><?php echo $c_preventivas ?></h1></strong></p>
+                    </div>
                     <a href="/gop/preventivas/preventivas_geracao.php" class="btn btn-success">Clique para Visualizar</a>
                 </div>
-                <br>
+
             </div>
         </div>
 
         <div class="col-xl-4 col-md-6">
-            <div class="<?php echo "$c_cor_ordens_suspensas"?>" style="width: 18rem;">
+            <div class="<?php echo "$c_cor_ordens_suspensas" ?>" style="width: 18rem;">
                 <div class="card-header">
                     <h4>Ordens Suspensas</h4>
                 </div>
@@ -152,14 +158,15 @@ else
                             echo "<img src='\gop\images\certo.png' alt='25' height='25'>";
                         } ?>
                         <br>
-                    <h4><strong><?php echo $c_ordens_suspensas ?> Ordens Suspensas</h4></strong></p><br><br><br>
+                    <div style="padding-left:50px;">
+                        <h1><strong><?php echo $c_ordens_suspensas ?></h1></strong></p>
+                    </div>
                     <a href="/gop/chama_suspensas.php" class="btn btn-success">Clique para Visualizar</a>
                 </div>
-
             </div>
         </div>
         <div class="col-xl-4 col-md-6">
-            <div class="<?php echo "$c_cor_preventivas_geradas"?>" style="width: 18rem;">
+            <div class="<?php echo "$c_cor_preventivas_geradas" ?>" style="width: 18rem;">
                 <div class="card-header">
                     <h4>Preventivas Geradas</h4>
                 </div>
@@ -173,8 +180,9 @@ else
                         } else {
                             echo "<img src='\gop\images\certo.png' alt='25' height='25'>";
                         } ?>
-
-                    <h4><strong><?php echo $c_preventivas_geradas ?> Preventivas Geradas hoje</h4></strong></p><br><br>
+                    <div style="padding-left:50px;">
+                        <h1><strong><?php echo $c_preventivas_geradas ?> </h1></strong></p>
+                    </div>
                     <a href="/gop/preventivas/preventivas_resumo.php" class="btn btn-success">Clique para Visualizar</a>
                 </div>
 
