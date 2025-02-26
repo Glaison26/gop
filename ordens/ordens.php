@@ -126,7 +126,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     // montagem do sql para recursos físicos
     $c_sql_recurso = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
                     ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao AS setor,
-                    usuarios.nome, recursos.descricao, recursos.patrimonio, ordens.data_previsao,
+                    usuarios.nome, recursos.descricao, recursos.patrimonio, ordens.data_previsao, oficinas.descricao as oficina,
                     case
                     when ordens.status='A' then 'Aberta'
                     when ordens.status='E' then 'Em Andamento'
@@ -141,13 +141,14 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     FROM ordens
                     JOIN setores ON ordens.id_setor=setores.id
                     JOIN usuarios ON ordens.id_solicitante=usuarios.id
+                    JOIN oficinas ON ordens.id_oficina=oficinas.id
                     JOIN recursos on ordens.id_recurso=recursos.id";
     if (!empty($c_where))
         $c_sql_recurso = $c_sql_recurso . ' where ' . $c_where;
     //
     $c_sql_espaco = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
                     ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao AS setor,
-                    usuarios.nome, ordens.data_previsao,
+                    usuarios.nome, ordens.data_previsao, oficinas.descricao as oficina,
                     case
                     when ordens.status='A' then 'Aberta'
                     when ordens.status='E' then 'Em Andamento'
@@ -161,6 +162,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     END AS ordens_tipo_texto
                     FROM ordens
                     JOIN setores ON ordens.id_setor=setores.id
+                    JOIN oficinas ON ordens.id_oficina=oficinas.id
                     JOIN usuarios ON ordens.id_solicitante=usuarios.id";
     if (!empty($c_where))
         $c_sql_espaco = $c_sql_espaco . ' where ' . $c_where;
@@ -168,7 +170,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     //
     $c_sql_avulso = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
                     ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao AS setor,
-                    usuarios.nome,ordens.data_previsao,
+                    usuarios.nome,ordens.data_previsao, oficinas.descricao as oficina,
                     case
                     when ordens.status='A' then 'Aberta'
                     when ordens.status='E' then 'Em Andamento'
@@ -182,6 +184,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     END AS ordens_tipo_texto
                     FROM ordens
                     JOIN setores ON ordens.id_setor=setores.id
+                    JOIN oficinas ON ordens.id_oficina=oficinas.id
                     JOIN usuarios ON ordens.id_solicitante=usuarios.id";
 
     if (!empty($c_where))

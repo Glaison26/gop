@@ -36,7 +36,7 @@ include('../conexao.php');
             "order": [1, 'asc'],
             "aoColumnDefs": [{
                 'bSortable': false,
-                'aTargets': [6]
+                'aTargets': [7]
             }, {
                 'aTargets': [0],
                 "visible": true
@@ -224,6 +224,7 @@ include('../conexao.php');
                                 <th scope="col">Patrimônio</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Setor</th>
+                                <th scope="col">Oficina</th>
                                 <th scope="col">Tipo</th>
                                 <th scope="col">Opções</th>
                             </tr>
@@ -268,6 +269,7 @@ include('../conexao.php');
                                     <td>$c_linha[patrimonio]</td>
                                     <td $c_cor style='text-align:center'>$c_linha[ordens_status]</td>
                                     <td>$c_linha[setor]</td>
+                                    <td>$c_linha[oficina]</td>
                                     <td>$c_linha[ordens_tipo_texto]</td>
                                     
                                     <td>
@@ -302,6 +304,7 @@ include('../conexao.php');
                                 <th scope="col">Descritivo</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Setor</th>
+                                <th scope="col">Oficina</th>
                                 <th scope="col">Tipo</th>
                                 <th scope="col">Opções</th>
                             </tr>
@@ -343,6 +346,7 @@ include('../conexao.php');
                                    <td>$c_linha[descritivo]</td>
                                    <td $c_cor style='text-align:center'>$c_linha[ordens_status]</td>
                                    <td>$c_linha[setor]</td>
+                                   <td>$c_linha[oficina]</td>
                                    <td>$c_linha[ordens_tipo_texto]</td>
                                     
                                     <td>
@@ -378,6 +382,7 @@ include('../conexao.php');
                                 <th scope="col">Descritivo</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Setor</th>
+                                <th scope="col">Oficina</th>
                                 <th scope="col">Tipo</th>
                                 <th scope="col">Opções</th>
                             </tr>
@@ -419,6 +424,7 @@ include('../conexao.php');
                                     <td>$c_linha[descritivo]</td>
                                     <td $c_cor style='text-align:center'>$c_linha[ordens_status]</td>
                                     <td>$c_linha[setor]</td>
+                                    <td>$c_linha[oficina]</td>
                                     <td>$c_linha[ordens_tipo_texto]</td>
                                     
                                     <td>
