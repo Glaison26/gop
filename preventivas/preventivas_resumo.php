@@ -15,7 +15,7 @@ $c_data = date('Y/m/d');
 
 $c_sql =  "SELECT ordens.id, ordens.id_oficina, ordens.descritivo, oficinas.descricao as oficina FROM ordens
 JOIN oficinas ON ordens.id_oficina=oficinas.id
-WHERE ordens.data_geracao='$c_data' ORDER BY ordens.id desc";
+WHERE ordens.data_geracao='$c_data' and tipo_ordem='P'  ORDER BY ordens.id desc";
 //echo $c_sql;
 $result = $conection->query($c_sql);
 $c_linha = $result->fetch_assoc();
@@ -89,7 +89,12 @@ if (!$result) {
         </table>
         <ul class="nav nav-tabs" role="tablist">
             <button type="submit" class="btn btn-info"><span class='glyphicon glyphicon-envelope'></span> enviar e-mail</button>&nbsp;
-            <a class="btn btn btn-primary" href="/gop/preventivas/preventivas.php"><span class="glyphicon glyphicon-off"></span> Finalizar</a>
+            <?php
+            if ($_SESSION['consulta_resumo'] == 'N')
+                echo '<a class="btn btn btn-primary" href="/gop/preventivas/preventivas.php"><span class="glyphicon glyphicon-off"></span> Finalizar</a>';
+            else
+            echo '<a class="btn btn btn-primary" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Finalizar</a>';
+            ?>
         </ul>
         <br>
     </div>

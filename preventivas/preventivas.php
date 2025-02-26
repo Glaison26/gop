@@ -18,6 +18,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_prevent
 }
 date_default_timezone_set('America/Sao_Paulo');
 $_SESSION['pesquisamenu'] = false;
+$_SESSION['consulta_resumo'] = "N";
 // click no botão de pesquisa
 if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $c_where = "";

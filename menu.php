@@ -13,6 +13,7 @@
     $_SESSION['voltadiretriz'] = 'N';
     $_SESSION['consulta_solicitacao'] = "";
     $_SESSION['consulta_ordem'] = "";
+    $_SESSION['consulta_resumo'] = "S";
     // verifico numero de solicitações em aberto
     $c_sql = "select COUNT(*) AS aberta_solicitacao FROM solicitacao WHERE STATUS = 'A'";
     $result = $conection->query($c_sql);
@@ -24,7 +25,7 @@
     $result = $conection->query($c_sql);
     $registro = $result->fetch_assoc();
     $c_preventivas = $registro['preventivas'];
-    // verifco Ordens de serviço com o SLA em atraso
+    // verifico Ordens de serviço com o SLA em atraso
     $c_sql = "select COUNT(*) AS sla FROM ordens WHERE data_previsao <= '$c_data' AND ordens.`status`='A'";
     $result = $conection->query($c_sql);
     $registro = $result->fetch_assoc();
@@ -39,7 +40,15 @@
     $result = $conection->query($c_sql);
     $registro = $result->fetch_assoc();
     $c_ordens_suspensas = $registro['suspensas'];
-    //
+    // verifico ordens preventiva geradas no dia
+    // pegar ordens geradas
+    $c_data = date('Y/m/d');
+
+    $c_sql =    "SELECT count(*) as preventivas_geradas FROM ordens
+                 WHERE ordens.data_geracao='$c_data' and tipo_ordem='P'";
+    $result = $conection->query($c_sql);
+    $registro = $result->fetch_assoc();
+    $c_preventivas_geradas = $registro['preventivas_geradas'];
 
 
     ?>

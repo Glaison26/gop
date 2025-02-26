@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +12,7 @@
 <body>
     <div class="row mx-auto h-25" style="max-width: 750px;">
         <div class="col-xl-4 col-md-6">
-            <div class="card text-dark bg-light mb-3" style="width: 18rem;">
+            <div class="card text-dark bg-info mb-3" style="width: 18rem;">
                 <div class="card-header">
                     <h4>Solicitações de Serviço</h4>
                 </div>
@@ -25,15 +27,15 @@
                         }
                         ?>
 
-                    <h4><strong> Existem <?php echo $c_solicitacao_aberta; ?> Solicitações registradas como abertas</strong></h4>
+                    <h4><strong><?php echo $c_solicitacao_aberta; ?> Solicitações registradas como abertas</strong></h4>
                     </p>
-                    <a href="/gop/chama_solicitacoes_menu.php" class="btn btn-primary">Clique para Visualizar</a>
+                    <a href="/gop/chama_solicitacoes_menu.php" class="btn btn-secondary">Clique para Visualizar</a>
                 </div>
             </div>
         </div>
 
         <div class="col-xl-4 col-md-6">
-            <div class="card text-dark bg-light mb-3" style="width: 18rem;">
+            <div class="card text-dark bg-info mb-3" style="width: 18rem;">
                 <div class="card-header">
                     <h4>Ordens de Serviço Abertas</h4>
                 </div>
@@ -47,16 +49,16 @@
                         } else {
                             echo "<img src='\gop\images\certo.png' alt='25' height='25'>";
                         } ?>
-                    <h4><strong>Existem <?php echo $c_ordens_abertas; ?> Ordens em aberto</h4></strong></p><br>
-                    <a href="/gop/chama_abertas.php" class="btn btn-primary">Clique para Visualizar</a>
+                    <h4><strong><?php echo $c_ordens_abertas; ?> Ordens em aberto</h4></strong></p><br>
+                    <a href="/gop/chama_abertas.php" class="btn btn-secondary">Clique para Visualizar</a>
                 </div>
-
+                      
             </div>
         </div>
 
         <div class="col-xl-4 col-md-6">
 
-            <div class="card text-dark bg-light mb-3" style="width: 18rem;">
+            <div class="card text-dark bg-info mb-3" style="width: 18rem;">
                 <div class="card-header">
                     <h4>Ordens de Serviço fora de SLA</h4>
                 </div>
@@ -70,14 +72,14 @@
                         } else {
                             echo "<img src='\gop\images\certo.png' alt='25' height='25'>";
                         } ?>
-                    <h4><strong>Existem <?php echo $c_ordens_sla; ?> Ordens fora do prazo de SLA</h4></strong></p><br>
-                    <a href="/gop/chama_fora_sla.php" class="btn btn-primary">Clique para Visualizar</a>
+                    <h4><strong><?php echo $c_ordens_sla; ?> Ordens fora do prazo de SLA</h4></strong></p>
+                    <a href="/gop/chama_fora_sla.php" class="btn btn-secondary">Clique para Visualizar</a><br>
                 </div>
-
+                           
             </div>
         </div>
         <div class="col-xl-4 col-md-6">
-            <div class="card text-dark bg-light mb-3" style="width: 18rem;">
+            <div class="card text-dark bg-info mb-3" style="width: 18rem;">
                 <div class="card-header">
                     <h4>Preventivas</h4>
                 </div>
@@ -92,15 +94,15 @@
                             echo "<img src='\gop\images\certo.png' alt='25' height='25'>";
                         } ?>
 
-                    <h4><strong>Existem <?php echo $c_preventivas ?> Preventivas a serem geradas</h4></strong></p><br>
-                    <a href="/gop/preventivas/preventivas_geracao.php" class="btn btn-primary">Clique para Visualizar</a>
+                    <h4><strong><?php echo $c_preventivas ?> Preventivas a serem geradas</h4></strong></p><br>
+                    <a href="/gop/preventivas/preventivas_geracao.php" class="btn btn-secondary">Clique para Visualizar</a>
                 </div>
-
+                <br>        
             </div>
         </div>
 
         <div class="col-xl-4 col-md-6">
-            <div class="card text-dark bg-light mb-3" style="width: 18rem;">
+            <div class="card text-dark bg-info mb-3" style="width: 18rem;">
                 <div class="card-header">
                     <h4>Suspensas</h4>
                 </div>
@@ -114,14 +116,35 @@
                         } else {
                             echo "<img src='\gop\images\certo.png' alt='25' height='25'>";
                         } ?>
-
-                    <h4><strong>Existem <?php echo $c_ordens_suspensas ?> Ordens Suspensas</h4></strong></p><br><br>
-                    <a href="/gop/chama_suspensas.php" class="btn btn-primary">Clique para Visualizar</a>
+                    <br>
+                    <h4><strong><?php echo $c_ordens_suspensas ?> Ordens Suspensas</h4></strong></p><br><br><br>
+                    <a href="/gop/chama_suspensas.php" class="btn btn-secondary">Clique para Visualizar</a>
                 </div>
 
             </div>
         </div>
+        <div class="col-xl-4 col-md-6">
+            <div class="card text-dark bg-info mb-3" style="width: 18rem;">
+                <div class="card-header">
+                    <h4>Preventivas Geradas</h4>
+                </div>
 
+                <div class="card-body">
+
+                    <p class="card-text">
+                        <?php
+                        if ($c_preventivas_geradas > 0) {
+                            echo "<img src='\gop\images\alerta.png' alt='25' height='25'>";
+                        } else {
+                            echo "<img src='\gop\images\certo.png' alt='25' height='25'>";
+                        } ?>
+
+                    <h4><strong><?php echo $c_preventivas_geradas ?> Preventivas Geradas hoje</h4></strong></p><br><br>
+                    <a href="/gop/preventivas/preventivas_resumo.php" class="btn btn-secondary">Clique para Visualizar</a>
+                </div>
+
+            </div>
+        </div>
         
     </div>
 </body>
