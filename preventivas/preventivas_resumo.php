@@ -112,7 +112,6 @@ if (isset($post['btn_email'])) {
             </tbody>
         </table>
         <ul class="nav nav-tabs" role="tablist">
-<<<<<<< HEAD
             <button type="submit" class="btn btn-info"><span class='glyphicon glyphicon-envelope'></span> enviar e-mail</button>&nbsp;
             <?php
             if ($_SESSION['consulta_resumo'] == 'N')
@@ -120,10 +119,8 @@ if (isset($post['btn_email'])) {
             else
             echo '<a class="btn btn btn-primary" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Finalizar</a>';
             ?>
-=======
             <button type="submit" name="btn_email" class="btn btn-info"><span class='glyphicon glyphicon-envelope'></span> enviar e-mail</button>&nbsp;
             <a class="btn btn btn-primary" href="/gop/preventivas/preventivas.php"><span class="glyphicon glyphicon-off"></span> Finalizar</a>
->>>>>>> 72a00c22a8c06fca21b7f2afacd7bc1b8b541258
         </ul>
         <br>
     </div>
