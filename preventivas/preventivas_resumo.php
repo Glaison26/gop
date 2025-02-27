@@ -119,8 +119,7 @@ if (isset($post['btn_email'])) {
             else
             echo '<a class="btn btn btn-primary" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Finalizar</a>';
             ?>
-            <button type="submit" name="btn_email" class="btn btn-info"><span class='glyphicon glyphicon-envelope'></span> enviar e-mail</button>&nbsp;
-            <a class="btn btn btn-primary" href="/gop/preventivas/preventivas.php"><span class="glyphicon glyphicon-off"></span> Finalizar</a>
+        
         </ul>
         <br>
     </div>

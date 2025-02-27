@@ -17,7 +17,7 @@ $c_wheretipo_avulso =  " and ordens.tipo='V'";
 // montagem do sql para recursos físicos
 $c_sql_recurso = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
                     ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao AS setor,
-                    usuarios.nome, recursos.descricao, ordens.data_previsao, recursos.patrimonio,
+                    usuarios.nome, recursos.descricao, ordens.data_previsao, recursos.patrimonio, oficinas.descricao as oficina,
                     case
                     when ordens.status='A' then 'Aberta'
                     when ordens.status='E' then 'Em Andamento'
@@ -33,11 +33,12 @@ $c_sql_recurso = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, 
                     JOIN setores ON ordens.id_setor=setores.id
                     JOIN usuarios ON ordens.id_solicitante=usuarios.id
                     JOIN recursos on ordens.id_recurso=recursos.id
+                    JOIN oficinas ON ordens.id_oficina=oficinas.id
                     where $c_where";
 // sql de espaços fisico
 $c_sql_espaco = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
                     ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao AS setor, ordens.data_previsao,
-                    usuarios.nome, 
+                    usuarios.nome, oficinas.descricao as oficina,
                     case
                     when ordens.status='A' then 'Aberta'
                     when ordens.status='E' then 'Em Andamento'
@@ -52,17 +53,18 @@ $c_sql_espaco = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, o
                     FROM ordens
                     JOIN setores ON ordens.id_setor=setores.id
                     JOIN usuarios ON ordens.id_solicitante=usuarios.id
+                    JOIN oficinas ON ordens.id_oficina=oficinas.id
                      where $c_where";
 // sql para abertas
 $c_sql_avulso = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
                     ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao AS setor,ordens.data_previsao,
-                    usuarios.nome,
+                    usuarios.nome, oficinas.descricao as oficina,
                     case
                     when ordens.status='A' then 'Aberta'
                     when ordens.status='E' then 'Em Andamento'
                     when ordens.status='C' then 'Concluída'
-                     when ordens.status='S' then 'Suspensa'
-                     when ordens.status='X' then 'Cancelada'
+                    when ordens.status='S' then 'Suspensa'
+                    when ordens.status='X' then 'Cancelada'
                     END AS ordens_status,
                     case
                     when tipo_ordem='C' then 'Corretiva'
@@ -71,6 +73,7 @@ $c_sql_avulso = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, o
                     FROM ordens
                     JOIN setores ON ordens.id_setor=setores.id
                     JOIN usuarios ON ordens.id_solicitante=usuarios.id
+                    JOIN oficinas ON ordens.id_oficina=oficinas.id
  
  where $c_where";
 // sql para recurso, espaços e avulsas               
