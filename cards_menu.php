@@ -48,12 +48,11 @@ else
     <div class="row mx-auto h-25" style="max-width: 750px;">
         <div class="col-xl-4 col-md-6">
             <div class="<?php echo "$c_cor_solicitacoes_abertas" ?>" style="width: 18rem;">
-                <div class="card-header">
-                    <h4>Solicitações de Serviço Abertas</h4>
-                </div>
+
                 <div class="card-body">
 
                     <p class="card-text">
+                    <div style="padding-left:60px;">
                         <?php
                         if ($c_solicitacao_aberta > 0) {
                             echo "<img src='\gop\images\alerta.png' alt='25' height='25'>";
@@ -61,10 +60,12 @@ else
                             echo "<img src='\gop\images\certo.png' alt='25' height='25'>";
                         }
                         ?>
-                    <div style="padding-left:50px;">
-                        <h1><strong><?php echo $c_solicitacao_aberta; ?> </strong></h1>
+                    </div>
+                    <div style="padding-left:2px;">
+                        <h1><strong><?php echo $c_solicitacao_aberta; ?><h4>Solicitações abertas</h4> </strong></h1>
                     </div>
                     </p>
+                    <br>
                     <a href="/gop/chama_solicitacoes_menu.php" class="btn btn-success">Clique para Visualizar</a>
                 </div>
             </div>
@@ -72,21 +73,22 @@ else
 
         <div class="col-xl-4 col-md-6">
             <div class="<?php echo "$c_cor_ordens_abertas" ?>" style="width: 18rem;">
-                <div class="card-header">
-                    <h4>Ordens de Serviço Abertas</h4>
-                </div>
+
 
                 <div class="card-body">
 
                     <p class="card-text">
+                    <div style="padding-left:60px;">
                         <?php
                         if ($c_ordens_abertas > 0) {
                             echo "<img src='\gop\images\alerta.png' alt='25' height='25'>";
                         } else {
                             echo "<img src='\gop\images\certo.png' alt='25' height='25'>";
                         } ?>
-                    <div style="padding-left:50px;">
-                        <h1><strong><?php echo $c_ordens_abertas; ?></h1></strong></p>
+                    </div>
+                    <div style="padding-left:2px;">
+                        <h1><strong><?php echo $c_ordens_abertas; ?><h4>Ordens de Serviço Abertas</h4></strong></h1>
+                        </p>
                     </div>
                     <a href="/gop/chama_abertas.php" class="btn btn-success">Clique para Visualizar</a>
                 </div>
@@ -97,21 +99,22 @@ else
         <div class="col-xl-4 col-md-6">
 
             <div class="<?php echo "$c_cor_ordens_sla" ?>" style="width: 18rem;">
-                <div class="card-header">
-                    <h4>Ordens de Serviço fora de SLA</h4>
-                </div>
+
 
                 <div class="card-body">
 
                     <p class="card-text">
+                    <div style="padding-left:60px;">
                         <?php
                         if ($c_ordens_sla > 0) {
                             echo "<img src='\gop\images\alerta.png' alt='25' height='25'>";
                         } else {
                             echo "<img src='\gop\images\certo.png' alt='25' height='25'>";
                         } ?>
-                    <div style="padding-left:50px;">
-                        <h1><strong><?php echo $c_ordens_sla; ?></h1></strong></p>
+                    </div>
+                    <div style="padding-left:2px;">
+                        <h1><strong><?php echo $c_ordens_sla; ?><h4>Ordens de Serviço fora de SLA</h4>
+                        </h1></strong></p>
                     </div>
                     <a href="/gop/chama_fora_sla.php" class="btn btn-success">Clique para Visualizar</a>
                 </div>
@@ -120,21 +123,22 @@ else
         </div>
         <div class="col-xl-4 col-md-6">
             <div class="<?php echo "$c_cor_preventivas_pendentes" ?>" style="width: 18rem;">
-                <div class="card-header">
-                    <h4>Preventivas Pendentes</h4>
-                </div>
+
 
                 <div class="card-body">
 
                     <p class="card-text">
+                    <div style="padding-left:60px;">
                         <?php
                         if ($c_preventivas > 0) {
                             echo "<img src='\gop\images\alerta.png' alt='25' height='25'>";
                         } else {
                             echo "<img src='\gop\images\certo.png' alt='25' height='25'>";
                         } ?>
-                    <div style="padding-left:50px;">
-                        <h1><strong><?php echo $c_preventivas ?></h1></strong></p>
+                    </div>
+                    <div style="padding-left:2px;">
+                        <h1><strong><?php echo $c_preventivas ?> <h4>Preventiva(s) Pendentes</h4>
+                        </h1></strong></p>
                     </div>
                     <a href="/gop/preventivas/preventivas_geracao.php" class="btn btn-success">Clique para Visualizar</a>
                 </div>
@@ -144,22 +148,23 @@ else
 
         <div class="col-xl-4 col-md-6">
             <div class="<?php echo "$c_cor_ordens_suspensas" ?>" style="width: 18rem;">
-                <div class="card-header">
-                    <h4>Ordens Suspensas</h4>
-                </div>
+
 
                 <div class="card-body">
 
                     <p class="card-text">
+                    <div style="padding-left:60px;">
                         <?php
                         if ($c_ordens_suspensas > 0) {
                             echo "<img src='\gop\images\alerta.png' alt='25' height='25'>";
                         } else {
                             echo "<img src='\gop\images\certo.png' alt='25' height='25'>";
                         } ?>
-                        <br>
-                    <div style="padding-left:50px;">
-                        <h1><strong><?php echo $c_ordens_suspensas ?></h1></strong></p>
+                    </div>
+                    <br>
+                    <div style="padding-left:2px;">
+                        <h1><strong><?php echo $c_ordens_suspensas ?><h4>Ordens Suspensas</h4>
+                        </h1></strong></p>
                     </div>
                     <a href="/gop/chama_suspensas.php" class="btn btn-success">Clique para Visualizar</a>
                 </div>
@@ -167,22 +172,25 @@ else
         </div>
         <div class="col-xl-4 col-md-6">
             <div class="<?php echo "$c_cor_preventivas_geradas" ?>" style="width: 18rem;">
-                <div class="card-header">
-                    <h4>Preventivas Geradas</h4>
-                </div>
+
 
                 <div class="card-body">
 
                     <p class="card-text">
+                    <div style="padding-left:60px;">
                         <?php
                         if ($c_preventivas_geradas > 0) {
                             echo "<img src='\gop\images\alerta.png' alt='25' height='25'>";
                         } else {
                             echo "<img src='\gop\images\certo.png' alt='25' height='25'>";
                         } ?>
-                    <div style="padding-left:50px;">
-                        <h1><strong><?php echo $c_preventivas_geradas ?> </h1></strong></p>
                     </div>
+                    <br>
+                    <div style="padding-left:2px;">
+                        <h1><strong><?php echo $c_preventivas_geradas ?> <h4>Preventivas Geradas</h4>
+                        </h1></strong></p>
+                    </div>
+
                     <a href="/gop/preventivas/preventivas_resumo.php" class="btn btn-success">Clique para Visualizar</a>
                 </div>
 
