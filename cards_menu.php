@@ -62,10 +62,10 @@ else
                         ?>
                     </div>
                     <div style="padding-left:2px;">
-                        <h1><strong><?php echo $c_solicitacao_aberta; ?><h4>Solicitações abertas</h4> </strong></h1>
+                        <h1><strong><?php echo $c_solicitacao_aberta; ?><h4>Solicitaçao(ões) aberta(s)</h4> </strong></h1>
                     </div>
                     </p>
-                    <br>
+                   
                     <a href="/gop/chama_solicitacoes_menu.php" class="btn btn-success">Clique para Visualizar</a>
                 </div>
             </div>
@@ -87,7 +87,7 @@ else
                         } ?>
                     </div>
                     <div style="padding-left:2px;">
-                        <h1><strong><?php echo $c_ordens_abertas; ?><h4>Ordens de Serviço Abertas</h4></strong></h1>
+                        <h1><strong><?php echo $c_ordens_abertas; ?><h4>Orden(s) de Serviço Aberta(s)</h4></strong></h1>
                         </p>
                     </div>
                     <a href="/gop/chama_abertas.php" class="btn btn-success">Clique para Visualizar</a>
@@ -113,7 +113,7 @@ else
                         } ?>
                     </div>
                     <div style="padding-left:2px;">
-                        <h1><strong><?php echo $c_ordens_sla; ?><h4>Ordens de Serviço fora de SLA</h4>
+                        <h1><strong><?php echo $c_ordens_sla; ?><h4>Orden(s) de Serviço fora de SLA</h4>
                         </h1></strong></p>
                     </div>
                     <a href="/gop/chama_fora_sla.php" class="btn btn-success">Clique para Visualizar</a>
@@ -137,7 +137,7 @@ else
                         } ?>
                     </div>
                     <div style="padding-left:2px;">
-                        <h1><strong><?php echo $c_preventivas ?> <h4>Preventiva(s) Pendentes</h4>
+                        <h1><strong><?php echo $c_preventivas ?> <h4>Preventiva(s) Pendente(s)</h4>
                         </h1></strong></p>
                     </div>
                     <a href="/gop/preventivas/preventivas_geracao.php" class="btn btn-success">Clique para Visualizar</a>
@@ -163,7 +163,7 @@ else
                     </div>
                     <br>
                     <div style="padding-left:2px;">
-                        <h1><strong><?php echo $c_ordens_suspensas ?><h4>Ordens Suspensas</h4>
+                        <h1><strong><?php echo $c_ordens_suspensas ?><h4>Orden(s) Suspensa(s)</h4>
                         </h1></strong></p>
                     </div>
                     <a href="/gop/chama_suspensas.php" class="btn btn-success">Clique para Visualizar</a>
@@ -185,9 +185,9 @@ else
                             echo "<img src='\gop\images\certo.png' alt='25' height='25'>";
                         } ?>
                     </div>
-                    <br>
+                    
                     <div style="padding-left:2px;">
-                        <h1><strong><?php echo $c_preventivas_geradas ?> <h4>Preventivas Geradas</h4>
+                        <h1><strong><?php echo $c_preventivas_geradas ?> <h4>Preventiva(s) Gerada(s)</h4>
                         </h1></strong></p>
                     </div>
 
