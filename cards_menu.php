@@ -30,9 +30,6 @@ if ($c_preventivas_geradas > 0)
     $c_cor_preventivas_geradas = 'card text-dark bg-warning mb-3';
 else
     $c_cor_preventivas_geradas = 'card text-dark bg-info mb-3';
-
-
-
 ?>
 
 <!DOCTYPE html>
