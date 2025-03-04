@@ -6,6 +6,7 @@ session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
+$_SESSION['i_id_oficina']=0; // valor inicial para codigo de ofician na geracao da OS
 
 include("conexao.php");
 
