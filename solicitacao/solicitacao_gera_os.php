@@ -240,7 +240,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $c_sql_oficina = "SELECT oficinas.id, oficinas.descricao FROM oficinas ORDER BY oficinas.descricao";
                         $result_oficina = $conection->query($c_sql_oficina);
                         while ($c_linha = $result_oficina->fetch_assoc()) {
-                            if ($i_id_oficina > 0) {
+                           // if ($i_id_oficina > 0) {
                                 if ($_SESSION['i_id_oficina'] == $c_linha['id'])
                                     $op = 'selected';
                                 else
@@ -248,7 +248,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 echo "  
                           <option $op>$c_linha[descricao]</option>
                         ";
-                            }
+                            //}
                         }
                         ?>
                     </select>
