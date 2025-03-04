@@ -120,7 +120,7 @@
                                 if ($_SESSION['tipo'] <> 'Solicitante') {
                                     echo "<li class='nav-item dropdown'>
                              <!-- Opções de cadastro do menu -->
-                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup= true' aria-expanded='false'>Cadastros</a>
+                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup= true' aria-expanded='false'><img src='\gop\images\cad.png' alt='25' width='20' height='20'> Cadastros</a>
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
 
                                  <a class='dropdown-item' href='/gop/cadastros/recursos/recursos_lista.php'><img src='\gop\images\config.png' alt='25' width='25' height='25'> Recursos Fisicos</a>
@@ -144,7 +144,7 @@
                                 ?>
 
                              <li class="nav-item dropdown">
-                                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Serviços</a>
+                                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src='\gop\images\servico.png' alt='25' width='20' height='20'> Serviços</a>
                                  <div class="dropdown-menu" aria-labelledby="dropdown01">
                                      <a class="dropdown-item" href="/gop/solicitacao/solicitacao.php"><img src="\gop\images\contato.png" alt="20" height="20"> Solicitações de Serviços</a>
                                      <?php
@@ -157,7 +157,7 @@
                          </li>
 
                          <li class='nav-item dropdown'>
-                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Almoxarifado</a>
+                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'><img src='\gop\images\armazem.png' alt='25' width='20' height='20'> Almoxarifado</a>
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
                                  
                                  <a class='dropdown-item' href='/gop/almoxarifado/cotacao_lista.php'><img src='\gop\images\cotacao.png' alt='25' width='25' height='25'> Cadastro de Cotações</a>
@@ -169,7 +169,7 @@
                          </li>
                          
                           <li class='nav-item dropdown'>
-                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Indicadores</a>
+                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'><img src='\gop\images\kpi.png' alt='25' width='20' height='20'> Indicadores</a>
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
                                  <a class='dropdown-item' href='/gop/relatorios/ocorrencias_query.php'>1. Ocorrências Padrões</a>
                                  <a class='dropdown-item' href='/gop/relatorios/oficinas_query.php'>2. Ocorrências por Oficinas</a>
@@ -188,7 +188,7 @@
                              </div>
                          </li>
                            <li class='nav-item dropdown'>
-                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Custos da Manutenção</a>
+                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'><img src='\gop\images\_reducao.png' alt='25' width='23' height='23'> Custos da Manutenção</a>
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
                                  <a class='dropdown-item' href='/gop/custos/ocorrencias_custo_query.php'>1. Custos por Ocorrências Padrões</a>
                                  <a class='dropdown-item' href='/gop/custos/oficinas_custo_query.php'>2. Custos por Oficinas</a>
