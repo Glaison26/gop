@@ -42,7 +42,7 @@
     $c_ordens_suspensas = $registro['suspensas'];
     // verifico ordens preventiva geradas no dia
     // pegar ordens geradas
-    $c_data = date('Y/m/d');
+    //$c_data = date('Y/m/d');
 
     $c_sql =    "SELECT count(*) as preventivas_geradas FROM ordens
                  WHERE ordens.data_geracao='$c_data' and tipo_ordem='P'";

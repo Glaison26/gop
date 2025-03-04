@@ -225,6 +225,7 @@ include('../conexao.php');
                                 <th scope="col">Status</th>
                                 <th scope="col">Setor</th>
                                 <th scope="col">Oficina</th>
+                                <th scope="col">Responsável</th>
                                 <th scope="col">Tipo</th>
                                 <th scope="col">Opções</th>
                             </tr>
@@ -270,6 +271,7 @@ include('../conexao.php');
                                     <td $c_cor style='text-align:center'>$c_linha[ordens_status]</td>
                                     <td>$c_linha[setor]</td>
                                     <td>$c_linha[oficina]</td>
+                                    <td>$c_linha[executor]</td>
                                     <td>$c_linha[ordens_tipo_texto]</td>
                                     
                                     <td>
@@ -305,6 +307,7 @@ include('../conexao.php');
                                 <th scope="col">Status</th>
                                 <th scope="col">Setor</th>
                                 <th scope="col">Oficina</th>
+                                <th scope="col">Responsável</th>
                                 <th scope="col">Tipo</th>
                                 <th scope="col">Opções</th>
                             </tr>
@@ -347,6 +350,7 @@ include('../conexao.php');
                                    <td $c_cor style='text-align:center'>$c_linha[ordens_status]</td>
                                    <td>$c_linha[setor]</td>
                                    <td>$c_linha[oficina]</td>
+                                   <td>$c_linha[executor]</td>
                                    <td>$c_linha[ordens_tipo_texto]</td>
                                     
                                     <td>
@@ -383,6 +387,7 @@ include('../conexao.php');
                                 <th scope="col">Status</th>
                                 <th scope="col">Setor</th>
                                 <th scope="col">Oficina</th>
+                                <th scope="col">Responsável</th>
                                 <th scope="col">Tipo</th>
                                 <th scope="col">Opções</th>
                             </tr>
@@ -425,6 +430,7 @@ include('../conexao.php');
                                     <td $c_cor style='text-align:center'>$c_linha[ordens_status]</td>
                                     <td>$c_linha[setor]</td>
                                     <td>$c_linha[oficina]</td>
+                                    <td>$c_linha[executor]</td>
                                     <td>$c_linha[ordens_tipo_texto]</td>
                                     
                                     <td>

@@ -127,6 +127,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $c_sql_recurso = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
                     ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao AS setor,
                     usuarios.nome, recursos.descricao, recursos.patrimonio, ordens.data_previsao, oficinas.descricao as oficina,
+                    executores.nome as executor,
                     case
                     when ordens.status='A' then 'Aberta'
                     when ordens.status='E' then 'Em Andamento'
@@ -142,13 +143,15 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     JOIN setores ON ordens.id_setor=setores.id
                     JOIN usuarios ON ordens.id_solicitante=usuarios.id
                     JOIN oficinas ON ordens.id_oficina=oficinas.id
-                    JOIN recursos on ordens.id_recurso=recursos.id";
+                    JOIN recursos on ordens.id_recurso=recursos.id
+                    JOIN executores on ordens.id_executor_responsavel=executores.id"; 
     if (!empty($c_where))
         $c_sql_recurso = $c_sql_recurso . ' where ' . $c_where;
     //
     $c_sql_espaco = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
                     ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao AS setor,
                     usuarios.nome, ordens.data_previsao, oficinas.descricao as oficina,
+                    executores.nome as executor,
                     case
                     when ordens.status='A' then 'Aberta'
                     when ordens.status='E' then 'Em Andamento'
@@ -163,7 +166,8 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     FROM ordens
                     JOIN setores ON ordens.id_setor=setores.id
                     JOIN oficinas ON ordens.id_oficina=oficinas.id
-                    JOIN usuarios ON ordens.id_solicitante=usuarios.id";
+                    JOIN usuarios ON ordens.id_solicitante=usuarios.id
+                    JOIN executores on ordens.id_executor_responsavel=executores.id"; 
     if (!empty($c_where))
         $c_sql_espaco = $c_sql_espaco . ' where ' . $c_where;
 
@@ -171,12 +175,13 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $c_sql_avulso = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, ordens.descritivo,
                     ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao AS setor,
                     usuarios.nome,ordens.data_previsao, oficinas.descricao as oficina,
+                    executores.nome as executor,
                     case
                     when ordens.status='A' then 'Aberta'
                     when ordens.status='E' then 'Em Andamento'
                     when ordens.status='C' then 'Concluída'
-                     when ordens.status='S' then 'Suspensa'
-                     when ordens.status='X' then 'Cancelada'
+                    when ordens.status='S' then 'Suspensa'
+                    when ordens.status='X' then 'Cancelada'
                     END AS ordens_status,
                     case
                     when tipo_ordem='C' then 'Corretiva'
@@ -185,7 +190,8 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     FROM ordens
                     JOIN setores ON ordens.id_setor=setores.id
                     JOIN oficinas ON ordens.id_oficina=oficinas.id
-                    JOIN usuarios ON ordens.id_solicitante=usuarios.id";
+                    JOIN usuarios ON ordens.id_solicitante=usuarios.id
+                    JOIN executores on ordens.id_executor_responsavel=executores.id"; 
 
     if (!empty($c_where))
         $c_sql_avulso = $c_sql_avulso . ' where ' . $c_where;
@@ -200,8 +206,8 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $_SESSION['sqlavulso'] = $c_sqlavulso;
     $_SESSION['pesquisamenu'] = false;
 
-    echo $c_sqlrecursos;
-    echo '----------------------------';
+    //echo $c_sqlrecursos;
+    //echo '----------------------------';
     //echo $c_sqlespacos;
     //echo '----------------------------';
     //echo $c_sqlavulso;
