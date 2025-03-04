@@ -260,7 +260,7 @@
                          <label for="usuario"></label>
                      </div>
                  </div>
-                 
+
                  <div class="content">
                      <?php
                         if ($_SESSION['tipo'] <> 'Solicitante') {
@@ -268,9 +268,9 @@
                         }
                         ?>
                  </div>
-
+             </body>
          </div>
-         </body>
+
 
          <div style="padding-bottom:15px;">
              <footer>
