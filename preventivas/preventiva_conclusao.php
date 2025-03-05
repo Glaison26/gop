@@ -11,10 +11,17 @@ include_once "../lib_gop.php";
 $msg_erro = "";
 $c_descritivo = "";
 date_default_timezone_set('America/Sao_Paulo');
+$i_id_oficina = $_SESSION['i_id_oficina']; // valor inicial da id da oficina
 $d_datacadastro = date('m-d-y');
 if ($_SESSION['tiposolicitacao'] == 'R') { // recurso fisico
     // pego id do recurso selecionado na página anterior
-    $i_id_recurso = $_GET["id"];
+    if (isset($_GET['id'])) {
+        $i_id_recurso = $_GET['id'];
+        $_SESSION['id_recurso'] = $i_id_recurso;
+    } else {
+        $i_id_recurso = $_SESSION['id_recurso'];
+    }
+
     // sql para pegar nome
     $c_sql = "SELECT recursos.id, recursos.descricao FROM recursos where recursos.id='$i_id_recurso'";
     $result = $conection->query($c_sql);
@@ -23,7 +30,12 @@ if ($_SESSION['tiposolicitacao'] == 'R') { // recurso fisico
 }
 if ($_SESSION['tiposolicitacao'] == 'E') {  // espaço físico
     // pego id do recurso selecionado na página anterior
-    $i_id_espaco = $_GET["id"];
+    if (isset($_GET['id'])) {
+        $i_id_espaco = $_GET['id'];
+        $_SESSION['id_espaco'] = $i_id_espaco;
+    } else {
+        $i_id_espaco = $_SESSION['id_espaco'];
+    }
     // sql para pegar nome
     $c_sql = "SELECT espacos.id, espacos.descricao FROM espacos where espacos.id='$i_id_espaco'";
     $result = $conection->query($c_sql);
@@ -56,6 +68,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         //
         $c_descritivo = $_POST['descritivo'];
         $c_tipopreventiva = $_POST['tipo_preventiva'];
+        // procuro pelo id do executor responsável
+        $c_executor_resp = $_POST['responsavel'];
+        $c_sql_executor_resp = "Select id, nome from executores where nome='$c_executor_resp'";
+        $result_executor_resp = $conection->query($c_sql_executor_resp);
+        $registro_executor_resp = $result_executor_resp->fetch_assoc();
+        $i_executor_resp = $registro_executor_resp['id'];
         // sql para pegar oficina
         $c_oficina = $_POST["oficina"];
         $c_sql_oficina = "select oficinas.id, oficinas.descricao from oficinas where oficinas.descricao = '$c_oficina'";
@@ -93,17 +111,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // sql para inclusão do registro
         if ($_SESSION['tiposolicitacao'] == 'R') // sql para recursos fisicos
             $c_sql = "Insert into preventivas (id_recurso,id_oficina, id_setor, id_centrodecusto,tipo,tipo_preventiva, data_cadastro
-                    , periodicidade_geracao, data_prox_realizacao, data_ult_realizacao, calibracao,descritivo, gerar,  id_ocorrencia, prazo_atendimento) 
+                    , periodicidade_geracao, data_prox_realizacao, data_ult_realizacao, calibracao,descritivo, gerar,
+                      id_ocorrencia, prazo_atendimento, id_executor) 
                     value ('$i_id_recurso', '$i_id_oficina', '$i_setor', '$i_id_centrodecusto', 'R', '$c_tipopreventiva',
                     '$d_data_cadastro', '$i_periodicidade', '$d_data_proxima', '$c_data_ultima','$c_calibracao',
-                     '$c_descritivo', 'Sim', '$i_id_ocorrencia', $c_prazo)";
+                     '$c_descritivo', 'Sim', '$i_id_ocorrencia', $c_prazo, $i_executor_resp)";
         //
         if ($_SESSION['tiposolicitacao'] == 'E') // sql para espacos fisicos
             $c_sql = "Insert into preventivas (id_espaco,id_oficina, id_setor, id_centrodecusto,tipo,tipo_preventiva, data_cadastro
-                      , periodicidade_geracao, data_prox_realizacao, data_ult_realizacao, calibracao,descritivo, gerar,  id_ocorrencia, prazo_atendimento ) 
+                      , periodicidade_geracao, data_prox_realizacao, data_ult_realizacao, calibracao,descritivo, 
+                      gerar,  id_ocorrencia, prazo_atendimento, id_executor ) 
                       value ('$i_id_espaco', '$i_id_oficina', '$i_setor', '$i_id_centrodecusto', 'E', '$c_tipopreventiva',
                      '$d_data_cadastro', '$i_periodicidade', '$d_data_proxima', '$c_data_ultima','$c_calibracao',
-                      '$c_descritivo', 'Sim', '$i_id_ocorrencia', $c_prazo)";
+                      '$c_descritivo', 'Sim', '$i_id_ocorrencia', $c_prazo,  $i_executor_resp)";
 
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
@@ -129,6 +149,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body>
+
+    <script>
+        // chama arquivo para pegar id da oficina e filtrar os executores da mesma
+        function verifica(value) {
+            window.location.href = "/gop/preventivas/preventivas_verifica_oficina.php?id=" + value;
+        }
+    </script>
 
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
@@ -169,36 +196,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 </div>
             </div>
-            
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Prazo de Atendimento</label>
-                <div class="col-sm-2">
-                    <input type="number" placeholder="no. de dias" class="form-control" id="prazo" name="prazo">
-                </div>
-            </div>
-            
 
             <div class="row mb-3">
-
                 <label class="col-sm-2 col-form-label">Data de Cadastro</label>
                 <div class="col-sm-3">
-                    <input type="date" class="form-control" id="datacadastro" name="datacadastro" value='<?php echo date("Y-m-d"); ?>'>
+                    <input required type="date" class="form-control" id="datacadastro" name="datacadastro" value='<?php echo date("Y-m-d"); ?>'>
                 </div>
+                <label class="col-sm-2 col-form-label">Prazo de Atendimento</label>
+                <div class="col-sm-2">
+                    <input required type="number" placeholder="no. de dias" class="form-control" id="prazo" name="prazo">
+                </div>
+
+            </div>
+
+
+            <div class="row mb-3">
+
+
                 <label class="col-sm-2 col-form-label">Tipo Preventiva</label>
                 <div class="col-sm-3">
-                    <select class="form-select form-select-lg mb-3" id="tipo_preventiva" name="tipo_preventiva" value="<?php echo $c_tipo_preventiva; ?>">
+                    <select class="form-select form-select-lg mb-3" id="tipo_preventiva" name="tipo_preventiva" value="<?php echo $c_tipo_preventiva; ?>" required>
                         <option></option>
                         <option value="R">Rotina</option>
                         <option value="P">Preditiva</option>
                         <option value="S">Sistematica</option>
                     </select>
                 </div>
-            </div>
-
-            <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Oficina </label>
                 <div class="col-sm-3">
-                    <select class="form-select form-select-lg mb-3" id="oficina" name="oficina">
+                    <select onchange="verifica(value)" class="form-select form-select-lg mb-3" id="oficina" name="oficina" required>
                         <option></option>
                         <?php
                         // select da tabela de oficinas
@@ -206,18 +232,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $result_oficina = $conection->query($c_sql_oficina);
                         while ($c_linha = $result_oficina->fetch_assoc()) {
                             $op = "";
-                            if ($c_linha['id'] == $registro['id_oficina']) {
-                                $op = "selected";
-                            }
+                            if ($_SESSION['i_id_oficina'] == $c_linha['id'])
+                                $op = 'selected';
+                            else
+                                $op = "";
                             echo "<option $op>$c_linha[descricao]</option>";
                         }
                         ?>
                     </select>
                 </div>
+            </div>
 
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Responsável </label>
+                <div class="col-sm-3">
+                    <select class="form-select form-select-lg mb-3" id="responsavel" name="responsavel" required>
+                        <option></option>
+                        <?php
+                        // select da tabela de setores
+                        $c_sql_resp = "SELECT executores.id, executores.nome FROM executores where id_oficina='$i_id_oficina' ORDER BY executores.nome";
+                        $result_resp = $conection->query($c_sql_resp);
+                        while ($c_linha = $result_resp->fetch_assoc()) {
+                            echo "  
+                          <option>$c_linha[nome]</option>
+                        ";
+                        }
+                        ?>
+                    </select>
+                </div>
                 <label class="col-sm-2 col-form-label">Centro de Custo </label>
                 <div class="col-sm-3">
-                    <select class="form-select form-select-lg mb-3" id="centrodecusto" name="centrodecusto">
+
+                    <select required class="form-select form-select-lg mb-3" id="centrodecusto" name="centrodecusto">
                         <option></option>
                         <?php
                         // select da tabela de centro de custo
@@ -239,20 +285,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Periodicidade</label>
-                <div class="col-sm-3">
-                    <input type="number" class="form-control" placeholder="no. de dias" name="periodicidade" value="<?php echo $c_periodicidade; ?>">
-                </div>
                 <label class="col-sm-2 col-form-label">Ultima Realização</label>
                 <div class="col-sm-3">
                     <input type="date" class="form-control" id="data_ultima" name="data_ultima" value="<?php echo $d_dataultima; ?>">
                 </div>
+                <label class="col-sm-2 col-form-label">Periodicidade</label>
+                <div class="col-sm-2">
+                    <input required type="number" class="form-control" placeholder="no. de dias" name="periodicidade" value="<?php echo $c_periodicidade; ?>">
+                </div>
+
+
             </div>
-            
+
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Setor </label>
                 <div class="col-sm-3">
-                    <select class="form-select form-select-lg mb-3" id="setor" name="setor">
+                    <select required class="form-select form-select-lg mb-3" id="setor" name="setor">
                         <option></option>
                         <?php
                         // select da tabela de setores
@@ -267,7 +315,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
                 <label class="col-sm-2 col-form-label">Ocorrencia </label>
                 <div class="col-sm-3">
-                    <select class="form-select form-select-lg mb-3" id="ocorrencia" name="ocorrencia">
+                    <select required class="form-select form-select-lg mb-3" id="ocorrencia" name="ocorrencia">
                         <option></option>
                         <?php
                         // select da tabela de ocorrencia
@@ -286,8 +334,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="row mb-3" style="padding-top:15px;padding-left:20px;">
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">Descritivo</label>
-                        <div class="col-sm-8">
-                            <textarea class="form-control" id="descritivo" name="descritivo" rows="10"><?php echo $c_descritivo ?></textarea>
+                        <div class="col-sm-9">
+                            <textarea required class="form-control" id="descritivo" name="descritivo" rows="10"><?php echo $c_descritivo ?></textarea>
                         </div>
                     </div>
                 </div>

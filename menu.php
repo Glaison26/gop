@@ -188,7 +188,7 @@
                              </div>
                          </li>
                            <li class='nav-item dropdown'>
-                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'><img src='\gop\images\_reducao.png' alt='25' width='23' height='23'> Custos da Manutenção</a>
+                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'><img src='\gop\images\_reducao.png' alt='25' width='23' height='23'> Custos</a>
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
                                  <a class='dropdown-item' href='/gop/custos/ocorrencias_custo_query.php'>1. Custos por Ocorrências Padrões</a>
                                  <a class='dropdown-item' href='/gop/custos/oficinas_custo_query.php'>2. Custos por Oficinas</a>
@@ -215,13 +215,13 @@
                          ";
                                             if ($_SESSION['tipo'] == 'Administrador')
                                                 echo
-                                                "<li class='nav-item'><a href='/gop/configuracoes.php' class='nav-link'>Configurações</a></li>
+                                                "<li class='nav-item'><a href='/gop/configuracoes.php' class='nav-link'><img src='\gop\images\configuracao.png' alt='25' width='25' height='25'>Configurações</a></li>
                         
                          ";
                                         }
                                         ?>
                              <li class='nav-item dropdown'>
-                                 <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Usuários</a>
+                                 <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'><img src='\gop\images\user.png' alt='25' width='25' height='25'> Usuários</a>
                                  <div class='dropdown-menu' aria-labelledby='dropdown01'>
                                      <?php
                                         if ($_SESSION['tipo'] == 'Administrador') {

@@ -21,7 +21,7 @@ $c_sql_susp =  "SELECT ordens_suspensao.data_suspensao, ordens_suspensao.hora_su
 ordens_suspensao.hora_retirada, ordens_suspensao.motivo 
 FROM ordens_suspensao 
 WHERE ordens_suspensao.id_ordem='$i_id' 
-AND ordens_suspensao.data_retirada IS null 
+ 
 ORDER BY ordens_suspensao.data_suspensao desc";
 //echo $c_sql_susp;
 $result = $conection->query($c_sql_susp);

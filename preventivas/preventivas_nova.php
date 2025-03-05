@@ -5,7 +5,7 @@ if (!isset($_SESSION['newsession'])) {
 }
 $_SESSION['tiposolicitacao'] = 'V';
 $_SESSION['opcao'] = "P";
-include("../conexao.php");
+$_SESSION['i_id_oficina']=0;
 include("../links2.php");
 ?>
 
