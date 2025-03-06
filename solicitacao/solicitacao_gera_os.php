@@ -200,6 +200,51 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_lista.php"><img src="\gop\images\saida.png" alt="" width="25" height="25"> Voltar</a>
             <hr>
             <div class="row mb-6">
+                <label class="col-md-2 col-form-label">Oficina</label>
+                <div class="col-sm-3">
+
+                    <select onchange="verifica(value)" class="form-select form-select-lg mb-3" id="oficina" name="oficina" required>
+                        <option></option>
+                        <?php
+                        // select da tabela de oficina
+                        $c_sql_oficina = "SELECT oficinas.id, oficinas.descricao FROM oficinas ORDER BY oficinas.descricao";
+                        $result_oficina = $conection->query($c_sql_oficina);
+                        while ($c_linha = $result_oficina->fetch_assoc()) {
+                           // if ($i_id_oficina > 0) {
+                                if ($_SESSION['i_id_oficina'] == $c_linha['id'])
+                                    $op = 'selected';
+                                else
+                                    $op = "";
+                                echo "  
+                          <option $op>$c_linha[descricao]</option>
+                        ";
+                            //}
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="row mb-6">
+                <label class="col-sm-2 col-form-label">Responsável </label>
+                <div class="col-sm-3">
+                    <select class="form-select form-select-lg mb-3" id="responsavel" name="responsavel" required>
+                        <option></option>
+                        <?php
+                        // select da tabela de setores
+                        $c_sql_resp = "SELECT executores.id, executores.nome FROM executores where id_oficina='$i_id_oficina' ORDER BY executores.nome";
+                        $result_resp = $conection->query($c_sql_resp);
+                        while ($c_linha = $result_resp->fetch_assoc()) {
+                            echo "  
+                          <option>$c_linha[nome]</option>
+                        ";
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb-6">
                 <label class="col-md-2 form-label">Data Inicio</label>
                 <div class="col-sm-2">
                     <input type="Date" class="form-control" name="data1" id="data_inicio" value='<?php echo date("Y-m-d"); ?>' onkeypress="mascaraData(this)">
@@ -229,50 +274,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <br>
             </div>
             <br>
-            <div class="row mb-6">
-                <label class="col-md-2 col-form-label">Oficina</label>
-                <div class="col-sm-3">
-
-                    <select onchange="verifica(value)" class="form-select form-select-lg mb-3" id="oficina" name="oficina" required>
-                        <option></option>
-                        <?php
-                        // select da tabela de oficina
-                        $c_sql_oficina = "SELECT oficinas.id, oficinas.descricao FROM oficinas ORDER BY oficinas.descricao";
-                        $result_oficina = $conection->query($c_sql_oficina);
-                        while ($c_linha = $result_oficina->fetch_assoc()) {
-                           // if ($i_id_oficina > 0) {
-                                if ($_SESSION['i_id_oficina'] == $c_linha['id'])
-                                    $op = 'selected';
-                                else
-                                    $op = "";
-                                echo "  
-                          <option $op>$c_linha[descricao]</option>
-                        ";
-                            //}
-                        }
-                        ?>
-                    </select>
-                </div>
-            </div>
-            <br>
-            <div class="row mb-6">
-                <label class="col-sm-2 col-form-label">Responsável </label>
-                <div class="col-sm-3">
-                    <select class="form-select form-select-lg mb-3" id="responsavel" name="responsavel" required>
-                        <option></option>
-                        <?php
-                        // select da tabela de setores
-                        $c_sql_resp = "SELECT executores.id, executores.nome FROM executores where id_oficina='$i_id_oficina' ORDER BY executores.nome";
-                        $result_resp = $conection->query($c_sql_resp);
-                        while ($c_linha = $result_resp->fetch_assoc()) {
-                            echo "  
-                          <option>$c_linha[nome]</option>
-                        ";
-                        }
-                        ?>
-                    </select>
-                </div>
-            </div>
         </form>
     </div>
 
