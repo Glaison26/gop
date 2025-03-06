@@ -172,7 +172,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                 </div>
                 <label class="col-sm-2 col-form-label">Prazo de Atendimento</label>
                 <div class="col-sm-2">
-                    <input type="number" placeholder="no. de dias" class="form-control" id="prazo" name="prazo" value='<?php echo $c_prazo ?>'>
+                    <input type="number" placeholder="no. de dias" class="form-control" id="prazo" name="prazo" value='<?php echo $c_prazo ?>' required>
                 </div>
 
             </div>
@@ -259,7 +259,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                 </div>
                 <label class="col-sm-2 col-form-label">Periodicidade</label>
                 <div class="col-sm-2">
-                    <input required type="number" class="form-control" placeholder="no. de dias" name="periodicidade" value="<?php echo $c_periodicidade; ?>">
+                    <input required type="number" class="form-control" placeholder="no. de dias" name="periodicidade" value="<?php echo $c_periodicidade; ?>" required>
                 </div>
 
 
