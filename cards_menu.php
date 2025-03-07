@@ -42,7 +42,7 @@ else
 </head>
 
 <body>
-    <div class="row mx-auto h-25" style="max-width: 750px;">
+    <div class="row mx-auto h-25 d-inline-block" style="max-width: 750px;">
         <div class="col-xl-4 col-md-6">
             <div class="<?php echo "$c_cor_solicitacoes_abertas" ?>" style="width: 24rem;">
 
