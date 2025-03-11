@@ -89,6 +89,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_ocorren
             e.preventDefault();
             var c_descricao = $('#add_descricaoField').val();
             var c_texto = $('#add_textoField').val();
+            var c_texto_fechamento = $('#add_textofechamentoField').val();
 
             if (c_descricao != '') {
 
@@ -97,7 +98,8 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_ocorren
                     type: "post",
                     data: {
                         c_descricao: c_descricao,
-                        c_texto : c_texto
+                        c_texto : c_texto,
+                        c_texto_fechamento : c_texto_fechamento
 
                     },
                     success: function(data) {
@@ -139,6 +141,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_ocorren
                 $('#up_idField').val(data[0]);
                 $('#up_descricaoField').val(data[1]);
                 $('#up_textoField').val(data[2]);
+                $('#up_textofechamentoField').val(data[3]);
             });
         });
     </script>
@@ -150,6 +153,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_ocorren
             var c_id = $('#up_idField').val();
             var c_descricao = $('#up_descricaoField').val();
             var c_texto = $('#up_textoField').val();
+            var c_texto_fechamento = $('#up_textofechamentoField').val();
 
             if (c_descricao != '') {
 
@@ -159,7 +163,8 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_ocorren
                     data: {
                         c_id: c_id,
                         c_descricao: c_descricao,
-                        c_texto:c_texto
+                        c_texto:c_texto,
+                        c_texto_fechamento : c_texto_fechamento
                     },
                     success: function(data) {
                         var json = JSON.parse(data);
@@ -204,6 +209,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_ocorren
                     <th scope="col">#</th>
                     <th scope="col">Descrição</th>
                     <th scope="col">Texto Padrão</th>
+                    <th scope="col">Texto Fechamento</th>
                     <th scope="col">Opções</th>
                 </tr>
             </thead>
@@ -211,7 +217,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_ocorren
                 <?php
 
                 // faço a Leitura da tabela com sql
-                $c_sql = "SELECT ocorrencias.id, ocorrencias.descricao, ocorrencias.texto FROM ocorrencias ORDER BY ocorrencias.descricao";
+                $c_sql = "SELECT ocorrencias.id, ocorrencias.descricao, ocorrencias.texto, ocorrencias.texto_fechamento FROM ocorrencias ORDER BY ocorrencias.descricao";
                 $result = $conection->query($c_sql);
                 // verifico se a query foi correto
                 if (!$result) {
@@ -226,6 +232,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_ocorren
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descricao]</td>
                     <td>$c_linha[texto]</td>
+                    <td>$c_linha[texto_fechamento]</td>
                     <td>
                     <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Ocorrência'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
@@ -264,6 +271,12 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_ocorren
                                 <textarea class="form-control" id="add_textoField" name="add_textoField" rows="8"></textarea>
                             </div>
                         </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Texto Padrão de Conclusão</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" id="add_textofechamentoField" name="add_textofechamentoField" rows="8"></textarea>
+                            </div>
+                        </div>
 
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
@@ -298,9 +311,16 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_ocorren
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Texto Padrão</label>
+                            <label class="col-sm-3 col-form-label">Texto padrão</label>
                             <div class="col-sm-9">
                                 <textarea class="form-control" id="up_textoField" name="up_textoField" rows="8"></textarea>
+                            </div>
+                        </div>
+                       
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Texto de conclusão</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" id="up_textofechamentoField" name="up_textofechamentoField" rows="8"></textarea>
                             </div>
                         </div>
 
