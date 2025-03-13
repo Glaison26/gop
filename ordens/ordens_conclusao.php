@@ -15,10 +15,16 @@ $i_id = $_SESSION['id_ordem']; // id da ordem de serviço
 $c_conclusao = "";
 $msg_erro = "";
 // pego outros dados da ordem de servico
-$c_sql_ordem = "select ordens.id, ordens.id, ordens.tipo, ordens.id_recurso, ordens.valor_servico, ordens.valor_material from ordens where ordens.id='$i_id'";
+$c_sql_ordem = "select ordens.id, ordens.id, ordens.tipo, ordens.id_ocorrencia,ordens.id_recurso, ordens.valor_servico, ordens.valor_material from ordens where ordens.id='$i_id'";
 $result = $conection->query($c_sql_ordem);
 $c_linha_ordem = $result->fetch_assoc();
+$i_id_ocorrencia = $c_linha_ordem['id_ocorrencia'];
 //echo $c_sql_ordem;
+// pego texto padrão de fechamento na table de ocorrencias padrões
+$c_sql_ocor= "select ocorrencias.id,ocorrencias.texto_fechamento from ocorrencias where ocorrencias.id='$i_id_ocorrencia'";
+$result_ocor = $conection->query($c_sql_ocor);
+$c_registro_ocor = $result_ocor->fetch_assoc();
+$c_conclusao = $c_registro_ocor['texto_fechamento'];
 
 // post para fechar a ordem de serviço
 
