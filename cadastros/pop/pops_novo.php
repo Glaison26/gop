@@ -32,7 +32,7 @@ $c_riscos = "";
 $c_bibliografia = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $c_descricao = $_POST['descricao'];
+    $c_descricao = rtrim($_POST['descricao']);
     $c_tipo = $_POST['tipopop'];
     $c_descricao = $_POST['descricao'];
     $c_revisado = $_POST['revisado'];

@@ -25,7 +25,7 @@ $msg_gravou = "";
 $msg_erro = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $c_descricao = $_POST['descricao'];
+    $c_descricao = rtrim($_POST['descricao']);
     $c_espaco = $_POST['espaco'];
     $c_responsavel = $_POST['responsavel'];
     $c_fone1 = $_POST['fone1'];
@@ -229,9 +229,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <input type="text" maxlength="3" id="rateio" class="form-control col-xs-12" name="rateio" value="0.00">
                 </div>
             </div>
-
-
-
 
             <?php
             if (!empty($msg_gravou)) {

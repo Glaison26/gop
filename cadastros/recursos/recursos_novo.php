@@ -90,7 +90,7 @@ $msg_erro = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $c_descricao = $_POST['descricao'];
+    $c_descricao = rtrim($_POST['descricao']);
     $c_patrimonio = $_POST['patrimonio'];
     $c_modelo = $_POST['modelo'];
     $c_numeroserie = $_POST['numeroserie'];

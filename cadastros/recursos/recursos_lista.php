@@ -15,7 +15,7 @@ WHERE usuarios.id='$i_id_usuario'";
 $result_acesso = $conection->query($c_sql_acesso);
 $registro_acesso = $result_acesso->fetch_assoc();
 if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_recursosfisicos'] == 'N') {
-   
+
     header('location: /gop/acesso.php');
 }
 
@@ -83,17 +83,13 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_recurs
 
         });
     </script>
-
-    <div class="panel panel-primary class">
-        <div class="panel-heading text-center">
-            <h4>GOP - Gestão Operacional</h4>
-            <h5>Lista de Recursos Físicos<h5>
-        </div>
-    </div>
-
     <div class="container-fluid">
-
-
+        <div class="panel panel-primary class">
+            <div class="panel-heading text-center">
+                <h4>GOP - Gestão Operacional</h4>
+                <h5>Lista de Recursos Físicos<h5>
+            </div>
+        </div>
         <br>
         <a class="btn btn-success btn-sm" href="/gop/cadastros/recursos/recursos_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>

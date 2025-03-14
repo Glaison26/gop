@@ -30,7 +30,7 @@ $msg_gravou = "";
 $msg_erro = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $c_descricao = $_POST['descricao'];
+    $c_descricao = rtrim($_POST['descricao']);
     $c_tipo = $_POST['tipo'];
     $c_responsavel = $_POST['responsavel'];
     $c_fone1 = $_POST['fone1'];

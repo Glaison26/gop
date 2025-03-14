@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     // metodo post para atualizar dados
     $c_id = $_GET["id"];
     $c_resultado = $_POST['resultado'];
-    $c_descricao = $_POST['descricao'];
+    $c_descricao = rtrim($_POST['descricao']);
     $c_descritivo = $_POST['descritivo'];
     $c_material = $_POST['material'];
     $c_atividadecritica = $_POST['atividadecritica'];

@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
 } else {
     // metodo post para atualizar dados
     $c_id = $_POST["id"];
-    $c_descricao = $_POST['descricao'];
+    $c_descricao = rtrim($_POST['descricao']);
     $c_marca = $_POST['marca'];
     $c_grupo = $_POST['grupo'];
     $c_unidadesaida = $_POST['unidadesaida'];

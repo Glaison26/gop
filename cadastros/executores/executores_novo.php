@@ -36,7 +36,7 @@ $msg_erro = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $c_nome = $_POST['nome'];
+    $c_nome = rtrim($_POST['nome']);
     $c_tipo = $_POST['tipo'];
     $c_cnpj_cpf = $_POST['cpfcnpj'];
     $c_endereco = $_POST['endereco'];

@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
 } else {
     // metodo post para atualizar dados
     $c_id = $_POST["id"];
-    $c_nome = $_POST['nome'];
+    $c_nome = rtrim($_POST['nome']);
     $c_tipo = $_POST['tipo'];
     $c_endereco = $_POST['endereco'];
     $c_bairro = $_POST['bairro'];

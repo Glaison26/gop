@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         exit;
     }
 
-    $c_descricao = $registro['descricao'];
+    $c_descricao = rtrim($registro['descricao']);
     $c_patrimonio = $registro['patrimonio'];
     $c_modelo = $registro['modelo'];
     $c_numeroserie = $registro['numeroserie'];

@@ -34,7 +34,7 @@ $msg_gravou = "";
 $msg_erro = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $c_descricao = $_POST['descricao'];
+    $c_descricao = rtrim($_POST['descricao']);
     $c_grupo = $_POST['grupo'];
     $c_razao = $_POST['razaosocial'];
     $c_contato = $_POST['contato'];
