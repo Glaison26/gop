@@ -143,7 +143,7 @@ else
                         </h3></strong></p>
                     </div>
 
-                    <a href="/gop/preventivas/preventivas_resumo.php" class="btn btn-success">Clique para Visualizar</a>
+                    <a href="/gop/preventivas/preventivas_resumo.php" class="btn btn-secondary">Clique para Visualizar</a>
                 </div>
 
             </div>

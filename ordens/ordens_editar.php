@@ -615,7 +615,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             <div class="row mb-3">
                 <div class="offset-sm-0 col-sm-3">
                     <?php
-                    if ($registro['status'] <> 'X')
+                    if ($registro['status'] <> 'X'&&$registro['status'] <> 'C')
                         echo '<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-saved"></span> Salvar</button>';
                     ?>
                     <a class='btn btn-danger' href='/gop/ordens/ordens_gerenciar.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>

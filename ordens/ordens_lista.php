@@ -170,16 +170,16 @@ include('../conexao.php');
 
 
 <body>
+
     <div class="container-fluid">
+
         <div class="panel panel-primary class">
             <div class="panel-heading text-center">
                 <h4>GOP - Gestão Operacional</h4>
                 <h5>Lista de Ordens de Serviços<h5>
             </div>
         </div>
-    </div>
 
-    <div class="container-fluid">
 
         <div style="padding-bottom :15px;">
             <div class="topnav">
