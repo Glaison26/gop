@@ -209,6 +209,7 @@
                                   <a class='dropdown-item' href='/gop/plano_acao/planos_menu.php'><img src='\gop\images\plano.png' alt='25' width='25' height='25'> Planos de Ação</a>
                                   <a class='dropdown-item' href='/gop/cadastros/pop/pops_lista.php'><img src='\gop\images\degraus.png' alt='25' width='25' height='25'> Cadastro de POP</a>
                                   <a class='dropdown-item' href='/gop/obras/obras_menu.php'><img src='\gop\images\ooadwork.png' alt='25' width='30' height='25'> Custos de Obras</a>
+                                  <a class='dropdown-item' href='/gop/cadastros/contratos/contratos_lista.php'><img src='\gop\images\contrato.png' alt='25' width='30' height='25'> Gestão de Contratos</a>
                              </div>
                           </li>
 
