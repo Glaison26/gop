@@ -10,14 +10,14 @@ include("../../conexao.php");
 include("../../links2.php");
 
 $c_descricao = '';
-$n_custo = 0.0;
-$n_qtdmin = 0;
-$n_qtdmax = 0;
-$d_ultimasaida = 'dd/mm/yyyy';
-$d_ultimaentrada = 'dd/mm/yyyy';
-$n_quantidadeatual = 0;
-$d_validade = 'dd/mm/yyyy';
-$c_fator = "1";
+$c_tipo_empresa = '';
+$c_contrato = '';
+$c_vigencia = '';
+$c_resp_contratante = '';
+$c_resp_contratada = '';
+
+$d_inicio = 'dd/mm/yyyy';
+$d_termino = 'dd/mm/yyyy';
 $c_obs = '';
 
 // variaveis para mensagens de erro e suscessso da gravação
@@ -125,7 +125,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 </head>
 
-
 <body>
     <div class="container -my5">
         <div style="padding-top:5px;">
@@ -159,126 +158,145 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ?>
 
         <form method="post">
+            <!-- abas de cadastro  -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#apresentacao" aria-controls="apresentacao" role="tab" data-toggle="tab">Apresentação</a></li>
+                <li role="presentation"><a href="#descritivo" aria-controls="descritivo" role="tab" data-toggle="tab">Mais Informações</a></li>
+            </ul>
+            <div class="tab-content">
+                <!-- aba da apresentação-->
+                <div role="tabpanel" class="tab-pane active" id="apresentacao">
+                    <div style="padding-top:15px;padding-left:20px;">
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Empresa (*)</label>
+                            <div class="col-sm-6">
+                                <input type="text" maxlength="120" class="form-control" name="descricao" required value="<?php echo $c_descricao; ?>">
+                            </div>
+                        </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Empresa (*)</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="120" class="form-control" name="descricao" required value="<?php echo $c_descricao; ?>">
-                </div>
-            </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Tipo da Empresa </label>
+                            <div class="col-sm-6">
+                                <input type="text" maxlength="120" class="form-control" name="tipo_empresa" required value="<?php echo $c_tipo_empresa; ?>">
+                            </div>
+                        </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Tipo da Empresa </label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="120" class="form-control" name="tipo_empresa" required value="<?php echo $c_tipo_empresa; ?>">
-                </div>
-            </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">No. de Contrato </label>
+                            <div class="col-sm-2">
+                                <input type="text" maxlength="30" class="form-control" name="contrato" required value="<?php echo $c_contrato; ?>">
+                            </div>
+                            <label class="col-sm-1 col-form-label">Vigência (em dias)</label>
+                            <div class="col-sm-3">
+                                <input type="text" maxlength="80" class="form-control" name="vigencia" value="<?php echo $c_vigencia; ?>">
+                            </div>
+                        </div>
 
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Início </label>
+                            <div class="col-sm-2">
+                                <input type="date" maxlength="30" class="form-control" name="inicio" required value="<?php echo $c_inicio; ?>">
+                            </div>
+                            <label class="col-sm-2 col-form-label">Término</label>
+                            <div class="col-sm-2">
+                                <input type="date" maxlength="80" class="form-control" name="termino" requerid value="<?php echo $c_termino; ?>">
+                            </div>
+                        </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Grupo </label>
-                <div class="col-sm-6">
-                    <select class="form-select form-select-lg mb-3" id="grupo" name="grupo">
-                        <?php
-                        // select da tabela de grupos
-                        $c_sql_grupo = "SELECT grupos.id, grupos.descricao FROM grupos ORDER BY grupos.descricao";
-                        $result_grupo = $conection->query($c_sql_grupo);
-                        while ($c_linha = $result_grupo->fetch_assoc()) {
-                            echo "  
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Centro de Custo</label>
+                            <div class="col-sm-6">
+                                <select class="form-select form-select-lg mb-3" id="centrodecusto" name="centrodecusto">
+                                    <?php
+                                    // select da tabela de centro de custos
+                                    $c_sql_centrocusto = "SELECT centrodecusto.id, centrodecusto.descricao FROM centrodecusto ORDER BY centrodecusto.descricao";
+                                    $result_centrocusto = $conection->query($c_sql_centrocusto);
+                                    while ($c_linha = $result_centrocusto->fetch_assoc()) {
+                                        echo "  
                           <option>$c_linha[descricao]</option>
                         ";
-                        }
-                        ?>
-                    </select>
-                </div>
-            </div>
-            <hr>
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Saldo Atual</label>
-                <div class="col-sm-2">
-                    <input type="text" maxlength="20" class="form-control" name="quantidadeatual" value="<?php echo $n_quantidadeatual; ?>">
-                </div>
-                <label class="col-sm-2 col-form-label">Valor de Custo</label>
-                <div class="col-sm-2">
-                    <input type="text" maxlength="20" class="form-control" name="custo" value="<?php echo $n_custo; ?>">
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Unidade de Entrada </label>
-                <div class="col-sm-2">
-                    <select class="form-select form-select-lg mb-3" id="unidadeentrada" name="unidadeentrada">
-                        <?php
-                        // select da tabela de unidades
-                        $c_sql_unidades = "SELECT unidades.id, unidades.descricao FROM unidades ORDER BY unidades.descricao";
-                        $result_unidades = $conection->query($c_sql_unidades);
-                        while ($c_linha = $result_unidades->fetch_assoc()) {
-                            echo "  
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Espaço Físico</label>
+                            <div class="col-sm-6">
+                                <select class="form-select form-select-lg mb-3" id="espacofisico" name="espacofisico">
+                                    <?php
+                                    // select da tabela de Espacos físicos
+                                    $c_sql_espacos = "SELECT espacos.id, espacos.descricao FROM espacos ORDER BY espacos.descricao";
+                                    $result_espacos = $conection->query($c_sql_espacos);
+                                    while ($c_linha = $result_espacos->fetch_assoc()) {
+                                        echo "  
                           <option>$c_linha[descricao]</option>
                         ";
-                        }
-                        ?>
-                    </select>
-                </div>
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
 
-                <label class="col-sm-2 col-form-label">Unidade de Saida </label>
-                <div class="col-sm-2">
-                    <select class="form-select form-select-lg mb-3" id="unidadesaida" name="unidadesaida">
-                        <?php
-                        // select da tabela de unidades
-                        $c_sql_unidades = "SELECT unidades.id, unidades.descricao FROM unidades ORDER BY unidades.descricao";
-                        $result_unidades = $conection->query($c_sql_unidades);
-                        while ($c_linha = $result_unidades->fetch_assoc()) {
-                            echo "  
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Setor</label>
+                            <div class="col-sm-6">
+                                <select class="form-select form-select-lg mb-3" id="centrodecusto" name="centrodecusto">
+                                    <?php
+                                    // select da tabela de setores
+                                    $c_sql_setor = "SELECT setores.id, setores.descricao FROM setores ORDER BY setores.descricao";
+                                    $result_setor = $conection->query($c_sql_setor);
+                                    while ($c_linha = $result_setor->fetch_assoc()) {
+                                        echo "  
                           <option>$c_linha[descricao]</option>
                         ";
-                        }
-                        ?>
-                    </select>
-                </div>
-            </div>
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Estoque Mínimo</label>
-                <div class="col-sm-2">
-                    <input type="text" maxlength="20" class="form-control" name="qtdmin" value="<?php echo $n_qtdmin; ?>">
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Observação</label>
+                            <div class="col-sm-6">
+                                <textarea class="form-control" id="obs" name="obs" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <label class="col-sm-2 col-form-label">Estoque Máximo</label>
-                <div class="col-sm-2">
-                    <input type="text" maxlength="20" class="form-control" name="qtdmax" value="<?php echo $n_qtdmax; ?>">
+                <!-- Aba de Mais informações -->
+                <div role="tabpanel" class="tab-pane" id="descritivo">
+                    <div style="padding-top:15px;padding-left:20px;">
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Resp. Contratante</label>
+                            <div class="col-sm-6">
+                                <input type="text" maxlength="100" class="form-control" name="resp_contratante" value="<?php echo $c_resp_contratante; ?>">
+                            </div>
+                           
+                        </div>
+                    </div>
+                    <div style="padding-top:15px;padding-left:20px;">
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Resp. Contratada</label>
+                            <div class="col-sm-6">
+                                <input type="text" maxlength="100" class="form-control" name="resp_contratada" value="<?php echo $c_resp_contratada; ?>">
+                            </div>
+                           
+                        </div>
+                    </div>
+                    <div style="padding-top:15px;padding-left:20px;">
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Objeto</label>
+                            <div class="col-sm-6">
+                                <input type="text" maxlength="150" class="form-control" name="objeto" value="<?php echo $c_objeto; ?>">
+                            </div>
+                           
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Ultima Saida</label>
-                <div class="col-sm-2">
-                    <input type="date" maxlength="20" class="form-control" name="ultimasaida" value="<?php echo $d_ultimasaida; ?>">
-                </div>
-                <label class="col-sm-2 col-form-label">Ultima Entrada</label>
-                <div class="col-sm-2">
-                    <input type="date" maxlength="20" class="form-control" name="ultimaentrada" value="<?php echo $d_ultimaentrada; ?>">
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Data de Validade</label>
-                <div class="col-sm-2">
-                    <input type="date" maxlength="20" class="form-control" name="validade" value="<?php echo $d_validade; ?>">
-                </div>
-                <label class="col-sm-2 col-form-label">Fator Conversão</label>
-                <div class="col-sm-2">
-                    <input type="text" maxlength="5" class="form-control" name="fator" value="<?php echo $c_fator; ?>">
-                </div>
-            </div>
-            <hr>
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Observação</label>
-                <div class="col-sm-6">
-                    <textarea class="form-control" id="obs" name="obs" rows="3"></textarea>
-                </div>
-            </div>
-            <?php
-            if (!empty($msg_gravou)) {
-                echo "
+                <?php
+                if (!empty($msg_gravou)) {
+                    echo "
                     <div class='row mb-3'>
                         <div class='offset-sm-3 col-sm-6'>
                              <div class='alert alert-success alert-dismissible fade show' role='alert'>
@@ -288,16 +306,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>     
                     </div>    
                 ";
-            }
-            ?>
-            <br>
-            <div class="row mb-3">
-                <div class="offset-sm-0 col-sm-3">
-                    <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                    <a class='btn btn-danger' href='/gop/cadastros/materiais/materiais_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
-                </div>
+                }
+                ?>
+                <br>
+                <div class="row mb-3">
+                    <div class="offset-sm-0 col-sm-3">
+                        <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
+                        <a class='btn btn-danger' href='/gop/cadastros/materiais/materiais_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                    </div>
 
-            </div>
+                </div>
         </form>
     </div>
 
