@@ -15,6 +15,10 @@ $c_contrato = '';
 $c_vigencia = '';
 $c_resp_contratante = '';
 $c_resp_contratada = '';
+$c_objeto = '';
+$c_iniciais = '';
+$c_operacional = '';
+$c_email_operacional = '';
 
 $d_inicio = 'dd/mm/yyyy';
 $d_termino = 'dd/mm/yyyy';
@@ -180,7 +184,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <input type="text" maxlength="120" class="form-control" name="tipo_empresa" required value="<?php echo $c_tipo_empresa; ?>">
                             </div>
                         </div>
-
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Objeto</label>
+                            <div class="col-sm-6">
+                                <input type="text" maxlength="150" class="form-control" name="objeto" value="<?php echo $c_objeto; ?>">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Dados Iniciais</label>
+                            <div class="col-sm-6">
+                                <input type="text" maxlength="150" class="form-control" name="iniciais" value="<?php echo $c_iniciais; ?>">
+                            </div>
+                        </div>
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">No. de Contrato </label>
                             <div class="col-sm-2">
@@ -206,7 +221,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Centro de Custo</label>
                             <div class="col-sm-6">
-                                <select class="form-select form-select-lg mb-3" id="centrodecusto" name="centrodecusto">
+                                <select class="form-select form-select-lg mb-3" id="centrodecusto" name="centrodecusto" required>
+                                    <option></option>
                                     <?php
                                     // select da tabela de centro de custos
                                     $c_sql_centrocusto = "SELECT centrodecusto.id, centrodecusto.descricao FROM centrodecusto ORDER BY centrodecusto.descricao";
@@ -223,7 +239,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Espaço Físico</label>
                             <div class="col-sm-6">
-                                <select class="form-select form-select-lg mb-3" id="espacofisico" name="espacofisico">
+                                <select class="form-select form-select-lg mb-3" id="espacofisico" name="espacofisico" required>
+                                    <option></option>
                                     <?php
                                     // select da tabela de Espacos físicos
                                     $c_sql_espacos = "SELECT espacos.id, espacos.descricao FROM espacos ORDER BY espacos.descricao";
@@ -241,7 +258,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Setor</label>
                             <div class="col-sm-6">
-                                <select class="form-select form-select-lg mb-3" id="centrodecusto" name="centrodecusto">
+                                <select class="form-select form-select-lg mb-3" id="centrodecusto" name="centrodecusto" required>
+                                    <option></option>
                                     <?php
                                     // select da tabela de setores
                                     $c_sql_setor = "SELECT setores.id, setores.descricao FROM setores ORDER BY setores.descricao";
@@ -259,7 +277,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Observação</label>
                             <div class="col-sm-6">
-                                <textarea class="form-control" id="obs" name="obs" rows="3"></textarea>
+                                <textarea class="form-control" id="obs" name="obs" rows="5"></textarea>
                             </div>
                         </div>
                     </div>
@@ -272,31 +290,63 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div class="col-sm-6">
                                 <input type="text" maxlength="100" class="form-control" name="resp_contratante" value="<?php echo $c_resp_contratante; ?>">
                             </div>
-                           
+
                         </div>
-                    </div>
-                    <div style="padding-top:15px;padding-left:20px;">
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Resp. Contratada</label>
                             <div class="col-sm-6">
                                 <input type="text" maxlength="100" class="form-control" name="resp_contratada" value="<?php echo $c_resp_contratada; ?>">
                             </div>
-                           
                         </div>
-                    </div>
-                    <div style="padding-top:15px;padding-left:20px;">
+
+                        <hr>
+                        <p>
+                        <h5><strong> E-mails:</h5></strong></p>
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Objeto</label>
+                            <label class="col-sm-3 col-form-label">Operacional</label>
                             <div class="col-sm-6">
-                                <input type="text" maxlength="150" class="form-control" name="objeto" value="<?php echo $c_objeto; ?>">
+                                <input type="email" maxlength="180" class="form-control" name="email_operacional" value="<?php echo $c_email_operacional; ?>">
                             </div>
-                           
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Gerência</label>
+                            <div class="col-sm-6">
+                                <input type="email" maxlength="180" class="form-control" name="email_gerencia" value="<?php echo $c_email_gerencia; ?>">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Diretoria</label>
+                            <div class="col-sm-6">
+                                <input type="email" maxlength="180" class="form-control" name="email_diretoria" value="<?php echo $c_email_diretoria; ?>">
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Informação de Denuncia</label>
+                            <div class="col-sm-6">
+                                <input type="text" maxlength="180" class="form-control" name="denuncia" value="<?php echo $c_denuncia; ?>">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Valor Mensal</label>
+                            <div class="col-sm-2">
+                                <input placeholder="valor Mensal" type="text" data-thousands="." data-decimal=","
+                                    data-prefix="R$ " class="form-control" id="valor" name="valor" value="<?php echo $c_valor ?>">
+                            </div>
+                            <label class="col-sm-3 col-form-label">Reajuste (%)</label>
+                            <div class="col-sm-1">
+                                <input type="text" data-thousands="." data-decimal=","
+                                    class="form-control" id="valor" name="reajuste" value="<?php echo $c_reajuste ?>">
+                            </div>
+
                         </div>
                     </div>
                 </div>
-                <?php
-                if (!empty($msg_gravou)) {
-                    echo "
+            </div>
+            <?php
+            if (!empty($msg_gravou)) {
+                echo "
                     <div class='row mb-3'>
                         <div class='offset-sm-3 col-sm-6'>
                              <div class='alert alert-success alert-dismissible fade show' role='alert'>
@@ -306,16 +356,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>     
                     </div>    
                 ";
-                }
-                ?>
-                <br>
-                <div class="row mb-3">
-                    <div class="offset-sm-0 col-sm-3">
-                        <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                        <a class='btn btn-danger' href='/gop/cadastros/materiais/materiais_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
-                    </div>
-
+            }
+            ?>
+            <br>
+            <div class="row mb-3">
+                <div class="offset-sm-0 col-sm-3">
+                    <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
+                    <a class='btn btn-danger' href='/gop/cadastros/materiais/materiais_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
                 </div>
+
+            </div>
         </form>
     </div>
 
