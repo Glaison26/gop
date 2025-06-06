@@ -19,6 +19,12 @@ $c_objeto = '';
 $c_iniciais = '';
 $c_operacional = '';
 $c_email_operacional = '';
+$c_email_gerencia = '';
+$c_email_diretoria = '';
+$c_denuncia = '';
+$c_valor = 0;
+$c_reajuste = 0;
+$c_obs = '';
 
 $d_inicio = 'dd/mm/yyyy';
 $d_termino = 'dd/mm/yyyy';
@@ -29,46 +35,31 @@ $msg_gravou = "";
 $msg_erro = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-    $c_descricao = rtrim($_POST['descricao']);
-    $c_marca = $_POST['marca'];
-    $c_grupo = $_POST['grupo'];
-    $c_unidadesaida = $_POST['unidadesaida'];
-    $c_unidadeentrada = $_POST['unidadeentrada'];
-    $n_custo = $_POST['custo'];
-    $n_qtdmin = $_POST['qtdmin'];
-    $n_qtdmax = $_POST['qtdmax'];
-    $d_ultimasaida = $_POST['ultimasaida'];
-    $d_ultimaentrada = $_POST['ultimaentrada'];
-    $n_quantidadeatual = $_POST['quantidadeatual'];
-    $d_validade = $_POST['validade'];
-    $c_fator = $_POST['fator'];
-    $c_obs = $_POST['obs'];
+    // faço post para as variáveis que vão gravar no sql
+    $c_descricao = $_POST['descricao'];
+    $c_tipo_empresa = $_POST['tipo_empresa'];
+    $c_contrato = $_POST['contrato'];
+    $c_vigencia = $_POST['vigencia'];
+    $c_resp_contratante = $_POST['resp_contratante'];
+    $c_resp_contratada = $_POST['resp_contratada'];
+    $c_objeto = $_POST['objeto'];
+    $c_iniciais = '';
+    $c_operacional = '';
+    $c_email_operacional = '';
+    $c_email_gerencia = '';
+    $c_email_diretoria = '';
+    $c_denuncia = '';
+    $c_valor = 0;
+    $c_reajuste = 0;
+    $c_obs = '';
 
     do {
-        if (empty($c_descricao)) {
-            $msg_erro = "Campos descrição deve ser preenchidos!!";
-            break;
-        }
-        if (($d_ultimaentrada == null)) {
-            $msg_erro = "Campos data da ultima entrada deve ser informado!!";
-            break;
-        }
 
-        if (($d_ultimasaida == null)) {
-            $msg_erro = "Campos data da ultima saida deve ser informado!!";
-            break;
-        }
-
-        if (($d_validade == null)) {
-            $msg_erro = "Campos data de validade deve ser informado!!";
-            break;
-        }
 
 
         // localizo o id do valor do combobox de centro de custos
-        // select da tabela de marcas
-        $c_sql_secundario = "SELECT marcas.id FROM marcas where marcas.descricao='$c_marca' ORDER BY marcas.descricao";
+
+        $c_sql_secundario = "SELECT centrodecusto.id FROM centrodecusto where centrodecusto.descricao='$c_marca' ORDER BY marcas.descricao";
         $result_secundario = $conection->query($c_sql_secundario);
         $registro_secundario = $result_secundario->fetch_assoc();
         $i_marca = $registro_secundario['id'];
@@ -179,7 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
 
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Tipo da Empresa </label>
+                            <label class="col-sm-3 col-form-label">Tipo da Empresa (*) </label>
                             <div class="col-sm-6">
                                 <input type="text" maxlength="120" class="form-control" name="tipo_empresa" required value="<?php echo $c_tipo_empresa; ?>">
                             </div>
@@ -197,7 +188,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">No. de Contrato </label>
+                            <label class="col-sm-3 col-form-label">No. de Contrato (*) </label>
                             <div class="col-sm-2">
                                 <input type="text" maxlength="30" class="form-control" name="contrato" required value="<?php echo $c_contrato; ?>">
                             </div>
@@ -208,18 +199,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
 
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Início </label>
+                            <label class="col-sm-3 col-form-label">Início (*)</label>
                             <div class="col-sm-2">
                                 <input type="date" maxlength="30" class="form-control" name="inicio" required value="<?php echo $c_inicio; ?>">
                             </div>
-                            <label class="col-sm-2 col-form-label">Término</label>
+                            <label class="col-sm-2 col-form-label">Término (*)</label>
                             <div class="col-sm-2">
                                 <input type="date" maxlength="80" class="form-control" name="termino" requerid value="<?php echo $c_termino; ?>">
                             </div>
                         </div>
 
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Centro de Custo</label>
+                            <label class="col-sm-3 col-form-label">Centro de Custo (*) </label>
                             <div class="col-sm-6">
                                 <select class="form-select form-select-lg mb-3" id="centrodecusto" name="centrodecusto" required>
                                     <option></option>
@@ -237,7 +228,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Espaço Físico</label>
+                            <label class="col-sm-3 col-form-label">Espaço Físico (*)</label>
                             <div class="col-sm-6">
                                 <select class="form-select form-select-lg mb-3" id="espacofisico" name="espacofisico" required>
                                     <option></option>
@@ -256,7 +247,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
 
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Setor</label>
+                            <label class="col-sm-3 col-form-label">Setor (*)</label>
                             <div class="col-sm-6">
                                 <select class="form-select form-select-lg mb-3" id="centrodecusto" name="centrodecusto" required>
                                     <option></option>

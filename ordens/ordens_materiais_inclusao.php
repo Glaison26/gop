@@ -174,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
                         while ($c_linha = $result_unidade->fetch_assoc()) {
 
                             echo "  
-                          <option>$c_linha[abreviatura]</option>
+                          <option>$c_linha[abreviatura]</option
                         ";
                         }
                         ?>
