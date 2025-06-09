@@ -52,7 +52,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $c_email_operacional = $_POST['email_operacional'];
     $c_email_gerencia = $_POST['email_gerencia'];
     $c_email_diretoria =  $_POST['email_diretoria'];
-    $c_denuncia = '';
+    $c_dados_iniciais = $_POST['iniciais'];
+    $c_denuncia = $_POST['denuncia'];
+    
     //$c_periodo_faturamento = $_POST[''];
     $c_valor = 0;
     $c_reajuste = 0;
@@ -85,7 +87,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         `email_operacional`, `email_diretoria`, `email_gerente`, `valor_mensal`, `dados_iniciais`, `denuncia`, `reajuste`, `tipo_prestador_servico`,
         `tipo_fornecedor_produtos`, `tipo_producao_mes`, `observacao`)" .
         "Value ('$i_espaco', '$i_setor', '$i_centrodecusto', '$c_descricao', '$c_tipo_empresa', '$c_vigencia', '$d_inicio', '$d_termino', '$c_contrato',
-        '$c_resp_contratado', '$c_resp_contratante', '$c_objeto', '$c_email_operacional', '$c_email_diretoria', '$c_email_gerente' )";
+        '$c_resp_contratado', '$c_resp_contratante', '$c_objeto', '$c_email_operacional', '$c_email_diretoria', '$c_email_gerente', '$c_valor,'
+        '$c_dados_iniciais', '$c_denuncia')";
 
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
