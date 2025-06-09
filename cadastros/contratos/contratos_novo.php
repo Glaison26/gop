@@ -41,49 +41,51 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $c_contrato = $_POST['contrato'];
     $c_vigencia = $_POST['vigencia'];
     $c_resp_contratante = $_POST['resp_contratante'];
-    $c_resp_contratada = $_POST['resp_contratada'];
+    $c_resp_contratado = $_POST['resp_contratada'];
     $c_objeto = $_POST['objeto'];
-    $c_iniciais = '';
+    $c_centro = $_POST['centrodecusto'];
+    $c_espaco = $_POST['espacofisico'];
+    $c_setor = $_POST['setor'];
+    $d_inicio = $_POST['inicio'];
+    $d_termino = $_POST['termino'];
     $c_operacional = '';
-    $c_email_operacional = '';
-    $c_email_gerencia = '';
-    $c_email_diretoria = '';
+    $c_email_operacional = $_POST['email_operacional'];
+    $c_email_gerencia = $_POST['email_gerencia'];
+    $c_email_diretoria =  $_POST['email_diretoria'];
     $c_denuncia = '';
+    //$c_periodo_faturamento = $_POST[''];
     $c_valor = 0;
     $c_reajuste = 0;
     $c_obs = '';
 
     do {
 
-
-
         // localizo o id do valor do combobox de centro de custos
 
-        $c_sql_secundario = "SELECT centrodecusto.id FROM centrodecusto where centrodecusto.descricao='$c_marca' ORDER BY marcas.descricao";
+        $c_sql_secundario = "SELECT centrodecusto.id FROM centrodecusto where centrodecusto.descricao='$c_centro' ORDER BY centrodecusto.descricao";
         $result_secundario = $conection->query($c_sql_secundario);
         $registro_secundario = $result_secundario->fetch_assoc();
-        $i_marca = $registro_secundario['id'];
-        // select da tabela de grupos
-        $c_sql_secundario = "SELECT grupos.id FROM grupos where grupos.descricao='$c_grupo' ORDER BY grupos.descricao";
+        $i_centrodecusto = $registro_secundario['id'];
+        // select da tabela de espacos fisicos
+        $c_sql_secundario = "SELECT espacos.id FROM espacos where espacos.descricao='$c_espaco' ORDER BY espacos.descricao";
         $result_secundario = $conection->query($c_sql_secundario);
         $registro_secundario = $result_secundario->fetch_assoc();
-        $i_grupo = $registro_secundario['id'];
-        // select da tabela de unidade com saida
-        $c_sql_secundario = "SELECT unidades.id FROM unidades where unidades.descricao='$c_unidadesaida' ORDER BY unidades.descricao";
+        $i_espaco = $registro_secundario['id'];
+        // select da tabela de setores
+        $c_sql_secundario = "SELECT setores.id FROM setores where setores.descricao='$c_setor' ORDER BY setores.descricao";
         $result_secundario = $conection->query($c_sql_secundario);
         $registro_secundario = $result_secundario->fetch_assoc();
-        $i_unidadesaida = $registro_secundario['id'];
-        // select da tabela de unidade com entrada
-        $c_sql_secundario = "SELECT unidades.id FROM unidades where unidades.descricao='$c_unidadeentrada' ORDER BY unidades.descricao";
-        $result_secundario = $conection->query($c_sql_secundario);
-        $registro_secundario = $result_secundario->fetch_assoc();
-        $i_unidadeentrada = $registro_secundario['id'];
-
-        // grava dados no banco
+        $i_setor = $registro_secundario['id'];
+   
+        // grava dados do contrato no banco de dados
 
         // faço a Leitura da tabela com sql
-        $c_sql = "Insert into materiais (descricao,  custo, qtdmin, qtdmax, fator, ultimasaida, ultimaentrada, data_validade, quantidadeatual, obs, id_marca, id_grupo, id_unidadesaida, id_unidadeentrada)" .
-            "Value ('$c_descricao', '$n_custo', '$n_qtdmin', '$n_qtdmax', '$c_fator', '$d_ultimasaida', '$d_ultimaentrada', '$d_validade', '$n_quantidadeatual', '$c_obs', '$i_marca', '$i_grupo', '$i_unidadesaida', '$i_unidadeentrada')";
+        $c_sql = "Insert into contratos (`id_espacofisico`, `id_setor`, `id_centrocusto`, `empresa`, `tipo_empresa`, `vigencia`, `inicio_contrato`, 
+        `termino_contrato`, `numero_contrato`, `resp_contratado`, `resp_contratante`, `objeto`, 
+        `email_operacional`, `email_diretoria`, `email_gerente`, `valor_mensal`, `dados_iniciais`, `denuncia`, `reajuste`, `tipo_prestador_servico`,
+        `tipo_fornecedor_produtos`, `tipo_producao_mes`, `observacao`)" .
+        "Value ('$i_espaco', '$i_setor', '$i_centrodecusto', '$c_descricao', '$c_tipo_empresa', '$c_vigencia', '$d_inicio', '$d_termino', '$c_contrato',
+        '$c_resp_contratado', '$c_resp_contratante', '$c_objeto', '$c_email_operacional', '$c_email_diretoria', '$c_email_gerente' )";
 
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
@@ -91,20 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
         }
 
-        $c_descricao = '';
-        $n_custo = 0.0;
-        $n_qtdmin = 0;
-        $n_qtdmax = 0;
-        $d_ultimasaida = 'dd/mm/yyyy';
-        $d_ultimaentrada = 'dd/mm/yyyy';
-        $n_quantidadeatual = 0;
-        $d_validade = 'dd/mm/yyyy';
-        $c_obs = '';
-
-
-        $msg_gravou = "Dados Gravados com Sucesso!!";
-
-        header('location: /gop/cadastros/materiais/materiais_lista.php');
+        header('location: /gop/cadastros/contratos/contratos_lista.php');
     } while (false);
 }
 
@@ -249,7 +238,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Setor (*)</label>
                             <div class="col-sm-6">
-                                <select class="form-select form-select-lg mb-3" id="centrodecusto" name="centrodecusto" required>
+                                <select class="form-select form-select-lg mb-3" id="setor" name="setor" required>
                                     <option></option>
                                     <?php
                                     // select da tabela de setores
@@ -289,7 +278,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <input type="text" maxlength="100" class="form-control" name="resp_contratada" value="<?php echo $c_resp_contratada; ?>">
                             </div>
                         </div>
-
                         <hr>
                         <p>
                         <h5><strong> E-mails:</h5></strong></p>
@@ -312,7 +300,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </div>
                         </div>
                         <hr>
-
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Informação de Denuncia</label>
                             <div class="col-sm-6">
@@ -330,7 +317,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <input type="text" data-thousands="." data-decimal=","
                                     class="form-control" id="valor" name="reajuste" value="<?php echo $c_reajuste ?>">
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -353,7 +339,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <div class="offset-sm-0 col-sm-3">
                     <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                    <a class='btn btn-danger' href='/gop/cadastros/materiais/materiais_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                    <a class='btn btn-danger' href='/gop/cadastros/contratos/contratos_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
                 </div>
 
             </div>
