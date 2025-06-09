@@ -22,8 +22,8 @@ $c_email_operacional = '';
 $c_email_gerencia = '';
 $c_email_diretoria = '';
 $c_denuncia = '';
-$c_valor = 0;
-$c_reajuste = 0;
+$c_valor = 0.0;
+$c_reajuste = 0.0;
 $c_obs = '';
 
 $d_inicio = 'dd/mm/yyyy';
@@ -56,14 +56,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $c_denuncia = $_POST['denuncia'];
     
     //$c_periodo_faturamento = $_POST[''];
-    $c_valor = 0;
-    $c_reajuste = 0;
-    $c_obs = '';
+    $c_valor = $_POST['valor'];
+    $c_reajuste = $_POST['reajuste'];
+    $c_obs = $_POST['obs'];
 
     do {
 
         // localizo o id do valor do combobox de centro de custos
-
         $c_sql_secundario = "SELECT centrodecusto.id FROM centrodecusto where centrodecusto.descricao='$c_centro' ORDER BY centrodecusto.descricao";
         $result_secundario = $conection->query($c_sql_secundario);
         $registro_secundario = $result_secundario->fetch_assoc();
@@ -78,9 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $result_secundario = $conection->query($c_sql_secundario);
         $registro_secundario = $result_secundario->fetch_assoc();
         $i_setor = $registro_secundario['id'];
-   
         // grava dados do contrato no banco de dados
-
         // faço a Leitura da tabela com sql
         $c_sql = "Insert into contratos (`id_espacofisico`, `id_setor`, `id_centrocusto`, `empresa`, `tipo_empresa`, `vigencia`, `inicio_contrato`, 
         `termino_contrato`, `numero_contrato`, `resp_contratado`, `resp_contratante`, `objeto`, 
@@ -88,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         `tipo_fornecedor_produtos`, `tipo_producao_mes`, `observacao`)" .
         "Value ('$i_espaco', '$i_setor', '$i_centrodecusto', '$c_descricao', '$c_tipo_empresa', '$c_vigencia', '$d_inicio', '$d_termino', '$c_contrato',
         '$c_resp_contratado', '$c_resp_contratante', '$c_objeto', '$c_email_operacional', '$c_email_diretoria', '$c_email_gerente', '$c_valor,'
-        '$c_dados_iniciais', '$c_denuncia')";
+        '$c_dados_iniciais', '$c_denuncia', '$c_reajuste', '$c_tipo_empresa','','','','$c_obs')";
 
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
