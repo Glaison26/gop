@@ -9,26 +9,28 @@ include_once "../../lib_gop.php";
 include("../../conexao.php");
 include("../../links2.php");
 
-$c_descricao = '';
-$c_tipo_empresa = '';
-$c_contrato = '';
-$c_vigencia = '';
-$c_resp_contratante = '';
-$c_resp_contratada = '';
-$c_objeto = '';
-$c_iniciais = '';
-$c_operacional = '';
-$c_email_operacional = '';
-$c_email_gerencia = '';
-$c_email_diretoria = '';
-$c_denuncia = '';
-$c_valor = 0.0;
-$c_reajuste = 0.0;
-$c_obs = '';
+// variaveis para mensagens de erro e suscessso da gravação
+$msg_gravou = "";
+$msg_erro = "";
 
-$d_inicio = 'dd/mm/yyyy';
-$d_termino = 'dd/mm/yyyy';
-$c_obs = '';
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no formulário
+
+    if (!isset($_GET["id"])) {
+        header('location: /gop/cadastros/contratos/contratos_lista.php');
+        exit;
+    }
+
+    $c_id = $_GET["id"];
+    // leitura do cliente através de sql usando id passada
+    $c_sql = "select * from contratos where id=$c_id";
+    $result = $conection->query($c_sql);
+    $registro = $result->fetch_assoc();
+
+    if (!$registro) {
+        header('location: /gop/cadastros/centrodecustos/centrodecusto_lista.php');
+        exit;
+    }
+}
 
 // variaveis para mensagens de erro e suscessso da gravação
 $msg_gravou = "";

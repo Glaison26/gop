@@ -3,6 +3,7 @@ session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
+$formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
 include("../../conexao.php");
 include("../../links.php");
 // verifico se usuário e operador de tem autorização de acesso
@@ -102,6 +103,7 @@ $registro_acesso = $result_acesso->fetch_assoc();
                 <tr>
                     <th scope="col">Código</th>
                     <th scope="col">Empresa</th>
+                    <th scope="col">Responsável</th>
                     <th scope="col">No. do Contrato</th>
                     <th scope="col">Inicio</th>
                     <th scope="col">Término</th>
@@ -114,7 +116,7 @@ $registro_acesso = $result_acesso->fetch_assoc();
                 <?php
 
                 // faço a Leitura da tabela com sql
-                $c_sql = "SELECT contratos.id,contratos.empresa, contratos.numero_contrato, contratos.inicio_contrato,
+                $c_sql = "SELECT contratos.id,contratos.empresa, contratos.numero_contrato, contratos.resp_contratante, contratos.inicio_contrato,
                         contratos.termino_contrato, contratos.vigencia, contratos.valor_mensal FROM contratos
                         ORDER BY contratos.empresa";
                 $result = $conection->query($c_sql);
@@ -125,16 +127,23 @@ $registro_acesso = $result_acesso->fetch_assoc();
 
                 // insiro os registro do banco de dados na tabela 
                 while ($c_linha = $result->fetch_assoc()) {
-
+                    $c_datainicio = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['inicio_contrato'])));
+                    $c_datatermino = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['termino_contrato'])));
+                    if ($c_linha['valor_mensal'] > 0) {
+                        $c_valor = $c_linha['valor_mensal'];
+                        $c_valor = $formatter->formatCurrency($c_valor, 'BRL');
+                    } else
+                        $c_valor = 'R$ 0.00';
                     echo "
                     <tr class='info'>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[empresa]</td>
+                    <td>$c_linha[resp_contratante]</td>
                     <td>$c_linha[numero_contrato]</td>
-                    <td>$c_linha[inicio_contrato]</td>
-                    <td>$c_linha[termino_contrato]</td>
+                    <td>$c_datainicio</td>
+                    <td>$c_datatermino</td>
                     <td>$c_linha[vigencia]</td>
-                    <td>$c_linha[valor_mensal]</td>
+                    <td>$c_valor</td>
                     
                     <td>
                     <a class='btn btn-secondary btn-sm' href='/gop/cadastros/executores/executores_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
