@@ -30,11 +30,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         header('location: /gop/cadastros/centrodecustos/centrodecusto_lista.php');
         exit;
     }
+
+    // carrega variáveis com os registros a serem editados
+    //
+    $i_espacofisico = 
+    //
+    $c_descricao = $registro["descricao"];
+    $c_tipo_empresa = $registro['tipo_empresa'];
+    $c_contrato = $_POST['contrato'];
+    $c_vigencia = $_POST['vigencia'];
+    $c_resp_contratante = $_POST['resp_contratante'];
+    $c_resp_contratado = $_POST['resp_contratada'];
+    $c_objeto = $_POST['objeto'];
+    $c_centro = $_POST['centrodecusto'];
+    $c_espaco = $_POST['espacofisico'];
+    $c_setor = $_POST['setor'];
+    $d_inicio = $_POST['inicio'];
+    $d_termino = $_POST['termino'];
+    $c_operacional = '';
+    $c_email_operacional = $_POST['email_operacional'];
+    $c_email_gerencia = $_POST['email_gerencia'];
+    $c_email_diretoria =  $_POST['email_diretoria'];
+    $c_dados_iniciais = $_POST['iniciais'];
+    $c_denuncia = $_POST['denuncia'];
+
+    //$c_periodo_faturamento = $_POST[''];
+    $c_valor = $_POST['valor'];
+    $c_reajuste = $_POST['reajuste'];
+    $c_obs = $_POST['obs'];
+
 }
 
-// variaveis para mensagens de erro e suscessso da gravação
-$msg_gravou = "";
-$msg_erro = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // faço post para as variáveis que vão gravar no sql
