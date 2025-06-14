@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     }
 
     // carrega variáveis com os registros a serem editados
-    
+
     $c_descricao = $registro["empresa"];
     $c_tipo_empresa = $registro['tipo_empresa'];
     $c_contrato = $registro['numero_contrato'];
@@ -45,7 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $i_setor = $registro['id_setor'];
     $d_inicio = $registro['inicio_contrato'];
     $d_termino = $registro['termino_contrato'];
-    
     $c_email_operacional = $registro['email_operacional'];
     $c_email_gerencia = $registro['email_gerente'];
     $c_email_diretoria =  $registro['email_diretoria'];
@@ -57,7 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $c_reajuste = $registro['reajuste'];
     $c_obs = $registro['observacao'];
     $c_periodo = $registro['periodo_faturamento'];
-
 }
 
 
@@ -70,9 +68,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $c_resp_contratante = $_POST['resp_contratante'];
     $c_resp_contratado = $_POST['resp_contratada'];
     $c_objeto = $_POST['objeto'];
-    $c_centro = $_POST['centrodecusto'];
-    $c_espaco = $_POST['espacofisico'];
-    $c_setor = $_POST['setor'];
+    $i_centro = $_POST['centrodecusto'];
+    $i_espaco = $_POST['espacofisico'];
+    $i_setor = $_POST['setor'];
     $d_inicio = $_POST['inicio'];
     $d_termino = $_POST['termino'];
     $c_operacional = '';
@@ -240,8 +238,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     $c_sql_centrocusto = "SELECT centrodecusto.id, centrodecusto.descricao FROM centrodecusto ORDER BY centrodecusto.descricao";
                                     $result_centrocusto = $conection->query($c_sql_centrocusto);
                                     while ($c_linha = $result_centrocusto->fetch_assoc()) {
+                                        $op = '';
+                                        if ($c_linha['id'] == $i_centro) {
+                                            $op = 'selected';
+                                        } else {
+                                            $op = '';
+                                        }
+
                                         echo "  
-                          <option>$c_linha[descricao]</option>
+                          <option $op>$c_linha[descricao]</option>
                         ";
                                     }
                                     ?>
@@ -258,8 +263,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     $c_sql_espacos = "SELECT espacos.id, espacos.descricao FROM espacos ORDER BY espacos.descricao";
                                     $result_espacos = $conection->query($c_sql_espacos);
                                     while ($c_linha = $result_espacos->fetch_assoc()) {
+                                        $op = '';
+                                         if ($c_linha['id'] == $i_espaco) {
+                                            $op = 'selected';
+                                        } else {
+                                            $op = '';
+                                        }
                                         echo "  
-                          <option>$c_linha[descricao]</option>
+                          <option $op>$c_linha[descricao]</option>
                         ";
                                     }
                                     ?>
@@ -277,8 +288,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     $c_sql_setor = "SELECT setores.id, setores.descricao FROM setores ORDER BY setores.descricao";
                                     $result_setor = $conection->query($c_sql_setor);
                                     while ($c_linha = $result_setor->fetch_assoc()) {
+                                        $op = '';
+                                         if ($c_linha['id'] == $i_setor) {
+                                            $op = 'selected';
+                                        } else {
+                                            $op = '';
+                                        }
                                         echo "  
-                          <option>$c_linha[descricao]</option>
+                          <option $op>$c_linha[descricao]</option>
                         ";
                                     }
                                     ?>
@@ -307,7 +324,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Resp. Contratada</label>
                             <div class="col-sm-6">
-                                <input type="text" maxlength="100" class="form-control" name="resp_contratada" value="<?php echo $c_resp_contratada; ?>">
+                                <input type="text" maxlength="100" class="form-control" name="resp_contratada" value="<?php echo $c_resp_contratado; ?>">
                             </div>
                         </div>
                         <hr>
