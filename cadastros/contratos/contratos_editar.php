@@ -27,37 +27,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $registro = $result->fetch_assoc();
 
     if (!$registro) {
-        header('location: /gop/cadastros/centrodecustos/centrodecusto_lista.php');
+        header('location: /gop/cadastros/contratos/contratos_lista.php');
         exit;
     }
 
     // carrega variáveis com os registros a serem editados
-    //
-    $i_espacofisico = 
-    //
-    $c_descricao = $registro["descricao"];
+    
+    $c_descricao = $registro["empresa"];
     $c_tipo_empresa = $registro['tipo_empresa'];
-    $c_contrato = $_POST['contrato'];
-    $c_vigencia = $_POST['vigencia'];
-    $c_resp_contratante = $_POST['resp_contratante'];
-    $c_resp_contratado = $_POST['resp_contratada'];
-    $c_objeto = $_POST['objeto'];
-    $c_centro = $_POST['centrodecusto'];
-    $c_espaco = $_POST['espacofisico'];
-    $c_setor = $_POST['setor'];
-    $d_inicio = $_POST['inicio'];
-    $d_termino = $_POST['termino'];
-    $c_operacional = '';
-    $c_email_operacional = $_POST['email_operacional'];
-    $c_email_gerencia = $_POST['email_gerencia'];
-    $c_email_diretoria =  $_POST['email_diretoria'];
-    $c_dados_iniciais = $_POST['iniciais'];
-    $c_denuncia = $_POST['denuncia'];
+    $c_contrato = $registro['numero_contrato'];
+    $c_vigencia = $registro['vigencia'];
+    $c_resp_contratante = $registro['resp_contratante'];
+    $c_resp_contratado = $registro['resp_contratado'];
+    $c_objeto = $registro['objeto'];
+    $i_centro = $registro['id_centrocusto'];
+    $i_espaco = $registro['id_espacofisico'];
+    $i_setor = $registro['id_setor'];
+    $d_inicio = $registro['inicio_contrato'];
+    $d_termino = $registro['termino_contrato'];
+    
+    $c_email_operacional = $registro['email_operacional'];
+    $c_email_gerencia = $registro['email_gerente'];
+    $c_email_diretoria =  $registro['email_diretoria'];
+    $c_dados_iniciais = $registro['dados_iniciais'];
+    $c_denuncia = $registro['denuncia'];
 
     //$c_periodo_faturamento = $_POST[''];
-    $c_valor = $_POST['valor'];
-    $c_reajuste = $_POST['reajuste'];
-    $c_obs = $_POST['obs'];
+    $c_valor = $registro['valor_mensal'];
+    $c_reajuste = $registro['reajuste'];
+    $c_obs = $registro['observacao'];
+    $c_periodo = $registro['periodo_faturamento'];
 
 }
 
@@ -206,7 +205,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Dados Iniciais</label>
                             <div class="col-sm-6">
-                                <input type="text" maxlength="150" class="form-control" name="iniciais" value="<?php echo $c_iniciais; ?>">
+                                <input type="text" maxlength="150" class="form-control" name="iniciais" value="<?php echo $c_dados_iniciais; ?>">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -223,11 +222,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Início (*)</label>
                             <div class="col-sm-2">
-                                <input type="date" maxlength="30" class="form-control" name="inicio" required value="<?php echo $c_inicio; ?>">
+                                <input type="date" maxlength="30" class="form-control" name="inicio" required value="<?php echo $d_inicio; ?>">
                             </div>
                             <label class="col-sm-2 col-form-label">Término (*)</label>
                             <div class="col-sm-2">
-                                <input type="date" maxlength="80" class="form-control" name="termino" requerid value="<?php echo $c_termino; ?>">
+                                <input type="date" maxlength="80" class="form-control" name="termino" requerid value="<?php echo $d_termino; ?>">
                             </div>
                         </div>
 
