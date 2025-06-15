@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $i_setor = $_POST['setor'];
     $d_inicio = $_POST['inicio'];
     $d_termino = $_POST['termino'];
-    $c_operacional = '';
+    
     $c_email_operacional = $_POST['email_operacional'];
     $c_email_gerencia = $_POST['email_gerencia'];
     $c_email_diretoria =  $_POST['email_diretoria'];
@@ -264,7 +264,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     $result_espacos = $conection->query($c_sql_espacos);
                                     while ($c_linha = $result_espacos->fetch_assoc()) {
                                         $op = '';
-                                         if ($c_linha['id'] == $i_espaco) {
+                                        if ($c_linha['id'] == $i_espaco) {
                                             $op = 'selected';
                                         } else {
                                             $op = '';
@@ -289,7 +289,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     $result_setor = $conection->query($c_sql_setor);
                                     while ($c_linha = $result_setor->fetch_assoc()) {
                                         $op = '';
-                                         if ($c_linha['id'] == $i_setor) {
+                                        if ($c_linha['id'] == $i_setor) {
                                             $op = 'selected';
                                         } else {
                                             $op = '';
