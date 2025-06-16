@@ -83,7 +83,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         // grava dados no banco
         // faço a Leitura da tabela com sql
         $c_sql = "Update centrodecusto" .
-            " SET descricao = '$c_descricao',  id_espacofisico='$i_espaco', responsavel ='$c_responsavel', fone1 ='$c_fone1', fone2='$c_fone2', endereco='$c_endereco', bairro='$c_bairro'" .
+            " SET descricao = '$c_descricao',  id_espacofisico='$i_espaco', responsavel ='$c_responsavel', fone1 ='$c_fone1', fone2='$c_fone2',
+             endereco='$c_endereco', bairro='$c_bairro'" .
             ", cidade='$c_cidade', cep='$c_cep', email='$c_email', rateio='$c_rateio'" .
             " where id=$c_id";
 

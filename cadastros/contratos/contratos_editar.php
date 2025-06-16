@@ -12,6 +12,7 @@ include("../../links2.php");
 // variaveis para mensagens de erro e suscessso da gravação
 $msg_gravou = "";
 $msg_erro = "";
+$c_id = $_GET["id"];
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no formulário
 
@@ -20,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         exit;
     }
 
-    $c_id = $_GET["id"];
+
     // leitura do cliente através de sql usando id passada
     $c_sql = "select * from contratos where id=$c_id";
     $result = $conection->query($c_sql);
@@ -58,7 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $c_periodo = $registro['periodo_faturamento'];
 }
 
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // faço post para as variáveis que vão gravar no sql
     $c_descricao = $_POST['descricao'];
@@ -68,12 +68,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $c_resp_contratante = $_POST['resp_contratante'];
     $c_resp_contratado = $_POST['resp_contratada'];
     $c_objeto = $_POST['objeto'];
-    $i_centro = $_POST['centrodecusto'];
-    $i_espaco = $_POST['espacofisico'];
-    $i_setor = $_POST['setor'];
+    $c_centro = $_POST['centrodecusto'];
+    $c_espaco = $_POST['espacofisico'];
+    $c_setor = $_POST['setor'];
     $d_inicio = $_POST['inicio'];
     $d_termino = $_POST['termino'];
-    
+
     $c_email_operacional = $_POST['email_operacional'];
     $c_email_gerencia = $_POST['email_gerencia'];
     $c_email_diretoria =  $_POST['email_diretoria'];
@@ -109,14 +109,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $i_setor = $registro_secundario['id'];
         // grava dados do contrato no banco de dados
         // faço a Leitura da tabela com sql
-        $c_sql = "Insert into contratos (`id_espacofisico`, `id_setor`, `id_centrocusto`, `empresa`, `tipo_empresa`, `vigencia`, `inicio_contrato`, 
-        `termino_contrato`, `numero_contrato`, `resp_contratado`, `resp_contratante`, `objeto`, 
-        `email_operacional`, `email_diretoria`, `email_gerente`, `valor_mensal`, `dados_iniciais`, `denuncia`, `reajuste`, `tipo_prestador_servico`,
-        `tipo_fornecedor_produtos`, `tipo_producao_mes`, `observacao`)" .
-            "Value ('$i_espaco', '$i_setor', '$i_centrodecusto', '$c_descricao', '$c_tipo_empresa', '$c_vigencia', '$d_inicio', '$d_termino', '$c_contrato',
-        '$c_resp_contratado', '$c_resp_contratante', '$c_objeto', '$c_email_operacional', '$c_email_diretoria', '$c_email_gerencia', '$c_valor',
-        '$c_dados_iniciais', '$c_denuncia', '$c_reajuste','','','','$c_obs')";
-        //echo $c_sql;
+        $c_sql = "update contratos set id_espacofisico='$i_espaco', id_setor='$i_setor', id_centrocusto='$i_centrodecusto', empresa='$c_descricao',
+        tipo_empresa='$c_tipo_empresa', vigencia='$c_vigencia', inicio_contrato='$d_inicio', termino_contrato='$d_termino',
+        numero_contrato='$c_contrato', resp_contratado='$c_resp_contratado', resp_contratante='$c_resp_contratante', objeto='$c_objeto', 
+        email_operacional='$c_email_operacional', email_diretoria='$c_email_diretoria', email_gerente='$c_email_gerencia', valor_mensal='$c_valor',
+        dados_iniciais='$c_dados_iniciais', denuncia='$c_denuncia', reajuste='$c_reajuste', tipo_prestador_servico='',
+        tipo_fornecedor_produtos='', tipo_producao_mes='', observacao='$c_obs' where id=$c_id";
+
+        echo $c_sql;
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
         if (!$result) {
@@ -145,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
                     <h4>GOP - Gestão Operacional</h4>
-                    <h5>Novo Contrato<h5>
+                    <h5>Editar Dados do Contrato<h5>
                 </div>
             </div>
         </div>

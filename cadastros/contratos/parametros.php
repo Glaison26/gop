@@ -11,9 +11,15 @@ $i_id_usuario = $_SESSION["id_usuario"];
 $c_sql_acesso = "select usuarios.tipo, perfil_usuarios.cadastros_executores FROM usuarios
 JOIN perfil_usuarios ON usuarios.id_perfil=perfil_usuarios.id
 WHERE usuarios.id='$i_id_usuario'";
+// id do contrato
+$c_id = $_GET["id"];
 
 $result_acesso = $conection->query($c_sql_acesso);
 $registro_acesso = $result_acesso->fetch_assoc();
+// pego o contrato selecionado via sql
+$c_sql_contrato = "SELECT contratos.id, contratos.empresa, contratos.numero_contrato FROM contratos where id=$c_id";
+$resul_contrato = $conection->query($c_sql_contrato);
+$registro_contrato = $resul_contrato->fetch_assoc();
 //if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_executores'] == 'N') {
 
 //    header('location: /gop/acesso.php');
@@ -28,7 +34,7 @@ $registro_acesso = $result_acesso->fetch_assoc();
         function confirmacao(id) {
             var resposta = confirm("Deseja remover esse registro?");
             if (resposta == true) {
-                window.location.href = "/gop/cadastros/contratos/contratos_excluir.php?id=" + id;
+                window.location.href = "/gop/cadastros/contratos/parametros_excluir.php?id=" + id;
             }
         }
     </script>
@@ -48,10 +54,10 @@ $registro_acesso = $result_acesso->fetch_assoc();
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,
-                    'aTargets': [7]
+                    'aTargets': [3]
                 }, {
                     'aTargets': [0],
-                    "visible": false
+                    "visible": true
                 }],
                 "oLanguage": {
                     "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -87,7 +93,7 @@ $registro_acesso = $result_acesso->fetch_assoc();
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
-            <h5>Lista de Contratos Cadastrados<h5>
+            <h5>Lista de Parametros do Contrato<h5>
         </div>
     </div>
 
@@ -95,58 +101,45 @@ $registro_acesso = $result_acesso->fetch_assoc();
     <div class="container-fluid">
         <br>
         <a class="btn btn-success btn-sm" href="/gop/cadastros/contratos/contratos_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
-        <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
+        <a class="btn btn-secondary btn-sm" href="/gop/cadastros/contratos/contratos_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
+        <hr>
+        <div class='alert alert-info' role='alert'>
+            <div style="padding-left:15px;">
+                <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
+            </div>
+            <h5>Parâmetros do Contrato : <?php echo $registro_contrato['empresa'].'-'.'Número :'.' '.$registro_contrato['numero_contrato'] ?></h5>
+        </div>
         <hr>
         <table class="table display table-bordered tabcontratos">
             <thead class="thead">
                 <tr>
-                    <th scope="col">Código</th>
-                    <th scope="col">Empresa</th>
-                    <th scope="col">Responsável</th>
-                    <th scope="col">No. do Contrato</th>
-                    <th scope="col">Inicio</th>
-                    <th scope="col">Término</th>
-                    <th scope="col">Vigência</th>
-                    <th scope="col">Valor</th>
+                    <th scope="col">#</th>
+                    <th scope="col">Descrição</th>
+                    <th scope="col">Unidade</th>
                     <th scope="col">Opções</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-
                 // faço a Leitura da tabela com sql
-                $c_sql = "SELECT contratos.id,contratos.empresa, contratos.numero_contrato, contratos.resp_contratante, contratos.inicio_contrato,
-                        contratos.termino_contrato, contratos.vigencia, contratos.valor_mensal FROM contratos
-                        ORDER BY contratos.empresa";
+                $c_sql = "SELECT contratos_parametros.id, contratos_parametros.descricao, unidades.descricao AS unidade FROM contratos_parametros
+                JOIN unidades ON contratos_parametros.id_unidade=unidades.id WHERE contratos_parametros.id_contrato=$c_id
+                ORDER BY contratos_parametros.descricao";
                 $result = $conection->query($c_sql);
                 // verifico se a query foi correto
                 if (!$result) {
                     die("Erro ao Executar Sql!!" . $conection->connect_error);
                 }
-
                 // insiro os registro do banco de dados na tabela 
                 while ($c_linha = $result->fetch_assoc()) {
-                    $c_datainicio = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['inicio_contrato'])));
-                    $c_datatermino = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['termino_contrato'])));
-                    if ($c_linha['valor_mensal'] > 0) {
-                        $c_valor = $c_linha['valor_mensal'];
-                        $c_valor = $formatter->formatCurrency($c_valor, 'BRL');
-                    } else
-                        $c_valor = 'R$ 0.00';
                     echo "
                     <tr class='info'>
                     <td>$c_linha[id]</td>
-                    <td>$c_linha[empresa]</td>
-                    <td>$c_linha[resp_contratante]</td>
-                    <td>$c_linha[numero_contrato]</td>
-                    <td>$c_datainicio</td>
-                    <td>$c_datatermino</td>
-                    <td>$c_linha[vigencia]</td>
-                    <td>$c_valor</td>
-                    
+                    <td>$c_linha[descricao]</td>
+                    <td>$c_linha[unidade]</td>
                     <td>
-                    <a class='btn btn-primary btn-sm' href='/gop/cadastros/contratos/parametros.php?id=$c_linha[id]'><span class='glyphicon glyphicon-th-list'></span> Parâmetros</a>
+                    <a class='btn btn-primary btn-sm' href='/gop/cadastros/contratos/parametros.php?id=$c_linha[id]'><span class='glyphicon glyphicon-list-alt'></span> Lançamentos</a>
                     <a class='btn btn-secondary btn-sm' href='/gop/cadastros/contratos/contratos_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
