@@ -159,19 +159,18 @@ $registro_contrato = $resul_contrato->fetch_assoc();
             e.preventDefault();
             var c_id = $('#up_idField').val();
             var c_descricao = $('#up_descricaoField').val();
-            var c_classe = $('#up_classeField').val();
-            var c_horas = $('#up_horasField').val();
-
+            var c_unidade = $('#up_unidadeField').val();
+           
             if (c_descricao != '') {
 
                 $.ajax({
-                    url: "tipos_editar.php",
+                    url: "parametros_editar.php",
                     type: "post",
                     data: {
                         c_id: c_id,
                         c_descricao: c_descricao,
-                        c_classe: c_classe,
-                        c_horas: c_horas
+                        c_unidade: c_unidade
+                     
                     },
                     success: function(data) {
                         var json = JSON.parse(data);
@@ -278,7 +277,7 @@ $registro_contrato = $resul_contrato->fetch_assoc();
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Unidade</label>
                             <div class="col-sm-6">
-                                <select class="form-select form-select-lg mb-3" id="add_unidadeField" name="add_unidadeField">
+                                <select class="form-select form-select-lg mb-3" id="up_unidadeField" name="up_unidadeField">
                                     <?php
                                     // select da tabela de unidades
                                     $c_sql_unidades = "SELECT unidades.id, unidades.descricao FROM unidades ORDER BY unidades.descricao";
