@@ -335,7 +335,7 @@ $registro_contrato = $resul_contrato->fetch_assoc();
                                     $result_unidades = $conection->query($c_sql_unidades);
                                     while ($c_linha2 = $result_unidades->fetch_assoc()) {
                                         $op ='';
-                                        if ($c_linha2['unidade']=$c_linha['id'])
+                                        if ($c_linha2['unidade']=$c_linha[''])
                                           $op='selected';
                                         echo "  
                           <option $op>$c_linha2[descricao]</option>
