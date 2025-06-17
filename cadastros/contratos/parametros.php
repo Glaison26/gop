@@ -5,7 +5,8 @@ if (!isset($_SESSION['newsession'])) {
 }
 $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
 include("../../conexao.php");
-include("../../links.php");
+include("../../links2.php");
+
 // verifico se usuário e operador de tem autorização de acesso
 $i_id_usuario = $_SESSION["id_usuario"];
 $c_sql_acesso = "select usuarios.tipo, perfil_usuarios.cadastros_executores FROM usuarios
@@ -13,6 +14,7 @@ JOIN perfil_usuarios ON usuarios.id_perfil=perfil_usuarios.id
 WHERE usuarios.id='$i_id_usuario'";
 // id do contrato
 $c_id = $_GET["id"];
+$_SESSION['id_contrato'] = $c_id;
 
 $result_acesso = $conection->query($c_sql_acesso);
 $registro_acesso = $result_acesso->fetch_assoc();
@@ -90,6 +92,42 @@ $registro_contrato = $resul_contrato->fetch_assoc();
         });
     </script>
 
+     <!-- Função javascript e ajax para inclusão dos dados -->
+    <script type="text/javascript">
+        $(document).on('submit', '#frmadd', function(e) {
+            e.preventDefault();
+            var c_descricao = $('#add_descricaoField').val();
+            var c_unidade = $('#add_unidadeField').val();
+
+            if (c_descricao != '') {
+
+                $.ajax({
+                    url: "parametros_novo.php",
+                    type: "post",
+                    data: {
+                        c_descricao: c_descricao,
+                        c_unidade: c_unidade
+
+                    },
+                    success: function(data) {
+                        var json = JSON.parse(data);
+                        var status = json.status;
+
+                        location.reload();
+                        if (status == 'true') {
+                            $('#novoModal').modal('hide');
+                            location.reload();
+                        } else {
+                            alert('falha ao incluir dados');
+                        }
+                    }
+                });
+            } else {
+                alert('Preencha todos os campos obrigatórios');
+            }
+        });
+    </script>
+
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
@@ -100,7 +138,10 @@ $registro_contrato = $resul_contrato->fetch_assoc();
 
     <div class="container-fluid">
         <br>
-        <a class="btn btn-success btn-sm" href="/gop/cadastros/contratos/contratos_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
+        <button type="button" title="Inclusão de Nova Marca" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
+            Incluir
+        </button>
+
         <a class="btn btn-secondary btn-sm" href="/gop/cadastros/contratos/contratos_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
         <hr>
         <div class='alert alert-info' role='alert'>
@@ -122,8 +163,8 @@ $registro_contrato = $resul_contrato->fetch_assoc();
             <tbody>
                 <?php
                 // faço a Leitura da tabela com sql
-                $c_sql = "SELECT contratos_parametros.id, contratos_parametros.descricao, unidades.descricao AS unidade FROM contratos_parametros
-                JOIN unidades ON contratos_parametros.id_unidade=unidades.id WHERE contratos_parametros.id_contrato=$c_id
+                $c_sql = "SELECT contratos_parametros.id, contratos_parametros.descricao, contratos_parametros.unidade FROM contratos_parametros
+                WHERE contratos_parametros.id_contrato=$c_id
                 ORDER BY contratos_parametros.descricao";
                 $result = $conection->query($c_sql);
                 // verifico se a query foi correto
@@ -167,13 +208,13 @@ $registro_contrato = $resul_contrato->fetch_assoc();
                         <div class="mb-3 row">
                             <label for="add_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" id="add_descricaoField" name="add_dscricaoField" required>
+                                <input type="text" class="form-control" id="add_descricaoField" name="add_descricaoField" required>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Unidade </label>
-                            <div class="col-sm-2">
-                                <select class="form-select form-select-lg mb-3" id="unidadeentrada" name="unidadeentrada">
+                            <label class="col-sm-3 col-form-label">Unidade</label>
+                            <div class="col-sm-6">
+                                <select class="form-select form-select-lg mb-3" id="add_unidadeField" name="add_unidadeField">
                                     <?php
                                     // select da tabela de unidades
                                     $c_sql_unidades = "SELECT unidades.id, unidades.descricao FROM unidades ORDER BY unidades.descricao";
@@ -231,7 +272,8 @@ $registro_contrato = $resul_contrato->fetch_assoc();
             </div>
         </div>
     </div>
-    -->
+
+   
 </body>
 
 </html>
