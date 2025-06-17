@@ -6,10 +6,10 @@ if (!isset($_SESSION['newsession'])) {
 // conexão dom o banco de dados
 include("../../conexao.php");
 // rotina de inclusão
-//$i_id_contrato = $_SESSION['id_contrato'];
+$i_id_contrato = $_SESSION['id_contrato'];
 $c_descricao = rtrim($_POST['c_descricao']);
 $c_unidade = $_POST['c_unidade'];
-$c_sql = "Insert into contratos_parametros (descricao, unidade, id_contrato ) Value ('$c_descricao','$c_unidade', '3')";
+$c_sql = "Insert into contratos_parametros (descricao, unidade, id_contrato ) Value ('$c_descricao','$c_unidade', '$i_id_contrato')";
 $result = $conection->query($c_sql);
 
 if($result ==true)

@@ -92,7 +92,7 @@ $registro_contrato = $resul_contrato->fetch_assoc();
         });
     </script>
 
-     <!-- Função javascript e ajax para inclusão dos dados -->
+    <!-- Função javascript e ajax para inclusão dos dados -->
     <script type="text/javascript">
         $(document).on('submit', '#frmadd', function(e) {
             e.preventDefault();
@@ -127,6 +127,70 @@ $registro_contrato = $resul_contrato->fetch_assoc();
             }
         });
     </script>
+
+    <!-- Coleta dados da tabela para edição do registro -->
+    <script>
+        $(document).ready(function() {
+
+            $('.editbtn').on('click', function() {
+
+                $('#editmodal').modal('show');
+
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function() {
+                    return $(this).text();
+                }).get();
+
+                console.log(data);
+
+                $('#up_idField').val(data[0]);
+                $('#up_descricaoField').val(data[1]);
+                $('#up_unidadeField').val(data[2]);
+
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        ~
+        // Função javascript e ajax para Alteração dos dados
+        $(document).on('submit', '#frmup', function(e) {
+            e.preventDefault();
+            var c_id = $('#up_idField').val();
+            var c_descricao = $('#up_descricaoField').val();
+            var c_classe = $('#up_classeField').val();
+            var c_horas = $('#up_horasField').val();
+
+            if (c_descricao != '') {
+
+                $.ajax({
+                    url: "tipos_editar.php",
+                    type: "post",
+                    data: {
+                        c_id: c_id,
+                        c_descricao: c_descricao,
+                        c_classe: c_classe,
+                        c_horas: c_horas
+                    },
+                    success: function(data) {
+                        var json = JSON.parse(data);
+                        var status = json.status;
+                        if (status == 'true') {
+                            $('#editmodal').modal('hide');
+                            location.reload();
+                        } else {
+                            alert('falha ao alterar dados');
+                        }
+                    }
+                });
+
+            } else {
+                alert('Todos os campos devem ser preenchidos!!');
+            }
+        });
+    </script>
+
 
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
@@ -180,7 +244,7 @@ $registro_contrato = $resul_contrato->fetch_assoc();
                     <td>$c_linha[unidade]</td>
                     <td>
                     <a class='btn btn-primary btn-sm' href='/gop/cadastros/contratos/parametros.php?id=$c_linha[id]'><span class='glyphicon glyphicon-list-alt'></span> Lançamentos</a>
-                    <a class='btn btn-secondary btn-sm' href='/gop/cadastros/contratos/contratos_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                    <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Parâmetro'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
@@ -247,7 +311,7 @@ $registro_contrato = $resul_contrato->fetch_assoc();
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Editar Marca</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Editar Parâmetro de Contrato</h4>
                 </div>
                 <div class="modal-body">
                     <div class='alert alert-warning' role='alert'>
@@ -259,6 +323,26 @@ $registro_contrato = $resul_contrato->fetch_assoc();
                             <label for="up_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" id="up_descricaoField" name="up_dscricaoField" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Unidade</label>
+                            <div class="col-sm-6">
+                                <select class="form-select form-select-lg mb-3" id="add_unidadeField" name="add_unidadeField">
+                                    <?php
+                                    // select da tabela de unidades
+                                    $c_sql_unidades = "SELECT unidades.id, unidades.descricao FROM unidades ORDER BY unidades.descricao";
+                                    $result_unidades = $conection->query($c_sql_unidades);
+                                    while ($c_linha2 = $result_unidades->fetch_assoc()) {
+                                        $op ='';
+                                        if ($c_linha2['unidade']=$c_linha['id'])
+                                          $op='selected';
+                                        echo "  
+                          <option $op>$c_linha2[descricao]</option>
+                        ";
+                                    }
+                                    ?>
+                                </select>
                             </div>
                         </div>
 
@@ -273,7 +357,7 @@ $registro_contrato = $resul_contrato->fetch_assoc();
         </div>
     </div>
 
-   
+
 </body>
 
 </html>
