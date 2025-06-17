@@ -106,9 +106,8 @@ $registro_contrato = $resul_contrato->fetch_assoc();
         <div class='alert alert-info' role='alert'>
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
-
             </div>
-            <h5>Parâmetros do Contrato : <?php echo $registro_contrato['empresa'].'-'.'Número :'.' '.$registro_contrato['numero_contrato'] ?></h5>
+            <h5>Parâmetros do Contrato : <?php echo $registro_contrato['empresa'] . '  -  ' . 'Contrato Número :' . ' ' . $registro_contrato['numero_contrato'] ?></h5>
         </div>
         <hr>
         <table class="table display table-bordered tabcontratos">
@@ -151,6 +150,88 @@ $registro_contrato = $resul_contrato->fetch_assoc();
             </tbody>
         </table>
     </div>
+
+    <!--  Formulários para janela modal de inclusão e edição -->
+    <!-- janela Modal para inclusão de registro -->
+    <div class="modal fade" class="modal-dialog modal-lg" id="novoModal" name="novoModal" tabindex="-1" role="dialog" aria-labelledby="novoModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">Inclusão de novo Parâmetro</h4>
+                </div>
+                <div class="modal-body">
+                    <div class='alert alert-warning' role='alert'>
+                        <h5>Campos com (*) são obrigatórios</h5>
+                    </div>
+                    <form id="frmadd" action="">
+                        <div class="mb-3 row">
+                            <label for="add_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="add_descricaoField" name="add_dscricaoField" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Unidade </label>
+                            <div class="col-sm-2">
+                                <select class="form-select form-select-lg mb-3" id="unidadeentrada" name="unidadeentrada">
+                                    <?php
+                                    // select da tabela de unidades
+                                    $c_sql_unidades = "SELECT unidades.id, unidades.descricao FROM unidades ORDER BY unidades.descricao";
+                                    $result_unidades = $conection->query($c_sql_unidades);
+                                    while ($c_linha = $result_unidades->fetch_assoc()) {
+                                        echo "  
+                          <option>$c_linha[descricao]</option>
+                        ";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Fechar</button>
+
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal para edição dos dados -->
+    <div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="editmodal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">Editar Marca</h4>
+                </div>
+                <div class="modal-body">
+                    <div class='alert alert-warning' role='alert'>
+                        <h5>Campos com (*) são obrigatórios</h5>
+                    </div>
+                    <form id="frmup" method="POST" action="">
+                        <input type="hidden" id="up_idField" name="up_idField">
+                        <div class="mb-3 row">
+                            <label for="up_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="up_descricaoField" name="up_dscricaoField" required>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
+                            <button class="btn btn-secondary" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Fechar</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    -->
 </body>
 
 </html>
