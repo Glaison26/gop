@@ -13,8 +13,12 @@ $c_sql_acesso = "select usuarios.tipo, perfil_usuarios.cadastros_executores FROM
 JOIN perfil_usuarios ON usuarios.id_perfil=perfil_usuarios.id
 WHERE usuarios.id='$i_id_usuario'";
 // id do contrato
-$c_id = $_GET["id"];
-$_SESSION['id_contrato'] = $c_id;
+if (isset($_GET['id'])) {
+    $c_id = $_GET['id'];
+    $_SESSION['id_contrato'] = $c_id;
+} else {
+    $c_id = $_SESSION['id_contrato'];
+}
 
 $result_acesso = $conection->query($c_sql_acesso);
 $registro_acesso = $result_acesso->fetch_assoc();
@@ -160,7 +164,7 @@ $registro_contrato = $resul_contrato->fetch_assoc();
             var c_id = $('#up_idField').val();
             var c_descricao = $('#up_descricaoField').val();
             var c_unidade = $('#up_unidadeField').val();
-           
+          
             if (c_descricao != '') {
 
                 $.ajax({
@@ -277,7 +281,7 @@ $registro_contrato = $resul_contrato->fetch_assoc();
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Unidade</label>
                             <div class="col-sm-6">
-                                <select class="form-select form-select-lg mb-3" id="up_unidadeField" name="up_unidadeField">
+                                <select class="form-select form-select-lg mb-3" id="add_unidadeField" name="add_unidadeField">
                                     <?php
                                     // select da tabela de unidades
                                     $c_sql_unidades = "SELECT unidades.id, unidades.descricao FROM unidades ORDER BY unidades.descricao";
@@ -327,17 +331,15 @@ $registro_contrato = $resul_contrato->fetch_assoc();
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Unidade</label>
                             <div class="col-sm-6">
-                                <select class="form-select form-select-lg mb-3" id="add_unidadeField" name="add_unidadeField">
+                                <select class="form-select form-select-lg mb-3" id="up_unidadeField" name="up_unidadeField">
                                     <?php
                                     // select da tabela de unidades
                                     $c_sql_unidades = "SELECT unidades.id, unidades.descricao FROM unidades ORDER BY unidades.descricao";
                                     $result_unidades = $conection->query($c_sql_unidades);
                                     while ($c_linha2 = $result_unidades->fetch_assoc()) {
-                                        $op ='';
-                                        if ($c_linha2['unidade']=$c_linha[''])
-                                          $op='selected';
+                                                                        
                                         echo "  
-                          <option $op>$c_linha2[descricao]</option>
+                          <option>$c_linha2[descricao]</option>
                         ";
                                     }
                                     ?>
