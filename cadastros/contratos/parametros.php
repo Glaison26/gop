@@ -26,6 +26,8 @@ $registro_acesso = $result_acesso->fetch_assoc();
 $c_sql_contrato = "SELECT contratos.id, contratos.empresa, contratos.numero_contrato FROM contratos where id=$c_id";
 $resul_contrato = $conection->query($c_sql_contrato);
 $registro_contrato = $resul_contrato->fetch_assoc();
+$_SESSION['contrato'] = $registro_contrato['empresa'] . '  -  ' . 'Contrato Número :' . ' ' . $registro_contrato['numero_contrato'];
+
 //if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_executores'] == 'N') {
 
 //    header('location: /gop/acesso.php');
@@ -151,7 +153,6 @@ $registro_contrato = $resul_contrato->fetch_assoc();
                 $('#up_idField').val(data[0]);
                 $('#up_descricaoField').val(data[1]);
                 $('#up_unidadeField').val(data[2]);
-
             });
         });
     </script>
@@ -198,25 +199,25 @@ $registro_contrato = $resul_contrato->fetch_assoc();
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
-            <h5>Lista de Parametros do Contrato<h5>
+            <h5>Lista de Parâmetros do Contrato<h5>
         </div>
     </div>
 
 
     <div class="container-fluid">
-        <br>
-        <button type="button" title="Inclusão de Nova Marca" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
-            Incluir
-        </button>
-
-        <a class="btn btn-secondary btn-sm" href="/gop/cadastros/contratos/contratos_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
-        <hr>
-        <div class='alert alert-info' role='alert'>
+       
+          <div class='alert alert-info' role='alert'>
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
             </div>
-            <h5>Parâmetros do Contrato : <?php echo $registro_contrato['empresa'] . '  -  ' . 'Contrato Número :' . ' ' . $registro_contrato['numero_contrato'] ?></h5>
+            <h5><strong>Parâmetros do Contrato : <?php echo $registro_contrato['empresa'] . '  -  ' . 'Contrato Número :' . ' ' . $registro_contrato['numero_contrato'] ?></strong></h5>
         </div>
+        <button type="button" title="Inclusão de Novo Parâmetro" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
+            Incluir
+        </button>
+        <a class="btn btn-secondary btn-sm" href="/gop/cadastros/contratos/contratos_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
+        <hr>
+      
         <hr>
         <table class="table display table-bordered tabcontratos">
             <thead class="thead">
@@ -246,7 +247,7 @@ $registro_contrato = $resul_contrato->fetch_assoc();
                     <td>$c_linha[descricao]</td>
                     <td>$c_linha[unidade]</td>
                     <td>
-                    <a class='btn btn-primary btn-sm' href='/gop/cadastros/contratos/parametros.php?id=$c_linha[id]'><span class='glyphicon glyphicon-list-alt'></span> Lançamentos</a>
+                    <a class='btn btn-primary btn-sm' href='/gop/cadastros/contratos/lancamentos_lista.php?id=$c_linha[id]'><span class='glyphicon glyphicon-list-alt'></span> Lançamentos</a>
                     <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Parâmetro'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
