@@ -9,16 +9,14 @@ include_once "../../lib_gop.php";
 include("../../conexao.php");
 include("../../links2.php");
 
-$c_descricao = '';
-$n_custo = 0.0;
-$n_qtdmin = 0;
-$n_qtdmax = 0;
-$d_ultimasaida = 'dd/mm/yyyy';
-$d_ultimaentrada = 'dd/mm/yyyy';
-$n_quantidadeatual = 0;
-$d_validade = 'dd/mm/yyyy';
-$c_fator = "1";
-$c_obs = '';
+$d_data ='';
+$i_quantidade = '0';
+$n_valor = 0;
+$c_unidade = '';
+$d_emissao = '';
+$c_nota = '';
+$d_vencimento = '';
+$c_condpag = '';
 
 // variaveis para mensagens de erro e suscessso da gravação
 $msg_gravou = "";
@@ -26,28 +24,12 @@ $msg_erro = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $c_descricao = rtrim($_POST['descricao']);
-    $c_marca = $_POST['marca'];
-    $c_grupo = $_POST['grupo'];
-    $c_unidadesaida = $_POST['unidadesaida'];
-    $c_unidadeentrada = $_POST['unidadeentrada'];
-    $n_custo = $_POST['custo'];
-    $n_qtdmin = $_POST['qtdmin'];
-    $n_qtdmax = $_POST['qtdmax'];
-    $d_ultimasaida = $_POST['ultimasaida'];
-    $d_ultimaentrada = $_POST['ultimaentrada'];
-    $n_quantidadeatual = $_POST['quantidadeatual'];
-    $d_validade = $_POST['validade'];
-    $c_fator = $_POST['fator'];
-    $c_obs = $_POST['obs'];
-
     do {
-
 
         // grava dados no banco
 
         // faço a Leitura da tabela com sql
-        $c_sql = "Insert into materiais (descricao,  custo, qtdmin, qtdmax, fator, ultimasaida, ultimaentrada, data_validade, quantidadeatual, obs, id_marca, id_grupo, id_unidadesaida, id_unidadeentrada)" .
+        $c_sql = "Insert into  (descricao,  custo, qtdmin, qtdmax, fator, ultimasaida, ultimaentrada, data_validade, quantidadeatual, obs, id_marca, id_grupo, id_unidadesaida, id_unidadeentrada)" .
             "Value ('$c_descricao', '$n_custo', '$n_qtdmin', '$n_qtdmax', '$c_fator', '$d_ultimasaida', '$d_ultimaentrada', '$d_validade', '$n_quantidadeatual', '$c_obs', '$i_marca', '$i_grupo', '$i_unidadesaida', '$i_unidadeentrada')";
 
         $result = $conection->query($c_sql);
@@ -127,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
                 <label class="col-sm-2 col-form-label">Quantidade (*)</label>
                 <div class="col-sm-2">
-                    <input type="text" class="form-control" name="quantidade" value="<?php echo $c_quantidade; ?>">
+                    <input type="text" class="form-control" name="quantidade" value="<?php echo $i_quantidade; ?>">
                 </div>
 
             </div>
@@ -151,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
                 <label class="col-sm-2 col-form-label">Emissão</label>
                 <div class="col-sm-2">
-                    <input type="date" class="form-control" name="emissao" value="<?php echo $c_emissao; ?>">
+                    <input type="date" class="form-control" name="emissao" value="<?php echo $d_emissao; ?>">
                 </div>
             </div>
 
