@@ -6,6 +6,7 @@ if (!isset($_SESSION['newsession'])) {
 include("../../conexao.php");
 include("../../links.php");
 include_once "../../lib_gop.php";
+$formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
 // verifico se usuário e operador de tem autorização de acesso
 $i_id_usuario = $_SESSION["id_usuario"];
 $c_sql_acesso = "select usuarios.tipo, perfil_usuarios.almoxarifado_materiais FROM usuarios
@@ -102,7 +103,7 @@ $registro_parametro = $resul_parametro->fetch_assoc();
             <h5>Lista de Lançamentos de Contrato<h5>
         </div>
     </div>
-  
+
     <div class="container-fluid">
         <div class='alert alert-info' role='alert'>
             <div style="padding-left:15px;">
@@ -132,11 +133,10 @@ $registro_parametro = $resul_parametro->fetch_assoc();
             </thead>
             <tbody>
                 <?php
-
                 // faço a Leitura da tabela com sql
                 $c_sql = "SELECT contratos_lancamentos.id, contratos_lancamentos.`data`, contratos_lancamentos.quantidade, contratos_lancamentos.valor,
-                        contratos_lancamentos.nota, contratos_lancamentos.emissao, contratos_lancamentos.vencimento, contratos_lancamentos.cond_pagamento, contratos_lancamentos.rateio,
-                        contratos_lancamentos.unidade
+                        contratos_lancamentos.nota, contratos_lancamentos.emissao, contratos_lancamentos.vencimento,
+                        contratos_lancamentos.cond_pagamento, contratos_lancamentos.rateio,contratos_lancamentos.unidade
                         FROM contratos_lancamentos
                         ORDER BY contratos_lancamentos.`data` desc";
                 $result = $conection->query($c_sql);
@@ -144,26 +144,30 @@ $registro_parametro = $resul_parametro->fetch_assoc();
                 if (!$result) {
                     die("Erro ao Executar Sql!!" . $conection->connect_error);
                 }
-
                 // insiro os registro do banco de dados na tabela 
                 while ($c_linha = $result->fetch_assoc()) {
-                    $c_valor = mask($c_linha['valor'], 'R$#########');
+                    // formatações de data e valores
+                    $c_valor = $c_linha['valor'];
+                    $c_valor = $formatter->formatCurrency($c_valor, 'BRL');
+                    $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data'])));
+                    $c_data_emissao = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['emissao'])));
+                    $c_data_vencimento = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['vencimento'])));
+                    //
                     echo "
                     <tr class='info'>
                     <td>$c_linha[id]</td>
-                    <td>$c_linha[data]</td>
+                    <td>$c_data</td>
                     <td>$c_linha[quantidade]</td>
                     <td>$c_linha[unidade]</td>
                     <td>$c_valor</td>
-                    <td>$c_linha[emissao]</td>
-                    <td>$c_linha[vencimento]</td>
+                    <td>$c_linha[nota]</td>
+                    <td>$c_data_emissao </td>
+                    <td>$c_data_vencimento</td>
                     <td>$c_linha[rateio]</td>
-
                     <td>
                     <a class='btn btn-secondary btn-sm' href='/gop/cadastros/materiais/materiais_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
-
                     </tr>
                     ";
                 }
