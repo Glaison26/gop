@@ -135,10 +135,14 @@ $registro_parametro = $resul_parametro->fetch_assoc();
                 <?php
                 // faço a Leitura da tabela com sql
                 $c_sql = "SELECT contratos_lancamentos.id, contratos_lancamentos.`data`, contratos_lancamentos.quantidade, contratos_lancamentos.valor,
-                        contratos_lancamentos.nota, contratos_lancamentos.emissao, contratos_lancamentos.vencimento,
-                        contratos_lancamentos.cond_pagamento, contratos_lancamentos.rateio,contratos_lancamentos.unidade
-                        FROM contratos_lancamentos
-                        ORDER BY contratos_lancamentos.`data` desc";
+                    contratos_lancamentos.nota, contratos_lancamentos.emissao, contratos_lancamentos.vencimento,
+                    contratos_lancamentos.cond_pagamento, contratos_lancamentos.rateio,contratos_lancamentos.unidade,
+                    case
+                    when contratos_lancamentos.rateio='' then 'Não'
+                    when contratos_lancamentos.rateio='' then 'Sim'
+                    END AS status
+                    FROM contratos_lancamentos
+                    ORDER BY contratos_lancamentos.`data` desc";
                 $result = $conection->query($c_sql);
                 // verifico se a query foi correto
                 if (!$result) {
@@ -163,7 +167,7 @@ $registro_parametro = $resul_parametro->fetch_assoc();
                     <td>$c_linha[nota]</td>
                     <td>$c_data_emissao </td>
                     <td>$c_data_vencimento</td>
-                    <td>$c_linha[rateio]</td>
+                    <td>$c_linha[status]</td>
                     <td>
                     <a class='btn btn-secondary btn-sm' href='/gop/cadastros/materiais/materiais_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
