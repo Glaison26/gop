@@ -169,7 +169,7 @@ $registro_parametro = $resul_parametro->fetch_assoc();
                     <td>$c_data_vencimento</td>
                     <td>$c_linha[status]</td>
                     <td>
-                    <a class='btn btn-secondary btn-sm' href='/gop/cadastros/materiais/materiais_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                    <a class='btn btn-secondary btn-sm' href='/gop/cadastros/contratos/lancamentos_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
                     </tr>
