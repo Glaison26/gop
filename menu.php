@@ -167,7 +167,7 @@
                              </div>
                          </li>
                          <li class='nav-item dropdown'>
-                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Outros</a>
+                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Outros Aplicativos</a>
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
                                   <a class='dropdown-item' href='/gop/plano_acao/planos_menu.php'><img src='\gop\images\plano.png' alt='25' width='25' height='25'> Planos de Ação</a>
                                   <a class='dropdown-item' href='/gop/cadastros/pop/pops_lista.php'><img src='\gop\images\degraus.png' alt='25' width='25' height='25'> Cadastro de POP</a>
