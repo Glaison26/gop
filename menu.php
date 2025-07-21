@@ -49,9 +49,8 @@
     $result = $conection->query($c_sql);
     $registro = $result->fetch_assoc();
     $c_preventivas_geradas = $registro['preventivas_geradas'];
-
-
     ?>
+    
  <!DOCTYPE html>
  <html lang="en">
 
@@ -167,9 +166,18 @@
                                  
                              </div>
                          </li>
+                         <li class='nav-item dropdown'>
+                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Outros</a>
+                             <div class='dropdown-menu' aria-labelledby='dropdown01'>
+                                  <a class='dropdown-item' href='/gop/plano_acao/planos_menu.php'><img src='\gop\images\plano.png' alt='25' width='25' height='25'> Planos de Ação</a>
+                                  <a class='dropdown-item' href='/gop/cadastros/pop/pops_lista.php'><img src='\gop\images\degraus.png' alt='25' width='25' height='25'> Cadastro de POP</a>
+                                  <a class='dropdown-item' href='/gop/obras/obras_menu.php'><img src='\gop\images\ooadwork.png' alt='25' width='30' height='25'> Custos de Obras</a>
+                                  <a class='dropdown-item' href='/gop/cadastros/contratos/contratos_lista.php'><img src='\gop\images\contrato.png' alt='25' width='30' height='25'> Gestão de Contratos</a>
+                             </div>
+                          </li>
                          
                           <li class='nav-item dropdown'>
-                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'><img src='\gop\images\kpi.png' alt='25' width='20' height='20'> Indicadores</a>
+                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'><img src='\gop\images\kpi.png' alt='25' width='20' height='20'> Indicadores Quantitativos</a>
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
                                  <a class='dropdown-item' href='/gop/relatorios/ocorrencias_query.php'>1. Ocorrências Padrões</a>
                                  <a class='dropdown-item' href='/gop/relatorios/oficinas_query.php'>2. Ocorrências por Oficinas</a>
@@ -188,7 +196,7 @@
                              </div>
                          </li>
                            <li class='nav-item dropdown'>
-                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'><img src='\gop\images\_reducao.png' alt='25' width='23' height='23'> Custos</a>
+                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'><img src='\gop\images\_reducao.png' alt='25' width='23' height='23'>Indicadores de Custos</a>
                              <div class='dropdown-menu' aria-labelledby='dropdown01'>
                                  <a class='dropdown-item' href='/gop/custos/ocorrencias_custo_query.php'>1. Custos por Ocorrências Padrões</a>
                                  <a class='dropdown-item' href='/gop/custos/oficinas_custo_query.php'>2. Custos por Oficinas</a>
@@ -203,15 +211,7 @@
                                                
                              </div>
                          </li>
-                         <li class='nav-item dropdown'>
-                             <a class='nav-link dropdown-toggle' href='#' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Outros</a>
-                             <div class='dropdown-menu' aria-labelledby='dropdown01'>
-                                  <a class='dropdown-item' href='/gop/plano_acao/planos_menu.php'><img src='\gop\images\plano.png' alt='25' width='25' height='25'> Planos de Ação</a>
-                                  <a class='dropdown-item' href='/gop/cadastros/pop/pops_lista.php'><img src='\gop\images\degraus.png' alt='25' width='25' height='25'> Cadastro de POP</a>
-                                  <a class='dropdown-item' href='/gop/obras/obras_menu.php'><img src='\gop\images\ooadwork.png' alt='25' width='30' height='25'> Custos de Obras</a>
-                                  <a class='dropdown-item' href='/gop/cadastros/contratos/contratos_lista.php'><img src='\gop\images\contrato.png' alt='25' width='30' height='25'> Gestão de Contratos</a>
-                             </div>
-                          </li>
+                      
 
                          ";
                                             if ($_SESSION['tipo'] == 'Administrador')

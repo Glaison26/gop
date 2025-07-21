@@ -22,7 +22,6 @@ if (isset($_POST['btncusto'])) {  // pegar custo do material
     $result = $conection->query($c_sql);
     $c_linha = $result->fetch_assoc();
     $c_valor = $c_linha['custo'];
-
     $c_indice = $_POST['material'];
 }
 // inclusão do material no banco de dados
@@ -174,7 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
                         while ($c_linha = $result_unidade->fetch_assoc()) {
 
                             echo "  
-                          <option>$c_linha[abreviatura]</option>
+                          <option>$c_linha[abreviatura]</option
                         ";
                         }
                         ?>

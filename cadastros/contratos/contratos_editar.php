@@ -9,30 +9,55 @@ include_once "../../lib_gop.php";
 include("../../conexao.php");
 include("../../links2.php");
 
-$c_descricao = '';
-$c_tipo_empresa = '';
-$c_contrato = '';
-$c_vigencia = '';
-$c_resp_contratante = '';
-$c_resp_contratada = '';
-$c_objeto = '';
-$c_iniciais = '';
-$c_operacional = '';
-$c_email_operacional = '';
-$c_email_gerencia = '';
-$c_email_diretoria = '';
-$c_denuncia = '';
-$c_valor = 0.0;
-$c_reajuste = 0.0;
-$c_obs = '';
-
-$d_inicio = 'dd/mm/yyyy';
-$d_termino = 'dd/mm/yyyy';
-$c_obs = '';
-
 // variaveis para mensagens de erro e suscessso da gravação
 $msg_gravou = "";
 $msg_erro = "";
+$c_id = $_GET["id"];
+
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no formulário
+
+    if (!isset($_GET["id"])) {
+        header('location: /gop/cadastros/contratos/contratos_lista.php');
+        exit;
+    }
+
+
+    // leitura do cliente através de sql usando id passada
+    $c_sql = "select * from contratos where id=$c_id";
+    $result = $conection->query($c_sql);
+    $registro = $result->fetch_assoc();
+
+    if (!$registro) {
+        header('location: /gop/cadastros/contratos/contratos_lista.php');
+        exit;
+    }
+
+    // carrega variáveis com os registros a serem editados
+
+    $c_descricao = $registro["empresa"];
+    $c_tipo_empresa = $registro['tipo_empresa'];
+    $c_contrato = $registro['numero_contrato'];
+    $c_vigencia = $registro['vigencia'];
+    $c_resp_contratante = $registro['resp_contratante'];
+    $c_resp_contratado = $registro['resp_contratado'];
+    $c_objeto = $registro['objeto'];
+    $i_centro = $registro['id_centrocusto'];
+    $i_espaco = $registro['id_espacofisico'];
+    $i_setor = $registro['id_setor'];
+    $d_inicio = $registro['inicio_contrato'];
+    $d_termino = $registro['termino_contrato'];
+    $c_email_operacional = $registro['email_operacional'];
+    $c_email_gerencia = $registro['email_gerente'];
+    $c_email_diretoria =  $registro['email_diretoria'];
+    $c_dados_iniciais = $registro['dados_iniciais'];
+    $c_denuncia = $registro['denuncia'];
+
+    //$c_periodo_faturamento = $_POST[''];
+    $c_valor = $registro['valor_mensal'];
+    $c_reajuste = $registro['reajuste'];
+    $c_obs = $registro['observacao'];
+    $c_periodo = $registro['periodo_faturamento'];
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // faço post para as variáveis que vão gravar no sql
@@ -48,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $c_setor = $_POST['setor'];
     $d_inicio = $_POST['inicio'];
     $d_termino = $_POST['termino'];
-    $c_operacional = '';
+
     $c_email_operacional = $_POST['email_operacional'];
     $c_email_gerencia = $_POST['email_gerencia'];
     $c_email_diretoria =  $_POST['email_diretoria'];
@@ -84,14 +109,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $i_setor = $registro_secundario['id'];
         // grava dados do contrato no banco de dados
         // faço a Leitura da tabela com sql
-        $c_sql = "Insert into contratos (`id_espacofisico`, `id_setor`, `id_centrocusto`, `empresa`, `tipo_empresa`, `vigencia`, `inicio_contrato`, 
-        `termino_contrato`, `numero_contrato`, `resp_contratado`, `resp_contratante`, `objeto`, 
-        `email_operacional`, `email_diretoria`, `email_gerente`, `valor_mensal`, `dados_iniciais`, `denuncia`, `reajuste`, `tipo_prestador_servico`,
-        `tipo_fornecedor_produtos`, `tipo_producao_mes`, `observacao`)" .
-            "Value ('$i_espaco', '$i_setor', '$i_centrodecusto', '$c_descricao', '$c_tipo_empresa', '$c_vigencia', '$d_inicio', '$d_termino', '$c_contrato',
-        '$c_resp_contratado', '$c_resp_contratante', '$c_objeto', '$c_email_operacional', '$c_email_diretoria', '$c_email_gerencia', '$c_valor',
-        '$c_dados_iniciais', '$c_denuncia', '$c_reajuste','','','','$c_obs')";
-        //echo $c_sql;
+        $c_sql = "update contratos set id_espacofisico='$i_espaco', id_setor='$i_setor', id_centrocusto='$i_centrodecusto', empresa='$c_descricao',
+        tipo_empresa='$c_tipo_empresa', vigencia='$c_vigencia', inicio_contrato='$d_inicio', termino_contrato='$d_termino',
+        numero_contrato='$c_contrato', resp_contratado='$c_resp_contratado', resp_contratante='$c_resp_contratante', objeto='$c_objeto', 
+        email_operacional='$c_email_operacional', email_diretoria='$c_email_diretoria', email_gerente='$c_email_gerencia', valor_mensal='$c_valor',
+        dados_iniciais='$c_dados_iniciais', denuncia='$c_denuncia', reajuste='$c_reajuste', tipo_prestador_servico='',
+        tipo_fornecedor_produtos='', tipo_producao_mes='', observacao='$c_obs' where id=$c_id";
+
+        echo $c_sql;
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
         if (!$result) {
@@ -120,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
                     <h4>GOP - Gestão Operacional</h4>
-                    <h5>Novo Contrato<h5>
+                    <h5>Editar Dados do Contrato<h5>
                 </div>
             </div>
         </div>
@@ -178,7 +203,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Dados Iniciais</label>
                             <div class="col-sm-6">
-                                <input type="text" maxlength="150" class="form-control" name="iniciais" value="<?php echo $c_iniciais; ?>">
+                                <input type="text" maxlength="150" class="form-control" name="iniciais" value="<?php echo $c_dados_iniciais; ?>">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -195,11 +220,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Início (*)</label>
                             <div class="col-sm-2">
-                                <input type="date" maxlength="30" class="form-control" name="inicio" required value="<?php echo $c_inicio; ?>">
+                                <input type="date" maxlength="30" class="form-control" name="inicio" required value="<?php echo $d_inicio; ?>">
                             </div>
                             <label class="col-sm-2 col-form-label">Término (*)</label>
                             <div class="col-sm-2">
-                                <input type="date" maxlength="80" class="form-control" name="termino" requerid value="<?php echo $c_termino; ?>">
+                                <input type="date" maxlength="80" class="form-control" name="termino" requerid value="<?php echo $d_termino; ?>">
                             </div>
                         </div>
 
@@ -213,8 +238,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     $c_sql_centrocusto = "SELECT centrodecusto.id, centrodecusto.descricao FROM centrodecusto ORDER BY centrodecusto.descricao";
                                     $result_centrocusto = $conection->query($c_sql_centrocusto);
                                     while ($c_linha = $result_centrocusto->fetch_assoc()) {
+                                        $op = '';
+                                        if ($c_linha['id'] == $i_centro) {
+                                            $op = 'selected';
+                                        } else {
+                                            $op = '';
+                                        }
+
                                         echo "  
-                          <option>$c_linha[descricao]</option>
+                          <option $op>$c_linha[descricao]</option>
                         ";
                                     }
                                     ?>
@@ -231,8 +263,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     $c_sql_espacos = "SELECT espacos.id, espacos.descricao FROM espacos ORDER BY espacos.descricao";
                                     $result_espacos = $conection->query($c_sql_espacos);
                                     while ($c_linha = $result_espacos->fetch_assoc()) {
+                                        $op = '';
+                                        if ($c_linha['id'] == $i_espaco) {
+                                            $op = 'selected';
+                                        } else {
+                                            $op = '';
+                                        }
                                         echo "  
-                          <option>$c_linha[descricao]</option>
+                          <option $op>$c_linha[descricao]</option>
                         ";
                                     }
                                     ?>
@@ -250,8 +288,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     $c_sql_setor = "SELECT setores.id, setores.descricao FROM setores ORDER BY setores.descricao";
                                     $result_setor = $conection->query($c_sql_setor);
                                     while ($c_linha = $result_setor->fetch_assoc()) {
+                                        $op = '';
+                                        if ($c_linha['id'] == $i_setor) {
+                                            $op = 'selected';
+                                        } else {
+                                            $op = '';
+                                        }
                                         echo "  
-                          <option>$c_linha[descricao]</option>
+                          <option $op>$c_linha[descricao]</option>
                         ";
                                     }
                                     ?>
@@ -280,7 +324,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Resp. Contratada</label>
                             <div class="col-sm-6">
-                                <input type="text" maxlength="100" class="form-control" name="resp_contratada" value="<?php echo $c_resp_contratada; ?>">
+                                <input type="text" maxlength="100" class="form-control" name="resp_contratada" value="<?php echo $c_resp_contratado; ?>">
                             </div>
                         </div>
                         <hr>

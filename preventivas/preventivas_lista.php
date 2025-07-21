@@ -123,9 +123,7 @@ include('../conexao.php');
         <div class='alert alert-info' role='alert'>
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
-
             </div>
-
             <h5>Resultado das Preventivas Selecionadas</h5>
         </div>
         <?php
@@ -153,7 +151,7 @@ include('../conexao.php');
                                 <th scope="col">#</th>
                                 <th scope="col">Recurso</th>
                                 <th scope="col">Patrimônio</th>
-                                
+
                                 <th scope="col">Tipo</th>
                                 <th scope="col">Calibração</th>
                                 <th scope="col">Periodicidade</th>
@@ -212,7 +210,7 @@ include('../conexao.php');
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Espaço Físico</th>
-                               
+
                                 <th scope="col">Tipo</th>
                                 <th scope="col">Periodicidade</th>
                                 <th scope="col">Ultima Realização</th>
