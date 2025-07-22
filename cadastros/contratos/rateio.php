@@ -24,7 +24,7 @@ $c_id = $_GET['id'];
 
 <body>
 
-   <script>
+    <script>
         $(document).ready(function() {
             $('.tablancamentos').DataTable({
                 // 
@@ -78,11 +78,8 @@ $c_id = $_GET['id'];
     </div>
 
     <div class="container-fluid">
-        
         <a class="btn btn-success btn-sm" href="/gop/cadastros/contratos/lancamentos_novo.php"><span class="glyphicon glyphicon-duplicate"></span> Gerar Rateio</a>
-       <a class="btn btn-secondary btn-sm" href="/gop/cadastros/contratos/lancamentos_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
-        <hr>
-
+        <a class="btn btn-secondary btn-sm" href="/gop/cadastros/contratos/lancamentos_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
         <hr>
         <table class="table table display table-bordered tablancamentos">
             <thead class="thead">
@@ -90,7 +87,6 @@ $c_id = $_GET['id'];
                     <th scope="col">Código</th>
                     <th scope="col">Centro de Custo</th>
                     <th scope="col">Valor do Rateio</th>
-                   
                 </tr>
             </thead>
             <tbody>
