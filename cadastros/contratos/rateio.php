@@ -16,7 +16,11 @@ $result_acesso = $conection->query($c_sql_acesso);
 $registro_acesso = $result_acesso->fetch_assoc();
 // id do lançamento
 $c_id = $_GET['id'];
-//
+// rotina para gerar rateio do lançamento por centro de custos
+if ((isset($_POST["btn_rateio"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
+    // seleciono todos os centros de custos para rateio
+    $c_sql_cc = "";
+}
 ?>
 
 <!doctype html>
@@ -70,6 +74,14 @@ $c_id = $_GET['id'];
         });
     </script>
 
+    <script>
+        // função para confirmar coonclusão
+        function pergunta() {
+            // retorna true se confirmado, ou false se cancelado
+            return confirm('Fazer rateio de valores?');
+        }
+    </script>
+
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
@@ -78,8 +90,14 @@ $c_id = $_GET['id'];
     </div>
 
     <div class="container-fluid">
-        <a class="btn btn-success btn-sm" href="/gop/cadastros/contratos/lancamentos_novo.php"><span class="glyphicon glyphicon-duplicate"></span> Gerar Rateio</a>
-        <a class="btn btn-secondary btn-sm" href="/gop/cadastros/contratos/lancamentos_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
+        <form method="post">
+            <button type="submit" onclick='return pergunta();' name="btn_rateio" title="Gerar Rateio do lançamento"
+                class="btn btn-success btn-sm"><span class="glyphicon glyphicon-duplicate"></span>
+                Gerar Rateio
+            </button>
+            <a class="btn btn-secondary btn-sm" href="/gop/cadastros/contratos/lancamentos_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
+        </form>
+
         <hr>
         <table class="table table display table-bordered tablancamentos">
             <thead class="thead">
