@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // grava dados no banco
         // faço a Leitura da tabela com sql
         $c_sql = "Insert into contratos_lancamentos (id_parametro, data, emissao, quantidade, valor, nota, unidade, vencimento, cond_pagamento, rateio)" .
-            "Value ('$i_id_parametro', '$d_data', '$d_emissao', '$i_quantidade', '$n_valor', '$c_nota', '$c_unidade', '$d_vencimento', '$c_condpag', '')";
+            "Value ('$i_id_parametro', '$d_data', '$d_emissao', '$i_quantidade', '$n_valor', '$c_nota', '$c_unidade', '$d_vencimento', '$c_condpag', 'N')";
 
         $result = $conection->query($c_sql);
         // verifico se a query foi correto

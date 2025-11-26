@@ -138,8 +138,8 @@ $registro_parametro = $resul_parametro->fetch_assoc();
                     contratos_lancamentos.nota, contratos_lancamentos.emissao, contratos_lancamentos.vencimento,
                     contratos_lancamentos.cond_pagamento, contratos_lancamentos.rateio,contratos_lancamentos.unidade,
                     case
-                    when contratos_lancamentos.rateio='' then 'Não'
-                    when contratos_lancamentos.rateio='' then 'Sim'
+                    when contratos_lancamentos.rateio='N' then 'Não'
+                    when contratos_lancamentos.rateio='S' then 'Sim'
                     END AS status
                     FROM contratos_lancamentos
                     ORDER BY contratos_lancamentos.`data` desc";
@@ -171,6 +171,7 @@ $registro_parametro = $resul_parametro->fetch_assoc();
                     <td>
                     <a class='btn btn-secondary btn-sm' href='/gop/cadastros/contratos/lancamentos_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
+                    <a class='btn btn-primary btn-sm' href='/gop/cadastros/contratos/rateio.php?id=$c_linha[id]'><span class='glyphicon glyphicon-adjust'></span> Rateio</a>
                     </td>
                     </tr>
                     ";
