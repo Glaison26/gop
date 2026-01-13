@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 <div class="clearfix" style="display:none"></div>
 
 <body>
-
+<main class="container mx-auto mt-10 px-4">
 
     <div class="login-container">
         <?php
