@@ -93,8 +93,8 @@ if (isset($_POST['btn_baixa']) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
             echo "<div class='panel panel-info class'>
                     <div class='panel-heading'>
             
-                         <a class='btn btn-success' href='/gop/ordens/ordens_materiais_inclusao.php'><span class='glyphicon glyphicon-plus'></span> Incluir Material</a>
-                         <button type='submit' name='btn_baixa' id='btn_baixa' class='btn btn-warning'><img src='\gop\images\itabela.png' alt='' width='20' height='20'></span> Baixa de Materiais</button>
+                         <a class='btn ' href='/gop/ordens/ordens_materiais_inclusao.php'><span class='glyphicon glyphicon-plus'></span> Incluir Material</a>
+                         <button type='submit' name='btn_baixa' id='btn_baixa' class='btn'><img src='\gop\images\itabela.png' alt='' width='20' height='20'></span> Baixa de Materiais</button>
                     </div>
             </div>";
         ?>
