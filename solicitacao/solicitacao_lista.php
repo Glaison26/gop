@@ -169,17 +169,7 @@ include('../conexao.php');
             </div>
         </div>
 
-        <div style="padding-bottom :15px;">
-            <div class="topnav">
-                <?php
-                if ($_SESSION['pesquisamenu'] == false) {
-                    echo "<a class='btn btn btn-sm' href='\gop\solicitacao\solicitacao.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
-                } else {
-                    echo "<a class='btn btn btn-sm' href='\gop\menu.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
-                }
-                ?>
-            </div>
-        </div>
+
         <div class='alert alert-info' role='alert'>
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
@@ -359,10 +349,20 @@ include('../conexao.php');
 
                 </div>
             </div>
+             <hr>
+        <div style="padding-bottom :15px;">
+            <?php
+            if ($_SESSION['pesquisamenu'] == false) {
+                echo "<a class='btn btn btn-sm' align='left' href='\gop\solicitacao\solicitacao.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
+            } else {
+                echo "<a class='btn btn btn-sm' align='left' href='\gop\menu.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
+            }
+            ?>
         </div>
-        <br>
-
+        </div>
+       
     </div>
+
 
 </body>
 

@@ -314,7 +314,7 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                         </div>
                     </div>
                     <div class="mt-4">
-                        <a href="#" class="text-red-600 hover:text-red-700 font-semibold text-sm flex items-center">
+                        <a href="/gop/preventivas/preventivas_geracao.php" class="text-red-600 hover:text-red-700 font-semibold text-sm flex items-center">
                             Ver detalhes <i class="fas fa-arrow-right ml-2"></i>
                         </a>
                     </div>
@@ -333,7 +333,7 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                         </div>
                     </div>
                     <div class="mt-4">
-                        <a href="#" class="text-purple-600 hover:text-purple-700 font-semibold text-sm flex items-center">
+                        <a href="/gop/chama_fora_sla.php" class="text-purple-600 hover:text-purple-700 font-semibold text-sm flex items-center">
                             Ver detalhes <i class="fas fa-arrow-right ml-2"></i>
                         </a>
                     </div>
@@ -352,7 +352,7 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                         </div>
                     </div>
                     <div class="mt-4">
-                        <a href="#" class="text-green-600 hover:text-green-700 font-semibold text-sm flex items-center">
+                        <a href="/gop/chama_suspensas.php" class="text-green-600 hover:text-green-700 font-semibold text-sm flex items-center">
                             Ver detalhes <i class="fas fa-arrow-right ml-2"></i>
                         </a>
                     </div>
@@ -371,7 +371,7 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                         </div>
                     </div>
                     <div class="mt-4">
-                        <a href="#" class="text-indigo-600 hover:text-indigo-700 font-semibold text-sm flex items-center">
+                        <a href="/gop/preventivas/preventivas_geracao.php" class="text-indigo-600 hover:text-indigo-700 font-semibold text-sm flex items-center">
                             Ver detalhes <i class="fas fa-arrow-right ml-2"></i>
                         </a>
                     </div>
