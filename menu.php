@@ -264,7 +264,7 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
         </div>
     </nav>
 
-    <!-- Main Content -->
+    <!-- Main Content cards -->
     <?php
     if ($_SESSION['tipo'] <> 'Solicitante') {
         echo '
@@ -283,7 +283,7 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Solicitações Abertas</p>
-                            <p class="text-3xl font-bold text-gray-900 mt-1"><?php echo $c_solicitacao_aberta; ?></p>
+                            <p class="text-3xl font-bold text-gray-900 mt-1">'. $c_solicitacao_aberta.'<p>
                         </div>
                         <div class="bg-yellow-100 p-3 rounded-full">
                             <i class="fas fa-file-alt text-yellow-600 text-2xl"></i>
@@ -303,7 +303,7 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Ordens de Serviço Abertas</p>
-                            <p class="text-3xl font-bold text-gray-900 mt-1"><?php echo $c_ordens_abertas; ?></p>
+                            <p class="text-3xl font-bold text-gray-900 mt-1">'. $c_ordens_abertas.'</p>
                         </div>
                         <div class="bg-blue-100 p-3 rounded-full">
                             <i class="fas fa-clipboard-list text-blue-600 text-2xl"></i>
@@ -323,7 +323,7 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Preventivas pendentes para geração</p>
-                            <p class="text-3xl font-bold text-gray-900 mt-1"><?php echo $c_preventivas; ?></p>
+                            <p class="text-3xl font-bold text-gray-900 mt-1">'.$c_preventivas.'</p>
                         </div>
                         <div class="bg-red-100 p-3 rounded-full">
                             <i class="fas fa-calendar-check text-red-600 text-2xl"></i>
@@ -342,7 +342,7 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Ordens de serviço fora de SLA</p>
-                            <p class="text-3xl font-bold text-gray-900 mt-1"><?php echo $c_ordens_sla; ?></p>
+                            <p class="text-3xl font-bold text-gray-900 mt-1">'.$c_ordens_sla.'</p>
                         </div>
                         <div class="bg-purple-100 p-3 rounded-full">
                             <i class="fas fa-clock text-purple-600 text-2xl"></i>
@@ -361,7 +361,7 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Ordens de serviço Suspensas</p>
-                            <p class="text-3xl font-bold text-gray-900 mt-1"><?php echo $c_ordens_suspensas; ?></p>
+                            <p class="text-3xl font-bold text-gray-900 mt-1">'.$c_ordens_suspensas.'</p>
                         </div>
                         <div class="bg-green-100 p-3 rounded-full">
                             <i class="fas fa-pause-circle text-green-600 text-2xl"></i>
@@ -380,7 +380,7 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Preventivas geradas em aberto</p>
-                            <p class="text-3xl font-bold text-gray-900 mt-1"><?php echo $c_preventivas_geradas; ?></p>
+                            <p class="text-3xl font-bold text-gray-900 mt-1">'.$c_preventivas_geradas.'</p>
                         </div>
                         <div class="bg-indigo-100 p-3 rounded-full">
                             <i class="fas fa-tools text-indigo-600 text-2xl"></i>
