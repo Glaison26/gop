@@ -1,9 +1,9 @@
 <?php
 // controle de acesso ao formulário
 session_start();
-if (!isset($_SESSION['newsession'])) {
-    die('Acesso não autorizado!!!');
-}
+//if (!isset($_SESSION['newsession'])) {
+//   die('Acesso não autorizado!!!');
+//}
 include('..\conexao.php');
 
 date_default_timezone_set('America/Sao_Paulo');
@@ -189,38 +189,55 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                         }
                         ?>
                     </div>
-                        <!-- indicadores de custos -->
-                        <?php
-                        if ($_SESSION['tipo'] <> 'Solicitante') {
-                            echo '
+                    <!-- indicadores de custos -->
+                    <?php
+                    if ($_SESSION['tipo'] <> 'Solicitante') {
+                        echo '
                     <div class="relative dropdown">
                         <button class="text-white hover:text-blue-200 transition flex items-center focus:outline-none">
                             Indicadores de Custos <i class="fas fa-chevron-down ml-1 text-xs"></i>
                         </button>
                         <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow-xl rounded-md w-48 z-50">
                                  <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/custos/ocorrencias_custo_query.php">Custos por Ocorrências Padrões</a>
-                                 <a class="dropdown-item" href="/gop/custos/oficinas_custo_query.php">Custos por Oficinas</a>
-                                 <a class="dropdown-item" href="/gop/custos/solicitantes_custo_query.php">Custos por Solicitantes</a> 
-                                 <a class="dropdown-item" href="/gop/custos/setores_custo_query.php">Custos por Setor</a>
-                                 <a class="dropdown-item" href="/gop/custos/centrodecusto_custo_query.php">Custos por Centro de Custo</a>
-                                 <a class="dropdown-item" href="/gop/custos/executores_custos_query.php">Custos por Executor</a>
-                                 <a class="dropdown-item" href="/gop/custos_mensais/ocorrencias_custo_mensal_query.php">Comparativo mensal de Custos por Ocorrências Padrões</a>
-                                 <a class="dropdown-item" href="/gop/custos_mensais/oficinas_custo_mensal_query.php">Comparativo mensal de Custos por Oficina</a>
-                                 <a class="dropdown-item" href="/gop/custos_mensais/solicitantes_custo_mensal_query.php">Comparativo mensal de Custos por Solicitante</a>
-                                 <a class="dropdown-item" href="/gop/custos_mensais/setores_custo_mensal_query.php">Comparativo mensal de Custos por Setor</a>
-                        </div>';
-                        }
-                        ?>
-                    </div>
+                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/custos/oficinas_custo_query.php">Custos por Oficinas</a>
+                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/custos/solicitantes_custo_query.php">Custos por Solicitantes</a> 
+                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/custos/setores_custo_query.php">Custos por Setor</a>
+                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/custos/centrodecusto_custo_query.php">Custos por Centro de Custo</a>
+                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/custos/executores_custos_query.php">Custos por Executor</a>
+                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/custos_mensais/ocorrencias_custo_mensal_query.php">Comparativo mensal de Custos por Ocorrências Padrões</a>
+                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/custos_mensais/oficinas_custo_mensal_query.php">Comparativo mensal de Custos por Oficina</a>
+                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/custos_mensais/solicitantes_custo_mensal_query.php">Comparativo mensal de Custos por Solicitante</a>
+                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/custos_mensais/setores_custo_mensal_query.php">Comparativo mensal de Custos por Setor</a>
+                        </div>
+                    </div>';
+                    }
+                    ?>
 
+                    <!-- configurações -->
+                    <?php
+                    if ($_SESSION['tipo'] == 'Administrador') {
+                        echo '
+                <div class="relative dropdown">
+                    <button class="text-white hover:text-blue-200 transition flex items-center focus:outline-none">
+                        Configurações <i class="fas fa-chevron-down ml-1 text-xs"></i>  
+                    </button>
+                    <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow
+                    rounded-md w-48 z-50">
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/usuarios/usuarios_lista.php">Usuários do Sistema</a>
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/usuarios/usuarios_perfil_lista.php">Perfis de Acesso</a>
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/configuracoes.php">Parâmetros do Sistema</a>
+                    </div>
+                </div>';
+                    }
+                    ?>
                     <!-- User Profile -->
                     <div class="relative dropdown">
                         <button class="text-white hover:text-blue-200 transition flex items-center focus:outline-none">
                             <i class="fas fa-user-circle text-2xl"></i>
                         </button>
                         <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow-xl rounded-md w-48 z-50 right-0">
-                            <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/usuarios/usuario_alterar_senha.php">Alterar Senha</a>
-                            <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/logout.php">Sair</a>
+                            <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/alterasenha.php">Alterar Senha</a>
+                            <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/index.php">Sair</a>
 
                         </div>
                         <div class="md:hidden">
@@ -229,6 +246,9 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                             </button>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
     </nav>
 
     <!-- Main Content -->
@@ -247,14 +267,14 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Solicitações Abertas</p>
-                            <p class="text-3xl font-bold text-gray-900 mt-1">12</p>
+                            <p class="text-3xl font-bold text-gray-900 mt-1"><?php echo $c_solicitacao_aberta; ?></p>
                         </div>
                         <div class="bg-yellow-100 p-3 rounded-full">
                             <i class="fas fa-file-alt text-yellow-600 text-2xl"></i>
                         </div>
                     </div>
                     <div class="mt-4">
-                        <a href="#" class="text-yellow-600 hover:text-yellow-700 font-semibold text-sm flex items-center">
+                        <a href="/gop/chama_solicitacoes_menu.php" class="text-yellow-600 hover:text-yellow-700 font-semibold text-sm flex items-center">
                             Ver detalhes <i class="fas fa-arrow-right ml-2"></i>
                         </a>
                     </div>
@@ -267,14 +287,14 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Ordens de Serviço Abertas</p>
-                            <p class="text-3xl font-bold text-gray-900 mt-1">08</p>
+                            <p class="text-3xl font-bold text-gray-900 mt-1"><?php echo $c_ordens_abertas; ?></p>
                         </div>
                         <div class="bg-blue-100 p-3 rounded-full">
                             <i class="fas fa-clipboard-list text-blue-600 text-2xl"></i>
                         </div>
                     </div>
                     <div class="mt-4">
-                        <a href="#" class="text-blue-600 hover:text-blue-700 font-semibold text-sm flex items-center">
+                        <a href="/gop/chama_abertas.php" class="text-blue-600 hover:text-blue-700 font-semibold text-sm flex items-center">
                             Ver detalhes <i class="fas fa-arrow-right ml-2"></i>
                         </a>
                     </div>
@@ -287,7 +307,7 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Preventivas pendentes para geração</p>
-                            <p class="text-3xl font-bold text-gray-900 mt-1">05</p>
+                            <p class="text-3xl font-bold text-gray-900 mt-1"><?php echo $c_preventivas; ?></p>
                         </div>
                         <div class="bg-red-100 p-3 rounded-full">
                             <i class="fas fa-calendar-check text-red-600 text-2xl"></i>
@@ -305,8 +325,8 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                 <div class="p-6">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Ordens de serviço com SLA em Atraso</p>
-                            <p class="text-3xl font-bold text-gray-900 mt-1">03</p>
+                            <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Ordens de serviço fora de SLA</p>
+                            <p class="text-3xl font-bold text-gray-900 mt-1"><?php echo $c_ordens_sla; ?></p>
                         </div>
                         <div class="bg-purple-100 p-3 rounded-full">
                             <i class="fas fa-clock text-purple-600 text-2xl"></i>
@@ -325,7 +345,7 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Ordens de serviço Suspensas</p>
-                            <p class="text-3xl font-bold text-gray-900 mt-1">02</p>
+                            <p class="text-3xl font-bold text-gray-900 mt-1"><?php echo $c_ordens_suspensas; ?></p>
                         </div>
                         <div class="bg-green-100 p-3 rounded-full">
                             <i class="fas fa-pause-circle text-green-600 text-2xl"></i>
@@ -344,7 +364,7 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Preventivas geradas em aberto</p>
-                            <p class="text-3xl font-bold text-gray-900 mt-1">04</p>
+                            <p class="text-3xl font-bold text-gray-900 mt-1"><?php echo $c_preventivas_geradas; ?></p>
                         </div>
                         <div class="bg-indigo-100 p-3 rounded-full">
                             <i class="fas fa-tools text-indigo-600 text-2xl"></i>
