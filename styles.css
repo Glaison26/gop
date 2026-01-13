@@ -1,0 +1,45 @@
+body {
+    /* 1. Define o caminho para a imagem de fundo.
+       ATENÇÃO: Substitua 'caminho/para/sua/imagem.png' pelo caminho real onde você salvou a imagem. */
+    background-image: url('smedweb/images/medico3.jpeg');
+
+    /* 2. Garante que a imagem cubra todo o elemento, mantendo a proporção. */
+    background-size: cover;
+
+    /* 3. Centraliza a imagem no elemento. */
+    background-position: center center;
+
+    /* 4. Impede que a imagem se repita (tiling). */
+    background-repeat: no-repeat;
+
+    /* 5. (Opcional) Fixa a imagem no viewport, para que ela não role com o conteúdo. */
+    background-attachment: fixed;
+
+    /* 6. (Opcional) Define uma cor de fundo sólida caso a imagem demore a carregar. */
+    background-color: #f0f8ff; /* Um azul muito claro, próximo ao branco */
+
+    /* Garante que o body ocupe toda a altura da viewport */
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+
+    /* Estilo para o conteúdo de teste */
+    .content-box {
+        background-color: rgba(255, 255, 255, 0.9);
+        /* Fundo branco semi-transparente para destacar o conteúdo */
+        padding: 10px;
+        margin: 10px auto;
+        width: 90%;
+        max-width: 1400px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Estilo para forçar a rolagem da página */
+    .spacer {
+        height: 150vh;
+        /* Garante que a página seja muito longa */
+        text-align: center;
+        padding-top: 20px;
+    }
+}

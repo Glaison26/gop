@@ -99,12 +99,8 @@ else
         </div>
         <div class="col-xl-4 col-md-6">
             <div class="<?php echo "$c_cor_preventivas_pendentes" ?>" style="width: 24rem;">
-
-
                 <div class="card-body">
-
                     <p class="card-text">
-
                     <div style="padding-left:2px;">
                         <h3><strong><?php echo $c_preventivas ?> <h4>Preventiva(s) Pendente(s)</h4>
                         </h3></strong></p>
@@ -117,10 +113,7 @@ else
 
         <div class="col-xl-4 col-md-6">
             <div class="<?php echo "$c_cor_ordens_suspensas" ?>" style="width: 24rem;">
-
-
                 <div class="card-body">
-
                     <p class="card-text">
                     <div style="padding-left:2px;">
                         <h3><strong><?php echo $c_ordens_suspensas ?><h4>Orden(s) Suspensa(s)</h4>

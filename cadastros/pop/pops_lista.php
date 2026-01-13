@@ -115,7 +115,10 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_pop'] 
                 // faço a Leitura da tabela com sql
                 $c_sql = "SELECT pops.id, pops.descricao, pops.data, pops.descritivo," .
                     "CASE WHEN pops.tipo ='1' THEN 'Administrativo'" .
-                    "WHEN pops.tipo ='2' THEN 'Instalação'" .
+                    "WHEN pops.tipo ='2' THEN 'Edificação'" .
+                    "WHEN pops.tipo ='3' THEN 'Equipamento'" .
+                    "WHEN pops.tipo ='4' THEN 'Instalação'" .
+                    "WHEN pops.tipo ='5' THEN 'Mobiliario'" .
                     "END AS tipopop FROM pops ORDER BY pops.descricao";
                 $result = $conection->query($c_sql);
                 // verifico se a query foi correto
