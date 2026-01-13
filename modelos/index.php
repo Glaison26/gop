@@ -76,7 +76,7 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
     <nav class="bg-blue-800 p-4 shadow-lg">
         <div class="container mx-auto flex items-center justify-between">
             <div class="text-white font-bold text-xl">
-                <i class="fas fa-tools mr-2"></i>GOP - Gestão de Operacional
+                <i class="fas fa-tools mr-2"></i>GOP - Gestão Operacional
             </div>
             <div class="hidden md:flex items-center space-x-6">
                 <a href="#" class="text-white hover:text-blue-200 transition">Início</a>
