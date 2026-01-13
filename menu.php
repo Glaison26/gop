@@ -2,7 +2,7 @@
 // controle de acesso ao formulário
 session_start();
 if (!isset($_SESSION['newsession'])) {
-   die('Acesso não autorizado!!!');
+    die('Acesso não autorizado!!!');
 }
 include('conexao.php');
 
@@ -111,27 +111,38 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                 ?>
 
                 <!-- Dropdown Solicitações -->
-
+                <?php
+                if ($_SESSION['tipo'] <> 'Solicitante') {
+                    echo '
                 <div class="relative dropdown">
                     <button class="text-white hover:text-blue-200 transition flex items-center focus:outline-none">
                         Serviços <i class="fas fa-chevron-down ml-1 text-xs"></i>
                     </button>
                     <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow-xl rounded-md w-48 z-50">
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/solicitacao/solicitacao.php">Solicitações</a>
-                        <?php
-                        if ($_SESSION['tipo'] <> 'Solicitante') {
-                            echo '<a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/ordens/ordens.php">Ordens de Serviço</a>
+                        
+                       <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/ordens/ordens.php">Ordens de Serviço</a>
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/preventivas/preventivas.php">Preventivas</a>
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/ocorrencias/ocorrencias_lista.php">Ocorrências Padrões</a>
                    
                     </div>
                 </div>';
-                        }
-                        ?>
-                        <!-- Dropdown Almoxarifados  -->
-                        <?php
-                        if ($_SESSION['tipo'] <> 'Solicitante') {
-                            echo '
+                } else {
+                    echo '
+                    <div class="relative dropdown">
+                    <button class="text-white hover:text-blue-200 transition flex items-center focus:outline-none">
+                        Serviços <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                    </button>
+                    <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow-xl rounded-md w-48 z-50">
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/solicitacao/solicitacao.php">Solicitações</a>
+                    </div>
+                </div>';
+                }
+                ?>
+                <!-- Dropdown Almoxarifados  -->
+                <?php
+                if ($_SESSION['tipo'] <> 'Solicitante') {
+                    echo '
                 <div class="relative dropdown">
                     <button class="text-white hover:text-blue-200 transition flex items-center focus:outline-none">
                         Almoxarifado <i class="fas fa-chevron-down ml-1 text-xs"></i>
@@ -144,12 +155,12 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                         
                     </div>
                 </div>';
-                        }
-                        ?>
-                        <!-- dropdown outros aplicativos -->
-                        <?php
-                        if ($_SESSION['tipo'] <> 'Solicitante') {
-                            echo '
+                }
+                ?>
+                <!-- dropdown outros aplicativos -->
+                <?php
+                if ($_SESSION['tipo'] <> 'Solicitante') {
+                    echo '
                     <div class="relative dropdown">
                     <button class="text-white hover:text-blue-200 transition flex items-center focus:outline-none">
                         Outros Aplicativos <i class="fas fa-chevron-down ml-1 text-xs"></i>
@@ -162,12 +173,12 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
 
                     </div>
                 </div>';
-                        }
-                        ?>
-                        <!-- Dropdown Indicadores Quantitativos -->
-                        <?php
-                        if ($_SESSION['tipo'] <> 'Solicitante') {
-                            echo '
+                }
+                ?>
+                <!-- Dropdown Indicadores Quantitativos -->
+                <?php
+                if ($_SESSION['tipo'] <> 'Solicitante') {
+                    echo '
                     <div class="relative dropdown">
                         <button class="text-white hover:text-blue-200 transition flex items-center focus:outline-none">
                             Indicadores <i class="fas fa-chevron-down ml-1 text-xs"></i>
@@ -186,14 +197,15 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                                  <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores_mensais/centrodecusto_mensais_query.php">Comparativo Mensal por Centro de Custo</a>
                                  <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores_mensais/executores_mensais_query.php">Comparativo Mensal de Horas por Executor</a>
                                  <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores_mensais/indicadores_manutencao_query.php">Indicadores da Manutenção</a>
-                        </div>';
-                        }
-                        ?>
-                    </div>
-                    <!-- indicadores de custos -->
-                    <?php
-                    if ($_SESSION['tipo'] <> 'Solicitante') {
-                        echo '
+                        </div>
+                      </div>';
+                }
+                ?>
+
+                <!-- indicadores de custos -->
+                <?php
+                if ($_SESSION['tipo'] <> 'Solicitante') {
+                    echo '
                     <div class="relative dropdown">
                         <button class="text-white hover:text-blue-200 transition flex items-center focus:outline-none">
                             Indicadores de Custos <i class="fas fa-chevron-down ml-1 text-xs"></i>
@@ -211,13 +223,13 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                                  <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/custos_mensais/setores_custo_mensal_query.php">Comparativo mensal de Custos por Setor</a>
                         </div>
                     </div>';
-                    }
-                    ?>
+                }
+                ?>
 
-                    <!-- configurações -->
-                    <?php
-                    if ($_SESSION['tipo'] == 'Administrador') {
-                        echo '
+                <!-- configurações -->
+                <?php
+                if ($_SESSION['tipo'] == 'Administrador') {
+                    echo '
                 <div class="relative dropdown">
                     <button class="text-white hover:text-blue-200 transition flex items-center focus:outline-none">
                         Configurações <i class="fas fa-chevron-down ml-1 text-xs"></i>  
@@ -229,30 +241,33 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/configuracoes.php">Parâmetros do Sistema</a>
                     </div>
                 </div>';
-                    }
-                    ?>
-                    <!-- User Profile -->
-                    <div class="relative dropdown">
-                        <button class="text-white hover:text-blue-200 transition flex items-center focus:outline-none">
-                            <i class="fas fa-user-circle text-2xl"></i>
-                        </button>
-                        <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow-xl rounded-md w-48 z-50 right-0">
-                            <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/alterasenha.php">Alterar Senha</a>
-                            <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/index.php">Sair</a>
+                }
+                ?>
+                <!-- User Profile -->
+                <div class="relative dropdown">
+                    <button class="text-white hover:text-blue-200 transition flex items-center focus:outline-none">
+                        <i class="fas fa-user-circle text-2xl"></i>
+                    </button>
+                    <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow-xl rounded-md w-48 z-50 right-0">
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/alterasenha.php">Alterar Senha</a>
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/index.php">Sair</a>
 
-                        </div>
-                        <div class="md:hidden">
-                            <button class="text-white focus:outline-none">
-                                <i class="fas fa-bars text-2xl"></i>
-                            </button>
-                        </div>
+                    </div>
+                    <div class="md:hidden">
+                        <button class="text-white focus:outline-none">
+                            <i class="fas fa-bars text-2xl"></i>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
+        </div>
     </nav>
 
     <!-- Main Content -->
+    <?php
+    if ($_SESSION['tipo'] <> 'Solicitante') {
+        echo '
     <main class="container mx-auto mt-10 px-4">
         <header class="mb-8">
             <h1 class="text-3xl font-bold text-gray-800">Painel de Controle</h1>
@@ -383,6 +398,9 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
 
 
     </main>
+    ';
+    }
+    ?>
 
     <footer class="mt-20 py-6 text-center text-gray-500 text-sm">
         &copy; 2026 Sistema de Gestão de Manutenção. Todos os direitos reservados.

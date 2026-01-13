@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $registro = $result->fetch_assoc();
         $c_senha = base64_decode($registro['senha']);
         if ($c_senha != $_POST['senha']) {
-            $l_erro = 'Falha no Login. Nome ou senha inválido. Verifique os dados e tente novamente !!!';
+            $l_erro = 'Nome ou senha inválido, Verifique e tente novamente !!!';
         } else {
             $l_erro = ' ';
             $_SESSION["newsession"] = "gop";
@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if (!empty($l_erro)) {
             echo "
               <div class='alert alert-warning' role='alert'>
-              <h4>$l_erro</h4>
+              <h5>$l_erro</h5>
               </div>
             ";
         }
