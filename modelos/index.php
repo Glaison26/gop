@@ -163,22 +163,56 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                 </div>';
                         }
                         ?>
-                    <!-- Dropdown Indicadores Quantitativos -->
-                     <?php
-                      if ($_SESSION['tipo'] <> 'Solicitante') {
+                        <!-- Dropdown Indicadores Quantitativos -->
+                        <?php
+                        if ($_SESSION['tipo'] <> 'Solicitante') {
                             echo '
                     <div class="relative dropdown">
                         <button class="text-white hover:text-blue-200 transition flex items-center focus:outline-none">
                             Indicadores <i class="fas fa-chevron-down ml-1 text-xs"></i>
                         </button>
                         <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow-xl rounded-md w-48 z-50">
-                            <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores/indicadores_quantitativos.php">Quantitativos</a>
-                            <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores/indicadores_financeiros.php">Financeiros</a>
+                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/relatorios/ocorrencias_query.php">Ocorrências Padrões</a>
+                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/relatorios/oficinas_query.php">Ocorrências por Oficinas</a>
+                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/relatorios/solicitantes_query.php">Ocorrências por Solicitantes</a>
+                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/relatorios/setores_query.php">Ocorrências por Setor</a>
+                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/relatorios/centrodecusto_query.php">Ocorrências por Centro de Custo</a>
+                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/relatorios/executores_query.php">Horas Trabalhadas por Executor</a>
+                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores_mensais/ocorrencias_mensais_query.php">Comparativo Mensal de Ocorrências Padrões</a>
+                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores_mensais/oficinas_mensais_query.php">Comparativo Mensal por Oficina</a>
+                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores_mensais/solicitantes_mensais_query.php">Comparativo Mensal por Solicitante</a>
+                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores_mensais/setores_mensais_query.php">Comparativo Mensal por Setor</a>
+                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores_mensais/centrodecusto_mensais_query.php">Comparativo Mensal por Centro de Custo</a>
+                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores_mensais/executores_mensais_query.php">Comparativo Mensal de Horas por Executor</a>
+                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores_mensais/indicadores_manutencao_query.php">Indicadores da Manutenção</a>
                         </div>';
-                      }
-                      ?>
+                        }
+                        ?>
                     </div>
-               
+                        <!-- indicadores de custos -->
+                        <?php
+                        if ($_SESSION['tipo'] <> 'Solicitante') {
+                            echo '
+                    <div class="relative dropdown">
+                        <button class="text-white hover:text-blue-200 transition flex items-center focus:outline-none">
+                            Indicadores de Custos <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow-xl rounded-md w-48 z-50">
+                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/custos/ocorrencias_custo_query.php">Custos por Ocorrências Padrões</a>
+                                 <a class="dropdown-item" href="/gop/custos/oficinas_custo_query.php">Custos por Oficinas</a>
+                                 <a class="dropdown-item" href="/gop/custos/solicitantes_custo_query.php">Custos por Solicitantes</a> 
+                                 <a class="dropdown-item" href="/gop/custos/setores_custo_query.php">Custos por Setor</a>
+                                 <a class="dropdown-item" href="/gop/custos/centrodecusto_custo_query.php">Custos por Centro de Custo</a>
+                                 <a class="dropdown-item" href="/gop/custos/executores_custos_query.php">Custos por Executor</a>
+                                 <a class="dropdown-item" href="/gop/custos_mensais/ocorrencias_custo_mensal_query.php">Comparativo mensal de Custos por Ocorrências Padrões</a>
+                                 <a class="dropdown-item" href="/gop/custos_mensais/oficinas_custo_mensal_query.php">Comparativo mensal de Custos por Oficina</a>
+                                 <a class="dropdown-item" href="/gop/custos_mensais/solicitantes_custo_mensal_query.php">Comparativo mensal de Custos por Solicitante</a>
+                                 <a class="dropdown-item" href="/gop/custos_mensais/setores_custo_mensal_query.php">Comparativo mensal de Custos por Setor</a>
+                        </div>';
+                        }
+                        ?>
+                    </div>
+
                     <!-- User Profile -->
                     <div class="relative dropdown">
                         <button class="text-white hover:text-blue-200 transition flex items-center focus:outline-none">
