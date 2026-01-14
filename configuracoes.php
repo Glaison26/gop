@@ -25,6 +25,11 @@ if ($registro['registros'] == 0) { // tabela vazia crio o registro unico em bran
     $c_email = '';
     $c_emailcc = '';
     $c_emailco = '';
+    $c_email_envio = '';
+    $c_host_email = '';
+    $c_porta_email = '';
+    $c_senha_emailnotificacoes = '';
+
 } else {
     $c_sql = "select * from configuracoes";
     $result = $conection->query($c_sql);
@@ -38,6 +43,10 @@ if ($registro['registros'] == 0) { // tabela vazia crio o registro unico em bran
     $c_email = $registro['email_manutencao'];
     $c_emailcc = $registro['emailcc_manutencao'];
     $c_emailco = $registro['emailco_manutencao'];
+    $c_email_envio = '';
+    $c_host_email = '';
+    $c_porta_email = '';
+    $c_senha_emailnotificacoes = '';
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo POST para gravar alterações de configurações
@@ -152,12 +161,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo POST para gravar alteraç
                     <input type="email" maxlength="150" class="form-control" name="emailcc" value="<?php echo $c_emailcc; ?>">
                 </div>
             </div>
+            <hr>
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">e-mail Manutenção Co.</label>
+                <label class="col-sm-3 col-form-label">e-mail de envio </label>
                 <div class="col-sm-6">
-                    <input type="email" maxlength="150" class="form-control" name="emailco" value="<?php echo $c_emailco; ?>">
+                    <input type="email" maxlength="150" class="form-control" name="email_envio" value="<?php echo $c_email_envio; ?>">
                 </div>
             </div>
+            <!-- host do servidor de email -->
+            <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">Host do Servidor de e-mail</label>
+                <div class="col-sm-6">
+                    <input type="text" maxlength="150" class="form-control" name="host_email" value="<?php echo $c_host_email; ?>">
+                </div>
+            </div>
+            <!-- porta do servidor de email -->
+            <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">Porta do Servidor de e-mail</label>
+                <div class="col-sm-6">
+                    <input type="text" maxlength="10" class="form-control" name="porta_email" value="<?php echo $c_porta_email; ?>">
+                </div>
+            </div>
+            <!-- senha do email utilizado para envio de notificações automáticas -->
+            <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">Senha do e-mail de envio</label>
+                <div class="col-sm-6">
+                    <input type="text" maxlength="150" class="form-control" name="senha_emailnotificacoes" value="<?php echo $c_senha_emailnotificacoes; ?>">
+                </div>
+            </div> 
+    
             <hr>
             <div class="row mb-3">
                 <div class="offset-sm-0 col-sm-3">

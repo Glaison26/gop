@@ -88,7 +88,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     }
     $c_where = $c_where = substr($c_where, 0, -5); // tirar o and no final
     // montagem do sql para recursos físicos
-    $c_sqlrecursos = "SELECT solicitacao.id, solicitacao.data_abertura, solicitacao.hora_abertura, solicitacao.id_solicitante,
+    $c_sqlrecursos = "SELECT solicitacao.id, solicitacao.id_ordem, solicitacao.data_abertura, solicitacao.hora_abertura, solicitacao.id_solicitante,
                     solicitacao.id_recursos, solicitacao.tipo,  solicitacao.`status`,
                     usuarios.nome AS solicitante, recursos.descricao AS recurso,
                     case 
@@ -105,7 +105,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     JOIN recursos ON solicitacao.id_recursos=recursos.id
                     where $c_where" . " order by solicitacao.data_abertura desc";
     // montagem do sql para espaços fisicos
-    $c_sqlespacos = "SELECT solicitacao.id, solicitacao.data_abertura, solicitacao.hora_abertura, solicitacao.id_solicitante,
+    $c_sqlespacos = "SELECT solicitacao.id, solicitacao.id_ordem, solicitacao.data_abertura, solicitacao.hora_abertura, solicitacao.id_solicitante,
                     solicitacao.tipo,  solicitacao.`status`,
                     usuarios.nome AS solicitante, espacos.descricao AS espaco,
                     case 
@@ -122,7 +122,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     JOIN espacos ON solicitacao.id_espaco=espacos.id               
                     where $c_where" . " order by solicitacao.data_abertura desc";
     // montagem do sql para solicitações avulsas 
-    $c_sqlavulso =  "SELECT solicitacao.id, solicitacao.data_abertura, solicitacao.hora_abertura, solicitacao.id_solicitante,
+    $c_sqlavulso =  "SELECT solicitacao.id, solicitacao.id_ordem, solicitacao.data_abertura, solicitacao.hora_abertura, solicitacao.id_solicitante,
                     solicitacao.tipo,  solicitacao.`status`,
                     usuarios.nome AS solicitante, 
                     case 

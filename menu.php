@@ -71,16 +71,23 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
     </style>
 </head>
 
+
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
 
     <!-- Navbar resposiva -->
     <nav class="bg-blue-800 p-4 shadow-lg" responsive-navbar>
+        <div class="container mx-auto mt-2 text-white">
+            <p>Bem-vindo, <span class="font-bold"><?php echo $_SESSION['c_usuario']; ?></span>! Hoje é <?php echo date('d/m/Y'); ?>, <?php echo date('H:i'); ?> horas.</p>
+        </div>
+        <br>
         <div class="container mx-auto flex items-center justify-between">
+            <!--painel de boas vindas com data e hora e nome do usuário -->
+
             <div class="text-white font-bold text-xl">
                 <i class="fas fa-tools mr-2"></i>GOP - Gestão Operacional
             </div>
             <div class="hidden md:flex items-center space-x-6">
-              
+
 
                 <!-- Dropdown Cadastro -->
                 <?php
@@ -88,7 +95,7 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                     echo '
                 <div class="relative dropdown">
                     <button class="text-white hover:text-blue-200 transition flex items-center focus:outline-none">
-                        Cadastros <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        Cadastros  <i class="fas fa-chevron-down ml-1 text-xs"></i>
                     </button>
                     <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow-xl rounded-md w-48 z-50">
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/recursos/recursos_lista.php">Recursos Fisicos</a>
@@ -265,11 +272,8 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
     </nav>
     <!-- subnav barra de navegação secundária com atalhos de solicitações e ordens -->
     <div class="bg-blue-700 p-2 shadow-md">
-        <!--painel de boas vindas com data e hora e nome do usuário -->
-        <div class="container mx-auto mt-2 text-white">
-            <p>Bem-vindo, <span class="font-bold"><?php echo $_SESSION['c_usuario']; ?></span>! Hoje é <?php echo date('d/m/Y'); ?>, <?php echo date('H:i'); ?> horas.</p>
-        </div>
-        <br>
+
+        
         <div class="container mx-auto flex items-center space-x-4">
             <a href="/gop/solicitacao/solicitacao.php" class="text-white hover:text-blue-200 transition flex items-center">
                 <i class="fas fa-file-alt mr-2"></i> Solicitação de Serviço
@@ -290,9 +294,6 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
         <!-- end subnav barra de navegação secundária com atalhos de solicitações e ordens -->
 
     </div>
-
-
-
     <!-- Main Content cards -->
     <?php
     if ($_SESSION['tipo'] <> 'Solicitante') {

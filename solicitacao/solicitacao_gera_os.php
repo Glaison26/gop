@@ -74,10 +74,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $c_descritivo = $_POST['descritivo'];
     $c_descricao = $registro_solicitacao['descricao'];
     // data de inicio
-    $d_data_inicio = new DateTime($_POST['data_inicio']);
-    $d_data_inicio = $d_data_inicio->format('Y-m-d');
-    $d_hora_inicio = new DateTime($_POST['hora_inicio']);
-    $d_hora_inicio = $d_hora_inicio->format('H:i');
+    $d_data_inicio = $_POST['data_inicio'];
+    $d_hora_inicio = $_POST['hora_inicio'];
 
     $d_data_previsao = new DateTime($_POST['data_sla']);
     $d_data_previsao = $d_data_previsao->format('Y-m-d');
@@ -132,8 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $result = $conection->query($c_sql);
             $c_linha = $result->fetch_assoc();
             $ordem = $c_linha['id_ordens'];
-            $c_data_inicio = new DateTime($_POST['data_inicio']);
-            $c_data_inicio = $c_data_inicio->format('Y-m-d');
+            $c_data_inicio = $_POST['data_inicio'];
             $data = new DateTime($d_data_previsao);
             $data = $data->format('d-m-Y');
             $c_assunto = "Abertura de Ordem  de Serviço no GOP";
@@ -247,7 +244,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-6">
                 <label class="col-md-2 form-label">Data Inicio</label>
                 <div class="col-sm-2">
-                    <input type="Date" class="form-control" name="data1" id="data_inicio" value='<?php echo date("Y-m-d"); ?>' onkeypress="mascaraData(this)">
+                    <input type="Date" class="form-control" name="data_inicio" id="data_inicio" value='<?php echo date("Y-m-d"); ?>' onkeypress="mascaraData(this)">
                 </div>
                 <label class="col-md-1 form-label">Hora</label>
                 <div class="col-sm-2">

@@ -39,15 +39,16 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $l_intervalo = true;
     if (isset($_POST['chk_ignora']))
         $l_intervalo = false;
-
-    if ($_POST['numero'] == '' && $l_intervalo == true) {  // ignora intervalo de datas se marcado para ignora
+    // data de abertura
+    if ($_POST['numero'] == '' && $_POST['rdo_data'] == 'A' && $l_intervalo == true) {
         $c_where = "(data_geracao>='$d_data1' and data_geracao<='$d_data2') and ";
     }
-
-
+    // data de conclusão
+    if ($_POST['numero'] == '' && $_POST['rdo_data'] == 'C' && $l_intervalo == true) {
+        $c_where = "(data_conclusao>='$d_data1' and data_conclusao<='$d_data2') and ";
+    }
     // sql para tipo de atendimento (programada ou urgência)
     $c_tipo_atendimento = $_POST['tipo'];
-
     if ($c_tipo_atendimento == "1") {  // corretiva
         $c_where = $c_where . "ordens.tipo_ordem='C' and ";
         // sql para tipo de ordem corretiva (programada ou urgência)
@@ -107,6 +108,15 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
         $c_linha = $result->fetch_assoc();
         $i_id_oficina = $c_linha['id'];
         $c_where = $c_where . "ordens.id_oficina='$i_id_oficina' and ";
+    }
+    // sql para executor responsável
+    if ($_POST["executor"] <> "Todos") {
+        $c_executor = $_POST["executor"];
+        $c_sql_executor = "select executores.id, executores.nome from executores where executores.nome = '$c_executor'";
+        $result = $conection->query($c_sql_executor);
+        $c_linha = $result->fetch_assoc();
+        $i_id_executor = $c_linha['id'];
+        $c_where = $c_where . "ordens.id_executor_responsavel='$i_id_executor' and ";
     }
     // sql para o descritivo
     if ($_POST['descritivo'] <> '') {
@@ -278,6 +288,21 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     <h4>Opções de Consulta<h4>
                 </div>
             </div>
+            <!-- radio butto para escolher datas de abertura ou conclusão -->
+             <div class="row mb-3">
+                <div class="form-check col-sm-2">
+                    <label class="form-check-label col-form-label">Data de Abertura</label>
+                    <div class="col-sm-2">
+                        <input class="form-check-input" type="radio" value="A" name="rdo_data" id="rdo_data" checked>
+                    </div>
+                </div>
+                <div class="form-check col-sm-2">
+                        <label class="form-check-label col-form-label">Data de Conclusão</label>
+                        <div class="col-sm-2">
+                            <input class="form-check-input" type="radio" value="C" name="rdo_data" id="rdo_data">
+                        </div>
+                </div>
+            </div>
             <div class="row mb-3">
                 <div class="form-check col-sm-2">
                     <label class="form-check-label col-form-label">Ignorar período</label>
@@ -298,6 +323,23 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                 <label class="col-md-2 form-label">No. da Ordem</label>
                 <div class="col-sm-2">
                     <input type="text" class="form-control" name="numero" id="numero" value='<?php echo $c_numero ?>'>
+                </div>
+                <label class="col-sm-2 col-form-label">Executor Responsável </label>
+                <!--combobox para selecionar responsável pela tabela de executores-->
+                <div class="col-sm-3">
+                    <select class="form-select form-select-lg mb-3" id="executor" name="executor">
+                        <option>Todos</option>
+                        <?php
+                        // select da tabela de executores
+                        $c_sql_exec = "SELECT executores.id, executores.nome FROM executores ORDER BY executores.nome";
+                        $result_exec = $conection->query($c_sql_exec);
+                        while ($c_linha = $result_exec->fetch_assoc()) {
+                            echo "  
+                          <option>$c_linha[nome]</option>
+                        ";
+                        }
+                        ?>
+                    </select>
                 </div>
             </div>
 

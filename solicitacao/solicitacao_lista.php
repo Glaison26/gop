@@ -193,6 +193,7 @@ include('../conexao.php');
                         <thead class="thead">
                             <tr>
                                 <th scope="col">#</th>
+                                <th scope="col">#OS</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Abertura</th>
                                 <th scope="col">Hora</th>
@@ -219,6 +220,7 @@ include('../conexao.php');
                                 echo "
                                 <tr class='info'>
                                     <td>$c_linha[id]</td>
+                                    <td>$c_linha[id_ordem]</td>
                                     <td>$c_linha[solicitacao_status]</td>
                                     <td>$c_data</td>
                                     <td>$c_linha[hora_abertura]</td>
@@ -248,6 +250,7 @@ include('../conexao.php');
                         <thead class="thead">
                             <tr>
                                 <th scope="col">#</th>
+                                <th scope="col">#OS</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Abertura</th>
                                 <th scope="col">Hora</th>
@@ -274,6 +277,7 @@ include('../conexao.php');
                                 echo "
                                 <tr class='info'>
                                     <td>$c_linha[id]</td>
+                                    <td>$c_linha[id_ordem]</td>
                                     <td>$c_linha[solicitacao_status]</td>
                                     <td>$c_data</td>
                                     <td>$c_linha[hora_abertura]</td>
@@ -302,6 +306,7 @@ include('../conexao.php');
                         <thead class="thead">
                             <tr>
                                 <th scope="col">#</th>
+                                <th scope="col">#OS</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Abertura</th>
                                 <th scope="col">Hora</th>
@@ -327,6 +332,7 @@ include('../conexao.php');
                                 echo "
                                 <tr class='info'>
                                     <td>$c_linha[id]</td>
+                                    <td>$c_linha[id_ordem]</td>
                                     <td>$c_linha[solicitacao_status]</td>
                                     <td>$c_data</td>
                                     <td>$c_linha[hora_abertura]</td>
