@@ -265,19 +265,33 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
     </nav>
     <!-- subnav barra de navegação secundária com atalhos de solicitações e ordens -->
     <div class="bg-blue-700 p-2 shadow-md">
+        <!--painel de boas vindas com data e hora e nome do usuário -->
+        <div class="container mx-auto mt-2 text-white">
+            <p>Bem-vindo, <span class="font-bold"><?php echo $_SESSION['c_usuario']; ?></span>! Hoje é <?php echo date('d/m/Y'); ?>, <?php echo date('H:i'); ?> horas.</p>
+        </div>
+        <br>
         <div class="container mx-auto flex items-center space-x-4">
             <a href="/gop/solicitacao/solicitacao.php" class="text-white hover:text-blue-200 transition flex items-center">
                 <i class="fas fa-file-alt mr-2"></i> Solicitação de Serviço
             </a>
-            <a href="/gop/ordens/ordens.php" class="text-white hover:text-blue-200 transition flex items-center">
+            <?php
+
+            if ($_SESSION['tipo'] <> 'Solicitante') {
+                echo '<a href="/gop/ordens/ordens.php" class="text-white hover:text-blue-200 transition flex items-center">
                 <i class="fas fa-clipboard-list mr-2"></i> Ordem de Serviço
             </a>
             <a href="/gop/preventivas/preventivas.php" class="text-white hover:text-blue-200 transition flex items-center">
                 <i class="fas fa-calendar-check mr-2"></i> Preventivas
-            </a>
-            
+            </a>';
+            }
+            ?>
+
         </div>
+        <!-- end subnav barra de navegação secundária com atalhos de solicitações e ordens -->
+
     </div>
+
+
 
     <!-- Main Content cards -->
     <?php
