@@ -43,10 +43,10 @@ if ($registro['registros'] == 0) { // tabela vazia crio o registro unico em bran
     $c_email = $registro['email_manutencao'];
     $c_emailcc = $registro['emailcc_manutencao'];
     $c_emailco = $registro['emailco_manutencao'];
-    $c_email_envio = '';
-    $c_host_email = '';
-    $c_porta_email = '';
-    $c_senha_emailnotificacoes = '';
+    $c_email_envio = $registro['email_envio'];
+    $c_host_email = $registro['email_host'];
+    $c_porta_email = $registro['porta_smtp'];
+    $c_senha_email = $registro['senha_email'];
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo POST para gravar alterações de configurações
@@ -58,7 +58,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo POST para gravar alteraç
     $c_url =  $_POST['url'];
     $c_email =  $_POST['email'];
     $c_emailcc =  $_POST['emailcc'];
-    $c_emailco =  $_POST['emailco'];
+   // $c_emailco =  $_POST['emailco'];
+    $c_email_envio =  $_POST['email_envio'];
+    $c_host_email =  $_POST['host_email'];
+    $c_porta_email =  $_POST['porta_email'];
+    $c_senha_email =  $_POST['senha_email'];
     //
     do {
         if (!valida_cnpj($c_cnpj))
@@ -67,7 +71,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo POST para gravar alteraç
             break;  
         }
         $c_sql_up = "update configuracoes set empresa='$c_empresa', cnpj = '$c_cnpj', responsavel='$c_responsavel', fone1='$c_fone1', fone2='$c_fone2',
-                    url='$c_url', email_manutencao='$c_email', emailcc_manutencao='$c_emailcc', emailco_manutencao='$c_emailco'";
+                    url='$c_url', email_manutencao='$c_email', emailcc_manutencao='$c_emailcc', 
+                    emailco_manutencao='$c_emailco', email_envio='$c_email_envio',
+                    email_host='$c_host_email', porta_smtp='$c_porta_email',
+                    senha_email='$c_senha_email'";
         $result = $conection->query($c_sql_up);
         header('location: /gop/menu.php');
     } while (false);
@@ -97,7 +104,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo POST para gravar alteraç
         <div class='alert alert-info' role='alert'>
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
-
             </div>
             <h5>Preencha os campos com as configuração do Sistema. Campos com (*) são obrigatórios</h5>
         </div>
@@ -171,22 +177,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo POST para gravar alteraç
             <!-- host do servidor de email -->
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Host do Servidor de e-mail</label>
-                <div class="col-sm-6">
+                <div class="col-sm-2">
                     <input type="text" maxlength="150" class="form-control" name="host_email" value="<?php echo $c_host_email; ?>">
                 </div>
             </div>
             <!-- porta do servidor de email -->
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Porta do Servidor de e-mail</label>
-                <div class="col-sm-6">
+                <div class="col-sm-1">
                     <input type="text" maxlength="10" class="form-control" name="porta_email" value="<?php echo $c_porta_email; ?>">
                 </div>
             </div>
             <!-- senha do email utilizado para envio de notificações automáticas -->
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Senha do e-mail de envio</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="150" class="form-control" name="senha_emailnotificacoes" value="<?php echo $c_senha_emailnotificacoes; ?>">
+                <div class="col-sm-3">
+                    <input type="text" maxlength="150" class="form-control" name="senha_email" value="<?php echo $c_senha_email; ?>">
                 </div>
             </div> 
     
