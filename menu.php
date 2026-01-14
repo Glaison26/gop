@@ -80,7 +80,7 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                 <i class="fas fa-tools mr-2"></i>GOP - Gestão Operacional
             </div>
             <div class="hidden md:flex items-center space-x-6">
-                <a href="#" class="text-white hover:text-blue-200 transition">Início</a>
+              
 
                 <!-- Dropdown Cadastro -->
                 <?php
