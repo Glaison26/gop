@@ -100,6 +100,7 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                     <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow-xl rounded-md w-48 z-50">
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/recursos/recursos_lista.php">Recursos Fisicos</a>
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/espacos/espacos_lista.php">Espaços Fisicos</a>
+                    <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/grupos/grupos_lista.php">Grupos de Recursos e Materiais</a>
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/fornecedores/fornecedores_lista.php">Fornecedores</a>
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/fabricantes/fabricantes_lista.php">Fabricantes</a>
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/executores/executores_lista.php">Executores</a>
@@ -158,7 +159,7 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/almoxarifado/cotacao_lista.php">Cotações de Compras</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/almoxarifado/compras_lista.php">Pedidos de Compras</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/materiais/materiais_lista.php">Cadastro de Materiais</a>
-                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/grupos/grupos_lista.php">Grupos de Materiais</a>
+                        
                         
                     </div>
                 </div>';
