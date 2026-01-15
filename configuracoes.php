@@ -8,6 +8,7 @@ include('conexao.php');
 include_once "lib_gop.php";
 // verifico se tabela de configurações já possui registro
 $msg_erro="";
+$msg_gravou="";
 $c_sql = "select count(*) as registros from configuracoes";
 $result = $conection->query($c_sql);
 $registro = $result->fetch_assoc();
@@ -76,8 +77,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo POST para gravar alteraç
                     email_host='$c_host_email', porta_smtp='$c_porta_email',
                     senha_email='$c_senha_email'";
         $result = $conection->query($c_sql_up);
-        header('location: /gop/menu.php');
+        //header('location: /gop/menu.php');
     } while (false);
+    $msg_gravou = "Configurações gravadas com sucesso!";
 }
 
 ?>
@@ -203,6 +205,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo POST para gravar alteraç
                     <a class='btn btn-danger' href='/gop/menu.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
                 </div>
             </div>
+             <?php
+            if (!empty($msg_gravou)) {
+                echo "
+                    <div class='row mb-3'>
+                        <div class='offset-sm-3 col-sm-6'>
+                             <div class='alert alert-success alert-dismissible fade show' role='alert'>
+                                <strong>$msg_gravou</strong>
+
+                             </div>
+                        </div>     
+                    </div>    
+                ";
+            }
+            ?>
         </form>
     </div>
 

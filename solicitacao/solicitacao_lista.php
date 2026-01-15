@@ -317,9 +317,7 @@ include('../conexao.php');
                         </thead>
                         <tbody>
                             <?php
-
                             // faço a Leitura da tabela com sql
-
                             $result = $conection->query($c_sql_avulso);
                             // verifico se a query foi correto
                             if (!$result) {

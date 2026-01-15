@@ -16,24 +16,19 @@ $i_id_ordem = $_SESSION['id_ordem'];
 $c_sql = "Insert into ordens_plano (id_plano, id_ordem) Value ('$i_id_plano', '$i_id_ordem')";
 $result = $conection->query($c_sql);
 
-if($result ==true)
-{
-   
+if ($result == true) {
+
     $data = array(
-        'status'=>'true',
-       
+        'status' => 'true',
+
+    );
+
+    echo json_encode($data);
+} else {
+    $data = array(
+        'status' => 'false',
+
     );
 
     echo json_encode($data);
 }
-else
-{
-     $data = array(
-        'status'=>'false',
-  
-    );
-
-    echo json_encode($data);
-} 
-
-?>
