@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $c_cnpj_cpf = mask($c_cnpj_cpf, "##.###.###/####-##");
         }
         // verifico a id do grupo selecionado no combo
-        $c_sql_grupos = "SELECT grupos.id FROM grupos where grupos.descricao='$c_grupo' ORDER BY grupos.descricao";
+        $c_sql_grupos = "SELECT grupos_fonecedores.id FROM grupos_fonecedores where grupos_fonecedores.descricao='$c_grupo' ORDER BY grupos_fonecedores.descricao";
         $result_grupos = $conection->query($c_sql_grupos);
         $registro_grupos = $result_grupos->fetch_assoc();
         $i_grupo = $registro_grupos['id'];
@@ -176,7 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <option></option>
                         <?php
                         // select da tabela de espacos fisicos
-                        $c_sql_grupos = "SELECT grupos.id, grupos.descricao FROM grupos ORDER BY grupos.descricao";
+                        $c_sql_grupos = "SELECT grupos_fonecedores.id, grupos_fonecedores.descricao FROM grupos_fonecedores ORDER BY grupos_fonecedores.descricao";
                         $result_grupos = $conection->query($c_sql_grupos);
                         while ($c_linha = $result_grupos->fetch_assoc()) {
                             echo "  

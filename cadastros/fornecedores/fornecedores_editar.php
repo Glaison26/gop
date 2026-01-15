@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         }
         // pego grupo pelo sql
         // verifico a id do grupo selecionado no combo
-        $c_sql_grupos = "SELECT grupos.id FROM grupos where grupos.descricao='$c_grupo' ORDER BY grupos.descricao";
+        $c_sql_grupos = "SELECT grupos_fonecedores.id FROM grupos_fonecedores where grupos_fonecedores.descricao='$c_grupo' ORDER BY grupos_fonecedores.descricao";
         $result_grupos = $conection->query($c_sql_grupos);
         $registro_grupos = $result_grupos->fetch_assoc();
         $i_grupo = $registro_grupos['id'];
@@ -181,7 +181,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                     <select class="form-select form-select-lg mb-3" id="grupo" name="grupo">
                         <?php
                         // select da tabela de espacos fisicos
-                        $c_sql_grupos = "SELECT grupos.id, grupos.descricao FROM grupos ORDER BY grupos.descricao";
+                        $c_sql_grupos = "SELECT grupos_fonecedores.id, grupos_fonecedores.descricao FROM grupos_fonecedores ORDER BY grupos_fonecedores.descricao";
                         $result_grupos = $conection->query($c_sql_grupos);
                         while ($c_linha = $result_grupos->fetch_assoc()) {
                             if ($c_linha['id'] == $i_id_grupo) {
