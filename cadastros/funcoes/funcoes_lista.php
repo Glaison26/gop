@@ -207,7 +207,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_cargos
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
-        <table class="table display table-bordered tabfuncoes">
+        <table class="table-bordered tabfuncoes">
             <thead class="thead">
                 <tr>
                     <th scope="col">#</th>
@@ -264,16 +264,16 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_cargos
                     </div>
                     <form id="frmadd" action="">
                         <div class="mb-3 row">
-                            <label for="add_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
+                            <label for="add_descricaoField" class="col-md-3 form-label">Descrição *</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" id="add_descricaoField" name="add_dscricaoField" required>
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="add_descricaoField" class="col-md-3 form-label">Valor/Hora</label>
+                            <label for="add_descricaoField" class="col-md-3 form-label">Valor/Hora *</label>
                             <div class="col-md-3">
                                 <input type="text" data-thousands="." data-decimal=","
-                                    data-prefix="R$ " class="form-control" id="add_valorField" name="add_valorField">
+                                    data-prefix="R$ " class="form-control" id="add_valorField" name="add_valorField" required>
                             </div>
                         </div>
 
@@ -304,16 +304,16 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_cargos
                     <form id="frmup" method="POST" action="">
                         <input type="hidden" id="up_idField" name="up_idField">
                         <div class="mb-3 row">
-                            <label for="up_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
+                            <label for="up_descricaoField" class="col-md-3 form-label">Descrição *</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" id="up_descricaoField" name="up_dscricaoField" required>
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="up_valorField" class="col-md-3 form-label">Valor/Hora</label>
+                            <label for="up_valorField" class="col-md-3 form-label">Valor/Hora *</label>
                             <div class="col-md-3">
                                 <input type="text" data-thousands="." data-decimal=","
-                                    data-prefix="R$ " class="form-control" id="up_valorField" name="up_valorField">
+                                    data-prefix="R$ " class="form-control" id="up_valorField" name="up_valorField" required>
                             </div>
                         </div>
 

@@ -76,16 +76,14 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
 
     <!-- Navbar resposiva -->
     <nav class="bg-blue-800 p-4 shadow-lg" responsive-navbar>
-        <div class="container mx-auto mt-2 text-white">
-            <p>Bem-vindo, <span class="font-bold"><?php echo $_SESSION['c_usuario']; ?></span>! Hoje é <?php echo date('d/m/Y'); ?>, <?php echo date('H:i'); ?> horas.</p>
-        </div>
+
         <br>
         <div class="container mx-auto flex items-center justify-between">
-            <!--painel de boas vindas com data e hora e nome do usuário -->
 
             <div class="text-white font-bold text-xl">
                 <i class="fas fa-tools mr-2"></i>GOP - Gestão Operacional
             </div>
+
             <div class="hidden md:flex items-center space-x-6">
 
 
@@ -269,12 +267,14 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                 </div>
             </div>
         </div>
-
+        <!--painel de boas vindas com data e hora e nome do usuário -->
+        <br>
+        <div class="container mx-auto mt-2 text-white">
+            <p>Bem-vindo, <span class="font-bold"><?php echo $_SESSION['c_usuario']; ?></span>! Hoje é <?php echo date('d/m/Y'); ?>, <?php echo date('H:i'); ?> horas.</p>
+        </div>
     </nav>
     <!-- subnav barra de navegação secundária com atalhos de solicitações e ordens -->
     <div class="bg-blue-700 p-2 shadow-md">
-
-        
         <div class="container mx-auto flex items-center space-x-4">
             <a href="/gop/solicitacao/solicitacao.php" class="text-white hover:text-blue-200 transition flex items-center">
                 <i class="fas fa-file-alt mr-2"></i> Solicitação de Serviço

@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $c_contato = $_POST['contato'];
     $c_fone1 = $_POST['fone1'];
     $c_fone2 = $_POST['fone2'];
-    $c_fone3 = $_POST['fone3'];
+   // $c_fone3 = $_POST['fone3'];
     $n_salario = $_POST['salario'];
     $c_cnpj_cpf = $_POST['cpfcnpj'];
     $i_horastrab = $_POST['horastrab'];
@@ -128,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             " SET id_oficina= '$i_oficina', id_funcao='$i_funcao', nome='$c_nome', endereco='$c_endereco'," .
             " bairro='$c_bairro',cep='$c_cep',cidade='$c_cidade',uf='$c_estado'," .
             " contato='$c_contato',tipo='$c_tipo',cpf_cnpj='$c_cnpj_cpf',email='$c_email',url='$c_url'," .
-            " fone1='$c_fone1',fone2='$c_fone2',fone3='$c_fone3',salario='$n_salario',horastrab='$i_horastrab'," .
+            " fone1='$c_fone1',fone2='$c_fone2',salario='$n_salario',horastrab='$i_horastrab'," .
             " valorhora='$n_valorhora',escolaridade='$c_escolaridade',formacao='$c_formacao',obs='$c_obs'" .
             " where id=$c_id";
         echo $c_sql;
@@ -149,6 +149,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/gop/css/basico.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar dados do Executor</title>
     <script>
         const handlePhone = (event) => {
             let input = event.target
@@ -168,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
 
 <body>
 
-    <div class="container  -my5">
+    <div class="container-fluid">
         <div style="padding-top:5px;">
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
@@ -177,13 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                 </div>
             </div>
         </div>
-        <div class='alert alert-info' role='alert'>
-            <div style="padding-left:15px;">
-                <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
-            </div>
-            <h5>Campos com (*) são obrigatórios</h5>
-        </div>
         <?php
         if (!empty($msg_erro)) {
             echo "
@@ -193,214 +190,221 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                 ";
         }
         ?>
+        <div class="container content-box">
+            <div class='alert alert-info' role='alert'>
+                <div style="padding-left:15px;">
+                    <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
-        <form method="post">
-            <input type="hidden" name="id" value="<?php echo $c_id; ?>">
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Nome (*)</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="120" class="form-control" name="nome" value="<?php echo $c_nome; ?>" required>
                 </div>
+                <h5>Campos com (*) são obrigatórios</h5>
             </div>
+            <form method="post">
+                <input type="hidden" name="id" value="<?php echo $c_id; ?>">
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Nome *</label>
+                    <div class="col-sm-6">
+                        <input type="text" maxlength="120" class="form-control" name="nome" value="<?php echo $c_nome; ?>" required>
+                    </div>
+                </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Tipo Executor </label>
-                <div class="col-sm-2">
-                    <select class="form-select form-select-lg mb-3" id="tipo" name="tipo">
-                        <option <?= ($c_tipo == 'J') ? 'selected' : '' ?>>Juridica</option>
-                        <option <?= ($c_tipo == 'F') ? 'selected' : '' ?>>Física</option>
-                    </select>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Tipo Executor </label>
+                    <div class="col-sm-2">
+                        <select class="form-select form-select-lg mb-3" id="tipo" name="tipo">
+                            <option <?= ($c_tipo == 'J') ? 'selected' : '' ?>>Juridica</option>
+                            <option <?= ($c_tipo == 'F') ? 'selected' : '' ?>>Física</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-2 col-form-label">CNPJ/CPF *</label>
+                    <div class="col-sm-2">
+                        <input type="text" maxlength="18" class="form-control" name="cpfcnpj" placeholder="somente números" value="<?php echo $c_cnpj_cpf; ?>" required>
+                    </div>
                 </div>
-                <label class="col-sm-2 col-form-label">CNPJ/CPF (*)</label>
-                <div class="col-sm-2">
-                    <input type="text" maxlength="18" class="form-control" name="cpfcnpj" placeholder="somente números" value="<?php echo $c_cnpj_cpf; ?>" required>
-                </div>
-            </div>
-           
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Contato</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="100" class="form-control" name="contato" value="<?php echo $c_contato; ?>">
-                </div>
-            </div>
-            
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Função/Cargo </label>
-                <div class="col-sm-3">
-                    <select class="form-select form-select-lg mb-3" id="funcao" name="funcao">
-                        <?php
-                        // select da tabela de funções
-                        $c_sql_secundario = "SELECT funcoes.id, funcoes.descricao FROM funcoes ORDER BY funcoes.descricao";
-                        $result_secundario = $conection->query($c_sql_secundario);
-                        while ($c_linha = $result_secundario->fetch_assoc()) {
-                            if ($c_linha['id'] == $i_funcao) {
-                                $op =  'Selected';
-                            } else {
-                                $op = '';
-                            }
-                            echo "
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Contato</label>
+                    <div class="col-sm-6">
+                        <input type="text" maxlength="100" class="form-control" name="contato" value="<?php echo $c_contato; ?>">
+                    </div>
+                </div>
+
+
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Função/Cargo </label>
+                    <div class="col-sm-3">
+                        <select class="form-select form-select-lg mb-3" id="funcao" name="funcao">
+                            <?php
+                            // select da tabela de funções
+                            $c_sql_secundario = "SELECT funcoes.id, funcoes.descricao FROM funcoes ORDER BY funcoes.descricao";
+                            $result_secundario = $conection->query($c_sql_secundario);
+                            while ($c_linha = $result_secundario->fetch_assoc()) {
+                                if ($c_linha['id'] == $i_funcao) {
+                                    $op =  'Selected';
+                                } else {
+                                    $op = '';
+                                }
+                                echo "
                                <option $op>$c_linha[descricao]</option>
                         ";
-                        }
-                        ?>
-                    </select>
-                </div>
-                <label class="col-sm-1 col-form-label">Oficina </label>
-                <div class="col-sm-2">
-                    <select class="form-select form-select-lg mb-3" id="oficina" name="oficina">
-                        <?php
-                        // select da tabela de oficinas
-                        $c_sql_oficina = "SELECT oficinas.id, oficinas.descricao FROM oficinas ORDER BY oficinas.descricao";
-                        $result_oficina = $conection->query($c_sql_oficina);
-                        while ($c_linha = $result_oficina->fetch_assoc()) {
-                            if ($c_linha['id'] == $i_oficina) {
-                                $op = 'selected';
-                            } else {
-                                $op = '';
                             }
-                            echo "  
+                            ?>
+                        </select>
+                    </div>
+                    <label class="col-sm-1 col-form-label">Oficina </label>
+                    <div class="col-sm-2">
+                        <select class="form-select form-select-lg mb-3" id="oficina" name="oficina">
+                            <?php
+                            // select da tabela de oficinas
+                            $c_sql_oficina = "SELECT oficinas.id, oficinas.descricao FROM oficinas ORDER BY oficinas.descricao";
+                            $result_oficina = $conection->query($c_sql_oficina);
+                            while ($c_linha = $result_oficina->fetch_assoc()) {
+                                if ($c_linha['id'] == $i_oficina) {
+                                    $op = 'selected';
+                                } else {
+                                    $op = '';
+                                }
+                                echo "  
                           <option $op>$c_linha[descricao]</option>
                         ";
-                        }
-                        ?>
-                    </select>
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Fone I (*)</label>
-                <div class="col-sm-2">
-                    <input type="tel" maxlength="20" onkeyup="handlePhone(event)" id="fone1" class="form-control" name="fone1" value="<?php echo $c_fone1; ?>" required>
-                </div>
-                <label class="col-sm-2 col-form-label">Fone II</label>
-                <div class="col-sm-2">
-                    <input type="tel" maxlength="20" onkeyup="handlePhone(event)" id="fone2" class="form-control" name="fone2" value="<?php echo $c_fone2; ?>">
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Endereço (*)</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="120" id="endereco" class="form-control" name="endereco" value="<?php echo $c_endereco; ?>" required>
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Bairro (*)</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="100" id="bairro" class="form-control" name="bairro" value="<?php echo $c_bairro; ?>" required>
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Cidade (*)</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="100" id="cidade" class="form-control" name="cidade" value="<?php echo $c_cidade; ?>" required>
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Estado</label>
-                <div class="col-sm-2">
-                    <select class="form-select form-select-lg mb-3" id="estado" name="estado" value="<?php echo $c_estado; ?>">
-                        <option value="AC" <?= ($c_estado == 'AC') ? 'selected' : '' ?>>Acre</option>
-                        <option value="AL" <?= ($c_estado == 'AL') ? 'selected' : '' ?>>Alagoas</option>
-                        <option value="AP" <?= ($c_estado == 'AP') ? 'selected' : '' ?>>Amapa</option>
-                        <option value="AM" <?= ($c_estado == 'AM') ? 'selected' : '' ?>>Amazonas</option>
-                        <option value="BA" <?= ($c_estado == 'BA') ? 'selected' : '' ?>>Bahia</option>
-                        <option value="CE" <?= ($c_estado == 'CE') ? 'selected' : '' ?>>Ceara</option>
-                        <option value="DF" <?= ($c_estado == 'DF') ? 'selected' : '' ?>>Distrito Federal</option>
-                        <option value="ES" <?= ($c_estado == 'ES') ? 'selected' : '' ?>>Espirito Santo</option>
-                        <option value="GO" <?= ($c_estado == 'GO') ? 'selected' : '' ?>>Goias</option>
-                        <option value="MA" <?= ($c_estado == 'MA') ? 'selected' : '' ?>>Maranhão</option>
-                        <option value="MT" <?= ($c_estado == 'MT') ? 'selected' : '' ?>>Mato Grosso</option>
-                        <option value="MS" <?= ($c_estado == 'MS') ? 'selected' : '' ?>>Mato Grosso do Sul</option>
-                        <option value="MG" <?= ($c_estado == 'MG') ? 'selected' : '' ?>>Minas Gerais</option>
-                        <option value="PA" <?= ($c_estado == 'PA') ? 'selected' : '' ?>>Para</option>
-                        <option value="PB" <?= ($c_estado == 'PB') ? 'selected' : '' ?>>Paraiba</option>
-                        <option value="PR" <?= ($c_estado == 'PR') ? 'selected' : '' ?>>Parana</option>
-                        <option value="PE" <?= ($c_estado == 'PE') ? 'selected' : '' ?>>Pernambuco</option>
-                        <option value="PI" <?= ($c_estado == 'PI') ? 'selected' : '' ?>>Piaui</option>
-                        <option value="RJ" <?= ($c_estado == 'RJ') ? 'selected' : '' ?>>Rio de Janeiro</option>
-                        <option value="RN" <?= ($c_estado == 'RN') ? 'selected' : '' ?>>Rio Grande do Norte</option>
-                        <option value="RS" <?= ($c_estado == 'RS') ? 'selected' : '' ?>>Rio Grande do Sul</option>
-                        <option value="RO" <?= ($c_estado == 'RO') ? 'selected' : '' ?>>Rondonia</option>
-                        <option value="RR" <?= ($c_estado == 'RR') ? 'selected' : '' ?>>Roraima</option>
-                        <option value="SC" <?= ($c_estado == 'SC') ? 'selected' : '' ?>>Santa Catarina</option>
-                        <option value="SP" <?= ($c_estado == 'SP') ? 'selected' : '' ?>>São Paulo</option>
-                        <option value="SE" <?= ($c_estado == 'SE') ? 'selected' : '' ?>>Sergipe</option>
-                        <option value="TO" <?= ($c_estado == 'TO') ? 'selected' : '' ?>>Tocantis</option>
-                    </select>
-                </div>
-                <label class="col-sm-2 col-form-label">CEP (*)</label>
-                <div class="col-sm-2">
-                    <input type="text" maxlength="10" id="cep" class="form-control" name="cep" value="<?php echo $c_cep; ?>" required>
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">E-mail</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="120" id="email" class="form-control" name="email" placeholder="E-mail" value="<?php echo $c_email; ?>">
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Site</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="120" id="url" class="form-control col-xs-12" name="url" value="<?php echo $c_url; ?>">
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Formação</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="120" class="form-control" name="formacao" id="formacao" value="<?php echo $c_formacao; ?>">
-                </div>
-            </div>
-
-
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Escolaridade</label>
-                <div class="col-sm-2">
-                    <select class="form-select form-select-lg mb-3" id="escolaridade" name="escolaridade">
-                        <option <?= ($c_escolaridade == 'Primário') ? 'selected' : '' ?>>Primário</option>
-                        <option <?= ($c_escolaridade == '1o. Grau') ? 'selected' : '' ?>>1o. Grau</option>
-                        <option <?= ($c_escolaridade == '2o. Grau') ? 'selected' : '' ?>>2o. Grau</option>
-                        <option <?= ($c_escolaridade == 'Curso Superior') ? 'selected' : '' ?>>Curso Superior</option>
-                    </select>
+                            }
+                            ?>
+                        </select>
+                    </div>
                 </div>
 
-                <label class="col-sm-2 col-form-label">Salário</label>
-                <div class="col-sm-2">
-                    <input type="text" maxlength="20" class="form-control" name="salario" id="salario" value="<?php echo $n_salario; ?>">
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Fone I *</label>
+                    <div class="col-sm-2">
+                        <input type="tel" maxlength="20" onkeyup="handlePhone(event)" id="fone1" class="form-control" name="fone1" value="<?php echo $c_fone1; ?>" required>
+                    </div>
+                    <label class="col-sm-2 col-form-label">Fone II</label>
+                    <div class="col-sm-2">
+                        <input type="tel" maxlength="20" onkeyup="handlePhone(event)" id="fone2" class="form-control" name="fone2" value="<?php echo $c_fone2; ?>">
+                    </div>
                 </div>
 
-            </div>
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Valor da hora</label>
-                <div class="col-sm-2">
-                    <input type="text" maxlength="20" class="form-control" name="valorhora" id="valorhora" value="<?php echo $n_valorhora; ?>">
-                </div>
-                <label class="col-sm-2 col-form-label">Horas Trabalhadas dia</label>
-                <div class="col-sm-2">
-                    <input type="text" maxlength="20" class="form-control" name="horastrab" id="horastrab" value="<?php echo $i_horastrab; ?>">
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Endereço *</label>
+                    <div class="col-sm-6">
+                        <input type="text" maxlength="120" id="endereco" class="form-control" name="endereco" value="<?php echo $c_endereco; ?>" required>
+                    </div>
                 </div>
 
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Observação</label>
-                <div class="col-sm-6">
-                    <textarea class="form-control" id="obs" name="obs" rows="3"><?php echo $c_obs ?></textarea>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Bairro *</label>
+                    <div class="col-sm-6">
+                        <input type="text" maxlength="100" id="bairro" class="form-control" name="bairro" value="<?php echo $c_bairro; ?>" required>
+                    </div>
                 </div>
-            </div>
 
-            <?php
-            if (!empty($msg_gravou)) {
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Cidade *</label>
+                    <div class="col-sm-6">
+                        <input type="text" maxlength="100" id="cidade" class="form-control" name="cidade" value="<?php echo $c_cidade; ?>" required>
+                    </div>
+                </div>
 
-                echo "
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Estado</label>
+                    <div class="col-sm-2">
+                        <select class="form-select form-select-lg mb-3" id="estado" name="estado" value="<?php echo $c_estado; ?>">
+                            <option value="AC" <?= ($c_estado == 'AC') ? 'selected' : '' ?>>Acre</option>
+                            <option value="AL" <?= ($c_estado == 'AL') ? 'selected' : '' ?>>Alagoas</option>
+                            <option value="AP" <?= ($c_estado == 'AP') ? 'selected' : '' ?>>Amapa</option>
+                            <option value="AM" <?= ($c_estado == 'AM') ? 'selected' : '' ?>>Amazonas</option>
+                            <option value="BA" <?= ($c_estado == 'BA') ? 'selected' : '' ?>>Bahia</option>
+                            <option value="CE" <?= ($c_estado == 'CE') ? 'selected' : '' ?>>Ceara</option>
+                            <option value="DF" <?= ($c_estado == 'DF') ? 'selected' : '' ?>>Distrito Federal</option>
+                            <option value="ES" <?= ($c_estado == 'ES') ? 'selected' : '' ?>>Espirito Santo</option>
+                            <option value="GO" <?= ($c_estado == 'GO') ? 'selected' : '' ?>>Goias</option>
+                            <option value="MA" <?= ($c_estado == 'MA') ? 'selected' : '' ?>>Maranhão</option>
+                            <option value="MT" <?= ($c_estado == 'MT') ? 'selected' : '' ?>>Mato Grosso</option>
+                            <option value="MS" <?= ($c_estado == 'MS') ? 'selected' : '' ?>>Mato Grosso do Sul</option>
+                            <option value="MG" <?= ($c_estado == 'MG') ? 'selected' : '' ?>>Minas Gerais</option>
+                            <option value="PA" <?= ($c_estado == 'PA') ? 'selected' : '' ?>>Para</option>
+                            <option value="PB" <?= ($c_estado == 'PB') ? 'selected' : '' ?>>Paraiba</option>
+                            <option value="PR" <?= ($c_estado == 'PR') ? 'selected' : '' ?>>Parana</option>
+                            <option value="PE" <?= ($c_estado == 'PE') ? 'selected' : '' ?>>Pernambuco</option>
+                            <option value="PI" <?= ($c_estado == 'PI') ? 'selected' : '' ?>>Piaui</option>
+                            <option value="RJ" <?= ($c_estado == 'RJ') ? 'selected' : '' ?>>Rio de Janeiro</option>
+                            <option value="RN" <?= ($c_estado == 'RN') ? 'selected' : '' ?>>Rio Grande do Norte</option>
+                            <option value="RS" <?= ($c_estado == 'RS') ? 'selected' : '' ?>>Rio Grande do Sul</option>
+                            <option value="RO" <?= ($c_estado == 'RO') ? 'selected' : '' ?>>Rondonia</option>
+                            <option value="RR" <?= ($c_estado == 'RR') ? 'selected' : '' ?>>Roraima</option>
+                            <option value="SC" <?= ($c_estado == 'SC') ? 'selected' : '' ?>>Santa Catarina</option>
+                            <option value="SP" <?= ($c_estado == 'SP') ? 'selected' : '' ?>>São Paulo</option>
+                            <option value="SE" <?= ($c_estado == 'SE') ? 'selected' : '' ?>>Sergipe</option>
+                            <option value="TO" <?= ($c_estado == 'TO') ? 'selected' : '' ?>>Tocantis</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-2 col-form-label">CEP *</label>
+                    <div class="col-sm-2">
+                        <input type="text" maxlength="10" id="cep" class="form-control" name="cep" value="<?php echo $c_cep; ?>" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">E-mail</label>
+                    <div class="col-sm-6">
+                        <input type="text" maxlength="120" id="email" class="form-control" name="email" placeholder="E-mail" value="<?php echo $c_email; ?>">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Site</label>
+                    <div class="col-sm-6">
+                        <input type="text" maxlength="120" id="url" class="form-control col-xs-12" name="url" value="<?php echo $c_url; ?>">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Formação</label>
+                    <div class="col-sm-6">
+                        <input type="text" maxlength="120" class="form-control" name="formacao" id="formacao" value="<?php echo $c_formacao; ?>">
+                    </div>
+                </div>
+
+
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Escolaridade</label>
+                    <div class="col-sm-2">
+                        <select class="form-select form-select-lg mb-3" id="escolaridade" name="escolaridade">
+                            <option <?= ($c_escolaridade == 'Primário') ? 'selected' : '' ?>>Primário</option>
+                            <option <?= ($c_escolaridade == '1o. Grau') ? 'selected' : '' ?>>1o. Grau</option>
+                            <option <?= ($c_escolaridade == '2o. Grau') ? 'selected' : '' ?>>2o. Grau</option>
+                            <option <?= ($c_escolaridade == 'Curso Superior') ? 'selected' : '' ?>>Curso Superior</option>
+                        </select>
+                    </div>
+
+                    <label class="col-sm-2 col-form-label">Salário</label>
+                    <div class="col-sm-2">
+                        <input type="text" maxlength="20" class="form-control" name="salario" id="salario" value="<?php echo $n_salario; ?>">
+                    </div>
+
+                </div>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Valor da hora</label>
+                    <div class="col-sm-2">
+                        <input type="text" maxlength="20" class="form-control" name="valorhora" id="valorhora" value="<?php echo $n_valorhora; ?>">
+                    </div>
+                    <label class="col-sm-2 col-form-label">Horas Trabalhadas dia</label>
+                    <div class="col-sm-2">
+                        <input type="text" maxlength="20" class="form-control" name="horastrab" id="horastrab" value="<?php echo $i_horastrab; ?>">
+                    </div>
+
+                </div>
+
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Observação</label>
+                    <div class="col-sm-6">
+                        <textarea class="form-control" id="obs" name="obs" rows="3"><?php echo $c_obs ?></textarea>
+                    </div>
+                </div>
+
+                <?php
+                if (!empty($msg_gravou)) {
+
+                    echo "
                     <div class='row mb-3'>
                         <div class='offset-sm-3 col-sm-6'>
                              <div class='alert alert-success alert-dismissible fade show' role='alert'>
@@ -409,18 +413,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                         </div>     
                     </div>    
                 ";
-            }
-            ?>
-            <br>
-            <div class="row mb-3">
-                <div class="offset-sm-0 col-sm-3">
-                    <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                    <a class='btn btn-danger' href='/gop/cadastros/executores/executores_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                }
+                ?>
+                <br>
+                <div class="row mb-3">
+                    <div class="offset-sm-0 col-sm-3">
+                        <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
+                        <a class='btn btn-danger' href='/gop/cadastros/executores/executores_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                    </div>
+
                 </div>
 
-            </div>
-
-        </form>
+            </form>
+        </div>
     </div>
 
 </body>

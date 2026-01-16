@@ -243,7 +243,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_grupos
                     </div>
                     <form id="frmadd" action="">
                         <div class="mb-3 row">
-                            <label for="add_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
+                            <label for="add_descricaoField" class="col-md-3 form-label">Descrição *</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" id="add_descricaoField" name="add_dscricaoField" required>
                             </div>
@@ -276,7 +276,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_grupos
                     <form id="frmup" method="POST" action="">
                         <input type="hidden" id="up_idField" name="up_idField">
                         <div class="mb-3 row">
-                            <label for="up_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
+                            <label for="up_descricaoField" class="col-md-3 form-label">Descrição *</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" id="up_descricaoField" name="up_dscricaoField" required>
                             </div>

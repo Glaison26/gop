@@ -98,6 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/gop/css/basico.css">
 
     <script type="text/javascript">
         $(document).ready(function() {
@@ -126,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body>
-    <div class="container  -my5">
+    <div class="container-fluid">
         <div style="padding-top:5px;">
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
@@ -139,13 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             </div>
         </div>
-        <div class='alert alert-info' role='alert'>
-            <div style="padding-left:15px;">
-                <img Align="left" src="\gop\images\escrita.png" alt="" width="50" height="45">
 
-            </div>
-            <h5>Campos com (*) são obrigatórios</h5>
-        </div>
 
         <br>
         <?php
@@ -160,169 +155,176 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ";
         }
         ?>
+        <div class="container content-box">
+            <div class='alert alert-info' role='alert'>
+                <div style="padding-left:15px;">
+                    <img Align="left" src="\gop\images\escrita.png" alt="" width="50" height="45">
 
-        <form method="post">
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Nome do Fornecedor (*)</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="120" class="form-control" name="descricao" value="<?php echo $c_descricao; ?>" required>
                 </div>
+                <h5>Campos com (*) são obrigatórios</h5>
             </div>
+            <form method="post">
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Nome do Fornecedor *</label>
+                    <div class="col-sm-6">
+                        <input type="text" maxlength="120" class="form-control" name="descricao" value="<?php echo $c_descricao; ?>" required>
+                    </div>
+                </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Grupo </label>
-                <div class="col-sm-4">
-                    <select class="form-select form-select-lg mb-3" id="grupo" name="grupo" required>
-                        <option></option>
-                        <?php
-                        // select da tabela de espacos fisicos
-                        $c_sql_grupos = "SELECT grupos_fonecedores.id, grupos_fonecedores.descricao FROM grupos_fonecedores ORDER BY grupos_fonecedores.descricao";
-                        $result_grupos = $conection->query($c_sql_grupos);
-                        while ($c_linha = $result_grupos->fetch_assoc()) {
-                            echo "  
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Grupo * </label>
+                    <div class="col-sm-4">
+                        <select class="form-select form-select-lg mb-3" id="grupo" name="grupo" required>
+                            <option></option>
+                            <?php
+                            // select da tabela de espacos fisicos
+                            $c_sql_grupos = "SELECT grupos_fonecedores.id, grupos_fonecedores.descricao FROM grupos_fonecedores ORDER BY grupos_fonecedores.descricao";
+                            $result_grupos = $conection->query($c_sql_grupos);
+                            while ($c_linha = $result_grupos->fetch_assoc()) {
+                                echo "  
                           <option>$c_linha[descricao]</option>
                         ";
-                        }
-                        ?>
-                    </select>
+                            }
+                            ?>
+                        </select>
+                    </div>
                 </div>
-            </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Razão Social (*)</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="120" class="form-control" name="razaosocial" value="<?php echo $c_razao; ?>" required>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Razão Social *</label>
+                    <div class="col-sm-6">
+                        <input type="text" maxlength="120" class="form-control" name="razaosocial" value="<?php echo $c_razao; ?>" required>
+                    </div>
                 </div>
-            </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Tipo Fornecedor (*)</label>
-                <div class="col-sm-2">
-                    <select class="form-select form-select-lg mb-3" id="tipo" name="tipo" required>
-                        <option></option>
-                        <option>Juridica</option>
-                        <option>Física</option>
-                    </select>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Tipo Fornecedor *</label>
+                    <div class="col-sm-2">
+                        <select class="form-select form-select-lg mb-3" id="tipo" name="tipo" required>
+                            <option></option>
+                            <option>Juridica</option>
+                            <option>Física</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-2 col-form-label">CNPJ/CPF *</label>
+                    <div class="col-sm-2">
+                        <input type="text" maxlength="18" class="form-control" name="cnpj_cpf" placeholder="somente números" value="<?php echo $c_cnpj_cpf; ?>" required>
+                    </div>
                 </div>
-                <label class="col-sm-2 col-form-label">CNPJ/CPF (*)</label>
-                <div class="col-sm-2">
-                    <input type="text" maxlength="18" class="form-control" name="cnpj_cpf" placeholder="somente números" value="<?php echo $c_cnpj_cpf; ?>" required>
-                </div>
-            </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Contato (*)</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="100" class="form-control" name="contato" value="<?php echo $c_contato; ?>" required>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Contato *</label>
+                    <div class="col-sm-6">
+                        <input type="text" maxlength="100" class="form-control" name="contato" value="<?php echo $c_contato; ?>" required>
+                    </div>
                 </div>
-            </div>
 
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Insc. Estadual</label>
-                <div class="col-sm-2">
-                    <input type="text" maxlength="16" class="form-control" name="insc_estad" value="<?php echo $c_insc_estad; ?>">
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Insc. Estadual</label>
+                    <div class="col-sm-2">
+                        <input type="text" maxlength="16" class="form-control" name="insc_estad" value="<?php echo $c_insc_estad; ?>">
+                    </div>
+                    <label class="col-sm-2 col-form-label">Insc. Municipal</label>
+                    <div class="col-sm-2">
+                        <input type="text" maxlength="16" class="form-control" name="insc_munic" value="<?php echo $c_insc_munic; ?>">
+                    </div>
                 </div>
-                <label class="col-sm-2 col-form-label">Insc. Municipal</label>
-                <div class="col-sm-2">
-                    <input type="text" maxlength="16" class="form-control" name="insc_munic" value="<?php echo $c_insc_munic; ?>">
+                <hr>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Fone I *</label>
+                    <div class="col-sm-2">
+                        <input type="tel" onkeyup="handlePhone(event)" maxlength="20" id="fone1" class="form-control" name="fone1" value="<?php echo $c_fone1; ?>" required>
+                    </div>
+                    <label class="col-sm-2 col-form-label">Fone II</label>
+                    <div class="col-sm-2">
+                        <input type="tel" onkeyup="handlePhone(event)" maxlength="20" id="fone2" class="form-control" name="fone2" value="<?php echo $c_fone2; ?>">
+                    </div>
                 </div>
-            </div>
-            <hr>
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Fone I (*)</label>
-                <div class="col-sm-2">
-                    <input type="tel" onkeyup="handlePhone(event)" maxlength="20" id="fone1" class="form-control" name="fone1" value="<?php echo $c_fone1; ?>" required>
-                </div>
-                <label class="col-sm-2 col-form-label">Fone II</label>
-                <div class="col-sm-2">
-                    <input type="tel" onkeyup="handlePhone(event)" maxlength="20" id="fone2" class="form-control" name="fone2" value="<?php echo $c_fone2; ?>">
-                </div>
-            </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Endereço</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="120" id="endereco" class="form-control" name="endereco" value="<?php echo $c_endereco; ?>">
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Endereço</label>
+                    <div class="col-sm-6">
+                        <input type="text" maxlength="120" id="endereco" class="form-control" name="endereco" value="<?php echo $c_endereco; ?>">
+                    </div>
                 </div>
-            </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Bairro</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="100" id="bairro" class="form-control" name="bairro" value="<?php echo $c_bairro; ?>">
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Bairro</label>
+                    <div class="col-sm-6">
+                        <input type="text" maxlength="100" id="bairro" class="form-control" name="bairro" value="<?php echo $c_bairro; ?>">
+                    </div>
                 </div>
-            </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Cidade</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="100" id="cidade" class="form-control" name="cidade" value="<?php echo $c_cidade; ?>">
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Cidade</label>
+                    <div class="col-sm-6">
+                        <input type="text" maxlength="100" id="cidade" class="form-control" name="cidade" value="<?php echo $c_cidade; ?>">
+                    </div>
                 </div>
-            </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Estado</label>
-                <div class="col-sm-3">
-                    <select class="form-select form-select-lg mb-3" id="estado" name="estado">
-                        <option value="AC">Acre</option>
-                        <option value="AL">Alagoas</option>
-                        <option value="AP">Amapa</option>
-                        <option value="AM">Amazonas</option>
-                        <option value="BA">Bahia</option>
-                        <option value="CE">Ceara</option>
-                        <option value="DF">Distrito Federal</option>
-                        <option value="ES">Espirito Santo</option>
-                        <option value="GO">Goias</option>
-                        <option value="MA">Maranhão</option>
-                        <option value="MT">Mato Grosso</option>
-                        <option value="MS">Mato Grosso do Sul</option>
-                        <option selected value="MG">Minas Gerais</option>
-                        <option value="PA">Para</option>
-                        <option value="PB">Paraiba</option>
-                        <option value="PR">Parana</option>
-                        <option value="PE">Pernambuco</option>
-                        <option value="PI">Piaui</option>
-                        <option value="RJ">Rio de Janeiro</option>
-                        <option value="RN">Rio Grande do Norte</option>
-                        <option value="RS">Rio Grande do Sul</option>
-                        <option value="RO">Rondonia</option>
-                        <option value="RR">Roraima</option>
-                        <option value="SC">Santa Catarina</option>
-                        <option value="SP">São Paulo</option>
-                        <option value="SE">Sergipe</option>
-                        <option value="TO">Tocantis</option>
-                    </select>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Estado</label>
+                    <div class="col-sm-3">
+                        <select class="form-select form-select-lg mb-3" id="estado" name="estado">
+                            <option value="AC">Acre</option>
+                            <option value="AL">Alagoas</option>
+                            <option value="AP">Amapa</option>
+                            <option value="AM">Amazonas</option>
+                            <option value="BA">Bahia</option>
+                            <option value="CE">Ceara</option>
+                            <option value="DF">Distrito Federal</option>
+                            <option value="ES">Espirito Santo</option>
+                            <option value="GO">Goias</option>
+                            <option value="MA">Maranhão</option>
+                            <option value="MT">Mato Grosso</option>
+                            <option value="MS">Mato Grosso do Sul</option>
+                            <option selected value="MG">Minas Gerais</option>
+                            <option value="PA">Para</option>
+                            <option value="PB">Paraiba</option>
+                            <option value="PR">Parana</option>
+                            <option value="PE">Pernambuco</option>
+                            <option value="PI">Piaui</option>
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="RN">Rio Grande do Norte</option>
+                            <option value="RS">Rio Grande do Sul</option>
+                            <option value="RO">Rondonia</option>
+                            <option value="RR">Roraima</option>
+                            <option value="SC">Santa Catarina</option>
+                            <option value="SP">São Paulo</option>
+                            <option value="SE">Sergipe</option>
+                            <option value="TO">Tocantis</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-1 col-form-label">CEP</label>
+                    <div class="col-sm-2">
+                        <input type="text" maxlength="10" id="cep" class="form-control" name="cep" value="<?php echo $c_cep; ?>">
+                    </div>
                 </div>
-                <label class="col-sm-1 col-form-label">CEP</label>
-                <div class="col-sm-2">
-                    <input type="text" maxlength="10" id="cep" class="form-control" name="cep" value="<?php echo $c_cep; ?>">
-                </div>
-            </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">E-mail</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="120" id="email" class="form-control" name="email" placeholder="E-mail" value="<?php echo $c_email; ?>">
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">E-mail</label>
+                    <div class="col-sm-6">
+                        <input type="text" maxlength="120" id="email" class="form-control" name="email" placeholder="E-mail" value="<?php echo $c_email; ?>">
+                    </div>
                 </div>
-            </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Site</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="120" id="url" class="form-control col-xs-12" name="url">
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Site</label>
+                    <div class="col-sm-6">
+                        <input type="text" maxlength="120" id="url" class="form-control col-xs-12" name="url">
+                    </div>
                 </div>
-            </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Observação</label>
-                <div class="col-sm-6">
-                    <textarea class="form-control" id="obs" name="obs" rows="3"></textarea>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Observação</label>
+                    <div class="col-sm-6">
+                        <textarea class="form-control" id="obs" name="obs" rows="3"></textarea>
+                    </div>
                 </div>
-            </div>
-            <?php
-            if (!empty($msg_gravou)) {
-                echo "
+                <?php
+                if (!empty($msg_gravou)) {
+                    echo "
                     <div class='row mb-3'>
                         <div class='offset-sm-3 col-sm-6'>
                              <div class='alert alert-success alert-dismissible fade show' role='alert'>
@@ -332,17 +334,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>     
                     </div>    
                 ";
-            }
-            ?>
-            <br>
-            <div class="row mb-3">
-                <div class="offset-sm-3 col-sm-3">
-                    <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                    <a class='btn btn-danger' href='/gop/cadastros/fornecedores/fornecedores_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
-                </div>
+                }
+                ?>
+                <hr>
+                <div class="row mb-3">
+                    <div class="offset-sm-0 col-sm-3">
+                        <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
+                        <a class='btn btn-danger' href='/gop/cadastros/fornecedores/fornecedores_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                    </div>
 
-            </div>
-        </form>
+                </div>
+            </form>
+        </div>
     </div>
 
 </body>

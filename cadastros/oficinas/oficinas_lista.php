@@ -233,7 +233,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_oficin
         <hr>
         <!-- Button trigger modal -->
 
-        <table class="table table display table-bordered taboficinas">
+        <table class="table-bordered taboficinas">
             <thead class="thead">
                 <tr>
                     <th scope="col">#</th>
@@ -296,15 +296,15 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_oficin
                     </div>
                     <form id="frmadd" action="">
                         <div class="mb-3 row">
-                            <label for="add_descricaoField" class="col-md-3 form-label">Oficina (*)</label>
+                            <label for="add_descricaoField" class="col-md-3 form-label">Oficina *</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" id="add_descricaoField" name="add_descricaoField" required>
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="add_descricaoField" class="col-md-3 form-label">Telefone 1</label>
+                            <label for="add_descricaoField" class="col-md-3 form-label">Telefone 1 *</label>
                             <div class="col-md-4">
-                                <input type="text" onkeyup="handlePhone(event)" class="form-control" id="add_fone1Field" name="add_fone1Field">
+                                <input type="text" onkeyup="handlePhone(event)" required class="form-control" id="add_fone1Field" name="add_fone1Field">
                             </div>
                         </div>
                         <div class="mb-3 row">
@@ -314,15 +314,15 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_oficin
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="add_descricaoField" class="col-md-3 form-label">e-mail</label>
+                            <label for="add_descricaoField" class="col-md-3 form-label">e-mail *</label>
                             <div class="col-md-9">
-                                <input type="email" class="form-control" id="add_emailField" name="add_emailField">
+                                <input type="email" class="form-control" required id="add_emailField" name="add_emailField">
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="add_descricaoField" class="col-md-3 form-label">Resposável</label>
+                            <label for="add_descricaoField" class="col-md-3 form-label">Resposável *</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" id="add_responsavelField" name="add_responsavelField">
+                                <input type="text" class="form-control" required id="add_responsavelField" name="add_responsavelField">
                             </div>
                         </div>
                 </div>
@@ -354,15 +354,15 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_oficin
                     <form id="frmup" method="POST" action="">
                         <input type="hidden" id="up_idField" name="up_idField">
                         <div class="mb-3 row">
-                            <label for="up_descricaoField" class="col-md-3 form-label">Oficina (*)</label>
+                            <label for="up_descricaoField" class="col-md-3 form-label">Oficina *</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" id="up_descricaoField" name="up_dscricaoField">
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="add_descricaoField" class="col-md-3 form-label">Telefone 1</label>
+                            <label for="add_descricaoField" class="col-md-3 form-label">Telefone 1 * </label>
                             <div class="col-md-4">
-                                <input type="text" onkeyup="handlePhone(event)" class="form-control" id="up_fone1Field" name="up_fone1Field">
+                                <input type="text" onkeyup="handlePhone(event)" required class="form-control" id="up_fone1Field" name="up_fone1Field">
                             </div>
                         </div>
                         <div class="mb-3 row">
@@ -372,15 +372,15 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_oficin
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="add_descricaoField" class="col-md-3 form-label">e-mail</label>
+                            <label for="add_descricaoField" class="col-md-3 form-label">e-mail *</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" id="up_emailField" name="up_emailField">
+                                <input type="email" class="form-control" required id="up_emailField" name="up_emailField">
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="add_descricaoField" class="col-md-3 form-label">Resposável</label>
+                            <label for="add_descricaoField" class="col-md-3 form-label">Resposável *</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" id="up_responsavelField" name="up_responsavelField">
+                                <input type="text" class="form-control" required id="up_responsavelField" name="up_responsavelField">
                             </div>
                         </div>
 

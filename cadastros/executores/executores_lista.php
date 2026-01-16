@@ -14,7 +14,7 @@ WHERE usuarios.id='$i_id_usuario'";
 $result_acesso = $conection->query($c_sql_acesso);
 $registro_acesso = $result_acesso->fetch_assoc();
 if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_executores'] == 'N') {
-   
+
     header('location: /gop/acesso.php');
 }
 ?>
@@ -97,7 +97,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_execut
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
-        <table class="table display table-bordered tabexecutores">
+        <table class=" table-bordered tabexecutores">
             <thead class="thead">
                 <tr>
                     <th scope="col">Código</th>
@@ -112,7 +112,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_execut
             </thead>
             <tbody>
                 <?php
-               
+
                 // faço a Leitura da tabela com sql
                 $c_sql = "SELECT executores.id, executores.nome,  executores.cpf_cnpj, executores.fone1, executores.fone2, executores.contato, funcoes.descricao AS funcao" .
                     " FROM executores JOIN funcoes ON executores.id_funcao=funcoes.id" .
