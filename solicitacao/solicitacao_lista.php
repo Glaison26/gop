@@ -189,7 +189,7 @@ include('../conexao.php');
             <!-- aba da recurso fisico-->
             <div role="tabpanel" class="tab-pane active" id="recurso">
                 <div style="padding-top:15px;padding-left:20px;">
-                    <table class="table table display table-bordered tabsolicitacao_recursos">
+                    <table class="table-bordered tabsolicitacao_recursos">
                         <thead class="thead">
                             <tr>
                                 <th scope="col">#</th>
@@ -302,7 +302,7 @@ include('../conexao.php');
             <!-- aba das avulsas-->
             <div role="tabpanel" class="tab-pane" id="avulsas">
                 <div style="padding-top:15px;padding-left:20px;">
-                    <table class="table table display table-bordered tabsolicitacao_avulsas">
+                    <table class="table-bordered tabsolicitacao_avulsas">
                         <thead class="thead">
                             <tr>
                                 <th scope="col">#</th>
@@ -328,7 +328,7 @@ include('../conexao.php');
                             while ($c_linha = $result->fetch_assoc()) {
                                 $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_abertura'])));
                                 echo "
-                                <tr class='info'>
+                                <tr>
                                     <td>$c_linha[id]</td>
                                     <td>$c_linha[id_ordem]</td>
                                     <td>$c_linha[solicitacao_status]</td>
