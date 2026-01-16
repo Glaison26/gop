@@ -183,7 +183,6 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_marcas
             <h5>Lista de Marcas<h5>
         </div>
     </div>
-    <br>
 
     <div class="container-fluid">
 
@@ -191,9 +190,8 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_marcas
             Incluir
         </button>
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
-
         <hr>
-        <table class="table table display table-bordered tabmarcas">
+        <table class="table-bordered tabmarcas">
             <thead class="thead">
                 <tr>
                     <th scope="col">#</th>
@@ -245,7 +243,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_marcas
                     </div>
                     <form id="frmadd" action="">
                         <div class="mb-3 row">
-                            <label for="add_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
+                            <label for="add_descricaoField" class="col-md-3 form-label">Descrição *</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" id="add_descricaoField" name="add_dscricaoField" required>
                             </div>
@@ -278,7 +276,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_marcas
                     <form id="frmup" method="POST" action="">
                         <input type="hidden" id="up_idField" name="up_idField">
                         <div class="mb-3 row">
-                            <label for="up_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
+                            <label for="up_descricaoField" class="col-md-3 form-label">Descrição *</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" id="up_descricaoField" name="up_dscricaoField" required>
                             </div>

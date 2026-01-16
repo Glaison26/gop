@@ -1,0 +1,107 @@
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #34495e;
+    --accent-color: #3498db;
+    --text-light: #ecf0f1;
+    --text-dark: #333;
+    --header-height: 70px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-top: var(--header-height);
+}
+
+.gop-header {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    height: var(--header-height);
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.gop-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.gop-logo h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.gop-logo span {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    border-left: 1px solid var(--text-light);
+    padding-left: 10px;
+}
+
+.gop-nav ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+.gop-nav a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s;
+}
+
+.gop-nav a:hover {
+    color: var(--accent-color);
+}
+
+.gop-user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-badge {
+    background-color: var(--secondary-color);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+}
+
+.logout-btn {
+    background-color: #e74c3c;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: background 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: #c0392b;
+}
+
+@media (max-width: 768px) {
+    .gop-nav {
+        display: none; /* Em um sistema real, aqui entraria um menu hambúrguer */
+    }
+    .gop-logo span {
+        display: none;
+    }
+}

@@ -68,7 +68,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class='alert alert-info' role='alert'>
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
-
             </div>
             <h5>Campos com (*) são obrigatórios</h5>
         </div>
@@ -86,10 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ";
         }
         ?>
-
-
         <form method="post">
-
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Descrição (*)</label>
                 <div class="col-sm-6">

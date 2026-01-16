@@ -92,7 +92,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_ferram
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
-        <table class="table display table-hover  table-condensed tabferramentas">
+        <table class="table-hover table-condensed tabferramentas">
             <thead class="thead">
                 <tr>
                     <th scope="col">Código</th>

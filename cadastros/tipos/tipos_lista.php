@@ -190,7 +190,7 @@ include("../../links2.php");
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
-        <table class="table table display table-bordered tabtipos">
+        <table class="table-bordered tabtipos">
             <thead class="thead">
                 <tr>
                     <th scope="col">#</th>
@@ -246,13 +246,13 @@ include("../../links2.php");
                     </div>
                     <form id="frmadd" action="">
                         <div class="mb-3 row">
-                            <label for="add_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
+                            <label for="add_descricaoField" class="col-md-3 form-label">Descrição *</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" id="add_descricaoField" name="add_dscricaoField" required>
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label class="col-sm-3 col-form-label">Classe (*)</label>
+                            <label class="col-sm-3 col-form-label">Classe *</label>
                             <div class="col-sm-6">
                                 <select class="form-select form-select-lg mb-3" id="add_classeField" name="add_classeField" required>
                                     <option></option>
@@ -264,9 +264,9 @@ include("../../links2.php");
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="add_descricaoField" class="col-md-3 form-label">Horas em Operação (*)</label>
+                            <label for="add_descricaoField" class="col-md-3 form-label">Horas em Operação*</label>
                             <div class="col-md-4">
-                                <input type="number" class="form-control" id="add_horasField" name="add_horasField">
+                                <input type="number" class="form-control" id="add_horasField" name="add_horasField" required>
                             </div>
                         </div>
 
@@ -297,13 +297,13 @@ include("../../links2.php");
                     <form id="frmup" method="POST" action="">
                         <input type="hidden" id="up_idField" name="up_idField">
                         <div class="mb-3 row">
-                            <label for="up_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
+                            <label for="up_descricaoField" class="col-md-3 form-label">Descrição *</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" id="up_descricaoField" name="up_dscricaoField" required>
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label class="col-sm-3 col-form-label">Classe (*)</label>
+                            <label class="col-sm-3 col-form-label">Classe *</label>
                             <div class="col-sm-6">
                                 <select class="form-select form-select-lg mb-3" id="up_classeField" name="up_classeField" required>
                                     <option>Clinico</option>
@@ -315,9 +315,9 @@ include("../../links2.php");
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="add_descricaoField" class="col-md-3 form-label">Horas em Operação (*)</label>
+                            <label for="add_descricaoField" class="col-md-3 form-label">Horas em Operação</label>
                             <div class="col-md-4">
-                                <input type="number" class="form-control" id="up_horasField" name="up_horasField">
+                                <input type="number" class="form-control" id="up_horasField" name="up_horasField" require>
                             </div>
                         </div>
 

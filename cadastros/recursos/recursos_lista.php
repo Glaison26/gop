@@ -95,7 +95,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_recurs
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
-        <table class="table table-bordered tabrecursos">
+        <table class="table-bordered tabrecursos">
             <thead class="thead">
                 <tr>
                     <th scope="col">Código</th>
@@ -133,7 +133,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_recurs
                 while ($c_linha = $result->fetch_assoc()) {
 
                     echo "
-                    <tr class='info'>
+                    <tr>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descricao]</td>
                     <td>$c_linha[patrimonio]</td>

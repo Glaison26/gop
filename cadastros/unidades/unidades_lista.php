@@ -198,7 +198,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['almoxarifado_uni
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
-        <table class="table table display table-bordered tabunidades">
+        <table class="display table-bordered tabunidades">
             <thead class="thead">
                 <tr>
                     <th scope="col">Código</th>
@@ -254,13 +254,13 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['almoxarifado_uni
                     </div>
                     <form id="frmadd" action="">
                         <div class="mb-3 row">
-                            <label for="add_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
+                            <label for="add_descricaoField" class="col-md-3 form-label">Descrição *</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" id="add_descricaoField" name="add_dscricaoField" required>
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="add_abreviaturaField" class="col-md-3 form-label">Abreviatura (*)</label>
+                            <label for="add_abreviaturaField" class="col-md-3 form-label">Abreviatura *</label>
                             <div class="col-md-3">
                                 <input type="text" class="form-control" id="add_abreviaturaField" name="add_abreviaturaField" required>
                             </div>
@@ -293,13 +293,13 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['almoxarifado_uni
                     <form id="frmup" method="POST" action="">
                         <input type="hidden" id="up_idField" name="up_idField">
                         <div class="mb-3 row">
-                            <label for="up_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
+                            <label for="up_descricaoField" class="col-md-3 form-label">Descrição *</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" id="up_descricaoField" name="up_dscricaoField" required>
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="up_abreviaturaField" class="col-md-3 form-label">Abreviatura (*)</label>
+                            <label for="up_abreviaturaField" class="col-md-3 form-label">Abreviatura *</label>
                             <div class="col-md-3">
                                 <input type="text" class="form-control" id="up_abreviaturaField" name="up_abreviaturaField" required>
                             </div>
