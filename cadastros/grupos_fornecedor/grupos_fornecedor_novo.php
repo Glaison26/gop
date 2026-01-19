@@ -7,7 +7,7 @@ if (!isset($_SESSION['newsession'])) {
 include("../../conexao.php");
 // rotina de inclusão
 $c_descricao = rtrim($_POST['c_descricao']);
-$c_sql = "Insert into grupos_fonecedores (descricao) Value ('$c_descricao')";
+$c_sql = "Insert into grupos_fornecedores (descricao) Value ('$c_descricao')";
 $result = $conection->query($c_sql);
 
 if($result ==true)

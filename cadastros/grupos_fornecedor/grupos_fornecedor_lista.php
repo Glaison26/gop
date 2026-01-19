@@ -203,7 +203,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_grupos
                 <?php
 
                 // faço a Leitura da tabela com sql
-                $c_sql = "SELECT grupos_fonecedores.id, grupos_fonecedores.descricao FROM grupos_fonecedores ORDER BY grupos_fonecedores.descricao";
+                $c_sql = "SELECT grupos_fornecedores.id, grupos_fornecedores.descricao FROM grupos_fornecedores ORDER BY grupos_fornecedores.descricao";
                 $result = $conection->query($c_sql);
                 // verifico se a query foi correto
                 if (!$result) {
