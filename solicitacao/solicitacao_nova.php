@@ -43,7 +43,7 @@ include("../links2.php");
                 <a href="\gop\espaco_pesquisa.php"><img src="\gop\images\pedreiro.png" alt="" width="30" height="35">
                     Serviço em Espaços Físicos</a>
                 <a href="\gop\solicitacao\solicitacao_conclusao.php"><img src="\gop\images\ordem.png" alt="" width="30" height="35">
-                    Solicitação de Serviço Avulso</a>
+                    Solicitação de Serviço</a>
                 <a href="\gop\solicitacao\solicitacao.php"><img src="\gop\images\saida.png" alt="" width="30" height="35"> Voltar as opções</a>
             </div>
         </div>

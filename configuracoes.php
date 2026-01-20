@@ -47,6 +47,22 @@ if ($registro['registros'] == 0) { // tabela vazia crio o registro unico em bran
     $c_host_email = $registro['email_host'];
     $c_porta_email = $registro['porta_smtp'];
     $c_senha_email = $registro['senha_email'];
+    //checks
+    if ($registro['solicitacao_recursos'] == 'S') {
+        $c_chkrecursosfisicos = 'checked';
+    } else {
+        $c_chkrecursosfisicos = 'N';
+    }
+    if ($registro['solicitacao_espacos'] == 'S') {
+        $c_chkespacosfisicos = 'checked';
+    } else {
+        $c_chkespacosfisicos = 'N';
+    }
+    if ($registro['solicitacao_avulsa'] == 'S') {
+        $c_chkavulsa = 'checked';
+    } else {
+        $c_chkavulsa = 'N';
+    }
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo POST para gravar alterações de configurações
@@ -63,20 +79,73 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo POST para gravar alteraç
     $c_host_email =  $_POST['host_email'];
     $c_porta_email =  $_POST['porta_email'];
     $c_senha_email =  $_POST['senha_email'];
-    //
+    // checks
+    if (isset($_POST['chkrecursosfisicos'])) {
+        $c_chkrecursosfisicos = 'S';
+    } else {
+        $c_chkrecursosfisicos = 'N';
+    }
+    if (isset($_POST['chkespacosfisicos'])) {
+        $c_chkespacosfisicos = 'S';
+    } else {
+        $c_chkespacosfisicos = 'N';
+    }
+    if (isset($_POST['chkavulsas'])) {
+        $c_chkavulsas = 'S';
+    } else {
+        $c_chkavulsas = 'N';
+    }
     do {
         if (!valida_cnpj($c_cnpj)) {
             $msg_erro = "Campo CNPJ inválido, favor verificar!!";
             break;
         }
-        $c_sql_up = "update configuracoes set empresa='$c_empresa', cnpj = '$c_cnpj', responsavel='$c_responsavel', fone1='$c_fone1', fone2='$c_fone2',
-                    url='$c_url', email_manutencao='$c_email', emailcc_manutencao='$c_emailcc', 
+        // verificos se todos as opções de solicitações estão desmarcadas. Se sim não deixar. tem que haver pelo menos uma
+        if ($c_chkrecursosfisicos=='N'&&$c_chkespacosfisicos=='N'&&$c_chkavulsas=='N'){
+            $msg_erro = "Pelo menos uma opção de solicitação deve estar marcada! Favor verifica!";
+            break;
+        }
+        $c_sql_up = "update configuracoes set empresa='$c_empresa', cnpj = '$c_cnpj', responsavel='$c_responsavel', fone1='$c_fone1',
+                    fone2='$c_fone2', url='$c_url', email_manutencao='$c_email', emailcc_manutencao='$c_emailcc', 
                     emailco_manutencao='$c_emailco', email_envio='$c_email_envio',
                     email_host='$c_host_email', porta_smtp='$c_porta_email',
-                    senha_email='$c_senha_email'";
+                    senha_email='$c_senha_email', solicitacao_recursos='$c_chkrecursosfisicos'
+                    ,solicitacao_espacos='$c_chkespacosfisicos', solicitacao_avulsa='$c_chkavulsas'";
         $result = $conection->query($c_sql_up);
         //header('location: /gop/menu.php');
     } while (false);
+    $c_sql = "select * from configuracoes";
+    $result = $conection->query($c_sql);
+    $registro = $result->fetch_assoc();
+    $c_empresa = $registro['empresa'];
+    $c_cnpj = $registro['cnpj'];
+    $c_responsavel = $registro['responsavel'];
+    $c_fone1 = $registro['fone1'];
+    $c_fone2 = $registro['fone2'];
+    $c_url = $registro['url'];
+    $c_email = $registro['email_manutencao'];
+    $c_emailcc = $registro['emailcc_manutencao'];
+    $c_emailco = $registro['emailco_manutencao'];
+    $c_email_envio = $registro['email_envio'];
+    $c_host_email = $registro['email_host'];
+    $c_porta_email = $registro['porta_smtp'];
+    $c_senha_email = $registro['senha_email'];
+    //checks
+    if ($registro['solicitacao_recursos'] == 'S') {
+        $c_chkrecursosfisicos = 'checked';
+    } else {
+        $c_chkrecursosfisicos = 'N';
+    }
+    if ($registro['solicitacao_espacos'] == 'S') {
+        $c_chkespacosfisicos = 'checked';
+    } else {
+        $c_chkespacosfisicos = 'N';
+    }
+    if ($registro['solicitacao_avulsa'] == 'S') {
+        $c_chkavulsa = 'checked';
+    } else {
+        $c_chkavulsa = 'N';
+    }
     $msg_gravou = "Configurações gravadas com sucesso!";
 }
 
@@ -93,7 +162,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo POST para gravar alteraç
 </head>
 
 <body>
-    <div class="container  -my5">
+    <div class="container-fluid">
         <div style="padding-top:5px;">
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
@@ -195,6 +264,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo POST para gravar alteraç
                     <label class="col-sm-3 col-form-label">Senha do e-mail de envio</label>
                     <div class="col-sm-3">
                         <input type="text" maxlength="150" class="form-control" name="senha_email" value="<?php echo $c_senha_email; ?>">
+                    </div>
+                </div>
+                <hr>
+                <div class="row mb-3">
+                    <p><strong>Opções de solicitação de serviço</strong></p>
+                </div>
+
+                <div class="row mb-3">
+                    <!-- opções de check com opções de solicitações de serviço -->
+                    <div class="form-check col-sm-3">
+                        <label class="form-check-label col-form-label">Recursos Físicos</label>
+                        <div class="col-sm-2">
+                            <input class="form-check-input" type="checkbox" value="S" name="chkrecursosfisicos" id="chkrecursosfisicos" <?php echo $c_chkrecursosfisicos ?>>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="form-check col-sm-3">
+                        <label class="form-check-label col-form-label">Espaços Físicos</label>
+                        <div class="col-sm-2">
+                            <input class="form-check-input" type="checkbox" value="S" name="chkespacosfisicos" id="chkespacosfisicos" <?php echo $c_chkespacosfisicos ?>>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="form-check col-sm-3">
+                        <label class="form-check-label col-form-label">Avulsas</label>
+                        <div class="col-sm-2">
+                            <input class="form-check-input" type="checkbox" value="S" name="chkavulsas" id="chkavulsas" <?php echo $c_chkavulsa ?>>
+                        </div>
                     </div>
                 </div>
 
