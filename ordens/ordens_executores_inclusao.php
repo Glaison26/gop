@@ -14,6 +14,8 @@ $c_executor_valor = $_SESSION['valor_executor'];
 $c_valor = "0";
 $c_indice = '';
 $msg_erro = "";
+$n_tempo_horas = '';
+$n_tempo_minutos = '';
 
 
 // inclusão do material no banco de dados
@@ -22,8 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
     $c_tempo_horas = $_POST['tempo_horas'];
     $c_tempo_minutos = $_POST['tempo_minutos'];
     $c_executor = $_POST['executor'];
-
-
     //
     do {
         if (empty($c_executor)) {
@@ -86,18 +86,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOP - Executores da Ordem</title>
+    <link rel="stylesheet" href="/gop/css/basico.css">
 
 </head>
 
 <body>
-<script>
+    <script>
         // chama arquivo para pegar ocorrencia
         function verifica(value) {
             window.location.href = "/gop/ordens/ordens_verifica_executor_valor.php?id=" + value;
         }
     </script>
 
-    <div class="container -my5">
+    <div class="container-fluid">
         <div style="padding-top:5px;">
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
@@ -106,14 +108,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
                 </div>
             </div>
         </div>
-        <div class='alert alert-info' role='alert'>
-            <div style="padding-left:15px;">
-                <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
-
-            </div>
-            <h5>Entre com os dados do Executor a ser anexado a Ordem de Serviço No. <?php echo $c_id ?> Todos os campos são obrigatórios</h5>
-        </div>
-
         <br>
         <?php
         if (!empty($msg_erro)) {
@@ -127,63 +121,70 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
             ";
         }
         ?>
+        <div class="container content-box">
+            <div class='alert alert-info' role='alert'>
+                <div style="padding-left:15px;">
+                    <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
-        <form method="post">
+                </div>
+                <h5>Entre com os dados do Executor a ser anexado a Ordem de Serviço No. <?php echo $c_id ?> Todos os campos são obrigatórios</h5>
+            </div>
+            <form method="post">
 
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Executor</label>
-                <div class="col-sm-5">
-                    <select onchange="verifica(value)"  class="form-select form-select-lg mb-3" id="executor" name="executor" value="<?php echo $c_executor_lista ?>" required>
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">Executor</label>
+                    <div class="col-sm-5">
+                        <select onchange="verifica(value)" class="form-select form-select-lg mb-3" id="executor" name="executor" value="<?php echo $c_executor_lista ?>" required>
 
-                        <?php
-                        
+                            <?php
+
                             echo "<option></option>";
-                        // select da tabela de executores
-                        $c_sql_executor = "SELECT executores.id, executores.nome FROM executores ORDER BY executores.nome";
-                        $result_executor = $conection->query($c_sql_executor);
-                        while ($c_linha = $result_executor->fetch_assoc()) {
-                            if (!empty($_SESSION['nome_executor'])) {
-                                if ($_SESSION['nome_executor'] == $c_linha['nome'])
-                                    $op = 'selected';
-                                else
-                                    $op = "";
-                            }
-                            echo "  
+                            // select da tabela de executores
+                            $c_sql_executor = "SELECT executores.id, executores.nome FROM executores ORDER BY executores.nome";
+                            $result_executor = $conection->query($c_sql_executor);
+                            while ($c_linha = $result_executor->fetch_assoc()) {
+                                if (!empty($_SESSION['nome_executor'])) {
+                                    if ($_SESSION['nome_executor'] == $c_linha['nome'])
+                                        $op = 'selected';
+                                    else
+                                        $op = "";
+                                }
+                                echo "  
                           <option $op>$c_linha[nome]</option>
                         ";
-                        }
-                        ?>
-                    </select>
+                            }
+                            ?>
+                        </select>
+                    </div>
                 </div>
-            </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Tempo em horas</label>
-                <div class="col-sm-2">
-                    <input type="number" class="form-control" name="tempo_horas" value="<?php echo $n_tempo_horas; ?>">
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">Tempo em horas</label>
+                    <div class="col-sm-2">
+                        <input type="number" class="form-control" name="tempo_horas" value="<?php echo $n_tempo_horas; ?>">
+                    </div>
+                    <label class="col-sm-1 col-form-label">Tempo em Min.</label>
+                    <div class="col-sm-2">
+                        <input type="number" class="form-control" name="tempo_minutos" value="<?php echo $n_tempo_minutos; ?>">
+                    </div>
                 </div>
-                <label class="col-sm-1 col-form-label">Tempo em Min.</label>
-                <div class="col-sm-2">
-                    <input type="number" class="form-control" name="tempo_minutos" value="<?php echo $n_tempo_minutos; ?>">
+                <div class="mb-3 row">
+                    <label class="col-sm-2 col-form-label">Valor hora</label>
+                    <div class="col-sm-3">
+                        <input placeholder="valor em Real" type="text" data-thousands="." data-decimal=","
+                            data-prefix="R$ " class="form-control" id="valor_hora" name="valor_hora" value="<?php echo $c_executor_valor ?>">
+                    </div>
                 </div>
-            </div>
-            <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label">Valor hora</label>
-                <div class="col-sm-3">
-                    <input placeholder="valor em Real" type="text" data-thousands="." data-decimal=","
-                        data-prefix="R$ " class="form-control" id="valor_hora" name="valor_hora" value="<?php echo $c_executor_valor ?>">
+                <hr>
+                <div class="row mb-3">
+                    <div class="offset-sm-0 col-sm-3">
+                        <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
+                        <a class='btn btn-danger' href='/gop/ordens/ordens_gerenciar.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                    </div>
                 </div>
-            </div>
-            <hr>
-            <div class="row mb-3">
-                <div class="offset-sm-0 col-sm-3">
-                    <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                    <a class='btn btn-danger' href='/gop/ordens/ordens_gerenciar.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-
 </body>
 
 </html>

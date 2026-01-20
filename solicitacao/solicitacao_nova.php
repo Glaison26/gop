@@ -10,6 +10,9 @@ $_SESSION['valor_ocorrencia'] = "";
 include("../conexao.php");
 include("../links2.php");
 // sql do arquivo de configurações 
+$c_sql_conf = "select * from configuracoes";
+$result = $conection->query($c_sql_conf);
+$registro = $result->fetch_assoc();
 
 ?>
 
@@ -24,7 +27,7 @@ include("../links2.php");
 </head>
 
 <body>
-    <div class="container -my5">
+    <div class="container-fluid">
         <div class="panel panel-primary class">
             <div class="panel-heading text-center">
                 <h4>GOP - Gestão Operacional</h4>
@@ -40,12 +43,23 @@ include("../links2.php");
         </div>
         <div style="padding-bottom :2px;">
             <div class="topnav">
+                <?php
+                if ($registro['solicitacao_recursos']=='S'){
+                    echo '
                 <a href="\gop\recurso_pesquisa.php"><img src="\gop\images\construcao.png" alt="" width="30" height="35">
-                    Serviço em Recurso Físico</a>
+                    Serviço em Recurso Físico</a>';
+                }
+                if ($registro['solicitacao_espacos']=='S'){
+                    echo '
                 <a href="\gop\espaco_pesquisa.php"><img src="\gop\images\pedreiro.png" alt="" width="30" height="35">
-                    Serviço em Espaços Físicos</a>
+                    Serviço em Espaços Físicos</a>';
+                }
+                if ($registro['solicitacao_avulsa']=='S'){
+                    echo '
                 <a href="\gop\solicitacao\solicitacao_conclusao.php"><img src="\gop\images\ordem.png" alt="" width="30" height="35">
-                    Solicitação de Serviço</a>
+                    Solicitação de Serviço</a>';
+                }
+                ?>
                 <a href="\gop\solicitacao\solicitacao.php"><img src="\gop\images\saida.png" alt="" width="30" height="35"> Voltar as opções</a>
             </div>
         </div>

@@ -218,7 +218,7 @@ include('../conexao.php');
                             while ($c_linha = $result->fetch_assoc()) {
                                 $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_abertura'])));
                                 echo "
-                                <tr class='info'>
+                                <tr>
                                     <td>$c_linha[id]</td>
                                     <td>$c_linha[id_ordem]</td>
                                     <td>$c_linha[solicitacao_status]</td>
