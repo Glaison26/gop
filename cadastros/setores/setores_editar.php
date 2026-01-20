@@ -92,9 +92,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
 <head>
     <meta charset="UTF-8">
     <html lang="en">
-    <link rel="stylesheet" href="/gop/css/basico.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar dados de novo Setor</title>
+    <link rel="stylesheet" href="/gop/css/basico.css">
 </head>
 
 <body>

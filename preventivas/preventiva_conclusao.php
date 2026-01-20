@@ -146,8 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GOP - Preventivas - Nova Preventiva</title>
-    <link rel="stylesheet" href="/gop/css/styles.css">
-
+    <link rel="stylesheet" href="/gop/css/basico.css">
 </head>
 
 <body>
@@ -166,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
 
-    <div class="container -my5">
+    <div class="container-fluid">
 
 
         <?php
@@ -187,8 +186,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <h5>Entre com os dados da nova preventiva e clique em salvar</h5>
             </div>
             <form method="post">
-
-
                 <div style="padding-left :30px;" class="row mb-3">
                     <div class="row mb-3">
                         <div class="form-check">
@@ -215,8 +212,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
                 <div class="row mb-3">
-
-
                     <label class="col-sm-2 col-form-label">Tipo Preventiva</label>
                     <div class="col-sm-3">
                         <select class="form-select form-select-lg mb-3" id="tipo_preventiva" name="tipo_preventiva" value="<?php echo $c_tipo_preventiva; ?>" required>
@@ -333,26 +328,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </select>
 
                     </div>
-
-                    <hr>
-                    <div class="row mb-3" style="padding-top:15px;padding-left:20px;">
-                        <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label">Descritivo</label>
-                            <div class="col-sm-9">
-                                <textarea required class="form-control" id="descritivo" name="descritivo" rows="10"><?php echo $c_descritivo ?></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
+                </div>
+                <hr>
+                <div class="row mb-3" style="padding-top:15px;padding-left:20px;">
                     <div class="row mb-3">
-                        <div class="offset-sm-0 col-sm-3">
-                            <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Finalizar</button>
-                            <a class='btn' href='/gop/preventivas/preventivas_nova.php'><img src="\gop\images\saida.png" alt="" width="25" height="18"> Voltar</a>
+                        <label class="col-sm-2 col-form-label">Descritivo</label>
+                        <div class="col-sm-9">
+                            <textarea required class="form-control" id="descritivo" name="descritivo" rows="10"><?php echo $c_descritivo ?></textarea>
                         </div>
                     </div>
+                </div>
+                <hr>
+                <div class="row mb-3">
+                    <div class="offset-sm-0 col-sm-3">
+                        <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Finalizar</button>
+                        <a class='btn' href='/gop/preventivas/preventivas_nova.php'><img src="\gop\images\saida.png" alt="" width="25" height="18"> Voltar</a>
+                    </div>
+                </div>
             </form>
         </div>
-
     </div>
 </body>
 
