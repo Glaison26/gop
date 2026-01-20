@@ -7,8 +7,8 @@ include('links2.php');
 include('conexao.php');
 include_once "lib_gop.php";
 // verifico se tabela de configurações já possui registro
-$msg_erro="";
-$msg_gravou="";
+$msg_erro = "";
+$msg_gravou = "";
 $c_sql = "select count(*) as registros from configuracoes";
 $result = $conection->query($c_sql);
 $registro = $result->fetch_assoc();
@@ -30,7 +30,6 @@ if ($registro['registros'] == 0) { // tabela vazia crio o registro unico em bran
     $c_host_email = '';
     $c_porta_email = '';
     $c_senha_emailnotificacoes = '';
-
 } else {
     $c_sql = "select * from configuracoes";
     $result = $conection->query($c_sql);
@@ -59,17 +58,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo POST para gravar alteraç
     $c_url =  $_POST['url'];
     $c_email =  $_POST['email'];
     $c_emailcc =  $_POST['emailcc'];
-   // $c_emailco =  $_POST['emailco'];
+    // $c_emailco =  $_POST['emailco'];
     $c_email_envio =  $_POST['email_envio'];
     $c_host_email =  $_POST['host_email'];
     $c_porta_email =  $_POST['porta_email'];
     $c_senha_email =  $_POST['senha_email'];
     //
     do {
-        if (!valida_cnpj($c_cnpj))
-        {
+        if (!valida_cnpj($c_cnpj)) {
             $msg_erro = "Campo CNPJ inválido, favor verificar!!";
-            break;  
+            break;
         }
         $c_sql_up = "update configuracoes set empresa='$c_empresa', cnpj = '$c_cnpj', responsavel='$c_responsavel', fone1='$c_fone1', fone2='$c_fone2',
                     url='$c_url', email_manutencao='$c_email', emailcc_manutencao='$c_emailcc', 
@@ -90,6 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo POST para gravar alteraç
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/gop/css/basico.css">
 
 </head>
 
@@ -103,12 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo POST para gravar alteraç
                 </div>
             </div>
         </div>
-        <div class='alert alert-info' role='alert'>
-            <div style="padding-left:15px;">
-                <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
-            </div>
-            <h5>Preencha os campos com as configuração do Sistema. Campos com (*) são obrigatórios</h5>
-        </div>
+
         <?php
         if (!empty($msg_erro)) {
             echo "
@@ -121,93 +115,99 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo POST para gravar alteraç
             ";
         }
         ?>
-        <br>
-        <form method="post">
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Nome da Empresa (*)</label>
-                <div class="col-sm-8">
-                    <input type="text" maxlength="200" class="form-control" name="empresa" value="<?php echo $c_empresa; ?>" required>
+        <div class="container content-box">
+            <div class='alert alert-info' role='alert'>
+                <div style="padding-left:15px;">
+                    <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
                 </div>
+                <h5>Preencha os campos com as configuração do Sistema. Campos com (*) são obrigatórios</h5>
             </div>
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">CNPJ (*)</label>
-                <div class="col-sm-2">
-                    <input type="text" maxlength="18" class="form-control" name="cnpj" value="<?php echo $c_cnpj; ?>" required>
+            <form method="post">
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Nome da Empresa (*)</label>
+                    <div class="col-sm-8">
+                        <input type="text" maxlength="200" class="form-control" name="empresa" value="<?php echo $c_empresa; ?>" required>
+                    </div>
                 </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Responsável (*)</label>
-                <div class="col-sm-5">
-                    <input type="text" maxlength="100" class="form-control" name="responsavel" value="<?php echo $c_responsavel; ?>" required>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">CNPJ (*)</label>
+                    <div class="col-sm-2">
+                        <input type="text" maxlength="18" class="form-control" name="cnpj" value="<?php echo $c_cnpj; ?>" required>
+                    </div>
                 </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Fone 1 (*)</label>
-                <div class="col-sm-2">
-                    <input type="text" maxlength="20" class="form-control" name="fone1" value="<?php echo $c_fone1; ?>" required>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Responsável (*)</label>
+                    <div class="col-sm-5">
+                        <input type="text" maxlength="100" class="form-control" name="responsavel" value="<?php echo $c_responsavel; ?>" required>
+                    </div>
                 </div>
-                <label class="col-sm-1 col-form-label">Fone 2</label>
-                <div class="col-sm-2">
-                    <input type="text" maxlength="20" class="form-control" name="fone2" value="<?php echo $c_fone2; ?>">
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Fone 1 (*)</label>
+                    <div class="col-sm-2">
+                        <input type="text" maxlength="20" class="form-control" name="fone1" value="<?php echo $c_fone1; ?>" required>
+                    </div>
+                    <label class="col-sm-1 col-form-label">Fone 2</label>
+                    <div class="col-sm-2">
+                        <input type="text" maxlength="20" class="form-control" name="fone2" value="<?php echo $c_fone2; ?>">
+                    </div>
                 </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">URL</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="200" class="form-control" name="url" value="<?php echo $c_url; ?>" required>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">URL</label>
+                    <div class="col-sm-6">
+                        <input type="text" maxlength="200" class="form-control" name="url" value="<?php echo $c_url; ?>" required>
+                    </div>
                 </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">e-mail Manutenção</label>
-                <div class="col-sm-6">
-                    <input type="email" maxlength="150" class="form-control" name="email" value="<?php echo $c_email; ?>" required>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">e-mail Manutenção</label>
+                    <div class="col-sm-6">
+                        <input type="email" maxlength="150" class="form-control" name="email" value="<?php echo $c_email; ?>" required>
+                    </div>
                 </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">e-mail Manutenção Cc.</label>
-                <div class="col-sm-6">
-                    <input type="email" maxlength="150" class="form-control" name="emailcc" value="<?php echo $c_emailcc; ?>">
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">e-mail Manutenção Cc.</label>
+                    <div class="col-sm-6">
+                        <input type="email" maxlength="150" class="form-control" name="emailcc" value="<?php echo $c_emailcc; ?>">
+                    </div>
                 </div>
-            </div>
-            <hr>
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">e-mail de envio </label>
-                <div class="col-sm-6">
-                    <input type="email" maxlength="150" class="form-control" name="email_envio" value="<?php echo $c_email_envio; ?>">
+                <hr>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">e-mail de envio </label>
+                    <div class="col-sm-6">
+                        <input type="email" maxlength="150" class="form-control" name="email_envio" value="<?php echo $c_email_envio; ?>">
+                    </div>
                 </div>
-            </div>
-            <!-- host do servidor de email -->
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Host do Servidor de e-mail</label>
-                <div class="col-sm-2">
-                    <input type="text" maxlength="150" class="form-control" name="host_email" value="<?php echo $c_host_email; ?>">
+                <!-- host do servidor de email -->
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Host do Servidor de e-mail</label>
+                    <div class="col-sm-2">
+                        <input type="text" maxlength="150" class="form-control" name="host_email" value="<?php echo $c_host_email; ?>">
+                    </div>
                 </div>
-            </div>
-            <!-- porta do servidor de email -->
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Porta do Servidor de e-mail</label>
-                <div class="col-sm-1">
-                    <input type="text" maxlength="10" class="form-control" name="porta_email" value="<?php echo $c_porta_email; ?>">
+                <!-- porta do servidor de email -->
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Porta do Servidor de e-mail</label>
+                    <div class="col-sm-1">
+                        <input type="text" maxlength="10" class="form-control" name="porta_email" value="<?php echo $c_porta_email; ?>">
+                    </div>
                 </div>
-            </div>
-            <!-- senha do email utilizado para envio de notificações automáticas -->
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Senha do e-mail de envio</label>
-                <div class="col-sm-3">
-                    <input type="text" maxlength="150" class="form-control" name="senha_email" value="<?php echo $c_senha_email; ?>">
+                <!-- senha do email utilizado para envio de notificações automáticas -->
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Senha do e-mail de envio</label>
+                    <div class="col-sm-3">
+                        <input type="text" maxlength="150" class="form-control" name="senha_email" value="<?php echo $c_senha_email; ?>">
+                    </div>
                 </div>
-            </div> 
-    
-            <hr>
-            <div class="row mb-3">
-                <div class="offset-sm-0 col-sm-3">
-                    <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                    <a class='btn btn-danger' href='/gop/menu.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+
+                <hr>
+                <div class="row mb-3">
+                    <div class="offset-sm-0 col-sm-3">
+                        <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
+                        <a class='btn btn-danger' href='/gop/menu.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                    </div>
                 </div>
-            </div>
-             <?php
-            if (!empty($msg_gravou)) {
-                echo "
+                <?php
+                if (!empty($msg_gravou)) {
+                    echo "
                     <div class='row mb-3'>
                         <div class='offset-sm-3 col-sm-6'>
                              <div class='alert alert-success alert-dismissible fade show' role='alert'>
@@ -217,9 +217,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo POST para gravar alteraç
                         </div>     
                     </div>    
                 ";
-            }
-            ?>
-        </form>
+                }
+                ?>
+            </form>
+        </div>
     </div>
 
 </body>

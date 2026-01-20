@@ -122,12 +122,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOP - Novo Material</title>
+    <link rel="stylesheet" href="/gop/css/basico.css">
 
 </head>
 
 
 <body>
-    <div class="container -my5">
+    <div class="container-fluid">
         <div style="padding-top:5px;">
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
@@ -136,15 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             </div>
         </div>
-        <div class='alert alert-info' role='alert'>
-            <div style="padding-left:15px;">
-                <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
-            </div>
-            <h5>Campos com (*) são obrigatórios</h5>
-        </div>
-
-        <br>
         <?php
         if (!empty($msg_erro)) {
             echo "
@@ -157,138 +151,145 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ";
         }
         ?>
+        <div class="container content-box">
+            <form method="post">
 
-        <form method="post">
-
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Descrição (*)</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="120" class="form-control" name="descricao" value="<?php echo $c_descricao; ?>">
+                <div class='alert alert-info' role='alert'>
+                    <div style="padding-left:15px;">
+                        <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
+                    </div>
+                    <h5>Preencha os campos com as configuração do Sistema. Campos com (*) são obrigatórios</h5>
                 </div>
-            </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Marca </label>
-                <div class="col-sm-6">
-                    <select class="form-select form-select-lg mb-3" id="marca" name="marca">
-                        <?php
-                        // select da tabela de Marcas
-                        $c_sql_marca = "SELECT marcas.id, marcas.descricao FROM marcas ORDER BY marcas.descricao";
-                        $result_marca = $conection->query($c_sql_marca);
-                        while ($c_linha = $result_marca->fetch_assoc()) {
-                            echo "  
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Descrição (*)</label>
+                    <div class="col-sm-6">
+                        <input type="text" maxlength="120" class="form-control" name="descricao" value="<?php echo $c_descricao; ?>">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Marca </label>
+                    <div class="col-sm-6">
+                        <select class="form-select form-select-lg mb-3" id="marca" name="marca">
+                            <?php
+                            // select da tabela de Marcas
+                            $c_sql_marca = "SELECT marcas.id, marcas.descricao FROM marcas ORDER BY marcas.descricao";
+                            $result_marca = $conection->query($c_sql_marca);
+                            while ($c_linha = $result_marca->fetch_assoc()) {
+                                echo "  
                           <option>$c_linha[descricao]</option>
                         ";
-                        }
-                        ?>
-                    </select>
+                            }
+                            ?>
+                        </select>
+                    </div>
                 </div>
-            </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Grupo </label>
-                <div class="col-sm-6">
-                    <select class="form-select form-select-lg mb-3" id="grupo" name="grupo">
-                        <?php
-                        // select da tabela de grupos
-                        $c_sql_grupo = "SELECT grupos.id, grupos.descricao FROM grupos ORDER BY grupos.descricao";
-                        $result_grupo = $conection->query($c_sql_grupo);
-                        while ($c_linha = $result_grupo->fetch_assoc()) {
-                            echo "  
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Grupo </label>
+                    <div class="col-sm-6">
+                        <select class="form-select form-select-lg mb-3" id="grupo" name="grupo">
+                            <?php
+                            // select da tabela de grupos
+                            $c_sql_grupo = "SELECT grupos.id, grupos.descricao FROM grupos ORDER BY grupos.descricao";
+                            $result_grupo = $conection->query($c_sql_grupo);
+                            while ($c_linha = $result_grupo->fetch_assoc()) {
+                                echo "  
                           <option>$c_linha[descricao]</option>
                         ";
-                        }
-                        ?>
-                    </select>
+                            }
+                            ?>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <hr>
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Saldo Atual</label>
-                <div class="col-sm-2">
-                    <input type="text" maxlength="20" class="form-control" name="quantidadeatual" value="<?php echo $n_quantidadeatual; ?>">
+                <hr>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Saldo Atual</label>
+                    <div class="col-sm-2">
+                        <input type="text" maxlength="20" class="form-control" name="quantidadeatual" value="<?php echo $n_quantidadeatual; ?>">
+                    </div>
+                    <label class="col-sm-2 col-form-label">Valor de Custo</label>
+                    <div class="col-sm-2">
+                        <input type="text" maxlength="20" class="form-control" name="custo" value="<?php echo $n_custo; ?>">
+                    </div>
                 </div>
-                <label class="col-sm-2 col-form-label">Valor de Custo</label>
-                <div class="col-sm-2">
-                    <input type="text" maxlength="20" class="form-control" name="custo" value="<?php echo $n_custo; ?>">
-                </div>
-            </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Unidade de Entrada </label>
-                <div class="col-sm-2">
-                    <select class="form-select form-select-lg mb-3" id="unidadeentrada" name="unidadeentrada">
-                        <?php
-                        // select da tabela de unidades
-                        $c_sql_unidades = "SELECT unidades.id, unidades.descricao FROM unidades ORDER BY unidades.descricao";
-                        $result_unidades = $conection->query($c_sql_unidades);
-                        while ($c_linha = $result_unidades->fetch_assoc()) {
-                            echo "  
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Unidade de Entrada </label>
+                    <div class="col-sm-2">
+                        <select class="form-select form-select-lg mb-3" id="unidadeentrada" name="unidadeentrada">
+                            <?php
+                            // select da tabela de unidades
+                            $c_sql_unidades = "SELECT unidades.id, unidades.descricao FROM unidades ORDER BY unidades.descricao";
+                            $result_unidades = $conection->query($c_sql_unidades);
+                            while ($c_linha = $result_unidades->fetch_assoc()) {
+                                echo "  
                           <option>$c_linha[descricao]</option>
                         ";
-                        }
-                        ?>
-                    </select>
-                </div>
+                            }
+                            ?>
+                        </select>
+                    </div>
 
-                <label class="col-sm-2 col-form-label">Unidade de Saida </label>
-                <div class="col-sm-2">
-                    <select class="form-select form-select-lg mb-3" id="unidadesaida" name="unidadesaida">
-                        <?php
-                        // select da tabela de unidades
-                        $c_sql_unidades = "SELECT unidades.id, unidades.descricao FROM unidades ORDER BY unidades.descricao";
-                        $result_unidades = $conection->query($c_sql_unidades);
-                        while ($c_linha = $result_unidades->fetch_assoc()) {
-                            echo "  
+                    <label class="col-sm-2 col-form-label">Unidade de Saida </label>
+                    <div class="col-sm-2">
+                        <select class="form-select form-select-lg mb-3" id="unidadesaida" name="unidadesaida">
+                            <?php
+                            // select da tabela de unidades
+                            $c_sql_unidades = "SELECT unidades.id, unidades.descricao FROM unidades ORDER BY unidades.descricao";
+                            $result_unidades = $conection->query($c_sql_unidades);
+                            while ($c_linha = $result_unidades->fetch_assoc()) {
+                                echo "  
                           <option>$c_linha[descricao]</option>
                         ";
-                        }
-                        ?>
-                    </select>
+                            }
+                            ?>
+                        </select>
+                    </div>
                 </div>
-            </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Estoque Mínimo</label>
-                <div class="col-sm-2">
-                    <input type="text" maxlength="20" class="form-control" name="qtdmin" value="<?php echo $n_qtdmin; ?>">
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Estoque Mínimo</label>
+                    <div class="col-sm-2">
+                        <input type="text" maxlength="20" class="form-control" name="qtdmin" value="<?php echo $n_qtdmin; ?>">
+                    </div>
+                    <label class="col-sm-2 col-form-label">Estoque Máximo</label>
+                    <div class="col-sm-2">
+                        <input type="text" maxlength="20" class="form-control" name="qtdmax" value="<?php echo $n_qtdmax; ?>">
+                    </div>
                 </div>
-                <label class="col-sm-2 col-form-label">Estoque Máximo</label>
-                <div class="col-sm-2">
-                    <input type="text" maxlength="20" class="form-control" name="qtdmax" value="<?php echo $n_qtdmax; ?>">
-                </div>
-            </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Ultima Saida</label>
-                <div class="col-sm-2">
-                    <input type="date" maxlength="20" class="form-control" name="ultimasaida" value="<?php echo $d_ultimasaida; ?>">
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Ultima Saida</label>
+                    <div class="col-sm-2">
+                        <input type="date" maxlength="20" class="form-control" name="ultimasaida" value="<?php echo $d_ultimasaida; ?>">
+                    </div>
+                    <label class="col-sm-2 col-form-label">Ultima Entrada</label>
+                    <div class="col-sm-2">
+                        <input type="date" maxlength="20" class="form-control" name="ultimaentrada" value="<?php echo $d_ultimaentrada; ?>">
+                    </div>
                 </div>
-                <label class="col-sm-2 col-form-label">Ultima Entrada</label>
-                <div class="col-sm-2">
-                    <input type="date" maxlength="20" class="form-control" name="ultimaentrada" value="<?php echo $d_ultimaentrada; ?>">
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Data de Validade</label>
+                    <div class="col-sm-2">
+                        <input type="date" maxlength="20" class="form-control" name="validade" value="<?php echo $d_validade; ?>">
+                    </div>
+                    <label class="col-sm-2 col-form-label">Fator Conversão</label>
+                    <div class="col-sm-2">
+                        <input type="text" maxlength="5" class="form-control" name="fator" value="<?php echo $c_fator; ?>">
+                    </div>
                 </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Data de Validade</label>
-                <div class="col-sm-2">
-                    <input type="date" maxlength="20" class="form-control" name="validade" value="<?php echo $d_validade; ?>">
+                <hr>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Observação</label>
+                    <div class="col-sm-6">
+                        <textarea class="form-control" id="obs" name="obs" rows="3"></textarea>
+                    </div>
                 </div>
-                <label class="col-sm-2 col-form-label">Fator Conversão</label>
-                <div class="col-sm-2">
-                    <input type="text" maxlength="5" class="form-control" name="fator" value="<?php echo $c_fator; ?>">
-                </div>
-            </div>
-            <hr>
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Observação</label>
-                <div class="col-sm-6">
-                    <textarea class="form-control" id="obs" name="obs" rows="3"></textarea>
-                </div>
-            </div>
-            <?php
-            if (!empty($msg_gravou)) {
-                echo "
+                <?php
+                if (!empty($msg_gravou)) {
+                    echo "
                     <div class='row mb-3'>
                         <div class='offset-sm-3 col-sm-6'>
                              <div class='alert alert-success alert-dismissible fade show' role='alert'>
@@ -298,17 +299,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>     
                     </div>    
                 ";
-            }
-            ?>
-            <br>
-            <div class="row mb-3">
-                <div class="offset-sm-3 col-sm-3">
-                    <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                    <a class='btn btn-danger' href='/gop/cadastros/materiais/materiais_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
-                </div>
+                }
+                ?>
+                <br>
+                <div class="row mb-3">
+                    <div class="offset-sm-0 col-sm-3">
+                        <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
+                        <a class='btn btn-danger' href='/gop/cadastros/materiais/materiais_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                    </div>
 
-            </div>
-        </form>
+                </div>
+            </form>
+        </div>
     </div>
 
 </body>

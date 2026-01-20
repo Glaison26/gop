@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $c_email_manutencao = $c_linha_email['email_manutencao'];
         // chamo o envio de email
         // barra de progresso
-        
+
 
         if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
             $c_sql = "SELECT MAX(solicitacao.ID) AS id_solicitacao FROM solicitacao";
@@ -136,6 +136,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../css/style2.css" rel="stylesheet" />
+    <title>GOP - Conclusão de Solicitação</title>
+    <link rel="stylesheet" href="/gop/css/basico.css">
 
 </head>
 
@@ -154,42 +156,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
 
-    <div class="container -my5">
+
+    <?php
+    if (!empty($msg_erro)) {
+        echo "
+            <div class='alert alert-warning' role='alert'>
+               
+                <h3><img Align='left' src='\gop\images\aviso.png' alt='30' height='35'><span>&nbsp;&nbsp;&nbsp; $msg_erro</span></h3>
+            </div>
+            ";
+    }
+    ?>
+    <div class="container content-box">
         <div class='alert alert-info' role='alert'>
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
             </div>
-            <h5>Digite as informações da solicitação e clique em finalizar para gravar a solicitação. Todos os Campos são obrigatórios</h5>
+            <h5>Preencha os campos com as configuração do Sistema. Campos com (*) são obrigatórios</h5>
         </div>
-        <div class="container" style ="display: none">
-            <div class="row">
-                <div class="col-md-3 col-sm-6">
-                    <div class="progress blue">
-                        <span class="progress-left">
-                            <span class="progress-bar"></span>
-                        </span>
-                        <span class="progress-right">
-                            <span class="progress-bar"></span>
-                        </span>
-                        <div class="progress-value">Gerando...</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <?php
-        if (!empty($msg_erro)) {
-            echo "
-            <div class='alert alert-warning' role='alert'>
-                
-                <h3><img Align='left' src='\gop\images\aviso.png' alt='30' height='35'><span>&nbsp;&nbsp;&nbsp; $msg_erro</span></h3>
-            </div>
-            ";
-        }
-        ?>
+
         <form method="post" name="frm_solicitacao">
             <div class="row mb-3">
 
-                <label class="col-sm-3 col-form-label">Ocorrencia </label>
+                <label class="col-sm-3 col-form-label">Ocorrência </label>
                 <div class="col-sm-7">
 
                     <select onchange="verifica(value)" class="form-select form-select-lg mb-3" id="ocorrencia" name="ocorrencia" value="<?php echo $c_ocorrencia ?>" required>
@@ -263,6 +252,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             </div>
         </form>
+    </div>
     </div>
 
 

@@ -5,7 +5,7 @@ if (!isset($_SESSION['newsession'])) {
 }
 $_SESSION['tiposolicitacao'] = 'V';
 $_SESSION['opcao'] = "P";
-$_SESSION['i_id_oficina']=0;
+$_SESSION['i_id_oficina'] = 0;
 include("../links2.php");
 ?>
 
@@ -21,14 +21,14 @@ include("../links2.php");
 
 <body>
     <div class="panel panel-primary class">
-        <div class="panel-heading text-center">
-            <h4>GOP - Gestão Operacional</h4>
-            <h5>Cadastro de Preventivas<h5>
+            <div class="panel-heading text-center">
+                <h4>GOP - Gestão Operacional</h4>
+                <h5>Cadastro de Preventivas<h5>
+            </div>
         </div>
-    </div>
 
-    <div class="container-my5">
-
+    <div class="container -my5">
+  
         <div class='alert alert-info' role='alert'>
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
