@@ -9,6 +9,8 @@ $_SESSION['ocorrencia'] = "";
 $_SESSION['valor_ocorrencia'] = "";
 include("../conexao.php");
 include("../links2.php");
+// sql do arquivo de configurações 
+
 ?>
 
 
