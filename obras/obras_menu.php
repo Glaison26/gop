@@ -14,11 +14,12 @@ include("../links2.php");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="imagex/png" href="./imagens/img_gop.ico">
 
 </head>
 
 <body>
-    <div class="container -my5">
+    <div class="container-fluid">
         <div class="panel panel-primary class">
             <div class="panel-heading text-center">
                 <h4>GOP - Gestão Operacional</h4>
