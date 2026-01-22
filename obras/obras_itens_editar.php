@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         header('location: /gop/obras/obras_itens_lista.php');
         exit;
     }
-   
+
     $c_descricao = $registro['descricao'];
     $c_grupo = $registro['id_grupo'];
     $c_unidade = $registro['id_unidade'];
@@ -67,14 +67,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             " SET descricao = '$c_descricao', id_grupo ='$i_grupo', id_unidade ='$i_unidade', valor_maodeobra ='$n_maodeobra'," .
             " valor_material='$n_material' where id=$c_id";
         echo $c_sql;
-       
+
         $result = $conection->query($c_sql);
 
         // verifico se a query foi correto
         if (!$result) {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
         }
-    
+
         header('location: /gop/obras/obras_itens_lista.php');
     } while (false);
 }
@@ -82,16 +82,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
 
 <!DOCTYPE html>
 <html lang="en">
+<title>GOP - Editar Itens de Obras</title>
+<link rel="stylesheet" href="/gop/css/basico.css">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 
 <body>
 
-    <div class="container -my5">
+    <div class="container-fluid">
         <div style="padding-top:5px;">
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
@@ -100,15 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                 </div>
             </div>
         </div>
-        <div class='alert alert-info' role='alert'>
-            <div style="padding-left:15px;">
-                <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
-            </div>
-            <h5>Campos com (*) são obrigatórios</h5>
-        </div>
-
-        <br>
         <?php
         if (!empty($msg_erro)) {
             echo "
@@ -121,76 +116,85 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             ";
         }
         ?>
-        <form method="post">
-            <input type="hidden" name="id" value="<?php echo $c_id; ?>">
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Grupo (*) </label>
-                <div class="col-sm-6">
-                    <select class="form-select form-select-lg mb-3" id="grupo" name="grupo" required>
-                        <option></option>
-                        <?php
-                        // select da tabela de grupos
-                        $c_sql_grupo = "SELECT obras_grupo.id, obras_grupo.descricao FROM obras_grupo ORDER BY obras_grupo.descricao";
-                        $result_grupo = $conection->query($c_sql_grupo);
-                        while ($c_linha = $result_grupo->fetch_assoc()) {
-                            $op = "";
-                            if ($c_linha['id'] == $c_grupo)
-                                $op = 'selected';
-                            echo "  
+        <div class="container content-box">
+            <div class='alert alert-info' role='alert'>
+                <div style="padding-left:15px;">
+                    <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
+
+                </div>
+                <h5>Campos com (*) são obrigatórios</h5>
+            </div>
+            <form method="post">
+                <input type="hidden" name="id" value="<?php echo $c_id; ?>">
+
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Grupo (*) </label>
+                    <div class="col-sm-6">
+                        <select class="form-select form-select-lg mb-3" id="grupo" name="grupo" required>
+                            <option></option>
+                            <?php
+                            // select da tabela de grupos
+                            $c_sql_grupo = "SELECT obras_grupo.id, obras_grupo.descricao FROM obras_grupo ORDER BY obras_grupo.descricao";
+                            $result_grupo = $conection->query($c_sql_grupo);
+                            while ($c_linha = $result_grupo->fetch_assoc()) {
+                                $op = "";
+                                if ($c_linha['id'] == $c_grupo)
+                                    $op = 'selected';
+                                echo "  
                           <option $op>$c_linha[descricao]</option>
                         ";
-                        }
-                        ?>
-                    </select>
+                            }
+                            ?>
+                        </select>
+                    </div>
                 </div>
-            </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Descrição (*)</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="120" class="form-control" name="descricao" value="<?php echo $c_descricao; ?>" required>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Descrição (*)</label>
+                    <div class="col-sm-6">
+                        <input type="text" maxlength="120" class="form-control" name="descricao" value="<?php echo $c_descricao; ?>" required>
+                    </div>
                 </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Unidade (*) </label>
-                <div class="col-sm-2">
-                    <select class="form-select form-select-lg mb-3" id="unidade" name="unidade" required>
-                        <option></option>
-                        <?php
-                        // select da tabela de unidades
-                        $c_sql_unidades = "SELECT unidades.id, unidades.descricao FROM unidades ORDER BY unidades.descricao";
-                        $result_unidades = $conection->query($c_sql_unidades);
-                        while ($c_linha = $result_unidades->fetch_assoc()) {
-                            $op = "";
-                            if ($c_linha['id'] == $c_unidade)
-                                $op = 'selected';
-                            echo "  
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Unidade (*) </label>
+                    <div class="col-sm-2">
+                        <select class="form-select form-select-lg mb-3" id="unidade" name="unidade" required>
+                            <option></option>
+                            <?php
+                            // select da tabela de unidades
+                            $c_sql_unidades = "SELECT unidades.id, unidades.descricao FROM unidades ORDER BY unidades.descricao";
+                            $result_unidades = $conection->query($c_sql_unidades);
+                            while ($c_linha = $result_unidades->fetch_assoc()) {
+                                $op = "";
+                                if ($c_linha['id'] == $c_unidade)
+                                    $op = 'selected';
+                                echo "  
                           <option $op>$c_linha[descricao]</option>
                         ";
-                        }
-                        ?>
-                    </select>
+                            }
+                            ?>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="mb-3 row">
-                <label class="col-sm-3 col-form-label">Valor Mão de Obra</label>
-                <div class="col-sm-2">
-                    <input placeholder="0.00" type="text" data-thousands="." data-decimal=","
-                        data-prefix="R$ " class="form-control" id="maodeobra" name="maodeobra" value="<?php echo $n_maodeobra ?>">
+                <div class="mb-3 row">
+                    <label class="col-sm-3 col-form-label">Valor Mão de Obra</label>
+                    <div class="col-sm-2">
+                        <input placeholder="0.00" type="text" data-thousands="." data-decimal=","
+                            data-prefix="R$ " class="form-control" id="maodeobra" name="maodeobra" value="<?php echo $n_maodeobra ?>">
+                    </div>
                 </div>
-            </div>
-            <div class="mb-3 row">
-                <label class="col-sm-3 col-form-label">Valor de Material</label>
-                <div class="col-sm-2">
-                    <input placeholder="0.00" type="text" data-thousands="." data-decimal=","
-                        data-prefix="R$ " class="form-control"  id="material" name="material" value="<?php echo $n_material ?>">
+                <div class="mb-3 row">
+                    <label class="col-sm-3 col-form-label">Valor de Material</label>
+                    <div class="col-sm-2">
+                        <input placeholder="0.00" type="text" data-thousands="." data-decimal=","
+                            data-prefix="R$ " class="form-control" id="material" name="material" value="<?php echo $n_material ?>">
+                    </div>
                 </div>
-            </div>
 
-            <?php
-            if (!empty($msg_gravou)) {
-                echo "
+                <?php
+                if (!empty($msg_gravou)) {
+                    echo "
                     <div class='row mb-3'>
                         <div class='offset-sm-3 col-sm-6'>
                              <div class='alert alert-success alert-dismissible fade show' role='alert'>
@@ -200,17 +204,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                         </div>     
                     </div>    
                 ";
-            }
-            ?>
-            <br>
-            <div class="row mb-3">
-                <div class="offset-sm-0 col-sm-3">
-                    <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                    <a class='btn btn-danger' href='/gop/obras/obras_itens_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
-                </div>
+                }
+                ?>
+                <hr>
+                <div class="row mb-3">
+                    <div class="offset-sm-0 col-sm-3">
+                        <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
+                        <a class='btn btn-danger' href='/gop/obras/obras_itens_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                    </div>
 
-            </div>
-        </form>
+                </div>
+            </form>
+        </div>
     </div>
 
 </body>

@@ -158,7 +158,7 @@ $registro_parametro = $resul_parametro->fetch_assoc();
                     $c_data_vencimento = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['vencimento'])));
                     //
                     echo "
-                    <tr class='info'>
+                    <tr>
                     <td>$c_linha[id]</td>
                     <td>$c_data</td>
                     <td>$c_linha[quantidade]</td>

@@ -219,7 +219,7 @@ $_SESSION['contrato'] = $registro_contrato['empresa'] . '  -  ' . 'Contrato Núm
         <hr>
       
         <hr>
-        <table class="table display table-bordered tabcontratos">
+        <table class="table-bordered tabcontratos">
             <thead class="thead">
                 <tr>
                     <th scope="col">#</th>

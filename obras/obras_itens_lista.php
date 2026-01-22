@@ -87,7 +87,7 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
         <a class="btn btn-secondary btn-sm" href="/gop/obras/obras_menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
-        <table class="table table display table-bordered tabitens">
+        <table class="table-bordered tabitens">
             <thead class="thead">
                 <tr>
                     <th scope="col">Código</th>

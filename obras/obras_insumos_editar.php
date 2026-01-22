@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // faço a Leitura da tabela com sql
         $c_sql = "update obras_insumos set id_item='$i_item', id_unidade='$i_unidade', quantidade='$n_quantidade',
          valor_maodeobra='$n_maodeobra', valor_material='$n_material' where id='$c_id'";
-         echo $c_sql;
+        echo $c_sql;
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
         if (!$result) {
@@ -86,6 +86,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html lang="en">
 
 <head>
+    <title>GOP - Editar Insumo de Obra</title>
+    <link rel="stylesheet" href="/gop/css/basico.css">
+
 </head>
 
 <body>
@@ -97,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     </script>
 
-    <div class="container -my5">
+    <div class="container-fluid">
         <div style="padding-top:5px;">
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
@@ -106,15 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             </div>
         </div>
-        <div class='alert alert-info' role='alert'>
-            <div style="padding-left:15px;">
-                <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
-            </div>
-            <h5>Campos com (*) são obrigatórios</h5>
-        </div>
-
-        <br>
         <?php
         if (!empty($msg_erro)) {
             echo "
@@ -127,102 +122,111 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ";
         }
         ?>
-        <form method="post">
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Grupo</label>
-                <div class="col-sm-6">
-                    <select onchange="verifica(value)" class="form-select form-select-lg mb-3" id="grupo" name="grupo" required>
-                        <?php
-                        // select da tabela de grupos
-                        $c_sql_grupo = "SELECT obras_grupo.id, obras_grupo.descricao FROM obras_grupo ORDER BY obras_grupo.descricao";
-                        $result_grupo = $conection->query($c_sql_grupo);
-                        while ($c_linha = $result_grupo->fetch_assoc()) {
-                            $op = '';
-                            if ($_SESSION['id_grupo_select'] > 0) {
+        <div class="container content-box">
+            <div class='alert alert-info' role='alert'>
+                <div style="padding-left:15px;">
+                    <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
-                                if ($c_linha['id'] == $_SESSION['id_grupo_select']) {
-                                    $op = 'selected';
+                </div>
+                <h5>Campos com (*) são obrigatórios</h5>
+            </div>
+
+            <form method="post">
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Grupo</label>
+                    <div class="col-sm-6">
+                        <select onchange="verifica(value)" class="form-select form-select-lg mb-3" id="grupo" name="grupo" required>
+                            <?php
+                            // select da tabela de grupos
+                            $c_sql_grupo = "SELECT obras_grupo.id, obras_grupo.descricao FROM obras_grupo ORDER BY obras_grupo.descricao";
+                            $result_grupo = $conection->query($c_sql_grupo);
+                            while ($c_linha = $result_grupo->fetch_assoc()) {
+                                $op = '';
+                                if ($_SESSION['id_grupo_select'] > 0) {
+
+                                    if ($c_linha['id'] == $_SESSION['id_grupo_select']) {
+                                        $op = 'selected';
+                                    }
+                                    echo "<option $op>$c_linha[descricao]</option>";
+                                } else {
+                                    $op2 = '';
+                                    if ($c_linha['id'] == $c_grupo)
+                                        $op2 = 'selected';
+                                    echo "<option $op2>$c_linha[descricao]</option>";
                                 }
-                                echo "<option $op>$c_linha[descricao]</option>";
-                            } else {
-                                $op2 = '';
-                                if ($c_linha['id'] == $c_grupo)
-                                    $op2 = 'selected';
-                                echo "<option $op2>$c_linha[descricao]</option>";
                             }
-                        }
-                        ?>
-                    </select>
+                            ?>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <hr>
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Item (*) </label>
-                <div class="col-sm-6">
-                    <select class="form-select form-select-lg mb-3" id="item" name="item" required>
-                        <option></option>
-                        <?php
-                        // select da tabela de grupos
-                        if ($_SESSION['id_grupo_select'] == 0)
-                            $c_sql_item = "SELECT obras_itens.id, obras_itens.descricao FROM obras_itens where obras_itens.id_grupo='$c_grupo' ORDER BY obras_itens.descricao";
-                        else
-                            $c_sql_item = "SELECT obras_itens.id, obras_itens.descricao FROM obras_itens where obras_itens.id_grupo='$_SESSION[id_grupo_select]' ORDER BY obras_itens.descricao";
-                        $result_item = $conection->query($c_sql_item);
-                        while ($c_linha = $result_item->fetch_assoc()) {
-                            $op = '';
-                            if ($c_linha['id'] == $c_item)
-                                $op = 'selected';
-                            echo "  
+                <hr>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Item (*) </label>
+                    <div class="col-sm-6">
+                        <select class="form-select form-select-lg mb-3" id="item" name="item" required>
+                            <option></option>
+                            <?php
+                            // select da tabela de grupos
+                            if ($_SESSION['id_grupo_select'] == 0)
+                                $c_sql_item = "SELECT obras_itens.id, obras_itens.descricao FROM obras_itens where obras_itens.id_grupo='$c_grupo' ORDER BY obras_itens.descricao";
+                            else
+                                $c_sql_item = "SELECT obras_itens.id, obras_itens.descricao FROM obras_itens where obras_itens.id_grupo='$_SESSION[id_grupo_select]' ORDER BY obras_itens.descricao";
+                            $result_item = $conection->query($c_sql_item);
+                            while ($c_linha = $result_item->fetch_assoc()) {
+                                $op = '';
+                                if ($c_linha['id'] == $c_item)
+                                    $op = 'selected';
+                                echo "  
                           <option $op>$c_linha[descricao]</option>
                         ";
-                        }
-                        ?>
-                    </select>
+                            }
+                            ?>
+                        </select>
+                    </div>
                 </div>
-            </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Quantidade</label>
-                <div class="col-sm-2">
-                    <input type="number" class="form-control" name="quantidade" value="<?php echo $n_quantidade; ?>">
-                </div>
-                <label class="col-sm-2 col-form-label">Unidade (*) </label>
-                <div class="col-sm-2">
-                    <select class="form-select form-select-lg mb-3" id="unidade" name="unidade" required>
-                        <option></option>
-                        <?php
-                        // select da tabela de unidades
-                        $c_sql_unidades = "SELECT unidades.id, unidades.descricao FROM unidades ORDER BY unidades.descricao";
-                        $result_unidades = $conection->query($c_sql_unidades);
-                        while ($c_linha = $result_unidades->fetch_assoc()) {
-                            $op = '';
-                            if ($c_linha['id'] == $c_unidade)
-                                $op = 'selected';
-                            echo "  
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Quantidade</label>
+                    <div class="col-sm-2">
+                        <input type="number" class="form-control" name="quantidade" value="<?php echo $n_quantidade; ?>">
+                    </div>
+                    <label class="col-sm-2 col-form-label">Unidade (*) </label>
+                    <div class="col-sm-2">
+                        <select class="form-select form-select-lg mb-3" id="unidade" name="unidade" required>
+                            <option></option>
+                            <?php
+                            // select da tabela de unidades
+                            $c_sql_unidades = "SELECT unidades.id, unidades.descricao FROM unidades ORDER BY unidades.descricao";
+                            $result_unidades = $conection->query($c_sql_unidades);
+                            while ($c_linha = $result_unidades->fetch_assoc()) {
+                                $op = '';
+                                if ($c_linha['id'] == $c_unidade)
+                                    $op = 'selected';
+                                echo "  
                           <option $op>$c_linha[descricao]</option>
                         ";
-                        }
-                        ?>
-                    </select>
+                            }
+                            ?>
+                        </select>
+                    </div>
                 </div>
-            </div>
 
-            <div class="mb-3 row">
-                <label class="col-sm-3 col-form-label">Valor Mão de Obra</label>
-                <div class="col-sm-2">
-                    <input placeholder="0.00" type="text" data-thousands="." data-decimal=","
-                        data-prefix="R$ " class="form-control" id="maodeobra" name="maodeobra" value="<?php echo $n_maodeobra ?>">
+                <div class="mb-3 row">
+                    <label class="col-sm-3 col-form-label">Valor Mão de Obra</label>
+                    <div class="col-sm-2">
+                        <input placeholder="0.00" type="text" data-thousands="." data-decimal=","
+                            data-prefix="R$ " class="form-control" id="maodeobra" name="maodeobra" value="<?php echo $n_maodeobra ?>">
+                    </div>
+                    <label class="col-sm-2 col-form-label">Valor de Material</label>
+                    <div class="col-sm-2">
+                        <input placeholder="0.00" type="text" data-thousands="." data-decimal=","
+                            data-prefix="R$ " class="form-control" id="material" name="material" value="<?php echo $n_material ?>">
+                    </div>
                 </div>
-                <label class="col-sm-2 col-form-label">Valor de Material</label>
-                <div class="col-sm-2">
-                    <input placeholder="0.00" type="text" data-thousands="." data-decimal=","
-                        data-prefix="R$ " class="form-control" id="material" name="material" value="<?php echo $n_material ?>">
-                </div>
-            </div>
 
-            <?php
-            if (!empty($msg_gravou)) {
-                echo "
+                <?php
+                if (!empty($msg_gravou)) {
+                    echo "
                     <div class='row mb-3'>
                         <div class='offset-sm-3 col-sm-6'>
                              <div class='alert alert-success alert-dismissible fade show' role='alert'>
@@ -232,17 +236,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>     
                     </div>    
                 ";
-            }
-            ?>
-            <br>
-            <div class="row mb-3">
-                <div class="offset-sm-0 col-sm-3">
-                    <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                    <a class='btn btn-danger' href='/gop/obras/obras_insumos_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
-                </div>
+                }
+                ?>
+                <hr>
+                <div class="row mb-3">
+                    <div class="offset-sm-0 col-sm-3">
+                        <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
+                        <a class='btn btn-danger' href='/gop/obras/obras_insumos_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                    </div>
 
-            </div>
-        </form>
+                </div>
+            </form>
+        </div>
     </div>
 
 </body>

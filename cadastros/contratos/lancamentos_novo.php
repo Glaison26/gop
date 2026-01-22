@@ -17,6 +17,7 @@ $d_emissao = '';
 $c_nota = '';
 $d_vencimento = '';
 $c_condpag = '';
+$c_data = '';
 
 $i_id_parametro = $_SESSION['id_parametro'];
 
@@ -68,12 +69,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOP - Lançamento de Contrato</title>
+    <link rel="stylesheet" href="/gop/css/basico.css">
 
 </head>
 
 
 <body>
-    <div class="container -my5">
+    <div class="container-fluid">
         <div style="padding-top:5px;">
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
@@ -82,15 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             </div>
         </div>
-        <div class='alert alert-info' role='alert'>
-            <div style="padding-left:15px;">
-                <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
-            </div>
-            <h5>Campos com (*) são obrigatórios</h5>
-        </div>
-
-        <br>
         <?php
         if (!empty($msg_erro)) {
             echo "
@@ -103,58 +98,65 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ";
         }
         ?>
+        <div class="container content-box">
+            <div class='alert alert-info' role='alert'>
+                <div style="padding-left:15px;">
+                    <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
-        <form method="post">
-
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Data (*)</label>
-                <div class="col-sm-2">
-                    <input type="date" class="form-control" name="data" value="<?php echo $c_data; ?>">
                 </div>
-                <label class="col-sm-2 col-form-label">Quantidade (*)</label>
-                <div class="col-sm-2">
-                    <input type="text" class="form-control" name="quantidade" required value="<?php echo $i_quantidade; ?>">
-                </div>
-
+                <h5>Campos com (*) são obrigatórios</h5>
             </div>
+            <form method="post">
 
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Valor</label>
-                <div class="col-sm-2">
-                    <input type="text" class="form-control" name="valor" required value="<?php echo $n_valor; ?>">
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">Data (*)</label>
+                    <div class="col-sm-2">
+                        <input type="date" class="form-control" name="data" value="<?php echo $c_data; ?>">
+                    </div>
+                    <label class="col-sm-2 col-form-label">Quantidade (*)</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" name="quantidade" required value="<?php echo $i_quantidade; ?>">
+                    </div>
+
                 </div>
-                <label class="col-sm-1 col-form-label">Unidade</label>
-                <div class="col-sm-3">
-                    <input type="text" maxlength="80" class="form-control" name="unidade" required value="<?php echo $c_unidade; ?>">
+
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">Valor</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" name="valor" required value="<?php echo $n_valor; ?>">
+                    </div>
+                    <label class="col-sm-1 col-form-label">Unidade</label>
+                    <div class="col-sm-3">
+                        <input type="text" maxlength="80" class="form-control" name="unidade" required value="<?php echo $c_unidade; ?>">
+                    </div>
                 </div>
-            </div>
 
 
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Nota</label>
-                <div class="col-sm-2">
-                    <input type="text" maxlength="30" class="form-control" required name="nota" value="<?php echo $c_nota; ?>">
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">Nota</label>
+                    <div class="col-sm-2">
+                        <input type="text" maxlength="30" class="form-control" required name="nota" value="<?php echo $c_nota; ?>">
+                    </div>
+                    <label class="col-sm-2 col-form-label">Emissão</label>
+                    <div class="col-sm-2">
+                        <input type="date" class="form-control" required name="emissao" value="<?php echo $d_emissao; ?>">
+                    </div>
                 </div>
-                <label class="col-sm-2 col-form-label">Emissão</label>
-                <div class="col-sm-2">
-                    <input type="date" class="form-control" required name="emissao" value="<?php echo $d_emissao; ?>">
-                </div>
-            </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Vencimento</label>
-                <div class="col-sm-2">
-                    <input type="date" class="form-control" required name="vencimento" value="<?php echo $d_vencimento; ?>">
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">Vencimento</label>
+                    <div class="col-sm-2">
+                        <input type="date" class="form-control" required name="vencimento" value="<?php echo $d_vencimento; ?>">
+                    </div>
+                    <label class="col-sm-1 col-form-label">Cond. Pagto.</label>
+                    <div class="col-sm-3">
+                        <input type="text" maxlength="100" class="form-control" name="cond_pag" value="<?php echo $c_condpag; ?>">
+                    </div>
                 </div>
-                <label class="col-sm-1 col-form-label">Cond. Pagto.</label>
-                <div class="col-sm-3">
-                    <input type="text" maxlength="100" class="form-control" name="cond_pag" value="<?php echo $c_condpag; ?>">
-                </div>
-            </div>
 
-            <?php
-            if (!empty($msg_gravou)) {
-                echo "
+                <?php
+                if (!empty($msg_gravou)) {
+                    echo "
                     <div class='row mb-3'>
                         <div class='offset-sm-3 col-sm-6'>
                              <div class='alert alert-success alert-dismissible fade show' role='alert'>
@@ -164,17 +166,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>     
                     </div>    
                 ";
-            }
-            ?>
-            <hr>
-            <div class="row mb-3">
-                <div class="offset-sm-0 col-sm-3">
-                    <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                    <a class='btn btn-danger' href='/gop/cadastros/contratos/lancamentos_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
-                </div>
+                }
+                ?>
+                <hr>
+                <div class="row mb-3">
+                    <div class="offset-sm-0 col-sm-3">
+                        <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
+                        <a class='btn btn-danger' href='/gop/cadastros/contratos/lancamentos_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                    </div>
 
-            </div>
-        </form>
+                </div>
+            </form>
+        </div>
     </div>
 
 </body>
