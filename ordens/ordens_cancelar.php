@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
          hora_cancelamento='$c_hora_cancelamento',
          id_resp_cancelamento='$i_solicitante' where id=$i_id";
         $result_up = $conection->query($c_sql_up);
-       
+
         header('location: /gop/ordens/ordens_gerenciar.php');
     } while (false);
 }
@@ -59,6 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOP - Cancelamento de Ordem de Serviço</title>
+    <link rel="stylesheet" href="/gop/css/basico.css">
 
 </head>
 
@@ -70,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     </script>
 
-    <div class="container -my5">
+    <div class="container-fluid">
         <div style="padding-top:5px;">
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
@@ -79,14 +81,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             </div>
         </div>
-        <div class='alert alert-info' role='alert'>
-            <div style="padding-left:15px;">
-                <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
-
-            </div>
-            <h4>Preencha os dados abaixo e clique no botão confirmar para Cancelar a ordem de serviço No. <?php echo $i_id ?></h4>
-        </div>
-
         <br>
         <?php
         if (!empty($msg_erro)) {
@@ -101,33 +95,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $agora = date('H:i');
         $c_data = date('Y-m-d');
         ?>
-        <form method="post">
-            <div class="row mb-8">
-                <label class="col-md-2 form-label">Data Cancelamento</label>
-                <div class="col-sm-2">
-                    <input type="Date" class="form-control" name="data_cancelamento" id="data_conclusao" value='<?php echo $c_data ?>'>
-                </div>
-                <label class="col-md-2 form-label">Hora Cancelamento</label>
-                <div class="col-sm-2">
-                    <input type="time" class="form-control" name="hora_cancelamento" id="hora_conclusao" value="<?php echo $agora ?>">
-                </div>
-            </div>
-            <br>
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Motivo Cancelamento</label>
-                <div class="col-sm-8">
-                    <textarea class="form-control" id="motivo" name="motivo" rows="6"><?php echo $c_motivo ?></textarea>
-                </div>
-            </div>
-            <hr>
-            <div class="row mb-3">
-                <div class="offset-sm-0 col-sm-3">
-                    <button type="submit" class="btn btn-primary" onclick='return pergunta();'><span class='glyphicon glyphicon-ok'></span> Confirma</button>
-                    <a class='btn btn-danger' href='/gop/ordens/ordens_gerenciar.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
-                </div>
-            </div>
+        <div class="container content-box">
+            <div class='alert alert-info' role='alert'>
+                <div style="padding-left:15px;">
+                    <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
-        </form>
+                </div>
+                <h4>Preencha os dados abaixo e clique no botão confirmar para Cancelar a ordem de serviço No. <?php echo $i_id ?></h4>
+            </div>
+            <form method="post">
+                <div class="row mb-8">
+                    <label class="col-md-2 form-label">Data Cancelamento</label>
+                    <div class="col-sm-2">
+                        <input type="Date" class="form-control" name="data_cancelamento" id="data_conclusao" value='<?php echo $c_data ?>'>
+                    </div>
+                    <label class="col-md-2 form-label">Hora Cancelamento</label>
+                    <div class="col-sm-2">
+                        <input type="time" class="form-control" name="hora_cancelamento" id="hora_conclusao" value="<?php echo $agora ?>">
+                    </div>
+                </div>
+                <br>
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">Motivo Cancelamento</label>
+                    <div class="col-sm-8">
+                        <textarea class="form-control" id="motivo" name="motivo" rows="6"><?php echo $c_motivo ?></textarea>
+                    </div>
+                </div>
+                <hr>
+                <div class="row mb-3">
+                    <div class="offset-sm-0 col-sm-3">
+                        <button type="submit" class="btn btn-primary" onclick='return pergunta();'><span class='glyphicon glyphicon-ok'></span> Confirma</button>
+                        <a class='btn btn-danger' href='/gop/ordens/ordens_gerenciar.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                    </div>
+                </div>
+
+            </form>
+        </div>
     </div>
 
 </body>

@@ -79,13 +79,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
 
 <head>
     <meta charset="UTF-8">
-
+    <title>GOP - Edição de Material de Cotação</title>
+    <link rel="stylesheet" href="/gop/css/basico.css">
 
 </head>
 
 <body>
 
-    <div class="container  -my5">
+    <div class="container-fluid">
         <div style="padding-top:5px;">
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
@@ -94,13 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                 </div>
             </div>
         </div>
-        <div class='alert alert-info' role='alert'>
-            <div style="padding-left:15px;">
-                <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
-            </div>
-            <h5>Campos com (*) são obrigatórios</h5>
-        </div>
         <?php
         if (!empty($msg_erro)) {
             echo "
@@ -110,82 +105,82 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                 ";
         }
         ?>
+        <div class="container content-box">
+            <div class='alert alert-info' role='alert'>
+                <div style="padding-left:15px;">
+                    <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
-        <form method="post">
-            <input type="hidden" name="id" value="<?php echo $c_id; ?>">
-            <br>
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Material</label>
-                <div class="col-sm-6">
-                    <select class="form-select form-select-lg mb-3" id="material" name="material">
+                </div>
+                <h5>Campos com (*) são obrigatórios</h5>
+            </div>
+            <form method="post">
+                <input type="hidden" name="id" value="<?php echo $c_id; ?>">
+                <br>
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">Material</label>
+                    <div class="col-sm-6">
+                        <select class="form-select form-select-lg mb-3" id="material" name="material">
 
-                        <?php
-                        if ($c_indice == '')
-                            echo "<option></option>";
-                        // select da tabela de Material
-                        $c_sql_material = "SELECT materiais.id, materiais.descricao FROM materiais ORDER BY materiais.descricao";
-                        $result_material = $conection->query($c_sql_material);
-                        while ($c_linha = $result_material->fetch_assoc()) {
-                                $op="";
-                                if ($c_linha['id']==$c_material)
-                                  $op="selected";
-                            echo "  
+                            <?php
+                            if ($c_indice == '')
+                                echo "<option></option>";
+                            // select da tabela de Material
+                            $c_sql_material = "SELECT materiais.id, materiais.descricao FROM materiais ORDER BY materiais.descricao";
+                            $result_material = $conection->query($c_sql_material);
+                            while ($c_linha = $result_material->fetch_assoc()) {
+                                $op = "";
+                                if ($c_linha['id'] == $c_material)
+                                    $op = "selected";
+                                echo "  
                           <option $op>$c_linha[descricao]</option>
                         ";
-                        }
-                        ?>
-                    </select>
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Quantidade</label>
-                <div class="col-sm-2">
-                    <input type="number" class="form-control" id="quantidade" name="quantidade" value="<?php echo $c_quantidade?>">
+                            }
+                            ?>
+                        </select>
+                    </div>
                 </div>
 
-            </div>
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Unidade</label>
-                <div class="col-sm-2">
-                    <select class="form-select form-select-lg mb-3" id="unidade" name="unidade">
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">Quantidade</label>
+                    <div class="col-sm-2">
+                        <input type="number" class="form-control" id="quantidade" name="quantidade" value="<?php echo $c_quantidade ?>">
+                    </div>
 
-                        <?php
+                </div>
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">Unidade</label>
+                    <div class="col-sm-2">
+                        <select class="form-select form-select-lg mb-3" id="unidade" name="unidade">
 
-                        // select da tabela de Unidades
-                        $c_sql_unidade = "SELECT unidades.id, unidades.descricao FROM unidades ORDER BY unidades.descricao";
-                        $result_unidade = $conection->query($c_sql_unidade);
-                        while ($c_linha = $result_unidade->fetch_assoc()) {
-                            $op = "";
-                            if ($c_linha['id']==$c_unidade)
-                              $op="selected";
+                            <?php
 
-                            echo "  
+                            // select da tabela de Unidades
+                            $c_sql_unidade = "SELECT unidades.id, unidades.descricao FROM unidades ORDER BY unidades.descricao";
+                            $result_unidade = $conection->query($c_sql_unidade);
+                            while ($c_linha = $result_unidade->fetch_assoc()) {
+                                $op = "";
+                                if ($c_linha['id'] == $c_unidade)
+                                    $op = "selected";
+
+                                echo "  
                           <option $op>$c_linha[descricao]</option>
                         ";
-                        }
-                        ?>
-                    </select>
+                            }
+                            ?>
+                        </select>
+                    </div>
                 </div>
-            </div>
+                <br>
+                <div class="row mb-3">
+                    <div class="offset-sm-0 col-sm-3">
+                        <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
+                        <a class='btn btn-danger' href='/gop/almoxarifado/cotacao_materiais_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                    </div>
 
-
-
-
-
-
-
-
-            <br>
-            <div class="row mb-3">
-                <div class="offset-sm-0 col-sm-3">
-                    <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                    <a class='btn btn-danger' href='/gop/almoxarifado/cotacao_materiais_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
                 </div>
 
-            </div>
-
-        </form>
+            </form>
+        </div>
     </div>
 
 </body>
