@@ -126,9 +126,9 @@ $c_preventivas_geradas = $registro['preventivas_geradas'];
                     </button>
                     <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow-xl rounded-md w-48 z-50">
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/solicitacao/solicitacao.php">Solicitações</a>
-                        
                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/ordens/ordens.php">Ordens de Serviço</a>
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/preventivas/preventivas.php">Preventivas</a>
+                    <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/agenda/agenda.php">Agenda de Executores</a>
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/ocorrencias/ocorrencias_lista.php">Ocorrências Padrões</a>
                    
                     </div>
