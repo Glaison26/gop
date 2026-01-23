@@ -13,14 +13,22 @@ $d_data1 = date("Y-m-d", strtotime(str_replace('/', '-', $d_data_inicio)));
 $d_data2 = date("Y-m-d", strtotime(str_replace('/', '-', $d_data_final)));
 // monto variavel $c_where_periodo com as datas 
 $c_where_periodo = " and (data_inicio>='$d_data1' and data_inicio<='$d_data2')";
-  
+
 // monto sql para pesquisa da agenda do executor
-$c_sql = 'SELECT ordens.data_inicio,  ordens.hora_inicio, executores.nome FROM ordens
+$c_sql = "SELECT ordens.data_inicio,  ordens.hora_inicio, executores.nome, ordens.status, ordens.id,
+case
+   when ordens.status='A' then 'Aberta'
+   when ordens.status='E' then 'Em Andamento'
+   when ordens.status='C' then 'Concluída'
+   when ordens.status='S' then 'Suspensa'
+   when ordens.status='X' then 'Cancelada'
+   END AS ordens_status FROM ordens
 JOIN ordens_executores ON ordens.id = ordens_executores.id_ordem
 JOIN executores ON ordens_executores.id_executor = executores.id
-where ordens_executores.id_executor = '.$id_executor.$c_where_periodo.'
-ORDER BY ordens.data_inicio desc';
+where ordens_executores.id_executor = ".$id_executor.$c_where_periodo."
+ORDER BY ordens.data_inicio desc";
 // variavesl de sessão com a montagem do sql
 $_SESSION['sql_agenda'] = $c_sql;
+$_SESSION['data1'] = $d_data1;
+$_SESSION['data2'] = $d_data2;
 header('location: /gop/agenda/agenda_lista.php');
-?>
