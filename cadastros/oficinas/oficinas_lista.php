@@ -233,7 +233,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_oficin
         <hr>
         <!-- Button trigger modal -->
 
-        <table class="table-bordered taboficinas">
+        <table class="table table-bordered table-striped taboficinas">
             <thead class="thead">
                 <tr>
                     <th scope="col">#</th>
@@ -260,7 +260,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_oficin
                 while ($c_linha = $result->fetch_assoc()) {
 
                     echo "
-                    <tr class='info'>
+                    <tr>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descricao]</td>
                     <td>$c_linha[fone1]</td>

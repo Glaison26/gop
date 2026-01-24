@@ -177,7 +177,15 @@ include('../conexao.php');
             </div>
             <h5>Resultado das Solicitações Selecionadas</h5>
         </div>
-
+        <div style="padding-bottom :15px;">
+            <?php
+            if ($_SESSION['pesquisamenu'] == false) {
+                echo "<a class='btn btn btn-sm' align='left' href='\gop\solicitacao\solicitacao.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
+            } else {
+                echo "<a class='btn btn btn-sm' align='left' href='\gop\menu.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
+            }
+            ?>
+        </div>
 
         <!-- abas de solicitações por recursos físicos, Espaços físicos e avulsos -->
         <ul class="nav nav-tabs" role="tablist">
@@ -189,7 +197,7 @@ include('../conexao.php');
             <!-- aba da recurso fisico-->
             <div role="tabpanel" class="tab-pane active" id="recurso">
                 <div style="padding-top:15px;padding-left:20px;">
-                    <table class="table-bordered tabsolicitacao_recursos">
+                    <table class="table table-bordered table-striped tabsolicitacao_recursos">
                         <thead class="thead">
                             <tr>
                                 <th scope="col">#</th>
@@ -246,7 +254,7 @@ include('../conexao.php');
             <!-- aba da espaco fisico-->
             <div role="tabpanel" class="tab-pane" id="espaco">
                 <div style="padding-top:15px;padding-left:20px;">
-                    <table class="table table display table-bordered tabsolicitacao_espacos">
+                    <table class="table table-bordered table-striped tabsolicitacao_espacos">
                         <thead class="thead">
                             <tr>
                                 <th scope="col">#</th>
@@ -275,7 +283,7 @@ include('../conexao.php');
                             while ($c_linha = $result->fetch_assoc()) {
                                 $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_abertura'])));
                                 echo "
-                                <tr class='info'>
+                                <tr>
                                     <td>$c_linha[id]</td>
                                     <td>$c_linha[id_ordem]</td>
                                     <td>$c_linha[solicitacao_status]</td>
@@ -302,7 +310,7 @@ include('../conexao.php');
             <!-- aba das avulsas-->
             <div role="tabpanel" class="tab-pane" id="avulsas">
                 <div style="padding-top:15px;padding-left:20px;">
-                    <table class="table-bordered tabsolicitacao_avulsas">
+                    <table class="table table-bordered table-striped tabsolicitacao_avulsas">
                         <thead class="thead">
                             <tr>
                                 <th scope="col">#</th>
@@ -353,18 +361,10 @@ include('../conexao.php');
 
                 </div>
             </div>
-             <hr>
-        <div style="padding-bottom :15px;">
-            <?php
-            if ($_SESSION['pesquisamenu'] == false) {
-                echo "<a class='btn btn btn-sm' align='left' href='\gop\solicitacao\solicitacao.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
-            } else {
-                echo "<a class='btn btn btn-sm' align='left' href='\gop\menu.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
-            }
-            ?>
+
+
         </div>
-        </div>
-       
+
     </div>
 
 

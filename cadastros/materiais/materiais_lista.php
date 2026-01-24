@@ -97,7 +97,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['almoxarifado_mat
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
-        <table class="table-bordered tabmateriais">
+        <table class="table table-bordered table-striped tabmateriais">
             <thead class="thead">
                 <tr>
                     <th scope="col">Código</th>
@@ -131,7 +131,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['almoxarifado_mat
                 while ($c_linha = $result->fetch_assoc()) {
                     $c_custo = mask($c_linha['custo'], 'R$#########');
                     echo "
-                    <tr class='info'>
+                    <tr>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descricao]</td>
                     <td>$c_linha[quantidadeatual]</td>

@@ -112,14 +112,15 @@ include('../conexao.php');
 </script>
 
 <body>
-    <div class="panel panel-primary class">
-        <div class="panel-heading text-center">
-            <h4>GOP - Gestão Operacional</h4>
-            <h5>Lista de Preventivas<h5>
-        </div>
-    </div>
-
     <div class="container-fluid">
+        <div class="panel panel-primary class">
+            <div class="panel-heading text-center">
+                <h4>GOP - Gestão Operacional</h4>
+                <h5>Lista de Preventivas<h5>
+            </div>
+        </div>
+
+
         <div class='alert alert-info' role='alert'>
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
@@ -145,7 +146,7 @@ include('../conexao.php');
             <!-- aba da recurso fisico-->
             <div role="tabpanel" class="tab-pane active" id="recurso">
                 <div style="padding-top:15px;padding-left:20px;">
-                    <table class="table table display table-bordered table-sm tabpreventivas_recursos">
+                    <table class="table table-bordered table-striped tabpreventivas_recursos">
                         <thead class="thead">
                             <tr>
                                 <th scope="col">#</th>
@@ -175,7 +176,7 @@ include('../conexao.php');
                                 $c_data_proxima = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_prox_realizacao'])));
 
                                 echo "
-                                <tr class='info'>
+                                <tr>
                                     <td>$c_linha[id]</td>
                                     <td>$c_linha[recurso]</td>
                                     <td>$c_linha[patrimonio]
@@ -205,7 +206,7 @@ include('../conexao.php');
             <!-- aba da espaco fisico-->
             <div role="tabpanel" class="tab-pane" id="espaco">
                 <div style="padding-top:15px;padding-left:20px;">
-                    <table class="table table display table-bordered tabpreventivas_espacos">
+                    <table class="table table-bordered table-striped tabpreventivas_espacos">
                         <thead class="thead">
                             <tr>
                                 <th scope="col">#</th>
@@ -232,7 +233,7 @@ include('../conexao.php');
                                 $c_data_proxima = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_prox_realizacao'])));
 
                                 echo "
-                                <tr class='info'>
+                                <tr>
                                     <td>$c_linha[id]</td>
                                     <td>$c_linha[espaco]</td>
                                     

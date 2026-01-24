@@ -86,16 +86,15 @@ $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $_SESSION['data1']))) . 
         </div>
     </div>
     <div class="container -my5">
-
         <div class='alert alert-info' role='alert'>
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
             </div>
-            <h4>Agenda do Executor : <?php echo $c_linha['nome'] ?> no período de <?php echo $c_data; ?> </h4>
+            <h4>Agenda do Executor : <?php echo $_SESSION['executor'] ?> no período de <?php echo $c_data; ?> </h4>
         </div>
         <a class='btn btn btn-sm' href='\gop\agenda\agenda.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>
         <hr>
-        <table class="table  table-bordered table-striped tab_agenda">
+        <table class="table table-bordered table-striped tab_agenda">
             <thead class=" thead">
             <tr>
                 <th scope="col">Numero da OS</th>
@@ -132,7 +131,6 @@ $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $_SESSION['data1']))) . 
                      </tr>";
                 }
                 ?>
-
             </tbody>
         </table>
     </div>

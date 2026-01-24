@@ -6,6 +6,11 @@ if (!isset($_SESSION['newsession'])) {
 include("../conexao.php");
 // pego id do executor
 $id_executor = $_POST['executor'];
+$c_sql_executor = "select * from executores where id=".$id_executor;
+$result = $conection->query($c_sql_executor);
+$c_result = $result->fetch_assoc();
+$_SESSION['executor'] = $c_result['nome'];
+
 // pego periodo para agenda
 $d_data_inicio = $_POST['data1'];
 $d_data_final = $_POST['data2'];
@@ -13,12 +18,12 @@ $d_data1 = date("Y-m-d", strtotime(str_replace('/', '-', $d_data_inicio)));
 $d_data2 = date("Y-m-d", strtotime(str_replace('/', '-', $d_data_final)));
 // monto variavel $c_where_periodo com as datas 
 $c_where_periodo = " and (data_inicio>='$d_data1' and data_inicio<='$d_data2')";
-
 // monto sql para pesquisa da agenda do executor
-$c_sql = "SELECT ordens.data_inicio,  ordens.hora_inicio, usuarios.nome as solicitante, executores.nome, ordens.status, setores.descricao AS setor, ordens.id,
+$c_sql = "SELECT ordens.data_inicio,  ordens.hora_inicio, usuarios.nome as solicitante, executores.nome, ordens.status,
+setores.descricao AS setor, ordens.id,
 case
    when ordens.status='A' then 'Aberta'
-   when ordens.status='E' then 'Em Andamento'
+   when ordens.status='E' then 'Em andamento'
    when ordens.status='C' then 'Concluída'
    when ordens.status='S' then 'Suspensa'
    when ordens.status='X' then 'Cancelada'

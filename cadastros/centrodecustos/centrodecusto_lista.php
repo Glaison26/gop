@@ -88,16 +88,13 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastro_centros
         </div>
     </div>
 
-
     <div class="container-fluid">
-
-
         <br>
         <a class="btn btn-success btn-sm" href="/gop/cadastros/centrodecustos/centrodecusto_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
-        <table class="table-bordered tabcentrodecusto">
+        <table class="table table-bordered table-striped tabcentrodecusto">
             <thead class="thead">
                 <tr>
                     <th scope="col">Código</th>

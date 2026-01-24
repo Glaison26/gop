@@ -207,7 +207,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_cargos
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
-        <table class="table-bordered tabfuncoes">
+        <table class="table table-bordered table-striped tabfuncoes">
             <thead class="thead">
                 <tr>
                     <th scope="col">#</th>
@@ -233,7 +233,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_cargos
                     $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
                     $c_custo = $formatter->formatCurrency($c_linha['valorhora'], 'BRL');
                     echo "
-                    <tr class='info'>
+                    <tr>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descricao]</td>
                     <td style='text-align: right;'>$c_custo</td>

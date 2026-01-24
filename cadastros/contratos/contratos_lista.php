@@ -98,7 +98,7 @@ $registro_acesso = $result_acesso->fetch_assoc();
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
-        <table class="table-bordered tabcontratos">
+        <table class="table table-bordered table-striped tabcontratos">
             <thead class="thead">
                 <tr>
                     <th scope="col">Código</th>

@@ -190,7 +190,7 @@ include("../../links2.php");
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
-        <table class="table-bordered tabtipos">
+        <table class="table table-bordered table-striped tabtipos">
             <thead class="thead">
                 <tr>
                     <th scope="col">#</th>
@@ -215,7 +215,7 @@ include("../../links2.php");
                 while ($c_linha = $result->fetch_assoc()) {
                       
                     echo "
-                    <tr class='info'>
+                    <tr>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descricao]</td>
                     <td>$c_linha[classe]</td>
