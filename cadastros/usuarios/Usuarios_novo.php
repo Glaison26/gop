@@ -52,14 +52,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
         }
         // consiste se senha tem pelo menos 1 caracter numérico
-        if (filter_var($c_senha, FILTER_SANITIZE_NUMBER_INT) == ''){
+        if (filter_var($c_senha, FILTER_SANITIZE_NUMBER_INT) == '') {
             $msg_erro = "Campo Senha deve ter pelo menos (1) caracter numérico";
             break;
         }
-        if (ctype_digit($c_senha)){
+        if (ctype_digit($c_senha)) {
             $msg_erro = "Campo Senha deve conter pelo menos uma letra do Alfabeto";
             break;
-
         }
         // consistencia se já existe login cadastrado
         $c_sql = "select usuarios.login from usuarios where login='$c_login'";
@@ -82,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
         }
         // pego a id do perfil para gravar no usuário
-        
+
         $c_sql_perfil = "select id from perfil_usuarios where perfil_usuarios.descricao='$_POST[perfil]'";
         $result_perfil = $conection->query($c_sql_perfil);
         $registro = $result_perfil->fetch_assoc();
@@ -117,6 +116,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/gop/css/basico.css">
+    <title>Dados de novo Executor</title>
 
     <script type="text/javascript">
         $(document).ready(function() {
@@ -126,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 </head>
 
-<div class="container -my5">
+<div class="container-fluid">
 
     <body>
         <div style="padding-top:5px;">
@@ -137,15 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             </div>
         </div>
-        <div class='alert alert-info' role='alert'>
-            <div style="padding-left:15px;">
-                <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
-            </div>
-            <h5>Campos com (*) são obrigatórios. A senha do usário deve conter pelo menos 1 letra do alfabeto, 1 caracter numérico, no  mínimo 8 caracteres e no máximo 30 caracteres</h5>
-        </div>
-
-        <br>
         <?php
         if (!empty($msg_erro)) {
             echo "
@@ -158,88 +151,96 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ";
         }
         ?>
-        <form method="post">
-            <div class="row mb-3">
-                <div class="form-check col-sm-3">
-                    <label class="form-check-label col-form-label">Usuário Ativo</label>
-                    <div class="col-sm-3">
-                        <input class="form-check-input" type="checkbox" value="S" name="chkativo" id="chkativo" checked>
+        <div class="container content-box">
+            <div class='alert alert-info' role='alert'>
+                <div style="padding-left:15px;">
+                    <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
+
+                </div>
+                <h5>Campos com (*) são obrigatórios. A senha do usário deve conter pelo menos 1 letra do alfabeto, 1 caracter numérico, no mínimo 8 caracteres e no máximo 30 caracteres</h5>
+            </div>
+            <form method="post">
+                <div class="row mb-3">
+                    <div class="form-check col-sm-3">
+                        <label class="form-check-label col-form-label">Usuário Ativo</label>
+                        <div class="col-sm-3">
+                            <input class="form-check-input" type="checkbox" value="S" name="chkativo" id="chkativo" checked>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <hr>
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Nome (*)</label>
-                <div class="col-sm-6">
-                    <input type="text" maxlength="120" class="form-control" name="nome" value="<?php echo $c_nome; ?>" required>
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Login (*)</label>
-                <div class="col-sm-3">
-                    <input type="text" maxlength="40" class="form-control" name="login" value="<?php echo $c_login; ?>" required>
+                <hr>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Nome (*)</label>
+                    <div class="col-sm-6">
+                        <input type="text" maxlength="120" class="form-control" name="nome" value="<?php echo $c_nome; ?>" required>
+                    </div>
                 </div>
 
-            </div>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Login (*)</label>
+                    <div class="col-sm-3">
+                        <input type="text" maxlength="40" class="form-control" name="login" value="<?php echo $c_login; ?>" required>
+                    </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Tipo de usuário </label>
-                <div class="col-sm-2">
-                    <select class="form-select form-select-lg mb-3" id="tipo" name="tipo">
-                        <option>Operador</option>
-                        <option>Solicitante</option>
-                        <option>Administrador</option>
-                    </select>
                 </div>
-            </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Perfil</label>
-                <div class="col-sm-3">
-                    <select class="form-select form-select-lg mb-3" id="perfil" name="perfil" required>
-                        <option></option>
-                        <?php
-                        $c_sql_perfil = "select perfil_usuarios.id, perfil_usuarios.descricao from perfil_usuarios order by perfil_usuarios.descricao";
-                        $result_perfil = $conection->query($c_sql_perfil);
-                        while ($registro = $result_perfil->fetch_assoc()){
-                            echo "<option>$registro[descricao]</option>";
-                        }
-                        ?>
-                       
-                    </select>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Tipo de usuário </label>
+                    <div class="col-sm-2">
+                        <select class="form-select form-select-lg mb-3" id="tipo" name="tipo">
+                            <option>Operador</option>
+                            <option>Solicitante</option>
+                            <option>Administrador</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">CPF (*)</label>
-                <div class="col-sm-2">
-                    <input type="text" id="cpf" maxlength="14" class="form-control" name="cpf" value="<?php echo $c_cpf; ?>" required>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Perfil</label>
+                    <div class="col-sm-3">
+                        <select class="form-select form-select-lg mb-3" id="perfil" name="perfil" required>
+                            <option></option>
+                            <?php
+                            $c_sql_perfil = "select perfil_usuarios.id, perfil_usuarios.descricao from perfil_usuarios order by perfil_usuarios.descricao";
+                            $result_perfil = $conection->query($c_sql_perfil);
+                            while ($registro = $result_perfil->fetch_assoc()) {
+                                echo "<option>$registro[descricao]</option>";
+                            }
+                            ?>
+
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">e-mail (*)</label>
-                <div class="col-sm-6">
-                    <input type="email" id="email" class="form-control" name="email" value="<?php echo $c_email; ?>" required>
+
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">CPF (*)</label>
+                    <div class="col-sm-2">
+                        <input type="text" id="cpf" maxlength="14" class="form-control" name="cpf" value="<?php echo $c_cpf; ?>" required>
+                    </div>
                 </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Senha (*)</label>
-                <div class="col-sm-2">
-                    <input type="password" maxlength="32" class="form-control" name="senha" value="<?php echo $c_senha; ?>" required>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">e-mail (*)</label>
+                    <div class="col-sm-6">
+                        <input type="email" id="email" class="form-control" name="email" value="<?php echo $c_email; ?>" required>
+                    </div>
                 </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Senha Confirmação (*)</label>
-                <div class="col-sm-2">
-                    <input type="password" maxlength="32" class="form-control" name="senha2" value="<?php echo $c_senha2; ?>" required>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Senha (*)</label>
+                    <div class="col-sm-2">
+                        <input type="password" maxlength="32" class="form-control" name="senha" value="<?php echo $c_senha; ?>" required>
+                    </div>
                 </div>
-            </div>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Senha Confirmação (*)</label>
+                    <div class="col-sm-2">
+                        <input type="password" maxlength="32" class="form-control" name="senha2" value="<?php echo $c_senha2; ?>" required>
+                    </div>
+                </div>
 
 
-            <?php
-            if (!empty($msg_gravou)) {
-                echo "
+                <?php
+                if (!empty($msg_gravou)) {
+                    echo "
                     <div class='row mb-3'>
                         <div class='offset-sm-3 col-sm-6'>
                              <div class='alert alert-success alert-dismissible fade show' role='alert'>
@@ -249,19 +250,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>     
                     </div>    
                 ";
-            }
-            ?>
-            <hr>
-            <div class="row mb-3">
-                <div class="offset-sm-0 col-sm-3">
-                    <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                    <a class='btn btn-danger' href='/gop/cadastros/usuarios/usuarios_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                }
+                ?>
+                <hr>
+                <div class="row mb-3">
+                    <div class="offset-sm-0 col-sm-3">
+                        <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
+                        <a class='btn btn-danger' href='/gop/cadastros/usuarios/usuarios_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                    </div>
+
                 </div>
-
-            </div>
-        </form>
+            </form>
+    </body>
 </div>
-
-</body>
+</div>
 
 </html>

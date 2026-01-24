@@ -6,7 +6,7 @@ if (!isset($_SESSION['newsession'])) {
 include("../conexao.php");
 // pego id do executor
 $id_executor = $_POST['executor'];
-$c_sql_executor = "select * from executores where id=".$id_executor;
+$c_sql_executor = "select * from executores where id=" . $id_executor;
 $result = $conection->query($c_sql_executor);
 $c_result = $result->fetch_assoc();
 $_SESSION['executor'] = $c_result['nome'];
@@ -17,7 +17,7 @@ $d_data_final = $_POST['data2'];
 $d_data1 = date("Y-m-d", strtotime(str_replace('/', '-', $d_data_inicio)));
 $d_data2 = date("Y-m-d", strtotime(str_replace('/', '-', $d_data_final)));
 // monto variavel $c_where_periodo com as datas 
-$c_where_periodo = " and (data_inicio>='$d_data1' and data_inicio<='$d_data2')";
+$c_where_periodo = "(data_inicio>='$d_data1' and data_inicio<='$d_data2')";
 // monto sql para pesquisa da agenda do executor
 $c_sql = "SELECT ordens.data_inicio,  ordens.hora_inicio, usuarios.nome as solicitante, executores.nome, ordens.status,
 setores.descricao AS setor, ordens.id,
@@ -31,9 +31,14 @@ case
 JOIN ordens_executores ON ordens.id = ordens_executores.id_ordem
 JOIN executores ON ordens_executores.id_executor = executores.id
 JOIN setores ON ordens.id_setor=setores.id
-JOIN usuarios ON ordens.id_solicitante=usuarios.id
-where ordens_executores.id_executor = ".$id_executor.$c_where_periodo."
-ORDER BY ordens.data_inicio desc";
+JOIN usuarios ON ordens.id_solicitante=usuarios.id";
+if ($id_executor == "0") {
+    $c_sql = $c_sql . " where " . $c_where_periodo;
+    $_SESSION['executor'] ='Todos os Executores';
+} else {
+    $c_sql = $c_sql . " where ordens_executores.id_executor = " . $id_executor . " and " . $c_where_periodo;
+}
+$c_sql = $c_sql . " ORDER BY ordens.data_inicio desc";
 // variavesl de sessão com a montagem do sql
 $_SESSION['sql_agenda'] = $c_sql;
 $_SESSION['data1'] = $d_data1;

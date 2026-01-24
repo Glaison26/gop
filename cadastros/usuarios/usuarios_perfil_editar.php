@@ -427,6 +427,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html lang="en">
+<header>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/gop/css/basico.css">
+    <title>GOP - Editar Perfil de Usuário</title>
+</header>
 
 <body>
 
@@ -437,23 +444,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
     <br>
-    <div class="container -my5">
+    <div class="container-fluid">
 
-        <body>
 
-            <?php
-            if (!empty($msg_erro)) {
-                echo "
+
+        <?php
+        if (!empty($msg_erro)) {
+            echo "
             <div class='alert alert-danger' role='alert'>
                 <h4>$msg_erro</h4>
             </div>
                 ";
-            }
-            ?>
-            <div class='alert alert-warning' role='alert'>
+        }
+        ?>
+        <!-- Definição das tabs  -->
+        <div class="container content-box">
+            <div class='alert alert-info' role='alert'>
+                <div style="padding-left:15px;">
+                    <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
+
+                </div>
                 <h5>Campos com (*) são obrigatórios</h5>
             </div>
-            <!-- Definição das tabs  -->
             <form method="post">
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active"><a href="#descricao" aria-controls="home" role="tab" data-toggle="tab">Descrição</a></li>
@@ -727,8 +739,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
 
                 </div>
-
-
                 <hr>
                 <div class="row mb-3">
                     <div class="offset-sm-0 col-sm-3">
@@ -738,8 +748,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 </div>
             </form>
-
-        </body>
+        </div>
     </div>
+</body>
+
 
 </html>

@@ -14,7 +14,7 @@ $result = $conection->query($c_sql);
 $c_linha = $result->fetch_assoc();
 
 $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $_SESSION['data1']))) . ' a '
- . date("d-m-Y", strtotime(str_replace('/', '-', $_SESSION['data2'])));
+    . date("d-m-Y", strtotime(str_replace('/', '-', $_SESSION['data2'])));
 
 ?>
 
@@ -28,51 +28,51 @@ $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $_SESSION['data1']))) . 
     <title>Agenda de Executor de Serviço</title>
 
     <!-- script da tabela de solicitações avulsas -->
-<script>
-    $(document).ready(function() {
-        $('.tab_agenda').DataTable({
-            // 
-            "iDisplayLength": -1,
-            "order": [1, 'asc'],
-            "aoColumnDefs": [{
-                'bSortable': false,
-                'aTargets': [5]
-            }, {
-                'aTargets': [0],
-                "visible": true
-            }],
-            "oLanguage": {
-                "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-                "sLengthMenu": "_MENU_ resultados por página",
-                "sInfoFiltered": " - filtrado de _MAX_ registros",
-                "oPaginate": {
-                    "spagingType": "full_number",
-                    "sNext": "Próximo",
-                    "sPrevious": "Anterior",
-                    "sFirst": "Primeiro",
-                    "sLoadingRecords": "Carregando...",
-                    "sProcessing": "Processando...",
-                    "sZeroRecords": "Nenhum registro encontrado",
+    <script>
+        $(document).ready(function() {
+            $('.tab_agenda').DataTable({
+                // 
+                "iDisplayLength": -1,
+                "order": [1, 'asc'],
+                "aoColumnDefs": [{
+                    'bSortable': false,
+                    'aTargets': [5]
+                }, {
+                    'aTargets': [0],
+                    "visible": true
+                }],
+                "oLanguage": {
+                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                    "sLengthMenu": "_MENU_ resultados por página",
+                    "sInfoFiltered": " - filtrado de _MAX_ registros",
+                    "oPaginate": {
+                        "spagingType": "full_number",
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLoadingRecords": "Carregando...",
+                        "sProcessing": "Processando...",
+                        "sZeroRecords": "Nenhum registro encontrado",
 
-                    "sLast": "Último"
-                },
-                "sSearch": "Pesquisar",
-                "sLengthMenu": 'Mostrar <select>' +
-                    '<option value="5">5</option>' +
-                    '<option value="10">10</option>' +
-                    '<option value="20">20</option>' +
-                    '<option value="30">30</option>' +
-                    '<option value="40">40</option>' +
-                    '<option value="50">50</option>' +
-                    '<option value="-1">Todos</option>' +
-                    '</select> Registros'
+                        "sLast": "Último"
+                    },
+                    "sSearch": "Pesquisar",
+                    "sLengthMenu": 'Mostrar <select>' +
+                        '<option value="5">5</option>' +
+                        '<option value="10">10</option>' +
+                        '<option value="20">20</option>' +
+                        '<option value="30">30</option>' +
+                        '<option value="40">40</option>' +
+                        '<option value="50">50</option>' +
+                        '<option value="-1">Todos</option>' +
+                        '</select> Registros'
 
-            }
+                }
+
+            });
 
         });
-
-    });
-</script>
+    </script>
 
 </head>
 
@@ -92,19 +92,25 @@ $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $_SESSION['data1']))) . 
             </div>
             <h4>Agenda do Executor : <?php echo $_SESSION['executor'] ?> no período de <?php echo $c_data; ?> </h4>
         </div>
+        <hr>
         <a class='btn btn btn-sm' href='\gop\agenda\agenda.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>
         <hr>
         <table class="table table-bordered table-striped tab_agenda">
             <thead class=" thead">
-            <tr>
-                <th scope="col">Numero da OS</th>
-                <th scope="col">Data Inicio</th>
-                <th scope="col">Hora Inicio</th>
-                <th scope="col">Setor</th>
-                <th scope="col">Solicitante</th>
-                <th scope="col">Status</th>
+                <tr>
+                    <th scope="col">Numero da OS</th>
+                    <th scope="col">Data Inicio</th>
+                    <th scope="col">Hora Inicio</th>
+                    <?php
+                    if ($_SESSION['executor'] == 'Todos os Executores') {
+                        echo "<th scope='col'>Executor</th>";
+                    }
+                    ?>
+                    <th scope="col">Setor</th>
+                    <th scope="col">Solicitante</th>
+                    <th scope="col">Status</th>
 
-            </tr>
+                </tr>
             </thead>
             <tbody>
                 <?php
@@ -123,7 +129,11 @@ $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $_SESSION['data1']))) . 
                       <tr>
                          <td>$c_linha[id]</td>
                          <td>$c_data</td>
-                         <td>$c_linha[hora_inicio]</td>
+                         <td>$c_linha[hora_inicio]</td>";
+                         if ($_SESSION['executor'] == 'Todos os Executores') {
+                            echo "<td>$c_linha[nome]</td>";
+                        }
+                        echo "
                          <td>$c_linha[setor]</td>
                          <td>$c_linha[solicitante]</td>
                          <td>$c_linha[ordens_status]</td>

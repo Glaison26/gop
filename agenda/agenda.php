@@ -59,6 +59,7 @@ include("../links2.php");
                         <div class="col-sm-7">
                             <select class="form-select form-select-lg mb-3" id="executor" name="executor" required>
                                 <option></option>
+                                <option value = "0">Todos os Executores</option>
                                 <?php
                                 // select da tabela de executores
                                 $c_sql_exec = "SELECT executores.id, executores.nome FROM executores ORDER BY executores.nome";

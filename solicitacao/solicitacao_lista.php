@@ -354,8 +354,6 @@ include('../conexao.php');
                                 ";
                             }
                             ?>
-
-
                         </tbody>
                     </table>
 
