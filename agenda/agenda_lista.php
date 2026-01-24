@@ -25,34 +25,86 @@ $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $_SESSION['data1']))) . 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agenda de Executor de Serviço</title>
+
+    <!-- script da tabela de solicitações avulsas -->
+<script>
+    $(document).ready(function() {
+        $('.tab_agenda').DataTable({
+            // 
+            "iDisplayLength": -1,
+            "order": [1, 'asc'],
+            "aoColumnDefs": [{
+                'bSortable': false,
+                'aTargets': [5]
+            }, {
+                'aTargets': [0],
+                "visible": true
+            }],
+            "oLanguage": {
+                "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                "sLengthMenu": "_MENU_ resultados por página",
+                "sInfoFiltered": " - filtrado de _MAX_ registros",
+                "oPaginate": {
+                    "spagingType": "full_number",
+                    "sNext": "Próximo",
+                    "sPrevious": "Anterior",
+                    "sFirst": "Primeiro",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": "Processando...",
+                    "sZeroRecords": "Nenhum registro encontrado",
+
+                    "sLast": "Último"
+                },
+                "sSearch": "Pesquisar",
+                "sLengthMenu": 'Mostrar <select>' +
+                    '<option value="5">5</option>' +
+                    '<option value="10">10</option>' +
+                    '<option value="20">20</option>' +
+                    '<option value="30">30</option>' +
+                    '<option value="40">40</option>' +
+                    '<option value="50">50</option>' +
+                    '<option value="-1">Todos</option>' +
+                    '</select> Registros'
+
+            }
+
+        });
+
+    });
+</script>
+
 </head>
 
 <body>
     <div class="container-fluid">
-
         <div class="panel panel-primary class">
             <div class="panel-heading text-center">
                 <h4>GOP - Gestão Operacional</h4>
                 <h5>Agenda de Executor<h5>
             </div>
         </div>
+    </div>
+    <div class="container -my5">
 
         <div class='alert alert-info' role='alert'>
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
             </div>
-            <h4>Agenda do Executor : <?php echo $c_linha['nome'] ?> no perído de <?php echo $c_data; ?> </h4>
+            <h4>Agenda do Executor : <?php echo $c_linha['nome'] ?> no período de <?php echo $c_data; ?> </h4>
         </div>
+        <a class='btn btn btn-sm' href='\gop\agenda\agenda.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>
+        <hr>
+        <table class="table  table-bordered table-striped tab_agenda">
+            <thead class=" thead">
+            <tr>
+                <th scope="col">Numero da OS</th>
+                <th scope="col">Data Inicio</th>
+                <th scope="col">Hora Inicio</th>
+                <th scope="col">Setor</th>
+                <th scope="col">Solicitante</th>
+                <th scope="col">Status</th>
 
-        <table class="table  table-bordered table-striped >
-            <thead class="thead">
-                <tr>
-                    <th scope="col">Numero da OS</th>
-                    <th scope="col">Data Inicio</th>
-                    <th scope="col">Hora Inicio</th>
-                    <th scope="col">Status</th>
-
-                </tr>
+            </tr>
             </thead>
             <tbody>
                 <?php
@@ -73,6 +125,8 @@ $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $_SESSION['data1']))) . 
                          <td>$c_linha[id]</td>
                          <td>$c_data</td>
                          <td>$c_linha[hora_inicio]</td>
+                         <td>$c_linha[setor]</td>
+                         <td>$c_linha[solicitante]</td>
                          <td>$c_linha[ordens_status]</td>
                                    
                      </tr>";
