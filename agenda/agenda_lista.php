@@ -13,7 +13,8 @@ $c_sql = $_SESSION['sql_agenda'];
 $result = $conection->query($c_sql);
 $c_linha = $result->fetch_assoc();
 
-$c_data = date("d-m-Y", strtotime(str_replace('/', '-', $_SESSION['data1']))) . ' a ' . date("d-m-Y", strtotime(str_replace('/', '-', $_SESSION['data2'])));
+$c_data = date("d-m-Y", strtotime(str_replace('/', '-', $_SESSION['data1']))) . ' a '
+ . date("d-m-Y", strtotime(str_replace('/', '-', $_SESSION['data2'])));
 
 ?>
 
@@ -108,7 +109,6 @@ $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $_SESSION['data1']))) . 
             </thead>
             <tbody>
                 <?php
-
                 // faço a Leitura da tabela com sql
                 //echo $c_sql_recurso;
                 $result = $conection->query($c_sql);
