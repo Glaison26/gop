@@ -8,6 +8,7 @@ include("../conexao.php");
 include("../links2.php");
 // executo o sql que foi montado
 $c_sql = $_SESSION['sql_agenda'];
+$registro['status'] = 'C';
 //echo $_SESSION['sql_agenda'];
 
 $result = $conection->query($c_sql);
@@ -85,7 +86,7 @@ $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $_SESSION['data1']))) . 
             </div>
         </div>
     </div>
-    <div class="container -my5">
+    <div class="container-fluid">
         <div class='alert alert-info' role='alert'>
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
@@ -106,9 +107,11 @@ $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $_SESSION['data1']))) . 
                         echo "<th scope='col'>Executor</th>";
                     }
                     ?>
+                    <th scope="col">Descritivo</th>
                     <th scope="col">Setor</th>
                     <th scope="col">Solicitante</th>
                     <th scope="col">Status</th>
+                    <th scope="col">Ação</th>
 
                 </tr>
             </thead>
@@ -134,9 +137,14 @@ $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $_SESSION['data1']))) . 
                             echo "<td>$c_linha[nome]</td>";
                         }
                         echo "
+                         <td>$c_linha[descritivo]</td>
                          <td>$c_linha[setor]</td>
                          <td>$c_linha[solicitante]</td>
                          <td>$c_linha[ordens_status]</td>
+                         <td>
+                         <a class='btn btn-info btn-sm' href='/gop/ordens/ordens_editar.php?id=$c_linha[id]'>
+                                        <span class='glyphicon glyphicon-eye-open'></span> Visualizar</a>
+                        </td>               
                                    
                      </tr>";
                 }

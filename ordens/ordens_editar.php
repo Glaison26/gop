@@ -625,10 +625,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                 <div class="row mb-3">
                     <div class="offset-sm-0 col-sm-3">
                         <?php
-                        if ($registro['status'] <> 'X' && $registro['status'] <> 'C')
+                        if ($registro['status'] <> 'X' && $registro['status'] <> 'C'&& $_SESSION['ver_os']==false)
                             echo '<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-saved"></span> Salvar</button>';
+                        if ($_SESSION['ver_os'] == false){
+                           echo "
+                            <a class='btn btn-danger' href='/gop/ordens/ordens_gerenciar.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>";
+                        } else{
+                           echo "
+                            <a class='btn btn-danger' href='/gop/agenda/agenda_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>";
+                        }
+
                         ?>
-                        <a class='btn btn-danger' href='/gop/ordens/ordens_gerenciar.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
                     </div>
                 </div>
 

@@ -5,6 +5,7 @@ if (!isset($_SESSION['newsession'])) {
 }
 include("../conexao.php");
 include("../links2.php");
+$_SESSION['ver_os']=true;
 
 ?>
 

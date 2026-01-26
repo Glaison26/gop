@@ -19,7 +19,7 @@ $d_data2 = date("Y-m-d", strtotime(str_replace('/', '-', $d_data_final)));
 // monto variavel $c_where_periodo com as datas 
 $c_where_periodo = "(data_inicio>='$d_data1' and data_inicio<='$d_data2')";
 // monto sql para pesquisa da agenda do executor
-$c_sql = "SELECT ordens.data_inicio,  ordens.hora_inicio, usuarios.nome as solicitante, executores.nome, ordens.status,
+$c_sql = "SELECT ordens.data_inicio, ordens.descritivo, ordens.hora_inicio, usuarios.nome as solicitante, executores.nome, ordens.status,
 setores.descricao AS setor, ordens.id,
 case
    when ordens.status='A' then 'Aberta'

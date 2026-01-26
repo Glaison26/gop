@@ -90,6 +90,8 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_ocorren
             var c_descricao = $('#add_descricaoField').val();
             var c_texto = $('#add_textoField').val();
             var c_texto_fechamento = $('#add_textofechamentoField').val();
+            var c_tempo_hora = $('#add_tempo_horas').val();
+            var c_tempo_minuto = $('#add_tempo_minutos').val();
 
             if (c_descricao != '') {
 
@@ -98,8 +100,10 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_ocorren
                     type: "post",
                     data: {
                         c_descricao: c_descricao,
-                        c_texto : c_texto,
-                        c_texto_fechamento : c_texto_fechamento
+                        c_texto: c_texto,
+                        c_texto_fechamento: c_texto_fechamento,
+                        c_tempo_hora:c_tempo_hora,
+                        c_tempo_minuto:c_tempo_minuto
 
                     },
                     success: function(data) {
@@ -163,8 +167,8 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_ocorren
                     data: {
                         c_id: c_id,
                         c_descricao: c_descricao,
-                        c_texto:c_texto,
-                        c_texto_fechamento : c_texto_fechamento
+                        c_texto: c_texto,
+                        c_texto_fechamento: c_texto_fechamento
                     },
                     success: function(data) {
                         var json = JSON.parse(data);
@@ -196,7 +200,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_ocorren
     <br>
     <div class="container-fluid">
 
-        <button type="button" title="Inclusão de Novo Grupo" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal">
+        <button type="button" title="Inclusão de Nova Ocorrência" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal">
             <span class="glyphicon glyphicon-plus"></span>
             Incluir
         </button>
@@ -210,6 +214,8 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_ocorren
                     <th scope="col">Descrição</th>
                     <th scope="col">Texto Padrão</th>
                     <th scope="col">Texto Fechamento</th>
+                    <th scope="col">Tempo hr.</th>
+                    <th scope="col">Tempo Min.</th>
                     <th scope="col">Opções</th>
                 </tr>
             </thead>
@@ -217,7 +223,9 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_ocorren
                 <?php
 
                 // faço a Leitura da tabela com sql
-                $c_sql = "SELECT ocorrencias.id, ocorrencias.descricao, ocorrencias.texto, ocorrencias.texto_fechamento FROM ocorrencias ORDER BY ocorrencias.descricao";
+                $c_sql = "SELECT ocorrencias.id, ocorrencias.descricao, ocorrencias.texto, ocorrencias.texto_fechamento, ocorrencias.tempo_hora,
+                ocorrencias.tempo_minuto
+                FROM ocorrencias ORDER BY ocorrencias.descricao";
                 $result = $conection->query($c_sql);
                 // verifico se a query foi correto
                 if (!$result) {
@@ -228,11 +236,13 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_ocorren
                 while ($c_linha = $result->fetch_assoc()) {
 
                     echo "
-                    <tr class='info'>
+                    <tr'>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descricao]</td>
                     <td>$c_linha[texto]</td>
                     <td>$c_linha[texto_fechamento]</td>
+                    <td>$c_linha[tempo_hora]</td>
+                    <td>$c_linha[tempo_minuto]</td>
                     <td>
                     <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Ocorrência'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
@@ -260,9 +270,21 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_ocorren
                     </div>
                     <form id="frmadd" action="">
                         <div class="mb-3 row">
-                            <label for="add_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
+                            <label for="add_descricaoField" class="col-md-3 form-label">Descrição*</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" id="add_descricaoField" name="add_dscricaoField" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Tempo em horas</label>
+                            <div class="col-sm-3">
+                                <input type="number" class="form-control" id="add_tempo_horas" required name="add_tempo_horas" value="<?php echo $n_tempo_horas; ?>">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                         <label class="col-sm-3 col-form-label">Tempo em Min.</label>
+                            <div class="col-sm-3">
+                                <input type="number" class="form-control" id="add_tempo_minutos" required name="add_tempo_minutos" value="<?php echo $n_tempo_minutos; ?>">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -311,12 +333,24 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_ocorren
                             </div>
                         </div>
                         <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Tempo em horas</label>
+                            <div class="col-sm-3">
+                                <input type="number" class="form-control" required name="tempo_horas" value="<?php echo $n_tempo_horas; ?>">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                         <label class="col-sm-3 col-form-label">Tempo em Min.</label>
+                            <div class="col-sm-3">
+                                <input type="number" class="form-control" required name="tempo_minutos" value="<?php echo $n_tempo_minutos; ?>">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Texto padrão</label>
                             <div class="col-sm-9">
                                 <textarea class="form-control" id="up_textoField" name="up_textoField" rows="8"></textarea>
                             </div>
                         </div>
-                       
+
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Texto de conclusão</label>
                             <div class="col-sm-9">

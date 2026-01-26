@@ -49,6 +49,8 @@ $c_sql =    "SELECT count(*) as preventivas_geradas FROM ordens
 $result = $conection->query($c_sql);
 $registro = $result->fetch_assoc();
 $c_preventivas_geradas = $registro['preventivas_geradas'];
+// marcados para ver ordem na agenda de executores
+$_SESSION['ver_os'] = false;
 ?>
 
 
