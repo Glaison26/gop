@@ -15,6 +15,8 @@ $registro_acesso = $result_acesso->fetch_assoc();
 if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_ocorrencias_padroes'] == 'N') {
     header('location: /gop/acesso.php');
 }
+$n_tempo_horas = '0';
+$n_tempo_minutos = '0';
 ?>
 <!doctype html>
 <html lang="en">
@@ -146,6 +148,8 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_ocorren
                 $('#up_descricaoField').val(data[1]);
                 $('#up_textoField').val(data[2]);
                 $('#up_textofechamentoField').val(data[3]);
+                $('#up_tempo_horas').val(data[4]);
+                $('#up_tempo_minutos').val(data[5]);
             });
         });
     </script>
@@ -158,6 +162,8 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_ocorren
             var c_descricao = $('#up_descricaoField').val();
             var c_texto = $('#up_textoField').val();
             var c_texto_fechamento = $('#up_textofechamentoField').val();
+            var c_tempo_minuto = $('#up_tempo_minutos').val();
+            var c_tempo_hora = $('#up_tempo_horas').val();
 
             if (c_descricao != '') {
 
@@ -168,7 +174,10 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_ocorren
                         c_id: c_id,
                         c_descricao: c_descricao,
                         c_texto: c_texto,
-                        c_texto_fechamento: c_texto_fechamento
+                        c_texto_fechamento: c_texto_fechamento,
+                        c_tempo_hora:c_tempo_hora,
+                        c_tempo_minuto:c_tempo_minuto
+
                     },
                     success: function(data) {
                         var json = JSON.parse(data);
@@ -335,13 +344,13 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_ocorren
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Tempo em horas</label>
                             <div class="col-sm-3">
-                                <input type="number" class="form-control" required name="tempo_horas" value="<?php echo $n_tempo_horas; ?>">
+                                <input type="number" class="form-control" required id="up_tempo_horas" name="up_tempo_horas" value="<?php echo $n_tempo_horas; ?>">
                             </div>
                         </div>
                         <div class="row mb-3">
                          <label class="col-sm-3 col-form-label">Tempo em Min.</label>
                             <div class="col-sm-3">
-                                <input type="number" class="form-control" required name="tempo_minutos" value="<?php echo $n_tempo_minutos; ?>">
+                                <input type="number" class="form-control" required id="up_tempo_minutos" name="up_tempo_minutos" value="<?php echo $n_tempo_minutos; ?>">
                             </div>
                         </div>
                         <div class="row mb-3">

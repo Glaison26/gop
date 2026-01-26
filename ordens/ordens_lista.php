@@ -219,6 +219,7 @@ include('../conexao.php');
                                 <th scope="col"># Sol.</th>
                                 <th scope="col">Data</th>
                                 <th scope="col">Hora</th>
+                                <th scope="col">Inicio</th>
                                 <th scope="col">Data SLA</th>
                                 <th scope="col">Descritivo</th>
                                 <th scope="col">Patrimônio</th>
@@ -244,6 +245,7 @@ include('../conexao.php');
                             // insiro os registro do banco de dados na tabela 
                             while ($c_linha = $result->fetch_assoc()) {
                                 $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_geracao'])));
+                                $c_data_inicio = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_inicio'])));
                                 if (!empty($c_linha['data_previsao']))
                                     $c_data_sla = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_previsao'])));
                                 else
@@ -265,6 +267,7 @@ include('../conexao.php');
                                     <td>$c_linha[id_solicitacao]</td>
                                     <td>$c_data</td>
                                     <td>$c_hora</td>
+                                    <td>$c_data_inicio</td>
                                     <td>$c_data_sla</td>
                                     <td>$c_linha[descritivo]</td>
                                     <td>$c_linha[patrimonio]</td>
@@ -302,6 +305,7 @@ include('../conexao.php');
                                 <th scope="col"># Sol.</th>
                                 <th scope="col">Data</th>
                                 <th scope="col">Hora</th>
+                                <th scope="col">Inicio</th>
                                 <th scope="col">Data SLA</th>
                                 <th scope="col">Descritivo</th>
                                 <th scope="col">Status</th>
@@ -326,6 +330,7 @@ include('../conexao.php');
                             // insiro os registro do banco de dados na tabela 
                             while ($c_linha = $result->fetch_assoc()) {
                                 $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_geracao'])));
+                                $c_data_inicio = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_inicio'])));
                                 if (!empty($c_linha['data_previsao']))
                                     $c_data_sla = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_previsao'])));
                                 else
@@ -345,6 +350,7 @@ include('../conexao.php');
                                    <td>$c_linha[id_solicitacao]</td>
                                    <td>$c_data</td>
                                    <td>$c_hora</td>
+                                   <td>$c_data_inicio</td>
                                    <td>$c_data_sla</td>
                                    <td>$c_linha[descritivo]</td>
                                    <td $c_cor style='text-align:center'>$c_linha[ordens_status]</td>
@@ -382,6 +388,7 @@ include('../conexao.php');
                                 <th scope="col"># Sol.</th>
                                 <th scope="col">Data</th>
                                 <th scope="col">Hora</th>
+                                <th scope="col">Inicio</th>
                                 <th scope="col">Data SLA</th>
                                 <th scope="col">Descritivo</th>
                                 <th scope="col">Status</th>
@@ -406,6 +413,7 @@ include('../conexao.php');
                             // insiro os registro do banco de dados na tabela 
                             while ($c_linha = $result->fetch_assoc()) {
                                 $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_geracao'])));
+                                $c_data_inicio = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_inicio'])));
                                 if (!empty($c_linha['data_previsao']))
                                     $c_data_sla = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_previsao'])));
                                 else
@@ -425,6 +433,7 @@ include('../conexao.php');
                                     <td>$c_linha[id_solicitacao]</td>
                                     <td>$c_data</td>
                                     <td>$c_linha[hora_geracao]</td>
+                                    <td>$c_data_inicio</td>
                                     <td>$c_data_sla</td>
                                     <td>$c_linha[descritivo]</td>
                                     <td $c_cor style='text-align:center'>$c_linha[ordens_status]</td>

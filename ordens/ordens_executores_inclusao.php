@@ -14,8 +14,14 @@ $c_executor_valor = $_SESSION['valor_executor'];
 $c_valor = "0";
 $c_indice = '';
 $msg_erro = "";
-$n_tempo_horas = '';
-$n_tempo_minutos = '';
+$id_ocorrencia = $_SESSION['id_ocorrencia'];
+// busco no cadastro a ocorencia as horas minutos padrões para a ocorrência da ordem de serviço
+$c_sql_ocorrencia = "select id,tempo_hora,tempo_minuto from ocorrencias where id = ".$id_ocorrencia;
+$result_ocorrencia = $conection->query($c_sql_ocorrencia);
+$c_linha_ocorrencia = $result_ocorrencia->fetch_assoc();
+
+$n_tempo_horas = $c_linha_ocorrencia['tempo_hora'];
+$n_tempo_minutos = $c_linha_ocorrencia['tempo_minuto'];
 
 
 // inclusão do material no banco de dados
@@ -27,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
     //
     do {
         if (empty($c_executor)) {
-            $msg_erro = "Todos os campos devem ser preencidos !!";
+            $msg_erro = "Todos os campos devem ser preenchidos !!";
             break;
         }
 

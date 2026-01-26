@@ -20,9 +20,10 @@ $_SESSION['valor_executor'] = "";
 $_SESSION['nome_material'] = "";
 $_SESSION['valor_material'] = "";
 //
-$c_sql_ordem = "select status from ordens where id='$i_id'";
+$c_sql_ordem = "select status, id_ocorrencia from ordens where id='$i_id'";
 $result = $conection->query($c_sql_ordem);
 $c_linha_ordem = $result->fetch_assoc();
+$_SESSION['id_ocorrencia'] = $c_linha_ordem['id_ocorrencia'];
 
 
 ?>
