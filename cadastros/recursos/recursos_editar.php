@@ -417,7 +417,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                                         ?>
                                     </select>
                                 </div>
-                                <label class="col-sm-2 col-form-label">Marca </label>
+                                <label class="col-sm-1 col-form-label">Marca </label>
                                 <div class="col-sm-2">
                                     <select class="form-select form-select-lg mb-3" id="marca" name="marca">
                                         <?php
@@ -440,7 +440,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-3 col-form-label">Espaço Físico </label>
-                                <div class="col-sm-4">
+                                <div class="col-sm-5">
                                     <select class="form-select form-select-lg mb-3" id="espaco" name="espaco">
                                         <?php
                                         // select da tabela de espacos fisicos
@@ -463,7 +463,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
 
                             <div class="row mb-3">
                                 <label class="col-sm-3 col-form-label">Centro de Custo </label>
-                                <div class="col-sm-4">
+                                <div class="col-sm-5">
                                     <select class="form-select form-select-lg mb-3" id="centrodecusto" name="centrodecusto">
                                         <?php
                                         // select da tabela de centro de custo
@@ -486,7 +486,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-3 col-form-label">Tipo </label>
-                                <div class="col-sm-4">
+                                <div class="col-sm-5">
                                     <select class="form-select form-select-lg mb-3" id="tipo" name="tipo">
                                         <?php
                                         // select da tabela de tipos
@@ -508,7 +508,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
 
                             <div class="row mb-3">
                                 <label class="col-sm-3 col-form-label">Setor </label>
-                                <div class="col-sm-4">
+                                <div class="col-sm-5">
                                     <select class="form-select form-select-lg mb-3" id="setor" name="setor">
                                         <?php
                                         // select da tabela de setores
@@ -532,7 +532,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                                 <div class="col-sm-2">
                                     <input type="text" maxlength="20" class="form-control" name="notafiscal" value="<?php echo $c_notafiscal; ?>" required>
                                 </div>
-                                <label class="col-sm-2 col-form-label">Data de Aquisição</label>
+                                <label class="col-sm-1 col-form-label">Aquisição</label>
                                 <div class="col-sm-2">
                                     <input type="date" class="form-control" name="dataaquisicao" value="<?php echo $d_dataaquisicao; ?>">
                                 </div>

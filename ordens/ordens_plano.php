@@ -120,7 +120,7 @@ include('../conexao.php');
             echo "
         <div class='panel panel-info class'>
             <div class='panel-heading'>
-                <button type='button' title='Inclusão de Planejamento' class='btn btn-success' data-toggle='modal' data-target='#novoModal_plano'>
+                <button type='button' title='Inclusão de Planejamento' class='btn btn' data-toggle='modal' data-target='#novoModal_plano'>
                     <span class='glyphicon glyphicon-plus'></span>
                     Incluir Planejamento
                 </button>
@@ -157,7 +157,7 @@ include('../conexao.php');
                 while ($c_linha = $result->fetch_assoc()) {
                     $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data'])));
                     echo "
-                    <tr class='info'>
+                    <tr>
                     <td>$c_linha[id]</td>
                     <td>$c_data</td>
                     <td>$c_linha[gerencia]</td>

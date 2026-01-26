@@ -192,7 +192,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
             </div>
             <form method="post">
                 <div style="padding-top:5px;padding-bottom:5px">
-                    <div class="panel panel-primary">
+                    <div class="panel">
                         <div class="panel-heading">
                             <a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_nova.php"><img src="\gop\images\contato.png" alt="" width="25" height="25"> Nova Solicitação</a>
                             <button type="submit" name='btnpesquisa' id='btnpesquisa' class="btn btn btn-sm"><img src="\gop\images\lupa.png" alt="" width="20" height="20"></span> Pesquisar</button>

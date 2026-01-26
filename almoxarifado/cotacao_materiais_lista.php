@@ -139,7 +139,7 @@ $_SESSION['descritivo_cotacao'] = $c_linha_cotacao['descritivo'];
                 while ($c_linha = $result->fetch_assoc()) {
 
                     echo "
-                    <tr class='info'>
+                    <tr>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[material]</td>
                     <td>$c_linha[quantidade]</td>
@@ -154,8 +154,6 @@ $_SESSION['descritivo_cotacao'] = $c_linha_cotacao['descritivo'];
                     ";
                 }
                 ?>
-
-
             </tbody>
         </table>
     </div>

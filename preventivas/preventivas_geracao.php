@@ -208,7 +208,7 @@ frontend com tabela das preventivas a serem geradas
                                 $c_data_proxima = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_prox_realizacao'])));
 
                                 echo "
-                                <tr class='info'>
+                                <tr>
                                     <td>$c_linha[id]</td>
                                     <td>$c_linha[recurso]</td>
                                    
@@ -262,7 +262,7 @@ frontend com tabela das preventivas a serem geradas
                                 $c_data_proxima = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_prox_realizacao'])));
 
                                 echo "
-                                <tr class='info'>
+                                <tr>
                                     <td>$c_linha[id]</td>
                                     <td>$c_linha[espaco]</td>
                                    

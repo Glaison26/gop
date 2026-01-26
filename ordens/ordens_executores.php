@@ -66,7 +66,7 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
         echo "<div class='panel panel-info class'>
         <div class='panel-heading'>
             
-             <a class='btn btn-success' href='/gop/ordens/ordens_executores_inclusao.php'><span class='glyphicon glyphicon-plus'></span> Incluir Executor</a>
+             <a class='btn btn' href='/gop/ordens/ordens_executores_inclusao.php'><span class='glyphicon glyphicon-plus'></span> Incluir Executor</a>
             
         </div>
     </div>";
@@ -111,7 +111,7 @@ $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
                     $c_valor_total = 0;
                 }
                 echo "
-                    <tr class='info'>
+                    <tr>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[nome]</td>
                     <td>$c_duracao</td>

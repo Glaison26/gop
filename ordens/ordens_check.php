@@ -121,7 +121,7 @@ include('../conexao.php');
         if ($c_linha_ordem['status'] <> 'C' && $c_linha_ordem['status'] <> 'S')
             echo "<div class='panel panel-info class'>
             <div class='panel-heading'>
-                <button type='button' title='Inclusão de CheckList' class='btn btn-success' data-toggle='modal' data-target='#novoModal_check'>
+                <button type='button' title='Inclusão de CheckList' class='btn btn' data-toggle='modal' data-target='#novoModal_check'>
                     <span class='glyphicon glyphicon-plus'></span>
                     Incluir CheckList
                 </button>
@@ -155,7 +155,7 @@ include('../conexao.php');
                 while ($c_linha = $result->fetch_assoc()) {
 
                     echo "
-                    <tr class='info'>
+                    <tr>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descricao]</td>
                     <td>

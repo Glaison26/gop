@@ -49,29 +49,29 @@ $_SESSION['id_ocorrencia'] = $c_linha_ordem['id_ocorrencia'];
                         <h5>Gerenciamento da Ordem de Serviço<h5>
                     </div>
                 </div>
-
-                <div style="padding-bottom :2px;">
-                    <div class="topnav">
-                    <a title='Editar Ordem de serviço' href='\gop\ordens\ordens_editar.php?id=<?php echo $i_id ?>'><img src='\gop\images\xxxescrever.png' alt='' width='30' height='25'><span> Editar</span></a>
-                        <?php
-                        // cabeçalho do gerenciar
-                        if ($c_linha_ordem['status'] <> 'C' && $c_linha_ordem['status'] <> 'S' && $c_linha_ordem['status'] <> 'X') {
-                            echo " 
-                            <a title='Concluir Ordem de Serviço' href='\gop\ordens\ordens_conclusao.php?id=<?php echo $i_id ?>'><img src='\gop\images\concluir.png' alt='' width='30' height='25'><span> Concluir</span></a>
-                        <a title='Suspender Ordem de Serviço' href='\gop\ordens\ordens_suspender.php?id=<?php echo $i_id ?>'><img src='\gop\images\aguardado.png' alt='' width='30' height='25'><span> Suspender</span></a>
-                        <a title='Cancelar Ordem de Serviço' href='\gop\ordens\ordens_cancelar.php?id=<?php echo $i_id ?>'><img src='\gop\images\cancelar.png' alt='' width='30' height='25'><span> Cancelar</span></a>";
-                        }
-                        if ($c_linha_ordem['status'] == 'S')
-                            echo "<a title='Tirar Suspensão' href='\gop\ordens\ordens_tirar_suspensao.php?id=<?php echo $i_id ?>'><img src='\gop\images\undo.png' alt='' width='30' height='25'><span> Tirar Suspensão</span></a>";                            
-                        ?>
-                        <a title='Voltar' href='\gop\ordens\ordens_lista.php'><img src="\gop\images\saida.png" alt="" width="30" height="25"><span> Voltar</span></a>
-                    </div>
-                </div>
-                <br>
+               
                 <div class='alert alert-info' role='alert'>
                     <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
                     <h5>Clique na opção desejada das ações ou itens anexos a Ordem de serviço <?php echo $i_id; ?></h5>
                 </div>
+                <div style="padding-bottom :2px;">
+
+                    <a  class='btn btn btn-sm' title='Editar Ordem de serviço' href='\gop\ordens\ordens_editar.php?id=<?php echo $i_id ?>'><img src='\gop\images\xxxescrever.png' alt='' width='30' height='25'><span> Editar</span></a>
+                    <?php
+                    // cabeçalho do gerenciar
+                    if ($c_linha_ordem['status'] <> 'C' && $c_linha_ordem['status'] <> 'S' && $c_linha_ordem['status'] <> 'X') {
+                        echo " 
+                            <a class='btn btn btn-sm' title='Concluir Ordem de Serviço' href='\gop\ordens\ordens_conclusao.php?id=<?php echo $i_id ?>'><img src='\gop\images\concluir.png' alt='' width='30' height='25'><span> Concluir</span></a>
+                            <a class='btn btn btn-sm' title='Suspender Ordem de Serviço' href='\gop\ordens\ordens_suspender.php?id=<?php echo $i_id ?>'><img src='\gop\images\aguardado.png' alt='' width='30' height='25'><span> Suspender</span></a>
+                            <a class='btn btn btn-sm' title='Cancelar Ordem de Serviço' href='\gop\ordens\ordens_cancelar.php?id=<?php echo $i_id ?>'><img src='\gop\images\cancelar.png' alt='' width='30' height='25'><span> Cancelar</span></a>";
+                    }
+                    if ($c_linha_ordem['status'] == 'S')
+                        echo "<a title='Tirar Suspensão' href='\gop\ordens\ordens_tirar_suspensao.php?id=<?php echo $i_id ?>'><img src='\gop\images\undo.png' alt='' width='20' height='25'><span> Tirar Suspensão</span></a>";
+                    ?>
+                    <a class='btn btn btn-sm' title='Voltar' href='\gop\ordens\ordens_lista.php'><img src="\gop\images\saida.png" alt="" width="30" height="25"><span> Voltar</span></a>
+                </div>
+                <hr>
+                
                 <!-- abas de itens de os -->
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active"><a href="#materiais" aria-controls="materiais" role="tab" data-toggle="tab">Materiais Gastos</a></li>

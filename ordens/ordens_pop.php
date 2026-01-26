@@ -130,7 +130,7 @@ include('../conexao.php');
         <div class='panel panel-info class'>
             <div class='panel-heading'>
                
-                <button type='button' title='Inclusão de POP' class='btn btn-success' data-toggle='modal' data-target='#novoModal'>
+                <button type='button' title='Inclusão de POP' class='btn btn' data-toggle='modal' data-target='#novoModal'>
                     <span class='glyphicon glyphicon-plus'></span>
                     Incluir POP
                 </button>
@@ -169,7 +169,7 @@ include('../conexao.php');
                 while ($c_linha = $result->fetch_assoc()) {
 
                     echo "
-                    <tr class='info'>
+                    <tr>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descricao]</td>
                     <td>$c_linha[tipopop]</td>

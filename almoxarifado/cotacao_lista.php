@@ -251,7 +251,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['almoxarifado_cot
                     else
                         $c_encerramento = "-";
                     echo "
-                    <tr class='info'>
+                    <tr>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descritivo]</td>
                     <td>$c_data</td>

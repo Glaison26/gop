@@ -182,7 +182,7 @@ include('../conexao.php');
 
 
         <div style="padding-bottom :15px;">
-            <div class="topnav">
+            
                 <?php
                 if ($_SESSION['pesquisamenu'] == false) {
                     echo "<a class='btn btn btn-sm' href='\gop\ordens\ordens.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
@@ -191,7 +191,7 @@ include('../conexao.php');
                 }
 
                 ?>
-            </div>
+            
         </div>
 
         <div class='alert alert-info' role='alert'>

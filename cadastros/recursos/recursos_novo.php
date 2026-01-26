@@ -396,7 +396,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         ?>
                                     </select>
                                 </div>
-                                <label class="col-sm-2 col-form-label">Marca </label>
+                                <label class="col-sm-1 col-form-label">Marca </label>
                                 <div class="col-sm-2">
                                     <select class="form-select form-select-lg mb-3" id="marca" name="marca" required>
                                         <option></option>
@@ -415,7 +415,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-3 col-form-label">Espaço Físico </label>
-                                <div class="col-sm-4">
+                                <div class="col-sm-5">
                                     <select class="form-select form-select-lg mb-3" id="espaco" name="espaco" required>
                                         <option></option>
                                         <?php
@@ -434,7 +434,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                             <div class="row mb-3">
                                 <label class="col-sm-3 col-form-label">Centro de Custo </label>
-                                <div class="col-sm-4">
+                                <div class="col-sm-5">
                                     <select class="form-select form-select-lg mb-3" id="centrodecusto" name="centrodecusto" required>
                                         <option></option>
                                         <?php
@@ -452,7 +452,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-3 col-form-label">Tipo </label>
-                                <div class="col-sm-4">
+                                <div class="col-sm-5">
                                     <select class="form-select form-select-lg mb-3" id="tipo" name="tipo" required>
                                         <option></option>
                                         <?php
@@ -471,7 +471,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                             <div class="row mb-3">
                                 <label class="col-sm-3 col-form-label">Setor </label>
-                                <div class="col-sm-4">
+                                <div class="col-sm-5">
                                     <select class="form-select form-select-lg mb-3" id="setor" name="setor" required>
                                         <option></option>
                                         <?php
@@ -492,7 +492,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="col-sm-2">
                                     <input type="text" maxlength="20" class="form-control" name="notafiscal" value="<?php echo $c_notafiscal; ?>" required>
                                 </div>
-                                <label class="col-sm-2 col-form-label">Data de Aquisição</label>
+                                <label class="col-sm-1 col-form-label">Aquisição</label>
                                 <div class="col-sm-2">
                                     <input type="date" class="form-control" name="dataaquisicao" value="<?php echo $d_dataaquisicao; ?>">
                                 </div>

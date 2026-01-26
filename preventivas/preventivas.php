@@ -128,7 +128,7 @@ JOIN espacos ON preventivas.id_espaco=espacos.id";
 
             <form method="post">
                 <div style="padding-top:5px;padding-bottom:10px">
-                    <div class="panel panel-primary">
+                    <div class="panel">
                         <div class="panel-heading">
                             <a class="btn btn btn-sm" href="preventivas_nova.php"><img src="\gop\images\preventivo.png" alt="" width="25" height="25"> Nova Preventiva</a>
                             <button type="submit" name='btnpesquisa' id='btnpesquisa' class="btn btn btn-sm"><img src="\gop\images\lupa.png" alt="" width="20" height="20"></span> Pesquisar</button>

@@ -272,7 +272,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
             <h5>Realize uma pesquisa com as opções de pesquisa de Ordens de Serviço abaixo</h5>
         </div>
         <form method="post">
-            <div class="panel panel-primary">
+            <div class="panel">
                 <div class="panel-heading">
                     <div style="padding-top:5px;padding-bottom:5px">
 
@@ -344,7 +344,6 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
             </div>
 
             <div class="row mb-3">
-
                 <label class="col-md-2 form-label">De</label>
                 <div class="col-sm-3">
                     <input type="Date" class="form-control" name="data1" id="data1" value='<?php echo date("Y-m-d"); ?>' onkeypress="mascaraData(this)">
@@ -353,10 +352,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                 <div class="col-sm-3">
                     <input type="Date" class="form-control" name="data2" id="data2" value='<?php echo date("Y-m-d"); ?>' onkeypress="mascaraData(this)">
                 </div>
-
             </div>
-
-
 
             <div class="row mb-3">
 
