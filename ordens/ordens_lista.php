@@ -9,6 +9,10 @@ $c_sql_avulso = $_SESSION['sqlavulso'];
 //echo $c_sql_recurso;
 include('../links.php');
 include('../conexao.php');
+// sql do arquivo de configurações 
+$c_sql_conf = "select * from configuracoes";
+$result_conf = $conection->query($c_sql_conf);
+$registro_conf = $result_conf->fetch_assoc();
 ?>
 
 <!DOCTYPE html>
@@ -191,22 +195,32 @@ include('../conexao.php');
                 }
 
                 ?>
-            
+ 
         </div>
 
         <div class='alert alert-info' role='alert'>
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
-
             </div>
 
             <h5>Resultado das Ordens de Serviço Selecionadas</h5>
         </div>
         <!-- abas de solicitações por recursos físicos, Espaços físicos e avulsos -->
         <ul class="nav nav-tabs nav-tabs-responsive" role="tablist">
-            <li role="presentation" class="active"><a href="#recurso" aria-controls="recurso" role="tab" data-toggle="tab">Ordens de Serviço em Recurso Físico</a></li>
-            <li role="presentation"><a href="#espaco" aria-controls="espaco" role="tab" data-toggle="tab">Ordens de Serviço em Espaços Físicos</a></li>
-            <li role="presentation"><a href="#avulsas" aria-controls="avulsas" role="tab" data-toggle="tab">Ordens de Serviço Avulsas</a></li>
+            <?php 
+            if ($registro_conf['solicitacao_recursos'] == 'S') {
+                echo '
+            <li role="presentation" class="active"><a href="#recurso" aria-controls="recurso" role="tab" data-toggle="tab">Visualizar Ordens de Serviço em Recurso Físico</a></li>';
+             }
+            if ($registro_conf['solicitacao_espacos'] == 'S') {
+                echo '
+            <li role="presentation"><a href="#espaco" aria-controls="espaco" role="tab" data-toggle="tab">Visualizar Ordens de Serviço em Espaços Físicos</a></li>';
+            }
+            if ($registro_conf['solicitacao_avulsa'] == 'S') {
+                echo '
+            <li role="presentation"><a href="#avulsas" aria-controls="avulsas" role="tab" data-toggle="tab">Visualizar Ordens de Serviço Avulsas</a></li>';
+            }
+            ?>
         </ul>
         <div class="tab-content">
             <!-- aba da recurso fisico-->
