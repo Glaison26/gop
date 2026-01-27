@@ -204,12 +204,13 @@ $registro_conf = $result_conf->fetch_assoc();
             }
               if ($registro_conf['solicitacao_avulsa'] == 'S') {
                 echo '
-            <li role="presentation"><a href="#avulsas" aria-controls="avulsas" role="tab" data-toggle="tab">Visualizar Solicitações Avulsas</a></li>';
+            <li role="presentation"><a href="#avulsas" aria-controls="avulsas" role="tab" data-toggle="tab">Visualizar Solicitações</a></li>';
             }
             ?>
         </ul>
         <div class="tab-content">
             <!-- aba da recurso fisico-->
+            
             <div role="tabpanel" class="tab-pane active" id="recurso">
                 <div style="padding-top:15px;padding-left:20px;">
                     <table class="table table-bordered table-striped tabsolicitacao_recursos">
@@ -260,8 +261,6 @@ $registro_conf = $result_conf->fetch_assoc();
                                 ";
                             }
                             ?>
-
-
                         </tbody>
                     </table>
                 </div>
@@ -285,15 +284,12 @@ $registro_conf = $result_conf->fetch_assoc();
                         </thead>
                         <tbody>
                             <?php
-
                             // faço a Leitura da tabela com sql
-
                             $result = $conection->query($c_sql_espaco);
                             // verifico se a query foi correto
                             if (!$result) {
                                 die("Erro ao Executar Sql!!" . $conection->connect_error);
                             }
-
                             // insiro os registro do banco de dados na tabela 
                             while ($c_linha = $result->fetch_assoc()) {
                                 $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_abertura'])));
@@ -310,7 +306,7 @@ $registro_conf = $result_conf->fetch_assoc();
                                     
                                     <td>
                                         <a class='btn btn-secondary btn-sm' href='/gop/solicitacao/solicitacao_detalhe.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Detalhe</a>
-                                        
+                                     
                                     </td>
 
                                 </tr>

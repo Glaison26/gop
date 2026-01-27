@@ -218,7 +218,7 @@ $registro_conf = $result_conf->fetch_assoc();
             }
             if ($registro_conf['solicitacao_avulsa'] == 'S') {
                 echo '
-            <li role="presentation"><a href="#avulsas" aria-controls="avulsas" role="tab" data-toggle="tab">Visualizar Ordens de Serviço Avulsas</a></li>';
+            <li role="presentation"><a href="#avulsas" aria-controls="avulsas" role="tab" data-toggle="tab">Visualizar Ordens de Serviço</a></li>';
             }
             ?>
         </ul>
