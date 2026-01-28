@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // data de inicio
     $d_data_inicio = $_POST['data_inicio'];
     $d_hora_inicio = $_POST['hora_inicio'];
-
+    
     $d_data_previsao = new DateTime($_POST['data_sla']);
     $d_data_previsao = $d_data_previsao->format('Y-m-d');
     $d_hora_previsao =  new DateTime($_POST['hora_sla']);
@@ -108,7 +108,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $i_ordem = $c_linha['id_ordem'];
 
         // mudo status da solicitacao que gerou a ordem de serviços
-        $c_sql = "Update solicitacao SET status = 'E', id_ordem='$i_ordem' where id='$i_id'";
+        $c_sql = "Update solicitacao SET status = 'E', id_ordem='$i_ordem', 
+        prazo_data = '$d_data_previsao', prazo_hora = '$d_hora_previsao' where id='$i_id'";
         $result = $conection->query($c_sql);
         // envia email com numero da OS e previsão de atendimento para solicitante
         // procuro solicitante
