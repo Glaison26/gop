@@ -219,6 +219,8 @@ $registro_conf = $result_conf->fetch_assoc();
                                 <th scope="col">Status</th>
                                 <th scope="col">Abertura</th>
                                 <th scope="col">Hora</th>
+                                <th scope="col">Prazo data</th>
+                                <th scope="col">Prazo Hora</th>
                                 <th scope="col">Solicitante</th>
                                 <th scope="col">Recurso Físico</th>
                                 <th scope="col">Tipo</th>
@@ -239,6 +241,10 @@ $registro_conf = $result_conf->fetch_assoc();
                             // insiro os registro do banco de dados na tabela 
                             while ($c_linha = $result->fetch_assoc()) {
                                 $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_abertura'])));
+                                if (!empty($c_linha['prazo_data']))
+                                    $c_data_prazo = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['prazo_data'])));
+                                else
+                                    $c_data_prazo = '';
                                 echo "
                                 <tr>
                                     <td>$c_linha[id]</td>
@@ -246,10 +252,12 @@ $registro_conf = $result_conf->fetch_assoc();
                                     <td>$c_linha[solicitacao_status]</td>
                                     <td>$c_data</td>
                                     <td>$c_linha[hora_abertura]</td>
+                                    <td>$c_data_prazo</td>
+                                    <td>$c_linha[prazo_hora]</td>
                                     <td>$c_linha[solicitante]</td>
                                     <td>$c_linha[recurso]</td>
                                     <td>$c_linha[solicitacao_tipo]</td>
-                                    
+                            
                                     <td>
                                         <a class='btn btn-secondary btn-sm' href='/gop/solicitacao/solicitacao_detalhe.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Detalhe</a>
                                         
@@ -274,6 +282,8 @@ $registro_conf = $result_conf->fetch_assoc();
                                 <th scope="col">Status</th>
                                 <th scope="col">Abertura</th>
                                 <th scope="col">Hora</th>
+                                <th scope="col">Prazo data</th>
+                                <th scope="col">Prazo Hora</th>
                                 <th scope="col">Solicitante</th>
                                 <th scope="col">Espaço Físico</th>
                                 <th scope="col">Tipo</th>
@@ -291,6 +301,10 @@ $registro_conf = $result_conf->fetch_assoc();
                             // insiro os registro do banco de dados na tabela 
                             while ($c_linha = $result->fetch_assoc()) {
                                 $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_abertura'])));
+                                if (!empty($c_linha['prazo_data']))
+                                    $c_data_prazo = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['prazo_data'])));
+                                else
+                                    $c_data_prazo = '';
                                 echo "
                                 <tr>
                                     <td>$c_linha[id]</td>
@@ -298,6 +312,8 @@ $registro_conf = $result_conf->fetch_assoc();
                                     <td>$c_linha[solicitacao_status]</td>
                                     <td>$c_data</td>
                                     <td>$c_linha[hora_abertura]</td>
+                                    <td>$c_data_prazo</td>
+                                    <td>$c_linha[prazo_hora]</td>
                                     <td>$c_linha[solicitante]</td>
                                     <td>$c_linha[espaco]</td>
                                     <td>$c_linha[solicitacao_tipo]</td>
@@ -327,6 +343,8 @@ $registro_conf = $result_conf->fetch_assoc();
                                 <th scope="col">Status</th>
                                 <th scope="col">Abertura</th>
                                 <th scope="col">Hora</th>
+                                <th scope="col">Prazo data</th>
+                                <th scope="col">Prazo Hora</th>
                                 <th scope="col">Solicitante</th>
                                 <th scope="col">Tipo</th>
                                 <th scope="col">Opções</th>
@@ -344,6 +362,10 @@ $registro_conf = $result_conf->fetch_assoc();
                             // insiro os registro do banco de dados na tabela 
                             while ($c_linha = $result->fetch_assoc()) {
                                 $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_abertura'])));
+                                if (!empty($c_linha['prazo_data']))
+                                    $c_data_prazo = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['prazo_data'])));
+                                else
+                                    $c_data_prazo = '';
                                 echo "
                                 <tr>
                                     <td>$c_linha[id]</td>
@@ -351,6 +373,8 @@ $registro_conf = $result_conf->fetch_assoc();
                                     <td>$c_linha[solicitacao_status]</td>
                                     <td>$c_data</td>
                                     <td>$c_linha[hora_abertura]</td>
+                                    <td>$c_data_prazo</td>
+                                    <td>$c_linha[prazo_hora]</td>
                                     <td>$c_linha[solicitante]</td>
                                     <td>$c_linha[solicitacao_tipo]</td>
                                     
@@ -365,15 +389,10 @@ $registro_conf = $result_conf->fetch_assoc();
                             ?>
                         </tbody>
                     </table>
-
                 </div>
             </div>
-
-
         </div>
-
     </div>
-
 
 </body>
 

@@ -17,6 +17,14 @@ include('../conexao.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script language="Javascript">
+        function confirmacao(id) {
+            var resposta = confirm("Deseja remover esse registro?");
+            if (resposta == true) {
+                window.location.href = "/gop/preventivas/preventivas_excluir.php?id=" + id;
+            }
+        }
+    </script>
 </head>
 <!-- script da tabela de recursos -->
 <script>
@@ -190,7 +198,9 @@ include('../conexao.php');
                                     <td>
                                         <a class='btn btn-secondary btn-sm' href='/gop/preventivas/preventivas_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                                       <a class='btn btn-success btn-sm' href='/gop/preventivas/preventivas_anexos.php?id=$c_linha[id]'>
-                                        <img src='\gop\images\anexo.png' alt='' width='23' height='18'> Anexos</a>  
+                                        <img src='\gop\images\anexo.png' alt='' width='23' height='18'> Anexos</a> 
+                                        <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
+
                                     </td>
 
                                 </tr>

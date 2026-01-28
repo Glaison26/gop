@@ -45,10 +45,7 @@ if ($_SESSION['tiposolicitacao'] == 'E') {  // espaço físico
 // rotina para gravação dos dados
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     do {
-        if (empty($_POST['tipo_preventiva']) || empty($_POST['setor']) || empty($_POST['oficina']) || empty($_POST['centrodecusto'])) {
-            $msg_erro = "Todos os Campos devem ser preenchidos!!!";
-            break;
-        }
+
 
         if (!is_numeric($_POST['periodicidade'])) {
             $msg_erro = "Valor de periodicidade inválido !!";
@@ -147,6 +144,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GOP - Preventivas - Nova Preventiva</title>
     <link rel="stylesheet" href="/gop/css/basico.css">
+
+
 </head>
 
 <body>
@@ -203,24 +202,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="col-sm-3">
                         <input required type="date" class="form-control" id="datacadastro" name="datacadastro" value='<?php echo date("Y-m-d"); ?>'>
                     </div>
-                    <label class="col-sm-2 col-form-label">Prazo de Atendimento</label>
-                    <div class="col-sm-2">
-                        <input required type="number" placeholder="no. de dias" class="form-control" id="prazo" name="prazo">
-                    </div>
-
-                </div>
-
-
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">Tipo Preventiva</label>
-                    <div class="col-sm-3">
-                        <select class="form-select form-select-lg mb-3" id="tipo_preventiva" name="tipo_preventiva" value="<?php echo $c_tipo_preventiva; ?>" required>
-                            <option></option>
-                            <option value="R">Rotina</option>
-                            <option value="P">Preditiva</option>
-                            <option value="S">Sistematica</option>
-                        </select>
-                    </div>
                     <label class="col-sm-2 col-form-label">Oficina </label>
                     <div class="col-sm-3">
                         <select onchange="verifica(value)" class="form-select form-select-lg mb-3" id="oficina" name="oficina" required>
@@ -240,6 +221,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             ?>
                         </select>
                     </div>
+
+                </div>
+
+
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">Tipo Preventiva</label>
+                    <div class="col-sm-3">
+                        <select class="form-select form-select-lg mb-3" id="tipo_preventiva" required name="tipo_preventiva" value="<?php echo $c_tipo_preventiva; ?>" required>
+                            <option></option>
+                            <option value="R">Rotina</option>
+                            <option value="P">Preditiva</option>
+                            <option value="S">Sistematica</option>
+                        </select>
+                    </div>
+
+                    <label class="col-sm-2 col-form-label">Prazo de Atendimento</label>
+                    <div class="col-sm-2">
+                        <input required type="number" placeholder="no. de dias" class="form-control" id="prazo" name="prazo">
+                    </div>
+
                 </div>
 
                 <div class="row mb-3">
@@ -286,11 +287,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="row mb-3">
                     <label class="col-sm-2 col-form-label">Ultima Realização</label>
                     <div class="col-sm-3">
-                        <input type="date" class="form-control" id="data_ultima" name="data_ultima">
+                        <input type="date" class="form-control" id="data_ultima" required name="data_ultima">
                     </div>
                     <label class="col-sm-2 col-form-label">Periodicidade</label>
                     <div class="col-sm-2">
-                        <input required type="number" class="form-control" placeholder="no. de dias" name="periodicidade">
+                        <input required type="number" class="form-control" placeholder="no. de dias" name="periodicidade" required>
                     </div>
 
 

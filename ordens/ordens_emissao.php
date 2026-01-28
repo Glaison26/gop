@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     
     if ($c_linha['tipo'] == 'R')
         $c_sql = $c_sql. "recursos.descricao as recurso,";
-    else
+    if ($c_linha['tipo'] == 'E')
         $c_sql = $c_sql. "espacos.descricao as espaco,";
     $c_sql = $c_sql . "  case
         when tipo_ordem='C' then 'Corretiva'
@@ -36,12 +36,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     FROM ordens";
     if ($c_linha['tipo'] == 'R')
         $c_sql = $c_sql . " JOIN recursos ON ordens.id_recurso=recursos.id";
-    else
-        $c_sql = $c_sql . "JOIN espacos ON ordens.id_espaco=espacos.id";
+     if ($c_linha['tipo'] == 'E')
+        $c_sql = $c_sql . " JOIN espacos ON ordens.id_espaco=espacos.id";
     $c_sql = $c_sql . " JOIN ocorrencias ON ordens.id_ocorrencia=ocorrencias.id  
         JOIN setores ON ordens.id_setor=setores.id
         JOIN usuarios ON ordens.id_solicitante=usuarios.id
         where ordens.id='$c_id'";
+       // echo $c_sql;
      $result = $conection->query($c_sql);
     $c_linha = $result->fetch_assoc();
 }
@@ -72,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                     . $c_linha['solicitante'] . '<br><br>';
                 if ($c_linha['tipo'] == 'R')
                     echo '<strong>Recursos Físico : </strong> ' . $c_linha['recurso'] . '<br><br>';
-                else
+                if ($c_linha['tipo'] == 'E')
                     echo '<strong>Espaço Físico : </strong> ' . $c_linha['espaco'] . '<br><br>';
                 echo '<strong>Descrição do Serviço :</strong><br><br>';
                 echo $c_linha['descricao'];
