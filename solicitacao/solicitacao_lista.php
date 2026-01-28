@@ -172,8 +172,6 @@ $registro_conf = $result_conf->fetch_assoc();
                 <h5>Solicitações de Serviços<h5>
             </div>
         </div>
-
-
         <div class='alert alert-info' role='alert'>
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
@@ -194,24 +192,24 @@ $registro_conf = $result_conf->fetch_assoc();
         <!-- abas de solicitações por recursos físicos, Espaços físicos e avulsos -->
         <ul class="nav nav-tabs" role="tablist">
             <?php
+            if ($registro_conf['solicitacao_avulsa'] == 'S') {
+                echo '
+            <li role="presentation" class="active"><a href="#avulsas" aria-controls="avulsas" role="tab" data-toggle="tab">Visualizar Solicitações</a></li>';
+            }
             if ($registro_conf['solicitacao_recursos'] == 'S') {
                 echo '
-            <li role="presentation" class="active"><a href="#recurso" aria-controls="recurso" role="tab" data-toggle="tab">Visualizar Solicitações em Recurso Físico</a></li>';
+            <li role="presentation"><a href="#recurso" aria-controls="recurso" role="tab" data-toggle="tab">Visualizar Solicitações em Recurso Físico</a></li>';
             }
-             if ($registro_conf['solicitacao_espacos'] == 'S') {
+            if ($registro_conf['solicitacao_espacos'] == 'S') {
                 echo '
             <li role="presentation"><a href="#espaco" aria-controls="espaco" role="tab" data-toggle="tab">Visualizar Solicitações em Espaços Físicos</a></li>';
-            }
-              if ($registro_conf['solicitacao_avulsa'] == 'S') {
-                echo '
-            <li role="presentation"><a href="#avulsas" aria-controls="avulsas" role="tab" data-toggle="tab">Visualizar Solicitações</a></li>';
             }
             ?>
         </ul>
         <div class="tab-content">
             <!-- aba da recurso fisico-->
-            
-            <div role="tabpanel" class="tab-pane active" id="recurso">
+
+            <div role="tabpanel" class="tab-pane" id="recurso">
                 <div style="padding-top:15px;padding-left:20px;">
                     <table class="table table-bordered table-striped tabsolicitacao_recursos">
                         <thead class="thead">
@@ -319,7 +317,7 @@ $registro_conf = $result_conf->fetch_assoc();
                 </div>
             </div>
             <!-- aba das avulsas-->
-            <div role="tabpanel" class="tab-pane" id="avulsas">
+            <div role="tabpanel" class="tab-pane active" id="avulsas">
                 <div style="padding-top:15px;padding-left:20px;">
                     <table class="table table-bordered table-striped tabsolicitacao_avulsas">
                         <thead class="thead">

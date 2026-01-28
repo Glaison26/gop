@@ -186,16 +186,16 @@ $registro_conf = $result_conf->fetch_assoc();
 
 
         <div style="padding-bottom :15px;">
-            
-                <?php
-                if ($_SESSION['pesquisamenu'] == false) {
-                    echo "<a class='btn btn btn-sm' href='\gop\ordens\ordens.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
-                } else {
-                    echo "<a class='btn btn btn-sm' href='\gop\menu.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
-                }
 
-                ?>
- 
+            <?php
+            if ($_SESSION['pesquisamenu'] == false) {
+                echo "<a class='btn btn btn-sm' href='\gop\ordens\ordens.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
+            } else {
+                echo "<a class='btn btn btn-sm' href='\gop\menu.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
+            }
+
+            ?>
+
         </div>
 
         <div class='alert alert-info' role='alert'>
@@ -207,24 +207,25 @@ $registro_conf = $result_conf->fetch_assoc();
         </div>
         <!-- abas de solicitações por recursos físicos, Espaços físicos e avulsos -->
         <ul class="nav nav-tabs nav-tabs-responsive" role="tablist">
-            <?php 
+            <?php
+            if ($registro_conf['solicitacao_avulsa'] == 'S') {
+                echo '
+            <li role="presentation" class="active"><a href="#avulsas" aria-controls="avulsas" role="tab" data-toggle="tab">Visualizar Ordens de Serviço</a></li>';
+            }
             if ($registro_conf['solicitacao_recursos'] == 'S') {
                 echo '
-            <li role="presentation" class="active"><a href="#recurso" aria-controls="recurso" role="tab" data-toggle="tab">Visualizar Ordens de Serviço em Recurso Físico</a></li>';
-             }
+            <li role="presentation"><a href="#recurso" aria-controls="recurso" role="tab" data-toggle="tab">Visualizar Ordens de Serviço em Recurso Físico</a></li>';
+            }
             if ($registro_conf['solicitacao_espacos'] == 'S') {
                 echo '
             <li role="presentation"><a href="#espaco" aria-controls="espaco" role="tab" data-toggle="tab">Visualizar Ordens de Serviço em Espaços Físicos</a></li>';
             }
-            if ($registro_conf['solicitacao_avulsa'] == 'S') {
-                echo '
-            <li role="presentation"><a href="#avulsas" aria-controls="avulsas" role="tab" data-toggle="tab">Visualizar Ordens de Serviço</a></li>';
-            }
+
             ?>
         </ul>
         <div class="tab-content">
             <!-- aba da recurso fisico-->
-            <div role="tabpanel" class="tab-pane active" id="recurso">
+            <div role="tabpanel" class="tab-pane" id="recurso">
                 <div style="padding-top:15px;padding-left:20px;">
                     <table class="table table display table-bordered table-striped table-active tabordens_recursos">
                         <thead class="thead">
@@ -392,7 +393,7 @@ $registro_conf = $result_conf->fetch_assoc();
                 </div>
             </div>
             <!-- aba das avulsas-->
-            <div role="tabpanel" class="tab-pane" id="avulsas">
+            <div role="tabpanel" class="tab-pane active" id="avulsas">
                 <div style="padding-top:15px;padding-left:20px;">
 
                     <table class="table table display table-bordered table-striped table-active tabordens_avulsas">
