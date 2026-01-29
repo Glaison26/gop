@@ -52,7 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $c_email_manutencao = $c_linha_email['email_manutencao'];
         //echo $c_email_oficina;
         // procuro solicitante para enviar e-mail
-
         $c_sql_sol = "select id_solicitante from ordens where id=$i_id";
         $result_sol = $conection->query($c_sql_sol);
         $registro_sol = $result_sol->fetch_assoc();
