@@ -77,9 +77,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             include('../email_gop.php');
         }
-
-
-
         header('location: /gop/ordens/ordens_gerenciar.php');
     } while (false);
 }
