@@ -230,7 +230,7 @@ $registro_conf = $result_conf->fetch_assoc();
                     <table class="table table display table-bordered table-striped table-active tabordens_recursos">
                         <thead class="thead">
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col"># OS</th>
                                 <th scope="col"># Sol.</th>
                                 <th scope="col">Data</th>
                                 <th scope="col">Hora</th>
@@ -316,7 +316,7 @@ $registro_conf = $result_conf->fetch_assoc();
                     <table class="table table display table-bordered table-striped table-active tabordens_espacos">
                         <thead class="thead">
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col"># OS</th>
                                 <th scope="col"># Sol.</th>
                                 <th scope="col">Data</th>
                                 <th scope="col">Hora</th>
@@ -399,7 +399,7 @@ $registro_conf = $result_conf->fetch_assoc();
                     <table class="table table display table-bordered table-striped table-active tabordens_avulsas">
                         <thead class="thead">
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col"># OS</th>
                                 <th scope="col"># Sol.</th>
                                 <th scope="col">Data</th>
                                 <th scope="col">Hora</th>

@@ -155,6 +155,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geração de Ordem de Serviço</title>
+    <link rel="stylesheet" href="/gop/css/basico.css">
 
 </head>
 
@@ -173,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
 
-    <div class="container -my5">
+    <div class="container content-box">
         <div class='alert alert-info' role='alert'>
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">

@@ -68,15 +68,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
 
             $ordem = $i_id;
-            $c_data_conclusao = new DateTime($_POST['data_conclusao']);
-            $c_data_conclusao = $c_data_conclusao->format('Y-m-d');
+            $c_data_suspensao = new DateTime($_POST['data_suspensao']);
+            $c_data_suspensao = $c_data_suspensao->format('Y-m-d');
             $c_motivo_suspensao = $_POST['motivo'];
 
-            $c_assunto = "Fechamento de Ordem de Serviço no GOP";
-            $c_body = "A Ordem de serviço No.<b> $ordem </b> foi concluida com suceso!<br>"
+            $c_assunto = "Suspensão de Ordem de Serviço no GOP";
+            $c_body = "A Ordem de serviço No.<b> $ordem </b> teve que ser suspensa Suspensa!<br>"
                 . "Descrição da Solicitação :" . $c_descricao . "<br>" .
                 "Motivo da Suspensão:<br>" .
-                $c_conclusao;
+                $c_motivo;
 
             include('../email_gop.php');
         }
@@ -146,11 +146,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="row mb-8">
                     <label class="col-md-2 form-label">Data Suspensão</label>
                     <div class="col-sm-2">
-                        <input type="Date" class="form-control" name="data_suspensao" id="data_conclusao" value='<?php echo $c_data ?>'>
+                        <input type="Date" class="form-control" name="data_suspensao" id="data_suspensao" value='<?php echo $c_data ?>'>
                     </div>
                     <label class="col-md-2 form-label">Hora Suspensão</label>
                     <div class="col-sm-2">
-                        <input type="time" class="form-control" name="hora_suspensao" id="hora_conclusao" value="<?php echo $agora ?>">
+                        <input type="time" class="form-control" name="hora_suspensao" id="hora_suspensao" value="<?php echo $agora ?>">
                     </div>
                 </div>
                 <br>

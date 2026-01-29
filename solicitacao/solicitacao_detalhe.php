@@ -17,7 +17,7 @@ $result = $conection->query($c_sql);
 $registro = $result->fetch_assoc();
 // sql para pegar dados da solicitação selecionada
 
-$c_sql = "SELECT solicitacao.id, solicitacao.data_abertura, solicitacao.hora_abertura, solicitacao.id_solicitante,
+$c_sql = "SELECT solicitacao.id, solicitacao.data_abertura, solicitacao.prazo_data, solicitacao.prazo_hora, solicitacao.hora_abertura, solicitacao.id_solicitante,
 solicitacao.id_recursos, solicitacao.tipo, solicitacao.id_ocorrencia, solicitacao.`status`, solicitacao.descricao, solicitacao.classificacao,
 usuarios.nome AS solicitante, setores.descricao AS setor,";
 if ($registro['classificacao'] == 'R') {
@@ -56,6 +56,15 @@ $c_descricao = $registro['descricao'];
 $c_setor = $registro['setor'];
 $d_data = date("d-m-Y", strtotime(str_replace('/', '-', $registro['data_abertura'])));
 $c_hora = $registro['hora_abertura'];
+if (!empty($registro['prazo_data']))
+    $d_prazo_data = date("d-m-Y", strtotime(str_replace('/', '-', $registro['prazo_data'])));
+else
+    $d_prazo_data = '';
+if (!empty($registro['prazo_hora']))
+    $c_prazo_hora = $registro['prazo_hora'];
+else
+    $c_prazo_hora = '';
+
 $c_Solicitante = $registro['solicitante'];
 $c_status = $registro['solicitacao_status'];
 $c_tipo = $registro['solicitacao_tipo'];
@@ -76,6 +85,8 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhe da Solicitação de Serviços</title>
+    <link rel="stylesheet" href="/gop/css/basico.css">
 
 </head>
 
@@ -87,106 +98,118 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
         </div>
     </div>
 
-    <div class="container -my5">
-        <div class='alert alert-info' role='alert'>
-            <div style="padding-left:15px;">
-                <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
+    <div class="container content-box">
+        
+            <?php
+            $c_id_ordem = $registro["id"];
+            if ($_SESSION['tipo'] <> 'Solicitante' && $registro['status'] == 'A')
+                echo '<a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_gera_os.php?id=' . $c_id_ordem . '"><img src="\gop\images\ordem.png" alt="" width="25" height="25"> Gerar OS</a>';
+            ?>
+            <a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_lista.php"><img src="\gop\images\saida.png" alt="" width="25" height="25"> Voltar</a>
+            <hr>
+            <div class='alert alert-info' role='alert'>
+                <div style="padding-left:15px;">
+                    <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
+                </div>
+                <h5>Detalhe da Solicitação de Serviço No. <?php echo $registro['id'] ?> para Visualização </h5>
             </div>
-            <h5>Detalhe da Solicitação de Serviço No. <?php echo $registro['id'] ?> para Visualização </h5>
-        </div>
-        <?php
-        $c_id_ordem = $registro["id"];
-        if ($_SESSION['tipo'] <> 'Solicitante' && $registro['status'] == 'A')
-            echo '<a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_gera_os.php?id=' . $c_id_ordem . '"><img src="\gop\images\ordem.png" alt="" width="25" height="25"> Gerar OS</a>';
-        ?>
+            <!-- abas de solicitações por recursos físicos -->
+            <ul class="nav nav-tabs" role="tablist">
 
-        <a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_lista.php"><img src="\gop\images\saida.png" alt="" width="25" height="25"> Voltar</a>
-        <hr>
-        <!-- abas de solicitações por recursos físicos -->
-        <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#descritivo" aria-controls="descritivo" role="tab" data-toggle="tab">Descrição do Serviço</a></li>
-            <li role="presentation"><a href="#detalhe" aria-controls="detalhe" role="tab" data-toggle="tab">Detalhe da Solicitação</a></li>
+                <li role="presentation" class="active"><a href="#detalhe" aria-controls="detalhe" role="tab" data-toggle="tab">Detalhe da Solicitação</a></li>
+                <li role="presentation"><a href="#descritivo" aria-controls="descritivo" role="tab" data-toggle="tab">Descrição do Serviço</a></li>
+            </ul>
 
-        </ul>
+            <div class="tab-content">
+                <!-- aba da descricao fisico-->
+                <div role="tabpanel" class="tab-pane" id="descritivo">
+                    <div style="padding-top:15px;padding-left:20px;">
 
-        <div class="tab-content">
-            <!-- aba da descricao fisico-->
-            <div role="tabpanel" class="tab-pane  active" id="descritivo">
-                <div style="padding-top:15px;padding-left:20px;">
-
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <textarea readonly class="form-control" id="descricao" name="descricao" rows="10"><?php echo $c_descricao; ?></textarea>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <textarea readonly class="form-control" id="descricao" name="descricao" rows="10"><?php echo $c_descricao; ?></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- aba de Detalhe -->
-            <div role="tabpanel" class="tab-pane" id="detalhe">
-                <div style="padding-top:15px;padding-left:20px;">
-                    <?php
-                    if ($registro['classificacao'] == 'R') {
-                        $c_recurso = $registro['recurso'];
-                        echo " 
+                <!-- aba de Detalhe -->
+                <div role="tabpanel" class="tab-pane active" id="detalhe">
+                    <div style="padding-top:15px;padding-left:20px;">
+                        <?php
+                        if ($registro['classificacao'] == 'R') {
+                            $c_recurso = $registro['recurso'];
+                            echo " 
                               <div class='row mb-3'>
                                  <label class='col-md-2 form-label'>Recurso Físico</label>
                                  <div class='col-sm-8'>
                                       <input  type='text' readonly class='form-control' name='recurso' id='recurso' value=' $c_recurso'>
                                 </div>
                               </div>";
-                    }
-                    ?>
-                    <?php
-                    if ($registro['classificacao'] == 'E') {
-                        $c_espaco = $registro['espaco'];
-                        echo " 
+                        }
+                        ?>
+                        <?php
+                        if ($registro['classificacao'] == 'E') {
+                            $c_espaco = $registro['espaco'];
+                            echo " 
                               <div class='row mb-3'>
                                  <label class='col-md-2 form-label'>Espaço Físico</label>
                                  <div class='col-sm-8'>
                                       <input  type='text' readonly class='form-control' name='espaco' id='espaco' value=' $c_espaco'>
                                 </div>
                                 </div>";
-                    }
-                    ?>
-                    <div class="row mb-3">
-                        <label class="col-md-2 form-label">Hora</label>
-                        <div class="col-sm-2">
-                            <input type="text" readonly class="form-control" name="hora" id="hora" value='<?php echo $c_hora; ?>'>
+                        }
+                        ?>
+                        <div class="row mb-3">
+                            <label class="col-md-2 form-label">Hora</label>
+                            <div class="col-sm-2">
+                                <input type="text" readonly class="form-control" name="hora" id="hora" value='<?php echo $c_hora; ?>'>
+                            </div>
+                            <label class="col-md-2 form-label">Data Abertura</label>
+                            <div class="col-sm-2">
+                                <input type="text" readonly class="form-control" name="data" id="data" value='<?php echo $d_data; ?>'>
+                            </div>
                         </div>
-                        <label class="col-md-2 form-label">Data Abertura</label>
-                        <div class="col-sm-2">
-                            <input type="text" readonly class="form-control" name="data" id="data" value='<?php echo $d_data; ?>'>
-                        </div>
-                    </div>
+                        <div class="row mb-3">
+                            <label class="col-md-2 form-label">Prazo Data</label>
+                            <div class="col-sm-2">
+                                <input type="text" readonly class="form-control" name="prazo_data" id="data" value='<?php echo $d_prazo_data; ?>'>
+                            </div>
+                            <label class="col-md-2 form-label">Prazo Hora</label>
+                            <div class="col-sm-2">
+                                <input type="text" readonly class="form-control" name="prazo_hora" id="hora" value='<?php echo $c_prazo_hora; ?>'>
+                            </div>
 
-                    <div class="row mb-3">
-                        <label class="col-md-2 form-label">Setor</label>
-                        <div class="col-sm-4">
-                            <input type="text" readonly class="form-control" name="setor" id="setor" value='<?php echo $c_setor; ?>'>
-                        </div>
-                        <label class="col-md-2 form-label">Solicitante</label>
-                        <div class="col-sm-2">
-                            <input type="text" readonly class="form-control" name="Solicitante" id="Solicitante" value='<?php echo $c_Solicitante; ?>'>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label class="col-md-2 form-label">Tipo</label>
-                        <div class="col-sm-4">
-                            <input type="text" readonly class="form-control" name="tipo" id="tipo" value='<?php echo $c_tipo; ?>'>
-                        </div>
-                        <label class="col-md-2 form-label">Status</label>
-                        <div class="col-sm-3">
-                            <input type="text" readonly class="form-control" name="status" id="status" value='<?php echo $c_status; ?>'>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label class="col-md-2 form-label">Ocorrência</label>
-                        <div class="col-sm-6">
-                            <input type="text" readonly class="form-control" name="ocorrencia" id="ocorrencia" value='<?php echo $c_ocorrencia; ?>'>
                         </div>
 
-                    </div>
+                        <div class="row mb-3">
+                            <label class="col-md-2 form-label">Setor</label>
+                            <div class="col-sm-3">
+                                <input type="text" readonly class="form-control" name="setor" id="setor" value='<?php echo $c_setor; ?>'>
+                            </div>
+                            <label class="col-md-1 form-label">Solicitante</label>
+                            <div class="col-sm-2">
+                                <input type="text" readonly class="form-control" name="Solicitante" id="Solicitante" value='<?php echo $c_Solicitante; ?>'>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-md-2 form-label">Tipo</label>
+                            <div class="col-sm-3">
+                                <input type="text" readonly class="form-control" name="tipo" id="tipo" value='<?php echo $c_tipo; ?>'>
+                            </div>
+                            <label class="col-md-1 form-label">Status</label>
+                            <div class="col-sm-3">
+                                <input type="text" readonly class="form-control" name="status" id="status" value='<?php echo $c_status; ?>'>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-md-2 form-label">Ocorrência</label>
+                            <div class="col-sm-6">
+                                <input type="text" readonly class="form-control" name="ocorrencia" id="ocorrencia" value='<?php echo $c_ocorrencia; ?>'>
+                            </div>
 
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
