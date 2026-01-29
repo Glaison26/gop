@@ -63,10 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $registro_sol = $result_sol->fetch_assoc();
         $c_email = $registro_sol['email'];
         $c_descricao = $registro['descricao'];
-
         // chamo o envio de email ordem de serviço gerada
         if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
-
             $ordem = $i_id;
             $c_data_suspensao = new DateTime($_POST['data_suspensao']);
             $c_data_suspensao = $c_data_suspensao->format('Y-m-d');

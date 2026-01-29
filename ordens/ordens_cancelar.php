@@ -47,6 +47,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
          id_resp_cancelamento='$i_solicitante' where id=$i_id";
         $result_up = $conection->query($c_sql_up);
 
+        // rotina de envio de email da conclusão para solicitante, manutenção e oficina
+        // pego o email da manutenção
+        $c_sql_config = "select email_manutencao from configuracoes";
+        $result = $conection->query($c_sql_config);
+        $c_linha_email = $result->fetch_assoc();
+        $c_email_manutencao = $c_linha_email['email_manutencao'];
+        //echo $c_email_oficina;
+        // procuro solicitante para enviar e-mail
+
+        $c_sql_sol = "select id_solicitante from ordens where id=$i_id";
+        $result_sol = $conection->query($c_sql_sol);
+        $registro_sol = $result_sol->fetch_assoc();
+        $i_id_solicitante = $registro_sol['id_solicitante'];
+        // procuro o email do solicitante
+        $c_sql_sol = "select email from usuarios where id= '$i_id_solicitante'";
+        $result_sol = $conection->query($c_sql_sol);
+        $registro_sol = $result_sol->fetch_assoc();
+        $c_email = $registro_sol['email'];
+        $c_descricao = $registro['descricao'];
+
+        // chamo o envio de email ordem de serviço cancelada
+        if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
+
+            $ordem = $i_id;
+            $c_data_cancelamento = new DateTime($_POST['data_cancelamento']);
+            $c_data_cancelamento = $c_data_cancelamento->format('Y-m-d');
+            $c_motivo_cancelamento = $_POST['motivo'];
+            $c_assunto = "Cancelamento de Ordem de Serviço no GOP<br>";
+            $c_body = "A Ordem de serviço No.<b> $ordem </b> foi cancelada no sistema!<br>"
+                . "Descrição da Solicitação :" . $c_descricao . "<br>" .
+                "Motivo do cancelamento:<br>" .
+                $c_motivo_cancelamento;
+
+            include('../email_gop.php');
+        }
         header('location: /gop/ordens/ordens_gerenciar.php');
     } while (false);
 }
@@ -107,11 +142,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="row mb-8">
                     <label class="col-md-2 form-label">Data Cancelamento</label>
                     <div class="col-sm-2">
-                        <input type="Date" class="form-control" name="data_cancelamento" id="data_conclusao" value='<?php echo $c_data ?>'>
+                        <input type="Date" class="form-control" name="data_cancelamento" id="data_cancelamento" value='<?php echo $c_data ?>'>
                     </div>
                     <label class="col-md-2 form-label">Hora Cancelamento</label>
                     <div class="col-sm-2">
-                        <input type="time" class="form-control" name="hora_cancelamento" id="hora_conclusao" value="<?php echo $agora ?>">
+                        <input type="time" class="form-control" name="hora_cancelamento" id="hora_cancelamento" value="<?php echo $agora ?>">
                     </div>
                 </div>
                 <br>

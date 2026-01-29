@@ -58,6 +58,45 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // incluir dados da suspensão na tabela de históricos da suspensão
         $c_sql = "update ordens_suspensao set data_retirada='$c_data_retirada', hora_retirada='$c_hora_retirada', motivo='$c_motivo'";
         $result = $conection->query($c_sql);
+        // rotina para envio de email quando houver suspensão
+        // envio para solicitante, oficina e 
+        // rotina de envio de email da conclusão para solicitante, manutenção e oficina
+        // pego o email da manutenção
+        $c_sql_config = "select email_manutencao from configuracoes";
+        $result = $conection->query($c_sql_config);
+        $c_linha_email = $result->fetch_assoc();
+        $c_email_manutencao = $c_linha_email['email_manutencao'];
+        //echo $c_email_oficina;
+        // procuro solicitante para enviar e-mail
+
+        $c_sql_sol = "select id_solicitante from ordens where id=$i_id";
+        $result_sol = $conection->query($c_sql_sol);
+        $registro_sol = $result_sol->fetch_assoc();
+        $i_id_solicitante = $registro_sol['id_solicitante'];
+        // procuro o email do solicitante
+        $c_sql_sol = "select email from usuarios where id= '$i_id_solicitante'";
+        $result_sol = $conection->query($c_sql_sol);
+        $registro_sol = $result_sol->fetch_assoc();
+        $c_email = $registro_sol['email'];
+        $c_descricao = $registro['descricao'];
+
+        // chamo o envio de email ordem de serviço gerada
+        if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
+
+            $ordem = $i_id;
+            $c_data_retirada = new DateTime($_POST['data_suspensao']);
+            $c_data_retirada = $c_data_retirada->format('Y-m-d');
+            $c_motivo_retirada = $_POST['motivo'];
+
+            $c_assunto = "Retirada de Suspensão de Ordem de Serviço no GOP";
+            $c_body = "A Ordem de serviço No.<b> $ordem </b> foi retirada da suspensão e serviço será retomado!<br>"
+                . "Descrição da Solicitação :" . $c_descricao . "<br>" .
+                "Motivo da Retirada da suspensão:<br>" .
+                $c_motivo;
+
+            include('../email_gop.php');
+        }
+
         header('location: /gop/ordens/ordens_gerenciar.php');
     } while (false);
 }
