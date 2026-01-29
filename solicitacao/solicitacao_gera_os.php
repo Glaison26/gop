@@ -113,10 +113,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $result = $conection->query($c_sql);
         // envia email com numero da OS e previsão de atendimento para solicitante
         // procuro solicitante
-        $c_sql_solicitante = "Select id, email from usuarios where id='$i_responsavel'";
+        $c_sql_solicitante = "Select id, email from usuarios where id='$i_id_solicitante'";
         $result_solicitante = $conection->query($c_sql_solicitante);
         $registro_solicitante = $result_solicitante->fetch_assoc();
         $c_email = $registro_solicitante['email']; // email do solicitante
+
         $c_email_oficina = $registro_oficina['email']; // email da oficina selecionada na ordem de serviço
         // pego o email da manutenção
         $c_sql_config = "select email_manutencao from configuracoes";

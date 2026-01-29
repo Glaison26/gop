@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         $c_senha = base64_encode($c_senha);
         // faço a Leitura da tabela com sql
         $c_sql = "Update Usuarios" .
-            " SET nome = '$c_nome', login ='$c_login', senha ='$c_senha', cpf ='$c_cpf', ativo='$c_ativo', tipo='$c_tipo'" .
+            " SET nome = '$c_nome', login ='$c_login', senha ='$c_senha', cpf ='$c_cpf', ativo='$c_ativo', tipo='$c_tipo', email='$c_email'" .
             " where id=$c_id";
 
         $result = $conection->query($c_sql);
