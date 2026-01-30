@@ -15,7 +15,7 @@ $c_id = $_GET["id"];
 $c_id_ordem = $_SESSION['id_ordem'];
 
 // Exclusão do registro
-$c_sql2 = "delete from ordens_executores where id=$c_id";
+$c_sql2 = "delete from ordens_prestadores where id=$c_id";
 $result2 = $conection->query($c_sql2);
 // somatório dos valores de custo de serviço de prestadores
 $c_sql = "SELECT SUM(ordens_prestadores.valor_total) AS total

@@ -20,6 +20,8 @@ $_SESSION['valor_executor'] = "";
 $_SESSION['nome_material'] = "";
 $_SESSION['valor_material'] = "";
 //
+$_SESSION['nome_prestador'] = "";
+$_SESSION['valor_prestador'] = "";
 $c_sql_ordem = "select status, id_ocorrencia from ordens where id='$i_id'";
 $result = $conection->query($c_sql_ordem);
 $c_linha_ordem = $result->fetch_assoc();
@@ -36,6 +38,8 @@ $_SESSION['id_ocorrencia'] = $c_linha_ordem['id_ocorrencia'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOP - Gerenciamento de Ordens de Serviço</title>
+    <link rel="stylesheet" href="/gop/css/basico.css">
 
 </head>
 
@@ -76,7 +80,8 @@ $_SESSION['id_ocorrencia'] = $c_linha_ordem['id_ocorrencia'];
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active"><a href="#materiais" aria-controls="materiais" role="tab" data-toggle="tab">Materiais Gastos</a></li>
                     <li role="presentation"><a href="#executores" aria-controls="executores" role="tab" data-toggle="tab">Executores</a></li>
-                    <li role="presentation"><a href="#abapop" aria-controls="abapop" role="tab" data-toggle="tab">POP</a></li>
+                    <li role="presentation"><a href="#prestadores" aria-controls="prestadores" role="tab" data-toggle="tab">Prestadores de Serviço</a></li>
+                    <li role="presentation"><a href="#abapop" aria-controls="abapop" role="tab" data-toggle="tab">Procedimentos Operacionais Padrões</a></li>
                     <li role="presentation"><a href="#checklist" aria-controls="checklist" role="tab" data-toggle="tab">Check Lists</a></li>
                     <li role="presentation"><a href="#plano" aria-controls="plano" role="tab" data-toggle="tab">Plano de Ação</a></li>
                     <li role="presentation"><a href="#ferramenta" aria-controls="ferramenta" role="tab" data-toggle="tab">Ferramentas</a></li>
@@ -97,6 +102,12 @@ $_SESSION['id_ocorrencia'] = $c_linha_ordem['id_ocorrencia'];
                     <div role="tabpanel" class="tab-pane" id="executores">
                         <div style="padding-top:15px;padding-left:20px;">
                             <?php include('ordens_executores.php') ?>
+                        </div>
+                    </div>
+                    <!-- aba de prestadores de serviço-->
+                    <div role="tabpanel" class="tab-pane" id="prestadores">
+                        <div style="padding-top:15px;padding-left:20px;">
+                            <?php include('ordens_prestadores.php') ?>
                         </div>
                     </div>
                     <!-- aba de POP-->

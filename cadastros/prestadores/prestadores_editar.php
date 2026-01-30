@@ -5,6 +5,7 @@ if (!isset($_SESSION['newsession'])) {
 }
 include('../../conexao.php');
 include('../../links2.php');
+$formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
 // código para editar prestadores de serviço cadastrados no sistema
 // sql para pegar os dados da tabela prestadores
 $i_id = $_GET['id'];

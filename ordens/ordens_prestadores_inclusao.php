@@ -8,15 +8,15 @@ include('../links2.php');
 include('../conexao.php');
 
 $c_id = $_SESSION['id_ordem'];
-$c_executor_lista = $_SESSION['nome_executor'];
-$c_executor_valor = $_SESSION['valor_executor'];
+$c_prestador_lista = $_SESSION['nome_prestador'];
+$c_prestador_valor = $_SESSION['valor_prestador'];
 
 $c_valor = "0";
 $c_indice = '';
 $msg_erro = "";
 $id_ocorrencia = $_SESSION['id_ocorrencia'];
 // busco no cadastro a ocorencia as horas minutos padrões para a ocorrência da ordem de serviço
-$c_sql_ocorrencia = "select id,tempo_hora,tempo_minuto from ocorrencias where id = ".$id_ocorrencia;
+$c_sql_ocorrencia = "select id,tempo_hora,tempo_minuto from ocorrencias where id = " . $id_ocorrencia;
 $result_ocorrencia = $conection->query($c_sql_ocorrencia);
 $c_linha_ocorrencia = $result_ocorrencia->fetch_assoc();
 
@@ -29,10 +29,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
     $c_custo = $_POST['valor_hora'];
     $c_tempo_horas = $_POST['tempo_horas'];
     $c_tempo_minutos = $_POST['tempo_minutos'];
-    $c_executor = $_POST['executor'];
+    $c_prestador = $_POST['prestador'];
     //
     do {
-        if (empty($c_executor)) {
+        if (empty($c_prestador)) {
             $msg_erro = "Todos os campos devem ser preenchidos !!";
             break;
         }
@@ -54,19 +54,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
         }
 
         // sql para pegar codigo do executor
-        $c_sql_executor = "SELECT executores.id, executores.nome FROM executores
-    where executores.nome = '$c_executor' ORDER BY executores.nome";
-        $result_executor = $conection->query($c_sql_executor);
-        $c_linha = $result_executor->fetch_assoc();
-        $i_id_executor = $c_linha['id'];
+        $c_sql_prestador = "SELECT prestadores.id, prestadores.nome FROM prestadores
+    where prestadores.nome = '$c_prestador' ORDER BY prestadores.nome";
+        $result_prestador = $conection->query($c_sql_prestador);
+        $c_linha = $result_prestador->fetch_assoc();
+        $i_id_prestador = $c_linha['id'];
         // calculo de valor total
         $custo_horas = $c_tempo_horas * $c_custo;
         $fracao = $c_tempo_minutos / 60;
         $custo_minuto = $fracao * $c_custo;
         $valor_total = $custo_horas + $custo_minuto;
         //
-        $c_sql = "Insert into ordens_executores (id_executor, tempo_horas, tempo_minutos, valor_hora, valor_total, id_ordem)
-                 Value ('$i_id_executor', '$c_tempo_horas', '$c_tempo_minutos','$c_custo',' $valor_total','$c_id')";
+        $c_sql = "Insert into ordens_prestadores (id_prestador, tempo_horas, tempo_minutos, valor_hora, valor_total, id_ordem)
+                 Value ('$i_id_prestador', '$c_tempo_horas', '$c_tempo_minutos','$c_custo',' $valor_total','$c_id')";
         $result = $conection->query($c_sql);
         // somatório dos valores de custo de serviço de prestadores
         $c_sql = "SELECT SUM(ordens_prestadores.valor_total) AS total
@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GOP - Executores da Ordem</title>
+    <title>GOP - Prestadores da Ordem</title>
     <link rel="stylesheet" href="/gop/css/basico.css">
 
 </head>
@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
     <script>
         // chama arquivo para pegar ocorrencia
         function verifica(value) {
-            window.location.href = "/gop/ordens/ordens_verifica_executor_valor.php?id=" + value;
+            window.location.href = "/gop/ordens/ordens_verifica_prestador_valor.php?id=" + value;
         }
     </script>
 
@@ -118,14 +118,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
                     <h4>GOP - Gestão Operacional</h4>
-                    <h5>Novo registro de executor para Ordem de Serviço<h5>
+                    <h5>Novo registro de Prestador para Ordem de Serviço<h5>
                 </div>
             </div>
         </div>
         <br>
-        <?php
-        if (!empty($msg_erro)) {
-            echo "
+        <div class="container content-box">
+            <?php
+            if (!empty($msg_erro)) {
+                echo "
             <div class='alert alert-warning' role='alert'>
                 <div style='padding-left:15px;'>
                     
@@ -133,32 +134,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
                 <h4><img Align='left' src='\gop\images\aviso.png' alt='30' height='35'> $msg_erro</h4>
             </div>
             ";
-        }
-        ?>
-        <div class="container content-box">
+            }
+            ?>
             <div class='alert alert-info' role='alert'>
                 <div style="padding-left:15px;">
                     <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
                 </div>
-                <h5>Entre com os dados do Executor a ser anexado a Ordem de Serviço No. <?php echo $c_id ?> Todos os campos são obrigatórios</h5>
+                <h5>Entre com os dados do Prestador a ser anexado a Ordem de Serviço No. <?php echo $c_id ?> Todos os campos são obrigatórios</h5>
             </div>
             <form method="post">
 
                 <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">Executor</label>
+                    <label class="col-sm-2 col-form-label">Prestador</label>
                     <div class="col-sm-5">
-                        <select onchange="verifica(value)" class="form-select form-select-lg mb-3" id="executor" name="executor" value="<?php echo $c_executor_lista ?>" required>
+                        <select onchange="verifica(value)" class="form-select form-select-lg mb-3" id="prestador" name="prestador" value="<?php echo $c_prestador_lista ?>" required>
 
                             <?php
 
                             echo "<option></option>";
-                            // select da tabela de executores
-                            $c_sql_executor = "SELECT executores.id, executores.nome FROM executores ORDER BY executores.nome";
-                            $result_executor = $conection->query($c_sql_executor);
-                            while ($c_linha = $result_executor->fetch_assoc()) {
-                                if (!empty($_SESSION['nome_executor'])) {
-                                    if ($_SESSION['nome_executor'] == $c_linha['nome'])
+                            // select da tabela de prestadores
+                            $c_sql_prestador = "SELECT prestadores.id, prestadores.nome FROM prestadores ORDER BY prestadores.nome";
+                            $result_prestador = $conection->query($c_sql_prestador);
+                            while ($c_linha = $result_prestador->fetch_assoc()) {
+                                if (!empty($_SESSION['nome_prestador'])) {
+                                    if ($_SESSION['nome_prestador'] == $c_linha['nome'])
                                         $op = 'selected';
                                     else
                                         $op = "";
@@ -183,10 +183,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label class="col-sm-2 col-form-label">Valor hora</label>
+                    <label class="col-sm-2 col-form-label">Valor visita/hora</label>
                     <div class="col-sm-3">
                         <input placeholder="valor em Real" type="text" data-thousands="." data-decimal=","
-                            data-prefix="R$ " class="form-control" id="valor_hora" name="valor_hora" value="<?php echo $c_executor_valor ?>">
+                            data-prefix="R$ " class="form-control" id="valor_hora" name="valor_hora" value="<?php echo $c_prestador_valor ?>">
                     </div>
                 </div>
                 <hr>
@@ -198,6 +198,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
                 </div>
             </form>
         </div>
+
     </div>
 </body>
 

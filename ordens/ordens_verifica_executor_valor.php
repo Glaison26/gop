@@ -12,7 +12,7 @@ include("../conexao.php");
 
 $c_id = $_GET["id"];
 
-// Exclusão do registro
+// pego o valor do executor selecionado no formulário
 $c_executor = $c_id;
 $c_sql_valor = "SELECT executores.valorhora FROM executores  where executores.nome='$c_executor'";
 $result_valor = $conection->query($c_sql_valor);
