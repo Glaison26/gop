@@ -125,7 +125,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $c_linha_email = $result->fetch_assoc();
         $c_email_manutencao = $c_linha_email['email_manutencao'];
         //echo $c_email_oficina;
-
+        // mensagem html de espera do envio do email
+        echo '<div class="alert alert-info" role="alert">
+            <div style="padding-left:15px;">
+                <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
+            </div>
+            <h5>Enviando email de notificação da Ordem de Serviço gerada. Aguarde...</h5>
+        </div>';
         // chamo o envio de email ordem de serviço gerada
         if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
             $c_sql = "SELECT MAX(ordens.ID) AS id_ordens FROM ordens";
