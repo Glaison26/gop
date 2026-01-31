@@ -37,7 +37,7 @@ $registro_conf = $result_conf->fetch_assoc();
         $('.tabordens_recursos').DataTable({
             // 
             "iDisplayLength": -1,
-            "order": [1, 'asc'],
+            "order": [0, 'desc'],
             "aoColumnDefs": [{
                 'bSortable': false,
                 'aTargets': [7]
@@ -83,7 +83,7 @@ $registro_conf = $result_conf->fetch_assoc();
         $('.tabordens_espacos').DataTable({
             // 
             "iDisplayLength": -1,
-            "order": [1, 'asc'],
+            "order": [0, 'desc'],
             "aoColumnDefs": [{
                 'bSortable': false,
                 'aTargets': [6]
@@ -130,9 +130,9 @@ $registro_conf = $result_conf->fetch_assoc();
         $('.tabordens_avulsas').DataTable({
             // 
             "iDisplayLength": -1,
-            "order": [1, 'asc'],
+            "order": [0, 'desc'],
             "aoColumnDefs": [{
-                'bSortable': false,
+                'bSortable': true,
                 'aTargets': [6]
             }, {
                 'aTargets': [0],
@@ -197,14 +197,7 @@ $registro_conf = $result_conf->fetch_assoc();
             ?>
 
         </div>
-
-        <div class='alert alert-info' role='alert'>
-            <div style="padding-left:15px;">
-                <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
-            </div>
-
-            <h5>Resultado das Ordens de Serviço Selecionadas</h5>
-        </div>
+        
         <!-- abas de solicitações por recursos físicos, Espaços físicos e avulsos -->
         <ul class="nav nav-tabs nav-tabs-responsive" role="tablist">
             <?php
@@ -295,7 +288,7 @@ $registro_conf = $result_conf->fetch_assoc();
                                     <td>
                                         
                                         <a class='btn btn-success btn-sm' href='/gop/ordens/ordens_gerenciar.php?id=$c_linha[id]'>
-                                        <img src='\gop\images\gerenciamento.png' alt='' width='23' height='18'> Gerenciar</a>
+                                        <span class='glyphicon glyphicon-cog'></span> Gerenciar</a>
 
                                         <a class='btn btn-info btn-sm' href='/gop/ordens/ordens_emissao.php?id=$c_linha[id]'  target='_blank'>
                                         <span class='glyphicon glyphicon-print'></span> Emitir</a>
@@ -377,7 +370,7 @@ $registro_conf = $result_conf->fetch_assoc();
                                     <td>
                                         
                                         <a class='btn btn-success btn-sm' href='/gop/ordens/ordens_gerenciar.php?id=$c_linha[id]'>
-                                        <img src='\gop\images\gerenciamento.png' alt='' width='23' height='18'> Gerenciar</a>
+                                        <span class='glyphicon glyphicon-cog'></span> Gerenciar</a>
                                         <a class='btn btn-info btn-sm' href='/gop/ordens/ordens_emissao.php?id=$c_linha[id]'>
                                         <span class='glyphicon glyphicon-print'></span> Emitir</a>
                                     
@@ -460,7 +453,7 @@ $registro_conf = $result_conf->fetch_assoc();
                                     <td>
                                         
                                       <a class='btn btn-success btn-sm' href='/gop/ordens/ordens_gerenciar.php?id=$c_linha[id]'>
-                                        <img src='\gop\images\gerenciamento.png' alt='' width='23' height='18'> Gerenciar</a>
+                                        <span class='glyphicon glyphicon-cog'></span> Gerenciar</a>
                                            <a class='btn btn-info btn-sm' href='/gop/ordens/ordens_emissao.php?id=$c_linha[id]' target='_blank'>
                                         <span class='glyphicon glyphicon-print'></span> Emitir</a>
                                      

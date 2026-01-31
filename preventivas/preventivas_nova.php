@@ -21,31 +21,33 @@ include("../links2.php");
 
 <body>
     <div class="panel panel-primary class">
-            <div class="panel-heading text-center">
-                <h4>GOP - Gestão Operacional</h4>
-                <h5>Cadastro de Preventivas<h5>
-            </div>
+        <div class="panel-heading text-center">
+            <h4>GOP - Gestão Operacional</h4>
+            <h5>Cadastro de Preventivas<h5>
         </div>
+    </div>
 
     <div class="container -my5">
-  
-        <div class='alert alert-info' role='alert'>
-            <div style="padding-left:15px;">
-                <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
+            <div class='alert alert-info' role='alert'>
+                <div style="padding-left:15px;">
+                    <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
+                </div>
+                <h5>Escolha o tipo da Preventiva Recurso Fisico ou Espaço Físico</h5>
             </div>
-            <h5>Escolha o tipo da Preventiva entre Recurso Fisico ou Espaço Físico</h5>
-        </div>
 
+            <hr>
+       
         <div style="padding-bottom :2px;">
-            <div class="topnav">
-                <a href="\gop\recurso_pesquisa.php"><img src="\gop\images\construcao.png" alt="" width="30" height="35">
-                    Preventiva em Recurso Físico</a>
-                <a href="\gop\espaco_pesquisa.php"><img src="\gop\images\pedreiro.png" alt="" width="30" height="35">
-                    Preventiva em Espaços Físicos</a>
 
-                <a href="\gop\preventivas\preventivas.php"><img src="\gop\images\saida.png" alt="" width="30" height="35"> Voltar as opções</a>
-            </div>
+            <a class="btn btn btn-sm" href="\gop\recurso_pesquisa.php"><img src="\gop\images\construcao.png" alt="" width="30" height="35">
+                Preventiva em Recurso Físico</a>
+            <a class="btn btn btn-sm" href="\gop\espaco_pesquisa.php"><img src="\gop\images\pedreiro.png" alt="" width="30" height="35">
+                Preventiva em Espaços Físicos</a>
+
+            <a class="btn btn btn-sm" href="\gop\preventivas\preventivas.php"><img src="\gop\images\saida.png" alt="" width="30" height="35"> Voltar as opções</a>
+
         </div>
+        <hr>
     </div>
 
 </body>

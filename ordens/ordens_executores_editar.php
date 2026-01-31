@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
             $msg_erro = "Valor de minutos inválido !!";
             break;
         }
-        if (!is_numeric($c_custo) || ($c_custo <= 0)) {
+        if (!is_numeric($c_custo)) {
 
             $msg_erro = "Valor de hora Inválido !!";
             break;

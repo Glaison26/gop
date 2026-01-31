@@ -13,6 +13,19 @@ include("../links2.php");
 $c_sql_conf = "select * from configuracoes";
 $result = $conection->query($c_sql_conf);
 $registro = $result->fetch_assoc();
+// verifico se apenas uma opção ente solicitação avulsa, recursos físicos ou espaços físicos está habilitada
+if (($registro['solicitacao_avulsa'] == 'S') && ($registro['solicitacao_recursos'] == 'N') && ($registro['solicitacao_espacos'] == 'N')) {
+    header("Location: \gop\solicitacao\solicitacao_conclusao.php");
+    exit();
+}
+if (($registro['solicitacao_avulsa'] == 'N') && ($registro['solicitacao_recursos'] == 'S') && ($registro['solicitacao_espacos'] == 'N')) {
+    header("Location: \gop\recurso_pesquisa.php");
+    exit();
+}
+if (($registro['solicitacao_avulsa'] == 'N') && ($registro['solicitacao_recursos'] == 'N') && ($registro['solicitacao_espacos'] == 'S')) {
+    header("Location: \gop\espaco_pesquisa.php");
+    exit();
+}
 
 ?>
 
@@ -34,36 +47,42 @@ $registro = $result->fetch_assoc();
                 <h5>Solicitações de Serviços<h5>
             </div>
         </div>
-
-        <div class='alert alert-info' role='alert'>
-            <div style="padding-left:15px;">
-                <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
+        <!-- painel con instruçoes dobre as escolhas -->
+        <div class="container -my5">
+            <div class='alert alert-info' role='alert'>
+                <div style="padding-left:15px;">
+                    <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
+                </div>
+                <h5>Escolha o tipo da Solicitação entre Avulsa, Recurso Fisico ou Espaço Físico</h5>
             </div>
-            <h5>Escolha o tipo da solicitação entre Recurso Fisico, Espaço Físico ou solicitação avulsa</h5>
-        </div>
-        <div style="padding-bottom :2px;">
 
-            <?php
-            if ($registro['solicitacao_recursos'] == 'S') {
-                echo '
-                <a href="\gop\recurso_pesquisa.php"><img src="\gop\images\construcao.png" alt="" width="30" height="35">
-                    Serviço em Recurso Físico</a>';
-            }
-            if ($registro['solicitacao_espacos'] == 'S') {
-                echo '
-                <a href="\gop\espaco_pesquisa.php"><img src="\gop\images\pedreiro.png" alt="" width="30" height="35">
-                    Serviço em Espaços Físicos</a>';
-            }
-            if ($registro['solicitacao_avulsa'] == 'S') {
-                echo '
-                <a href="\gop\solicitacao\solicitacao_conclusao.php"><img src="\gop\images\ordem.png" alt="" width="30" height="35">
-                    Solicitação de Serviço</a>';
-            }
-            ?>
-            <a href="\gop\solicitacao\solicitacao.php"><img src="\gop\images\saida.png" alt="" width="30" height="35"> Voltar as opções</a>
+            <hr>
 
+            <div style="padding-bottom :2px;">
+
+                <?php
+                if ($registro['solicitacao_avulsa'] == 'S') {
+                    echo '
+                
+                <a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_conclusao.php"><img src="\gop\images\ordem.png" alt="" width="30" height="35">
+                    Iniciar nova Solicitação de Serviço</a>';
+                }
+                if ($registro['solicitacao_recursos'] == 'S') {
+                    echo '
+                <a class="btn btn btn-sm" href="\gop\recurso_pesquisa.php"><img src="\gop\images\construcao.png" alt="" width="30" height="35">
+                    Iniciar nova Solicitação em Recurso Físico</a>';
+                }
+                if ($registro['solicitacao_espacos'] == 'S') {
+                    echo '
+                <a class="btn btn btn-sm" href="\gop\espaco_pesquisa.php"><img src="\gop\images\pedreiro.png" alt="" width="30" height="35">
+                    Iniciar nova Solicitação em Espaço Físico</a>';
+                }
+
+                ?>
+                <a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao.php"><img src="\gop\images\saida.png" alt="" width="30" height="35"> Voltar as opções</a>
+
+            </div>
         </div>
-    </div>
 </body>
 
 </html>

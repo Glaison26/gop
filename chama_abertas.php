@@ -90,12 +90,11 @@ $c_sqlrecursos = $c_sql_recurso . $c_wheretipo_recurso;
 $c_sqlespacos = $c_sql_espaco . $c_wheretipo_espaco;
 $c_sqlavulso = $c_sql_avulso . $c_wheretipo_avulso;
 // guardo session para proxima pagina de tabelas
-$_SESSION['sqlrecurso'] = $c_sqlrecursos;
-$_SESSION['sqlespaco'] = $c_sqlespacos;
-$_SESSION['sqlavulso'] = $c_sqlavulso;
+$_SESSION['sqlrecurso'] = $c_sqlrecursos.' order by ordens.id desc';
+$_SESSION['sqlespaco'] = $c_sqlespacos.' order by ordens.id desc';
+$_SESSION['sqlavulso'] = $c_sqlavulso.' order by ordens.id desc';
 $_SESSION['pesquisamenu'] = true;
 
-echo $c_sqlrecursos;
 //echo '----------------------------';
 //echo $c_sqlespacos;
 //echo '----------------------------';
