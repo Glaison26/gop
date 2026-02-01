@@ -184,6 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $c_valor_servico = $_POST['valor_servico'];
     $c_valor_material = $_POST['valor_material'];
     $c_descritivo = $_POST['descritivo'];
+    $c_id_ocorrencia = $_POST['ocorrencia'];
 
     if (!is_numeric($c_valor_servico))
         $c_valor_servico = 0;
@@ -192,8 +193,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
 
     do {
         // sql para atualizar regitro da os
+        $i_id = $_SESSION['id_ordem'];
         $c_sql = "Update ordens" .
-            " SET data_inicio='$c_data_inicio', hora_inicio='$c_hora_inicio', id_setor='$i_setor',
+            " SET data_inicio='$c_data_inicio', hora_inicio='$c_hora_inicio',  id_setor='$i_setor', id_ocorrencia='$c_id_ocorrencia',
              tipo_ordem='$c_tipo_ordem', tipo_corretiva='$c_tipo_corretiva', tipo_preventiva='$c_tipo_preventiva',
             id_oficina='$i_oficina', data_entrada='$c_data_entrada', hora_entrada='$c_hora_entrada',
             data_previsao='$c_data_previsao', hora_previsao='$c_hora_previsao', situacao='$c_situacao', 
@@ -201,6 +203,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             data_saida='$c_data_saida', data_garantia='$c_data_garantia', numero_nota='$c_nota',
             valor_servico = '$c_valor_servico', valor_material='$c_valor_material', descritivo='$c_descritivo'
             where id='$i_id'";
+            
 
         $result = $conection->query($c_sql);
 
@@ -331,9 +334,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                             </div>
                             <br>
                             <div class="row mb-3">
+
                                 <label class="col-sm-2 col-form-label">Ocorrência</label>
                                 <div class="col-sm-6">
-                                    <input readonly type="text" maxlength="50" class="form-control" name="ocorrencia" value="<?php echo $c_ocorrencia; ?>">
+                                    <select class="form-select form-select-lg mb-2" id="ocorrencia" name="ocorrencia">
+
+                                        <?php
+                                        // select da tabela de ocorrencias
+                                        $c_sql_ocorrencia = "SELECT ocorrencias.id, ocorrencias.descricao FROM ocorrencias 
+                                        ORDER BY ocorrencias.descricao";
+                                        $result_ocorrencia = $conection->query($c_sql_ocorrencia);
+                                        while ($c_linha2 = $result_ocorrencia->fetch_assoc()) {
+                                            $op = "";
+                                            if ($c_linha2['id'] == $registro['id_ocorrencia']) {
+                                                $op = "selected";
+                                            }
+                                            echo "<option  value='$c_linha2[id]' $op>$c_linha2[descricao]</option>";
+                                        }
+                                        ?>
+                                    </select>
                                 </div>
                             </div>
                             <br>
@@ -388,6 +407,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                                     <input type="text" readonly class="form-control" id="solicitacao" name="solicitacao" value="<?php echo $i_solicitacao; ?>">
                                 </div>
                             </div>
+                            <br>
                             <div class="row mb-8">
                                 <label class="col-sm-2 col-form-label">Tipo da Ordem</label>
                                 <div class="col-sm-2">
@@ -396,6 +416,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                                         <option <?= ($registro['tipo_ordem'] == 'P') ? 'selected' : '' ?> value="P">Preventiva</option>
                                     </select>
                                 </div>
+                                
                                 <label class="col-sm-2 col-form-label">Corretiva</label>
                                 <div class="col-sm-2">
                                     <select <?php echo $hab_corretiva ?> <?php echo $c_ativa; ?> class="form-select form-select-lg mb-3" id="tipo_corretiva" name="tipo_corretiva" value="<?php echo $c_tipo_corretiva; ?>">
@@ -405,6 +426,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                                 </div>
 
                             </div>
+                            <br>
                             <div class="row mb-8">
                                 <label class="col-sm-2 col-form-label">Tipo da Preventiva</label>
                                 <div class="col-sm-2">
@@ -625,13 +647,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                 <div class="row mb-3">
                     <div class="offset-sm-0 col-sm-3">
                         <?php
-                        if ($registro['status'] <> 'X' && $registro['status'] <> 'C'&& $_SESSION['ver_os']==false)
+                        if ($registro['status'] <> 'X' && $registro['status'] <> 'C' && $_SESSION['ver_os'] == false)
                             echo '<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-saved"></span> Salvar</button>';
-                        if ($_SESSION['ver_os'] == false){
-                           echo "
+                        if ($_SESSION['ver_os'] == false) {
+                            echo "
                             <a class='btn btn-danger' href='/gop/ordens/ordens_gerenciar.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>";
-                        } else{
-                           echo "
+                        } else {
+                            echo "
                             <a class='btn btn-danger' href='/gop/agenda/agenda_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>";
                         }
 

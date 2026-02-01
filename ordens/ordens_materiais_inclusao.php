@@ -11,6 +11,7 @@ $c_id = $_SESSION['id_ordem'];
 // seção para material e valor
 $c_material_lista = $_SESSION['nome_material'];
 $c_material_valor = $_SESSION['valor_material'];
+$c_unidade = $_SESSION['unidade_material'];
 
 $c_valor = "0";
 $n_quantidade = "0";
@@ -172,11 +173,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
                         <select class="form-select form-select-lg mb-3" id="unidade" name="unidade">
                             <?php
                             // select da tabela de Unidades
+                            echo "<option></option>";
+                            $c_sql_unidade = "SELECT unidades.id, unidades.descricao, unidades.abreviatura FROM unidades 
 
+                            ORDER BY unidades.abreviatura";
+                            $result_uni = $conection->query($c_sql_unidade);
                             while ($c_linha = $result_uni->fetch_assoc()) {
 
                                 echo "  
-                          <option>$c_linha[abreviatura]</option>
+                            <option ";;
+                                if ($c_unidade == $c_linha['id']) {
+                                    echo " selected ";
+                                }
+                                echo ">$c_linha[abreviatura]</option>
                         ";
                             }
                             ?>

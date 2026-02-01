@@ -22,6 +22,8 @@ $_SESSION['valor_material'] = "";
 //
 $_SESSION['nome_prestador'] = "";
 $_SESSION['valor_prestador'] = "";
+$_SESSION['unidade_material'] = "";
+// sql para pegar dados da ordem de serviço
 $c_sql_ordem = "select status, id_ocorrencia, descritivo from ordens where id='$i_id'";
 $result = $conection->query($c_sql_ordem);
 $c_linha_ordem = $result->fetch_assoc();
