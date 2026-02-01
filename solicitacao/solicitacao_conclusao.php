@@ -209,7 +209,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label class="col-sm-3 col-form-label">Tipo de Solicitação</label>
                 <div class="col-sm-2">
                     <select class="form-select form-select-lg mb-3" id="tipo" name="tipo" value="<?php echo $c_tipo; ?>" required>
-                        <option></option>
                         <option>Programada</option>
                         <option>Urgência</option>
 
