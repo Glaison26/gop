@@ -245,6 +245,13 @@ $registro_conf = $result_conf->fetch_assoc();
                                     $c_data_prazo = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['prazo_data'])));
                                 else
                                     $c_data_prazo = '';
+                                // variavel que receber cor azul quando for programada e vermelho quando for urgência
+                                $c_cor = '';
+                                if ($c_linha['solicitacao_tipo'] == 'Programada') {
+                                    $c_cor = 'style="color:blue;"';
+                                } elseif ($c_linha['solicitacao_tipo'] == 'Urgência') {
+                                    $c_cor = 'style="color:red;"';
+                                }
                                 echo "
                                 <tr>
                                     <td>$c_linha[id]</td>
@@ -256,7 +263,7 @@ $registro_conf = $result_conf->fetch_assoc();
                                     <td>$c_linha[prazo_hora]</td>
                                     <td>$c_linha[solicitante]</td>
                                     <td>$c_linha[recurso]</td>
-                                    <td>$c_linha[solicitacao_tipo]</td>
+                                    <td $c_cor>$c_linha[solicitacao_tipo]</td>
                             
                                     <td>
                                         <a class='btn btn-secondary btn-sm' href='/gop/solicitacao/solicitacao_detalhe.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Detalhe</a>
@@ -305,6 +312,13 @@ $registro_conf = $result_conf->fetch_assoc();
                                     $c_data_prazo = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['prazo_data'])));
                                 else
                                     $c_data_prazo = '';
+                                 // variavel que receber cor azul quando for programada e vermelho quando for urgência
+                                $c_cor = '';
+                                if ($c_linha['solicitacao_tipo'] == 'Programada') {
+                                    $c_cor = 'style="color:blue;"';
+                                } elseif ($c_linha['solicitacao_tipo'] == 'Urgência') {
+                                    $c_cor = 'style="color:red;"';
+                                }
                                 echo "
                                 <tr>
                                     <td>$c_linha[id]</td>
@@ -316,7 +330,7 @@ $registro_conf = $result_conf->fetch_assoc();
                                     <td>$c_linha[prazo_hora]</td>
                                     <td>$c_linha[solicitante]</td>
                                     <td>$c_linha[espaco]</td>
-                                    <td>$c_linha[solicitacao_tipo]</td>
+                                    <td $c_cor>$c_linha[solicitacao_tipo]</td>
                                     
                                     <td>
                                         <a class='btn btn-secondary btn-sm' href='/gop/solicitacao/solicitacao_detalhe.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Detalhe</a>
@@ -366,6 +380,13 @@ $registro_conf = $result_conf->fetch_assoc();
                                     $c_data_prazo = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['prazo_data'])));
                                 else
                                     $c_data_prazo = '';
+                                 // variavel que receber cor azul quando for programada e vermelho quando for urgência
+                                $c_cor = '';
+                                if ($c_linha['solicitacao_tipo'] == 'Programada') {
+                                    $c_cor = 'style="color:blue;"';
+                                } elseif ($c_linha['solicitacao_tipo'] == 'Urgência') {
+                                    $c_cor = 'style="color:red;"';
+                                }
                                 echo "
                                 <tr>
                                     <td>$c_linha[id]</td>
@@ -376,7 +397,7 @@ $registro_conf = $result_conf->fetch_assoc();
                                     <td>$c_data_prazo</td>
                                     <td>$c_linha[prazo_hora]</td>
                                     <td>$c_linha[solicitante]</td>
-                                    <td>$c_linha[solicitacao_tipo]</td>
+                                    <td $c_cor>$c_linha[solicitacao_tipo]</td>
                                     
                                     <td>
                                         <a class='btn btn-secondary btn-sm' href='/gop/solicitacao/solicitacao_detalhe.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Detalhe</a>
