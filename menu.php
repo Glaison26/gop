@@ -220,6 +220,7 @@ $_SESSION['ver_os'] = false;
                             Indicadores de Custos <i class="fas fa-chevron-down ml-1 text-xs"></i>
                         </button>
                         <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow-xl rounded-md w-48 z-50">
+                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/custos/centrodecusto_custo_geral_query.php">Custo Geral de Manutenção por Período</a>
                                  <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/custos/ocorrencias_custo_query.php">Custos por Ocorrências Padrões</a>
                                  <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/custos/oficinas_custo_query.php">Custos por Oficinas</a>
                                  <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/custos/solicitantes_custo_query.php">Custos por Solicitantes</a> 
@@ -230,11 +231,11 @@ $_SESSION['ver_os'] = false;
                                  <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/custos_mensais/oficinas_custo_mensal_query.php">Comparativo mensal de Custos por Oficina</a>
                                  <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/custos_mensais/solicitantes_custo_mensal_query.php">Comparativo mensal de Custos por Solicitante</a>
                                  <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/custos_mensais/setores_custo_mensal_query.php">Comparativo mensal de Custos por Setor</a>
+                                 
                         </div>
                     </div>';
                 }
                 ?>
-
                 <!-- configurações -->
                 <?php
                 if ($_SESSION['tipo'] == 'Administrador') {
