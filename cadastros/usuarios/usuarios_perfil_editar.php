@@ -202,7 +202,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     } else {
         $c_chkobras = 'N';
     }
-    //
+    // agenda executores
+    if ($registro['servicos_agenda'] == 'S') {
+        $c_chkagendaexecutores = 'checked';
+    } else {
+        $c_chkagendaexecutores = 'N';
+    }
 }
 // Metodo post para gravação dos dados editados
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -393,11 +398,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         $c_chkobras = 'N';
     }
+    // agenda executores
+    if (isset($_POST['chkagendaexecutores'])) {
+        $c_chkagendaexecutores = 'S';
+    } else {
+        $c_chkagendaexecutores = 'N';
+    }
 
     do {
 
         // gravo os dados com sql
-        $c_sql = "Update perfil_usuarios set descricao='$c_descricao', cadastros_recursosfisicos='$c_chkrecursosfisicos', cadastros_espacosfisicos='$c_chkespacosfisicos',
+        $c_sql = "Update perfil_usuarios set descricao='$c_descricao', cadastros_recursosfisicos='$c_chkrecursosfisicos', 
+        cadastros_espacosfisicos='$c_chkespacosfisicos',
         cadastros_fornecedores='$c_chkfornecedores', cadastros_fabricantes='$c_chkfabricantes', cadastros_executores='$c_chkexecutores',
         cadastros_cargosfuncoes='$c_chkfcargosfuncoes',cadastros_oficinas='$c_chkoficinas', cadastro_centrosdecusto='$c_chkcentrosdecusto',
         cadastros_setores='$c_chksetores', cadastros_ferramentas='$c_chkferramentas', cadastros_grupos='$c_chkgruposrecursos',
@@ -407,7 +419,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         almoxarifado_cotacoes='$c_chkcotacao', almoxarifado_pedidodecompra='$c_chkpedidodecompra', almoxarifado_materiais='$c_chkmateriais',
         almoxarifado_unidadesmedidas='$c_chkunidades', indicadores_ocorrencias='$c_chkcontagem', indicadores_comparativos='$c_chkcomparativo',
         custos_ocorrencias='$c_chkcustoindividual', custos_comparativos='$c_chkcomparativocustos', cadastros_tipos='$c_chktipo',
-        obras='$c_chkobras'
+        obras='$c_chkobras', servicos_agenda='$c_chkagendaexecutores'
         where id='$c_id'";
         //echo $c_sql;
         $result = $conection->query($c_sql);
@@ -632,6 +644,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <label class="form-check-label col-form-label">Ocorrencias Padrões</label>
                                     <div class="col-sm-3">
                                         <input class="form-check-input" type="checkbox" value="S" name="chkocorrencias" id="chkocorrencias" <?php echo $c_chkocorrencias ?>>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row mb-3">
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Agenda de Executores</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkagendaexecutores" id="chkagendaexecutores" <?php echo $c_chkagendaexecutores ?>>
                                     </div>
                                 </div>
                             </div>
