@@ -15,7 +15,7 @@ $agora = date('Y-m-d');
 $c_sql_recurso = "SELECT preventivas.id, preventivas.id_oficina, preventivas.id_setor, preventivas.tipo,
  preventivas.periodicidade_geracao, preventivas.calibracao, preventivas.id_recurso, recursos.descricao as recurso,
 preventivas.data_ult_realizacao, preventivas.data_prox_realizacao, preventivas.tipo_preventiva, 
-preventivas.descritivo, preventivas.gerar, preventivas.id_ocorrencia, prazo_atendimento,
+preventivas.descritivo, preventivas.gerar, preventivas.id_ocorrencia, prazo_atendimento, preventivas.id_executor,
 case
 when preventivas.calibracao ='S' then 'Sim'
 when preventivas.calibracao ='N' then 'Não'
@@ -29,7 +29,7 @@ ORDER BY preventivas.data_prox_realizacao desc";
 $c_sql_espaco = "SELECT preventivas.id, preventivas.tipo, preventivas.id_oficina, preventivas.tipo_preventiva, 
 preventivas.periodicidade_geracao, preventivas.descritivo, preventivas.id_setor, preventivas.calibracao, preventivas.id_espaco, 
 espacos.descricao as espaco, preventivas.data_ult_realizacao, preventivas.data_prox_realizacao,
- preventivas.gerar, preventivas.id_ocorrencia, prazo_atendimento,
+ preventivas.gerar, preventivas.id_ocorrencia, prazo_atendimento, preventivas.id_executor,
 case
 when preventivas.calibracao ='S' then 'Sim'
 when preventivas.calibracao ='N' then 'Não'
@@ -68,6 +68,8 @@ while ($c_linha = $result->fetch_assoc()) {
     $i_id_oficina = $c_linha['id_oficina'];
     $i_id_setor   = $c_linha['id_setor'];
     $i_id_ocorrencia = $c_linha['id_ocorrencia'];
+    $i_id_responsavel = $c_linha['id_executor'];
+    $i_id_executor_responsavel = $c_linha['id_executor'];
     //
     $c_tipo = $c_linha['tipo']; // recurso fisico, espaço fisico ou avulsa 
     $c_tipo_ordem = 'P'; // Preventiva 
@@ -81,10 +83,10 @@ while ($c_linha = $result->fetch_assoc()) {
 
     // inserir dados da preventiva na tabela de ordens de serviços
     $c_sql = "insert into ordens (id_solicitante, id_responsavel, id_recurso, id_oficina, id_setor, data_inicio, hora_inicio, tipo,
-    tipo_ordem, tipo_preventiva, descricao,  data_geracao, hora_geracao, status, id_ocorrencia, descritivo, data_previsao, hora_previsao)
+    tipo_ordem, tipo_preventiva, descricao,  data_geracao, hora_geracao, status, id_ocorrencia, descritivo, data_previsao, hora_previsao, id_executor_responsavel)
     value ('$i_id_solicitante', '$i_id_solicitante', '$i_id_recurso', '$i_id_oficina','$i_id_setor', '$d_data_inicio', '$d_hora_inicio',
     'R', 'P', '$c_tipo_preventiva', '$c_descritivo', '$d_data_geracao', '$d_hora_geracao', 'A',
-    '$i_id_ocorrencia', '$c_descricao', '$d_data_previsao', '$d_hora_geracao')";
+    '$i_id_ocorrencia', '$c_descricao', '$d_data_previsao', '$d_hora_geracao', '$i_id_executor_responsavel')";
     $resultado = $conection->query($c_sql);
     if (!$resultado) {
         die("Erro ao Executar Sql!!" . $conection->connect_error);
@@ -166,6 +168,7 @@ while ($c_linha = $result->fetch_assoc()) {
     $i_id_oficina = $c_linha['id_oficina'];
     $i_id_setor   = $c_linha['id_setor'];
     $i_id_ocorrencia = $c_linha['id_ocorrencia'];
+    $i_id_responsavel = $c_linha['id_executor'];
     //
     $c_tipo = $c_linha['tipo']; // recurso fisico, espaço fisico ou avulsa 
     $c_tipo_ordem = 'P'; // Preventiva 
@@ -178,12 +181,12 @@ while ($c_linha = $result->fetch_assoc()) {
     
     $i_id_preventiva = $c_linha['id'];
     // inserir dados da preventiva na tabela de ordens de serviços
-    $c_sql = "insert into ordens (id_solicitante, id_responsavel, id_espaco, id_oficina, id_setor, data_inicio, hora_inicio, tipo,
-    tipo_ordem, tipo_preventiva, descricao,  data_geracao, hora_geracao, status, id_ocorrencia, descritivo, data_previsao, hora_previsao)
-    value ('$i_id_solicitante', '$i_id_solicitante', '$i_id_espaco', '$i_id_oficina', '$i_id_setor', '$d_data_inicio', '$d_hora_inicio',
+    $c_sql = "insert into ordens (id_solicitante, id_responsavel, id_espaco, id_oficina, id_setor, data_inicio, hora_inicio, tipo, 
+    tipo_ordem, tipo_preventiva, descricao,  data_geracao, hora_geracao, status, id_ocorrencia, descritivo, data_previsao, hora_previsao, id_executor_responsavel)
+    value ('$i_id_solicitante', '$i_id_responsavel', '$i_id_espaco', '$i_id_oficina', '$i_id_setor', '$d_data_inicio', '$d_hora_inicio',
     'E', 'P', '$c_tipo_preventiva', '$c_descritivo', '$d_data_geracao', '$d_hora_geracao', 'A',
-     $i_id_ocorrencia, '$c_descricao', '$d_data_previsao', '$d_hora_geracao')";
-     //echo $c_sql;
+     $i_id_ocorrencia, '$c_descricao', '$d_data_previsao', '$d_hora_geracao', '$i_id_responsavel')";
+     echo $c_sql;
     $resultado = $conection->query($c_sql);
     
     if (!$resultado) {

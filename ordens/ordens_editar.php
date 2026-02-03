@@ -82,6 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $c_descritivo = $registro['descritivo'];
     $c_nome_responsavel = $registro_responsavel['nome'];
     $i_solicitacao = $registro['id_solicitacao'];
+    $i_id_responsavel = $registro['id_responsavel'];
 
     if ($registro['tipo_ordem'] == 'P') {
         $hab_preventiva = '';
@@ -203,7 +204,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             data_saida='$c_data_saida', data_garantia='$c_data_garantia', numero_nota='$c_nota',
             valor_servico = '$c_valor_servico', valor_material='$c_valor_material', descritivo='$c_descritivo'
             where id='$i_id'";
-            
+
 
         $result = $conection->query($c_sql);
 
@@ -363,6 +364,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                                 </div>
                             </div>
                             <br>
+                            <!-- executor responsavel -->
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Responsável </label>
+                                <div class="col-sm-6">
+                                    <select class="form-select form-select-lg mb-3" id="responsavel" name="responsavel" required>
+                                        
+                                        <?php
+                                        // select da tabela de setores
+                                        $c_sql_resp = "SELECT executores.id, executores.nome FROM executores  ORDER BY executores.nome";
+                                        $result_resp = $conection->query($c_sql_resp);
+                                        while ($c_linha = $result_resp->fetch_assoc()) {
+                                            $op = "";
+                                            if ($c_linha['id'] == $registro['id_responsavel']) {
+                                                $op = "selected";
+                                            }
+                                            echo "<option $op>$c_linha[nome]</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Solicitante</label>
                                 <div class="col-sm-6">
@@ -416,7 +438,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                                         <option <?= ($registro['tipo_ordem'] == 'P') ? 'selected' : '' ?> value="P">Preventiva</option>
                                     </select>
                                 </div>
-                                
+
                                 <label class="col-sm-2 col-form-label">Corretiva</label>
                                 <div class="col-sm-2">
                                     <select <?php echo $hab_corretiva ?> <?php echo $c_ativa; ?> class="form-select form-select-lg mb-3" id="tipo_corretiva" name="tipo_corretiva" value="<?php echo $c_tipo_corretiva; ?>">
