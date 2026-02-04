@@ -54,6 +54,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $c_chkexecutores = 'N';
         }
+        // prestadores de serviço
+        if (isset($_POST['chkprestadoresdeservico'])) {
+            $c_chkprestadoresdeservico = 'S';
+        } else {
+            $c_chkprestadoresdeservico = 'N';
+        }
         //
         if (isset($_POST['chkfcargosfuncoes'])) {
             $c_chkfcargosfuncoes = 'S';
@@ -205,20 +211,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $c_chkobras = 'N';
         }
+        // serviços agenda de executores
+        if (isset($_POST['chkagendaexecutores'])) {
+            $c_chkagendaexecutores = 'S';
+        } else {
+            $c_chkagendaexecutores = 'N';
+        }
         // grava dados no banco
 
         // faço a Leitura da tabela com sql
         $c_sql = "INSERT INTO perfil_usuarios (descricao,cadastros_recursosfisicos, cadastros_espacosfisicos, cadastros_fornecedores,
-        cadastros_fabricantes, cadastros_executores, cadastros_cargosfuncoes,cadastros_oficinas, cadastro_centrosdecusto,
+        cadastros_fabricantes, cadastros_executores,  cadastros_cargosfuncoes,cadastros_oficinas, cadastro_centrosdecusto,
         cadastros_setores, cadastros_ferramentas, cadastros_grupos, cadastros_marcas, cadastros_pop, cadastros_checklist,
         servicos_solicitacoes, servicos_ordens,servicos_preventivas,servicos_ocorrencias_padroes,servicos_plano_acao,
         almoxarifado_cotacoes, almoxarifado_pedidodecompra, almoxarifado_materiais, almoxarifado_unidadesmedidas,
-        indicadores_ocorrencias, indicadores_comparativos, custos_ocorrencias, custos_comparativos, cadastros_tipos, obras) value
+        indicadores_ocorrencias, indicadores_comparativos, custos_ocorrencias, custos_comparativos, cadastros_tipos, obras, cadastros_prestadores, servicos_agenda) value
         ('$c_descricao','$c_chkrecursosfisicos', '$c_chkespacosfisicos', '$c_chkfornecedores', '$c_chkfabricantes',
         '$c_chkexecutores', '$c_chkexecutores', '$c_chkfcargosfuncoes', '$c_chkoficinas', '$c_chkcentrosdecusto', '$c_chksetores',
         '$c_chkferramentas', '$c_chkgruposrecursos', '$c_chkmarcasrecursos','$c_chkpop', '$c_chksolicitacoes', '$c_chkordens',
         '$c_chkpreventivas', '$c_chkocorrencias', '$c_chkplanoacao','$c_chkcotacao','$c_chkpedidodecompra','$c_chkmateriais', '$c_chkunidades',
-        '$c_chkcontagem', '$c_chkcomparativo', '$c_chkcustoindividual', '$c_chkcomparativocustos', '$c_chktipo', '$c_chkobras')";
+        '$c_chkcontagem', '$c_chkcomparativo', '$c_chkcustoindividual', '$c_chkcomparativocustos', '$c_chktipo', '$c_chkobras', '$c_chkprestadoresdeservico', '$c_chkagendaexecutores')";
 
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
@@ -359,62 +371,75 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     </div>
                                 </div>
                                 <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Prestadores de Serviço</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkprestadoresdeservico" id="chkprestadoresdeservico" checked>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row mb-3">
+                                <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Cargos e Funções</label>
                                     <div class="col-sm-3">
                                         <input class="form-check-input" type="checkbox" value="S" name="chkfcargosfuncoes" id="chkfcargosfuncoes" checked>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row mb-3">
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Oficinas</label>
                                     <div class="col-sm-3">
                                         <input class="form-check-input" type="checkbox" value="S" name="chkoficinas" id="chkoficinas" checked>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row mb-3">
+
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Centros de Custo</label>
                                     <div class="col-sm-3">
                                         <input class="form-check-input" type="checkbox" value="S" name="chkcentrosdecusto" id="chkcentrosdecusto" checked>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row mb-3">
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Setores</label>
                                     <div class="col-sm-3">
                                         <input class="form-check-input" type="checkbox" value="S" name="chksetores" id="chksetores" checked>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row mb-3">
+
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Ferramentas</label>
                                     <div class="col-sm-3">
                                         <input class="form-check-input" type="checkbox" value="S" name="chkferramentas" id="chkferramentas" checked>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row mb-3">
-
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Marcas de Recursos</label>
                                     <div class="col-sm-3">
                                         <input class="form-check-input" type="checkbox" value="S" name="chkmarcasrecursos" id="chkmarcasrecursos" checked>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row mb-3">
+
+
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Tipos de Recursos</label>
                                     <div class="col-sm-3">
                                         <input class="form-check-input" type="checkbox" value="S" name="chktipo" id="chktipo" checked>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row mb-3">
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">CheckList</label>
                                     <div class="col-sm-3">
                                         <input class="form-check-input" type="checkbox" value="S" name="chkchecklist" id="chkchecklist" checked>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="row mb-3">
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Unidades e Medidas</label>
                                     <div class="col-sm-3">

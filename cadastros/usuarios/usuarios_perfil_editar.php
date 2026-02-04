@@ -208,6 +208,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     } else {
         $c_chkagendaexecutores = 'N';
     }
+    // prestadores de serviço
+    if ($registro['cadastros_prestadores'] == 'S') {
+        $c_chkprestadoresdeservico = 'checked';
+    } else {
+        $c_chkprestadoresdeservico = 'N';
+    }
 }
 // Metodo post para gravação dos dados editados
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -404,6 +410,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         $c_chkagendaexecutores = 'N';
     }
+    // prestadores de serviço
+    if (isset($_POST['chkprestadoresdeservico'])) {
+        $c_chkprestadoresdeservico = 'S';
+    } else {
+        $c_chkprestadoresdeservico = 'N';
+    }
 
     do {
 
@@ -419,7 +431,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         almoxarifado_cotacoes='$c_chkcotacao', almoxarifado_pedidodecompra='$c_chkpedidodecompra', almoxarifado_materiais='$c_chkmateriais',
         almoxarifado_unidadesmedidas='$c_chkunidades', indicadores_ocorrencias='$c_chkcontagem', indicadores_comparativos='$c_chkcomparativo',
         custos_ocorrencias='$c_chkcustoindividual', custos_comparativos='$c_chkcomparativocustos', cadastros_tipos='$c_chktipo',
-        obras='$c_chkobras', servicos_agenda='$c_chkagendaexecutores'
+        obras='$c_chkobras', servicos_agenda='$c_chkagendaexecutores', cadastros_prestadores='$c_chkprestadoresdeservico'
         where id='$c_id'";
         //echo $c_sql;
         $result = $conection->query($c_sql);
@@ -549,42 +561,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     </div>
                                 </div>
                                 <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Prestadores de Serviço</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkprestadoresdeservico" id="chkprestadoresdeservico" <?php echo $c_chkprestadoresdeservico ?>>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row mb-3">
+                                <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Cargos e Funções</label>
                                     <div class="col-sm-3">
                                         <input class="form-check-input" type="checkbox" value="S" name="chkfcargosfuncoes" id="chkcargosfuncoes" <?php echo $c_chkfcargosfuncoes ?>>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row mb-3">
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Oficinas</label>
                                     <div class="col-sm-3">
                                         <input class="form-check-input" type="checkbox" value="S" name="chkoficinas" id="chkoficinas" <?php echo $c_chkoficinas ?>>
                                     </div>
                                 </div>
+
+                            </div>
+                            <div class="row mb-3">
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Centros de Custo</label>
                                     <div class="col-sm-3">
                                         <input class="form-check-input" type="checkbox" value="S" name="chkcentrosdecusto" id="chkcentrosdecusto" <?php echo $c_chkcentrosdecusto ?>>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row mb-3">
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Setores</label>
                                     <div class="col-sm-3">
                                         <input class="form-check-input" type="checkbox" value="S" name="chksetores" id="chksetores" <?php echo $c_chksetores ?>>
                                     </div>
                                 </div>
+
+                            </div>
+                            <div class="row mb-3">
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Ferramentas</label>
                                     <div class="col-sm-3">
                                         <input class="form-check-input" type="checkbox" value="S" name="chkferramentas" id="chkferramentas" <?php echo $c_chkferramentas ?>>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row mb-3">
-
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Marcas de Recursos</label>
                                     <div class="col-sm-3">
@@ -592,21 +612,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     </div>
 
                                 </div>
+
+                            </div>
+                            <div class="row mb-3">
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Tipos de Recursos</label>
                                     <div class="col-sm-3">
                                         <input class="form-check-input" type="checkbox" value="S" name="chktipo" id="chktipo" <?php echo $c_chktipo ?>>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row mb-3">
-
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">CheckList</label>
                                     <div class="col-sm-3">
                                         <input class="form-check-input" type="checkbox" value="S" name="chkchecklist" id="chkchecklist" <?php echo $c_chkchecklist ?>>
                                     </div>
                                 </div>
+
+                            </div>
+                            <div class="row mb-3">
                                 <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Unidades e Medidas</label>
                                     <div class="col-sm-3">
