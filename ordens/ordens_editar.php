@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $registro_ocorrencia = $result_ocorrencia->fetch_assoc();
     $c_ocorrencia = $registro_ocorrencia['descricao'];
     // sql para pegar o responsável
-    $c_responsavel = $registro['id_responsavel'];
+    $c_responsavel = $registro['id_solicitante'];
     $c_sql_responsavel = "Select id,nome from usuarios where id='$c_responsavel'";
     $result_responsavel = $conection->query($c_sql_responsavel);
     $registro_responsavel = $result_responsavel->fetch_assoc();
@@ -83,6 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $c_nome_responsavel = $registro_responsavel['nome'];
     $i_solicitacao = $registro['id_solicitacao'];
     $i_id_responsavel = $registro['id_responsavel'];
+    $i_id_executor_responsavel = $registro['id_executor_responsavel'];
 
     if ($registro['tipo_ordem'] == 'P') {
         $hab_preventiva = '';
@@ -186,6 +187,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $c_valor_material = $_POST['valor_material'];
     $c_descritivo = $_POST['descritivo'];
     $c_id_ocorrencia = $_POST['ocorrencia'];
+    $i_id_executor_responsavel = $_POST['executor_responsavel'];
 
     if (!is_numeric($c_valor_servico))
         $c_valor_servico = 0;
@@ -202,7 +204,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             data_previsao='$c_data_previsao', hora_previsao='$c_hora_previsao', situacao='$c_situacao', 
             motivo_naoconformidade ='$c_motivo', data_entrega='$c_data_entrega', hora_entrega='$c_hora_entrega',
             data_saida='$c_data_saida', data_garantia='$c_data_garantia', numero_nota='$c_nota',
-            valor_servico = '$c_valor_servico', valor_material='$c_valor_material', descritivo='$c_descritivo'
+            valor_servico = '$c_valor_servico', valor_material='$c_valor_material',
+            descritivo='$c_descritivo', id_executor_responsavel='$i_id_executor_responsavel'
             where id='$i_id'";
 
 
@@ -334,6 +337,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                                 ?>
                             </div>
                             <br>
+                            <!-- select da tabela de ocorrencias -->
                             <div class="row mb-3">
 
                                 <label class="col-sm-2 col-form-label">Ocorrência</label>
@@ -356,30 +360,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                                     </select>
                                 </div>
                             </div>
-                            <br>
+
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Descritivo</label>
                                 <div class="col-sm-6">
                                     <input type="text" <?php echo $c_estado; ?> maxlength="50" class="form-control" name="descritivo" value="<?php echo $c_descritivo; ?>">
                                 </div>
                             </div>
-                            <br>
+
                             <!-- executor responsavel -->
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">Responsável </label>
+                                <label class="col-sm-2 col-form-label">Executor Responsável </label>
                                 <div class="col-sm-6">
-                                    <select class="form-select form-select-lg mb-3" id="responsavel" name="responsavel" required>
-                                        
+                                    <select class="form-select form-select-lg mb-3" id="executor_responsavel" name="executor_responsavel" required>
+
                                         <?php
                                         // select da tabela de setores
                                         $c_sql_resp = "SELECT executores.id, executores.nome FROM executores  ORDER BY executores.nome";
                                         $result_resp = $conection->query($c_sql_resp);
                                         while ($c_linha = $result_resp->fetch_assoc()) {
                                             $op = "";
-                                            if ($c_linha['id'] == $registro['id_responsavel']) {
+                                            if ($c_linha['id'] == $registro['id_executor_responsavel']) {
                                                 $op = "selected";
                                             }
-                                            echo "<option $op>$c_linha[nome]</option>";
+                                           echo "  
+                                    <option value='$c_linha[id]' $op>$c_linha[nome]</option>";
                                         }
                                         ?>
                                     </select>
@@ -391,7 +396,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                                     <input type="text" readonly maxlength="50" class="form-control" name="responsavel" value="<?php echo $c_nome_responsavel; ?>">
                                 </div>
                             </div>
-                            <br>
+
                             <div class="row mb-8">
                                 <label class="col-md-2 form-label">Data do Inicio</label>
                                 <div class="col-sm-2">
@@ -402,8 +407,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                                     <input type="time" <?php echo $c_estado; ?> class="form-control" name="hora_inicio" id="hora_geracao" value="<?php echo $c_hora_inicio ?>">
                                 </div>
                             </div>
-
                             <br>
+
                             <div class="row mb-8">
                                 <label class="col-sm-2 col-form-label">Setor </label>
                                 <div class="col-sm-3">
@@ -429,7 +434,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                                     <input type="text" readonly class="form-control" id="solicitacao" name="solicitacao" value="<?php echo $i_solicitacao; ?>">
                                 </div>
                             </div>
-                            <br>
+
                             <div class="row mb-8">
                                 <label class="col-sm-2 col-form-label">Tipo da Ordem</label>
                                 <div class="col-sm-2">
@@ -448,7 +453,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                                 </div>
 
                             </div>
-                            <br>
+
                             <div class="row mb-8">
                                 <label class="col-sm-2 col-form-label">Tipo da Preventiva</label>
                                 <div class="col-sm-2">
@@ -489,7 +494,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                                     </div>
                                 </div>
                             </div>
-                            <br>
+
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Oficina </label>
                                 <div class="col-sm-3">
@@ -568,7 +573,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                                     <input readonly type="time" class="form-control" name="hora_conclusao" id="hora_conclusao" value="<?php echo $c_hora_conclusao ?>">
                                 </div>
                             </div>
-                            <br>
+
                             <div class="row mb-8">
                                 <label class="col-md-2 form-label">Data Entrega</label>
                                 <div class="col-sm-2">
@@ -579,7 +584,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                                     <input type="time" class="form-control" name="hora_entrega" id="hora_entrega" value="<?php echo $c_hora_entrega ?>">
                                 </div>
                             </div>
-                            <br>
+
                             <div class="row mb-8">
                                 <label class="col-md-2 form-label">Data Saída</label>
                                 <div class="col-sm-2">
@@ -591,7 +596,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                                 </div>
 
                             </div>
-                            <br>
+
                             <div class="row mb-8">
                                 <label class="col-sm-2 col-form-label">No. Nota</label>
                                 <div class="col-sm-2">

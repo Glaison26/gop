@@ -1,0 +1,21 @@
+Ordem de Serviço Nº: 5
+Data de Geração: 28/01/2026 Hora: 15:26:00
+Solicitante: Solicitante
+Setor: Secretaria de Planejamento
+Tipo de Ordem: Corretiva
+Ocorrência: Criação Usuário Moderna
+Executor Responsável: Executor C
+Descrição da Solicitação: Preencher os dados abaixo:
+
+Nome Completo: Aparecida de souza
+CPF:69551022659
+Módulos que irá acessar (ex. compras, contabilidade, estoque, etc)
+
+Compras e contabilidade
+Descrição: Preencher os dados abaixo:
+
+Nome Completo: Aparecida de souza
+CPF:69551022659
+Módulos que irá acessar (ex. compras, contabilidade, estoque, etc)
+
+Compras e contabilidade
