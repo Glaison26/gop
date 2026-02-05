@@ -15,7 +15,8 @@ $i_id = $_SESSION['id_ordem']; // id da ordem de serviço
 $c_conclusao = "";
 $msg_erro = "";
 // pego outros dados da ordem de servico
-$c_sql_ordem = "select ordens.id, ordens.id, ordens.tipo, ordens.id_ocorrencia,ordens.id_recurso, ordens.valor_servico, ordens.valor_material from ordens where ordens.id='$i_id'";
+$c_sql_ordem = "select ordens.id, ordens.id, ordens.tipo, ordens.id_ocorrencia,ordens.id_recurso, ordens.valor_servico, ordens.valor_material 
+from ordens where ordens.id='$i_id'";
 $result = $conection->query($c_sql_ordem);
 $c_linha_ordem = $result->fetch_assoc();
 $i_id_ocorrencia = $c_linha_ordem['id_ocorrencia'];

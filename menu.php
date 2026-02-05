@@ -431,7 +431,6 @@ $_SESSION['ver_os'] = false;
 
         </div>
 
-
     </main>
     ';
     }
