@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                 <p class="card-text"><strong>Ocorrência:</strong> <?php echo $c_linha['ocorrencia']; ?></p>
                 <p class="card-text"><strong>Executor Responsável:</strong> <?php echo $c_linha['executor_responsavel']; ?></p>
                 <p class="card-text"><strong>Descrição da Solicitação:</strong><br><?php echo nl2br($c_linha['descricao']); ?></p>
-                <p class="card-text"><strong>Descrição:</strong><br><?php echo nl2br($c_linha['descricao']); ?></p>
+               
             </div>
         </div>
     </div>

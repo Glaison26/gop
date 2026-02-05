@@ -290,8 +290,7 @@ $registro_conf = $result_conf->fetch_assoc();
                                         <a class='btn btn-success btn-sm' href='/gop/ordens/ordens_gerenciar.php?id=$c_linha[id]'>
                                         <span class='glyphicon glyphicon-cog'></span> Gerenciar</a>
 
-                                        <a class='btn btn-info btn-sm' href='/gop/ordens/ordens_emissao.php?id=$c_linha[id]'  target='_blank'>
-                                        <span class='glyphicon glyphicon-print'></span> Emitir</a>
+                                       
                                     </td>
 
                                 </tr>
@@ -371,8 +370,7 @@ $registro_conf = $result_conf->fetch_assoc();
                                         
                                         <a class='btn btn-success btn-sm' href='/gop/ordens/ordens_gerenciar.php?id=$c_linha[id]'>
                                         <span class='glyphicon glyphicon-cog'></span> Gerenciar</a>
-                                        <a class='btn btn-info btn-sm' href='/gop/ordens/ordens_emissao.php?id=$c_linha[id]'>
-                                        <span class='glyphicon glyphicon-print'></span> Emitir</a>
+                                       
                                     
                                     </td>
 
@@ -454,8 +452,7 @@ $registro_conf = $result_conf->fetch_assoc();
                                         
                                       <a class='btn btn-success btn-sm' href='/gop/ordens/ordens_gerenciar.php?id=$c_linha[id]'>
                                         <span class='glyphicon glyphicon-cog'></span> Gerenciar</a>
-                                           <a class='btn btn-info btn-sm' href='/gop/ordens/ordens_emissao.php?id=$c_linha[id]' target='_blank'>
-                                        <span class='glyphicon glyphicon-print'></span> Emitir</a>
+                                          
                                      
                                     </td>
 

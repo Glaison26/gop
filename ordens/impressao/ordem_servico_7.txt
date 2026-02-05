@@ -4,5 +4,5 @@ Solicitante: Glaison Queiroz
 Setor: Secretaria de Planejamento
 Tipo de Ordem: Corretiva
 Ocorrência: Criação Usuário Moderna
-Executor Responsável: Executor C
+Executor Responsável: Executor B
 Descrição: modelo de abertura de chamado

@@ -65,7 +65,8 @@ $_SESSION['id_ocorrencia'] = $c_linha_ordem['id_ocorrencia'];
                 <!-- botões de ação da ordem de serviço -->
                 
                 <div style="padding-bottom :2px;">
-
+                    <a class='btn btn btn-sm' href='/gop/ordens/ordens_emissao.php?id=<?php echo $i_id ?>'  target='_blank'>
+                                        <span class='glyphicon glyphicon-print'></span> Emitir</a>
                     <a  class='btn btn btn-sm' title='Editar Ordem de serviço' href='\gop\ordens\ordens_editar.php?id=<?php echo $i_id ?>'><img src='\gop\images\xxxescrever.png' alt='' width='30' height='20'><span> Editar</span></a>
                     <?php
                     // cabeçalho do gerenciar

@@ -29,7 +29,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo post para envio do email
 
     // leitura da ordem de serviço
     $c_sql = "SELECT ordens.id, ordens.data_geracao, hora_geracao, ordens.descricao,
-    ordens.tipo, ocorrencias.descricao as ocorrencia, executores.nome as executor_responsavel,";
+    ordens.tipo, ocorrencias.descricao as ocorrencia, executores.nome as executor_responsavel, oficinas.descricao 
+        as oficina, oficinas.email as email_oficina, executores.email as email_executor, case
+        when ordens.tipo_ordem='C' then 'Corretiva'
+        when ordens.tipo_ordem='P' then 'Preventiva'
+        END AS ordens_tipo_texto,
+        setores.descricao AS setor, usuarios.nome AS solicitante,";
     $c_sql = $c_sql . "  case
         when tipo_ordem='C' then 'Corretiva'
         when tipo_ordem='P' then 'Preventiva'
@@ -40,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo post para envio do email
         JOIN setores ON ordens.id_setor=setores.id
         JOIN usuarios ON ordens.id_solicitante=usuarios.id
         join executores on ordens.id_executor_responsavel=executores.id
+        join oficinas on ordens.id_oficina=oficinas.id
         where ordens.id='$c_id'";
     // echo $c_sql;
     $result = $conection->query($c_sql);
@@ -49,6 +55,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo post para envio do email
     $result = $conection->query($c_sql_config);
     $c_linha_email = $result->fetch_assoc();
     $c_email = $c_linha_email['email_manutencao'];
+    // pego o email da oficina
+    $c_email_oficina = $c_linha['email_oficina'];
+    // pego o email do executor
+    $c_email_executor = $c_linha['email_executor'];
     // aqui vai o código para enviar o email com os dados da ordem de serviço por anexo
     $c_arquivo = "impressao\ordem_servico_" . $c_linha['id'] . ".txt";
     $c_conteudo = "Ordem de Serviço Nº: " . $c_linha['id'] . "\n";
@@ -81,6 +91,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo post para envio do email
         //echo $c_email;
         //die;
         $mail->addAddress($c_email, 'GOP');     // endereco para onde será enviado
+        // envio para oficina
+        if (!empty($c_email_oficina))
+            $mail->addCC($c_email_oficina, 'GOP');
+         // envio para executor
+        if (!empty($c_email_executor))
+            $mail->addCC($c_email_executor, 'GOP');
         //Attachments
         $mail->addAttachment($c_arquivo);         //Add attachments
         //Content
