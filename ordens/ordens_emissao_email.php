@@ -89,7 +89,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo post para envio do email
     $pdf->Cell(40, 10, mb_convert_encoding('Ordem de Serviço Nº: ' . $c_linha['id'], 'ISO-8859-1', 'UTF-8'));
     $pdf->Ln();
     $pdf->SetFont('Arial', '', 14);
-    $pdf->Cell(40, 10, mb_convert_encoding('Data de Geração: ' . date('d/m/Y', strtotime($c_linha['data_geracao'])) . ' Hora: ' . $c_linha['hora_geracao'], 'ISO-8859-1', 'UTF-8'));
+    $pdf->Cell(40, 10, mb_convert_encoding('Data de Geração: ' . date('d/m/Y', strtotime($c_linha['data_geracao'])) . 
+    ' Hora: ' . $c_linha['hora_geracao'], 'ISO-8859-1', 'UTF-8'));
     $pdf->Ln();
     $pdf->Cell(40, 10, mb_convert_encoding('Solicitante: ' . $c_linha['solicitante'], 'ISO-8859-1', 'UTF-8'));
     $pdf->Ln();
