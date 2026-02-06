@@ -46,6 +46,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     // echo $c_sql;
     $result = $conection->query($c_sql);
     $c_linha = $result->fetch_assoc();
+    // sql para pegar material utilizado na ordem de serviço contendo o nome do material, quantidade, unidades de medida usando a tabela ordens_materiais
+    $c_sql_materiais = "SELECT materiais.descricao, ordens_materiais.quantidade, unidades.descricao as unidade_medida FROM ordens_materiais
+    JOIN materiais ON ordens_materiais.id_material=materiais.id
+    JOIN unidades ON materiais.id_unidadeSaida=unidades.id
+    where ordens_materiais.id_ordem='$c_id'";
+    $result_materiais = $conection->query($c_sql_materiais);
+
+    // sql para pegar os executores envolvidos na ordem de serviço usando a tabela ordens_executores
+    $c_sql_executores = "SELECT executores.nome, funcoes.descricao as funcao FROM ordens_executores
+    JOIN executores ON ordens_executores.id_executor=executores.id
+    JOIN funcoes ON executores.id_funcao=funcoes.id
+    where ordens_executores.id_ordem='$c_id'";
+    $result_executores = $conection->query($c_sql_executores);
+    
     // gero arquivo texto com os dados da ordem de serviço para ser impresso
     $c_arquivo = "impressao\ordem_servico_" . $c_linha['id'] . ".txt";
     $c_conteudo = "Ordem de Serviço Nº: " . $c_linha['id'] . "\n";
@@ -83,8 +97,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                 <h4>Ordem de Serviço - Emissão</h4>
             </div>
             <div class="card-body">
-                <h5 class="card-title">Ordem de Serviço Nº: <?php echo $c_linha['id']; ?></h5>
-                <p class="card-text"><strong>Data de Geração:</strong> <?php echo date('d/m/Y', strtotime($c_linha['data_geracao'])); ?>
+                <h1 class="card-title">Ordem de Serviço Nº: <?php echo $c_linha['id']; ?></h1>
+                <h3><p class="card-text"><strong>Data de Geração:</strong> <?php echo date('d/m/Y', strtotime($c_linha['data_geracao'])); ?>
                     &nbsp;&nbsp;&nbsp;<strong>Hora:</strong> <?php echo $c_linha['hora_geracao']; ?></p>
                 <p class="card-text"><strong>Solicitante:</strong> <?php echo $c_linha['solicitante']; ?></p>
                 <p class="card-text"><strong>Setor:</strong> <?php echo $c_linha['setor']; ?></p>
@@ -99,7 +113,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                 <p class="card-text"><strong>Tipo de Ordem:</strong> <?php echo $c_linha['ordens_tipo_texto']; ?></p>
                 <p class="card-text"><strong>Ocorrência:</strong> <?php echo $c_linha['ocorrencia']; ?></p>
                 <p class="card-text"><strong>Executor Responsável:</strong> <?php echo $c_linha['executor_responsavel']; ?></p>
+                <hr>
                 <p class="card-text"><strong>Descrição da Solicitação:</strong><br><?php echo nl2br($c_linha['descricao']); ?></p>
+                <!-- traço linha para separar os dados da ordem de serviço dos materiais utilizados e executores envolvidos -->
+                <hr>
+                <p class="card-text"><strong>Materiais Utilizados:</strong><br>
+                    <?php
+                    if ($result_materiais->num_rows > 0) {
+                        while ($row = $result_materiais->fetch_assoc()) {
+                            echo "- " . $row['descricao'] . " - Quantidade: " . $row['quantidade'] . " " . $row['unidade_medida'] . "<br>";
+                        }
+                    } else {
+                        echo "Nenhum material utilizado.";
+                    }
+                    ?>
+                </p>
+                <hr>
+                <p class="card-text"><strong>Executores Envolvidos:</strong><br>
+                    <?php
+                    if ($result_executores->num_rows > 0) {
+                        while ($row = $result_executores->fetch_assoc()) {
+                            echo "- " . $row['nome'] . " - Função: " . $row['funcao'] . "<br>";
+                        }
+                    } else {
+                        echo "Nenhum executor envolvido.";
+                    }
+                    ?>
+                </p></h3>    
                
             </div>
         </div>
