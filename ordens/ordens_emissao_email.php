@@ -1,7 +1,6 @@
 <?php
 //Import PHPMailer classes into the global namespace
 //These must be at the top of your script, not inside a function
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -53,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo post para envio do email
     // echo $c_sql;
     $result = $conection->query($c_sql);
     $c_linha = $result->fetch_assoc();
-        // sql para pegar material utilizado na ordem de serviço contendo o nome do material, quantidade, unidades de medida usando a tabela ordens_materiais
+    // sql para pegar material utilizado na ordem de serviço contendo o nome do material, quantidade, unidades de medida usando a tabela ordens_materiais
     $c_sql_materiais = "SELECT materiais.descricao, ordens_materiais.quantidade, unidades.descricao as unidade_medida FROM ordens_materiais
     JOIN materiais ON ordens_materiais.id_material=materiais.id
     JOIN unidades ON materiais.id_unidadeSaida=unidades.id
@@ -79,56 +78,61 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo post para envio do email
     // aqui vai o código para enviar o email com os dados da ordem de serviço por anexo
     // Gero arquivo em pdpf com os dados da ordem de serviço usando a biblioteca FPDF
     require('../fpdf/fpdf.php');
-    
+
     $pdf = new FPDF();
     $pdf->AddPage();
-    $pdf->SetFont('Arial','B',16);
-    $pdf->Cell(40,10, ('Ordem de Serviço Nº: ' . $c_linha['id']));
+    $pdf->SetFont('Arial', 'B', 16);
+    // adiciono titulo emissão de ordem de serviço usando utf8 para evitar problemas com acentos e caracteres especiais
+    $pdf->Cell(0, 10, mb_convert_encoding('Ordem de Serviço - Emissão', 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
     $pdf->Ln();
-    $pdf->SetFont('Arial','',12);
-    $pdf->Cell(40,10,'Data de Geração: ' . date('d/m/Y', strtotime($c_linha['data_geracao'])) . ' Hora: ' . $c_linha['hora_geracao']);
+
+    $pdf->Cell(40, 10, mb_convert_encoding('Ordem de Serviço Nº: ' . $c_linha['id'], 'ISO-8859-1', 'UTF-8'));
     $pdf->Ln();
-    $pdf->Cell(40,10,'Solicitante: ' . $c_linha['solicitante']);
+    $pdf->SetFont('Arial', '', 14);
+    $pdf->Cell(40, 10, mb_convert_encoding('Data de Geração: ' . date('d/m/Y', strtotime($c_linha['data_geracao'])) . ' Hora: ' . $c_linha['hora_geracao'], 'ISO-8859-1', 'UTF-8'));
     $pdf->Ln();
-    $pdf->Cell(40,10,'Setor: ' . $c_linha['setor']);
+    $pdf->Cell(40, 10, mb_convert_encoding('Solicitante: ' . $c_linha['solicitante'], 'ISO-8859-1', 'UTF-8'));
+    $pdf->Ln();
+    $pdf->Cell(40, 10, mb_convert_encoding('Setor: ' . $c_linha['setor'], 'ISO-8859-1', 'UTF-8'));
     $pdf->Ln();
     if ($c_linha['tipo'] == 'R')
-        $pdf->Cell(40,10,'Recurso: ' . $c_linha['recurso']);
+        $pdf->Cell(40, 10, mb_convert_encoding('Recurso: ' . $c_linha['recurso'], 'ISO-8859-1', 'UTF-8'));
     if ($c_linha['tipo'] == 'E')
-        $pdf->Cell(40,10,'Espaço: ' . $c_linha['espaco']);
+        $pdf->Cell(40, 10, mb_convert_encoding('Espaço: ' . $c_linha['espaco'], 'ISO-8859-1', 'UTF-8'));
     $pdf->Ln();
-    $pdf->Cell(40,10,'Tipo de Ordem: ' .  $c_linha['ordens_tipo_texto']);
+    $pdf->Cell(40, 10, mb_convert_encoding('Tipo de Ordem: ' .  $c_linha['ordens_tipo_texto'], 'ISO-8859-1', 'UTF-8'));
     $pdf->Ln();
-    $pdf->Cell(40,10,'Ocorrência: ' .  $c_linha['ocorrencia']);
+    $pdf->Cell(40, 10, mb_convert_encoding('Ocorrência: ' .  $c_linha['ocorrencia'], 'ISO-8859-1', 'UTF-8'));
     $pdf->Ln();
     if (!empty($c_linha['oficina']))
-        $pdf->Cell(40,10,'Oficina: ' .  $c_linha['oficina']);
+        $pdf->Cell(40, 10, mb_convert_encoding('Oficina: ' .  $c_linha['oficina'], 'ISO-8859-1', 'UTF-8'));
     $pdf->Ln();
-    $pdf->Cell(40,10,'Executor Responsável: ' .  $c_linha['executor_responsavel']);
+    $pdf->Cell(40, 10, mb_convert_encoding('Executor Responsável: ' .  $c_linha['executor_responsavel'], 'ISO-8859-1', 'UTF-8'));
     $pdf->Ln();
-    $pdf->Cell(40,10,'Descrição da Solicitação:');
+    $pdf->Cell(40, 10, mb_convert_encoding('Descrição da Solicitação:', 'ISO-8859-1', 'UTF-8'));
     $pdf->Ln();
-    $pdf->MultiCell(0,10,$c_linha['descricao']);
+    $pdf->MultiCell(0, 10, $c_linha['descricao']);
     $pdf->Ln();
-    $pdf->Cell(40,10,'Materiais Utilizados:');
+    $pdf->Cell(40, 10, mb_convert_encoding('Materiais Utilizados:', 'ISO-8859-1', 'UTF-8'));
     $pdf->Ln();
     if ($result_materiais->num_rows > 0) {
         while ($row = $result_materiais->fetch_assoc()) {
-            $pdf->Cell(40,10,'- ' . $row['descricao'] . ' - Quantidade: ' . $row['quantidade'] . ' ' . $row['unidade_medida']);
+            $pdf->Cell(40, 10, mb_convert_encoding('- ' . $row['descricao'] . ' - Quantidade: ' . $row['quantidade'] . ' ' . $row['unidade_medida'], 'ISO-8859-1', 'UTF-8'));
             $pdf->Ln();
         }
     }
     $pdf->Ln();
-    $pdf->Cell(40,10,'Executores Envolvidos:');
+    $pdf->Cell(40, 10, mb_convert_encoding('Executores Envolvidos: ', 'ISO-8859-1', 'UTF-8'));
+    $pdf->Ln();
     if ($result_executores->num_rows > 0) {
         while ($row = $result_executores->fetch_assoc()) {
-            $pdf->Cell(40,10,'- ' . $row['nome'] . ' - Função: ' . $row['funcao']);
+            $pdf->Cell(40, 10, mb_convert_encoding('   - ' . $row['nome'] . ' - Função: ' . $row['funcao'], 'ISO-8859-1', 'UTF-8'));
             $pdf->Ln();
         }
     } else {
-         $pdf->Cell(40,10,'Nenhum executor envolvido.');
-         $pdf->Ln();
-     }
+        $pdf->Cell(40, 10, mb_convert_encoding('Nenhum executor envolvido.', 'ISO-8859-1', 'UTF-8'));
+        $pdf->Ln();
+    }
 
     // salvo o pdf em um arquivo temporário
     $c_arquivo_pdf = "impressao\ordem_servico_" . $c_linha['id'] . ".pdf";
@@ -138,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo post para envio do email
     try {
         //Server settings
         //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-        $mail->CharSet = 'UTF-8';
+        // $mail->CharSet = 'UTF-8';
         $mail->isSMTP();                                            //Send using SMTP
         $mail->Host       = $c_host_email;                     //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
@@ -155,15 +159,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo post para envio do email
         // envio para oficina
         if (!empty($c_email_oficina))
             $mail->addCC($c_email_oficina, 'GOP');
-         // envio para executor
+        // envio para executor
         if (!empty($c_email_executor))
             $mail->addCC($c_email_executor, 'GOP');
         //Attachments
         $mail->addAttachment($c_arquivo_pdf);         //Add attachments
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
-        $mail->Subject = 'Ordem de Serviço Nº: ' . $c_linha['id'];
-        $mail->Body    = 'Segue em anexo a Ordem de Serviço Nº: ' . $c_linha['id'];
+        $mail->Subject = mb_convert_encoding('Ordem de Serviço Nº: ' . $c_linha['id'], 'ISO-8859-1', 'UTF-8');
+        $mail->Body    = mb_convert_encoding('Segue em anexo a Ordem de Serviço Nº: ' . $c_linha['id'], 'ISO-8859-1', 'UTF-8');
 
         $mail->send();
     } catch (Exception $e) {
