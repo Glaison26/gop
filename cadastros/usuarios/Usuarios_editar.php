@@ -91,10 +91,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             $msg_erro = "Campo Senha deve ter pelo menos (1) caracter numérico";
             break;
         }
-        if (ctype_digit($c_senha)) {
-            $msg_erro = "Campo Senha deve conter pelo menos uma letra do Alfabeto";
-            break;
-        }
+       // if (ctype_digit($c_senha)) {
+       //     $msg_erro = "Campo Senha deve conter pelo menos uma letra do Alfabeto";
+       //     break;
+       // }
         // grava dados no banco
         // criptografo senha
         $c_senha = base64_encode($c_senha);

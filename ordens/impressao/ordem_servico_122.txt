@@ -1,0 +1,10 @@
+Ordem de Serviço Nº: 122
+Data de Geração: 31/01/2026 Hora: 12:46:00
+Solicitante: Solicitante
+Setor: Patrimônio
+Tipo de Ordem: Corretiva
+Ocorrência: Criação de Usuário Moderna
+Executor Responsável: Maria da Silva
+Descrição: Nome Completo :Ricardo Nevs
+Módulos : patrimonio e compras
+CPF:636366773

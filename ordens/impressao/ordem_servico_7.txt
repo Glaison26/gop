@@ -1,8 +1,0 @@
-Ordem de Serviço Nº: 7
-Data de Geração: 29/01/2026 Hora: 10:24:00
-Solicitante: Glaison Queiroz
-Setor: Secretaria de Planejamento
-Tipo de Ordem: Corretiva
-Ocorrência: Criação Usuário Moderna
-Executor Responsável: Executor B
-Descrição: modelo de abertura de chamado

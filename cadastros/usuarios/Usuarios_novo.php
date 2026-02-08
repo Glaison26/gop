@@ -56,10 +56,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $msg_erro = "Campo Senha deve ter pelo menos (1) caracter numérico";
             break;
         }
-        if (ctype_digit($c_senha)) {
-            $msg_erro = "Campo Senha deve conter pelo menos uma letra do Alfabeto";
-            break;
-        }
+       // if (ctype_digit($c_senha)) {
+       //     $msg_erro = "Campo Senha deve conter pelo menos uma letra do Alfabeto";
+       //     break;
+       // }
         // consistencia se já existe login cadastrado
         $c_sql = "select usuarios.login from usuarios where login='$c_login'";
         $result = $conection->query($c_sql);

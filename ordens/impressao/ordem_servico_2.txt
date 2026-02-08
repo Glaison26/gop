@@ -1,7 +1,0 @@
-Ordem de Serviço Nº: 2
-Data de Geração: 14/01/2026 Hora: 10:00:00
-Solicitante: Solicitante
-Setor: Secretaria de Planejamento
-Tipo de Ordem: Corretiva
-Ocorrência: Criação Usuário Moderna
-Descrição: modelo de abertura de chamado

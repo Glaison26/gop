@@ -7,6 +7,11 @@ session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
+//Import PHPMailer classes into the global namespace
+//These must be at the top of your script, not inside a function
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 include("../conexao.php");
 include("../links2.php");
 date_default_timezone_set('America/Sao_Paulo');
@@ -39,11 +44,26 @@ if (isset($post['btn_email'])) {
        $result_registro = $conection->query($c_sql_geradas);
         // segundo loop com os registro por oficina a serem enviados po e-mail
        while ($c_linha_registro = $result_registro->fetch_assoc()){
-          // pego parametros para enviar o e-mail
-          
-          // chamo rotina para enviar o e-mail com as preventivas
+            // rotina para envio de e-mail para oficinas com as preventivas geradas
+            $mail = new PHPMailer(true);
+            date_default_timezone_set('America/Sao_Paulo');
+            define('FPDF_FONTPATH', '../fpdf/font/');
+            $c_id = $c_linha_registro['id'];
+            // sql para pegar o email da oficina
+            $c_sql_oficina_email = "SELECT oficinas.email FROM oficinas WHERE oficinas.id='$i_id_oficina'";
+            $result_oficina_email = $conection->query($c_sql_oficina_email);
+            $c_linha_oficina_email = $result_oficina_email->fetch_assoc();
+            $c_email_oficina = $c_linha_oficina_email['email'];
+            // pego o email da manutenção
+            $c_sql_config = "select email_manutencao from configuracoes";
+            $result = $conection->query($c_sql_config);
+            $c_linha_email = $result->fetch_assoc();
+            $c_email = $c_linha_email['email_manutencao'];
+            // envio de email da ordem de serviço
+            include("../ordens/ordens_emissao_email.php");
 
-        }                ;
+
+        }                
                         
     }
 }

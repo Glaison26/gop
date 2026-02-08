@@ -1,9 +1,0 @@
-Ordem de Serviço Nº: 37
-Data de Geração: 03/02/2026 Hora: 16:00:00
-Solicitante: Glaison Queiroz
-Setor: Secretaria de Administração
-Espaço: Prédio do Meio Ambiente
-Tipo de Ordem: Preventiva
-Ocorrência: Formatação de Computador desktop
-Executor Responsável: Executor B
-Descrição: teste espaço fisico

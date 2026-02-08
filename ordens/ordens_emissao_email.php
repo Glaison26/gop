@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo post para envio do email
     $pdf->Ln();
     $pdf->Cell(40, 10, mb_convert_encoding('Descrição da Solicitação:', 'ISO-8859-1', 'UTF-8'));
     $pdf->Ln();
-    $pdf->MultiCell(0, 10, $c_linha['descricao']);
+    $pdf->MultiCell(0, 10, mb_convert_encoding($c_linha['descricao'], 'ISO-8859-1', 'UTF-8'));
     $pdf->Ln();
     $pdf->Cell(40, 10, mb_convert_encoding('Materiais Utilizados:', 'ISO-8859-1', 'UTF-8'));
     $pdf->Ln();
@@ -177,4 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo post para envio do email
     // mensagem de sucesso no envio
     // (omitir detalhes de implementação do email)
     echo "<div class='container mt-3'><div class='alert alert-success'>Ordem de Serviço enviada por email com sucesso!</div></div>";
+    // removo o arquivo pdf temporário
+    unlink($c_arquivo_pdf);
+
 }
