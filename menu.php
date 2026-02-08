@@ -26,7 +26,7 @@ $result = $conection->query($c_sql);
 $registro = $result->fetch_assoc();
 $c_preventivas = $registro['preventivas'];
 // verifico Ordens de serviço com o SLA em atraso
-$c_sql = "select COUNT(*) AS sla FROM ordens WHERE data_previsao < '$c_data' AND ordens.`status`='A'";
+$c_sql = "select COUNT(*) AS sla FROM ordens WHERE ((data_previsao < '$c_data' AND ordens.`status`='A') OR (data_previsao = '$c_data' AND hora_previsao <= CURTIME() AND ordens.`status`='A'))";
 $result = $conection->query($c_sql);
 $registro = $result->fetch_assoc();
 $c_ordens_sla = $registro['sla'];
