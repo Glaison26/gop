@@ -298,13 +298,13 @@ $n_tempo_minutos = '0';
                         </div>
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Texto Padrão</label>
-                            <div class="col-sm-9">
+                            <div class="col-sm-12">
                                 <textarea class="form-control" id="add_textoField" name="add_textoField" rows="8"></textarea>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Texto Padrão de Conclusão</label>
-                            <div class="col-sm-9">
+                            <div class="col-sm-12">
                                 <textarea class="form-control" id="add_textofechamentoField" name="add_textofechamentoField" rows="8"></textarea>
                             </div>
                         </div>

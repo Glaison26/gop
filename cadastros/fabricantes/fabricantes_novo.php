@@ -52,10 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $c_obs = $_POST['obs'];
 
     do {
-        if (empty($c_descricao) || empty($c_razao) || empty($c_cnpj_cpf) || empty($c_tipo) || empty($c_contato)) {
-            $msg_erro = "Campos Fabricante, razão social, cnpj/cpf, tipo e contato devem ser preenchidos!!";
-            break;
-        }
+       
         // mascara para cpf ou cnpj
         if ($c_tipo == "Física") {
             $c_cnpj_cpf = mask($c_cnpj_cpf, "###.###.###-##");
@@ -179,31 +176,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
 
                 <div class="row mb-3">
-                    <label class="col-sm-3 col-form-label">Razão Social *</label>
+                    <label class="col-sm-3 col-form-label">Razão Social</label>
                     <div class="col-sm-6">
-                        <input type="text" maxlength="120" class="form-control" name="razaosocial" value="<?php echo $c_razao; ?>" required>
+                        <input type="text" maxlength="120" class="form-control" name="razaosocial" value="<?php echo $c_razao; ?>">
                     </div>
                 </div>
 
                 <div class="row mb-3">
-                    <label class="col-sm-3 col-form-label">Tipo Fornecedor *</label>
+                    <label class="col-sm-3 col-form-label">Tipo do Fabricante *</label>
                     <div class="col-sm-2">
-                        <select class="form-select form-select-lg mb-3" id="tipo" name="tipo" required>
+                        <select class="form-select form-select-lg mb-3" id="tipo" name="tipo">
                             <option></option>
                             <option>Juridica</option>
                             <option>Física</option>
                         </select>
                     </div>
-                    <label class="col-sm-2 col-form-label">CNPJ/CPF *</label>
+                    <label class="col-sm-2 col-form-label">CNPJ/CPF</label>
                     <div class="col-sm-2">
-                        <input type="text" maxlength="18" class="form-control" name="cnpj_cpf" placeholder="somente números" value="<?php echo $c_cnpj_cpf; ?>" required>
+                        <input type="text" maxlength="18" class="form-control" name="cnpj_cpf" placeholder="somente números" value="<?php echo $c_cnpj_cpf; ?>">
                     </div>
                 </div>
 
                 <div class="row mb-3">
-                    <label class="col-sm-3 col-form-label">Contato *</label>
+                    <label class="col-sm-3 col-form-label">Contato</label>
                     <div class="col-sm-6">
-                        <input type="text" maxlength="100" class="form-control" name="contato" value="<?php echo $c_contato; ?>" required>
+                        <input type="text" maxlength="100" class="form-control" name="contato" value="<?php echo $c_contato; ?>">
                     </div>
                 </div>
 

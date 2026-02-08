@@ -58,6 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $i_horastrab = $registro["horastrab"];
     $n_valorhora = $registro["valorhora"];
     $c_escolaridade = $registro["escolaridade"];
+    $i_oficina = $registro["id_oficina"];
+    $i_funcao = $registro["id_funcao"];
     $c_obs = $registro["obs"];
 } else {
     // metodo post para atualizar dados
@@ -125,13 +127,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         // grava dados no banco
         // faço a Leitura da tabela com sql
         $c_sql = "Update executores" .
-            " SET id_oficina= '$i_oficina', id_funcao='$i_funcao', nome='$c_nome', endereco='$c_endereco'," .
+            " SET id_oficina='$i_oficina', id_funcao='$i_funcao', nome='$c_nome', endereco='$c_endereco'," .
             " bairro='$c_bairro',cep='$c_cep',cidade='$c_cidade',uf='$c_estado'," .
             " contato='$c_contato',tipo='$c_tipo',cpf_cnpj='$c_cnpj_cpf',email='$c_email',url='$c_url'," .
             " fone1='$c_fone1',fone2='$c_fone2',salario='$n_salario',horastrab='$i_horastrab'," .
             " valorhora='$n_valorhora',escolaridade='$c_escolaridade',formacao='$c_formacao',obs='$c_obs'" .
             " where id=$c_id";
-        echo $c_sql;
+        //echo $c_sql;
+       //die();
         $result = $conection->query($c_sql);
 
         // verifico se a query foi correto
@@ -257,14 +260,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                             // select da tabela de oficinas
                             $c_sql_oficina = "SELECT oficinas.id, oficinas.descricao FROM oficinas ORDER BY oficinas.descricao";
                             $result_oficina = $conection->query($c_sql_oficina);
-                            while ($c_linha = $result_oficina->fetch_assoc()) {
-                                if ($c_linha['id'] == $i_oficina) {
+                            while ($c_linha_oficina = $result_oficina->fetch_assoc()) {
+                                if ($c_linha_oficina['id'] == $i_oficina) {
                                     $op = 'selected';
                                 } else {
                                     $op = '';
                                 }
                                 echo "  
-                          <option $op>$c_linha[descricao]</option>
+                          <option $op>$c_linha_oficina[descricao]</option>
                         ";
                             }
                             ?>

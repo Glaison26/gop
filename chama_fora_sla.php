@@ -10,7 +10,9 @@ if (!isset($_SESSION['newsession'])) {
 include("conexao.php");
 date_default_timezone_set('America/Sao_Paulo');
 $c_data = date('Y-m-d');
-$c_where = "data_previsao < '$c_data' AND ordens.`status`='A'";
+// sql para selecionar as ordens em aberto com data de previsão menor  que a data atual e status aberto ou data de previsão igual a data atual e hora do sistema maior que a hora de previsão e status aberto
+$c_where = "((data_previsao < '$c_data' AND ordens.`status`='A') OR (data_previsao = '$c_data' AND hora_previsao <= CURTIME() AND ordens.`status`='A'))";
+//$c_where = "data_previsao < '$c_data' AND ordens.`status`='A'";
 $c_wheretipo_recurso =  " and ordens.tipo='R'";
 $c_wheretipo_espaco =  " and ordens.tipo='E'";
 $c_wheretipo_avulso =  " and ordens.tipo='V'";
