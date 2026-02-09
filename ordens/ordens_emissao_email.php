@@ -65,6 +65,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo post para envio do email
     JOIN funcoes ON executores.id_funcao=funcoes.id
     where ordens_executores.id_ordem='$c_id'";
     $result_executores = $conection->query($c_sql_executores);
+    // sql para pegar checklists associados à ordem de serviço usando a tabela ordens_check
+    $c_sql_checklists = "SELECT checklist.descricao, checklist.descritivo FROM ordens_check
+    JOIN checklist ON ordens_check.id_check=checklist.id
+    where ordens_check.id_ordem='$c_id'";
+    $result_checklists = $conection->query($c_sql_checklists);
 
     // pego o email da manutenção
     $c_sql_config = "select email_manutencao from configuracoes";
@@ -89,8 +94,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo post para envio do email
     $pdf->Cell(40, 10, mb_convert_encoding('Ordem de Serviço Nº: ' . $c_linha['id'], 'ISO-8859-1', 'UTF-8'));
     $pdf->Ln();
     $pdf->SetFont('Arial', '', 14);
-    $pdf->Cell(40, 10, mb_convert_encoding('Data de Geração: ' . date('d/m/Y', strtotime($c_linha['data_geracao'])) . 
-    ' Hora: ' . $c_linha['hora_geracao'], 'ISO-8859-1', 'UTF-8'));
+    $pdf->Cell(40, 10, mb_convert_encoding('Data de Geração: ' . date('d/m/Y', strtotime($c_linha['data_geracao'])) .
+        ' Hora: ' . $c_linha['hora_geracao'], 'ISO-8859-1', 'UTF-8'));
     $pdf->Ln();
     $pdf->Cell(40, 10, mb_convert_encoding('Solicitante: ' . $c_linha['solicitante'], 'ISO-8859-1', 'UTF-8'));
     $pdf->Ln();
@@ -134,6 +139,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo post para envio do email
         $pdf->Cell(40, 10, mb_convert_encoding('Nenhum executor envolvido.', 'ISO-8859-1', 'UTF-8'));
         $pdf->Ln();
     }
+    // nova página para checklist
+    $pdf->AddPage();
+    $pdf->Cell(40, 10, mb_convert_encoding('Checklists Associados: ', 'ISO-8859-1', 'UTF-8'));
+    $pdf->Ln();
+    if ($result_checklists->num_rows > 0) {
+        while ($row = $result_checklists->fetch_assoc()) {
+            $pdf->Cell(40, 10, mb_convert_encoding('   - ' . $row['descricao'], 'ISO-8859-1', 'UTF-8'));
+            $pdf->Ln();
+            $pdf->MultiCell(0, 10, mb_convert_encoding($row['descritivo'], 'ISO-8859-1', 'UTF-8'));
+            $pdf->Ln();
+        }
+    } else {
+        $pdf->Cell(40, 10, mb_convert_encoding('Nenhum checklist associado.', 'ISO-8859-1', 'UTF-8'));
+        $pdf->Ln();
+    }
+
 
     // salvo o pdf em um arquivo temporário
     $c_arquivo_pdf = "impressao\ordem_servico_" . $c_linha['id'] . ".pdf";
@@ -179,5 +200,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo post para envio do email
     echo "<div class='container mt-3'><div class='alert alert-success'>Ordem de Serviço enviada por email com sucesso!</div></div>";
     // removo o arquivo pdf temporário
     unlink($c_arquivo_pdf);
-
 }
