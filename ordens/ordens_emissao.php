@@ -98,6 +98,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             </div>
             <div class="card-body">
                 <h1 class="card-title">Ordem de Serviço Nº: <?php echo $c_linha['id']; ?></h1>
+                <!-- linha para separar o título dos dados da ordem de serviço -->
+                <p><hr></p>
                 <h3><p class="card-text"><strong>Data de Geração:</strong> <?php echo date('d/m/Y', strtotime($c_linha['data_geracao'])); ?>
                     &nbsp;&nbsp;&nbsp;<strong>Hora:</strong> <?php echo $c_linha['hora_geracao']; ?></p>
                 <p class="card-text"><strong>Solicitante:</strong> <?php echo $c_linha['solicitante']; ?></p>

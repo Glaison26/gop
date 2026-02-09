@@ -1,12 +1,8 @@
 Ordem de Serviço Nº: 2
-Data de Geração: 08/02/2026 Hora: 10:44:00
-Solicitante: Glaison
-Setor: Planejamento
+Data de Geração: 14/01/2026 Hora: 10:00:00
+Solicitante: Solicitante
+Setor: Secretaria de Planejamento
 Tipo de Ordem: Corretiva
-Ocorrência: Criação de usuário Sistema Moderna
-Executor Responsável: Funcionario A
-Descrição: Favor Preencher as informações abaixo :
-
-Nome Completo :José da Silva Ribeiro
-CPF:698776663
-Quais módulos (ex.compras, estoque, contabilidade etc) : Compras, Contabilidade
+Ocorrência: Criação Usuário Moderna
+Executor Responsável: Executor A
+Descrição: modelo de abertura de chamado

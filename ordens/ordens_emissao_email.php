@@ -58,7 +58,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo post para envio do email
     JOIN unidades ON materiais.id_unidadeSaida=unidades.id
     where ordens_materiais.id_ordem='$c_id'";
     $result_materiais = $conection->query($c_sql_materiais);
-
     // sql para pegar os executores envolvidos na ordem de serviço usando a tabela ordens_executores
     $c_sql_executores = "SELECT executores.nome, funcoes.descricao as funcao FROM ordens_executores
     JOIN executores ON ordens_executores.id_executor=executores.id
@@ -70,7 +69,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo post para envio do email
     JOIN checklist ON ordens_check.id_check=checklist.id
     where ordens_check.id_ordem='$c_id'";
     $result_checklists = $conection->query($c_sql_checklists);
-
+    // sql para pegar procedimentos operacionais padros pop associados à ordem de serviço usando a tabela ordens_pop
+    $c_sql_pop = "SELECT pops.descricao, pops.descritivo, pops.preparado, pops.revisado, pops.resultadoesperado, pops.materialnecessario,
+    pops.atividadecritica, pops.cuidados, pops.anc, pops.processo, pops.objetivo, pops.risco FROM ordens_pop
+    JOIN pops ON ordens_pop.id_pop=pops.id
+    where ordens_pop.id_ordem='$c_id'";
+    $result_pop = $conection->query($c_sql_pop);
     // pego o email da manutenção
     $c_sql_config = "select email_manutencao from configuracoes";
     $result = $conection->query($c_sql_config);
@@ -83,14 +87,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo post para envio do email
     // aqui vai o código para enviar o email com os dados da ordem de serviço por anexo
     // Gero arquivo em pdpf com os dados da ordem de serviço usando a biblioteca FPDF
     require('../fpdf/fpdf.php');
-
     $pdf = new FPDF();
     $pdf->AddPage();
     $pdf->SetFont('Arial', 'B', 16);
     // adiciono titulo emissão de ordem de serviço usando utf8 para evitar problemas com acentos e caracteres especiais
     $pdf->Cell(0, 10, mb_convert_encoding('Ordem de Serviço - Emissão', 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
+    // imprimo traço horizontal
+    $pdf->Line(10, 20, 200, 20);
     $pdf->Ln();
-
     $pdf->Cell(40, 10, mb_convert_encoding('Ordem de Serviço Nº: ' . $c_linha['id'], 'ISO-8859-1', 'UTF-8'));
     $pdf->Ln();
     $pdf->SetFont('Arial', '', 14);
@@ -100,6 +104,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo post para envio do email
     $pdf->Cell(40, 10, mb_convert_encoding('Solicitante: ' . $c_linha['solicitante'], 'ISO-8859-1', 'UTF-8'));
     $pdf->Ln();
     $pdf->Cell(40, 10, mb_convert_encoding('Setor: ' . $c_linha['setor'], 'ISO-8859-1', 'UTF-8'));
+    // imprimo traço horizontal
+    $pdf->Line(10, 20, 200, 20);
     $pdf->Ln();
     if ($c_linha['tipo'] == 'R')
         $pdf->Cell(40, 10, mb_convert_encoding('Recurso: ' . $c_linha['recurso'], 'ISO-8859-1', 'UTF-8'));
@@ -114,10 +120,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo post para envio do email
         $pdf->Cell(40, 10, mb_convert_encoding('Oficina: ' .  $c_linha['oficina'], 'ISO-8859-1', 'UTF-8'));
     $pdf->Ln();
     $pdf->Cell(40, 10, mb_convert_encoding('Executor Responsável: ' .  $c_linha['executor_responsavel'], 'ISO-8859-1', 'UTF-8'));
+    $pdf->Line(10, 20, 200, 20);
     $pdf->Ln();
     $pdf->Cell(40, 10, mb_convert_encoding('Descrição da Solicitação:', 'ISO-8859-1', 'UTF-8'));
     $pdf->Ln();
     $pdf->MultiCell(0, 10, mb_convert_encoding($c_linha['descricao'], 'ISO-8859-1', 'UTF-8'));
+    $pdf->Line(10, 20, 200, 20);
     $pdf->Ln();
     $pdf->Cell(40, 10, mb_convert_encoding('Materiais Utilizados:', 'ISO-8859-1', 'UTF-8'));
     $pdf->Ln();
@@ -128,7 +136,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo post para envio do email
         }
     }
     $pdf->Ln();
+    $pdf->Line(10, 20, 200, 20);
     $pdf->Cell(40, 10, mb_convert_encoding('Executores Envolvidos: ', 'ISO-8859-1', 'UTF-8'));
+    $pdf->Line(10, 20, 200, 20);
     $pdf->Ln();
     if ($result_executores->num_rows > 0) {
         while ($row = $result_executores->fetch_assoc()) {
@@ -154,6 +164,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo post para envio do email
         $pdf->Cell(40, 10, mb_convert_encoding('Nenhum checklist associado.', 'ISO-8859-1', 'UTF-8'));
         $pdf->Ln();
     }
+    // nova página para pops
+    $pdf->AddPage();
+    $pdf->Cell(40, 10, mb_convert_encoding('Procedimentos Operacionais Padrão (POP) Associados: ', 'ISO-8859-1', 'UTF-8'));
+    $pdf->Ln();
+    if ($result_pop->num_rows > 0) {
+        while ($row = $result_pop->fetch_assoc()) {
+            $pdf->Cell(40, 10, mb_convert_encoding('   - ' . $row['descricao'], 'ISO-8859-1', 'UTF-8'));
+            $pdf->Ln();
+            $pdf->MultiCell(0, 10, mb_convert_encoding($row['descritivo'], 'ISO-8859-1', 'UTF-8'));
+            $pdf->Ln();
+            $pdf->Cell(40, 10, mb_convert_encoding('     Preparado por: ' . $row['preparado'], 'ISO-8859-1', 'UTF-8'));
+            $pdf->Ln();
+            $pdf->Cell(40, 10, mb_convert_encoding('     Revisado por: ' . $row['revisado'], 'ISO-8859-1', 'UTF-8'));
+            $pdf->Ln();
+            $pdf->Cell(40, 10, mb_convert_encoding('     Resultado Esperado: ' . $row['resultadoesperado'], 'ISO-8859-1', 'UTF-8'));
+            $pdf->Ln();
+            $pdf->Cell(40, 10, mb_convert_encoding('     Processo: ' . $row['processo'], 'ISO-8859-1', 'UTF-8'));
+            $pdf->Ln();
+            $pdf->Cell(40, 10, mb_convert_encoding('     Objetivo: ' . $row['objetivo'], 'ISO-8859-1', 'UTF-8'));
+            $pdf->Ln();
+            $pdf->Cell(40, 10, mb_convert_encoding('     Material Necessário: ' . $row['materialnecessario'], 'ISO-8859-1', 'UTF-8'));
+            $pdf->Ln();
+            $pdf->Cell(40, 10, mb_convert_encoding('     Atividade Crítica: ' . $row['atividadecritica'], 'ISO-8859-1', 'UTF-8'));
+            $pdf->Ln();
+            $pdf->Cell(40, 10, mb_convert_encoding('     Cuidados: ' . $row['cuidados'], 'ISO-8859-1', 'UTF-8'));
+            $pdf->Ln();
+            $pdf->Cell(40, 10, mb_convert_encoding('     Análise de Consequências (ANC): ' . $row['anc'], 'ISO-8859-1', 'UTF-8'));
+            $pdf->Ln();
+            $pdf->Cell(40, 10, mb_convert_encoding('     Risco: ' . $row['risco'], 'ISO-8859-1', 'UTF-8'));
+            $pdf->Ln();
+        }
+    } else {
+        $pdf->Cell(40, 10, mb_convert_encoding('Nenhum POP associado.', 'ISO-8859-1', 'UTF-8'));
+        $pdf->Ln();
+    }
+
 
 
     // salvo o pdf em um arquivo temporário
@@ -187,10 +233,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo post para envio do email
         //Attachments
         $mail->addAttachment($c_arquivo_pdf);         //Add attachments
         //Content
-        $mail->isHTML(true);                                  //Set email format to HTML
+        $mail->isHTML(true);   //Set email format to HTML
         $mail->Subject = mb_convert_encoding('Ordem de Serviço Nº: ' . $c_linha['id'], 'ISO-8859-1', 'UTF-8');
         $mail->Body    = mb_convert_encoding('Segue em anexo a Ordem de Serviço Nº: ' . $c_linha['id'], 'ISO-8859-1', 'UTF-8');
-
         $mail->send();
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
