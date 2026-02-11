@@ -41,7 +41,7 @@ $result = $conection->query($c_sql);
 </head>
 
 <body>
-   
+
 
     <script>
         $(document).ready(function() {
@@ -54,7 +54,7 @@ $result = $conection->query($c_sql);
                     'aTargets': [7]
                 }, {
                     'aTargets': [0],
-                    "visible": false
+                    "visible": true
                 }],
                 "oLanguage": {
                     "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -105,7 +105,7 @@ $result = $conection->query($c_sql);
         <table class="table table display table-bordered tabhistorico">
             <thead class="thead">
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col"># OS</th>
                     <th scope="col">Data Geração</th>
                     <th scope="col">Hora Geração</th>
                     <th scope="col">Status</th>
@@ -122,6 +122,8 @@ $result = $conection->query($c_sql);
                 <?php
                 $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
                 // insiro os registro do banco de dados na tabela 
+                $n_total_servicos = 0;
+                $n_total_material = 0;
                 while ($c_linha = $result->fetch_assoc()) {
                     // formatacao de datas
                     $c_dta_gerada = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_geracao'])));
@@ -155,12 +157,25 @@ $result = $conection->query($c_sql);
 
                     </tr>
                     ";
+                    // acumulo os valores de serviço e material para mostrar o total gasto com o recurso
+                    $n_total_servicos += $c_linha['valor_servico'];
+                    $n_total_material += $c_linha['valor_material'];
+                    // gero o total gasto com o recurso
+                    $c_total = $n_total_servicos + $n_total_material;
                 }
                 ?>
-
-
             </tbody>
         </table>
+        <hr>
+        <div class='alert alert-info' role='alert'>
+            <div style="padding-left:15px;">
+                <img Align="left" src="\gop\images\calculo.png" alt="30" height="35"><br><br>
+                <h5>Total Gasto com Material : <?php echo $formatter->formatCurrency($n_total_material, 'BRL') ?></h5>
+                <h5>Total Gasto com Serviço : <?php echo $formatter->formatCurrency($n_total_servicos, 'BRL') ?></h5>
+                <h5>Total Gasto com o Recurso Físico : <?php echo $formatter->formatCurrency($c_total, 'BRL') ?></h5>
+            </div>
+        </div>
+        <hr>
         <a class="btn btn-secondary btn-sm" href="/gop/cadastros/recursos/recursos_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
     </div>
 
