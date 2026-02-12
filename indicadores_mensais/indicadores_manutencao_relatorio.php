@@ -8,8 +8,7 @@ session_start();
 //$c_sql = $_SESSION['sql'];
 //$result = $conection->query($c_sql);
 //$result_grafico = $result;
-$c_periodo = $_SESSION['periodo'];
-$c_query = $_SESSION['query'];
+
 
 ?>
 
@@ -34,8 +33,8 @@ $c_query = $_SESSION['query'];
                 <div class="panel-body">
 
                     <hr>
-                    <p><strong>Detalhamento dos Indicadores: </strong></p>
-                    <p><?php echo $_SESSION['query_indicadores']; ?></p>
+                    <p><h4><strong>Detalhamento dos Indicadores: </strong></h4></p>
+                    <p><h4><?php echo $_SESSION['query_indicadores']; ?></h4></p>
 
                 </div>
             </div>
