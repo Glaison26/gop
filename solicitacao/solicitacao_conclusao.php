@@ -111,8 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $c_email_manutencao = $c_linha_email['email_manutencao'];
         // chamo o envio de email
         // barra de progresso
-
-
+        // mensagem em javascript de espera do envio do email
         if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
             $c_sql = "SELECT MAX(solicitacao.ID) AS id_solicitacao FROM solicitacao";
             $result = $conection->query($c_sql);
@@ -138,6 +137,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>GOP - Conclusão de Solicitação</title>
     <link rel="stylesheet" href="/gop/css/basico.css">
 
+    <!-- css para centralizar o loading -->
+    <style>
+        #loading {
+            /* Centraliza a div na tela */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            /* Fundo branco semi-transparente */
+            display: none;
+            /* Inicia oculto */
+            z-index: 9999;
+            /* Garante que fica por cima */
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -148,13 +168,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     </script>
 
+    <script>
+        document.getElementById('frm_solicitacao').addEventListener('submit', function() {
+            // Mostra o loading ao submeter
+            document.getElementById('loading').style.display = 'flex';
+
+
+        });
+    </script>
+
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
             <h5>Conclusão de abertura de Solicitação de Serviço<h5>
         </div>
     </div>
-
+    <!-- Estrutura do Loading (oculta inicialmente) -->
+    <div id="loading" style="display:none; text-align:center; margin-top:20px;">
+        <img src="/gop/images/loading.gif" alt="Carregando..." width="50" height="50">
+        <p>Aguarde, processando sua solicitação...</p>
+    </div>
 
     <?php
     if (!empty($msg_erro)) {
@@ -171,10 +204,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
             </div>
-            <h5>Preencha os campos com as configuração do Sistema. Campos com (*) são obrigatórios</h5>
+            <h5>Informações para geração da Solicitação de Serviço. Preencha as informações, clique em Finalizar e aguarde o envio do email de notificação.</h5>
         </div>
 
-        <form method="post" name="frm_solicitacao">
+        <form method="post" name="frm_solicitacao" id="frm_solicitacao">
             <div class="row mb-3">
 
                 <label class="col-sm-3 col-form-label">Ocorrência </label>
@@ -251,9 +284,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         </form>
     </div>
-    </div>
 
 
 </body>
+
+
 
 </html>
