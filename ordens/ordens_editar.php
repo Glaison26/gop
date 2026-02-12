@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         header('location: /gop/pops_lista.php');
         exit;
     }
-
+    $_SESSION['id_ordem'] = $_GET["id"];
     $i_id = $_SESSION['id_ordem'];
     // leitura do cliente através de sql usando id passada
     $c_sql = "select * from ordens where id=$i_id";
