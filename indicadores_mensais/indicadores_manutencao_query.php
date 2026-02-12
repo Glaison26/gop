@@ -71,7 +71,7 @@ where ordens.`status`='C' and $c_where";
     $c_sql_suspensao = "SELECT sum(TIMESTAMPDIFF(MINUTE, CONCAT(data_suspensao, ' ', hora_suspensao), 
     CONCAT(data_retirada, ' ', hora_retirada))) as tma_suspensao FROM ordens_suspensao 
     where ordens_suspensao.id_ordem in (select id from ordens where ordens.`status`='C' and $c_where)";
-     
+
     $result_suspensao = $conection->query($c_sql_suspensao);
     $registro_suspensao = $result_suspensao->fetch_assoc();
     // calculo do tma total de horas trabalhadas divido pelo total de ordens para apurar o tma médio por ordem
@@ -83,14 +83,48 @@ where ordens.`status`='C' and $c_where";
     // calculo do TMA médio em horas e minutos
     $tma_medio_horas = floor($tma_medio / 60);
     $tma_medio_minutos = $tma_medio % 60;
+    //  Índice de Produtividade da Manutenção (IPM) - não implementado ainda
+    //  O indice é calcula usando total de ordens concluidas dividido pelo total de técnicos executores disniveis no período
+    // sql para apurar o total de técnicos executores disponíveis no período
+    $c_sql_tecnicos = "select count(*) as total_tecnicos from executores where executores.ativo = 'Sim'";
+    $result_tecnicos = $conection->query($c_sql_tecnicos);
+    $registro_tecnicos = $result_tecnicos->fetch_assoc();
+    if ($registro_tecnicos['total_tecnicos'] > 0) {
+        $ipm = $registro_total_ordens['total_ordens'] / $registro_tecnicos['total_tecnicos'];
+    } else {
+        $ipm = 0;
+    }
+    // calculo de ipm por horas usando total de ordens concluidas dividido pelo total de horas trabalhadas das ordens concluidas no período
+    $c_sql_horas_trabalhadas = "SELECT sum(TIMESTAMPDIFF(MINUTE, CONCAT(data_inicio, ' ', hora_geracao), CONCAT(data_conclusao, ' ', hora_conclusao))) 
+    as horas_trabalhadas FROM ordens where ordens.`status`='C' and $c_where";
+    $result_horas_trabalhadas = $conection->query($c_sql_horas_trabalhadas);
+    $registro_horas_trabalhadas = $result_horas_trabalhadas->fetch_assoc();
+    if ($registro_horas_trabalhadas['horas_trabalhadas'] > 0) {
+        $ipm_horas = $registro_total_ordens['total_ordens'] / ($registro_horas_trabalhadas['horas_trabalhadas'] / 60);
+    } else {
+        $ipm_horas = 0;
+    }
+    // calculo de ipm por numero de dias usando total de ordens concluidas dividido pelo total de dias do período
+    $data_inicio = new DateTime($d_data1);
+    $data_fim = new DateTime($d_data2);
+    $intervalo = $data_inicio->diff($data_fim);
+    $total_dias = $intervalo->days + 1; // adiciona 1 para incluir o dia final
+    if ($total_dias > 0) {
+        $ipm_dias = $registro_total_ordens['total_ordens'] / $total_dias;
+    } else {
+        $ipm_dias = 0;
+    }
+
     // monto o detalhamento dos indicadores para exibir no relatório
     $c_query = "Período de: " . date("d-m-Y", strtotime(str_replace('/', '-', $_POST['data1']))) . " até "
-        . date("d-m-Y", strtotime(str_replace('/', '-', $_POST['data2']))) . '<br><br>';    
+        . date("d-m-Y", strtotime(str_replace('/', '-', $_POST['data2']))) . '<br><br>';
     $c_query = $c_query . " - Índice de Cumprimento de Prazo (SLA): " . number_format($indice_sla, 2) . '%<br>';
     $c_query = $c_query . " - Tempo Médio de Atendimento (TMA): " . $tma_medio_horas . " horas e " . $tma_medio_minutos . " minutos<br>";
     $c_query = $c_query . " - Total de Ordens Concluídas no Período: " . $registro_total['total'] . '<br>';
     $c_query = $c_query . " - Total de Ordens Fora do SLA: " . $registro_total_fora_sla['total_fora_sla'] . '<br>';
-
+    $c_query = $c_query . " - Índice de Produtividade da Manutenção (IPM) por Número de Técnicos: " . number_format($ipm, 2) . '<br>';
+    $c_query = $c_query . " - Índice de Produtividade da Manutenção (IPM) por Horas Trabalhadas: " . number_format($ipm_horas, 2) . '<br>';
+    $c_query = $c_query . " - Índice de Produtividade da Manutenção (IPM) por Número de Dias: " . number_format($ipm_dias, 2) . '<br>';
 
     // salvo a query para exibir no relatório
     if (empty($c_query))

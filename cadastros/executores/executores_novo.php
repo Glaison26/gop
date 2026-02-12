@@ -58,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $c_oficina = $_POST['oficina'];
     $c_escolaridade = $_POST['escolaridade'];
     $c_obs = $_POST['obs'];
+    $c_ativo = $_POST['ativo'];
 
     do {
         if (empty($c_nome) || empty($c_endereco) || empty($c_cnpj_cpf) || empty($c_bairro) || empty($c_cidade) || empty($c_cep)) {
@@ -96,10 +97,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // faço a inclusão da tabela com sql
         $c_sql = "Insert into executores (id_oficina,id_funcao, nome,endereco,bairro,cep,cidade,uf,contato,tipo,cpf_cnpj,email,url," .
-            " fone1,fone2,fone3,salario,horastrab,valorhora,escolaridade,formacao,obs)" .
+            " fone1,fone2,fone3,salario,horastrab,valorhora,escolaridade,formacao,obs,ativo)" .
             " Value ('$i_oficina', '$i_funcao', '$c_nome', '$c_endereco', '$c_bairro','$c_cep', '$c_cidade', '$c_estado'," .
             " '$c_contato', '$c_tipo', '$c_cnpj_cpf', '$c_email', '$c_url','$c_fone1', '$c_fone2', '$c_fone3'," .
-            " '$n_salario', '$i_horastrab', '$n_valorhora', '$c_escolaridade', '$c_formacao', '$c_obs')";
+            " '$n_salario', '$i_horastrab', '$n_valorhora', '$c_escolaridade', '$c_formacao', '$c_obs','$c_ativo')";
         echo $c_sql;
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
@@ -206,6 +207,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <h5>Campos com (*) são obrigatórios</h5>
             </div>
             <form method="post">
+                <!-- Ativo sim ou Não -->
+                 <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Ativo</label>
+                    <div class="col-sm-2">
+                        <select class="form-select form-select-lg mb-3" id="ativo" name="ativo">
+                            <option value="Sim">Sim</option>
+                            <option value="Não">Não</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="row mb-3">
                     <label class="col-sm-3 col-form-label">Nome *</label>
                     <div class="col-sm-6">

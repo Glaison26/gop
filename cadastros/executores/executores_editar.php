@@ -61,6 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $i_oficina = $registro["id_oficina"];
     $i_funcao = $registro["id_funcao"];
     $c_obs = $registro["obs"];
+    $c_ativo = $registro["ativo"];
 } else {
     // metodo post para atualizar dados
     $c_id = $_POST["id"];
@@ -77,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $c_contato = $_POST['contato'];
     $c_fone1 = $_POST['fone1'];
     $c_fone2 = $_POST['fone2'];
-   // $c_fone3 = $_POST['fone3'];
+    // $c_fone3 = $_POST['fone3'];
     $n_salario = $_POST['salario'];
     $c_cnpj_cpf = $_POST['cpfcnpj'];
     $i_horastrab = $_POST['horastrab'];
@@ -86,6 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $c_obs = $_POST['obs'];
     $c_funcao = $_POST['funcao'];
     $c_oficina = $_POST['oficina'];
+    $c_ativo = $_POST['ativo'];
     if ($i_horastrab == '') {
         $i_horastrab = 0;
     }
@@ -131,10 +133,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             " bairro='$c_bairro',cep='$c_cep',cidade='$c_cidade',uf='$c_estado'," .
             " contato='$c_contato',tipo='$c_tipo',cpf_cnpj='$c_cnpj_cpf',email='$c_email',url='$c_url'," .
             " fone1='$c_fone1',fone2='$c_fone2',salario='$n_salario',horastrab='$i_horastrab'," .
-            " valorhora='$n_valorhora',escolaridade='$c_escolaridade',formacao='$c_formacao',obs='$c_obs'" .
+            " valorhora='$n_valorhora',escolaridade='$c_escolaridade',formacao='$c_formacao',obs='$c_obs',ativo='$c_ativo'" .
             " where id=$c_id";
         //echo $c_sql;
-       //die();
+        //die();
         $result = $conection->query($c_sql);
 
         // verifico se a query foi correto
@@ -203,6 +205,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             </div>
             <form method="post">
                 <input type="hidden" name="id" value="<?php echo $c_id; ?>">
+                <!-- Ativo sim ou Não -->
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Ativo</label>
+                    <div class="col-sm-2">
+                        <select class="form-select form-select-lg mb-3" id="ativo" name="ativo">
+                            <option value="Sim" <?= ($c_ativo == 'Sim') ? 'selected' : '' ?>>Sim</option>
+                            <option value="Não" <?= ($c_ativo == 'Não') ? 'selected' : '' ?>>Não</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="row mb-3">
                     <label class="col-sm-3 col-form-label">Nome *</label>
                     <div class="col-sm-6">
