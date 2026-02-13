@@ -114,6 +114,23 @@ where ordens.`status`='C' and $c_where";
     } else {
         $ipm_dias = 0;
     }
+    
+    // sql para apurar total de horas reais realizadas = somatorio de data e hora da conclusão - data e hora inicial das ordens no periodo
+    $c_sql_horas_reais = "SELECT sum(TIMESTAMPDIFF(MINUTE, CONCAT(data_inicio, ' ', hora_geracao), CONCAT(data_conclusao, ' ', hora_conclusao))) 
+    as horas_reais FROM ordens where ordens.`status`='C' and $c_where";
+    $result_horas_reais = $conection->query($c_sql_horas_reais);
+    $registro_horas_reais = $result_horas_reais->fetch_assoc();
+    // sql para apurar total de horas previstas = somatorio de data e hora da conclusão - data e hora prevista das ordens no periodo
+    $c_sql_horas_previstas = "SELECT sum(TIMESTAMPDIFF(MINUTE, CONCAT(data_previsao, ' ', hora_previsao), CONCAT(data_conclusao, ' ', hora_conclusao))) 
+    as horas_previstas FROM ordens where ordens.`status`='C' and $c_where";
+    $result_horas_previstas = $conection->query($c_sql_horas_previstas);
+    $registro_horas_previstas = $result_horas_previstas->fetch_assoc();
+    // calculo do índice de eficiência operacional usando a fórmula: (total de horas previstas - total de horas reais) / total de horas previstas * 100
+    if ($registro_horas_previstas['horas_previstas'] > 0) {
+        $indice_eficiencia_operacional = ($registro_horas_previstas['horas_previstas'] / $registro_horas_reais['horas_reais']) * 100;
+    } else {
+        $indice_eficiencia_operacional = 0;
+    }
 
     // monto o detalhamento dos indicadores para exibir no relatório
     $c_query = "Período de: " . date("d-m-Y", strtotime(str_replace('/', '-', $_POST['data1']))) . " até "
@@ -125,7 +142,8 @@ where ordens.`status`='C' and $c_where";
     $c_query = $c_query . " - Índice de Produtividade da Manutenção (IPM) por Número de Técnicos: " . number_format($ipm, 2) . '<br>';
     $c_query = $c_query . " - Índice de Produtividade da Manutenção (IPM) por Horas Trabalhadas: " . number_format($ipm_horas, 2) . '<br>';
     $c_query = $c_query . " - Índice de Produtividade da Manutenção (IPM) por Número de Dias: " . number_format($ipm_dias, 2) . '<br>';
-
+    $c_query = $c_query . " - Índice de Eficiência Operacional: " . number_format($indice_eficiencia_operacional, 2) . '%<br>';
+    
     // salvo a query para exibir no relatório
     if (empty($c_query))
         $_SESSION['query_indicadores'] = "Nenhum";
