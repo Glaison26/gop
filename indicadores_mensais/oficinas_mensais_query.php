@@ -17,7 +17,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['indicadores_comp
 }
 date_default_timezone_set('America/Sao_Paulo');
 $c_query = "";
-$_SESSION['titulo_rel'] = "Relatório Comparativo Mensal de Oficinas da Manutenção por Período" ;
+$_SESSION['titulo_rel'] = "Relatório Comparativo Mensal de Oficinas da Manutenção por Período";
 $_SESSION['titulo_graf'] = "Gráfico Comparativo Mensal de Oficinas da Manutenção por Período";
 
 // rotina para montagem do sql com as opções selecionadas
@@ -98,9 +98,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
         $c_where = $c_where . "ordens.id_setor='$i_id_setor' and ";
         $c_query = $c_query . 'Setor:' . $c_linha['descricao'] . '-';
     }
-
     // sql para oficinas
-
     $c_oficina = $_POST["oficina"];
     $c_sql_oficina = "select oficinas.id, oficinas.descricao from oficinas where oficinas.descricao = '$c_oficina'";
     $result = $conection->query($c_sql_oficina);
@@ -108,8 +106,6 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $i_id_oficina = $c_linha['id'];
     $c_where = $c_where . "ordens.id_oficina='$i_id_oficina' and ";
     $c_query = $c_query . 'Oficina:' . $c_linha['descricao'] . '-';
-
-
     $c_where = $c_where = substr($c_where, 0, -5); // tirar o and no final
     // montagem do sql para recursos físicos
     //
@@ -118,8 +114,6 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
             JOIN oficinas ON ordens.id_oficina=oficinas.id
             WHERE $c_where
             GROUP BY extract(month FROM ordens.data_geracao), ordens.id_oficina ORDER BY mes";
-
-
     // guardo session para proxima pagina de tabelas
     $_SESSION['sql'] = $c_sql;
     if (empty($c_query))
@@ -129,8 +123,6 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     //echo $c_sql;
     echo "<script> window.open('/gop/indicadores_mensais/mensais_relatorio.php?id=', '_blank');</script>";
 }
-
-
 ?>
 
 
