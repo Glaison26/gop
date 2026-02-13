@@ -18,8 +18,11 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) { 
                 FROM recursos
                 JOIN setores ON recursos.id_setor=setores.id
                 JOIN marcas ON recursos.id_marca=marcas.id";
-    if ($c_pesquisa != ' ') {
-        $c_sql = $c_sql . " where recursos.ativo='S' and recursos.descricao LIKE " .  "'" . $c_pesquisa . "%'";
+   // se a opção de pesquisa for por descrição, monto o sql para pesquisar por descrição do recurso
+    if ($_POST['pesquisa_opcao'] == 'descricao') {
+        $c_sql = $c_sql . " WHERE recursos.descricao LIKE '%$c_pesquisa%'";
+    } else { // se a opção de pesquisa for por patrimônio, monto o sql para pesquisar por patrimônio do recurso
+        $c_sql = $c_sql . " WHERE recursos.patrimonio LIKE '%$c_pesquisa%'";
     }
     $c_sql = $c_sql . " order by recursos.descricao";
     $result = $conection->query($c_sql);
@@ -118,6 +121,21 @@ Pagina da rotina para selecionar o recurso da solicitação
         <!-- inputs para pesquisa de recurso -->
         <form method="post">
             <hr>
+            <!--  radio buton com opção de pesquisar recurso fisico por descrição ou pelo patrimônio -->
+            <div class="mb-3 row">
+                <label for="up_parametroField" class="col-sm-3 col-form-label">Pesquisar por</label>
+                <div class="col-sm-6">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="pesquisa_opcao" id="pesquisa_descricao" value="descricao" checked>
+                        <label class="form-check-label" for="pesquisa_descricao">Descrição</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="pesquisa_opcao" id="pesquisa_patrimonio" value="patrimonio">
+                        <label class="form-check-label" for="pesquisa_patrimonio">Patrimônio</label>
+                    </div>
+                </div>
+            </div>
+            <hr>
             <div class="mb-5 row">
                 <hr>
                 <label for="up_parametroField" class="col-sm-3 col-form-label">Buscar Recurso</label>
@@ -165,11 +183,11 @@ Pagina da rotina para selecionar o recurso da solicitação
                     <td>$c_linha[setor]</td>
                                                        
                     <td>";
-                    if ($_SESSION['opcao']=='S')
-                      echo "<a class='btn btn' title='Selecionar Recurso' href='javascript:func()'onclick='conclusao($c_linha[id])'><img src='\gop\images\selecionar.png'  width='20' height='20'> Selecionar</a>";
-                    else
-                      echo "<a class='btn btn' title='Selecionar Recurso' href='javascript:func()'onclick='conclusao_prev($c_linha[id])'><img src='\gop\images\selecionar.png'  width='20' height='20'> Selecionar</a>";
-                    echo "</td></tr>";
+                        if ($_SESSION['opcao'] == 'S')
+                            echo "<a class='btn btn' title='Selecionar Recurso' href='javascript:func()'onclick='conclusao($c_linha[id])'><img src='\gop\images\selecionar.png'  width='20' height='20'> Selecionar</a>";
+                        else
+                            echo "<a class='btn btn' title='Selecionar Recurso' href='javascript:func()'onclick='conclusao_prev($c_linha[id])'><img src='\gop\images\selecionar.png'  width='20' height='20'> Selecionar</a>";
+                        echo "</td></tr>";
                     }
                 }
                 ?>
