@@ -376,7 +376,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
 
                                         <?php
                                         // select da tabela de setores
-                                        $c_sql_resp = "SELECT executores.id, executores.nome FROM executores  ORDER BY executores.nome";
+                                        $c_sql_resp = "SELECT executores.id, executores.nome FROM executores where ativo='SIM'  ORDER BY executores.nome";
                                         $result_resp = $conection->query($c_sql_resp);
                                         while ($c_linha = $result_resp->fetch_assoc()) {
                                             $op = "";

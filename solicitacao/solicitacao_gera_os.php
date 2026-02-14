@@ -240,7 +240,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <option></option>
                         <?php
                         // select da tabela de setores
-                        $c_sql_resp = "SELECT executores.id, executores.nome FROM executores where id_oficina='$i_id_oficina' ORDER BY executores.nome";
+                        $c_sql_resp = "SELECT executores.id, executores.nome FROM executores where id_oficina='$i_id_oficina' and ativo='SIM' ORDER BY executores.nome";
                         $result_resp = $conection->query($c_sql_resp);
                         while ($c_linha = $result_resp->fetch_assoc()) {
                             echo "  
