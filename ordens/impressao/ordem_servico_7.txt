@@ -1,8 +1,12 @@
 Ordem de Serviço Nº: 7
-Data de Geração: 29/01/2026 Hora: 10:24:00
-Solicitante: Glaison Queiroz
-Setor: Secretaria de Planejamento
+Data de Geração: 14/02/2026 Hora: 11:26:00
+Solicitante: Solicitante
+Setor: Fazenda
 Tipo de Ordem: Corretiva
-Ocorrência: Criação Usuário Moderna
-Executor Responsável: Executor B
-Descrição: modelo de abertura de chamado
+Ocorrência: Criação de usuário Sistema Moderna
+Executor Responsável: Funcionario A
+Descrição: Favor Preencher as informações abaixo :
+
+Nome Completo :Maria do Carmo de Oliveira
+CPF:8098098098
+Quais módulos (ex.compras, estoque, contabilidade etc) :Compras
