@@ -1,0 +1,12 @@
+Ordem de Serviço Nº: 8
+Data de Geração: 14/02/2026 Hora: 13:56:00
+Solicitante: Glaison
+Setor: Planejamento
+Tipo de Ordem: Corretiva
+Ocorrência: Criação de usuário Sistema Moderna
+Executor Responsável: Funcionario A
+Descrição: Favor Preencher as informações abaixo :
+
+Nome Completo :
+CPF:
+Quais módulos (ex.compras, estoque, contabilidade etc) :

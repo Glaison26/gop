@@ -1,0 +1,12 @@
+Ordem de Serviço Nº: 6
+Data de Geração: 12/02/2026 Hora: 00:09:00
+Solicitante: Glaison
+Setor: Obras Públicas
+Tipo de Ordem: Corretiva
+Ocorrência: Criação de usuário Sistema Moderna
+Executor Responsável: Funcionario A
+Descrição: Favor Preencher as informações abaixo :
+
+Nome Completo :
+CPF:
+Quais módulos (ex.compras, estoque, contabilidade etc) :

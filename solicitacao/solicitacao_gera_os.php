@@ -151,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $c_data_inicio = $_POST['data_inicio'];
             $data = new DateTime($d_data_previsao);
             $data = $data->format('d-m-Y');
-            $c_assunto = "<h5>Abertura de Ordem  de Serviço no GOP</h5>";
+            $c_assunto = "Abertura de Ordem  de Serviço no GOP";
             $c_body = "<h4>A Ordem de serviço No.<b> $ordem da solicitação no. $i_id </b> foi gerada com suceso! Aguarde o atendimento <br>"
                 . "Descrição da Solicitação :" . $c_descricao . "<br>" .
                 " Previsão de execução: $data" . "</h4>";

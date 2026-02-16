@@ -7,7 +7,7 @@
 <link rel="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
 <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
 <link href="https://cdn.datatables.net/2.1.5/css/dataTables.dataTables.min.css">
-
+<link rel="shortcut icon" type="imagex/png" href="./imagens/img_gop.ico">
 <link rel="shortcut icon" type="imagex/png" href="./images/img_gop.ico">
 
 <script scr="https://code.jquery.com/jquery-3.3.1.js"></script>
