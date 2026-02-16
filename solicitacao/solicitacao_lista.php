@@ -267,10 +267,14 @@ $registro_conf = $result_conf->fetch_assoc();
                                     $c_prazo_hora = $c_linha['prazo_hora'];
                                 else
                                     $c_prazo_hora = 'a definir';
+                                if ($c_linha['id_ordem']<>null)
+                                    $i_os = $c_linha['id_ordem'];
+                                else
+                                    $i_os = 'N.G';
                                 echo "
                                 <tr>
                                     <td>$c_linha[id]</td>
-                                    <td>$c_linha[id_ordem]</td>
+                                    <td>$i_os</td>
                                     <td>$c_linha[solicitacao_status]</td>
                                     <td>$c_linha[descricao]</td>
                                     <td>$c_data</td>
@@ -352,10 +356,14 @@ $registro_conf = $result_conf->fetch_assoc();
                                     $c_prazo_hora = $c_linha['prazo_hora'];
                                  else
                                     $c_prazo_hora = 'a definir';
+                                 if ($c_linha['id_ordem']<>null)
+                                    $i_os = $c_linha['id_ordem'];
+                                else
+                                    $i_os = 'N.G';
                                 echo "
                                 <tr>
                                     <td>$c_linha[id]</td>
-                                    <td>$c_linha[id_ordem]</td>
+                                    <td>$i_os</td>
                                     <td>$c_linha[solicitacao_status]</td>
                                     <td>$c_linha[descricao]</td>
                                     <td>$c_data</td>
@@ -438,10 +446,14 @@ $registro_conf = $result_conf->fetch_assoc();
                                     $c_prazo_hora = $c_linha['prazo_hora'];
                                  else
                                     $c_prazo_hora = 'a definir';
+                                if ($c_linha['id_ordem']<>null)
+                                    $i_os = $c_linha['id_ordem'];
+                                else
+                                    $i_os = 'N.G';
                                 echo "
                                 <tr>
                                     <td>$c_linha[id]</td>
-                                    <td>$c_linha[id_ordem]</td>
+                                    <td>$i_os</td>
                                     <td>$c_linha[solicitacao_status]</td>
                                     <td>$c_linha[descricao]</td>
                                     <td>$c_data</td>
