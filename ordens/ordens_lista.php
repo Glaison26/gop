@@ -197,7 +197,7 @@ $registro_conf = $result_conf->fetch_assoc();
             ?>
 
         </div>
-        
+
         <!-- abas de solicitações por recursos físicos, Espaços físicos e avulsos -->
         <ul class="nav nav-tabs nav-tabs-responsive" role="tablist">
             <?php
@@ -272,11 +272,11 @@ $registro_conf = $result_conf->fetch_assoc();
                                 echo "
                                 <tr>
                                     <td>$c_linha[id]</td>";
-                                    if ($c_linha['tipo_ordem']=='P')
-                                      echo "<td>N.A</td>";
-                                    else  
-                                      echo "<td>$c_linha[id_solicitacao]</td>";
-                                    echo "
+                                if ($c_linha['tipo_ordem'] == 'P')
+                                    echo "<td>N.A</td>";
+                                else
+                                    echo "<td>$c_linha[id_solicitacao]</td>";
+                                echo "
                                     <td>$c_data</td>
                                     <td>$c_hora</td>
                                     <td>$c_data_inicio</td>
@@ -358,11 +358,11 @@ $registro_conf = $result_conf->fetch_assoc();
                                 echo "
                                 <tr>
                                    <td>$c_linha[id]</td>";
-                                    if ($c_linha['tipo_ordem']=='P')
-                                      echo "<td>N.A</td>";
-                                    else  
-                                      echo "<td>$c_linha[id_solicitacao]</td>";
-                                   echo " 
+                                if ($c_linha['tipo_ordem'] == 'P')
+                                    echo "<td>N.A</td>";
+                                else
+                                    echo "<td>$c_linha[id_solicitacao]</td>";
+                                echo " 
                                    <td>$c_data</td>
                                    <td>$c_hora</td>
                                    <td>$c_data_inicio</td>
@@ -444,11 +444,11 @@ $registro_conf = $result_conf->fetch_assoc();
                                 echo "
                                 <tr>
                                     <td>$c_linha[id]</td>";
-                                     if ($c_linha['tipo_ordem']=='P')
-                                      echo "<td>N.A</td>";
-                                    else  
-                                      echo "<td>$c_linha[id_solicitacao]</td>";
-                                    echo "
+                                if ($c_linha['tipo_ordem'] == 'P')
+                                    echo "<td>N.A</td>";
+                                else
+                                    echo "<td>$c_linha[id_solicitacao]</td>";
+                                echo "
                                     <td>$c_data</td>
                                     <td>$c_linha[hora_geracao]</td>
                                     <td>$c_data_inicio</td>
