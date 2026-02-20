@@ -28,6 +28,17 @@ FROM preventivas
 JOIN espacos ON preventivas.id_espaco=espacos.id
 where data_prox_realizacao<='$agora'
 ORDER BY preventivas.data_prox_realizacao desc";
+// sql com preventvas gerais sem vinculo com recurso fisico ou espaço físico
+$c_sql_geral = "SELECT preventivas.id, preventivas.periodicidade_geracao, preventivas.calibracao, preventivas.id_espaco,
+preventivas.data_ult_realizacao, preventivas.data_prox_realizacao, preventivas.gerar,
+case
+when preventivas.calibracao ='S' then 'Sim'
+when preventivas.calibracao ='N' then 'Não'
+END AS preventiva_calibracao
+FROM preventivas 
+where data_prox_realizacao<='$agora' and preventivas.tipo = 'V'
+ORDER BY preventivas.data_prox_realizacao desc";
+
 
 
 
@@ -59,6 +70,52 @@ frontend com tabela das preventivas a serem geradas
     }
 </script>
 <!-- script para tabela de preventivas em recursos fisicos a serem geradas -->
+ <script>
+    $(document).ready(function() {
+        $('.tabpreventivas_geral').DataTable({
+            // 
+            "iDisplayLength": -1,
+            "order": [1, 'asc'],
+            "aoColumnDefs": [{
+                'bSortable': false,
+                'aTargets': [5]
+            }, {
+                'aTargets': [0],
+                "visible": false
+            }],
+            "oLanguage": {
+                "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                "sLengthMenu": "_MENU_ resultados por página",
+                "sInfoFiltered": " - filtrado de _MAX_ registros",
+                "oPaginate": {
+                    "spagingType": "full_number",
+                    "sNext": "Próximo",
+                    "sPrevious": "Anterior",
+                    "sFirst": "Primeiro",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": "Processando...",
+                    "sZeroRecords": "Nenhum registro encontrado",
+
+                    "sLast": "Último"
+                },
+                "sSearch": "Pesquisar",
+                "sLengthMenu": 'Mostrar <select>' +
+                    '<option value="5">5</option>' +
+                    '<option value="10">10</option>' +
+                    '<option value="20">20</option>' +
+                    '<option value="30">30</option>' +
+                    '<option value="40">40</option>' +
+                    '<option value="50">50</option>' +
+                    '<option value="-1">Todos</option>' +
+                    '</select> Registros'
+
+            }
+
+        });
+
+    });
+</script>
+
 <script>
     $(document).ready(function() {
         $('.tabpreventivas_recursos').DataTable({
@@ -173,12 +230,67 @@ frontend com tabela das preventivas a serem geradas
         <hr>
         <!-- abas de preventivas por recursos físicos, Espaços físicos e avulsos -->
         <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#recurso" aria-controls="recurso" role="tab" data-toggle="tab">Preventivas em Recurso Físico</a></li>
+            <li role="presentation" class="active"> <a href="#preventiva" aria-controls="preventiva" role="tab" data-toggle="tab">Preventivas sem vinculo</a></li>
+            <li role="presentation"><a href="#recurso" aria-controls="recurso" role="tab" data-toggle="tab">Preventivas em Recurso Físico</a></li>
             <li role="presentation"><a href="#espaco" aria-controls="espaco" role="tab" data-toggle="tab">Preventivas em Espaços Físicos</a></li>
         </ul>
         <div class="tab-content">
+            <!-- aba para prentivas sem vinculo -->
+            <div role="tabpanel" class="tab-pane active" id="preventiva">
+                <div style="padding-top:15px;padding-left:20px;">
+                    <table class="table table display table-bordered table-sm tabpreventivas_geral">
+                        <thead class="thead">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Calibração</th>
+                                <th scope="col">Periodicidade</th>
+                                <th scope="col">Ultima Realização</th>
+                                <th scope="col">Próxima Realização</th>
+                                <th scope="col">Gerar</th>
+                                <th scope="col">Opções</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            // faço a Leitura da tabela com sql
+                            $result = $conection->query($c_sql_geral);
+                            // verifico se a query foi correto
+                            if (!$result) {
+                                die("Erro ao Executar Sql!!" . $conection->connect_error);
+                            }
+
+                            // insiro os registro do banco de dados na tabela 
+                            while ($c_linha = $result->fetch_assoc()) {
+                                $c_data_realizacao = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_ult_realizacao'])));
+                                $c_data_proxima = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_prox_realizacao'])));
+
+                                echo "
+                                <tr>
+                                    <td>$c_linha[id]</td>
+                                                                    
+                                    <td>$c_linha[preventiva_calibracao]</td>
+                                    <td>$c_linha[periodicidade_geracao] dias</td>
+                                    <td>$c_data_realizacao</td>
+                                    <td>$c_data_proxima</td>
+                                    <td>$c_linha[gerar]</td>
+                                                                    
+                                    <td>
+                                        <a class='btn btn-success btn-sm' href='/gop/preventivas/preventivas_selecionar.php?id=$c_linha[id]'><img src='\gop\images\selecionar.png' alt='' width='25' height='25'> Marcar/Desmarcar</a>
+                                       
+                                    </td>
+
+                                </tr>
+                                ";
+                            }
+                            ?>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             <!-- aba da recurso fisico-->
-            <div role="tabpanel" class="tab-pane active" id="recurso">
+            <div role="tabpanel" class="tab-pane" id="recurso">
                 <div style="padding-top:15px;padding-left:20px;">
                     <table class="table table display table-bordered table-sm tabpreventivas_recursos">
                         <thead class="thead">

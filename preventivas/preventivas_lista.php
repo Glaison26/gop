@@ -5,6 +5,7 @@ if (!isset($_SESSION['newsession'])) {
 }
 $c_sql_recurso = $_SESSION['sqlrecurso'];
 $c_sql_espaco = $_SESSION['sqlespaco'];
+$c_sql_geral = $_SESSION['sqlgeral'];
 
 //echo $c_sql_recurso;
 include('../links.php');
@@ -26,6 +27,53 @@ include('../conexao.php');
         }
     </script>
 </head>
+<!--script da tabela de preventivas sem vinculo -->
+<script>
+    $(document).ready(function() {
+        $('.tabpreventivas_geral').DataTable({
+            // 
+            "iDisplayLength": -1,
+            "order": [1, 'asc'],
+            "aoColumnDefs": [{
+                'bSortable': false,
+                'aTargets': [6]
+            }, {
+                'aTargets': [0],
+                "visible": true
+            }],
+            "oLanguage": {
+                "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                "sLengthMenu": "_MENU_ resultados por página",
+                "sInfoFiltered": " - filtrado de _MAX_ registros",
+                "oPaginate": {
+                    "spagingType": "full_number",
+                    "sNext": "Próximo",
+                    "sPrevious": "Anterior",
+                    "sFirst": "Primeiro",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": "Processando...",
+                    "sZeroRecords": "Nenhum registro encontrado",
+
+                    "sLast": "Último"
+                },
+                "sSearch": "Pesquisar",
+                "sLengthMenu": 'Mostrar <select>' +
+                    '<option value="5">5</option>' +
+                    '<option value="10">10</option>' +
+                    '<option value="20">20</option>' +
+                    '<option value="30">30</option>' +
+                    '<option value="40">40</option>' +
+                    '<option value="50">50</option>' +
+                    '<option value="-1">Todos</option>' +
+                    '</select> Registros'
+
+            }
+
+        });
+
+    });
+</script>
+
 <!-- script da tabela de recursos -->
 <script>
     $(document).ready(function() {
@@ -35,7 +83,7 @@ include('../conexao.php');
             "order": [1, 'asc'],
             "aoColumnDefs": [{
                 'bSortable': false,
-                'aTargets': [6]
+                'aTargets': [7]
             }, {
                 'aTargets': [0],
                 "visible": true
@@ -81,7 +129,7 @@ include('../conexao.php');
             "order": [1, 'asc'],
             "aoColumnDefs": [{
                 'bSortable': false,
-                'aTargets': [6]
+                'aTargets': [7]
             }, {
                 'aTargets': [0],
                 "visible": true
@@ -146,13 +194,75 @@ include('../conexao.php');
         <hr>
         <!-- abas de preventivas por recursos físicos, Espaços físicos e avulsos -->
         <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#recurso" aria-controls="recurso" role="tab" data-toggle="tab">Preventivas em Recurso Físico</a></li>
+            <li role="presentation" class="active"><a href="#preventiva" aria-controls="preventiva" role="tab" data-toggle="tab">Preventivas sem Vinculo</a></li>
+            <li role="presentation"><a href="#recurso" aria-controls="recurso" role="tab" data-toggle="tab">Preventivas em Recurso Físico</a></li>
             <li role="presentation"><a href="#espaco" aria-controls="espaco" role="tab" data-toggle="tab">Preventivas em Espaços Físicos</a></li>
 
         </ul>
+        <!-- preventivas gerais sem recurso fisico ou espaço fisico -->
         <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="preventiva">
+                <div style="padding-top:15px;padding-left:20px;">
+                    <table class="table table-bordered table-striped tabpreventivas_geral">
+                        <thead class="thead">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Tipo</th>
+                                <th scope="col">Ocorrência</th>
+                                <th scope="col">Periodicidade</th>
+                                <th scope="col">Ultima Realização</th>
+                                <th scope="col">Próxima Realização</th>
+                                <th scope="col">Opções</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            // faço a Leitura da tabela com sql
+                            $result = $conection->query($c_sql_geral);
+                            // verifico se a query foi correto
+                            if (!$result) {
+                                die("Erro ao Executar Sql!!" . $conection->connect_error);
+                            }
+
+                            // insiro os registro do banco de dados na tabela 
+                            while ($c_linha = $result->fetch_assoc()) {
+                                $c_data_realizacao = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_ult_realizacao'])));
+                                $c_data_proxima = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data_prox_realizacao'])));
+
+                                echo "
+                                <tr>
+                                    <td>$c_linha[id]</td>
+                                    <td>$c_linha[preventiva_tipo_completo]</td>
+                                    <th>$c_linha[ocorrencia]</td>
+                                    <td>$c_linha[periodicidade_geracao] dias</td>
+                                    <td>$c_data_realizacao</td>
+                                    <td>$c_data_proxima</td>
+                                                                    
+                                    <td>
+                                        <a class='btn btn-secondary btn-sm' href='/gop/preventivas/preventivas_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                                      <a class='btn btn-success btn-sm' href='/gop/preventivas/preventivas_anexos.php?id=$c_linha[id]'>
+                                        <img src='\gop\images\anexo.png' alt='' width='23' height='18'> Anexos</a> 
+                                        <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
+
+                                    </td>
+
+                                </tr>
+                                ";
+                            }
+                            ?>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- fim da aba de preventiva gerais -->
+
+
+
             <!-- aba da recurso fisico-->
-            <div role="tabpanel" class="tab-pane active" id="recurso">
+            <div role="tabpanel" class="tab-pane" id="recurso">
                 <div style="padding-top:15px;padding-left:20px;">
                     <table class="table table-bordered table-striped tabpreventivas_recursos">
                         <thead class="thead">
@@ -160,7 +270,7 @@ include('../conexao.php');
                                 <th scope="col">#</th>
                                 <th scope="col">Recurso</th>
                                 <th scope="col">Patrimônio</th>
-
+                                <th scope="col">Ocorrência</th>
                                 <th scope="col">Tipo</th>
                                 <th scope="col">Calibração</th>
                                 <th scope="col">Periodicidade</th>
@@ -187,8 +297,8 @@ include('../conexao.php');
                                 <tr>
                                     <td>$c_linha[id]</td>
                                     <td>$c_linha[recurso]</td>
-                                    <td>$c_linha[patrimonio]
-                                    
+                                    <td>$c_linha[patrimonio]</td>
+                                    <td>$c_linha[ocorrencia]</td>
                                     <td>$c_linha[preventiva_tipo_completo]</td>
                                     <td>$c_linha[preventiva_calibracao]</td>
                                     <td>$c_linha[periodicidade_geracao] dias</td>
@@ -221,8 +331,8 @@ include('../conexao.php');
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Espaço Físico</th>
-
                                 <th scope="col">Tipo</th>
+                                <th scope="col">Ocorrência</th>
                                 <th scope="col">Periodicidade</th>
                                 <th scope="col">Ultima Realização</th>
                                 <th scope="col">Próxima Realização</th>
@@ -246,8 +356,8 @@ include('../conexao.php');
                                 <tr>
                                     <td>$c_linha[id]</td>
                                     <td>$c_linha[espaco]</td>
-                                    
                                     <td>$c_linha[preventiva_tipo_completo]</td>
+                                    <td>$c_linha[ocorrencia]</td>
                                     <td>$c_linha[periodicidade_geracao] dias</td>
                                     <td>$c_data_realizacao</td>
                                     <td>$c_data_proxima</td>
@@ -275,6 +385,7 @@ include('../conexao.php');
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Status</th>
+                                <th scope="col">Ocorrência</th>
                                 <th scope="col">Abertura</th>
                                 <th scope="col">Hora</th>
                                 <th scope="col">Solicitante</th>
@@ -300,6 +411,7 @@ include('../conexao.php');
                                 <tr class='info'>
                                     <td>$c_linha[id]</td>
                                     <td>$c_linha[solicitacao_status]</td>
+                                    <td>$c_linha[ocorrencia]</td>
                                     <td>$c_data</td>
                                     <td>$c_linha[hora_abertura]</td>
                                     <td>$c_linha[solicitante]</td>

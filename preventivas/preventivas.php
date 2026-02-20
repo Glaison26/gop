@@ -51,10 +51,34 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     if ($c_where <> '')
         $c_where = $c_where = substr($c_where, 0, -5); // tirar o and no final
 
+    // montagem do sql para pesquisa de preventivas gerais sem recursos fisicos ou espaços fisicos
+    $c_sqlgeral = "SELECT preventivas.id ,preventivas.id_recurso,  preventivas.descritivo, preventivas.id_oficina, preventivas.id_centrodecusto, preventivas.tipo_preventiva,
+preventivas.data_cadastro, preventivas.periodicidade_geracao, preventivas.data_prox_realizacao, preventivas.data_ult_realizacao, preventivas.calibracao,
+oficinas.descricao AS oficina, ocorrencias.descricao as ocorrencia,
+case
+when preventivas.tipo_preventiva ='S' then 'Sistemática'
+when preventivas.tipo_preventiva ='P' then 'Preditiva'
+when preventivas.tipo_preventiva ='R' then 'Rotina'
+END AS preventiva_tipo_completo,
+case
+when preventivas.calibracao ='S' then 'Sim'
+when preventivas.calibracao ='N' then 'Não'
+END AS preventiva_calibracao
+FROM preventivas
+join ocorrencias on preventivas.id_ocorrencia=ocorrencias.id
+JOIN oficinas ON preventivas.id_oficina=oficinas.id";
+
+    if ($c_where <> '') {
+        $c_sqlgeral = $c_sqlgeral . ' where tipo = "V" and ' . $c_where;
+    } else {
+        $c_sqlgeral = $c_sqlgeral . ' where tipo = "V"';
+    }
+
+    $c_sqlgeral = $c_sqlgeral . ' ORDER BY preventivas.data_prox_realizacao desc';
     // montagem do sql para pesquisa de preventivas em recursos fisicos
     $c_sqlrecursos = "SELECT preventivas.id ,preventivas.id_recurso,  preventivas.descritivo, preventivas.id_oficina, preventivas.id_centrodecusto, preventivas.tipo_preventiva,
 preventivas.data_cadastro, preventivas.periodicidade_geracao, preventivas.data_prox_realizacao, preventivas.data_ult_realizacao, preventivas.calibracao,
-oficinas.descricao AS oficina, recursos.descricao AS recurso, recursos.patrimonio,
+oficinas.descricao AS oficina, recursos.descricao AS recurso, recursos.patrimonio, ocorrencias.descricao as ocorrencia,
 case
 when preventivas.tipo_preventiva ='S' then 'Sistemática'
 when preventivas.tipo_preventiva ='P' then 'Preditiva'
@@ -66,6 +90,7 @@ when preventivas.calibracao ='N' then 'Não'
 END AS preventiva_calibracao
 FROM preventivas
 JOIN oficinas ON preventivas.id_oficina=oficinas.id
+join ocorrencias on preventivas.id_ocorrencia=ocorrencias.id
 JOIN recursos ON preventivas.id_recurso=recursos.id";
     if ($c_where <> '')
         $c_sqlrecursos = $c_sqlrecursos . ' where ' . $c_where;
@@ -75,7 +100,7 @@ JOIN recursos ON preventivas.id_recurso=recursos.id";
     // montagem de sql para pesquisa de preventivas dem espaçõs fisicos
     $c_sqlespacos = "SELECT preventivas.id, preventivas.descritivo, preventivas.id_espaco, preventivas.id_oficina, preventivas.id_centrodecusto, preventivas.tipo_preventiva,
 preventivas.data_cadastro, preventivas.periodicidade_geracao, preventivas.data_prox_realizacao, preventivas.data_ult_realizacao, preventivas.calibracao,
-oficinas.descricao AS oficina, espacos.descricao AS espaco,
+oficinas.descricao AS oficina, espacos.descricao AS espaco, ocorrencias.descricao as ocorrencia,
 case
 when preventivas.tipo_preventiva ='S' then 'Sistemática'
 when preventivas.tipo_preventiva ='P' then 'Preditiva'
@@ -83,6 +108,7 @@ when preventivas.tipo_preventiva ='R' then 'Rotina'
 END AS preventiva_tipo_completo
 FROM preventivas
 JOIN oficinas ON preventivas.id_oficina=oficinas.id
+join ocorrencias on preventivas.id_ocorrencia=ocorrencias.id
 JOIN espacos ON preventivas.id_espaco=espacos.id";
     if ($c_where <> '')
         $c_sqlespacos = $c_sqlespacos . ' where ' . $c_where;
@@ -92,6 +118,7 @@ JOIN espacos ON preventivas.id_espaco=espacos.id";
     // variaves que repassaram o sql de pesquisa
     $_SESSION['sqlrecurso'] = $c_sqlrecursos;
     $_SESSION['sqlespaco'] = $c_sqlespacos;
+    $_SESSION['sqlgeral'] = $c_sqlgeral;
     // variavel de controle de retorno para o card ou não no menu principal
     $_SESSION['pesquisamenu'] = false;
 

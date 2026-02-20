@@ -105,24 +105,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         $c_dias = '+' . $i_periodicidade . ' days';
         $d_data_proxima = date('y-m-d', strtotime($c_dias, strtotime($c_data_ultima))); // incremento 1 dia a data do loop
-        // sql para inclusão do registro
-        if ($_SESSION['tiposolicitacao'] == 'R') // sql para recursos fisicos
+        // sql para inclusão do registro para recurso fisico
+        if ($_SESSION['tiposolicitacao'] == 'R') { // sql para recursos fisicos
             $c_sql = "Insert into preventivas (id_recurso,id_oficina, id_setor, id_centrodecusto,tipo,tipo_preventiva, data_cadastro
                     , periodicidade_geracao, data_prox_realizacao, data_ult_realizacao, calibracao,descritivo, gerar,
                       id_ocorrencia, prazo_atendimento, id_executor) 
                     value ('$i_id_recurso', '$i_id_oficina', '$i_setor', '$i_id_centrodecusto', 'R', '$c_tipopreventiva',
                     '$d_data_cadastro', '$i_periodicidade', '$d_data_proxima', '$c_data_ultima','$c_calibracao',
                      '$c_descritivo', 'Sim', '$i_id_ocorrencia', $c_prazo, $i_executor_resp)";
+        }
         //
-        if ($_SESSION['tiposolicitacao'] == 'E') // sql para espacos fisicos
+        if ($_SESSION['tiposolicitacao'] == 'E') { // sql para espacos fisicos
             $c_sql = "Insert into preventivas (id_espaco,id_oficina, id_setor, id_centrodecusto,tipo,tipo_preventiva, data_cadastro
                       , periodicidade_geracao, data_prox_realizacao, data_ult_realizacao, calibracao,descritivo, 
                       gerar,  id_ocorrencia, prazo_atendimento, id_executor ) 
                       value ('$i_id_espaco', '$i_id_oficina', '$i_setor', '$i_id_centrodecusto', 'E', '$c_tipopreventiva',
                      '$d_data_cadastro', '$i_periodicidade', '$d_data_proxima', '$c_data_ultima','$c_calibracao',
                       '$c_descritivo', 'Sim', '$i_id_ocorrencia', $c_prazo,  $i_executor_resp)";
+        }
+        if ($_SESSION['tiposolicitacao'] == 'V'){ // sql para preventivas avulsas sem espaço fisico ou recurso fisico
+            $c_sql = "Insert into preventivas (id_oficina, id_setor, id_centrodecusto,tipo,tipo_preventiva, data_cadastro
+                      , periodicidade_geracao, data_prox_realizacao, data_ult_realizacao, calibracao,descritivo, 
+                      gerar,  id_ocorrencia, prazo_atendimento, id_executor ) 
+                      value ('$i_id_oficina', '$i_setor', '$i_id_centrodecusto', 'V', '$c_tipopreventiva',
+                     '$d_data_cadastro', '$i_periodicidade', '$d_data_proxima', '$c_data_ultima','$c_calibracao',
+                      '$c_descritivo', 'Sim', '$i_id_ocorrencia', $c_prazo,  $i_executor_resp)";
+        }
 
-        $result = $conection->query($c_sql);
+            $result = $conection->query($c_sql);
         // verifico se a query foi correto
         if (!$result) {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
