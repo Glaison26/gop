@@ -11,7 +11,7 @@ $_SESSION['i_id_oficina']=0; // valor inicial para codigo de ofician na geracao 
 include("conexao.php");
 
     // montagem do sql para recursos físicos
-    $c_sqlrecursos = "SELECT solicitacao.id, solicitacao.prazo_data, solicitacao.prazo_hora, solicitacao.id_ordem, solicitacao.data_abertura, solicitacao.hora_abertura, solicitacao.id_solicitante,
+    $c_sqlrecursos = "SELECT solicitacao.id, ocorrencias.descricao, solicitacao.data_conclusao, solicitacao.hora_conclusao, solicitacao.prazo_data, solicitacao.prazo_hora, solicitacao.id_ordem, solicitacao.data_abertura, solicitacao.hora_abertura, solicitacao.id_solicitante,
                     solicitacao.id_recursos, solicitacao.tipo,  solicitacao.`status`,
                     usuarios.nome AS solicitante, recursos.descricao AS recurso,
                     case 
@@ -26,9 +26,10 @@ include("conexao.php");
                     FROM solicitacao
                     JOIN usuarios ON solicitacao.id_solicitante=usuarios.id
                     JOIN recursos ON solicitacao.id_recursos=recursos.id
+                    JOIN ocorrencias on solicitacao.id_ocorrencia=ocorrencias.id
                     WHERE STATUS = 'A' order by solicitacao.data_abertura desc";
     // montagem do sql para espaços fisicos
-    $c_sqlespacos = "SELECT solicitacao.id, solicitacao.prazo_data, solicitacao.prazo_hora, solicitacao.id_ordem, solicitacao.data_abertura, solicitacao.hora_abertura, solicitacao.id_solicitante,
+    $c_sqlespacos = "SELECT solicitacao.id, ocorrencias.descricao, solicitacao.data_conclusao, solicitacao.hora_conclusao, solicitacao.prazo_data, solicitacao.prazo_hora, solicitacao.id_ordem, solicitacao.data_abertura, solicitacao.hora_abertura, solicitacao.id_solicitante,
                     solicitacao.tipo,  solicitacao.`status`,
                     usuarios.nome AS solicitante, espacos.descricao AS espaco,
                     case 
@@ -42,10 +43,11 @@ include("conexao.php");
                     END AS solicitacao_status
                     FROM solicitacao
                     JOIN usuarios ON solicitacao.id_solicitante=usuarios.id
-                    JOIN espacos ON solicitacao.id_espaco=espacos.id               
+                    JOIN espacos ON solicitacao.id_espaco=espacos.id 
+                    JOIN ocorrencias on solicitacao.id_ocorrencia=ocorrencias.id              
                     WHERE STATUS = 'A' order by solicitacao.data_abertura desc";
     // montagem do sql para solicitações avulsas 
-    $c_sqlavulso =  "SELECT solicitacao.id, solicitacao.prazo_data, solicitacao.prazo_hora, solicitacao.id_ordem, solicitacao.data_abertura, solicitacao.hora_abertura, solicitacao.id_solicitante,
+    $c_sqlavulso =  "SELECT solicitacao.id, ocorrencias.descricao, solicitacao.data_conclusao, solicitacao.hora_conclusao, solicitacao.prazo_data, solicitacao.prazo_hora, solicitacao.id_ordem, solicitacao.data_abertura, solicitacao.hora_abertura, solicitacao.id_solicitante,
                     solicitacao.tipo,  solicitacao.`status`,
                     usuarios.nome AS solicitante, 
                     case 
@@ -59,6 +61,7 @@ include("conexao.php");
                     END AS solicitacao_status
                     FROM solicitacao
                     JOIN usuarios ON solicitacao.id_solicitante=usuarios.id  
+                    JOIN ocorrencias on solicitacao.id_ocorrencia=ocorrencias.id
                     WHERE STATUS = 'A' and solicitacao.classificacao = 'V' order by solicitacao.data_abertura desc";
     // chamo pagina com os dados a serem selecionados passando a string sql
     $_SESSION['sqlrecurso'] = $c_sqlrecursos;

@@ -20,6 +20,16 @@ if (isset($_GET['id'])) {
 } else {
     $i_id = $_SESSION['id_solicitacao'];
 }
+// select da solicitação para capturar dados 
+$c_sql_solicitacao = "select * from solicitacao where id='$i_id'";
+$result_solicitacao = $conection->query($c_sql_solicitacao);
+$registro_solicitacao = $result_solicitacao->fetch_assoc();
+ $i_id_ocorrencia = $registro_solicitacao['id_ocorrencia'];
+// procuro descritivo da ocorrencia via sql
+$c_sql_ocorrencia = "SELECT ocorrencias.descricao FROM ocorrencias where id = '$i_id_ocorrencia'";
+$result_ocorrencia = $conection->query($c_sql_ocorrencia);
+$registro_ocorrencia = $result_ocorrencia->fetch_assoc();
+$c_descritivo = $registro_ocorrencia['descricao'];
 
 // rotina para geração de ordem de serviço
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -40,17 +50,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $c_sql_executor_resp = "Select id, nome from executores where nome='$c_executor_resp'";
     $result_executor_resp = $conection->query($c_sql_executor_resp);
     $registro_executor_resp = $result_executor_resp->fetch_assoc();
-    $i_executor_resp=$registro_executor_resp['id'];
+    $i_executor_resp = $registro_executor_resp['id'];
     // procuro solicitante
     $c_responsavel = $_SESSION['c_usuario'];
     $c_sql_responsavel = "Select id from usuarios where login='$c_responsavel'";
     $result_responsavel = $conection->query($c_sql_responsavel);
     $registro_responsavel = $result_responsavel->fetch_assoc();
 
-    // select da solicitação para capturar dados 
-    $c_sql_solicitacao = "select * from solicitacao where id='$i_id'";
-    $result_solicitacao = $conection->query($c_sql_solicitacao);
-    $registro_solicitacao = $result_solicitacao->fetch_assoc();
+
+
     // variaveis para fazer o insert
     $i_id_solicitante = $registro_solicitacao['id_solicitante'];
     $i_id_setor = $registro_solicitacao['id_setor'];
@@ -76,12 +84,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // data de inicio
     $d_data_inicio = $_POST['data_inicio'];
     $d_hora_inicio = $_POST['hora_inicio'];
-    
+
     $d_data_previsao = new DateTime($_POST['data_sla']);
     $d_data_previsao = $d_data_previsao->format('Y-m-d');
     $d_hora_previsao =  new DateTime($_POST['hora_sla']);
     $d_hora_previsao = $d_hora_previsao->format('H:i');
     $i_id_ocorrencia = $registro_solicitacao['id_ocorrencia'];
+
     //echo $descritivo;
 
     do {
@@ -143,9 +152,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $data = new DateTime($d_data_previsao);
             $data = $data->format('d-m-Y');
             $c_assunto = "Abertura de Ordem  de Serviço no GOP";
-            $c_body = "A Ordem de serviço No.<b> $ordem da solicitação no. $i_id </b> foi gerada com suceso! Aguarde o atendimento <br>"
+            $c_body = "<h4>A Ordem de serviço No.<b> $ordem da solicitação no. $i_id </b> foi gerada com suceso! Aguarde o atendimento <br>"
                 . "Descrição da Solicitação :" . $c_descricao . "<br>" .
-                " Previsão de execução: $data";
+                " Previsão de execução: $data" . "</h4>";
             include('../email_gop.php');
         }
 
@@ -218,12 +227,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $c_sql_oficina = "SELECT oficinas.id, oficinas.descricao FROM oficinas ORDER BY oficinas.descricao";
                         $result_oficina = $conection->query($c_sql_oficina);
                         while ($c_linha = $result_oficina->fetch_assoc()) {
-                           // if ($i_id_oficina > 0) {
-                                if ($_SESSION['i_id_oficina'] == $c_linha['id'])
-                                    $op = 'selected';
-                                else
-                                    $op = "";
-                                echo "  
+                            // if ($i_id_oficina > 0) {
+                            if ($_SESSION['i_id_oficina'] == $c_linha['id'])
+                                $op = 'selected';
+                            else
+                                $op = "";
+                            echo "  
                           <option $op>$c_linha[descricao]</option>
                         ";
                             //}
@@ -232,7 +241,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </select>
                 </div>
             </div>
-            
+            <br>
             <div class="row mb-6">
                 <label class="col-sm-2 col-form-label">Responsável </label>
                 <div class="col-sm-3">
@@ -240,7 +249,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <option></option>
                         <?php
                         // select da tabela de setores
-                        $c_sql_resp = "SELECT executores.id, executores.nome FROM executores where id_oficina='$i_id_oficina' ORDER BY executores.nome";
+                        $c_sql_resp = "SELECT executores.id, executores.nome FROM executores where id_oficina='$i_id_oficina' and ativo='SIM' ORDER BY executores.nome";
                         $result_resp = $conection->query($c_sql_resp);
                         while ($c_linha = $result_resp->fetch_assoc()) {
                             echo "  
@@ -251,7 +260,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </select>
                 </div>
             </div>
-
+            <br>
             <div class="row mb-6">
                 <label class="col-md-2 form-label">Data Inicio</label>
                 <div class="col-sm-2">
@@ -277,7 +286,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-6">
                 <label class="col-md-2 form-label">Descritivo</label>
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" name="descritivo" id="descritivo" required>
+                    <input type="text" class="form-control" name="descritivo" id="descritivo" value='<?php echo $c_descritivo ?>' required>
                 </div>
                 <br>
             </div>

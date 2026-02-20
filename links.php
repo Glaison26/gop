@@ -6,6 +6,8 @@
 <link href="https://cdn.datatables.net/2.1.5/css/dataTables.dataTables.min.css">
 
 <link rel="shortcut icon" type="imagex/png" href="./images/img_gop.ico">
+<link rel="shortcut icon" type="imagex/png" href="./imagens/img_gop.ico">
+<link rel="shortcut icon" type="imagex/png" href="../imagens/img_gop.ico">
 
 <script scr="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script scr="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>

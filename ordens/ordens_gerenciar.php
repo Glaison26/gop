@@ -56,18 +56,18 @@ $_SESSION['id_ocorrencia'] = $c_linha_ordem['id_ocorrencia'];
                         <h5>Gerenciamento da Ordem de Serviço<h5>
                     </div>
                 </div>
-               <!-- painel com o número da ordem de serviço -->
+                <!-- painel com o número da ordem de serviço -->
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <h4>Ordem de Serviço Nº <?php echo $i_id ?> - <?php echo $c_linha_ordem['descritivo'] ?></h4>
                     </div>
                 </div>
                 <!-- botões de ação da ordem de serviço -->
-                
+
                 <div style="padding-bottom :2px;">
-                    <a class='btn btn btn-sm' href='/gop/ordens/ordens_emissao.php?id=<?php echo $i_id ?>'  target='_blank'>
-                                        <span class='glyphicon glyphicon-print'></span> Emitir</a>
-                    <a  class='btn btn btn-sm' title='Editar Ordem de serviço' href='\gop\ordens\ordens_editar.php?id=<?php echo $i_id ?>'><img src='\gop\images\xxxescrever.png' alt='' width='30' height='20'><span> Editar</span></a>
+                    <a class='btn btn btn-sm' href='/gop/ordens/ordens_emissao.php?id=<?php echo $i_id ?>' target='_blank'>
+                        <span class='glyphicon glyphicon-print'></span> Emitir</a>
+                    <a class='btn btn btn-sm' title='Editar Ordem de serviço' href='\gop\ordens\ordens_editar.php?id=<?php echo $i_id ?>'><img src='\gop\images\xxxescrever.png' alt='' width='30' height='20'><span> Editar</span></a>
                     <?php
                     // cabeçalho do gerenciar
                     if ($c_linha_ordem['status'] <> 'C' && $c_linha_ordem['status'] <> 'S' && $c_linha_ordem['status'] <> 'X') {
@@ -82,31 +82,29 @@ $_SESSION['id_ocorrencia'] = $c_linha_ordem['id_ocorrencia'];
                     <a class='btn btn btn-sm' title='Voltar' href='\gop\ordens\ordens_lista.php'><img src="\gop\images\saida.png" alt="" width="30" height="20"><span> Voltar</span></a>
                 </div>
                 <hr>
-                
+
                 <!-- abas de itens de os -->
                 <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#materiais" aria-controls="materiais" role="tab" data-toggle="tab">Materiais Gastos</a></li>
-                    <li role="presentation"><a href="#executores" aria-controls="executores" role="tab" data-toggle="tab">Executores</a></li>
+                    <li role="presentation" class="active"><a href="#executores" aria-controls="executores" role="tab" data-toggle="tab">Executores</a></li>
                     <li role="presentation"><a href="#prestadores" aria-controls="prestadores" role="tab" data-toggle="tab">Prestadores de Serviço</a></li>
-                    <li role="presentation"><a href="#abapop" aria-controls="abapop" role="tab" data-toggle="tab">Procedimentos Operacionais Padrões</a></li>
-                    <li role="presentation"><a href="#checklist" aria-controls="checklist" role="tab" data-toggle="tab">Check Lists</a></li>
-                    <li role="presentation"><a href="#plano" aria-controls="plano" role="tab" data-toggle="tab">Plano de Ação</a></li>
-                    <li role="presentation"><a href="#ferramenta" aria-controls="ferramenta" role="tab" data-toggle="tab">Ferramentas</a></li>
-                    <li role="presentation"><a href="#imagens" aria-controls="imagens" role="tab" data-toggle="tab">Imagens</a></li>
+                    <li role="presentation"><a href="#materiais" aria-controls="materiais" role="tab" data-toggle="tab">Materiais Gastos</a></li>
                     <li role="presentation"><a href="#susp" aria-controls="susp" role="tab" data-toggle="tab">Suspensões</a></li>
-
-
+                    <li role="presentation"><a href="#checklist" aria-controls="checklist" role="tab" data-toggle="tab">Check Lists</a></li>
+                    <li role="presentation"><a href="#abapop" aria-controls="abapop" role="tab" data-toggle="tab">Procedimentos Operacionais Padrões</a></li>
+                    <li role="presentation"><a href="#imagens" aria-controls="imagens" role="tab" data-toggle="tab">Imagens</a></li>
+                    <li role="presentation"><a href="#ferramenta" aria-controls="ferramenta" role="tab" data-toggle="tab">Ferramentas</a></li>
+                    <li role="presentation"><a href="#plano" aria-controls="plano" role="tab" data-toggle="tab">Plano de Ação</a></li>
                 </ul>
                 <div class="tab-content">
                     <!-- aba da materiais gastos-->
-                    <div role="tabpanel" class="tab-pane active" id="materiais">
+                    <div role="tabpanel" class="tab-pane" id="materiais">
                         <div style="padding-top:15px;padding-left:20px;">
                             <?php include('ordens_materiais.php'); ?>
 
                         </div>
                     </div>
                     <!-- aba de executores-->
-                    <div role="tabpanel" class="tab-pane" id="executores">
+                    <div role="tabpanel" class="tab-pane  active" id="executores">
                         <div style="padding-top:15px;padding-left:20px;">
                             <?php include('ordens_executores.php') ?>
                         </div>

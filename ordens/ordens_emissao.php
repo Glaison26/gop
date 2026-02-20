@@ -150,6 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     <div class="container mt-3">
         <form action="ordens_emissao_email.php?id=<?php echo $c_id; ?>" method="post">
             <button type="submit" class="btn btn-primary">Enviar Ordem de Serviço por Email</button>
+            
            <!-- botão para fechar a aba aberta -->
             <button type="button" class="btn btn-secondary" onclick="window.close();">Fechar</button>
         </form>

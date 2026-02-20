@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $i_total = mysqli_num_rows($result);
             if ($i_total > 0) {
                 // atualizo o status da solicitação
-                $c_sql_up = "update solicitacao set status='C' where id_ordem = '$i_id'";
+                $c_sql_up = "update solicitacao set status='C', data_conclusao='$_POST[data_conclusao]', hora_conclusao='$_POST[hora_conclusao]' where id_ordem = '$i_id'";
                 $result_up = $conection->query($c_sql_up);
             }
         }

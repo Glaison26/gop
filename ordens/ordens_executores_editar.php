@@ -165,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['btncusto'])) {
                         if ($c_indice == '')
                             echo "<option></option>";
                         // select da tabela de Material
-                        $c_sql_executor = "SELECT executores.id, executores.nome FROM executores ORDER BY executores.nome";
+                        $c_sql_executor = "SELECT executores.id, executores.nome FROM executores where ativo = 'SIM' ORDER BY executores.nome";
                         $result_executor = $conection->query($c_sql_executor);
                         while ($c_linha = $result_executor->fetch_assoc()) {
                             $op = "";
