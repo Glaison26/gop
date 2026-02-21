@@ -154,7 +154,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     JOIN usuarios ON ordens.id_solicitante=usuarios.id
                     JOIN oficinas ON ordens.id_oficina=oficinas.id
                     JOIN recursos on ordens.id_recurso=recursos.id
-                    JOIN executores on ordens.id_executor_responsavel=executores.id"; 
+                    JOIN executores on ordens.id_executor_responsavel=executores.id";
     if (!empty($c_where))
         $c_sql_recurso = $c_sql_recurso . ' where ' . $c_where;
     //
@@ -177,7 +177,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     JOIN setores ON ordens.id_setor=setores.id
                     JOIN oficinas ON ordens.id_oficina=oficinas.id
                     JOIN usuarios ON ordens.id_solicitante=usuarios.id
-                    JOIN executores on ordens.id_executor_responsavel=executores.id"; 
+                    JOIN executores on ordens.id_executor_responsavel=executores.id";
     if (!empty($c_where))
         $c_sql_espaco = $c_sql_espaco . ' where ' . $c_where;
 
@@ -201,7 +201,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     JOIN setores ON ordens.id_setor=setores.id
                     JOIN oficinas ON ordens.id_oficina=oficinas.id
                     JOIN usuarios ON ordens.id_solicitante=usuarios.id
-                    JOIN executores on ordens.id_executor_responsavel=executores.id"; 
+                    JOIN executores on ordens.id_executor_responsavel=executores.id";
 
     if (!empty($c_where))
         $c_sql_avulso = $c_sql_avulso . ' where ' . $c_where;
@@ -211,9 +211,9 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $c_sqlespacos = $c_sql_espaco . $c_wheretipo_espaco;
     $c_sqlavulso = $c_sql_avulso . $c_wheretipo_avulso;
     // guardo session para proxima pagina de tabelas
-    $_SESSION['sqlrecurso'] = $c_sqlrecursos.' order by ordens.id desc';
-    $_SESSION['sqlespaco'] = $c_sqlespacos.' order by ordens.id desc';
-    $_SESSION['sqlavulso'] = $c_sqlavulso.' order by ordens.id desc';;
+    $_SESSION['sqlrecurso'] = $c_sqlrecursos . ' order by ordens.id desc';
+    $_SESSION['sqlespaco'] = $c_sqlespacos . ' order by ordens.id desc';
+    $_SESSION['sqlavulso'] = $c_sqlavulso . ' order by ordens.id desc';;
     $_SESSION['pesquisamenu'] = false;
 
     //echo $c_sqlrecursos;
@@ -291,7 +291,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                 </div>
             </div>
             <!-- radio butto para escolher datas de abertura ou conclusão -->
-             <div class="row mb-3">
+            <div class="row mb-3">
                 <div class="form-check col-sm-2">
                     <label class="form-check-label col-form-label">Data de Abertura</label>
                     <div class="col-sm-2">
@@ -299,10 +299,10 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     </div>
                 </div>
                 <div class="form-check col-sm-2">
-                        <label class="form-check-label col-form-label">Data de Conclusão</label>
-                        <div class="col-sm-2">
-                            <input class="form-check-input" type="radio" value="C" name="rdo_data" id="rdo_data">
-                        </div>
+                    <label class="form-check-label col-form-label">Data de Conclusão</label>
+                    <div class="col-sm-2">
+                        <input class="form-check-input" type="radio" value="C" name="rdo_data" id="rdo_data">
+                    </div>
                 </div>
             </div>
             <div class="row mb-3">
@@ -319,7 +319,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     </div>
                 </div>
             </div>
-          
+
             <br>
             <div class="row mb-3">
                 <label class="col-md-2 form-label">No. da Ordem</label>
@@ -410,11 +410,19 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     </select>
                 </div>
                 <label class="col-sm-1 col-form-label">Tipo</label>
-                <div class="col-sm-2">
+                <div class="col-sm-3">
                     <select onchange="verifica(value)" class="form-select form-select-lg mb-3" id="tipo" name="tipo" value="<?php echo $c_tipo; ?>">
                         <option value="0">Todas</option>
                         <option value="1">Corretiva</option>
-                        <option value="2">Preventiva</option>
+                        <?php
+                        echo $_SESSION['checa_preventiva'];
+                        
+                        if ($_SESSION['checa_preventiva'] == 'S') {
+                            echo '<option  Selected value="2">Preventiva</option>';
+                        } else {
+                            echo '<option value="2">Preventiva</option>';
+                        }
+                        ?>
                     </select>
                 </div>
             </div>

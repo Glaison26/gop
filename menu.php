@@ -14,6 +14,7 @@ $_SESSION['voltadiretriz'] = 'N';
 $_SESSION['consulta_solicitacao'] = "";
 $_SESSION['consulta_ordem'] = "";
 $_SESSION['consulta_resumo'] = "S";
+$_SESSION['checa_preventiva'] = "N";
 // verifico numero de solicitações em aberto
 $c_sql = "select COUNT(*) AS aberta_solicitacao FROM solicitacao WHERE STATUS = 'A'";
 $result = $conection->query($c_sql);
@@ -422,7 +423,7 @@ $_SESSION['ver_os'] = false;
                         </div>
                     </div>
                     <div class="mt-4">
-                        <a href="/gop/preventivas/preventivas_geracao.php" class="text-indigo-600 hover:text-indigo-700 font-semibold text-sm flex items-center">
+                        <a href="/gop/ordens/chama_ordens_preventivas.php" class="text-indigo-600 hover:text-indigo-700 font-semibold text-sm flex items-center">
                             Ver detalhes <i class="fas fa-arrow-right ml-2"></i>
                         </a>
                     </div>
