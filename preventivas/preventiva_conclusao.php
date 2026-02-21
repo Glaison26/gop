@@ -9,7 +9,9 @@ include("../conexao.php");
 include("../links2.php");
 include_once "../lib_gop.php";
 $msg_erro = "";
-$c_descritivo = "";
+//$c_descritivo = "";
+$c_descritivo = $_SESSION['ocorrencia'];
+$c_ocorrencia = $_SESSION['valor_ocorrencia'];
 date_default_timezone_set('America/Sao_Paulo');
 $i_id_oficina = $_SESSION['i_id_oficina']; // valor inicial da id da oficina
 $d_datacadastro = date('m-d-y');
@@ -123,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                      '$d_data_cadastro', '$i_periodicidade', '$d_data_proxima', '$c_data_ultima','$c_calibracao',
                       '$c_descritivo', 'Sim', '$i_id_ocorrencia', $c_prazo,  $i_executor_resp)";
         }
-        if ($_SESSION['tiposolicitacao'] == 'V'){ // sql para preventivas avulsas sem espaço fisico ou recurso fisico
+        if ($_SESSION['tiposolicitacao'] == 'V') { // sql para preventivas avulsas sem espaço fisico ou recurso fisico
             $c_sql = "Insert into preventivas (id_oficina, id_setor, id_centrodecusto,tipo,tipo_preventiva, data_cadastro
                       , periodicidade_geracao, data_prox_realizacao, data_ult_realizacao, calibracao,descritivo, 
                       gerar,  id_ocorrencia, prazo_atendimento, id_executor ) 
@@ -132,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                       '$c_descritivo', 'Sim', '$i_id_ocorrencia', $c_prazo,  $i_executor_resp)";
         }
 
-            $result = $conection->query($c_sql);
+        $result = $conection->query($c_sql);
         // verifico se a query foi correto
         if (!$result) {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
@@ -167,6 +169,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     </script>
 
+    <script>
+        // chama arquivo para pegar ocorrencia
+        function verifica_ocorrencia(value) {
+            window.location.href = "/gop/preventivas/verifica_ocorrencia.php?id=" + value;
+        }
+    </script>
+
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
@@ -195,14 +204,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <h5>Entre com os dados da nova preventiva e clique em salvar</h5>
             </div>
             <form method="post">
-                <div style="padding-left :30px;" class="row mb-3">
-                    <div class="row mb-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="chk_calibracao">
-                            <label class="form-check-label" for="chk_calibracao">
-                                Calibração
-                            </label>
-                        </div>
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">Ocorrencia </label>
+                    <div class="col-sm-7">
+                        <select onchange="verifica_ocorrencia(value)" required class="form-select form-select-lg mb-3" id="ocorrencia" name="ocorrencia" value="<?php echo $c_ocorrencia ?>">
+                            <option></option>
+                            <?php
+                            // select da tabela de ocorrencia
+                            $c_sql_setor = "SELECT ocorrencias.id, ocorrencias.descricao FROM ocorrencias ORDER BY ocorrencias.descricao";
+                            $result_setor = $conection->query($c_sql_setor);
+                            while ($c_linha = $result_setor->fetch_assoc()) {
+                                if (!empty($_SESSION['valor_ocorrencia'])) {
+                                    if ($_SESSION['valor_ocorrencia'] == $c_linha['descricao'])
+                                        $op = 'selected';
+                                    else
+                                        $op = "";
+                                }
+                                echo "  
+                          <option $op>$c_linha[descricao]</option>";
+                            }
+                            ?>
+                        </select>
 
                     </div>
                 </div>
@@ -212,7 +234,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="col-sm-3">
                         <input required type="date" class="form-control" id="datacadastro" name="datacadastro" value='<?php echo date("Y-m-d"); ?>'>
                     </div>
-                    <label class="col-sm-2 col-form-label">Oficina </label>
+                    <label class="col-sm-1 col-form-label">Oficina </label>
                     <div class="col-sm-3">
                         <select onchange="verifica(value)" class="form-select form-select-lg mb-3" id="oficina" name="oficina" required>
                             <option></option>
@@ -236,24 +258,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
                 <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">Tipo Preventiva</label>
-                    <div class="col-sm-3">
-                        <select class="form-select form-select-lg mb-3" id="tipo_preventiva" required name="tipo_preventiva" value="<?php echo $c_tipo_preventiva; ?>" required>
-                            <option></option>
-                            <option value="R">Rotina</option>
-                            <option value="P">Preditiva</option>
-                            <option value="S">Sistematica</option>
-                        </select>
-                    </div>
 
-                    <label class="col-sm-2 col-form-label">Prazo de Atendimento</label>
-                    <div class="col-sm-2">
-                        <input required type="number" placeholder="no. de dias" class="form-control" id="prazo" name="prazo">
-                    </div>
-
-                </div>
-
-                <div class="row mb-3">
                     <label class="col-sm-2 col-form-label">Responsável </label>
                     <div class="col-sm-3">
                         <select class="form-select form-select-lg mb-3" id="responsavel" name="responsavel" required>
@@ -270,7 +275,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             ?>
                         </select>
                     </div>
-                    <label class="col-sm-2 col-form-label">Centro de Custo </label>
+
+                    <label class="col-sm-1 col-form-label">Prazo de Atendimento</label>
+                    <div class="col-sm-2">
+                        <input required type="number" placeholder="no. de dias" class="form-control" id="prazo" name="prazo">
+                    </div>
+
+                </div>
+
+                <div class="row mb-3">
+
+                    <label class="col-sm-2 col-form-label">Tipo Preventiva</label>
+                    <div class="col-sm-3">
+                        <select class="form-select form-select-lg mb-3" id="tipo_preventiva" required name="tipo_preventiva" value="<?php echo $c_tipo_preventiva; ?>" required>
+                            <option></option>
+                            <option value="R">Rotina</option>
+                            <option value="P">Preditiva</option>
+                            <option value="S">Sistematica</option>
+                        </select>
+                    </div>
+
+                    <label class="col-sm-1 col-form-label">Centro de Custo </label>
                     <div class="col-sm-3">
 
                         <select required class="form-select form-select-lg mb-3" id="centrodecusto" name="centrodecusto">
@@ -299,14 +324,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="col-sm-3">
                         <input type="date" class="form-control" id="data_ultima" required name="data_ultima">
                     </div>
-                    <label class="col-sm-2 col-form-label">Periodicidade</label>
+                    <label class="col-sm-1 col-form-label">Periodicidade</label>
                     <div class="col-sm-2">
                         <input required type="number" class="form-control" placeholder="no. de dias" name="periodicidade" required>
                     </div>
-
-
                 </div>
-
                 <div class="row mb-3">
                     <label class="col-sm-2 col-form-label">Setor </label>
                     <div class="col-sm-3">
@@ -323,32 +345,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             ?>
                         </select>
                     </div>
-                    <label class="col-sm-2 col-form-label">Ocorrencia </label>
                     <div class="col-sm-3">
-                        <select required class="form-select form-select-lg mb-3" id="ocorrencia" name="ocorrencia">
-                            <option></option>
-                            <?php
-                            // select da tabela de ocorrencia
-                            $c_sql_setor = "SELECT ocorrencias.id, ocorrencias.descricao FROM ocorrencias ORDER BY ocorrencias.descricao";
-                            $result_setor = $conection->query($c_sql_setor);
-                            while ($c_linha = $result_setor->fetch_assoc()) {
-                                echo "  
-                          <option>$c_linha[descricao]</option>";
-                            }
-                            ?>
-                        </select>
-
-                    </div>
-                </div>
-                <hr>
-                <div class="row mb-3" style="padding-top:15px;padding-left:20px;">
-                    <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label">Descritivo</label>
-                        <div class="col-sm-9">
-                            <textarea required class="form-control" id="descritivo" name="descritivo" rows="10"><?php echo $c_descritivo ?></textarea>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="chk_calibracao">
+                            <label class="form-check-label" for="chk_calibracao">
+                                Calibração
+                            </label>
                         </div>
                     </div>
                 </div>
+
+
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">Descritivo</label>
+                    <div class="col-sm-7">
+                        <textarea required class="form-control" id="descritivo" name="descritivo" rows="10"><?php echo $c_descritivo ?></textarea>
+                    </div>
+                </div>
+
                 <hr>
                 <div class="row mb-3">
                     <div class="offset-sm-0 col-sm-3">

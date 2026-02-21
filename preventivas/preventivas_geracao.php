@@ -30,17 +30,15 @@ where data_prox_realizacao<='$agora'
 ORDER BY preventivas.data_prox_realizacao desc";
 // sql com preventvas gerais sem vinculo com recurso fisico ou espaço físico
 $c_sql_geral = "SELECT preventivas.id, preventivas.periodicidade_geracao, preventivas.calibracao, preventivas.id_espaco,
-preventivas.data_ult_realizacao, preventivas.data_prox_realizacao, preventivas.gerar,
+preventivas.data_ult_realizacao, preventivas.data_prox_realizacao, preventivas.gerar, ocorrencias.descricao as ocorrencia,
 case
 when preventivas.calibracao ='S' then 'Sim'
 when preventivas.calibracao ='N' then 'Não'
 END AS preventiva_calibracao
 FROM preventivas 
+join ocorrencias on preventivas.id_ocorrencia=ocorrencias.id
 where data_prox_realizacao<='$agora' and preventivas.tipo = 'V'
 ORDER BY preventivas.data_prox_realizacao desc";
-
-
-
 
 //echo $c_sql_recurso;
 include('../links.php');
@@ -242,7 +240,7 @@ frontend com tabela das preventivas a serem geradas
                         <thead class="thead">
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Calibração</th>
+                                <th scope="col">Ocorrência</th>
                                 <th scope="col">Periodicidade</th>
                                 <th scope="col">Ultima Realização</th>
                                 <th scope="col">Próxima Realização</th>
@@ -268,7 +266,7 @@ frontend com tabela das preventivas a serem geradas
                                 <tr>
                                     <td>$c_linha[id]</td>
                                                                     
-                                    <td>$c_linha[preventiva_calibracao]</td>
+                                    <td>$c_linha[ocorrencia]</td>
                                     <td>$c_linha[periodicidade_geracao] dias</td>
                                     <td>$c_data_realizacao</td>
                                     <td>$c_data_proxima</td>

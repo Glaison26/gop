@@ -6,6 +6,8 @@ if (!isset($_SESSION['newsession'])) {
 $_SESSION['tiposolicitacao'] = 'V';
 $_SESSION['opcao'] = "P";
 $_SESSION['i_id_oficina'] = 0;
+$_SESSION['ocorrencia']="";
+$_SESSION['valor_ocorrencia']="";
 include("../links2.php");
 ?>
 

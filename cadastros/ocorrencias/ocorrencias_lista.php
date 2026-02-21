@@ -267,13 +267,13 @@ $n_tempo_minutos = '0';
         </table>
     </div>
     <!-- janela Modal para inclusão de registro -->
-    <div class="modal fade" class="modal-dialog modal-lg" id="novoModal" name="novoModal" tabindex="-1" role="dialog" aria-labelledby="novoModal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" class="modal-dialog modal-lg" role="document">
+    <div class="modal fade" class="modal-dialog modal-xl" id="novoModal" name="novoModal" tabindex="-1" role="dialog" aria-labelledby="novoModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="exampleModalLabel">Inclusão de nova Ocorrência</h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" class="modal-dialog modal-lg">
                     <div class='alert alert-warning' role='alert'>
                         <h5>Campos com (*) são obrigatórios</h5>
                     </div>
