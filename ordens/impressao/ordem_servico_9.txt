@@ -1,0 +1,11 @@
+Ordem de Serviço Nº: 9
+Data de Geração: 21/02/2026 Hora: 17:50:00
+Solicitante: Glaison
+Setor: Planejamento
+Tipo de Ordem: Preventiva
+Ocorrência: Manutenção Preventiva de Parque de TI
+Executor Responsável: Funcionário B
+Descrição: Quantidadeo de Computadores :
+Quantidade  de pontos de Rede:
+Quantidade de Racks :
+Quantidade de Usuários :

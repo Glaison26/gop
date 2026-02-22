@@ -1,0 +1,12 @@
+Ordem de Serviço Nº: 10
+Data de Geração: 21/02/2026 Hora: 20:39:00
+Solicitante: Solicitante
+Setor: Fazenda
+Tipo de Ordem: Corretiva
+Ocorrência: Criação de usuário Sistema Moderna
+Executor Responsável: Funcionario A
+Descrição: Favor Preencher as informações abaixo :
+
+Nome Completo :Sandro dos Santos Oliveira
+CPF:34625634645
+Quais módulos (ex.compras, estoque, contabilidade etc) :compras

@@ -183,20 +183,7 @@ $registro_conf = $result_conf->fetch_assoc();
                 <h5>Lista de Ordens de Serviços<h5>
             </div>
         </div>
-
-
-        <div style="padding-bottom :15px;">
-
-            <?php
-            if ($_SESSION['pesquisamenu'] == false) {
-                echo "<a class='btn btn btn-sm' href='\gop\ordens\ordens.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
-            } else {
-                echo "<a class='btn btn btn-sm' href='\gop\menu.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
-            }
-
-            ?>
-
-        </div>
+    
 
         <!-- abas de solicitações por recursos físicos, Espaços físicos e avulsos -->
         <ul class="nav nav-tabs nav-tabs-responsive" role="tablist">
@@ -480,7 +467,19 @@ $registro_conf = $result_conf->fetch_assoc();
                 </div>
             </div>
         </div>
-        <br>
+        <hr>
+          <div style="padding-bottom :15px;">
+
+            <?php
+            if ($_SESSION['pesquisamenu'] == false) {
+                echo "<a class='btn btn btn-sm' href='\gop\ordens\ordens.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
+            } else {
+                echo "<a class='btn btn btn-sm' href='\gop\menu.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
+            }
+
+            ?>
+
+        </div>
 
     </div>
 

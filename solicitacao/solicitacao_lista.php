@@ -173,23 +173,7 @@ $registro_conf = $result_conf->fetch_assoc();
                 <h5>Solicitações de Serviços<h5>
             </div>
         </div>
-        <div class='alert alert-info' role='alert'>
-            <div style="padding-left:15px;">
-                <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
-
-            </div>
-            <h5>Resultado das Solicitações Selecionadas</h5>
-        </div>
-        <div style="padding-bottom :15px;">
-            <?php
-            if ($_SESSION['pesquisamenu'] == false) {
-                echo "<a class='btn btn btn-sm' align='left' href='\gop\solicitacao\solicitacao.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
-            } else {
-                echo "<a class='btn btn btn-sm' align='left' href='\gop\menu.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
-            }
-            ?>
-        </div>
-
+       
         <!-- abas de solicitações por recursos físicos, Espaços físicos e avulsos -->
         <ul class="nav nav-tabs" role="tablist">
             <?php
@@ -212,7 +196,7 @@ $registro_conf = $result_conf->fetch_assoc();
 
             <div role="tabpanel" class="tab-pane" id="recurso">
                 <div style="padding-top:15px;padding-left:20px;">
-                    <table class="table table-bordered table-striped tabsolicitacao_recursos">
+                    <table class="table table display table-bordered table-striped table-active tabsolicitacao_recursos">
                         <thead class="thead">
                             <tr>
                                 <th scope="col"># Sol.</th>
@@ -268,7 +252,7 @@ $registro_conf = $result_conf->fetch_assoc();
                                     $c_prazo_hora = $c_linha['prazo_hora'];
                                 else
                                     $c_prazo_hora = 'a definir';
-                                if ($c_linha['id_ordem']<>null)
+                                if ($c_linha['id_ordem'] <> null)
                                     $i_os = $c_linha['id_ordem'];
                                 else
                                     $i_os = 'N.G';
@@ -304,7 +288,7 @@ $registro_conf = $result_conf->fetch_assoc();
             <!-- aba da espaco fisico-->
             <div role="tabpanel" class="tab-pane" id="espaco">
                 <div style="padding-top:15px;padding-left:20px;">
-                    <table class="table table-bordered table-striped tabsolicitacao_espacos">
+                    <table class="table table display table-bordered table-striped table-active tabsolicitacao_espacos">
                         <thead class="thead">
                             <tr>
                                 <th scope="col"># Sol.</th>
@@ -355,9 +339,9 @@ $registro_conf = $result_conf->fetch_assoc();
                                     $c_hora_conclusao = 'a definir';
                                 if (!empty($c_linha['prazo_hora']))
                                     $c_prazo_hora = $c_linha['prazo_hora'];
-                                 else
+                                else
                                     $c_prazo_hora = 'a definir';
-                                 if ($c_linha['id_ordem']<>null)
+                                if ($c_linha['id_ordem'] <> null)
                                     $i_os = $c_linha['id_ordem'];
                                 else
                                     $i_os = 'N.G';
@@ -394,7 +378,7 @@ $registro_conf = $result_conf->fetch_assoc();
             <!-- aba das avulsas-->
             <div role="tabpanel" class="tab-pane active" id="avulsas">
                 <div style="padding-top:15px;padding-left:20px;">
-                    <table class="table table-bordered table-striped tabsolicitacao_avulsas">
+                    <table class="table table display table-bordered table-striped table-active tabsolicitacao_avulsas">
                         <thead class="thead">
                             <tr>
                                 <th scope="col"># Sol.</th>
@@ -445,9 +429,9 @@ $registro_conf = $result_conf->fetch_assoc();
                                     $c_hora_conclusao = 'a definir';
                                 if (!empty($c_linha['prazo_hora']))
                                     $c_prazo_hora = $c_linha['prazo_hora'];
-                                 else
+                                else
                                     $c_prazo_hora = 'a definir';
-                                if ($c_linha['id_ordem']<>null)
+                                if ($c_linha['id_ordem'] <> null)
                                     $i_os = $c_linha['id_ordem'];
                                 else
                                     $i_os = 'N.G';
@@ -478,6 +462,16 @@ $registro_conf = $result_conf->fetch_assoc();
                     </table>
                 </div>
             </div>
+        </div>
+        <hr>
+        <div style="padding-bottom :15px;">
+            <?php
+            if ($_SESSION['pesquisamenu'] == false) {
+                echo "<a class='btn btn btn-sm' align='left' href='\gop\solicitacao\solicitacao.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
+            } else {
+                echo "<a class='btn btn btn-sm' align='left' href='\gop\menu.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
+            }
+            ?>
         </div>
     </div>
 

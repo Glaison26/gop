@@ -51,8 +51,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $result = $conection->query($c_sql);
             $i_total = mysqli_num_rows($result);
             if ($i_total > 0) {
+                // pego descrição da solicitação
+                $c_sql_solicitacao = "select descricao from solicitacao where id_ordem = '$i_id'";
+                $result_solicitacao = $conection->query($c_sql_solicitacao);
+                $c_registro_solicitacao = $result_solicitacao->fetch_assoc();
+                $c_descricao = $c_registro_solicitacao['descricao'];
+                $c_descricao = $c_descricao . "\r\n" . "\r\n".'CONCLUSÃO :'."\r\n". "\r\n" . $_POST['conclusao'];
                 // atualizo o status da solicitação
-                $c_sql_up = "update solicitacao set status='C', data_conclusao='$_POST[data_conclusao]', hora_conclusao='$_POST[hora_conclusao]' where id_ordem = '$i_id'";
+                $c_sql_up = "update solicitacao set status='C', data_conclusao='$_POST[data_conclusao]', hora_conclusao='$_POST[hora_conclusao]', descricao='$c_descricao'
+                  where id_ordem = '$i_id'";
+                 
                 $result_up = $conection->query($c_sql_up);
             }
         }

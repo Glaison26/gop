@@ -129,8 +129,8 @@ $_SESSION['ver_os'] = false;
                         Serviços <i class="fas fa-chevron-down ml-1 text-xs"></i>
                     </button>
                     <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow-xl rounded-md w-48 z-50">
-                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/solicitacao/solicitacao.php">Solicitações de Serviço</a>
-                       <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/ordens/ordens.php">Ordens de Serviço</a>
+                    <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/solicitacao/solicitacao.php">Solicitações de Serviço</a>
+                    <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/ordens/ordens.php">Ordens de Serviço</a>
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/preventivas/preventivas.php">Cadastro de preventivas</a>
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/agenda/agenda.php">Agenda de Executores</a>
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/ocorrencias/ocorrencias_lista.php">Ocorrências Padrões de Serviço</a>
