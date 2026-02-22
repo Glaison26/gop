@@ -82,7 +82,9 @@ where ordens.`status`='C' and $c_where";
     }
     // calculo do TMA médio em horas e minutos
     $tma_medio_horas = floor($tma_medio / 60);
-    $tma_medio_minutos = $tma_medio % 60;
+    if ($tma_medio > 0) {
+        $tma_medio_minutos = round($tma_medio) % 60;
+    }
     //  Índice de Produtividade da Manutenção (IPM) - não implementado ainda
     //  O indice é calcula usando total de ordens concluidas dividido pelo total de técnicos executores disniveis no período
     // sql para apurar o total de técnicos executores disponíveis no período
@@ -114,7 +116,7 @@ where ordens.`status`='C' and $c_where";
     } else {
         $ipm_dias = 0;
     }
-    
+
     // sql para apurar total de horas reais realizadas = somatorio de data e hora da conclusão - data e hora inicial das ordens no periodo
     $c_sql_horas_reais = "SELECT sum(TIMESTAMPDIFF(MINUTE, CONCAT(data_inicio, ' ', hora_geracao), CONCAT(data_conclusao, ' ', hora_conclusao))) 
     as horas_reais FROM ordens where ordens.`status`='C' and $c_where";
@@ -143,7 +145,7 @@ where ordens.`status`='C' and $c_where";
     $c_query = $c_query . " - Índice de Produtividade da Manutenção (IPM) por Horas Trabalhadas: " . number_format($ipm_horas, 2) . '<br>';
     $c_query = $c_query . " - Índice de Produtividade da Manutenção (IPM) por Número de Dias: " . number_format($ipm_dias, 2) . '<br>';
     $c_query = $c_query . " - Índice de Eficiência Operacional: " . number_format($indice_eficiencia_operacional, 2) . '%<br>';
-    
+
     // salvo a query para exibir no relatório
     if (empty($c_query))
         $_SESSION['query_indicadores'] = "Nenhum";
