@@ -196,6 +196,7 @@ if ($c_linha['registros'] == 0) {
                 console.log(data);
 
                 $('#up_idField').val(data[0]);
+                $('#up_material').val(data[1]);
                 $('#up_qtd').val(data[2]);
 
                 $('#up_valor_unitario').val(data[4].replace('R$', '').replace(',', '.').replace(/^\s+|\s+$/g, ''));
@@ -341,6 +342,12 @@ if ($c_linha['registros'] == 0) {
                     <form id="frmup" method="POST" action="">
                         <input type="hidden" id="up_idField" name="up_idField">
                         <input type="hidden" id="up_qtd" name="up_qtd">
+                        <div class="mb-3 row">
+                            <label for="up_material" class="col-md-3 form-label">Material</label>
+                            <div class="col-md-9">
+                                 <input type="text" class="form-control" id="up_material" name="up_material" readonly>
+                            </div>
+                        </div>
                         <div class="mb-3 row">
                             <label for="up_descricaoField" class="col-md-3 form-label">Valor Unitário</label>
                             <div class="col-md-9">

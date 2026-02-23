@@ -20,7 +20,7 @@ $msg_erro = "";
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $c_material = $_POST['material'];
-   // $c_unidade = $_POST['unidade'];
+    // $c_unidade = $_POST['unidade'];
     $c_quantidade = $_POST['quantidade'];
 
 
@@ -84,9 +84,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
         <br>
-        <?php
-        if (!empty($msg_erro)) {
-            echo "
+
+        <div class="container content-box">
+            <?php
+            if (!empty($msg_erro)) {
+                echo "
             <div class='alert alert-warning' role='alert'>
                 <div style='padding-left:15px;'>
                     <h5><img Align='left' src='\gop\images\aviso.png' alt='30' height='35'> $msg_erro</h5>
@@ -94,9 +96,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 
             </div>
             ";
-        }
-        ?>
-        <div class="container content-box">
+            }
+            ?>
             <div class='alert alert-info' role='alert'>
                 <div style="padding-left:15px;">
                     <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
@@ -134,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
 
                 </div>
-               
+
 
                 <div class="row mb-3">
                     <div class="offset-sm-0 col-sm-3">
