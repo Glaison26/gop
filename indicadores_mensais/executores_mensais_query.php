@@ -108,6 +108,15 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
         $c_where = $c_where . "ordens.id_oficina='$i_id_oficina' and ";
         $c_query = $c_query . 'Oficina:' . $c_linha['descricao'] . '-';
     }
+    // sql para ocorrencias
+    if ($_POST["ocorrencia"] <> "Todas as Ocorrências") {
+        $i_ocorrencia = $_POST["ocorrencia"];
+        $c_sql_ocorrencia = "select ocorrencias.id, ocorrencias.descricao from ocorrencias where ocorrencias.id = '$i_ocorrencia'";
+        $result = $conection->query($c_sql_ocorrencia);
+        $c_linha = $result->fetch_assoc();
+        $c_where = $c_where . "ordens.id_ocorrencia='$i_ocorrencia' and ";
+        $c_query = $c_query . 'Ocorrência:' . $c_linha['descricao'] . '-';
+    }
     // sql para executores
 
     $c_executor = $_POST["executor"];
@@ -119,12 +128,12 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $c_query = $c_query . 'Executor:' . $c_linha['nome'] . '-';
 
     $c_where = $c_where = substr($c_where, 0, -5); // tirar o and no final
-    
+
     //
-     // limpo tabela temporária
-     $c_sql_del = "delete from tempo_horas_mes";
-     // montagem do sql para horas por mes do executor
-     $result_del = $conection->query($c_sql_del);
+    // limpo tabela temporária
+    $c_sql_del = "delete from tempo_horas_mes";
+    // montagem do sql para horas por mes do executor
+    $result_del = $conection->query($c_sql_del);
     $c_sql = "SELECT extract(month FROM ordens.data_geracao) AS mes, ordens_executores.id_executor, executores.nome, 
             SUM(ordens_executores.tempo_horas) as total_horas,
             SUM(ordens_executores.tempo_minutos) as total_minutos FROM ordens
@@ -134,19 +143,19 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
             GROUP BY extract(month FROM ordens.data_geracao), ordens_executores.id_executor";
     //echo $c_sql;        
     $result = $conection->query($c_sql);
- // calculos de horas para montaegem da tabela temporária
+    // calculos de horas para montaegem da tabela temporária
     $horas = 0;
     $minutos = 0;
     while ($c_linha = $result->fetch_assoc()) {
         $c_mes = $c_linha['mes'];
-         if (!empty($c_linha['total_horas']))
-             $horas = $c_linha['total_horas'];
+        if (!empty($c_linha['total_horas']))
+            $horas = $c_linha['total_horas'];
         if (!empty($c_linha['total_minutos']))
-             $minutos = $c_linha['total_minutos'];
-        
+            $minutos = $c_linha['total_minutos'];
+
         if ($minutos > 60) {
-             while ($minutos > 60) {
-                 $minutos = $minutos - 60;
+            while ($minutos > 60) {
+                $minutos = $minutos - 60;
                 $horas = $horas + 1;
             }
         }
@@ -167,7 +176,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     //echo $c_sql;
     // chamada do relatório do executor por mes
     echo "<script> window.open('/gop/indicadores_mensais/executores_mensais_relatorio.php?id=', '_blank');</script>";
-    }
+}
 
 
 
@@ -276,11 +285,25 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                 </div>
 
             </div>
+            
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Ocorrência</label>
+                <div class="col-sm-7">
 
+                    <select class="form-select form-select-lg mb-3" id="ocorrencia" name="ocorrencia" required>
 
-
-
-
+                        <option>Todas as Ocorrências</option>
+                        <?php
+                        // select da tabela de ocorrencia
+                        $c_sql_ocorrencia = "SELECT ocorrencias.id, ocorrencias.descricao FROM ocorrencias ORDER BY ocorrencias.descricao";
+                        $result_ocorrencia = $conection->query($c_sql_ocorrencia);
+                        while ($c_linha = $result_ocorrencia->fetch_assoc()) {
+                            echo "<option value='" . $c_linha['id'] . "'>" . $c_linha['descricao'] . "</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
 
             <div class="row mb-3">
 
