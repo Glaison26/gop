@@ -15,7 +15,7 @@ $registro_acesso = $result_acesso->fetch_assoc();
 if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['custos_comparativos'] == 'N') {
     header('location: /gop/acesso.php');
 }
-$_SESSION['titulo_rel'] = "Relatório Comparativo de Custos Mensais por Solicitantes da Manutenção por Período" ;
+$_SESSION['titulo_rel'] = "Relatório Comparativo de Custos Mensais por Solicitantes da Manutenção por Período";
 $_SESSION['titulo_graf'] = "Gráfico Comparativo de Custos Mensais por Solicitantes da Manutenção por Período";
 //
 date_default_timezone_set('America/Sao_Paulo');
@@ -78,7 +78,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
         $c_query = $c_query . 'Canceladas -';
     }
 
-   
+
     // sql para setor
     if ($_POST["setor"] <> "Todos") {
         $c_setor = $_POST["setor"];
@@ -87,7 +87,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
         $c_linha = $result->fetch_assoc();
         $i_id_setor = $c_linha['id'];
         $c_where = $c_where . "ordens.id_setor='$i_id_setor' and ";
-        $c_query = $c_query . 'Setor:'. $c_linha['descricao']. '-';
+        $c_query = $c_query . 'Setor:' . $c_linha['descricao'] . '-';
     }
     // sql para oficinas
     if ($_POST['oficina'] <> "Todas") {
@@ -97,11 +97,21 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
         $c_linha = $result->fetch_assoc();
         $i_id_oficina = $c_linha['id'];
         $c_where = $c_where . "ordens.id_oficina='$i_id_oficina' and ";
-        $c_query = $c_query . 'Oficina:'. $c_linha['descricao']. '-';
+        $c_query = $c_query . 'Oficina:' . $c_linha['descricao'] . '-';
+    }
+    // sql para ocorrencias
+    if ($_POST["ocorrencia"] <> "Todas as Ocorrências") {
+        $i_ocorrencia = $_POST["ocorrencia"];
+        $c_sql_ocorrencia = "select ocorrencias.id, ocorrencias.descricao from ocorrencias where ocorrencias.id = '$i_ocorrencia'";
+        $result = $conection->query($c_sql_ocorrencia);
+        $c_linha = $result->fetch_assoc();
+        $c_where = $c_where . "ordens.id_ocorrencia='$i_ocorrencia' and ";
+        $c_query = $c_query . 'Ocorrência:' . $c_linha['descricao'] . '-';
     }
 
-     // sql para solicitante
-    
+
+    // sql para solicitante
+
     $c_solicitante = $_POST["solicitante"];
     $c_sql_solicitante = "select usuarios.id, usuarios.nome from usuarios where usuarios.nome = '$c_solicitante'";
     $result = $conection->query($c_sql_solicitante);
@@ -109,7 +119,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $i_id_solicitante = $c_linha['id'];
     $c_where = $c_where . "ordens.id_solicitante='$i_id_solicitante' and ";
     $c_query = $c_query . 'Solicitante:' . $c_linha['nome'] . '-';
-   
+
     $c_where = $c_where = substr($c_where, 0, -5); // tirar o and no final
     // montagem do sql para recursos físicos
     //
@@ -200,21 +210,21 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                 <label class="col-sm-2 col-form-label">Solicitante </label>
                 <div class="col-sm-7">
                     <select class="form-select form-select-lg mb-3" id="solicitante" name="solicitante" required>
-                      <option></option>
-                      <?php
-                           // select da tabela de solicitantes
-                           $c_sql_sol = "SELECT usuarios.id, usuarios.nome FROM usuarios ORDER BY usuarios.nome";
-                           $result_sol = $conection->query($c_sql_sol);
-                           while ($c_linha = $result_sol->fetch_assoc()) {
-                               echo "  
+                        <option></option>
+                        <?php
+                        // select da tabela de solicitantes
+                        $c_sql_sol = "SELECT usuarios.id, usuarios.nome FROM usuarios ORDER BY usuarios.nome";
+                        $result_sol = $conection->query($c_sql_sol);
+                        while ($c_linha = $result_sol->fetch_assoc()) {
+                            echo "  
                                  <option>$c_linha[nome]</option>
                                  ";
-                          }
-                     ?>
+                        }
+                        ?>
                     </select>
                 </div>
             </div>
-    
+
             <div class="row mb-3">
 
                 <label class="col-md-2 form-label">De</label>
@@ -226,6 +236,25 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     <input type="Date" class="form-control" name="data2" id="data2" value='<?php echo date("Y-m-d"); ?>' onkeypress="mascaraData(this)">
                 </div>
 
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Ocorrência</label>
+                <div class="col-sm-7">
+
+                    <select class="form-select form-select-lg mb-3" id="ocorrencia" name="ocorrencia" required>
+
+                        <option>Todas as Ocorrências</option>
+                        <?php
+                        // select da tabela de ocorrencia
+                        $c_sql_ocorrencia = "SELECT ocorrencias.id, ocorrencias.descricao FROM ocorrencias ORDER BY ocorrencias.descricao";
+                        $result_ocorrencia = $conection->query($c_sql_ocorrencia);
+                        while ($c_linha = $result_ocorrencia->fetch_assoc()) {
+                            echo "<option value='" . $c_linha['id'] . "'>" . $c_linha['descricao'] . "</option>";
+                        }
+                        ?>
+                    </select>
+
+                </div>
             </div>
 
             <div class="row mb-3">
@@ -264,7 +293,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                 </div>
             </div>
             <div class="row mb-3">
-                
+
                 <label class="col-sm-2 col-form-label">Tipo</label>
                 <div class="col-sm-3">
                     <select onchange="verifica(value)" class="form-select form-select-lg mb-3" id="tipo" name="tipo" value="<?php echo $c_tipo; ?>">
@@ -284,7 +313,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
             </div>
 
             <div class="row mb-3">
-              
+
                 <label class="col-sm-2 col-form-label">Tipo Preventiva</label>
                 <div class="col-sm-3">
                     <select disabled class="form-select form-select-lg mb-3" id="tipo_preventiva" name="tipo_preventiva" value="<?php echo $c_tipo_preventiva; ?>">

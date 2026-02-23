@@ -99,6 +99,16 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
         $c_where = $c_where . "ordens.id_oficina='$i_id_oficina' and ";
         $c_query = $c_query . 'Oficina:' . $c_linha['descricao'] . '-';
     }
+    // sql para ocorrencias
+    if ($_POST["ocorrencia"] <> "Todas as Ocorrências") {
+        $i_ocorrencia = $_POST["ocorrencia"];
+        $c_sql_ocorrencia = "select ocorrencias.id, ocorrencias.descricao from ocorrencias where ocorrencias.id = '$i_ocorrencia'";
+        $result = $conection->query($c_sql_ocorrencia);
+        $c_linha = $result->fetch_assoc();
+        $c_where = $c_where . "ordens.id_ocorrencia='$i_ocorrencia' and ";
+        $c_query = $c_query . 'Ocorrência:' . $c_linha['descricao'] . '-';
+    }
+
     // sql para setor
 
     $c_setor = $_POST["setor"];
@@ -226,6 +236,25 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     <input type="Date" class="form-control" name="data2" id="data2" value='<?php echo date("Y-m-d"); ?>' onkeypress="mascaraData(this)">
                 </div>
 
+            </div>
+             <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Ocorrência</label>
+                <div class="col-sm-7">
+
+                    <select class="form-select form-select-lg mb-3" id="ocorrencia" name="ocorrencia" required>
+
+                        <option>Todas as Ocorrências</option>
+                        <?php
+                        // select da tabela de ocorrencia
+                        $c_sql_ocorrencia = "SELECT ocorrencias.id, ocorrencias.descricao FROM ocorrencias ORDER BY ocorrencias.descricao";
+                        $result_ocorrencia = $conection->query($c_sql_ocorrencia);
+                        while ($c_linha = $result_ocorrencia->fetch_assoc()) {
+                            echo "<option value='" . $c_linha['id'] . "'>" . $c_linha['descricao'] . "</option>";
+                        }
+                        ?>
+                    </select>
+
+                </div>
             </div>
 
             <div class="row mb-3">
