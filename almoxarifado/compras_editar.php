@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $d_vencimento = $d_vencimento->format('Y-m-d');
     // Gravo informações editadas
     $c_sql_up = "update compras set tipo='$_POST[tipo]', nota= '$_POST[nota]', 
-   vencimento = '$d_vencimento', prazo='$_POST[prazo]', condicoes_pag='$_POST[cond]', comprador='$_POST[comprador]', observacao='$_POST[obs]'
+   vencimento = '$d_vencimento', prazo='$_POST[prazo]', condicoes_pag='$_POST[cond]', comprador='$_POST[comprador]', descritivo='$_POST[obs]'
    where id='$c_id'";
     $result_up = $conection->query($c_sql_up);
     header('location: /gop/almoxarifado/compras_lista.php');
@@ -135,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Observação</label>
                 <div class="col-sm-8">
-                    <textarea class="form-control" id="obs" name="obs" rows="6"><?php echo $registro['observacao']; ?></textarea>
+                    <textarea class="form-control" id="obs" name="obs" rows="6"><?php echo $registro['descritivo']; ?></textarea>
                 </div>
             </div>
             <br>

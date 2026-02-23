@@ -70,7 +70,6 @@ include("../links2.php");
 
 
 <?php
-
 ///////////////////////////////////////////////////////////////
 // rotina para gerar pedido a apartir de uma cotação realizada
 //////////////////////////////////////////////////////////////
@@ -114,8 +113,11 @@ if (isset($_POST['btnpedido']) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
             '$c_linha[valor_unitario]', '$c_linha[valor_total]', '$c_linha[id_unidade]', $c_linha[fator], 'S', 'N')";
             $result_compras = $conection->query($c_sql_ins);
         }
-        echo "<script>alert('Pedido de Compra gerado com Sucesso!!')</script>";
     }
+    // Atualizo o status da cotação como gerou compra
+    $c_sql_upd_cotacao = "update cotacao_fornecedor set vencedor = 'SIM' where id='$i_id'";
+    $result_upd = $conection->query($c_sql_upd_cotacao);
+    echo "<script>alert('Pedido de Compra gerado com Sucesso!!')</script>";
 }
 
 ?>

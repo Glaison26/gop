@@ -20,23 +20,24 @@ $msg_erro = "";
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $c_material = $_POST['material'];
-    $c_unidade = $_POST['unidade'];
+   // $c_unidade = $_POST['unidade'];
     $c_quantidade = $_POST['quantidade'];
 
 
     do {
-        if (empty($c_material) || empty($c_unidade) || empty($c_quantidade)) {
+        if (empty($c_material)  || empty($c_quantidade)) {
             $msg_erro = "Todos os campos devem ser preenchidos!!";
             break;
         }
 
         // sql para pegar o id do material
-        $c_sql = "select id, descricao from materiais where descricao = '$c_material'";
+        $c_sql = "select id, descricao, id_unidadeEntrada from materiais where descricao = '$c_material'";
         $result = $conection->query($c_sql);
         $c_registro = $result->fetch_assoc();
         $i_id_material = $c_registro['id'];
+        $i_id_unidade_entrada = $c_registro['id_unidadeEntrada'];
         // pego o id da unidade de medida com sql
-        $c_sql = "select id, descricao from unidades where descricao = '$c_unidade'";
+        $c_sql = "select id, descricao  from unidades where id = '$i_id_unidade_entrada'";
         $result = $conection->query($c_sql);
         $c_registro = $result->fetch_assoc();
         $i_id_unidade = $c_registro['id'];
@@ -47,7 +48,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $c_sql = "Insert into cotacao_materiais (id_cotacao, id_material, id_unidade, quantidade) 
         Value ('$i_id_cotacao', '$i_id_material','$i_id_unidade','$c_quantidade' )";
         $result = $conection->query($c_sql);
-
 
         if (!$result) {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="row mb-3">
                     <label class="col-sm-2 col-form-label">Material</label>
                     <div class="col-sm-6">
-                        <select class="form-select form-select-lg mb-3" id="material" name="material">
+                        <select class="form-select form-select-lg mb-3" id="material" name="material" required>
                             <?php
                             if ($c_indice == '')
                                 echo "<option></option>";
@@ -134,26 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
 
                 </div>
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">Unidade</label>
-                    <div class="col-sm-2">
-                        <select class="form-select form-select-lg mb-3" id="unidade" name="unidade">
-
-                            <?php
-
-                            // select da tabela de Unidades
-                            $c_sql_unidade = "SELECT unidades.id, unidades.descricao FROM unidades ORDER BY unidades.descricao";
-                            $result_unidade = $conection->query($c_sql_unidade);
-                            while ($c_linha = $result_unidade->fetch_assoc()) {
-
-                                echo "  
-                          <option>$c_linha[descricao]</option>
-                        ";
-                            }
-                            ?>
-                        </select>
-                    </div>
-                </div>
+               
 
                 <div class="row mb-3">
                     <div class="offset-sm-0 col-sm-3">

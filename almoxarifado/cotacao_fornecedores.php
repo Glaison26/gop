@@ -170,12 +170,13 @@ $c_tipo = $c_linha_cotacao['tipo'] ;
                     <th scope="col">#</th>
                     <th scope="col">Fornecedor</th>
                     <th scope="col">Vendedor</th>
-                    <th scope="col">Valor Total</th>
+                    <th scope="col">Valor Cotação</th>
                     <th scope="col">Valor Frete</th>
                     <th scope="col">Total</th>
                     <th scope="col">Status</th>
                     <th scope="col">Prazo em dias</th>
                     <th scope="col">Forma de Pagamento</th>
+                    <th scope="col">Gerou Compra</th>
                     <th scope="col">Opções</th>
                 </tr>
             </thead>
@@ -183,7 +184,7 @@ $c_tipo = $c_linha_cotacao['tipo'] ;
                 <?php
                 // faço a Leitura da tabela com sql
                 $c_sql = "SELECT cotacao_fornecedor.id, fornecedores.descricao AS fornecedor, cotacao_fornecedor.valor_total,
-                cotacao_fornecedor.frete, cotacao_fornecedor.prazo, forma_pagamento, cotacao_fornecedor.vendedor,
+                cotacao_fornecedor.frete, cotacao_fornecedor.prazo, forma_pagamento, cotacao_fornecedor.vendedor, cotacao_fornecedor.vencedor,
                 case 
                 when status='P' then 'Participante'
                 when status='V' then 'Vencedor'
@@ -230,6 +231,7 @@ $c_tipo = $c_linha_cotacao['tipo'] ;
                     <td>$c_linha[status_texto]</td>
                     <td>$c_prazo</td>
                     <td>$c_linha[forma_pagamento]</td>
+                    <td>$c_linha[vencedor]</td>
                     <td>
 
                     <a class='btn btn-secondary btn-sm' href='/gop/almoxarifado/cotacao_fornecedores_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>&nbsp;";
