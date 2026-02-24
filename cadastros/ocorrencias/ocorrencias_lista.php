@@ -104,8 +104,8 @@ $n_tempo_minutos = '0';
                         c_descricao: c_descricao,
                         c_texto: c_texto,
                         c_texto_fechamento: c_texto_fechamento,
-                        c_tempo_hora:c_tempo_hora,
-                        c_tempo_minuto:c_tempo_minuto
+                        c_tempo_hora: c_tempo_hora,
+                        c_tempo_minuto: c_tempo_minuto
 
                     },
                     success: function(data) {
@@ -175,8 +175,8 @@ $n_tempo_minutos = '0';
                         c_descricao: c_descricao,
                         c_texto: c_texto,
                         c_texto_fechamento: c_texto_fechamento,
-                        c_tempo_hora:c_tempo_hora,
-                        c_tempo_minuto:c_tempo_minuto
+                        c_tempo_hora: c_tempo_hora,
+                        c_tempo_minuto: c_tempo_minuto
 
                     },
                     success: function(data) {
@@ -209,10 +209,7 @@ $n_tempo_minutos = '0';
     <br>
     <div class="container-fluid">
 
-        <button type="button" title="Inclusão de Nova Ocorrência" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal">
-            <span class="glyphicon glyphicon-plus"></span>
-            Incluir
-        </button>
+        <a class="btn btn-success btn-sm" href="/gop/cadastros/ocorrencias/ocorrencia_nova.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
@@ -221,8 +218,6 @@ $n_tempo_minutos = '0';
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Descrição</th>
-                    <th scope="col">Texto Padrão</th>
-                    <th scope="col">Texto Fechamento</th>
                     <th scope="col">Tempo hr.</th>
                     <th scope="col">Tempo Min.</th>
                     <th scope="col">Opções</th>
@@ -248,12 +243,10 @@ $n_tempo_minutos = '0';
                     <tr'>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descricao]</td>
-                    <td>$c_linha[texto]</td>
-                    <td>$c_linha[texto_fechamento]</td>
                     <td>$c_linha[tempo_hora]</td>
                     <td>$c_linha[tempo_minuto]</td>
                     <td>
-                    <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Ocorrência'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
+                    <a class='btn btn-secondary btn-sm' href='/gop/cadastros/ocorrencias/ocorrencia_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
@@ -266,117 +259,7 @@ $n_tempo_minutos = '0';
             </tbody>
         </table>
     </div>
-    <!-- janela Modal para inclusão de registro -->
-    <div class="modal fade" class="modal-dialog modal-xl" id="novoModal" name="novoModal" tabindex="-1" role="dialog" aria-labelledby="novoModal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Inclusão de nova Ocorrência</h4>
-                </div>
-                <div class="modal-body" class="modal-dialog modal-lg">
-                    <div class='alert alert-warning' role='alert'>
-                        <h5>Campos com (*) são obrigatórios</h5>
-                    </div>
-                    <form id="frmadd" action="">
-                        <div class="mb-3 row">
-                            <label for="add_descricaoField" class="col-md-3 form-label">Descrição*</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" id="add_descricaoField" name="add_dscricaoField" required>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Tempo em horas</label>
-                            <div class="col-sm-3">
-                                <input type="number" class="form-control" id="add_tempo_horas" required name="add_tempo_horas" value="<?php echo $n_tempo_horas; ?>">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                         <label class="col-sm-3 col-form-label">Tempo em Min.</label>
-                            <div class="col-sm-3">
-                                <input type="number" class="form-control" id="add_tempo_minutos" required name="add_tempo_minutos" value="<?php echo $n_tempo_minutos; ?>">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Texto Padrão</label>
-                            <div class="col-sm-12">
-                                <textarea class="form-control" id="add_textoField" name="add_textoField" rows="8"></textarea>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Texto Padrão de Conclusão</label>
-                            <div class="col-sm-12">
-                                <textarea class="form-control" id="add_textofechamentoField" name="add_textofechamentoField" rows="8"></textarea>
-                            </div>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Fechar</button>
-
-                        </div>
-                    </form>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Modal para edição dos dados -->
-    <div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="editmodal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Editar Ocorrência</h4>
-                </div>
-                <div class="modal-body">
-                    <div class='alert alert-warning' role='alert'>
-                        <h5>Campos com (*) são obrigatórios</h5>
-                    </div>
-                    <form id="frmup" method="POST" action="">
-                        <input type="hidden" id="up_idField" name="up_idField">
-                        <div class="mb-3 row">
-                            <label for="up_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" id="up_descricaoField" name="up_dscricaoField" required>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Tempo em horas</label>
-                            <div class="col-sm-3">
-                                <input type="number" class="form-control" required id="up_tempo_horas" name="up_tempo_horas" value="<?php echo $n_tempo_horas; ?>">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                         <label class="col-sm-3 col-form-label">Tempo em Min.</label>
-                            <div class="col-sm-3">
-                                <input type="number" class="form-control" required id="up_tempo_minutos" name="up_tempo_minutos" value="<?php echo $n_tempo_minutos; ?>">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Texto padrão</label>
-                            <div class="col-sm-9">
-                                <textarea class="form-control" id="up_textoField" name="up_textoField" rows="8"></textarea>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Texto de conclusão</label>
-                            <div class="col-sm-9">
-                                <textarea class="form-control" id="up_textofechamentoField" name="up_textofechamentoField" rows="8"></textarea>
-                            </div>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                            <button class="btn btn-secondary" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Fechar</button>
-                        </div>
-                    </form>
-                </div>
-
-            </div>
-        </div>
-    </div>
+    
 
 </body>
 
