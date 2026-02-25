@@ -14,15 +14,15 @@ $c_sql_conf = "select * from configuracoes";
 $result = $conection->query($c_sql_conf);
 $registro = $result->fetch_assoc();
 // verifico se apenas uma opção ente solicitação avulsa, recursos físicos ou espaços físicos está habilitada
-if (($registro['solicitacao_avulsa'] == 'S') && ($registro['solicitacao_recursos'] == 'N') && ($registro['solicitacao_espacos'] == 'N')) {
+if (($registro['solicitacao_avulsa'] == 'S') && ($registro['solicitacao_recursos'] == 'N') && ($registro['solicitacao_espacos'] == 'N') && ($_SESSION['tipo'] == 'Solicitante')) {
     header("Location: \gop\solicitacao\solicitacao_conclusao.php");
     exit();
 }
-if (($registro['solicitacao_avulsa'] == 'N') && ($registro['solicitacao_recursos'] == 'S') && ($registro['solicitacao_espacos'] == 'N')) {
+if (($registro['solicitacao_avulsa'] == 'N') && ($registro['solicitacao_recursos'] == 'S') && ($registro['solicitacao_espacos'] == 'N') && ($_SESSION['tipo'] == 'Solicitante')) {
     header("Location: \gop\recurso_pesquisa.php");
     exit();
 }
-if (($registro['solicitacao_avulsa'] == 'N') && ($registro['solicitacao_recursos'] == 'N') && ($registro['solicitacao_espacos'] == 'S')) {
+if (($registro['solicitacao_avulsa'] == 'N') && ($registro['solicitacao_recursos'] == 'N') && ($registro['solicitacao_espacos'] == 'S') && ($_SESSION['tipo'] == 'Solicitante')) {
     header("Location: \gop\espaco_pesquisa.php");
     exit();
 }
@@ -61,18 +61,18 @@ if (($registro['solicitacao_avulsa'] == 'N') && ($registro['solicitacao_recursos
             <div style="padding-bottom :2px;">
 
                 <?php
-                if ($registro['solicitacao_avulsa'] == 'S') {
+                if (($registro['solicitacao_avulsa'] == 'S') || ($_SESSION['tipo'] <> 'Solicitante')) {
                     echo '
                 
                 <a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_conclusao.php"><img src="\gop\images\ordem.png" alt="" width="30" height="35">
                     Iniciar nova Solicitação de Serviço</a>';
                 }
-                if ($registro['solicitacao_recursos'] == 'S') {
+                if (($registro['solicitacao_recursos'] == 'S') || ($_SESSION['tipo'] <> 'Solicitante')) {
                     echo '
                 <a class="btn btn btn-sm" href="\gop\recurso_pesquisa.php"><img src="\gop\images\construcao.png" alt="" width="30" height="35">
                     Iniciar nova Solicitação em Recurso Físico</a>';
                 }
-                if ($registro['solicitacao_espacos'] == 'S') {
+                if (($registro['solicitacao_espacos'] == 'S') || ($_SESSION['tipo'] <> 'Solicitante')) {
                     echo '
                 <a class="btn btn btn-sm" href="\gop\espaco_pesquisa.php"><img src="\gop\images\pedreiro.png" alt="" width="30" height="35">
                     Iniciar nova Solicitação em Espaço Físico</a>';

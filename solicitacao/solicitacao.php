@@ -54,6 +54,9 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     if ($_POST['status'] == "Concluída") {
         $c_where = $c_where . "solicitacao.status='C' and ";
     }
+    if ($_POST['status'] == "Cancelada") {
+        $c_where = $c_where . "solicitacao.status='X' and ";
+    }
     // sql para tipo de solicitação (programada ou urgência)
     $c_tipo = $_POST['tipo'];
     if ($c_tipo == "Programada") {
@@ -102,6 +105,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     when solicitacao.status='A' then 'Aberta'
                     when solicitacao.status='E' then 'Em Andamento'
                     when solicitacao.status='C' then 'Concluída'
+                    when solicitacao.status='X' then 'Cancelada'
                     END AS solicitacao_status
                     FROM solicitacao
                     JOIN usuarios ON solicitacao.id_solicitante=usuarios.id
@@ -120,6 +124,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     when solicitacao.status='A' then 'Aberta'
                     when solicitacao.status='E' then 'Em Andamento'
                     when solicitacao.status='C' then 'Concluída'
+                    when solicitacao.status='X' then 'Cancelada'
                     END AS solicitacao_status
                     FROM solicitacao
                     JOIN usuarios ON solicitacao.id_solicitante=usuarios.id
@@ -138,6 +143,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     when solicitacao.status='A' then 'Aberta'
                     when solicitacao.status='E' then 'Em Andamento'
                     when solicitacao.status='C' then 'Concluída'
+                    when solicitacao.status='X' then 'Cancelada'
                     END AS solicitacao_status
                     FROM solicitacao
                     JOIN usuarios ON solicitacao.id_solicitante=usuarios.id  
@@ -243,6 +249,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                             <option>Aberta</option>
                             <option>Em Andamento</option>
                             <option>Concluída</option>
+                            <option>Cancelada</option>
                         </select>
                     </div>
                     <label class="col-sm-1 col-form-label">Tipo</label>
