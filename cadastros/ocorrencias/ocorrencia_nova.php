@@ -26,21 +26,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $c_texto_fechamento = $_POST['add_textofechamentoField'];
     $c_tempo_horas = $_POST['add_tempo_horas'];
     $c_tempo_minutos = $_POST['add_tempo_minutos'];
+    $i_id_tipo_ocorrencia = $_POST['tipo'];
 
     do {
         // grava dados no banco
 
         // faço a Leitura da tabela com sql
-        $c_sql = $c_sql = "Insert into ocorrencias (descricao, texto, texto_fechamento, tempo_hora, tempo_minuto)
-                           Value ('$c_descricao', '$c_texto', '$c_texto_fechamento', '$c_tempo_horas', '$c_tempo_minutos')";
+        $c_sql = $c_sql = "Insert into ocorrencias (descricao, texto, texto_fechamento, tempo_hora, tempo_minuto, id_tipo_ocorrencia)
+                           Value ('$c_descricao', '$c_texto', '$c_texto_fechamento', '$c_tempo_horas', '$c_tempo_minutos', '$i_id_tipo_ocorrencia')";
+                            echo $c_sql;
         $result = $conection->query($c_sql);
-        $result = $conection->query($c_sql);
+       
+       
         // verifico se a query foi correto
         if (!$result) {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
         }
-
-
 
         $msg_gravou = "Dados Gravados com Sucesso!!";
 
@@ -110,10 +111,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <form method="post">
                 <div class="mb-3 row">
                     <label for="add_descricaoField" class="col-md-3 form-label">Descrição*</label>
-                    <div class="col-md-9">
+                    <div class="col-md-8">
                         <input type="text" class="form-control" id="add_descricaoField" name="add_descricaoField" required>
                     </div>
                 </div>
+
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Tipo de Ocorrência</label>
+                    <div class="col-sm-4">
+                        <select class="form-select form-select-lg mb-3" id="tipo" name="tipo" required>
+                            <option></option>
+                            <?php
+                            // select da tabela de tipo de ocorrências
+                            $c_sql_ocorrencia = "SELECT tipo_ocorrencia.id, tipo_ocorrencia.descricao FROM tipo_ocorrencia ORDER BY tipo_ocorrencia.descricao";
+                            $result_ocorrencia = $conection->query($c_sql_ocorrencia);
+                            while ($c_linha = $result_ocorrencia->fetch_assoc()) {
+                                  
+                           echo "<option value='" . $c_linha['id'] . "'>" . $c_linha['descricao'] . "</option>";
+                        
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="row mb-3">
                     <label class="col-sm-3 col-form-label">Tempo em horas</label>
                     <div class="col-sm-3">
@@ -128,13 +149,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-3 col-form-label">Texto Padrão</label>
-                    <div class="col-sm-12">
+                    <div class="col-sm-11">
                         <textarea class="form-control" id="add_textoField" name="add_textoField" rows="8"></textarea>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-3 col-form-label">Texto Padrão de Conclusão</label>
-                    <div class="col-sm-12">
+                    <div class="col-sm-11">
                         <textarea class="form-control" id="add_textofechamentoField" name="add_textofechamentoField" rows="8"></textarea>
                     </div>
                 </div>

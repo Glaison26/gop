@@ -22,6 +22,8 @@ include("conexao.php");
                     when solicitacao.status='A' then 'Aberta'
                     when solicitacao.status='E' then 'Em Andamento'
                     when solicitacao.status='C' then 'Concluída'
+                    when solicitacao.status='X' then 'Cancelada'
+
                     END AS solicitacao_status
                     FROM solicitacao
                     JOIN usuarios ON solicitacao.id_solicitante=usuarios.id
@@ -40,6 +42,7 @@ include("conexao.php");
                     when solicitacao.status='A' then 'Aberta'
                     when solicitacao.status='E' then 'Em Andamento'
                     when solicitacao.status='C' then 'Concluída'
+                    when solicitacao.status='X' then 'Cancelada'
                     END AS solicitacao_status
                     FROM solicitacao
                     JOIN usuarios ON solicitacao.id_solicitante=usuarios.id
@@ -58,6 +61,7 @@ include("conexao.php");
                     when solicitacao.status='A' then 'Aberta'
                     when solicitacao.status='E' then 'Em Andamento'
                     when solicitacao.status='C' then 'Concluída'
+                    when solicitacao.status='X' then 'Cancelada'
                     END AS solicitacao_status
                     FROM solicitacao
                     JOIN usuarios ON solicitacao.id_solicitante=usuarios.id  

@@ -46,6 +46,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
          hora_cancelamento='$c_hora_cancelamento',
          id_resp_cancelamento='$i_solicitante' where id=$i_id";
         $result_up = $conection->query($c_sql_up);
+        // se ordem de serviço tiver solicitação coloco status como cancelada
+        $c_sql_solicitacao = "select * from solicitacao where id_ordem='$i_id'";
+        $result_solicitacao = $conection->query($c_sql_solicitacao);
+        if ($result_solicitacao->num_rows > 0) {
+            $c_sql_solicitacao = "UPDATE solicitacao set status='X' where id_ordem='$i_id'";
+            $result_solicitacao = $conection->query($c_sql_solicitacao);
+        }
+
 
         // rotina de envio de email da conclusão para solicitante, manutenção e oficina
         // pego o email da manutenção

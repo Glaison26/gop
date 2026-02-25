@@ -118,7 +118,7 @@ include('../conexao.php');
     <br>
     <div class="container-fluid">
         <?php
-        if ($c_linha_ordem['status'] <> 'C' && $c_linha_ordem['status'] <> 'S')
+        if (($c_linha_ordem['status'] <> 'C') && ($c_linha_ordem['status'] <> 'S') && ($c_linha_ordem['status'] <> 'X'))
             echo "<div class='panel panel-info class'>
             <div class='panel-heading'>
                 <button type='button' title='Inclusão de CheckList' class='btn btn' data-toggle='modal' data-target='#novoModal_check'>

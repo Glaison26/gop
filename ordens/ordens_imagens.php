@@ -92,7 +92,7 @@ $c_caminho = '/gop/ordens/imagens_lista.php?id=' . $i_id;
     <div class="container-fluid">
         <form method="post" enctype="multipart/form-data">
             <?php
-            if ($c_linha_ordem['status'] <> 'C' && $c_linha_ordem['status'] <> 'S')
+            if (($c_linha_ordem['status'] <> 'C') && ($c_linha_ordem['status']) <> 'S' && ($c_linha_ordem['status'] <> 'X'))
                 echo "<div class='panel panel-Light'>
 
                     <br>

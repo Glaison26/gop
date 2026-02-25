@@ -89,7 +89,7 @@ if (isset($_POST['btn_baixa']) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
 <div class="container-fluid">
     <form method="post" onsubmit="return confirm('Confirma baixa dos Materiais?')">
         <?php
-        if ($c_linha_ordem['status'] <> 'C' && $c_linha_ordem['status'] <> 'S')
+        if (($c_linha_ordem['status'] <> 'C') && ($c_linha_ordem['status'] <> 'S') && ($c_linha_ordem['status'] <> 'X'))
             echo "<div class='panel panel-info class'>
                     <div class='panel-heading'>
             

@@ -6,8 +6,10 @@ if (!isset($_SESSION['newsession'])) {
 include("../conexao.php");
 include("../links2.php");
 $_SESSION['i_id_oficina']=0; // valor inicial para codigo de ofician na geracao da OS
+$_SESSION['i_id_tipo_ocorrencia']=0;
 // verifico se usuário e operador de tem autorização de acesso
 $i_id_usuario = $_SESSION["id_usuario"];
+
 $c_sql_acesso = "select usuarios.tipo, perfil_usuarios.servicos_solicitacoes FROM usuarios
 JOIN perfil_usuarios ON usuarios.id_perfil=perfil_usuarios.id
 WHERE usuarios.id='$i_id_usuario'";
@@ -51,6 +53,9 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     }
     if ($_POST['status'] == "Concluída") {
         $c_where = $c_where . "solicitacao.status='C' and ";
+    }
+    if ($_POST['status'] == "Cancelada") {
+        $c_where = $c_where . "solicitacao.status='X' and ";
     }
     // sql para tipo de solicitação (programada ou urgência)
     $c_tipo = $_POST['tipo'];
@@ -100,6 +105,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     when solicitacao.status='A' then 'Aberta'
                     when solicitacao.status='E' then 'Em Andamento'
                     when solicitacao.status='C' then 'Concluída'
+                    when solicitacao.status='X' then 'Cancelada'
                     END AS solicitacao_status
                     FROM solicitacao
                     JOIN usuarios ON solicitacao.id_solicitante=usuarios.id
@@ -118,6 +124,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     when solicitacao.status='A' then 'Aberta'
                     when solicitacao.status='E' then 'Em Andamento'
                     when solicitacao.status='C' then 'Concluída'
+                    when solicitacao.status='X' then 'Cancelada'
                     END AS solicitacao_status
                     FROM solicitacao
                     JOIN usuarios ON solicitacao.id_solicitante=usuarios.id
@@ -136,6 +143,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     when solicitacao.status='A' then 'Aberta'
                     when solicitacao.status='E' then 'Em Andamento'
                     when solicitacao.status='C' then 'Concluída'
+                    when solicitacao.status='X' then 'Cancelada'
                     END AS solicitacao_status
                     FROM solicitacao
                     JOIN usuarios ON solicitacao.id_solicitante=usuarios.id  
@@ -241,6 +249,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                             <option>Aberta</option>
                             <option>Em Andamento</option>
                             <option>Concluída</option>
+                            <option>Cancelada</option>
                         </select>
                     </div>
                     <label class="col-sm-1 col-form-label">Tipo</label>
