@@ -7,6 +7,7 @@ include("../conexao.php");
 include("../links2.php");
 $c_solicitacao = $_SESSION['ocorrencia'];
 $c_ocorrencia = $_SESSION['valor_ocorrencia'];
+$i_id_tipo_ocorrencia = $_SESSION['i_id_tipo_ocorrencia'];
 
 if ($_SESSION['tiposolicitacao'] == 'R') { // recurso fisico
     // pego id do recurso selecionado na página anterior
@@ -169,6 +170,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </script>
 
     <script>
+        // chama arquivo para pegar id do tipo de ocorencia  as ocorrencias da mesma
+        function verifica_tipo(value) {
+            window.location.href = "/gop/solicitacao/verifica_tipo.php?id=" + value;
+        }
+    </script>
+
+    <script>
         document.getElementById('frm_solicitacao').addEventListener('submit', function() {
             // Mostra o loading ao submeter
             document.getElementById('loading').style.display = 'flex';
@@ -210,6 +218,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form method="post" name="frm_solicitacao" id="frm_solicitacao">
             <div class="row mb-3">
 
+                <label class="col-sm-3 col-form-label">Tipo de Ocorrência </label>
+                <div class="col-sm-7">
+
+                    <select onchange="verifica_tipo(value)" class="form-select form-select-lg mb-3" id="tipo_ocorrencia" name="_tipo_ocorrencia" value="<?php echo $c_tipo_ocorrencia ?>" required>
+
+                        <option></option>
+                        <?php
+                        // select da tabela de ocorrencia
+                        $c_sql_tipo = "SELECT tipo_ocorrencia.id, tipo_ocorrencia.descricao FROM tipo_ocorrencia ORDER BY tipo_ocorrencia.descricao";
+                        $result_tipo = $conection->query($c_sql_tipo);
+                        while ($c_linha = $result_tipo->fetch_assoc()) {
+                       $op = "";
+                                if ($_SESSION['i_id_tipo_ocorrencia'] == $c_linha['id'])
+                                    $op = 'selected';
+                                else
+                                    $op = "";
+                                echo "<option $op>$c_linha[descricao]</option>";
+        
+                        }
+                        ?>
+                    </select>
+
+                </div>
+            </div>
+            <div class="row mb-3">
+
                 <label class="col-sm-3 col-form-label">Ocorrência </label>
                 <div class="col-sm-7">
 
@@ -218,9 +252,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <option></option>
                         <?php
                         // select da tabela de ocorrencia
-                        $c_sql_setor = "SELECT ocorrencias.id, ocorrencias.descricao FROM ocorrencias ORDER BY ocorrencias.descricao";
-                        $result_setor = $conection->query($c_sql_setor);
-                        while ($c_linha = $result_setor->fetch_assoc()) {
+                        $c_sql_ocorrencia = "SELECT ocorrencias.id, ocorrencias.descricao FROM ocorrencias where id_tipo_ocorrencia='$i_id_tipo_ocorrencia'  ORDER BY ocorrencias.descricao";
+                        echo $c_sql_ocorrencia;
+                        //die();
+                        $result_ocorrencia = $conection->query($c_sql_ocorrencia);
+                        while ($c_linha = $result_ocorrencia->fetch_assoc()) {
                             if (!empty($_SESSION['valor_ocorrencia'])) {
                                 if ($_SESSION['valor_ocorrencia'] == $c_linha['descricao'])
                                     $op = 'selected';

@@ -133,6 +133,7 @@ $_SESSION['ver_os'] = false;
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/ordens/ordens.php">Ordens de Serviço</a>
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/preventivas/preventivas.php">Cadastro de preventivas</a>
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/agenda/agenda.php">Agenda de Executores</a>
+                    <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/ocorrencias/tipo_ocorrencias.php">Tipos de Ocorrência</a>
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/ocorrencias/ocorrencias_lista.php">Ocorrências Padrões de Serviço</a>
                    
                     </div>

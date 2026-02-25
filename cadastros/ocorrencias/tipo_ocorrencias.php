@@ -7,27 +7,24 @@ include("../../conexao.php");
 include("../../links.php");
 // verifico se usuário e operador de tem autorização de acesso
 $i_id_usuario = $_SESSION["id_usuario"];
-$c_sql_acesso = "select usuarios.tipo, perfil_usuarios.servicos_ocorrencias_padroes FROM usuarios
+$c_sql_acesso = "select usuarios.tipo, perfil_usuarios.cadastros_grupos FROM usuarios
 JOIN perfil_usuarios ON usuarios.id_perfil=perfil_usuarios.id
 WHERE usuarios.id='$i_id_usuario'";
 $result_acesso = $conection->query($c_sql_acesso);
 $registro_acesso = $result_acesso->fetch_assoc();
-if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_ocorrencias_padroes'] == 'N') {
+if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_grupos'] == 'N') {
     header('location: /gop/acesso.php');
 }
-$n_tempo_horas = '0';
-$n_tempo_minutos = '0';
 ?>
 <!doctype html>
 <html lang="en">
 
 <body>
-
     <script language="Javascript">
         function confirmacao(id) {
             var resposta = confirm("Deseja remover esse registro?");
             if (resposta == true) {
-                window.location.href = "/gop/cadastros/ocorrencias/ocorrencias_excluir.php?id=" + id;
+                window.location.href = "/gop/cadastros/ocorrencias/ocorrencias_tipo_excluir.php?id=" + id;
             }
         }
     </script>
@@ -41,7 +38,7 @@ $n_tempo_minutos = '0';
 
     <script>
         $(document).ready(function() {
-            $('.tabocorrencias').DataTable({
+            $('.tabtipos_ocorrencias').DataTable({
                 // 
                 "iDisplayLength": -1,
                 "order": [1, 'asc'],
@@ -84,28 +81,19 @@ $n_tempo_minutos = '0';
 
         });
     </script>
-
     <!-- Função javascript e ajax para inclusão dos dados -->
     <script type="text/javascript">
         $(document).on('submit', '#frmadd', function(e) {
             e.preventDefault();
             var c_descricao = $('#add_descricaoField').val();
-            var c_texto = $('#add_textoField').val();
-            var c_texto_fechamento = $('#add_textofechamentoField').val();
-            var c_tempo_hora = $('#add_tempo_horas').val();
-            var c_tempo_minuto = $('#add_tempo_minutos').val();
 
             if (c_descricao != '') {
 
                 $.ajax({
-                    url: "ocorrencias_novo.php",
+                    url: "tipo_ocorrencia_novo.php",
                     type: "post",
                     data: {
-                        c_descricao: c_descricao,
-                        c_texto: c_texto,
-                        c_texto_fechamento: c_texto_fechamento,
-                        c_tempo_hora: c_tempo_hora,
-                        c_tempo_minuto: c_tempo_minuto
+                        c_descricao: c_descricao
 
                     },
                     success: function(data) {
@@ -146,38 +134,28 @@ $n_tempo_minutos = '0';
 
                 $('#up_idField').val(data[0]);
                 $('#up_descricaoField').val(data[1]);
-                $('#up_textoField').val(data[2]);
-                $('#up_textofechamentoField').val(data[3]);
-                $('#up_tempo_horas').val(data[4]);
-                $('#up_tempo_minutos').val(data[5]);
+
+
             });
         });
     </script>
 
     <script type="text/javascript">
+        ~
         // Função javascript e ajax para Alteração dos dados
         $(document).on('submit', '#frmup', function(e) {
             e.preventDefault();
             var c_id = $('#up_idField').val();
             var c_descricao = $('#up_descricaoField').val();
-            var c_texto = $('#up_textoField').val();
-            var c_texto_fechamento = $('#up_textofechamentoField').val();
-            var c_tempo_minuto = $('#up_tempo_minutos').val();
-            var c_tempo_hora = $('#up_tempo_horas').val();
 
             if (c_descricao != '') {
 
                 $.ajax({
-                    url: "ocorrencias_editar.php",
+                    url: "tipo_ocorrencia_editar.php",
                     type: "post",
                     data: {
                         c_id: c_id,
-                        c_descricao: c_descricao,
-                        c_texto: c_texto,
-                        c_texto_fechamento: c_texto_fechamento,
-                        c_tempo_hora: c_tempo_hora,
-                        c_tempo_minuto: c_tempo_minuto
-
+                        c_descricao: c_descricao
                     },
                     success: function(data) {
                         var json = JSON.parse(data);
@@ -198,29 +176,26 @@ $n_tempo_minutos = '0';
     </script>
 
 
-    <!-- montagem da página -->
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
-            <h5>Lista de Ocorrências Padrões<h5>
+            <h5>Lista de Tipos de Ocorrências<h5>
         </div>
     </div>
 
-    <br>
     <div class="container-fluid">
-
-        <a class="btn btn-success btn-sm" href="/gop/cadastros/ocorrencias/ocorrencia_nova.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
+        <br>
+        <button type="button" title="Inclusão de Novo Grupo" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
+            Incluir
+        </button>
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
-        <table class="table table display table-bordered tabocorrencias">
+        <table class="table table-bordered table-striped tabgrupos">
             <thead class="thead">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Descrição</th>
-                    <th scope="col">Tipo da Ocorrência</th>
-                    <th scope="col">Tempo em Horas</th>
-                    <th scope="col">Tempo em Minutos</th>
                     <th scope="col">Opções</th>
                 </tr>
             </thead>
@@ -228,10 +203,7 @@ $n_tempo_minutos = '0';
                 <?php
 
                 // faço a Leitura da tabela com sql
-                $c_sql = "SELECT ocorrencias.id, ocorrencias.descricao, ocorrencias.texto, ocorrencias.texto_fechamento, ocorrencias.tempo_hora,
-                ocorrencias.tempo_minuto, tipo_ocorrencia.descricao as tipo_ocorrencia
-                FROM ocorrencias 
-                JOIN tipo_ocorrencia on Ocorrencias.id_tipo_ocorrencia = tipo_ocorrencia.id ORDER BY ocorrencias.descricao";
+                $c_sql = "SELECT tipo_ocorrencia.id, Tipo_ocorrencia.descricao FROM tipo_ocorrencia ORDER BY tipo_ocorrencia.descricao";
                 $result = $conection->query($c_sql);
                 // verifico se a query foi correto
                 if (!$result) {
@@ -242,14 +214,11 @@ $n_tempo_minutos = '0';
                 while ($c_linha = $result->fetch_assoc()) {
 
                     echo "
-                    <tr'>
+                    <tr>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descricao]</td>
-                    <td>$c_linha[tipo_ocorrencia]</td>
-                    <td>$c_linha[tempo_hora]</td>
-                    <td>$c_linha[tempo_minuto]</td>
                     <td>
-                    <a class='btn btn-secondary btn-sm' href='/gop/cadastros/ocorrencias/ocorrencia_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                    <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Grupos'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
@@ -257,12 +226,72 @@ $n_tempo_minutos = '0';
                     ";
                 }
                 ?>
-
-
             </tbody>
         </table>
     </div>
-    
+
+    <!-- janela Modal para inclusão de registro -->
+    <div class="modal fade" class="modal-dialog modal-lg" id="novoModal" name="novoModal" tabindex="-1" role="dialog" aria-labelledby="novoModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">Inclusão de novo Tipo de Ocorrência</h4>
+                </div>
+                <div class="modal-body">
+                    <div class='alert alert-warning' role='alert'>
+                        <h5>Campos com (*) são obrigatórios</h5>
+                    </div>
+                    <form id="frmadd" action="">
+                        <div class="mb-3 row">
+                            <label for="add_descricaoField" class="col-md-3 form-label">Descrição *</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="add_descricaoField" name="add_dscricaoField" required>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Fechar</button>
+
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal para edição dos dados -->
+    <div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="editmodal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">Editar Tipo de Ocorrência</h4>
+                </div>
+                <div class="modal-body">
+                    <div class='alert alert-warning' role='alert'>
+                        <h5>Campos com (*) são obrigatórios</h5>
+                    </div>
+                    <form id="frmup" method="POST" action="">
+                        <input type="hidden" id="up_idField" name="up_idField">
+                        <div class="mb-3 row">
+                            <label for="up_descricaoField" class="col-md-3 form-label">Descrição *</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="up_descricaoField" name="up_dscricaoField" required>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
+                            <button class="btn btn-secondary" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Fechar</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 </body>
 

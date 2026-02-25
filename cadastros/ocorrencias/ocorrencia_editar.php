@@ -31,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $c_texto_fechamento = $registro['texto_fechamento'];
     $c_tempo_horas = $registro['tempo_hora'];
     $c_tempo_minutos = $registro['tempo_minuto'];
+    $i_id_tipo_ocorrencia = $registro['id_tipo_ocorrencia'];
 
     if (!$registro) {
         header('location: /gop/cadastros/ocorrencias/ocorrencias_lista.php');
@@ -38,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     }
 } else {
     // metodo post para atualizar dados
-    
+
     $c_descricao = rtrim($_POST['up_descricaoField']);
     $c_texto = $_POST['up_textoField'];
     $c_texto_fechamento = $_POST['up_textofechamentoField'];
@@ -129,6 +130,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                     <label for="up_descricaoField" class="col-md-3 form-label">Descrição (*)</label>
                     <div class="col-md-9">
                         <input type="text" class="form-control" id="up_descricaoField" name="up_descricaoField" required value="<?php echo $c_descricao; ?>">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Tipo de Ocorrência</label>
+                    <div class="col-sm-4">
+                        <select class="form-select form-select-lg mb-3" id="tipo" name="tipo" required>
+                            <option></option>
+                            <?php
+                            // select da tabela de tipo de ocorrências
+                            $c_sql_ocorrencia = "SELECT tipo_ocorrencia.id, tipo_ocorrencia.descricao FROM tipo_ocorrencia ORDER BY tipo_ocorrencia.descricao";
+                            $result_ocorrencia = $conection->query($c_sql_ocorrencia);
+                            while ($c_linha = $result_ocorrencia->fetch_assoc()) {
+                                if ($c_linha['id'] == $i_id_tipo_ocorrencia) {
+                                    $op =  'Selected';
+                                } else {
+                                    $op = '';
+                                }
+                                echo "<option $op value='" . $c_linha['id'] . "'>" . $c_linha['descricao'] . "</option>";
+                            }
+                            ?>
+                        </select>
                     </div>
                 </div>
                 <div class="row mb-3">

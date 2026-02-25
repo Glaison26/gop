@@ -6,8 +6,10 @@ if (!isset($_SESSION['newsession'])) {
 include("../conexao.php");
 include("../links2.php");
 $_SESSION['i_id_oficina']=0; // valor inicial para codigo de ofician na geracao da OS
+$_SESSION['i_id_tipo_ocorrencia']=0;
 // verifico se usuário e operador de tem autorização de acesso
 $i_id_usuario = $_SESSION["id_usuario"];
+
 $c_sql_acesso = "select usuarios.tipo, perfil_usuarios.servicos_solicitacoes FROM usuarios
 JOIN perfil_usuarios ON usuarios.id_perfil=perfil_usuarios.id
 WHERE usuarios.id='$i_id_usuario'";
