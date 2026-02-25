@@ -221,7 +221,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label class="col-sm-3 col-form-label">Tipo de Ocorrência </label>
                 <div class="col-sm-7">
 
-                    <select onchange="verifica_tipo(value)" class="form-select form-select-lg mb-3" id="tipo_ocorrencia" name="_tipo_ocorrencia" value="<?php echo $c_tipo_ocorrencia ?>" required>
+                    <select onchange="verifica_tipo(value)" class="form-select form-select-lg mb-3" id="tipo_ocorrencia" name="tipo_ocorrencia" value="<?php echo $c_tipo_ocorrencia ?>" required>
 
                         <option></option>
                         <?php
