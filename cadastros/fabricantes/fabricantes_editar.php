@@ -226,6 +226,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                     </div>
                 </div>
 
+                
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Endereço</label>
+                    <div class="col-sm-6">
+                        <input type="text" maxlength="120" id="endereco" class="form-control" name="endereco" value="<?php echo $c_endereco; ?>">
+                    </div>
+                </div>
+
                 <div class="row mb-3">
                     <label class="col-sm-3 col-form-label">Bairro</label>
                     <div class="col-sm-6">
