@@ -27,7 +27,7 @@ body {
     .content-box {
         background-color: rgba(255, 255, 255, 0.9);
         /* Fundo branco semi-transparente para destacar o conteúdo */
-        padding: 10px;
+        padding: 15px;
         margin: 10px auto;
         width: 90%;
         max-width: 1400px;

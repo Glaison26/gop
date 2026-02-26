@@ -5,8 +5,8 @@ if (!isset($_SESSION['newsession'])) {
 }
 include("../conexao.php");
 include("../links2.php");
-$_SESSION['i_id_oficina']=0; // valor inicial para codigo de ofician na geracao da OS
-$_SESSION['i_id_tipo_ocorrencia']=0;
+$_SESSION['i_id_oficina'] = 0; // valor inicial para codigo de ofician na geracao da OS
+$_SESSION['i_id_tipo_ocorrencia'] = 0;
 // verifico se usuário e operador de tem autorização de acesso
 $i_id_usuario = $_SESSION["id_usuario"];
 
@@ -21,7 +21,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_solicit
 
 date_default_timezone_set('America/Sao_Paulo');
 $c_numero = "";
-if (!empty($_SESSION['consulta_solicitacao'])){
+if (!empty($_SESSION['consulta_solicitacao'])) {
     $c_numero = $_SESSION['consulta_solicitacao'];
     $_SESSION['consulta_solicitacao'] = "";
 }
@@ -37,7 +37,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     // expressão sql inicia para recursos fisicos
     // checa se check de ignorar periodo marcado
     if (isset($_POST['chk_ignora']))
-    $l_intervalo = false;
+        $l_intervalo = false;
     // data de abertura
 
     if ($_POST['numero'] == '') {
@@ -166,6 +166,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/gop/css/basico.css">
 
 </head>
 
@@ -194,124 +195,127 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     </div>
     <div class="content">
 
-        <div class="container -my5">
-            <div class='alert alert-info' role='alert'>
-                <div style="padding-left:15px;">
-                    <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
+        <div class="container-fluid">
 
+            <div class="container content-box">
+                <div class='alert alert-info' role='alert'>
+                    <div style="padding-left:15px;">
+                        <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
+
+                    </div>
+                    <h5><?php $_SESSION['c_usuario'] ?>Clique em nova solitação para abrir uma nova solicitação de serviço ou realize uma pesquisa com as opções de pesquisa abaixo</h5>
                 </div>
-                <h5><?php $_SESSION['c_usuario'] ?>Clique em nova solitação para abrir uma nova solicitação de serviço ou realize uma pesquisa com as opções de pesquisa abaixo</h5>
-            </div>
-            <form method="post">
-                <div style="padding-top:5px;padding-bottom:5px">
-                    <div class="panel">
-                        <div class="panel-heading">
-                            <a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_nova.php"><img src="\gop\images\contato.png" alt="" width="25" height="25"> Nova Solicitação</a>
-                            <button type="submit" name='btnpesquisa' id='btnpesquisa' class="btn btn btn-sm"><img src="\gop\images\lupa.png" alt="" width="20" height="20"></span> Pesquisar</button>
-                            <!--<a class="btn btn btn-sm" href="#"><img src="\gop\images\eraser.png" alt="" width="25" height="25"> Limpar pesquisa</a> -->
-                            <a class="btn btn btn-sm" href="\gop\menu.php"><img src="\gop\images\saida.png" alt="" width="25" height="25"> Voltar</a>
+                <form method="post">
+                    <div style="padding-top:5px;padding-bottom:5px">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_nova.php"><img src="\gop\images\contato.png" alt="" width="25" height="25"> Nova Solicitação</a>
+                                <button type="submit" name='btnpesquisa' id='btnpesquisa' class="btn btn btn-sm"><img src="\gop\images\lupa.png" alt="" width="20" height="20"></span> Pesquisar</button>
+                                <!--<a class="btn btn btn-sm" href="#"><img src="\gop\images\eraser.png" alt="" width="25" height="25"> Limpar pesquisa</a> -->
+                                <a class="btn btn btn-sm" href="\gop\menu.php"><img src="\gop\images\saida.png" alt="" width="25" height="25"> Voltar</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="panel panel-light class">
-                    <div class="panel-heading text-center">
-                        <h5>Opções de Consulta<h5>
-                    </div>
-                </div>
-                
-                <div class="row mb-3">
-
-                    <label class="col-md-2 form-label">No. da Solicitação</label>
-                    <div class="col-sm-2">
-                        <input type="text" class="form-control" name="numero" id="numero" value='<?php echo $c_numero ?>'>
+                    <div class="panel panel-light class">
+                        <div class="panel-heading text-center">
+                            <h5>Opções de Consulta<h5>
+                        </div>
                     </div>
 
-                </div>
-                <br>
-                <div class="row mb-3">
+                    <div class="row mb-3">
 
-                    <label class="col-md-2 form-label">De</label>
-                    <div class="col-sm-3">
-                        <input type="Date" class="form-control" name="data1" id="data1" value='<?php echo date("Y-m-d"); ?>' onkeypress="mascaraData(this)">
-                    </div>
-                    <label class="col-md-1 form-label">até</label>
-                    <div class="col-sm-3">
-                        <input type="Date" class="form-control" name="data2" id="data2" value='<?php echo date("Y-m-d"); ?>' onkeypress="mascaraData(this)">
-                    </div>
-                </div>
-                <br>
+                        <label class="col-md-2 form-label">No. da Solicitação</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" name="numero" id="numero" value='<?php echo $c_numero ?>'>
+                        </div>
 
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">Status</label>
-                    <div class="col-sm-3">
-                        <select class="form-select form-select-lg mb-3" id="status" name="status" value="<?php echo $c_status; ?>">
-                            <option>Todos</option>
-                            <option>Aberta</option>
-                            <option>Em Andamento</option>
-                            <option>Concluída</option>
-                            <option>Cancelada</option>
-                        </select>
                     </div>
-                    <label class="col-sm-1 col-form-label">Tipo</label>
-                    <div class="col-sm-2">
-                        <select class="form-select form-select-lg mb-3" id="tipo" name="tipo" value="<?php echo $c_tipo; ?>">
-                            <option>Todos</option>
-                            <option>Programada</option>
-                            <option>Urgência</option>
-                        </select>
+                    <br>
+                    <div class="row mb-3">
+
+                        <label class="col-md-2 form-label">De</label>
+                        <div class="col-sm-3">
+                            <input type="Date" class="form-control" name="data1" id="data1" value='<?php echo date("Y-m-d"); ?>' onkeypress="mascaraData(this)">
+                        </div>
+                        <label class="col-md-1 form-label">até</label>
+                        <div class="col-sm-3">
+                            <input type="Date" class="form-control" name="data2" id="data2" value='<?php echo date("Y-m-d"); ?>' onkeypress="mascaraData(this)">
+                        </div>
                     </div>
-                </div>
-                <div class="row mb-3">
+                    <br>
 
-                    <label class="col-sm-2 col-form-label">Solicitante </label>
-                    <div class="col-sm-3">
-                        <select class="form-select form-select-lg mb-3" id="solicitante" name="solicitante">
-                            <?php
-                            if ($_SESSION['tipo'] <> 'Solicitante') {
-                                echo "<option>Todos</option>";
-                            }
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">Status</label>
+                        <div class="col-sm-3">
+                            <select class="form-select form-select-lg mb-3" id="status" name="status" value="<?php echo $c_status; ?>">
+                                <option>Todos</option>
+                                <option>Aberta</option>
+                                <option>Em Andamento</option>
+                                <option>Concluída</option>
+                                <option>Cancelada</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-1 col-form-label">Tipo</label>
+                        <div class="col-sm-2">
+                            <select class="form-select form-select-lg mb-3" id="tipo" name="tipo" value="<?php echo $c_tipo; ?>">
+                                <option>Todos</option>
+                                <option>Programada</option>
+                                <option>Urgência</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
 
-                            // select da tabela de solicitantes
-                            if ($_SESSION['tipo'] <> 'Solicitante') {
-                                $c_sql_sol = "SELECT usuarios.id, usuarios.nome FROM usuarios ORDER BY usuarios.nome";
-                            } else {
-                                $c_login = $_SESSION['c_usuario'];
-                                $c_sql_sol = "SELECT usuarios.id, usuarios.nome FROM usuarios where usuarios.login='$c_login'
+                        <label class="col-sm-2 col-form-label">Solicitante </label>
+                        <div class="col-sm-3">
+                            <select class="form-select form-select-lg mb-3" id="solicitante" name="solicitante">
+                                <?php
+                                if ($_SESSION['tipo'] <> 'Solicitante') {
+                                    echo "<option>Todos</option>";
+                                }
+
+                                // select da tabela de solicitantes
+                                if ($_SESSION['tipo'] <> 'Solicitante') {
+                                    $c_sql_sol = "SELECT usuarios.id, usuarios.nome FROM usuarios ORDER BY usuarios.nome";
+                                } else {
+                                    $c_login = $_SESSION['c_usuario'];
+                                    $c_sql_sol = "SELECT usuarios.id, usuarios.nome FROM usuarios where usuarios.login='$c_login'
                                  ORDER BY usuarios.nome";
-                            }
+                                }
 
-                            $result_sol = $conection->query($c_sql_sol);
-                            while ($c_linha = $result_sol->fetch_assoc()) {
-                                echo "  
+                                $result_sol = $conection->query($c_sql_sol);
+                                while ($c_linha = $result_sol->fetch_assoc()) {
+                                    echo "  
                           <option>$c_linha[nome]</option>";
-                            }
-                            ?>
-                        </select>
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <label class="col-sm-1 col-form-label">Setor </label>
+                        <div class="col-sm-3">
+                            <select class="form-select form-select-lg mb-3" id="setor" name="setor">
+                                <option>Todos</option>
+                                <?php
+                                // select da tabela de setores
+                                $c_sql_setor = "SELECT setores.id, setores.descricao FROM setores ORDER BY setores.descricao";
+                                $result_setor = $conection->query($c_sql_setor);
+                                while ($c_linha = $result_setor->fetch_assoc()) {
+                                    echo "<option>$c_linha[descricao]</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
                     </div>
-                    <label class="col-sm-1 col-form-label">Setor </label>
-                    <div class="col-sm-3">
-                        <select class="form-select form-select-lg mb-3" id="setor" name="setor">
-                            <option>Todos</option>
-                            <?php
-                            // select da tabela de setores
-                            $c_sql_setor = "SELECT setores.id, setores.descricao FROM setores ORDER BY setores.descricao";
-                            $result_setor = $conection->query($c_sql_setor);
-                            while ($c_linha = $result_setor->fetch_assoc()) {
-                                echo "<option>$c_linha[descricao]</option>";
-                            }
-                            ?>
-                        </select>
+                    <div class="row mb-3">
+                        <label class="col-md-2 form-label">Descritivo</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" name="descritivo" id="descritivo">
+                        </div>
                     </div>
-                </div>
-                <div class="row mb-3">
-                    <label class="col-md-2 form-label">Descritivo</label>
-                    <div class="col-sm-7">
-                        <input type="text" class="form-control" name="descritivo" id="descritivo">
-                    </div>
-                </div>
 
 
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 
