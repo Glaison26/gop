@@ -1,0 +1,12 @@
+Ordem de Serviço Nº: 16
+Data de Geração: 25/02/2026 Hora: 23:02:00
+Solicitante: Solicitante
+Setor: Obras Públicas
+Tipo de Ordem: Corretiva
+Ocorrência: Criação de usuário Sistema Moderna
+Executor Responsável: Funcionario A
+Descrição: Favor Preencher as informações abaixo :
+
+Nome Completo : Valeria Matos
+CPF:75765422887
+Quais módulos (ex.compras, estoque, contabilidade etc) :Compras

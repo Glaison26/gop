@@ -66,13 +66,13 @@ $_SESSION['id_ocorrencia'] = $c_linha_ordem['id_ocorrencia'];
 
                 <div style="padding-bottom :2px;">
                     <a class='btn btn btn-sm' href='/gop/ordens/ordens_emissao.php?id=<?php echo $i_id ?>' target='_blank'>
-                        <span class='glyphicon glyphicon-print'></span> Emitir</a>
+                       <img src="\gop\images\printer.png" alt="" width="25" height="25"> Emitir</a>
                     <a class='btn btn btn-sm' title='Editar Ordem de serviço' href='\gop\ordens\ordens_editar.php?id=<?php echo $i_id ?>'><img src='\gop\images\xxxescrever.png' alt='' width='30' height='20'><span> Editar</span></a>
                     <?php
                     // cabeçalho do gerenciar
                     if ($c_linha_ordem['status'] <> 'C' && $c_linha_ordem['status'] <> 'S' && $c_linha_ordem['status'] <> 'X') {
                         echo " 
-                            <a class='btn btn btn-sm' title='Concluir Ordem de Serviço' href='\gop\ordens\ordens_conclusao.php?id=<?php echo $i_id ?>'><img src='\gop\images\concluir.png' alt='' width='30' height='20'><span> Concluir</span></a>
+                            <a class='btn btn btn-sm' title='Concluir Ordem de Serviço' href='\gop\ordens\ordens_conclusao.php?id=<?php echo $i_id ?>'><img src='\gop\images\concluir.png' alt='' width='30' height='25'><span> Concluir</span></a>
                             <a class='btn btn btn-sm' title='Suspender Ordem de Serviço' href='\gop\ordens\ordens_suspender.php?id=<?php echo $i_id ?>'><i class='fas fa-pause-circle'></i><span> Suspender</span></a>
                             <a class='btn btn btn-sm' title='Cancelar Ordem de Serviço' href='\gop\ordens\ordens_cancelar.php?id=<?php echo $i_id ?>'><img src='\gop\images\cancelar.png' alt='' width='25' height='20'><span> Cancelar</span></a>";
                     }
