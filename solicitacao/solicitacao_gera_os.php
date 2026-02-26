@@ -26,10 +26,18 @@ $result_solicitacao = $conection->query($c_sql_solicitacao);
 $registro_solicitacao = $result_solicitacao->fetch_assoc();
  $i_id_ocorrencia = $registro_solicitacao['id_ocorrencia'];
 // procuro descritivo da ocorrencia via sql
-$c_sql_ocorrencia = "SELECT ocorrencias.descricao FROM ocorrencias where id = '$i_id_ocorrencia'";
+$c_sql_ocorrencia = "SELECT ocorrencias.descricao, tempo_minuto, tempo_hora FROM ocorrencias where id = '$i_id_ocorrencia'";
 $result_ocorrencia = $conection->query($c_sql_ocorrencia);
 $registro_ocorrencia = $result_ocorrencia->fetch_assoc();
 $c_descritivo = $registro_ocorrencia['descricao'];
+//
+$data_str = date('Y/m/d H:i:s');
+$tempo_soma = ' +'. $registro_ocorrencia['tempo_hora'].' hours '.$registro_ocorrencia['tempo_minuto']. ' minutes';
+$data_str .= ''. $tempo_soma;
+$data_str = date('Y-m-d', strtotime($data_str.''.$tempo_soma));
+$d_data = strtotime($data_str);
+//echo $data_str;
+//die();
 
 // rotina para geração de ordem de serviço
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -275,7 +283,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-6">
                 <label class="col-md-2 form-label">Prazo SLA </label>
                 <div class="col-sm-2">
-                    <input type="Date" class="form-control" name="data_sla" id="data_sla" value='<?php echo date("Y-m-d"); ?>' onkeypress="mascaraData(this)">
+                    <input type="Date" class="form-control" name="data_sla" id="data_sla" value='<?php echo $data_str; ?>'>
                 </div>
                 <label class="col-md-1 form-label">Hora</label>
                 <div class="col-sm-2">

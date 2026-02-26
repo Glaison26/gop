@@ -225,7 +225,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                         <input type="tel" onkeyup="handlePhone(event)" maxlength="20" id="fone2" class="form-control" name="fone2" value="<?php echo $c_fone2; ?>">
                     </div>
                 </div>
-
                 
                 <div class="row mb-3">
                     <label class="col-sm-3 col-form-label">Endereço</label>
