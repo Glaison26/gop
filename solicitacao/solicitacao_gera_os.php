@@ -30,7 +30,7 @@ $c_sql_ocorrencia = "SELECT ocorrencias.descricao, tempo_minuto, tempo_hora FROM
 $result_ocorrencia = $conection->query($c_sql_ocorrencia);
 $registro_ocorrencia = $result_ocorrencia->fetch_assoc();
 $c_descritivo = $registro_ocorrencia['descricao'];
-//
+// monto data e hora de sls baseado no tempo da ocorrência na solicitação de serviço
 $data_str = date('Y/m/d H:i:s');
 $tempo_soma = ' +' . $registro_ocorrencia['tempo_hora'] . ' hours ' . $registro_ocorrencia['tempo_minuto'] . ' minutes';
 $data_str .= '' . $tempo_soma;
@@ -64,9 +64,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $c_sql_responsavel = "Select id from usuarios where login='$c_responsavel'";
     $result_responsavel = $conection->query($c_sql_responsavel);
     $registro_responsavel = $result_responsavel->fetch_assoc();
-
-
-
     // variaveis para fazer o insert
     $i_id_solicitante = $registro_solicitacao['id_solicitante'];
     $i_id_setor = $registro_solicitacao['id_setor'];
