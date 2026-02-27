@@ -24,7 +24,7 @@ if (isset($_GET['id'])) {
 $c_sql_solicitacao = "select * from solicitacao where id='$i_id'";
 $result_solicitacao = $conection->query($c_sql_solicitacao);
 $registro_solicitacao = $result_solicitacao->fetch_assoc();
- $i_id_ocorrencia = $registro_solicitacao['id_ocorrencia'];
+$i_id_ocorrencia = $registro_solicitacao['id_ocorrencia'];
 // procuro descritivo da ocorrencia via sql
 $c_sql_ocorrencia = "SELECT ocorrencias.descricao, tempo_minuto, tempo_hora FROM ocorrencias where id = '$i_id_ocorrencia'";
 $result_ocorrencia = $conection->query($c_sql_ocorrencia);
@@ -32,12 +32,12 @@ $registro_ocorrencia = $result_ocorrencia->fetch_assoc();
 $c_descritivo = $registro_ocorrencia['descricao'];
 //
 $data_str = date('Y/m/d H:i:s');
-$tempo_soma = ' +'. $registro_ocorrencia['tempo_hora'].' hours '.$registro_ocorrencia['tempo_minuto']. ' minutes';
-$data_str .= ''. $tempo_soma;
-$data_str = date('Y-m-d', strtotime($data_str.''.$tempo_soma));
+$tempo_soma = ' +' . $registro_ocorrencia['tempo_hora'] . ' hours ' . $registro_ocorrencia['tempo_minuto'] . ' minutes';
+$data_str .= '' . $tempo_soma;
+$data_str = date('Y-m-d', strtotime($data_str));
 $d_data = strtotime($data_str);
-//echo $data_str;
-//die();
+// hora do prazo
+$d_tempo_prazo  = date('H:i:s', strtotime('+' . $registro_ocorrencia['tempo_hora'] . ' ' . 'hours +' . ' ' . $registro_ocorrencia['tempo_minuto'] . ' ' . 'minutes'));
 
 // rotina para geração de ordem de serviço
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -276,7 +276,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
                 <label class="col-md-1 form-label">Hora</label>
                 <div class="col-sm-2">
-                    <input type="time" class="form-control" name="hora_inicio" id="hora_inicio" required>
+                    <input type="time" class="form-control" name="hora_inicio" id="hora_inicio" value='<?php echo date('H:i:s'); ?>' required>
                 </div>
             </div>
             <br>
@@ -287,7 +287,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
                 <label class="col-md-1 form-label">Hora</label>
                 <div class="col-sm-2">
-                    <input type="time" class="form-control" name="hora_sla" id="hora_sla" required>
+                    <input type="time" class="form-control" name="hora_sla" id="hora_sla" value='<?php echo $d_tempo_prazo; ?>' required>
                 </div>
             </div>
             <br>
