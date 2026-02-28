@@ -215,7 +215,10 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
             <div role="tabpanel" class="tab-pane" id="mensagens">
                 <div style="padding-top:15px;padding-left:20px;">
                     <!-- tabela com as mensagens trocadas entre usuário final e operador do sistema -->
-                    <a class="btn btn btn-sm" href="#"><img src="\gop\images\escrita.png" alt="" width="25" height="25"> Nova Mensagem</a>
+
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#mensagem"><img src="\gop\images\escrita.png" alt="" width="25" height="25">
+                        Nova Mensagem
+                    </button>
                     <hr>
                     <table class="table table   tab_mensagens">
                         <thead class="thead">
@@ -225,9 +228,9 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
                                 <th scope="col">Hora</th>
                                 <th scope="col">Enviado por</th>
                                 <th scope="col">Tipo</th>
-                                <th scope="col">Status</th>
+                               
                                 <th scope="col">Mensagem</th>
-                                                         
+
                             </tr>
                         </thead>
                         <tbody>
@@ -262,7 +265,7 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
                     <td>$c_linha[hora]</td>
                     <td>$c_linha[nome]</td>
                     <td>$c_linha[tipo_usuario]</td>
-                    <td>$c_linha[status_msg]</td>
+                    
                     <td>$c_linha[mensagem]</td>
                     
                    
@@ -277,10 +280,33 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
             </div>
         </div>
     </div>
-
-   
-
-
 </body>
+
+<!-- Modal -->
+<div class="modal fade" id="mensagem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Nova Mensagem da Solicitação</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3">
+                    <label class="col-sm-5 col-form-label">Mensagem para envio</label>
+                    <div class="col-sm-20">
+                        <textarea class="form-control" id="add_texto" name="add_texto" rows="18"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary">Envia</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 </html>

@@ -66,7 +66,7 @@ $_SESSION['id_ocorrencia'] = $c_linha_ordem['id_ocorrencia'];
 
                 <div style="padding-bottom :2px;">
                     <a class='btn btn btn-sm' href='/gop/ordens/ordens_emissao.php?id=<?php echo $i_id ?>' target='_blank'>
-                       <img src="\gop\images\printer.png" alt="" width="25" height="25"> Emitir</a>
+                        <img src="\gop\images\printer.png" alt="" width="25" height="25"> Emitir</a>
                     <a class='btn btn btn-sm' title='Editar Ordem de serviço' href='\gop\ordens\ordens_editar.php?id=<?php echo $i_id ?>'><img src='\gop\images\xxxescrever.png' alt='' width='30' height='20'><span> Editar</span></a>
                     <?php
                     // cabeçalho do gerenciar
@@ -77,9 +77,9 @@ $_SESSION['id_ocorrencia'] = $c_linha_ordem['id_ocorrencia'];
                             <a class='btn btn btn-sm' title='Cancelar Ordem de Serviço' href='\gop\ordens\ordens_cancelar.php?id=<?php echo $i_id ?>'><img src='\gop\images\cancelar.png' alt='' width='25' height='20'><span> Cancelar</span></a>";
                     }
                     if ($c_linha_ordem['status'] == 'S')
-                        echo "<a title='Tirar Suspensão' href='\gop\ordens\ordens_tirar_suspensao.php?id=<?php echo $i_id ?>'><img src='\gop\images\undo.png' alt='' width='20' height='20'><span> Tirar Suspensão</span></a>";
+                        echo "<a class='btn btn btn-sm' title='Tirar Suspensão' href='\gop\ordens\ordens_tirar_suspensao.php?id=<?php echo $i_id ?>'><img src='\gop\images\undo.png' alt='' width='20' height='20'><span> Tirar Suspensão</span></a>";
                     ?>
-                    <a class='btn btn btn-sm' title='Voltar' href='\gop\ordens\ordens_lista.php'><img src="\gop\images\saida.png" alt="" width="30" height="20"><span> Voltar</span></a>
+
                 </div>
                 <hr>
 
@@ -155,6 +155,10 @@ $_SESSION['id_ocorrencia'] = $c_linha_ordem['id_ocorrencia'];
                         </div>
                     </div>
 
+                </div>
+                <div style="padding-top:15px;padding-left:20px;">
+                    <hr>
+                    <a class='btn btn btn-sm' title='Voltar' href='\gop\ordens\ordens_lista.php'><img src="\gop\images\saida.png" alt="" width="30" height="20"><span> Voltar</span></a>
                 </div>
             </div>
 

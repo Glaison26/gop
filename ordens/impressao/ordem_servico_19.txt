@@ -1,0 +1,14 @@
+Ordem de Serviço Nº: 19
+Data de Geração: 27/02/2026 Hora: 23:24:00
+Solicitante: Solicitante
+Setor: Planejamento
+Tipo de Ordem: Corretiva
+Ocorrência: Formatação de Computador
+Executor Responsável: Funcionário B
+Descrição: Favor preencher as informações abaixo :
+
+Usuário :Maria da Silva
+Possui backup (sim ou não) :Não
+Possui microsoft office (sim/não):Sim
+
+

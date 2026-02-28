@@ -1,0 +1,8 @@
+Ordem de Serviço Nº: 4
+Data de Geração: 11/02/2026 Hora: 23:21:00
+Solicitante: Glaison
+Setor: Administração
+Tipo de Ordem: Corretiva
+Ocorrência: Manutenção de Pc com fonte Queimada
+Executor Responsável: Funcionário B
+Descrição: Patrimôni no:
