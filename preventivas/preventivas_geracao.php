@@ -7,34 +7,24 @@ if (!isset($_SESSION['newsession'])) {
 date_default_timezone_set('America/Sao_Paulo');
 $agora = date('Y-m-d');
 // sql com as preventiva com data da próxima realização igual ou inferior a data do dia em recurso fisico
-$c_sql_recurso = "SELECT preventivas.id, preventivas.periodicidade_geracao, preventivas.calibracao, preventivas.id_recurso, recursos.descricao as recurso,
-preventivas.data_ult_realizacao, preventivas.data_prox_realizacao, preventivas.gerar,
-case
-when preventivas.calibracao ='S' then 'Sim'
-when preventivas.calibracao ='N' then 'Não'
-END AS preventiva_calibracao
+$c_sql_recurso = "SELECT preventivas.id, preventivas.periodicidade_geracao, preventivas.id_recurso, recursos.descricao as recurso,
+preventivas.data_ult_realizacao, preventivas.data_prox_realizacao, preventivas.gerar
 FROM preventivas 
 JOIN recursos ON preventivas.id_recurso=recursos.id
 where data_prox_realizacao<='$agora'
 ORDER BY preventivas.data_prox_realizacao desc";
 // sql com as preventiva com data da próxima realização igual ou inferior a data do dia em espaço fisico
-$c_sql_espaco = "SELECT preventivas.id, preventivas.periodicidade_geracao, preventivas.calibracao, preventivas.id_espaco, espacos.descricao as espaco,
-preventivas.data_ult_realizacao, preventivas.data_prox_realizacao, preventivas.gerar,
-case
-when preventivas.calibracao ='S' then 'Sim'
-when preventivas.calibracao ='N' then 'Não'
-END AS preventiva_calibracao
+$c_sql_espaco = "SELECT preventivas.id, preventivas.periodicidade_geracao,  preventivas.id_espaco, espacos.descricao as espaco,
+preventivas.data_ult_realizacao, preventivas.data_prox_realizacao, preventivas.gerar
 FROM preventivas 
 JOIN espacos ON preventivas.id_espaco=espacos.id
 where data_prox_realizacao<='$agora'
 ORDER BY preventivas.data_prox_realizacao desc";
 // sql com preventvas gerais sem vinculo com recurso fisico ou espaço físico
-$c_sql_geral = "SELECT preventivas.id, preventivas.periodicidade_geracao, preventivas.calibracao, preventivas.id_espaco,
-preventivas.data_ult_realizacao, preventivas.data_prox_realizacao, preventivas.gerar, ocorrencias.descricao as ocorrencia,
-case
-when preventivas.calibracao ='S' then 'Sim'
-when preventivas.calibracao ='N' then 'Não'
-END AS preventiva_calibracao
+$c_sql_geral = "SELECT preventivas.id, preventivas.periodicidade_geracao,  preventivas.id_espaco,
+preventivas.data_ult_realizacao, preventivas.data_prox_realizacao, preventivas.gerar, 
+ocorrencias.descricao as ocorrencia
+
 FROM preventivas 
 join ocorrencias on preventivas.id_ocorrencia=ocorrencias.id
 where data_prox_realizacao<='$agora' and preventivas.tipo = 'V'
@@ -295,7 +285,6 @@ frontend com tabela das preventivas a serem geradas
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Recurso</th>
-                                <th scope="col">Calibração</th>
                                 <th scope="col">Periodicidade</th>
                                 <th scope="col">Ultima Realização</th>
                                 <th scope="col">Próxima Realização</th>
@@ -321,8 +310,6 @@ frontend com tabela das preventivas a serem geradas
                                 <tr>
                                     <td>$c_linha[id]</td>
                                     <td>$c_linha[recurso]</td>
-                                   
-                                    <td>$c_linha[preventiva_calibracao]</td>
                                     <td>$c_linha[periodicidade_geracao] dias</td>
                                     <td>$c_data_realizacao</td>
                                     <td>$c_data_proxima</td>
@@ -350,7 +337,6 @@ frontend com tabela das preventivas a serem geradas
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Espaço Fisico</th>
-                                <th scope="col">Calibração</th>
                                 <th scope="col">Periodicidade</th>
                                 <th scope="col">Ultima Realização</th>
                                 <th scope="col">Próxima Realização</th>
@@ -375,8 +361,6 @@ frontend com tabela das preventivas a serem geradas
                                 <tr>
                                     <td>$c_linha[id]</td>
                                     <td>$c_linha[espaco]</td>
-                                   
-                                    <td>$c_linha[preventiva_calibracao]</td>
                                     <td>$c_linha[periodicidade_geracao] dias</td>
                                     <td>$c_data_realizacao</td>
                                     <td>$c_data_proxima</td>

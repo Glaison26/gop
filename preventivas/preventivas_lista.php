@@ -183,14 +183,15 @@ include('../conexao.php');
             </div>
             <h5>Resultado das Preventivas Selecionadas</h5>
         </div>
-        <?php
-        if ($_SESSION['pesquisamenu'] == false) {
-            echo "<a class='btn btn btn-sm' href='\gop\preventivas\preventivas.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
-        } else {
-            echo "<a class='btn btn btn-sm' href='\gop\menu.php'><img src='\gop\images\back.png' alt='' width='25' height='25'> Voltar</a>";
-        }
+<?php
+    if ($_SESSION['pesquisamenu'] == false) {
+        echo "<a class='btn btn btn-sm' href='\gop\preventivas\preventivas.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
+    } else {
+        echo "<a class='btn btn btn-sm' href='\gop\menu.php'><img src='\gop\images\back.png' alt='' width='25' height='25'> Voltar</a>";
+    }
 
-        ?>
+    ?>
+
         <hr>
         <!-- abas de preventivas por recursos físicos, Espaços físicos e avulsos -->
         <ul class="nav nav-tabs" role="tablist">
@@ -272,7 +273,7 @@ include('../conexao.php');
                                 <th scope="col">Patrimônio</th>
                                 <th scope="col">Ocorrência</th>
                                 <th scope="col">Tipo</th>
-                                <th scope="col">Calibração</th>
+
                                 <th scope="col">Periodicidade</th>
                                 <th scope="col">Ultima Realização</th>
                                 <th scope="col">Próxima Realização</th>
@@ -300,7 +301,7 @@ include('../conexao.php');
                                     <td>$c_linha[patrimonio]</td>
                                     <td>$c_linha[ocorrencia]</td>
                                     <td>$c_linha[preventiva_tipo_completo]</td>
-                                    <td>$c_linha[preventiva_calibracao]</td>
+                                    
                                     <td>$c_linha[periodicidade_geracao] dias</td>
                                     <td>$c_data_realizacao</td>
                                     <td>$c_data_proxima</td>
@@ -433,10 +434,12 @@ include('../conexao.php');
 
                 </div>
             </div>
+
+
         </div>
 
     </div>
-
+    
 </body>
 
 </html>

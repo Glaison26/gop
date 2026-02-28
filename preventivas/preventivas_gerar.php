@@ -13,13 +13,9 @@ date_default_timezone_set('America/Sao_Paulo');
 $agora = date('Y-m-d');
 // sql com as preventiva com data da próxima realização igual ou inferior a data do dia em recurso fisico
 $c_sql_recurso = "SELECT preventivas.id, preventivas.id_oficina, preventivas.id_setor, preventivas.tipo,
- preventivas.periodicidade_geracao, preventivas.calibracao, preventivas.id_recurso, recursos.descricao as recurso,
+ preventivas.periodicidade_geracao, preventivas.id_recurso, recursos.descricao as recurso,
 preventivas.data_ult_realizacao, preventivas.data_prox_realizacao, preventivas.tipo_preventiva, 
-preventivas.descritivo, preventivas.gerar, preventivas.id_ocorrencia, prazo_atendimento, preventivas.id_executor,
-case
-when preventivas.calibracao ='S' then 'Sim'
-when preventivas.calibracao ='N' then 'Não'
-END AS preventiva_calibracao
+preventivas.descritivo, preventivas.gerar, preventivas.id_ocorrencia, prazo_atendimento, preventivas.id_executor
 FROM preventivas 
 JOIN recursos ON preventivas.id_recurso=recursos.id
 where data_prox_realizacao<='$agora' and gerar = 'Sim'
@@ -27,26 +23,19 @@ ORDER BY preventivas.data_prox_realizacao desc";
 //echo $c_sql_recurso;
 // sql com as preventiva com data da próxima realização igual ou inferior a data do dia em espaço fisico
 $c_sql_espaco = "SELECT preventivas.id, preventivas.tipo, preventivas.id_oficina, preventivas.tipo_preventiva, 
-preventivas.periodicidade_geracao, preventivas.descritivo, preventivas.id_setor, preventivas.calibracao, preventivas.id_espaco, 
+preventivas.periodicidade_geracao, preventivas.descritivo, preventivas.id_setor, preventivas.id_espaco, 
 espacos.descricao as espaco, preventivas.data_ult_realizacao, preventivas.data_prox_realizacao,
- preventivas.gerar, preventivas.id_ocorrencia, prazo_atendimento, preventivas.id_executor,
-case
-when preventivas.calibracao ='S' then 'Sim'
-when preventivas.calibracao ='N' then 'Não'
-END AS preventiva_calibracao
+ preventivas.gerar, preventivas.id_ocorrencia, prazo_atendimento, preventivas.id_executor
 FROM preventivas 
 JOIN espacos ON preventivas.id_espaco=espacos.id
 where data_prox_realizacao<='$agora'
 ORDER BY preventivas.data_prox_realizacao desc";
 // sql com as preventivas sem viculo com espaços fisicos e recursos fisicos
 $c_sql_geral = "SELECT preventivas.id, preventivas.tipo, preventivas.id_oficina, preventivas.tipo_preventiva, 
-preventivas.periodicidade_geracao, preventivas.descritivo, preventivas.id_setor, preventivas.calibracao, preventivas.id_espaco, 
+preventivas.periodicidade_geracao, preventivas.descritivo, preventivas.id_setor, preventivas.id_espaco, 
  preventivas.data_ult_realizacao, preventivas.data_prox_realizacao, ocorrencias.descricao as ocorrencia,
- preventivas.gerar, preventivas.id_ocorrencia, prazo_atendimento, preventivas.id_executor,
-case
-when preventivas.calibracao ='S' then 'Sim'
-when preventivas.calibracao ='N' then 'Não'
-END AS preventiva_calibracao
+ preventivas.gerar, preventivas.id_ocorrencia, prazo_atendimento, preventivas.id_executor
+
 FROM preventivas 
 join ocorrencias on preventivas.id_ocorrencia=ocorrencias.id
 where data_prox_realizacao<='$agora' and preventivas.tipo = 'V'

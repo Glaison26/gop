@@ -24,11 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         header('location: /gop/preventivas/preventivas_lista.php');
         exit;
     }
-    // captura dos dados extraídos via sql
-    if ($registro['calibracao'] == 'S')
-        $c_calibracao = 'checked';
-    else
-        $c_calibracao = '';
+
     //
     $d_data_cadastro = $registro['data_cadastro'];
     $c_periodicidade = $registro['periodicidade_geracao'];
@@ -62,12 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         $registro_setor = $result_setor->fetch_assoc();
         $i_setor = $registro_setor['id'];
         //
-        // verifico a id do centro de custo selecionado no combo 
-        $c_centrodecusto = $_POST['centrodecusto'];
-        $c_sql_secundario = "SELECT centrodecusto.id FROM centrodecusto where centrodecusto.descricao='$c_centrodecusto' ORDER BY centrodecusto.descricao";
-        $result_secundario = $conection->query($c_sql_secundario);
-        $registro_secundario = $result_secundario->fetch_assoc();
-        $i_id_centrodecusto = $registro_secundario['id'];
+
         // procuro pelo id do executor responsável
         $c_executor_resp = $_POST['responsavel'];
         $c_sql_executor_resp = "Select id, nome from executores where nome='$c_executor_resp'";
@@ -87,18 +78,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         $registro_ocorrencia = $result_ocorrencia->fetch_assoc();
         $i_id_ocorrencia = $registro_ocorrencia['id'];
 
-        if (!isset($_POST['chk_calibracao'])) {
-            $c_calibracao = 'N';
-        } else {
-            $c_calibracao = 'S';
-        }
+
         $c_prazo = $_POST['prazo'];
         $c_dias = '+' . $i_periodicidade . ' days';
         $d_data_proxima = date('y-m-d', strtotime($c_dias, strtotime($c_data_ultima))); // incremento 1 dia a data do loop
         // sql para alteração do registro
-        $c_sql = "update preventivas set id_oficina='$i_id_oficina', id_setor='$i_setor', id_centrodecusto='$i_id_centrodecusto',
+        $c_sql = "update preventivas set id_oficina='$i_id_oficina', id_setor='$i_setor',
     tipo_preventiva='$c_tipopreventiva', data_cadastro='$d_data_cadastro',periodicidade_geracao='$i_periodicidade',
-    data_prox_realizacao='$d_data_proxima', data_ult_realizacao='$c_data_ultima', calibracao='$c_calibracao', id_ocorrencia='$i_id_ocorrencia', 
+    data_prox_realizacao='$d_data_proxima', data_ult_realizacao='$c_data_ultima', id_ocorrencia='$i_id_ocorrencia', 
     descritivo='$c_descritivo', prazo_atendimento='$c_prazo', id_executor=$i_executor_resp where id=$i_id";
         echo $c_sql;
 
@@ -160,20 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             }
             ?>
             <form method="post">
-                <div style="padding-left :30px;" class="row mb-3">
-                    <div class="row mb-3">
-                        <div style="padding-left :30px;">
-                            <div class="form-check">
 
-                                <input class="form-check-input" type="checkbox" id="chk_calibracao" <?php echo $c_calibracao ?>>
-
-                                <label class="form-check-label" for="chk_calibracao">
-                                    Calibração
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="row mb-3">
                     <label class="col-sm-2 col-form-label">Ocorrencia </label>
                     <div class="col-sm-7">
@@ -205,24 +179,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                     <div class="col-sm-3">
                         <input required type="date" class="form-control" id="datacadastro" name="datacadastro" value='<?php echo date("Y-m-d"); ?>'>
                     </div>
-                    <label class="col-sm-2 col-form-label">Prazo de Atendimento</label>
-                    <div class="col-sm-2">
-                        <input type="number" placeholder="no. de dias" class="form-control" id="prazo" name="prazo" value='<?php echo $c_prazo ?>' required>
-                    </div>
-
-                </div>
-
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">Tipo Preventiva</label>
-                    <div class="col-sm-3">
-                        <select class="form-select form-select-lg mb-3" id="tipo_preventiva" name="tipo_preventiva" value="<?php echo $c_tipo_preventiva; ?>">
-
-                            <option <?= ($registro['tipo_preventiva'] == 'R') ? 'selected' : '' ?> value="R">Rotina</option>
-                            <option <?= ($registro['tipo_preventiva'] == 'P') ? 'selected' : '' ?> value="P">Preditiva</option>
-                            <option <?= ($registro['tipo_preventiva'] == 'S') ? 'selected' : '' ?> value="S">Sistematica</option>
-                        </select>
-                    </div>
-                    <label class="col-sm-2 col-form-label">Oficina </label>
+                    <label class="col-sm-1 col-form-label">Oficina </label>
                     <div class="col-sm-3">
                         <select class="form-select form-select-lg mb-3" id="oficina" name="oficina">
                             <option></option>
@@ -240,7 +197,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                             ?>
                         </select>
                     </div>
+
+
                 </div>
+
 
                 <div class="row mb-3">
                     <label class="col-sm-2 col-form-label">Responsável </label>
@@ -262,29 +222,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
 
                             ?>
                         </select>
-                    </div>
-                    <label class="col-sm-2 col-form-label">Centro de Custo </label>
-                    <div class="col-sm-3">
-                        <select class="form-select form-select-lg mb-3" id="centrodecusto" name="centrodecusto">
-                            <option></option>
-                            <?php
-                            // select da tabela de centro de custo
-                            $c_sql_custo = "SELECT centrodecusto.id, centrodecusto.descricao FROM centrodecusto ORDER BY centrodecusto.descricao";
-                            $result_custo = $conection->query($c_sql_custo);
-                            while ($c_linha = $result_custo->fetch_assoc()) {
-                                $op = '';
-                                if ($c_linha['id'] == $registro['id_centrodecusto']) {
-                                    $op = 'selected';
-                                } else {
-                                    $op = '';
-                                }
 
-                                echo "<option $op>$c_linha[descricao]</option>";
-                            }
-
-                            ?>
-                        </select>
                     </div>
+                    <label class="col-sm-2 col-form-label">Prazo de Atendimento</label>
+                    <div class="col-sm-2">
+                        <input type="number" placeholder="no. de dias" class="form-control" id="prazo" name="prazo" value='<?php echo $c_prazo ?>' required>
+                    </div>
+
 
                 </div>
                 <div class="row mb-3">
@@ -318,25 +262,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                             }
                             ?>
                         </select>
-                    </div>
-                    <label class="col-sm-2 col-form-label">Ocorrencia </label>
 
-                    <hr>
-                    <div class="row mb-3" style="padding-top:15px;padding-left:20px;">
-                        <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label">Descritivo</label>
-                            <div class="col-sm-9">
-                                <textarea required class="form-control" id="descritivo" name="descritivo" rows="10"><?php echo $c_descritivo ?></textarea>
-                            </div>
-                        </div>
                     </div>
-                    <hr>
+                    <label class="col-sm-2 col-form-label">Tipo Preventiva</label>
+                    <div class="col-sm-3">
+                        <select class="form-select form-select-lg mb-3" id="tipo_preventiva" name="tipo_preventiva" value="<?php echo $c_tipo_preventiva; ?>">
+
+                            <option <?= ($registro['tipo_preventiva'] == 'R') ? 'selected' : '' ?> value="R">Rotina</option>
+                            <option <?= ($registro['tipo_preventiva'] == 'P') ? 'selected' : '' ?> value="P">Preditiva</option>
+                            <option <?= ($registro['tipo_preventiva'] == 'S') ? 'selected' : '' ?> value="S">Sistematica</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <hr>
+                <div class="row mb-3" style="padding-top:15px;padding-left:20px;">
                     <div class="row mb-3">
-                        <div class="offset-sm-0 col-sm-3">
-                            <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                            <a class='btn btn-success' href='/gop/preventivas/preventivas_lista.php'><img src="\gop\images\saida.png" alt="" width="25" height="18"> Voltar</a>
+                        <label class="col-sm-2 col-form-label">Descritivo</label>
+                        <div class="col-sm-9">
+                            <textarea required class="form-control" id="descritivo" name="descritivo" rows="10"><?php echo $c_descritivo ?></textarea>
                         </div>
                     </div>
+                </div>
+                <hr>
+                <div class="row mb-3">
+                    <div class="offset-sm-0 col-sm-3">
+                        <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
+                        <a class='btn btn-success' href='/gop/preventivas/preventivas_lista.php'><img src="\gop\images\saida.png" alt="" width="25" height="18"> Voltar</a>
+                    </div>
+                </div>
             </form>
         </div>
 

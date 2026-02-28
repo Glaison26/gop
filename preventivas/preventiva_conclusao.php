@@ -79,12 +79,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $result = $conection->query($c_sql_oficina);
         $c_linha = $result->fetch_assoc();
         $i_id_oficina = $c_linha['id'];
-        // verifico a id do centro de custo selecionado no combo 
-        $c_centrodecusto = $_POST['centrodecusto'];
-        $c_sql_secundario = "SELECT centrodecusto.id FROM centrodecusto where centrodecusto.descricao='$c_centrodecusto' ORDER BY centrodecusto.descricao";
-        $result_secundario = $conection->query($c_sql_secundario);
-        $registro_secundario = $result_secundario->fetch_assoc();
-        $i_id_centrodecusto = $registro_secundario['id'];
         //
         $d_data_cadastro = new DateTime($_POST['datacadastro']);
         $d_data_cadastro = $d_data_cadastro->format('Y-m-d');
@@ -100,37 +94,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $registro_ocorrencia = $result_ocorrencia->fetch_assoc();
         $i_id_ocorrencia = $registro_ocorrencia['id'];
 
-        if (!isset($_POST['chk_calibracao'])) {
-            $c_calibracao = 'N';
-        } else {
-            $c_calibracao = 'S';
-        }
         $c_dias = '+' . $i_periodicidade . ' days';
         $d_data_proxima = date('y-m-d', strtotime($c_dias, strtotime($c_data_ultima))); // incremento 1 dia a data do loop
         // sql para inclusão do registro para recurso fisico
         if ($_SESSION['tiposolicitacao'] == 'R') { // sql para recursos fisicos
-            $c_sql = "Insert into preventivas (id_recurso,id_oficina, id_setor, id_centrodecusto,tipo,tipo_preventiva, data_cadastro
-                    , periodicidade_geracao, data_prox_realizacao, data_ult_realizacao, calibracao,descritivo, gerar,
+            $c_sql = "Insert into preventivas (id_recurso,id_oficina, id_setor,tipo,tipo_preventiva, data_cadastro
+                    , periodicidade_geracao, data_prox_realizacao, data_ult_realizacao,descritivo, gerar,
                       id_ocorrencia, prazo_atendimento, id_executor) 
-                    value ('$i_id_recurso', '$i_id_oficina', '$i_setor', '$i_id_centrodecusto', 'R', '$c_tipopreventiva',
-                    '$d_data_cadastro', '$i_periodicidade', '$d_data_proxima', '$c_data_ultima','$c_calibracao',
+                    value ('$i_id_recurso', '$i_id_oficina', '$i_setor',  'R', '$c_tipopreventiva',
+                    '$d_data_cadastro', '$i_periodicidade', '$d_data_proxima', '$c_data_ultima',
                      '$c_descritivo', 'Sim', '$i_id_ocorrencia', $c_prazo, $i_executor_resp)";
         }
         //
         if ($_SESSION['tiposolicitacao'] == 'E') { // sql para espacos fisicos
-            $c_sql = "Insert into preventivas (id_espaco,id_oficina, id_setor, id_centrodecusto,tipo,tipo_preventiva, data_cadastro
-                      , periodicidade_geracao, data_prox_realizacao, data_ult_realizacao, calibracao,descritivo, 
+            $c_sql = "Insert into preventivas (id_espaco,id_oficina, id_setor, tipo,tipo_preventiva, data_cadastro
+                      , periodicidade_geracao, data_prox_realizacao, data_ult_realizacao, descritivo, 
                       gerar,  id_ocorrencia, prazo_atendimento, id_executor ) 
                       value ('$i_id_espaco', '$i_id_oficina', '$i_setor', '$i_id_centrodecusto', 'E', '$c_tipopreventiva',
-                     '$d_data_cadastro', '$i_periodicidade', '$d_data_proxima', '$c_data_ultima','$c_calibracao',
+                     '$d_data_cadastro', '$i_periodicidade', '$d_data_proxima', '$c_data_ultima',
                       '$c_descritivo', 'Sim', '$i_id_ocorrencia', $c_prazo,  $i_executor_resp)";
         }
         if ($_SESSION['tiposolicitacao'] == 'V') { // sql para preventivas avulsas sem espaço fisico ou recurso fisico
-            $c_sql = "Insert into preventivas (id_oficina, id_setor, id_centrodecusto,tipo,tipo_preventiva, data_cadastro
-                      , periodicidade_geracao, data_prox_realizacao, data_ult_realizacao, calibracao,descritivo, 
+            $c_sql = "Insert into preventivas (id_oficina, id_setor, tipo,tipo_preventiva, data_cadastro
+                      , periodicidade_geracao, data_prox_realizacao, data_ult_realizacao,descritivo, 
                       gerar,  id_ocorrencia, prazo_atendimento, id_executor ) 
-                      value ('$i_id_oficina', '$i_setor', '$i_id_centrodecusto', 'V', '$c_tipopreventiva',
-                     '$d_data_cadastro', '$i_periodicidade', '$d_data_proxima', '$c_data_ultima','$c_calibracao',
+                      value ('$i_id_oficina', '$i_setor',  'V', '$c_tipopreventiva',
+                     '$d_data_cadastro', '$i_periodicidade', '$d_data_proxima', '$c_data_ultima',
                       '$c_descritivo', 'Sim', '$i_id_ocorrencia', $c_prazo,  $i_executor_resp)";
         }
 
@@ -276,55 +265,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </select>
                     </div>
 
-                    <label class="col-sm-1 col-form-label">Prazo de Atendimento</label>
+                    <label class="col-sm-2 col-form-label">Prazo Atend.</label>
                     <div class="col-sm-2">
                         <input required type="number" placeholder="no. de dias" class="form-control" id="prazo" name="prazo">
                     </div>
 
                 </div>
 
-                <div class="row mb-3">
 
-                    <label class="col-sm-2 col-form-label">Tipo Preventiva</label>
-                    <div class="col-sm-3">
-                        <select class="form-select form-select-lg mb-3" id="tipo_preventiva" required name="tipo_preventiva" value="<?php echo $c_tipo_preventiva; ?>" required>
-                            <option></option>
-                            <option value="R">Rotina</option>
-                            <option value="P">Preditiva</option>
-                            <option value="S">Sistematica</option>
-                        </select>
-                    </div>
-
-                    <label class="col-sm-1 col-form-label">Centro de Custo </label>
-                    <div class="col-sm-3">
-
-                        <select required class="form-select form-select-lg mb-3" id="centrodecusto" name="centrodecusto">
-                            <option></option>
-                            <?php
-                            // select da tabela de centro de custo
-                            $c_sql_custo = "SELECT centrodecusto.id, centrodecusto.descricao FROM centrodecusto ORDER BY centrodecusto.descricao";
-                            $result_custo = $conection->query($c_sql_custo);
-                            while ($c_linha = $result_custo->fetch_assoc()) {
-                                $op = '';
-                                if ($c_linha['id'] == $i_centrodecusto) {
-                                    $op = 'selected';
-                                } else {
-                                    $op = '';
-                                }
-
-                                echo "<option $op>$c_linha[descricao]</option>";
-                            }
-
-                            ?>
-                        </select>
-                    </div>
-                </div>
                 <div class="row mb-3">
                     <label class="col-sm-2 col-form-label">Ultima Realização</label>
                     <div class="col-sm-3">
                         <input type="date" class="form-control" id="data_ultima" required name="data_ultima">
                     </div>
-                    <label class="col-sm-1 col-form-label">Periodicidade</label>
+                    <label class="col-sm-2 col-form-label">Periodicidade</label>
                     <div class="col-sm-2">
                         <input required type="number" class="form-control" placeholder="no. de dias" name="periodicidade" required>
                     </div>
@@ -345,14 +299,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             ?>
                         </select>
                     </div>
-                    <div class="col-sm-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="chk_calibracao">
-                            <label class="form-check-label" for="chk_calibracao">
-                                Calibração
-                            </label>
-                        </div>
+                    <label class="col-sm-2 col-form-label">Tipo Preventiva</label>
+                    <div class="col-sm-2">
+                        <select class="form-select form-select-lg mb-3" id="tipo_preventiva" required name="tipo_preventiva" value="<?php echo $c_tipo_preventiva; ?>" required>
+                            <option></option>
+                            <option value="R">Rotina</option>
+                            <option value="P">Preditiva</option>
+                            <option value="S">Sistematica</option>
+                        </select>
                     </div>
+
+
                 </div>
 
 
