@@ -6,8 +6,8 @@ if (!isset($_SESSION['newsession'])) {
 $_SESSION['tiposolicitacao'] = 'V';
 $_SESSION['opcao'] = "P";
 $_SESSION['i_id_oficina'] = 0;
-$_SESSION['ocorrencia']="";
-$_SESSION['valor_ocorrencia']="";
+$_SESSION['ocorrencia'] = "";
+$_SESSION['valor_ocorrencia'] = "";
 include("../links2.php");
 ?>
 
@@ -18,7 +18,7 @@ include("../links2.php");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <link rel="stylesheet" href="/gop/css/basico.css">
 </head>
 
 <body>
@@ -28,26 +28,28 @@ include("../links2.php");
             <h5>Cadastro de Preventivas<h5>
         </div>
     </div>
-
     <div class="container -my5">
-        <div class='alert alert-info' role='alert'>
-            <div style="padding-left:15px;">
-                <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
-            </div>
-            <h5>Escolha o tipo da Preventiva Recurso Fisico ou Espaço Físico</h5>
-        </div>
-        <hr>
-        <div style="padding-bottom :2px;">
-            <a class="btn btn btn-sm" href="/gop/preventivas/preventiva_conclusao.php"><img src="\gop\images\ordem.png" alt="" width="30" height="35">
-                Nova Preventiva</a>
-            <a class="btn btn btn-sm" href="\gop\recurso_pesquisa.php"><img src="\gop\images\construcao.png" alt="" width="30" height="35">
-                Nova Preventiva em Recurso Físico</a>
-            <a class="btn btn btn-sm" href="\gop\espaco_pesquisa.php"><img src="\gop\images\pedreiro.png" alt="" width="30" height="35">
-                Nova Preventiva em Espaços Físicos</a>
-            <a class="btn btn btn-sm" href="\gop\preventivas\preventivas.php"><img src="\gop\images\saida.png" alt="" width="30" height="35"> Voltar as opções</a>
+        <div class="container content-box">
 
+            <div class='alert alert-info' role='alert'>
+                <div style="padding-left:15px;">
+                    <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
+                </div>
+                <h5>Escolha o tipo da Preventiva Recurso Fisico ou Espaço Físico</h5>
+            </div>
+            <hr>
+            <div style="padding-bottom :1px;">
+                <a class="btn btn btn-sm" href="/gop/preventivas/preventiva_conclusao.php"><img src="\gop\images\ordem.png" alt="" width="30" height="35">
+                    Nova Preventiva</a>
+                <a class="btn btn btn-sm" href="\gop\recurso_pesquisa.php"><img src="\gop\images\construcao.png" alt="" width="30" height="35">
+                    Nova Preventiva em Recurso Físico</a>
+                <a class="btn btn btn-sm" href="\gop\espaco_pesquisa.php"><img src="\gop\images\pedreiro.png" alt="" width="30" height="35">
+                    Nova Preventiva em Espaços Físicos</a>
+                <a class="btn btn btn-sm" href="\gop\preventivas\preventivas.php"><img src="\gop\images\saida.png" alt="" width="30" height="35"> Voltar as opções</a>
+
+            </div>
+            
         </div>
-        <hr>
     </div>
 
 </body>

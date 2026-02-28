@@ -106,7 +106,7 @@ $_SESSION['ver_os'] = false;
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/fabricantes/fabricantes_lista.php">Fabricantes</a>
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/executores/executores_lista.php">Executores Internos</a>
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/prestadores/prestadores_lista.php">Prestadores de Serviço</a>
-                    <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/funcoes/funcoes_lista.php">Funções e Cargos</a>
+                    <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/funcoes/funcoes_lista.php">Cargos e Funções</a>
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/oficinas/oficinas_lista.php">Oficinas</a>
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/centrodecustos/centrodecusto_lista.php">Centros de Custos</a>
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/setores/setores_lista.php">Setores</a>

@@ -36,6 +36,7 @@ if (($registro['solicitacao_avulsa'] == 'N') && ($registro['solicitacao_recursos
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/gop/css/basico.css">
 
 </head>
 
@@ -49,40 +50,43 @@ if (($registro['solicitacao_avulsa'] == 'N') && ($registro['solicitacao_recursos
         </div>
         <!-- painel con instruçoes dobre as escolhas -->
         <div class="container -my5">
-            <div class='alert alert-info' role='alert'>
-                <div style="padding-left:15px;">
-                    <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
+            <div class="container content-box">
+                <div class='alert alert-info' role='alert'>
+                    <div style="padding-left:15px;">
+                        <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
+                    </div>
+                    <h5>Escolha o tipo da Solicitação entre Avulsa, Recurso Fisico ou Espaço Físico</h5>
                 </div>
-                <h5>Escolha o tipo da Solicitação entre Avulsa, Recurso Fisico ou Espaço Físico</h5>
-            </div>
 
-            <hr>
+                <hr>
 
-            <div style="padding-bottom :2px;">
+                <div style="padding-bottom :2px;">
 
-                <?php
-                if (($registro['solicitacao_avulsa'] == 'S') || ($_SESSION['tipo'] <> 'Solicitante')) {
-                    echo '
+                    <?php
+                    if (($registro['solicitacao_avulsa'] == 'S') || ($_SESSION['tipo'] <> 'Solicitante')) {
+                        echo '
                 
                 <a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_conclusao.php"><img src="\gop\images\ordem.png" alt="" width="30" height="35">
                     Iniciar nova Solicitação de Serviço</a>';
-                }
-                if (($registro['solicitacao_recursos'] == 'S') || ($_SESSION['tipo'] <> 'Solicitante')) {
-                    echo '
+                    }
+                    if (($registro['solicitacao_recursos'] == 'S') || ($_SESSION['tipo'] <> 'Solicitante')) {
+                        echo '
                 <a class="btn btn btn-sm" href="\gop\recurso_pesquisa.php"><img src="\gop\images\construcao.png" alt="" width="30" height="35">
                     Iniciar nova Solicitação em Recurso Físico</a>';
-                }
-                if (($registro['solicitacao_espacos'] == 'S') || ($_SESSION['tipo'] <> 'Solicitante')) {
-                    echo '
+                    }
+                    if (($registro['solicitacao_espacos'] == 'S') || ($_SESSION['tipo'] <> 'Solicitante')) {
+                        echo '
                 <a class="btn btn btn-sm" href="\gop\espaco_pesquisa.php"><img src="\gop\images\pedreiro.png" alt="" width="30" height="35">
                     Iniciar nova Solicitação em Espaço Físico</a>';
-                }
+                    }
 
-                ?>
-                <a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao.php"><img src="\gop\images\saida.png" alt="" width="30" height="35"> Voltar as opções</a>
+                    ?>
+                    <a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao.php"><img src="\gop\images\saida.png" alt="" width="30" height="35"> Voltar as opções</a>
 
+                </div>
             </div>
         </div>
+    </div>
 </body>
 
 </html>
