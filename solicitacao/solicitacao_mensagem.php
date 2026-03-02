@@ -32,17 +32,20 @@ Value ('$c_descricao', '$i_id_solicitacao', '$i_id_usuario','$c_tipo', '$d_data'
 
     // rotina para envio do email
     // pego o email da manutenção
+    $c_email_manutencao = "";
     if ($c_tipo == "1") { // solicitante enviando email para manutenção
         $c_sql_config = "select email_manutencao from configuracoes";
         $result_solicitante = $conection->query($c_sql_config);
         $c_linha_email = $result_solicitante->fetch_assoc();
         $c_email = $c_linha_email['email_manutencao'];
+        $c_email_manutencao = $c_linha_email['email_manutencao'];
     } else {
         // manutenção enviando e-mail para solicitante
         $c_sql_solicitante = "Select email from usuarios where id='$i_id_usuario'";
         $result_solicitante = $conection->query($c_sql_solicitante);
         $registro_solicitante = $result_solicitante->fetch_assoc();
         $c_email = $registro_solicitante['email'];
+        $c_email_manutencao = $c_email;
     }
     // chamo o envio de email
     // barra de progresso

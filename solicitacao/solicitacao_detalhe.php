@@ -142,19 +142,17 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
         </div>
     </div>
     <div class="container-fluid">
-                        <div style="padding-left:60px;">
-        <?php
-        $c_id_ordem = $registro["id"];
-
-        if ($_SESSION['tipo'] <> 'Solicitante' && $registro['status'] == 'A')
-            echo '<a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_gera_os.php?id=' . $c_id_ordem . '"><img src="\gop\images\ordem.png" alt="" width="25" height="25"> Gerar OS</a>';
-        ?>
-        <a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_lista.php"><img src="\gop\images\saida.png" alt="" width="25" height="25"> Voltar</a>
-
-                        </div>
 
         <div class="container content-box">
+            <?php
+            $c_id_ordem = $registro["id"];
 
+            if ($_SESSION['tipo'] <> 'Solicitante' && $registro['status'] == 'A')
+                echo '<a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_gera_os.php?id=' . $c_id_ordem . '"><img src="\gop\images\ordem.png" alt="" width="25" height="25"> Gerar OS</a>';
+            ?>
+
+            <a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_lista.php"><img src="\gop\images\saida.png" alt="" width="25" height="25"> Voltar</a>
+            <hr>
             <div class='alert alert-info' role='alert'>
                 <div style="padding-left:15px;">
                     <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
