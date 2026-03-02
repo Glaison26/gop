@@ -268,12 +268,12 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     <div class="container-fluid">
 
         <div class="container content-box">
-            <div style="padding-left:25px;">
+            <div style="padding-left:1px;">
                 <div class='alert alert-info' role='alert'>
-                    <div style="padding-left:15px;">
-                        <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
-                    </div>
+                    <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
+
+
                     <h5>Realize uma pesquisa com as opções de pesquisa de Ordens de Serviço abaixo</h5>
                 </div>
                 <form method="post">
@@ -310,10 +310,10 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                             }
                         </style>
                         <div style="padding-left:15px;">
-                                <p><strong> Data do Filtro</strong></p>
-                            </div>
+                            <p><strong> Data do Filtro</strong></p>
+                        </div>
                         <div style="padding-left:20px;">
-                            
+
                             <div class="row mb-2">
                                 <div class="col-sm-2">
                                     <label class="radio-label">
@@ -327,11 +327,6 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                                     <label class="radio-label"><input type="radio" value="C" name="rdo_data" id="rdo_data"> Conclusão
                                     </label>
                                 </div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div style="padding-left:240px;">
-                            <div class="row mb-3">
                                 <div class="form-check col-sm-3">
                                     <label class="radio-label"><input type="checkbox" value="S" name="chk_ignora" id="chk_ignora"> Ignorar Periodo</label>
                                 </div>
@@ -340,6 +335,14 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                                     <label class="radio-label"> <input type="checkbox" value="S" name="chk_sla" id="chk_sla">Fora de SLA</label>
                                 </div>
                             </div>
+
+                        </div>
+
+                        <div class="row mb-3">
+
+                        </div>
+                        <hr>
+                        <div style="padding-left:240px;">
                         </div>
 
                         <hr>

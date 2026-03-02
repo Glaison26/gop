@@ -177,15 +177,15 @@ $registro_conf = $result_conf->fetch_assoc();
         <!-- abas de solicitações por recursos físicos, Espaços físicos e avulsos -->
         <ul class="nav nav-tabs" role="tablist">
             <?php
-            if ($registro_conf['solicitacao_avulsa'] == 'S') {
+            if (($registro_conf['solicitacao_avulsa'] == 'S') || ($_SESSION['tipo'] <> 'Solicitante')) {
                 echo '
             <li role="presentation" class="active"><a href="#avulsas" aria-controls="avulsas" role="tab" data-toggle="tab">Visualizar Solicitações</a></li>';
             }
-            if ($registro_conf['solicitacao_recursos'] == 'S') {
+            if (($registro_conf['solicitacao_recursos'] == 'S') || ($_SESSION['tipo'] <> 'Solicitante')) {
                 echo '
             <li role="presentation"><a href="#recurso" aria-controls="recurso" role="tab" data-toggle="tab">Visualizar Solicitações em Recurso Físico</a></li>';
             }
-            if ($registro_conf['solicitacao_espacos'] == 'S') {
+            if (($registro_conf['solicitacao_espacos'] == 'S' || ($_SESSION['tipo'] <> 'Solicitante'))) {
                 echo '
             <li role="presentation"><a href="#espaco" aria-controls="espaco" role="tab" data-toggle="tab">Visualizar Solicitações em Espaços Físicos</a></li>';
             }
