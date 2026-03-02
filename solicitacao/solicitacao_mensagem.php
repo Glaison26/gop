@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $i_id_solicitacao = $_SESSION['id_solicitacao'];
     $c_descricao = rtrim($_POST['mensagem']);
     $i_id_usuario = $_SESSION["id_usuario"];
+    // tipo de envio. se feito por solicitante ou operador do sistema
     if ($_SESSION['tipo'] == 'Solicitante') {
         $c_tipo = "1";
     } else {
@@ -27,9 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $d_data = date("Y-m-d");
     $d_hora = date('H:i:s');
     $c_sql = "Insert into mensagens (mensagem,id_solicitacao, id_usuario,tipo, data, hora, status) 
-Value ('$c_descricao', '$i_id_solicitacao', '$i_id_usuario','$c_tipo', '$d_data', '$d_hora','N')";
+            Value ('$c_descricao', '$i_id_solicitacao', '$i_id_usuario','$c_tipo', '$d_data', '$d_hora','N')";
     $result = $conection->query($c_sql);
-
     // rotina para envio do email
     // pego o email da manutenção
     $c_email_manutencao = "";
@@ -38,20 +38,19 @@ Value ('$c_descricao', '$i_id_solicitacao', '$i_id_usuario','$c_tipo', '$d_data'
         $result_solicitante = $conection->query($c_sql_config);
         $c_linha_email = $result_solicitante->fetch_assoc();
         $c_email = $c_linha_email['email_manutencao'];
-        $c_email_manutencao = $c_linha_email['email_manutencao'];
+        $c_email_manutencao = "";
     } else {
         // manutenção enviando e-mail para solicitante
         $c_sql_solicitante = "Select email from usuarios where id='$i_id_usuario'";
         $result_solicitante = $conection->query($c_sql_solicitante);
         $registro_solicitante = $result_solicitante->fetch_assoc();
         $c_email = $registro_solicitante['email'];
-        $c_email_manutencao = $c_email;
+        $c_email_manutencao = "";
     }
     // chamo o envio de email
     // barra de progresso
     // mensagem em javascript de espera do envio do email
     if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
-
         $c_assunto = "Mensagem de sobre solicitação de Serviço No.:" . $i_id_solicitacao . " no Sistema GOP";
         $c_body = $c_descricao;
         $c_email_oficina = "";

@@ -45,9 +45,11 @@ try {
     $mail->send();
     echo 'Message has been sent';
     // configuração para envio para manutenção
-    $mail->ClearAddresses();
-    $mail->addAddress($c_email_manutencao, 'GOP');     // endereco da manutenção para onde será enviado
-    $mail->send();
+    if (!empty($c_email_manutencao)) {
+        $mail->ClearAddresses();
+        $mail->addAddress($c_email_manutencao, 'GOP');     // endereco da manutenção para onde será enviado
+        $mail->send();
+    }
 } catch (Exception $e) {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
