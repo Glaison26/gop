@@ -9,8 +9,15 @@ if (!isset($_SESSION['newsession'])) {
 }
 include("../conexao.php");
 include("../links2.php");
+date_default_timezone_set('America/Sao_Paulo');
 // pego id da solicitação selecionado na página anterior
-$i_id = $_GET["id"];
+if (isset($_GET['id'])) {
+    $i_id = $_GET['id'];
+    $_SESSION['id_solicitacao'] = $i_id;
+} else {
+    $i_id = $_SESSION['id_solicitacao'];
+}
+
 // verifico classificação da solicitação
 $c_sql = "select solicitacao.classificacao from solicitacao where solicitacao.id='$i_id'";
 $result = $conection->query($c_sql);
@@ -91,6 +98,43 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
 </head>
 
 <body>
+    <!-- Função javascript e ajax para inclusão dos dados -->
+    <script type="text/javascript">
+        $(document).on('submit', '#frm_add', function(e) {
+            e.preventDefault();
+            var c_descricao = $('#add_texto').val();
+
+            if (c_descricao != '') {
+
+                $.ajax({
+                    url: "mensagem_nova.php",
+                    type: "post",
+                    data: {
+                        c_descricao: c_descricao
+
+                    },
+                    success: function(data) {
+                        var json = JSON.parse(data);
+                        var status = json.status;
+
+                        location.reload();
+
+                        if (status == 'true') {
+
+                            $('#novoModal').modal('hide');
+                            location.reload();
+                        } else {
+                            alert('falha ao incluir dados');
+                        }
+                    }
+                });
+            } else {
+                alert('Preencha todos os campos obrigatórios');
+            }
+        });
+    </script>
+
+
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>GOP - Gestão Operacional</h4>
@@ -161,6 +205,13 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
                     }
                     ?>
                     <div class="row mb-3">
+                        <label class="col-md-2 form-label">Ocorrência</label>
+                        <div class="col-sm-6">
+                            <input type="text" readonly class="form-control" name="ocorrencia" id="ocorrencia" value='<?php echo $c_ocorrencia; ?>'>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
                         <label class="col-md-2 form-label">Hora</label>
                         <div class="col-sm-2">
                             <input type="text" readonly class="form-control" name="hora" id="hora" value='<?php echo $c_hora; ?>'>
@@ -202,12 +253,6 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
                             <input type="text" readonly class="form-control" name="status" id="status" value='<?php echo $c_status; ?>'>
                         </div>
                     </div>
-                    <div class="row mb-3">
-                        <label class="col-md-2 form-label">Ocorrência</label>
-                        <div class="col-sm-6">
-                            <input type="text" readonly class="form-control" name="ocorrencia" id="ocorrencia" value='<?php echo $c_ocorrencia; ?>'>
-                        </div>
-                    </div>
 
                 </div>
             </div>
@@ -216,19 +261,16 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
                 <div style="padding-top:15px;padding-left:20px;">
                     <!-- tabela com as mensagens trocadas entre usuário final e operador do sistema -->
 
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#mensagem"><img src="\gop\images\escrita.png" alt="" width="25" height="25">
-                        Nova Mensagem
-                    </button>
+                    <a class="btn btn-success btn-sm" href="/gop/solicitacao/solicitacao_mensagem.php"><span class="glyphicon glyphicon-envelope"></span> Nova Mensagem</a>
                     <hr>
                     <table class="table table   tab_mensagens">
                         <thead class="thead">
                             <tr>
-                                <th scope="col">#</th>
+
                                 <th scope="col">Data</th>
                                 <th scope="col">Hora</th>
                                 <th scope="col">Enviado por</th>
                                 <th scope="col">Tipo</th>
-                               
                                 <th scope="col">Mensagem</th>
 
                             </tr>
@@ -260,7 +302,7 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
                                 $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data'])));
                                 echo "
                     <tr>
-                    <td>$c_linha[id]</td>
+                    
                     <td>$c_data</td>
                     <td>$c_linha[hora]</td>
                     <td>$c_linha[nome]</td>
@@ -281,32 +323,5 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
         </div>
     </div>
 </body>
-
-<!-- Modal -->
-<div class="modal fade" id="mensagem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Nova Mensagem da Solicitação</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row mb-3">
-                    <label class="col-sm-5 col-form-label">Mensagem para envio</label>
-                    <div class="col-sm-20">
-                        <textarea class="form-control" id="add_texto" name="add_texto" rows="18"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-
-                <button type="button" class="btn btn-primary">Envia</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 </html>

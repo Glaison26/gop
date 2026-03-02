@@ -119,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $c_linha = $result->fetch_assoc();
             $solicitacao = $c_linha['id_solicitacao'];
             $c_assunto = "Abertura de Solicitação de Serviço no GOP";
-            $c_body = "Solicitação No.<b> $solicitacao </b> foi gerada com suceso! Aguarde o atendimento <br>"
+            $c_body = "Solicitação No.<b> $solicitacao </b> foi gerada com sucesso!  <br>"
                 . "Descrição da Solicitação :" . $c_descricao;
             include('../email_gop.php');
         }
