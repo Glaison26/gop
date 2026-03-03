@@ -66,7 +66,7 @@ frontend com tabela das preventivas a serem geradas
             "order": [1, 'asc'],
             "aoColumnDefs": [{
                 'bSortable': false,
-                'aTargets': [5]
+                'aTargets': [6]
             }, {
                 'aTargets': [0],
                 "visible": false
@@ -158,7 +158,7 @@ frontend com tabela das preventivas a serem geradas
             "order": [1, 'asc'],
             "aoColumnDefs": [{
                 'bSortable': false,
-                'aTargets': [7]
+                'aTargets': [6]
             }, {
                 'aTargets': [0],
                 "visible": false
