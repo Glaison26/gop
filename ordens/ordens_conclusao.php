@@ -10,8 +10,32 @@ if (!isset($_SESSION['newsession'])) {
 include('../links2.php');
 include('../conexao.php');
 date_default_timezone_set('America/Sao_Paulo');
-
 $i_id = $_SESSION['id_ordem']; // id da ordem de serviço
+// verifico se existem executores ou prestadores de servi anexos a ordem de serviço
+// total de executores
+$c_sql_executores = "select count(*) as total_executores FROM ordens_executores
+where ordens_executores.id_ordem = '$i_id' ";
+$result_executores = $conection->query($c_sql_executores);
+$c_linha_executores = $result_executores->fetch_assoc();
+$i_total_executores = $c_linha_executores['total_executores'];
+// tota de prestadores de servico
+$c_sql_prestadores = "select count(*) as total_prestadores FROM ordens_prestadores
+where ordens_prestadores.id_ordem = '$i_id' ";
+$result_prestadores = $conection->query($c_sql_prestadores);
+$c_linha_prestadores = $result_prestadores->fetch_assoc();
+$i_total_prestadores = $c_linha_prestadores['total_prestadores'];
+// consitencia se total de executores e prestadores = zero não deixa prossegui na conclusão
+if (($i_total_executores<1)&&($i_total_prestadores<1)){
+    //header('location: /gop/ordens/ordens_gerenciar.php');
+    echo "
+      <script>
+        alert('Nenhum executor ou prestador de serviço foi incluido a Ordem de serviço, favor verificar para realizar a conclusão!!');
+        window.location.href = '/gop/ordens/ordens_gerenciar.php';
+      </script>
+    ";
+
+}
+
 $c_conclusao = "";
 $msg_erro = "";
 // pego outros dados da ordem de servico

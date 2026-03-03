@@ -73,12 +73,15 @@ $_SESSION['id_ocorrencia'] = $c_linha_ordem['id_ocorrencia'];
                     if ($c_linha_ordem['status'] <> 'C' && $c_linha_ordem['status'] <> 'S' && $c_linha_ordem['status'] <> 'X') {
                         echo " 
                             <a class='btn btn btn-sm' title='Concluir Ordem de Serviço' href='\gop\ordens\ordens_conclusao.php?id=<?php echo $i_id ?>'><img src='\gop\images\concluir.png' alt='' width='30' height='25'><span> Concluir</span></a>
-                            <a class='btn btn btn-sm' title='Suspender Ordem de Serviço' href='\gop\ordens\ordens_suspender.php?id=<?php echo $i_id ?>'><i class='fas fa-pause-circle'></i><span> Suspender</span></a>
+                            <a class='btn btn btn-sm' title='Suspender Ordem de Serviço' href='\gop\ordens\ordens_suspender.php?id=<?php echo $i_id ?>'><img src='\gop\images\pausa.png' alt='' width='25' height='20'><span> Suspender</span></a>
                             <a class='btn btn btn-sm' title='Cancelar Ordem de Serviço' href='\gop\ordens\ordens_cancelar.php?id=<?php echo $i_id ?>'><img src='\gop\images\cancelar.png' alt='' width='25' height='20'><span> Cancelar</span></a>";
                     }
                     if ($c_linha_ordem['status'] == 'S')
                         echo "<a class='btn btn btn-sm' title='Tirar Suspensão' href='\gop\ordens\ordens_tirar_suspensao.php?id=<?php echo $i_id ?>'><img src='\gop\images\undo.png' alt='' width='20' height='20'><span> Tirar Suspensão</span></a>";
                     ?>
+                    
+                        <a class='btn btn btn-sm' title='Voltar' href='\gop\ordens\ordens_lista.php'><img src="\gop\images\saida.png" alt="" width="30" height="20"><span> Voltar</span></a>
+                    
 
                 </div>
                 <hr>
@@ -156,10 +159,7 @@ $_SESSION['id_ocorrencia'] = $c_linha_ordem['id_ocorrencia'];
                     </div>
 
                 </div>
-                <div style="padding-top:15px;padding-left:20px;">
-                    <hr>
-                    <a class='btn btn btn-sm' title='Voltar' href='\gop\ordens\ordens_lista.php'><img src="\gop\images\saida.png" alt="" width="30" height="20"><span> Voltar</span></a>
-                </div>
+
             </div>
 
         </div>
