@@ -308,22 +308,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <option value="S">Sistematica</option>
                         </select>
                     </div>
-
-
                 </div>
-
-
                 <div class="row mb-3">
                     <label class="col-sm-2 col-form-label">Descritivo</label>
                     <div class="col-sm-7">
                         <textarea required class="form-control" id="descritivo" name="descritivo" rows="10"><?php echo $c_descritivo ?></textarea>
                     </div>
                 </div>
-
                 <hr>
                 <div class="row mb-3">
                     <div class="offset-sm-0 col-sm-3">
-                        <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Finalizar</button>
+                        <button type="submit" class="btn btn"><img src="\gop\images\certo.png" alt="" width="25" height="25"> Finalizar</button>
                         <a class='btn' href='/gop/preventivas/preventivas_nova.php'><img src="\gop\images\saida.png" alt="" width="25" height="18"> Voltar</a>
                     </div>
                 </div>
