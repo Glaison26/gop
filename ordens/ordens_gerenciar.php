@@ -56,12 +56,7 @@ $_SESSION['id_ocorrencia'] = $c_linha_ordem['id_ocorrencia'];
                         <h5>Gerenciamento da Ordem de Serviço<h5>
                     </div>
                 </div>
-                <!-- painel com o número da ordem de serviço -->
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <h4>Ordem de Serviço Nº <?php echo $i_id ?> - <?php echo $c_linha_ordem['descritivo'] ?></h4>
-                    </div>
-                </div>
+
                 <!-- botões de ação da ordem de serviço -->
 
                 <div style="padding-bottom :2px;">
@@ -79,10 +74,17 @@ $_SESSION['id_ocorrencia'] = $c_linha_ordem['id_ocorrencia'];
                     if ($c_linha_ordem['status'] == 'S')
                         echo "<a class='btn btn btn-sm' title='Tirar Suspensão' href='\gop\ordens\ordens_tirar_suspensao.php?id=<?php echo $i_id ?>'><img src='\gop\images\undo.png' alt='' width='20' height='20'><span> Tirar Suspensão</span></a>";
                     ?>
-                    
-                        <a class='btn btn btn-sm' title='Voltar' href='\gop\ordens\ordens_lista.php'><img src="\gop\images\saida.png" alt="" width="30" height="20"><span> Voltar</span></a>
-                    
 
+                    <a class='btn btn btn-sm' title='Voltar' href='\gop\ordens\ordens_lista.php'><img src="\gop\images\saida.png" alt="" width="30" height="20"><span> Voltar</span></a>
+
+
+                </div>
+                <!-- painel com o número da ordem de serviço -->
+                <hr>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4>Ordem de Serviço Nº <?php echo $i_id ?> - <?php echo $c_linha_ordem['descritivo'] ?></h4>
+                    </div>
                 </div>
                 <hr>
 
