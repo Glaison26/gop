@@ -60,6 +60,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $c_sql_responsavel = "Select id,nome from usuarios where id='$c_responsavel'";
     $result_responsavel = $conection->query($c_sql_responsavel);
     $registro_responsavel = $result_responsavel->fetch_assoc();
+    // sql para pegar quem gerou a ordem de serviço
+    $c_gerador = $registro['id_resp_geracao'];
+    $c_sql_gerador = "Select id, nome from usuarios where id='$c_gerador'";
+    $result_gerador = $conection->query($c_sql_gerador);
+
+    if ($result_gerador->num_rows > 0) {
+        $registro_gerador = $result_gerador->fetch_assoc();
+        $c_resp_geracao = $registro_gerador['nome'];
+    } else
+        $c_resp_geracao = "";
+    // sql para pegar quem concluiu a ordem de serviço
+    $c_concluiu = $registro['id_resp_conclusao'];
+    $c_sql_concluiu = "Select id, nome from usuarios where id='$c_concluiu'";
+    $result_concluiu = $conection->query($c_sql_concluiu);
+    if ($result_concluiu->num_rows > 0) {
+        $registro_concluiu = $result_concluiu->fetch_assoc();
+        $c_resp_concluiu = $registro_concluiu['nome'];
+    } else
+        $c_resp_concluiu = "";
     // capturo dados da tabela para as variaveis
     $c_data_geracao = $registro['data_geracao'];
     $c_hora_geracao = $registro['hora_geracao'];
@@ -134,7 +153,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $result_setor = $conection->query($c_sql_setor);
     $c_linha = $result_setor->fetch_assoc();
     $i_setor = $c_linha['id'];
-    //
     $c_tipo_ordem = $_POST['tipo'];
     // para tipo corretiva
     if ($c_tipo_ordem == 'C') {
@@ -287,7 +305,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         <div class="container content-box">
             <div class='alert alert-info' role='alert'>
                 <div style="padding-left:15px;">
-                    <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
+                    <img Align="left" src="\gop\images\escrita.png" alt="30" height="25">
 
                 </div>
                 <h4>Edição de Ordem de Serviço no.<b><?php echo ' ' . $i_id ?></b>. Os campos com (*) são obrigatórios</h4>
@@ -367,7 +385,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                                     <input type="text" <?php echo $c_estado; ?> maxlength="50" class="form-control" name="descritivo" value="<?php echo $c_descritivo; ?>">
                                 </div>
                             </div>
-
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Gerado por</label>
+                                <div class="col-sm-6">
+                                    <input type="text" readonly class="form-control" name="gerador" value="<?php echo $c_resp_geracao; ?>">
+                                </div>
+                            </div>
                             <!-- executor responsavel -->
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Executor Responsável </label>
@@ -383,7 +406,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                                             if ($c_linha['id'] == $registro['id_executor_responsavel']) {
                                                 $op = "selected";
                                             }
-                                           echo "  
+                                            echo "  
                                     <option value='$c_linha[id]' $op>$c_linha[nome]</option>";
                                         }
                                         ?>
@@ -613,7 +636,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                                 <div class="col-sm-2">
                                     <input <?php echo $c_estado; ?> type="text" class="form-control" name="valor_material" id="valor_material" value="<?php echo $c_valor_material; ?>">
                                 </div>
+
+                                <label class="col-sm-1 col-form-label">Concluído por</label>
+                                <div class="col-sm-5">
+                                    <input type="text" readonly class="form-control" name="gerador" value="<?php echo $c_resp_concluiu; ?>">
+                                </div>
                             </div>
+
                             <br>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Conclusão</label>

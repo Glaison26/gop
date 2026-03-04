@@ -95,6 +95,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $d_hora_previsao =  new DateTime($_POST['hora_sla']);
     $d_hora_previsao = $d_hora_previsao->format('H:i');
     $i_id_ocorrencia = $registro_solicitacao['id_ocorrencia'];
+    // usuário que gerou a ordem de serviço
+    $i_id_resp_geracao = $_SESSION["id_usuario"];
 
     //echo $descritivo;
 
@@ -109,12 +111,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $c_sql = "Insert into ordens (id_solicitante,id_responsavel, id_setor, id_recurso
              , id_espaco, id_oficina, tipo, tipo_ordem, tipo_corretiva, descritivo
              , descricao, data_geracao, hora_geracao, data_previsao, hora_previsao, status, id_solicitacao,
-              id_ocorrencia, data_inicio, hora_inicio, id_executor_responsavel) 
+              id_ocorrencia, data_inicio, hora_inicio, id_executor_responsavel, id_resp_geracao) 
              value ('$i_id_solicitante', '$i_responsavel','$i_id_setor', '$i_id_recurso', 
              '$i_id_espaco', '$i_id_oficina', '$c_tipo', '$c_tipo_ordem', '$c_tipo_corretiva',
              '$c_descritivo', '$c_descricao', '$d_data_geracao', '$d_hora_geracao', 
              '$d_data_previsao', '$d_hora_previsao', 'A', '$i_id ', '$i_id_ocorrencia', 
-             '$d_data_inicio','$d_hora_inicio', $i_executor_resp) ";
+             '$d_data_inicio','$d_hora_inicio', '$i_executor_resp', '$i_id_resp_geracao') ";
         $result = $conection->query($c_sql);
         $c_sql =    "SELECT MAX(ordens.ID) AS id_ordem FROM ordens";
         $result = $conection->query($c_sql);

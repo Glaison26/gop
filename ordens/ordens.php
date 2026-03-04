@@ -271,9 +271,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
             <div style="padding-left:1px;">
                 <div class='alert alert-info' role='alert'>
 
-                    <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
-
-
+                    <img Align="left" src="\gop\images\escrita.png" alt="30" height="25">
                     <h5>Realize uma pesquisa com as opções de pesquisa de Ordens de Serviço abaixo</h5>
                 </div>
                 <form method="post">
@@ -288,11 +286,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                         </div>
                     </div>
 
-                    <div class="panel panel-light class">
-                        <div class="panel-heading text-center">
-                            <h4>Opções de Consulta<h4>
-                        </div>
-                    </div>
+                    
                     <!-- radio butto para escolher datas de abertura ou conclusão -->
                     <div class="row mb-3">
 
@@ -311,7 +305,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                         </style>
                         <div style="padding-left:15px;">
                             <p><strong> Data do Filtro</strong></p>
-                        </div>
+                       
                         <div style="padding-left:20px;">
 
                             <div class="row mb-2">
@@ -338,14 +332,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
 
                         </div>
 
-                        <div class="row mb-3">
-
-                        </div>
-                        <hr>
-                        <div style="padding-left:240px;">
-                        </div>
-
-                        <hr>
+                         <hr>
                         <div class="row mb-3">
                             <label class="col-md-2 form-label">No. da Ordem</label>
                             <div class="col-sm-2">
@@ -490,7 +477,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                                 </select>
                             </div>
                         </div>
-
+                        </div>
                 </form>
             </div>
         </div>

@@ -104,9 +104,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $c_data_conclusao = $_POST['data_conclusao'];
         $c_hora_conclusao = $_POST['hora_conclusao'];
         $c_conclusao = $_POST['conclusao'];
+        $i_id_resp_conclusao = $_SESSION["id_usuario"];
 
         $c_sql_up = "update ordens set status='C', data_conclusao='$c_data_conclusao', 
-            hora_conclusao='$c_hora_conclusao', conclusao='$c_conclusao' where id=$i_id";
+            hora_conclusao='$c_hora_conclusao', conclusao='$c_conclusao', id_resp_conclusao='$i_id_resp_conclusao'  where id=$i_id";
         $result_up = $conection->query($c_sql_up);
 
         // rotina de envio de email da conclusão para solicitante, manutenção e oficina
