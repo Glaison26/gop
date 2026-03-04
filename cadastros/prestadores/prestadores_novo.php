@@ -35,6 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $c_url = $_POST['url'];
     $c_obs = $_POST['obs'];
     $c_status = $_POST['status'];
+    $c_estado = $_POST['estado'];
+    $e_mail = $_POST['email'];
     // status igual "S" para ativo e "N" para inativo
     if ($c_status == 'Ativo') {
         $c_status = 'S';
@@ -289,13 +291,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="row mb-3">
                     <label class="col-sm-3 col-form-label">Valor do Contrato *</label>
                     <div class="col-sm-3">
-                        <input type="text" maxlength="10" id="valor_contrato" class="form-control" name="valor_contrato" placeholder="Valor do Contrato">
+                        <input type="text" required maxlength="10" id="valor_contrato" class="form-control" name="valor_contrato" placeholder="Valor do Contrato">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-3 col-form-label">Valor da Visita *</label>
                     <div class="col-sm-3">
-                        <input type="text" maxlength="10" id="valor_visita" class="form-control" name="valor_visita" placeholder="Valor da Visita">
+                        <input type="text" required maxlength="10" id="valor_visita" class="form-control" name="valor_visita" placeholder="Valor da Visita">
                     </div>
                 </div>
                 <div class="row mb-3">
