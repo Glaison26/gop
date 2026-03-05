@@ -336,7 +336,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </div>
                             <hr>
                             <div class="row mb-3">
-                                <label class="col-sm-3 col-form-label">Fornecedor </label>
+                                <label class="col-sm-3 col-form-label">Fornecedor *</label>
                                 <div class="col-sm-6">
                                     <select class="form-select form-select-lg mb-3" id="fornecedor" name="fornecedor" required>
                                         <option></option>
@@ -355,7 +355,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-3 col-form-label">Fabricante </label>
+                                <label class="col-sm-3 col-form-label">Fabricante * </label>
                                 <div class="col-sm-6">
                                     <select class="form-select form-select-lg mb-3" id="fabricante" name="fabricante" required>
                                         <option></option>
@@ -396,7 +396,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         ?>
                                     </select>
                                 </div>
-                                <label class="col-sm-1 col-form-label">Marca </label>
+                                <label class="col-sm-1 col-form-label">Marca * </label>
                                 <div class="col-sm-2">
                                     <select class="form-select form-select-lg mb-3" id="marca" name="marca" required>
                                         <option></option>
@@ -414,7 +414,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label class="col-sm-3 col-form-label">Espaço Físico </label>
+                                <label class="col-sm-3 col-form-label">Espaço Físico * </label>
                                 <div class="col-sm-5">
                                     <select class="form-select form-select-lg mb-3" id="espaco" name="espaco" required>
                                         <option></option>
@@ -433,7 +433,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-3 col-form-label">Centro de Custo </label>
+                                <label class="col-sm-3 col-form-label">Centro de Custo *</label>
                                 <div class="col-sm-5">
                                     <select class="form-select form-select-lg mb-3" id="centrodecusto" name="centrodecusto" required>
                                         <option></option>
@@ -470,7 +470,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-3 col-form-label">Setor </label>
+                                <label class="col-sm-3 col-form-label">Setor *</label>
                                 <div class="col-sm-5">
                                     <select class="form-select form-select-lg mb-3" id="setor" name="setor" required>
                                         <option></option>
@@ -507,7 +507,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div class="row mb-5">
 
                                 <div class="row mb-3">
-                                    <label class="col-sm-3 col-form-label">Conservação</label>
+                                    <label class="col-sm-3 col-form-label">Conservação *</label>
                                     <div class="col-sm-2">
                                         <select class="form-select form-select-lg mb-3" id="estado" name="estado" value="<?php echo $c_estado; ?>" required>
                                             <option></option>
