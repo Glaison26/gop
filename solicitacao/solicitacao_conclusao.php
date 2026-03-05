@@ -106,10 +106,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
         }
         // pego o email da manutenção
-        $c_sql_config = "select email_manutencao from configuracoes";
+        $c_sql_config = "select email_manutencao, email_envio from configuracoes";
         $result = $conection->query($c_sql_config);
         $c_linha_email = $result->fetch_assoc();
         $c_email_manutencao = $c_linha_email['email_manutencao'];
+        $c_email_envio = $c_linha_email['email_envio'];
         // chamo o envio de email
         // barra de progresso
         // mensagem em javascript de espera do envio do email

@@ -20,7 +20,7 @@ $mail = new PHPMailer(true);
 try {
     //Server settings
     //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-    $c_email_envio = 'glaison26.queiroz@gmail.com';
+    $c_email_envio = $c_email_envio;
     $mail->CharSet = 'UTF-8';
     $mail->isSMTP();                                            //Send using SMTP
     $mail->Host       = $c_host_email;                     //Set the SMTP server to send through

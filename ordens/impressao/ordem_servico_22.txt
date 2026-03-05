@@ -1,0 +1,14 @@
+Ordem de Serviço Nº: 22
+Data de Geração: 05/03/2026 Hora: 19:28:00
+Solicitante: Glaison
+Setor: Obras Públicas
+Tipo de Ordem: Corretiva
+Ocorrência: Formatação de Computador
+Executor Responsável: Funcionario A
+Descrição: Favor preencher as informações abaixo :
+
+Usuário :
+Possui backup (sim ou não) :
+Possui microsoft office (sim/não):
+
+

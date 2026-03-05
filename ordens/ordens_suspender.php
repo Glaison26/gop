@@ -46,10 +46,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // envio para solicitante, oficina e 
         // rotina de envio de email da conclusão para solicitante, manutenção e oficina
         // pego o email da manutenção
-        $c_sql_config = "select email_manutencao from configuracoes";
+        $c_sql_config = "select email_manutencao, email_envio from configuracoes";
         $result = $conection->query($c_sql_config);
         $c_linha_email = $result->fetch_assoc();
         $c_email_manutencao = $c_linha_email['email_manutencao'];
+        $c_email_envio = $c_linha_email['email_envio'];
         //echo $c_email_oficina;
         // procuro solicitante para enviar e-mail
         $c_sql_sol = "select id_solicitante from ordens where id=$i_id";

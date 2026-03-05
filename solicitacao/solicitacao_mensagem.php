@@ -14,7 +14,7 @@ date_default_timezone_set('America/Sao_Paulo');
 // gravação e envio da mensagem
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    
+
     // rotina de inclusão
     $i_id_solicitacao = $_SESSION['id_solicitacao'];
     $c_descricao = rtrim($_POST['mensagem']);
@@ -33,10 +33,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // rotina para envio do email
     // pego o email da manutenção
     $c_email_manutencao = "";
+    $c_sql_config = "select email_manutencao, email_envio from configuracoes";
+    $result_solicitante = $conection->query($c_sql_config);
+    $c_linha_email = $result_solicitante->fetch_assoc();
+    $c_email_envio = $c_linha_email['email_envio'];
     if ($c_tipo == "1") { // solicitante enviando email para manutenção
-        $c_sql_config = "select email_manutencao from configuracoes";
-        $result_solicitante = $conection->query($c_sql_config);
-        $c_linha_email = $result_solicitante->fetch_assoc();
         $c_email = $c_linha_email['email_manutencao'];
         $c_email_manutencao = "";
     } else {

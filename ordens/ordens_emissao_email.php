@@ -134,6 +134,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo post para envio do email
             $pdf->Cell(40, 10, mb_convert_encoding('- ' . $row['descricao'] . ' - Quantidade: ' . $row['quantidade'] . ' ' . $row['unidade_medida'], 'ISO-8859-1', 'UTF-8'));
             $pdf->Ln();
         }
+    }else {
+        $pdf->Cell(40, 10, mb_convert_encoding('Nenhum Material cadastrado', 'ISO-8859-1', 'UTF-8'));
+        $pdf->Ln();
     }
     $pdf->Ln();
     $pdf->Line(10, 20, 200, 20);

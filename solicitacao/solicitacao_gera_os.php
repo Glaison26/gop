@@ -136,10 +136,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $c_email_oficina = $registro_oficina['email']; // email da oficina selecionada na ordem de serviço
         // pego o email da manutenção
-        $c_sql_config = "select email_manutencao from configuracoes";
+        $c_sql_config = "select email_envio, email_manutencao from configuracoes";
         $result = $conection->query($c_sql_config);
         $c_linha_email = $result->fetch_assoc();
         $c_email_manutencao = $c_linha_email['email_manutencao'];
+        $c_email_envio = $c_linha_email['email_envio'];
         //echo $c_email_oficina;
         // mensagem na pagina para aguardar o envio do e-mail
         echo '<div class="alert alert-info" role="alert">
