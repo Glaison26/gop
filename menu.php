@@ -433,8 +433,18 @@ $_SESSION['ver_os'] = false;
 
         </div>
 
+
     </main>
     ';
+    } else {
+        echo '
+     <div class="container_btn">
+        <h1>Solicitação de Serviço</h1>
+        <p>Clique no botão abaixo para nova solicitação.</p>
+        <div class="btn-home_btn">
+            <a href="/gop/solicitacao/solicitacao_nova.php">Abrir Nova Solicitação</a>
+        </div>
+    </div>';
     }
     ?>
 
@@ -445,3 +455,48 @@ $_SESSION['ver_os'] = false;
 </body>
 
 </html>
+
+<style>
+    .body_btn {
+        background-color: #0f1de7;
+        color: #0f1de7;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .container_btn {
+        text-align: center;
+        border: 2px solid #1461d4;
+        padding: 30px;
+        border-radius: 10px;
+        background-color: #ffffff;
+    }
+
+    h1_btn {
+        font-size: 48px;
+        margin-bottom: 20px;
+    }
+
+    p_btn {
+        font-size: 18px;
+    }
+
+    .btn-home_btn {
+        margin-top: 20px;
+    }
+
+    .btn-home_btn a {
+        text-decoration: none;
+        color: #ffffff;
+        background-color: #1640cc;
+        padding: 10px 20px;
+        border-radius: 5px;
+    }
+
+    .btn-home_bnt a:hover {
+        background-color: #123250;
+    }
+</style>

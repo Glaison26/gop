@@ -1,0 +1,11 @@
+Ordem de Serviço Nº: 23
+Data de Geração: 07/03/2026 Hora: 11:42:00
+Previsão de Entrega: 08/03/2026 Hora: 11:42:00
+Previsão de Inicio: 07/03/2026 Hora: 11:42:00
+Solicitante: Glaison
+Setor: Fazenda
+Tipo de Ordem: Corretiva
+Ocorrência: Instalação de Impressora no Computador
+Executor Responsável: Jedean do Carmo
+Descrição: Selb da Impressora:09877
+Modelo da Impressora:ricoh

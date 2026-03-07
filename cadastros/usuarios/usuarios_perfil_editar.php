@@ -214,6 +214,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     } else {
         $c_chkprestadoresdeservico = 'N';
     }
+    // gerador de Ordem de Serviço
+    if ($registro['gera_os'] == 'S') {
+        $c_chkgera_os = 'checked';
+    } else {
+        $c_chkgera_os = 'N';
+    }
 }
 // Metodo post para gravação dos dados editados
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -416,6 +422,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         $c_chkprestadoresdeservico = 'N';
     }
+    // // gera ordem de serviço
+    if (isset($_POST['chkgera_os'])) {
+        $c_chkgera_os = 'S';
+    } else {
+        $c_chkgera_os = 'N';
+    }
 
     do {
 
@@ -431,7 +443,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         almoxarifado_cotacoes='$c_chkcotacao', almoxarifado_pedidodecompra='$c_chkpedidodecompra', almoxarifado_materiais='$c_chkmateriais',
         almoxarifado_unidadesmedidas='$c_chkunidades', indicadores_ocorrencias='$c_chkcontagem', indicadores_comparativos='$c_chkcomparativo',
         custos_ocorrencias='$c_chkcustoindividual', custos_comparativos='$c_chkcomparativocustos', cadastros_tipos='$c_chktipo',
-        obras='$c_chkobras', servicos_agenda='$c_chkagendaexecutores', cadastros_prestadores='$c_chkprestadoresdeservico'
+        obras='$c_chkobras', servicos_agenda='$c_chkagendaexecutores', cadastros_prestadores='$c_chkprestadoresdeservico',
+        gera_os='$c_chkgera_os'
         where id='$c_id'";
         //echo $c_sql;
         $result = $conection->query($c_sql);
@@ -469,9 +482,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
     <br>
     <div class="container-fluid">
-
-
-
         <?php
         if (!empty($msg_erro)) {
             echo "
@@ -676,6 +686,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <label class="form-check-label col-form-label">Agenda de Executores</label>
                                     <div class="col-sm-3">
                                         <input class="form-check-input" type="checkbox" value="S" name="chkagendaexecutores" id="chkagendaexecutores" <?php echo $c_chkagendaexecutores ?>>
+                                    </div>
+                                </div>
+                                 <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Gerar Ordem de Serviço</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkgera_os" id="chkgera_os" <?php echo $c_chkgera_os ?>>
                                     </div>
                                 </div>
                             </div>

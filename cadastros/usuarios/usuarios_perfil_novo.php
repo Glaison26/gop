@@ -217,6 +217,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $c_chkagendaexecutores = 'N';
         }
+        // gerar ordens de serviços
+        if (isset($_POST['chkgera_os'])) {
+            $c_chkgera_os = 'S';
+        } else {
+            $c_chkgera_os = 'N';
+        }
         // grava dados no banco
 
         // faço a Leitura da tabela com sql
@@ -225,12 +231,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         cadastros_setores, cadastros_ferramentas, cadastros_grupos, cadastros_marcas, cadastros_pop, cadastros_checklist,
         servicos_solicitacoes, servicos_ordens,servicos_preventivas,servicos_ocorrencias_padroes,servicos_plano_acao,
         almoxarifado_cotacoes, almoxarifado_pedidodecompra, almoxarifado_materiais, almoxarifado_unidadesmedidas,
-        indicadores_ocorrencias, indicadores_comparativos, custos_ocorrencias, custos_comparativos, cadastros_tipos, obras, cadastros_prestadores, servicos_agenda) value
+        indicadores_ocorrencias, indicadores_comparativos, custos_ocorrencias, custos_comparativos, cadastros_tipos,
+         obras, cadastros_prestadores, servicos_agenda,gera_os) value
         ('$c_descricao','$c_chkrecursosfisicos', '$c_chkespacosfisicos', '$c_chkfornecedores', '$c_chkfabricantes',
         '$c_chkexecutores', '$c_chkexecutores', '$c_chkfcargosfuncoes', '$c_chkoficinas', '$c_chkcentrosdecusto', '$c_chksetores',
         '$c_chkferramentas', '$c_chkgruposrecursos', '$c_chkmarcasrecursos','$c_chkpop', '$c_chksolicitacoes', '$c_chkordens',
         '$c_chkpreventivas', '$c_chkocorrencias', '$c_chkplanoacao','$c_chkcotacao','$c_chkpedidodecompra','$c_chkmateriais', '$c_chkunidades',
-        '$c_chkcontagem', '$c_chkcomparativo', '$c_chkcustoindividual', '$c_chkcomparativocustos', '$c_chktipo', '$c_chkobras', '$c_chkprestadoresdeservico', '$c_chkagendaexecutores')";
+        '$c_chkcontagem', '$c_chkcomparativo', '$c_chkcustoindividual', '$c_chkcomparativocustos', '$c_chktipo', '$c_chkobras',
+         '$c_chkprestadoresdeservico', '$c_chkagendaexecutores', '$c_chkgera_os')";
 
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
@@ -485,6 +493,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <label class="form-check-label col-form-label">Agenda de Executores</label>
                                     <div class="col-sm-3">
                                         <input class="form-check-input" type="checkbox" value="S" name="chkagendaexecutores" id="chkagendaexecutores" checked>
+                                    </div>
+                                </div>
+                                 <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Gerar Ordem de Serviço</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkgera_os" id="chkgera_os" checked>
                                     </div>
                                 </div>
                             </div>

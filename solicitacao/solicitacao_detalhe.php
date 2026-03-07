@@ -17,6 +17,17 @@ if (isset($_GET['id'])) {
 } else {
     $i_id = $_SESSION['id_solicitacao'];
 }
+$i_id_usuario = $_SESSION["id_usuario"];
+$c_sql_acesso = "select usuarios.tipo, perfil_usuarios.servicos_solicitacoes, perfil_usuarios.gera_os FROM usuarios
+JOIN perfil_usuarios ON usuarios.id_perfil=perfil_usuarios.id
+WHERE usuarios.id='$i_id_usuario'";
+
+$result_acesso = $conection->query($c_sql_acesso);
+$registro_acesso = $result_acesso->fetch_assoc();
+if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_solicitacoes'] == 'N') {
+
+    header('location: /gop/acesso.php');
+}
 
 // verifico classificação da solicitação
 $c_sql = "select solicitacao.classificacao from solicitacao where solicitacao.id='$i_id'";
@@ -146,9 +157,11 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
         <div class="container content-box">
             <?php
             $c_id_ordem = $registro["id"];
-
-            if ($_SESSION['tipo'] <> 'Solicitante' && $registro['status'] == 'A')
-                echo '<a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_gera_os.php?id=' . $c_id_ordem . '"><img src="\gop\images\ordem.png" alt="" width="25" height="25"> Gerar OS</a>';
+            
+            if ($_SESSION['tipo'] <> 'Solicitante' && $registro['status'] == 'A') {
+                if (($registro_acesso['gera_os'] =='S'&&$_SESSION['tipo']=='Operador')||($_SESSION['tipo']=='Administrador'))
+                echo '<a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_gera_os.php?id=' . $c_id_ordem . '"><img src="\gop\images\ordem.png" alt="" width="25" height="25"> Gerar Ordem de Serviço</a>';
+            }
             ?>
 
             <a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_lista.php"><img src="\gop\images\saida.png" alt="" width="25" height="25"> Voltar</a>

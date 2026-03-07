@@ -9,6 +9,18 @@ $c_sql_avulso = $_SESSION['sqlavulso'];
 //echo $c_sql_recurso;
 include('../links.php');
 include('../conexao.php');
+$i_id_usuario = $_SESSION["id_usuario"];
+$c_sql_acesso = "select usuarios.tipo, perfil_usuarios.servicos_ordens FROM usuarios
+JOIN perfil_usuarios ON usuarios.id_perfil=perfil_usuarios.id
+WHERE usuarios.id='$i_id_usuario'";
+
+$result_acesso = $conection->query($c_sql_acesso);
+$registro_acesso = $result_acesso->fetch_assoc();
+if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_ordens'] == 'N') {
+
+    header('location: /gop/acesso.php');
+}
+
 // sql do arquivo de configurações 
 $c_sql_conf = "select * from configuracoes";
 $result_conf = $conection->query($c_sql_conf);
