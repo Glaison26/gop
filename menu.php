@@ -15,6 +15,7 @@ $_SESSION['consulta_solicitacao'] = "";
 $_SESSION['consulta_ordem'] = "";
 $_SESSION['consulta_resumo'] = "S";
 $_SESSION['checa_preventiva'] = "N";
+$_SESSION['i_id_tipo_ocorrencia']="";
 // verifico numero de solicitações em aberto
 $c_sql = "select COUNT(*) AS aberta_solicitacao FROM solicitacao WHERE STATUS = 'A'";
 $result = $conection->query($c_sql);
@@ -446,6 +447,7 @@ $_SESSION['ver_os'] = false;
         <div class="btn-home_btn">
             <a href="/gop/solicitacao/solicitacao_nova.php">Abrir Nova Solicitação</a>
         </div>
+        <br><br>
     </div>';
     }
     ?>
