@@ -438,9 +438,11 @@ $_SESSION['ver_os'] = false;
     ';
     } else {
         echo '
-     <div class="container_btn">
+   <div class="container_btn">
+        <br>
         <h1>Solicitação de Serviço</h1>
         <p>Clique no botão abaixo para nova solicitação.</p>
+        <br>
         <div class="btn-home_btn">
             <a href="/gop/solicitacao/solicitacao_nova.php">Abrir Nova Solicitação</a>
         </div>
