@@ -459,7 +459,7 @@ $_SESSION['ver_os'] = false;
 <style>
     .body_btn {
         background-color: #0f1de7;
-        color: #0f1de7;
+        color: #e7e2e2;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -469,7 +469,7 @@ $_SESSION['ver_os'] = false;
 
     .container_btn {
         text-align: center;
-        border: 2px solid #1461d4;
+        border: 2px solid #f0f3f7;
         padding: 30px;
         border-radius: 10px;
         background-color: #ffffff;
