@@ -21,7 +21,7 @@ $c_sql_conta = "select count(*) nregistros from ocorrencias where id_tipo_ocorre
 $result = $conection->query($c_sql_conta);
 $registro = $result->fetch_assoc();
 if ($registro['nregistros'] == 0) {
-    $c_sql = "delete from tipoocorrencia where id=$c_id";
+    $c_sql = "delete from tipo_ocorrencia where id=$c_id";
     $result = $conection->query($c_sql);
     header('location: /gop/cadastros/ocorrenciaa/tipo_ocorrencias.php');
 } else {
