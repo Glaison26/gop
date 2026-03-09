@@ -27,6 +27,6 @@ if ($registro['nregistros'] == 0) {
 } else {
     echo "<script>alert('Não é possivel excluir registro!')</script>";
     echo "<div class='container-fluid'>
-     <a class='btn btn-primary' href='/gop/cadastros/ocorrenciaa/tipo_ocorrencias.php'><span class='glyphicon glyphicon-off'></span> Voltar a Lista</a>
+     <a class='btn btn-primary' href='/gop/cadastros/ocorrencias/tipo_ocorrencias.php'><span class='glyphicon glyphicon-off'></span> Voltar a Lista</a>
     </div>";
 }
