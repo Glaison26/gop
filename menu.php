@@ -86,6 +86,7 @@ $_SESSION['ver_os'] = false;
             <div class="text-white font-bold text-xl">
                 <i class="fas fa-tools mr-2"></i>GOP - Gestão Operacional
             </div>
+            
 
             <div class="hidden md:flex items-center space-x-6">
 
