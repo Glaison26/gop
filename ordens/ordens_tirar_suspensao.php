@@ -145,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $agora_retirada = date('H:i');
         $c_data_retirada = date('Y-m-d');
         ?>
-        <form method="post">
+        <form method="post" name="frm_tira_suspensao" id="frm_tira_suspensao">
             <div class="row mb-8">
                 <label class="col-md-2 form-label">Data Suspensão</label>
                 <div class="col-sm-2">
@@ -186,5 +186,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 
 </body>
+
+<script>
+    document.getElementById('frm_tira_suspensao').addEventListener('submit', function() {
+        document.getElementById('modalProcessamento').style.display = 'block';
+    });
+</script>
+
+<div id="modalProcessamento" class="modal" style="display:none; position:fixed; z-index:1; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.4);">
+    <div class="modal-content" style="background-color:#fefefe; margin:15% auto; padding:20px; border:1px solid #888; width:300px; border-radius:5px; text-align:center;">
+        <h4>Processando...</h4>
+        <p>Aguarde o envio do email de notificação</p>
+        <div style="margin-top:20px;">
+            <div class="spinner-border" role="status" style="display:inline-block;">
+                <span class="sr-only">Carregando...</span>
+            </div>
+        </div>
+    </div>
+</div>
 
 </html>
