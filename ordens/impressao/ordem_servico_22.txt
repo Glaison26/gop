@@ -1,14 +1,11 @@
 Ordem de Serviço Nº: 22
-Data de Geração: 05/03/2026 Hora: 19:28:00
-Solicitante: Glaison
-Setor: Obras Públicas
+Data de Geração: 18/03/2026 Hora: 10:31:00
+Previsão de Entrega: 18/03/2026 Hora: 11:01:00
+Previsão de Inicio: 18/03/2026 Hora: 10:31:38
+Solicitante: Glaison Queiroz
+Setor: Administração
 Tipo de Ordem: Corretiva
-Ocorrência: Formatação de Computador
-Executor Responsável: Funcionario A
-Descrição: Favor preencher as informações abaixo :
-
-Usuário :
-Possui backup (sim ou não) :
-Possui microsoft office (sim/não):
-
-
+Ocorrência: Criação de Usuário de Rede
+Executor Responsável: Tecnico 1
+Descrição: 
+Pastas de Acesso:

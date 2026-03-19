@@ -21,12 +21,12 @@ $c_sql_conta = "select count(*) nregistros from ocorrencias where id_tipo_ocorre
 $result = $conection->query($c_sql_conta);
 $registro = $result->fetch_assoc();
 if ($registro['nregistros'] == 0) {
-    $c_sql = "delete from tipoocorrencia where id=$c_id";
+    $c_sql = "delete from tipo_ocorrencia where id=$c_id";
     $result = $conection->query($c_sql);
     header('location: /gop/cadastros/ocorrenciaa/tipo_ocorrencias.php');
 } else {
     echo "<script>alert('Não é possivel excluir registro!')</script>";
     echo "<div class='container-fluid'>
-     <a class='btn btn-primary' href='/gop/cadastros/ocorrenciaa/tipo_ocorrencias.php'><span class='glyphicon glyphicon-off'></span> Voltar a Lista</a>
+     <a class='btn btn-primary' href='/gop/cadastros/ocorrencias/tipo_ocorrencias.php'><span class='glyphicon glyphicon-off'></span> Voltar a Lista</a>
     </div>";
 }
