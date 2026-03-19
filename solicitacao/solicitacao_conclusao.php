@@ -8,6 +8,8 @@ include("../links2.php");
 $c_solicitacao = $_SESSION['ocorrencia'];
 $c_ocorrencia = $_SESSION['valor_ocorrencia'];
 $i_id_tipo_ocorrencia = $_SESSION['i_id_tipo_ocorrencia'];
+$_SESSION['finaliza'] = false;
+
 
 if ($_SESSION['tiposolicitacao'] == 'R') { // recurso fisico
     // pego id do recurso selecionado na página anterior
@@ -41,7 +43,7 @@ if ($_SESSION['tiposolicitacao'] == 'E') {  // espaço físico
 
 //$c_solicitacao = "";
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if (($_SERVER['REQUEST_METHOD'] == 'POST') ) {
 
     // procuro solicitante
     $c_solicitante = $_SESSION['c_usuario'];
@@ -116,8 +118,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $result = $conection->query($c_sql);
         $c_linha = $result->fetch_assoc();
         $solicitacao = $c_linha['id_solicitacao'];
-        
-        echo "<script>document.getElementById('finalizar').disabled = true;</script>";
+
+
         // chamo o envio de email
         // barra de progresso
         // mensagem em javascript de espera do envio do email
@@ -129,7 +131,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $c_assunto = "Abertura de Solicitação de Serviço no GOP";
             $c_body = "Solicitação No.<b> $solicitacao </b> foi gerada com sucesso!  <br>"
                 . "Descrição da Solicitação :" . $c_descricao;
+                
+            
             include('../email_gop.php');
+           
+           
         }
         header('location: /gop/solicitacao/solicitacao_gerada.php?id_recurso=$i_id_recurso');
     } while (false);
@@ -146,30 +152,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>GOP - Conclusão de Solicitação</title>
     <link rel="stylesheet" href="/gop/css/basico.css">
 
-    <!-- css para centralizar o loading -->
-    <style>
-        #loading {
-            /* Centraliza a div na tela */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.8);
-            /* Fundo branco semi-transparente */
-            display: none;
-            /* Inicia oculto */
-            z-index: 9999;
-            /* Garante que fica por cima */
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-    </style>
-
+   
 </head>
 
 <body>
+    
     <script>
         // chama arquivo para pegar ocorrencia
         function verifica(value) {
@@ -184,14 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     </script>
 
-    <script>
-        document.getElementById('frm_solicitacao').addEventListener('submit', function() {
-            // Mostra o loading ao submeter
-            document.getElementById('loading').style.display = 'flex';
-
-
-        });
-    </script>
+    
 
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
@@ -237,13 +217,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $c_sql_tipo = "SELECT tipo_ocorrencia.id, tipo_ocorrencia.descricao FROM tipo_ocorrencia ORDER BY tipo_ocorrencia.descricao";
                         $result_tipo = $conection->query($c_sql_tipo);
                         while ($c_linha = $result_tipo->fetch_assoc()) {
-                       $op = "";
-                                if ($_SESSION['i_id_tipo_ocorrencia'] == $c_linha['id'])
-                                    $op = 'selected';
-                                else
-                                    $op = "";
-                                echo "<option $op>$c_linha[descricao]</option>";
-        
+                            $op = "";
+                            if ($_SESSION['i_id_tipo_ocorrencia'] == $c_linha['id'])
+                                $op = 'selected';
+                            else
+                                $op = "";
+                            echo "<option $op>$c_linha[descricao]</option>";
                         }
                         ?>
                     </select>
@@ -322,7 +301,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <hr>
             <div class="row mb-3">
                 <div class="offset-sm-0 col-sm-3">
-                    <button type="submit" onclick="this.disabled=true; this.innerText='Finalizando...';" class="btn"><img src="\gop\images\certo.png" name='finalizar' id='finalizar' alt="" width="25" height="25"></span> Finalizar</button>
+                    <button type="submit" class="btn"><img src="\gop\images\certo.png" onclick="this.innerText='Finalizando...';"  name='finalizar' id='finalizar' alt="" width="25" height="25"></span> Finalizar</button>
                     <a class='btn btn' href='/gop/solicitacao/solicitacao.php'><img src="\gop\images\saida.png" alt="" width="25" height="25"> Voltar</a>
                 </div>
             </div>
@@ -332,6 +311,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 </body>
 
+<script>
+    document.getElementById('frm_solicitacao').addEventListener('submit', function() {
+        document.getElementById('modalProcessamento').style.display = 'block';
+    });
+</script>
+
+<div id="modalProcessamento" class="modal" style="display:none; position:fixed; z-index:1; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.4);">
+    <div class="modal-content" style="background-color:#fefefe; margin:15% auto; padding:20px; border:1px solid #888; width:300px; border-radius:5px; text-align:center;">
+        <h4>Processando...</h4>
+        <p>Aguarde o envio do email de notificação</p>
+        <div style="margin-top:20px;">
+            <div class="spinner-border" role="status" style="display:inline-block;">
+                <span class="sr-only">Carregando...</span>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 </html>

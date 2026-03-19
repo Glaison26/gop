@@ -7,6 +7,7 @@ $_SESSION['tiposolicitacao'] = 'V';
 $_SESSION['opcao'] = "S";
 $_SESSION['ocorrencia'] = "";
 $_SESSION['valor_ocorrencia'] = "";
+$_SESSION['finaliza'] = false;
 include("../conexao.php");
 include("../links2.php");
 // sql do arquivo de configurações 
