@@ -206,6 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $c_descritivo = $_POST['descritivo'];
     $c_id_ocorrencia = $_POST['ocorrencia'];
     $i_id_executor_responsavel = $_POST['executor_responsavel'];
+    $c_descricao = $_POST['descricao'];
 
     if (!is_numeric($c_valor_servico))
         $c_valor_servico = 0;
@@ -223,7 +224,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             motivo_naoconformidade ='$c_motivo', data_entrega='$c_data_entrega', hora_entrega='$c_hora_entrega',
             data_saida='$c_data_saida', data_garantia='$c_data_garantia', numero_nota='$c_nota',
             valor_servico = '$c_valor_servico', valor_material='$c_valor_material',
-            descritivo='$c_descritivo', id_executor_responsavel='$i_id_executor_responsavel'
+            descritivo='$c_descritivo', id_executor_responsavel='$i_id_executor_responsavel', descricao='$c_descricao'
             where id='$i_id'";
 
 
