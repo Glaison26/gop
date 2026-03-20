@@ -138,34 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $c_treinamento = $_POST['treinamento'];
 
     do {
-        if (empty($c_descricao) || empty($c_patrimonio) || empty($c_modelo) || empty($c_notafiscal)) {
-            $msg_erro = "Campos Descrição, patrimonio, modelo, nota fiscal devem ser preenchidos!!";
-            Carregadados();
-            break;
-            if (($d_dataaquisicao == null)) {
-                $msg_erro = "Campos data da aquisição deve ser informado!!";
-                Carregadados();
-                break;
-            }
-
-            if (($d_datagarantia == null)) {
-                $msg_erro = "Campos data da garantia deve ser informado!!";
-                Carregadados();
-                break;
-            }
-
-            if (($d_dataultimamanutencao == null)) {
-                $msg_erro = "Campos data da ultima manutenção deve ser informado!!";
-                Carregadados();
-                break;
-            }
-            if (($d_ultimapreventiva == null)) {
-                $msg_erro = "Campos data da ultima preventiva deve ser informado!!";
-                Carregadados();
-                break;
-            }
-        }
-
+       
         // verifico a id do tipo selecionado no combo
         $c_sql_secundario = "SELECT tipos.id FROM tipos where tipos.descricao='$c_tipo' ORDER BY tipos.descricao";
         $result_secundario = $conection->query($c_sql_secundario);
@@ -490,7 +463,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div class="row mb-3">
                                 <label class="col-sm-3 col-form-label">Nota Fiscal *</label>
                                 <div class="col-sm-2">
-                                    <input type="text" maxlength="20" class="form-control" name="notafiscal" value="<?php echo $c_notafiscal; ?>" required>
+                                    <input type="text" maxlength="20" class="form-control" name="notafiscal" value="<?php echo $c_notafiscal; ?>">
                                 </div>
                                 <label class="col-sm-1 col-form-label">Aquisição</label>
                                 <div class="col-sm-2">
@@ -509,7 +482,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="row mb-3">
                                     <label class="col-sm-3 col-form-label">Conservação *</label>
                                     <div class="col-sm-2">
-                                        <select class="form-select form-select-lg mb-3" id="estado" name="estado" value="<?php echo $c_estado; ?>" required>
+                                        <select class="form-select form-select-lg mb-3" id="estado" name="estado" value="<?php echo $c_estado; ?>">
                                             <option></option>
                                             <option>Ótimo</option>
                                             <option>Muito Bom</option>

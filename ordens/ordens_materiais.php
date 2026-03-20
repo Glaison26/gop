@@ -15,16 +15,16 @@ if (isset($_POST['btn_baixa']) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     // loop para dar baixa
     while ($registro = $result_baixa->fetch_assoc()) {
         if ($registro['baixa'] == 'N') {
-        $c_sql_up = "update materiais set quantidadeatual = quantidadeatual-$registro[quantidade]
+            $c_sql_up = "update materiais set quantidadeatual = quantidadeatual-$registro[quantidade]
          where materiais.id='$registro[id_material]'";
-         //echo $c_sql_up;
-        $result_up = $conection->query($c_sql_up);
-        $c_sql_up2 = "update ordens_materiais set baixa='S' where id='$registro[id]'";
-        $result_up2 = $conection->query($c_sql_up2);
+            //echo $c_sql_up;
+            $result_up = $conection->query($c_sql_up);
+            $c_sql_up2 = "update ordens_materiais set baixa='S' where id='$registro[id]'";
+            $result_up2 = $conection->query($c_sql_up2);
         }
     }
 
-  echo "<script>alert('Baixas Realizadas com sucesso!!');</script>"  ;
+    echo "<script>alert('Baixas Realizadas com sucesso!!');</script>";
 }
 
 ?>

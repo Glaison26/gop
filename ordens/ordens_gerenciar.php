@@ -24,10 +24,11 @@ $_SESSION['nome_prestador'] = "";
 $_SESSION['valor_prestador'] = "";
 $_SESSION['unidade_material'] = "";
 // sql para pegar dados da ordem de serviço
-$c_sql_ordem = "select status, id_ocorrencia, descritivo from ordens where id='$i_id'";
+$c_sql_ordem = "select status, id_ocorrencia, descritivo, descricao from ordens where id='$i_id'";
 $result = $conection->query($c_sql_ordem);
 $c_linha_ordem = $result->fetch_assoc();
 $_SESSION['id_ocorrencia'] = $c_linha_ordem['id_ocorrencia'];
+
 
 
 ?>
@@ -90,7 +91,8 @@ $_SESSION['id_ocorrencia'] = $c_linha_ordem['id_ocorrencia'];
 
                 <!-- abas de itens de os -->
                 <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#executores" aria-controls="executores" role="tab" data-toggle="tab">Executores</a></li>
+                    <li role="presentation" class="active"><a href="#descricao" aria-controls="descricao" role="tab" data-toggle="tab">Descrição do Serviço</a></li>
+                    <li role="presentation"><a href="#executores" aria-controls="executores" role="tab" data-toggle="tab">Executores</a></li>
                     <li role="presentation"><a href="#prestadores" aria-controls="prestadores" role="tab" data-toggle="tab">Prestadores de Serviço</a></li>
                     <li role="presentation"><a href="#materiais" aria-controls="materiais" role="tab" data-toggle="tab">Materiais Gastos</a></li>
                     <li role="presentation"><a href="#susp" aria-controls="susp" role="tab" data-toggle="tab">Suspensões</a></li>
@@ -101,6 +103,13 @@ $_SESSION['id_ocorrencia'] = $c_linha_ordem['id_ocorrencia'];
                     <li role="presentation"><a href="#plano" aria-controls="plano" role="tab" data-toggle="tab">Plano de Ação</a></li>
                 </ul>
                 <div class="tab-content">
+                    <!-- aba com descrição do serviço -->
+                    <div role="tabpanel" class="tab-pane active" id="descricao">
+                        <div style="padding-top:15px;padding-left:20px;">
+                            <?php include('ordens_descricao.php'); ?>
+
+                        </div>
+                    </div> 
                     <!-- aba da materiais gastos-->
                     <div role="tabpanel" class="tab-pane" id="materiais">
                         <div style="padding-top:15px;padding-left:20px;">
@@ -109,7 +118,7 @@ $_SESSION['id_ocorrencia'] = $c_linha_ordem['id_ocorrencia'];
                         </div>
                     </div>
                     <!-- aba de executores-->
-                    <div role="tabpanel" class="tab-pane  active" id="executores">
+                    <div role="tabpanel" class="tab-pane" id="executores">
                         <div style="padding-top:15px;padding-left:20px;">
                             <?php include('ordens_executores.php') ?>
                         </div>

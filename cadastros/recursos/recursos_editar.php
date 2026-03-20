@@ -530,7 +530,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                             <div class="row mb-3">
                                 <label class="col-sm-3 col-form-label">Nota Fiscal *</label>
                                 <div class="col-sm-2">
-                                    <input type="text" maxlength="20" class="form-control" name="notafiscal" value="<?php echo $c_notafiscal; ?>" required>
+                                    <input type="text" maxlength="20" class="form-control" name="notafiscal" value="<?php echo $c_notafiscal; ?>">
                                 </div>
                                 <label class="col-sm-1 col-form-label">Aquisição</label>
                                 <div class="col-sm-2">
@@ -681,7 +681,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                             <div class="row mb-6">
                                 <label class="col-sm-2 col-form-label">Observação</label>
                                 <div class="col-sm-6">
-                                    <textarea class="form-control" id="obs" name="obs" rows="10"></textarea>
+                                    <textarea class="form-control" id="obs" name="obs" rows="10"><?php echo $c_obs?></textarea>
                                 </div>
                             </div>
                         </div>
