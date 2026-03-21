@@ -16,10 +16,50 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_solicit
 
     header('location: /gop/acesso.php');
 }
-$c_sql_recurso = $_SESSION['sqlrecurso'];
-$c_sql_espaco = $_SESSION['sqlespaco'];
-$c_sql_avulso = $_SESSION['sqlavulso'];
-//echo $c_sql_recurso;
+if (!empty($_SESSION['consulta_solicitacao'])) { // consulta da solicitação após geração da mesma
+    $id_nova_solicitacao = $_SESSION['consulta_solicitacao'];
+    // recurso fisico
+    $c_sql_recurso = "SELECT solicitacao.id, ocorrencias.descricao, solicitacao.prazo_data, solicitacao.data_conclusao,
+   solicitacao.hora_conclusao, solicitacao.prazo_hora, solicitacao.id_ordem, solicitacao.data_abertura,
+   solicitacao.hora_abertura, solicitacao.id_solicitante, solicitacao.id_recursos, solicitacao.tipo,
+   solicitacao.`status`, usuarios.nome AS solicitante, recursos.descricao AS recurso, 
+   case WHEN solicitacao.tipo='P' THEN 'Programada' ELSE 'Urgência' END AS solicitacao_tipo, 
+   case when solicitacao.status='A' then 'Aberta' when solicitacao.status='E' then 'Em Andamento' 
+   when solicitacao.status='C' then 'Concluída' when solicitacao.status='X' then 'Cancelada'
+   END AS solicitacao_status FROM solicitacao JOIN usuarios ON solicitacao.id_solicitante=usuarios.id 
+   JOIN recursos ON solicitacao.id_recursos=recursos.id JOIN ocorrencias on solicitacao.id_ocorrencia=ocorrencias.id 
+   where solicitacao.id = '$id_nova_solicitacao' order by solicitacao.data_abertura desc";
+    // espaço fisico
+    $c_sql_espaco = "SELECT solicitacao.id, ocorrencias.descricao, solicitacao.prazo_data, solicitacao.data_conclusao,
+    solicitacao.hora_conclusao, solicitacao.prazo_hora, solicitacao.id_ordem, solicitacao.data_abertura, 
+    solicitacao.hora_abertura, solicitacao.id_solicitante, solicitacao.tipo, solicitacao.`status`, 
+    usuarios.nome AS solicitante, espacos.descricao AS espaco, case WHEN solicitacao.tipo='P' THEN 'Programada'
+    ELSE 'Urgência' END AS solicitacao_tipo, case when solicitacao.status='A' then 'Aberta' 
+    when solicitacao.status='E' then 'Em Andamento' when solicitacao.status='C' then 'Concluída'
+    when solicitacao.status='X' then 'Cancelada' END AS solicitacao_status FROM solicitacao 
+    JOIN usuarios ON solicitacao.id_solicitante=usuarios.id JOIN espacos ON solicitacao.id_espaco=espacos.id 
+    JOIN ocorrencias on solicitacao.id_ocorrencia=ocorrencias.id where solicitacao.id = '$id_nova_solicitacao'
+    order by solicitacao.data_abertura desc";
+    // solicitação avulsa
+    $c_sql_avulso = "SELECT solicitacao.id, ocorrencias.descricao, solicitacao.prazo_data, solicitacao.data_conclusao,
+     solicitacao.hora_conclusao, solicitacao.prazo_hora, solicitacao.id_ordem, solicitacao.data_abertura, 
+     solicitacao.hora_abertura, solicitacao.id_solicitante, solicitacao.tipo, solicitacao.`status`, 
+     usuarios.nome AS solicitante, case WHEN solicitacao.tipo='P' THEN 'Programada' ELSE 'Urgência' 
+     END AS solicitacao_tipo, case when solicitacao.status='A' then 'Aberta' when solicitacao.status='E' 
+     then 'Em Andamento' when solicitacao.status='C' then 'Concluída' when solicitacao.status='X' 
+     then 'Cancelada' END AS solicitacao_status FROM solicitacao 
+     JOIN usuarios ON solicitacao.id_solicitante=usuarios.id 
+     JOIN ocorrencias on solicitacao.id_ocorrencia=ocorrencias.id 
+     where solicitacao.id = '$id_nova_solicitacao' and classificacao='V' order by solicitacao.data_abertura desc";
+    $_SESSION['consulta_solicitacao'] = "";
+} else {
+    $c_sql_recurso = $_SESSION['sqlrecurso'];
+    $c_sql_espaco = $_SESSION['sqlespaco'];
+    $c_sql_avulso = $_SESSION['sqlavulso'];
+}
+//echo $c_sql_recurso.'<br>';
+//echo $c_sql_espaco.'<br>';
+//echo $c_sql_avulso;
 
 // sql do arquivo de configurações 
 $c_sql_conf = "select * from configuracoes";
@@ -185,7 +225,7 @@ $registro_conf = $result_conf->fetch_assoc();
                 <h5>Solicitações de Serviços<h5>
             </div>
         </div>
-       
+
         <!-- abas de solicitações por recursos físicos, Espaços físicos e avulsos -->
         <ul class="nav nav-tabs" role="tablist">
             <?php

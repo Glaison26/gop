@@ -3,10 +3,52 @@ session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
-$c_sql_recurso = $_SESSION['sqlrecurso'];
-$c_sql_espaco = $_SESSION['sqlespaco'];
-$c_sql_avulso = $_SESSION['sqlavulso'];
-//echo $c_sql_recurso;
+
+if (!empty($_SESSION['consulta_ordem'])) { // consulta da Ordem de serviço após geração da mesma
+    $i_id_nova_ordem = $_SESSION['consulta_ordem'];
+    // recursos fisicos
+    $c_sql_recurso = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, 
+    ordens.descritivo,  ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao 
+   AS setor, usuarios.nome, recursos.descricao, data_inicio, recursos.patrimonio, ordens.data_previsao,
+   oficinas.descricao as oficina, executores.nome as executor, case when ordens.status='A' then 'Aberta'
+   when ordens.status='E' then 'Em Andamento' when ordens.status='C' then 'Concluída' 
+   when ordens.status='S' then 'Suspensa' when ordens.status='X' then 'Cancelada' 
+   END AS ordens_status, case when tipo_ordem='C' then 'Corretiva' when tipo_ordem='P'
+   then 'Preventiva' END AS ordens_tipo_texto FROM ordens JOIN setores ON ordens.id_setor=setores.id 
+   JOIN usuarios ON ordens.id_solicitante=usuarios.id JOIN oficinas ON ordens.id_oficina=oficinas.id 
+   JOIN recursos on ordens.id_recurso=recursos.id JOIN executores on ordens.id_executor_responsavel=executores.id 
+   where ordens.id = '$i_id_nova_ordem' and ordens.tipo='R' order by ordens.id desc";
+    // Espaços físicos
+    $c_sql_espaco = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao,
+   ordens.descritivo, ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao 
+   AS setor, usuarios.nome, ordens.data_previsao, data_inicio, oficinas.descricao as oficina, executores.nome 
+   as executor, case when ordens.status='A' then 'Aberta' when ordens.status='E' then 'Em Andamento'
+   when ordens.status='C' then 'Concluída' when ordens.status='S' then 'Suspensa' when ordens.status='X'
+   then 'Cancelada' END AS ordens_status, case when tipo_ordem='C' then 'Corretiva' when tipo_ordem='P'
+   then 'Preventiva' END AS ordens_tipo_texto FROM ordens JOIN setores ON ordens.id_setor=setores.id 
+   JOIN oficinas ON ordens.id_oficina=oficinas.id JOIN usuarios ON ordens.id_solicitante=usuarios.id 
+   JOIN executores on ordens.id_executor_responsavel=executores.id where ordens.id = '$i_id_nova_ordem'  and ordens.tipo='E'
+   order by ordens.id desc";
+   // ordens avulsas
+   $c_sql_avulso = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, 
+   ordens.descritivo, ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao
+   AS setor, usuarios.nome,ordens.data_previsao, data_inicio, oficinas.descricao as oficina, executores.nome 
+   as executor, case when ordens.status='A' then 'Aberta' when ordens.status='E' then 'Em Andamento'
+   when ordens.status='C' then 'Concluída' when ordens.status='S' then 'Suspensa' when ordens.status='X'
+   then 'Cancelada' END AS ordens_status, case when tipo_ordem='C' then 'Corretiva' when tipo_ordem='P'
+   then 'Preventiva' END AS ordens_tipo_texto FROM ordens JOIN setores ON ordens.id_setor=setores.id 
+   JOIN oficinas ON ordens.id_oficina=oficinas.id JOIN usuarios ON ordens.id_solicitante=usuarios.id 
+   JOIN executores on ordens.id_executor_responsavel=executores.id where ordens.id = '$i_id_nova_ordem' and ordens.tipo='V'
+   order by ordens.id desc";
+   
+} else {
+    $c_sql_recurso = $_SESSION['sqlrecurso'];
+    $c_sql_espaco = $_SESSION['sqlespaco'];
+    $c_sql_avulso = $_SESSION['sqlavulso'];
+}
+//echo $c_sql_recurso . '<br>';
+//echo $c_sql_espaco . '<br>';
+//echo $c_sql_avulso . '<br>';
 include('../links.php');
 include('../conexao.php');
 $i_id_usuario = $_SESSION["id_usuario"];

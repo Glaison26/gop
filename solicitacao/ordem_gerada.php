@@ -17,7 +17,7 @@ if (!$result) {
 }
 if (isset($_POST['btn_acessar']) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $_SESSION['consulta_ordem'] = $c_linha['id_ordem'];
-    header('location: /gop/ordens/ordens.php');
+    header('location: /gop/ordens/ordens_lista.php');
 }
 ?>
 
@@ -48,8 +48,8 @@ if (isset($_POST['btn_acessar']) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
             <h5>Ordem de Serviço nº <?php echo $c_linha['id_ordem']; ?> gerada com sucesso!</h5>
             <hr>
             <form method="post" action="">
-                <button type="submit" name="btn_acessar" class="btn btn-primary"><span class='glyphicon glyphicon-share-alt'></span> Acessar</button>
-                <a class="btn btn btn-success" href="/gop/solicitacao/solicitacao_lista.php"><span class="glyphicon glyphicon-off"></span> Encerrar</a>
+                <button type="submit" name="btn_acessar" class="btn btn-primary"><span class='glyphicon glyphicon-share-alt'></span> Acessar Ordem de Serviço gerada</button>
+                <a class="btn btn btn-success" href="/gop/solicitacao/solicitacao.php"><span class="glyphicon glyphicon-off"></span> Encerrar</a>
             </form>
         </div>
 </body>

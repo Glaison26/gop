@@ -11,13 +11,14 @@ $c_sql =    "SELECT MAX(solicitacao.ID) AS id_solicitacao FROM solicitacao";
 $result = $conection->query($c_sql);
 $c_linha = $result->fetch_assoc();
 $solicitacao = $c_linha['id_solicitacao'];
+
 // verifico se a query foi correto
 if (!$result) {
     die("Erro ao Executar Sql!!" . $conection->connect_error);
 }
 if (isset($_POST['btn_acessar']) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
    $_SESSION['consulta_solicitacao'] = $c_linha['id_solicitacao'];
-   header('location: /gop/solicitacao/solicitacao.php');
+   header('location: /gop/solicitacao/solicitacao_lista.php');
 }
 ?>
 
@@ -48,7 +49,7 @@ if (isset($_POST['btn_acessar']) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
             <h5>Solicitação de Serviço nº <?php echo $c_linha['id_solicitacao']; ?> gerada com sucesso!</h5>
         <hr>
         <form method="POST">
-            <button type="submit" name="btn_acessar" class="btn btn-primary"><span class='glyphicon glyphicon-share-alt'></span> Acessar</button>
+            <button type="submit" name="btn_acessar" class="btn btn-primary"><span class='glyphicon glyphicon-share-alt'></span> Acessar Solicitação</button>
             <a class="btn btn btn-success" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Encerrar</a>
         </form>
 

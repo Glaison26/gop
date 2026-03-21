@@ -5,6 +5,7 @@ if (!isset($_SESSION['newsession'])) {
 }
 include("../conexao.php");
 include("../links2.php");
+$_SESSION['consulta_ordem'] = "";
 // verifico se usuário e operador de tem autorização de acesso
 $i_id_usuario = $_SESSION["id_usuario"];
 $c_sql_acesso = "select usuarios.tipo, perfil_usuarios.servicos_ordens FROM usuarios
