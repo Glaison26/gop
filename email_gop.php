@@ -41,6 +41,22 @@ try {
     $mail->isHTML(true);                                  //Set email format to HTML
     $mail->Subject = $c_assunto;
     $mail->Body    = $c_body;
+    $mail->AltBody = strip_tags($c_body);
+    $mail->Body = "
+        <html>
+        <head>
+            <style>
+                body { font-family: Arial, sans-serif; font-size: 14px; }
+                p { text-align: justify; line-height: 1.6; }
+                h1 { font-size: 24px; margin-bottom: 15px; }
+                h2 { font-size: 20px; margin-bottom: 10px; }
+            </style>
+        </head>
+        <body>
+            " . $c_body . "
+        </body>
+        </html>
+    ";
 
     $mail->send();
     echo 'Message has been sent';

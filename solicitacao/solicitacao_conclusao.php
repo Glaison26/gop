@@ -129,13 +129,11 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') ) {
             $c_linha = $result->fetch_assoc();
             $solicitacao = $c_linha['id_solicitacao'];
             $c_assunto = "Abertura de Solicitação de Serviço no GOP";
-            $c_body = "Solicitação No.<b> $solicitacao </b> foi gerada com sucesso!  <br>"
-                . "Descrição da Solicitação :" . $c_descricao;
-                
+            $c_body = "<h3>Solicitação No.<b> $solicitacao </b> foi gerada com sucesso!<br>"
+                . "Descrição da Solicitação :" . $c_descricao."</h3>";
             
             include('../email_gop.php');
-           
-           
+              
         }
         header('location: /gop/solicitacao/solicitacao_gerada.php?id_recurso=$i_id_recurso');
     } while (false);
