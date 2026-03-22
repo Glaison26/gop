@@ -60,6 +60,49 @@ $result_qtd = $conection->query($c_sql_qtd);
             </table>
 
         </div>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+        <!-- grágico de horas de executores -->
+        <script type="text/javascript">
+            // gráfico por Valor
+            google.charts.load('current', {
+                'packages': ['corechart']
+            });
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+
+                var data = google.visualization.arrayToDataTable([
+                    ['Executor', 'Tempo'],
+
+                    <?php
+                    $result_grafico = $conection->query($c_sql);
+                    // percorre resultado da query para para montar gráfico
+                    while ($registro = $result_grafico->fetch_assoc()) {
+                        $c_executor = $registro['executor'];
+                        $c_horas =  $registro['tempo_grafico'];
+                    ?>['<?php echo $c_executor ?>', <?php echo $c_horas ?>],
+                    <?php } ?>
+                ]);
+
+                var options = {
+                    legend: {
+                        position: 'none'
+                    }
+
+                };
+
+                var chart = new google.visualization.BarChart(document.getElementById('chart1'));
+
+                chart.draw(data, options);
+            }
+        </script>
+
+        <div style="padding-left:300px;">
+            <h3 class="text-center">Gráfico de Horas trabalhadas por Executores</h3>
+            <div id="chart1" style="width: 900px; height: 500px;"></div>
+        </div>
+        
         <br>
         <h2 class="text-center">Relatório de número de atendimento realizados por Executor no Período</h2><br>
         <hr>
@@ -93,45 +136,8 @@ $result_qtd = $conection->query($c_sql_qtd);
     <hr>
     <!-- gráficos de horas por executor -->
 
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-    <!-- grágico de horas de executores -->
-    <script type="text/javascript">
-        // gráfico por Valor
-        google.charts.load('current', {
-            'packages': ['corechart']
-        });
-        google.charts.setOnLoadCallback(drawChart);
 
-        function drawChart() {
-
-            var data = google.visualization.arrayToDataTable([
-                ['Executor', 'Tempo'],
-
-                <?php
-                $result_grafico = $conection->query($c_sql);
-                // percorre resultado da query para para montar gráfico
-                while ($registro = $result_grafico->fetch_assoc()) {
-                    $c_executor = $registro['executor'];
-                    $c_horas =  $registro['tempo_grafico'];
-                ?>['<?php echo $c_executor ?>', <?php echo $c_horas ?>],
-                <?php } ?>
-            ]);
-
-            var options = {
-                legend: {
-                    position: 'none'
-                }
-
-            };
-
-            var chart = new google.visualization.BarChart(document.getElementById('chart1'));
-
-            chart.draw(data, options);
-        }
-    </script>
-
-  
 
     <!-- gráfico de numero de ocorrências por executor -->
 
@@ -170,10 +176,7 @@ $result_qtd = $conection->query($c_sql_qtd);
         }
     </script>
 
-      <div style="padding-left:300px;">
-        <h3 class="text-center">Gráfico de Horas trabalhadas por Executores</h3>
-        <div id="chart1" style="width: 900px; height: 500px;"></div>
-    </div>
+
 
     <div style="padding-left:300px;">
         <h3 class="text-center">Gráfico com número de atendimentos por Executor</h3>
