@@ -6,6 +6,10 @@ if (!isset($_SESSION['newsession'])) {
 include("../../conexao.php");
 include("../../links.php");
 // sql para pegar recurso
+$n_total_servicos = 0;
+$n_total_material = 0;
+// gero o total gasto com o recurso
+$c_total = 0;
 $c_id = $_GET["id"];
 $c_sql_Recurso = "select * from recursos where id='$c_id'";
 $result_recurso = $conection->query($c_sql_Recurso);

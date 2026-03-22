@@ -7,8 +7,11 @@ if (!isset($_SESSION['newsession'])) {
 include("../conexao.php");
 include("../links2.php");
 $c_sql = $_SESSION['sql'];
+$c_sql_tipo = $_SESSION['sql_tipo'];
 $result = $conection->query($c_sql);
 $result_grafico = $result;
+$result_tipo = $conection->query($c_sql_tipo);
+$result_grafico_tipo = $result_tipo;
 $c_periodo = $_SESSION['periodo'];
 $c_query = $_SESSION['query'];
 
@@ -26,13 +29,83 @@ $c_query = $_SESSION['query'];
 <body>
     <div class="container">
         <h2 class="text-center">Relatório de Ocorrências de Manutenção por Período</h2><br>
-        <h5 class="text-left">Filtros :<?php echo $c_query;?></h5><br>
+        <h5 class="text-left">Filtros :<?php echo $c_query; ?></h5><br>
         <div class="panel panel-default">
-            <div class="panel-heading text-center"><strong>Período :<?php echo $c_periodo?> </strong></div>
+            <div class="panel-heading text-center"><strong>Período :<?php echo $c_periodo ?> </strong></div>
+            <!-- por tipos de ocorrencia -->
             <hr>
             <table class="table table display table-bordered table-striped table-active tabocorrencias">
                 <thead class="thead">
                     <tr>
+                        <th scope="col">Tipo de Ocorrência</th>
+                        <th scope="col">No de Chamados</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $i_chamados = 0;
+                    while ($c_linha2 = $result_tipo->fetch_assoc()) {
+                        $i_chamados += $c_linha2['ocorrencias'];
+                        echo "
+                            <tr class='info'>
+                            <td>$c_linha2[descricao]</td>
+                            <td>$c_linha2[ocorrencias]</td>
+                          
+                            </tr>
+                            ";
+                    }
+                    ?>
+                </tbody>
+            </table>
+            <!-- gráficos das ocorrencias -->
+
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+            <script type="text/javascript">
+                // gráfico por Valor
+                google.charts.load('current', {
+                    'packages': ['corechart']
+                });
+                google.charts.setOnLoadCallback(drawChart);
+
+                function drawChart() {
+
+                    var data = google.visualization.arrayToDataTable([
+                        ['Ocorrencias', 'chamados'],
+
+                        <?php
+                        $result_grafico_tipo = $conection->query($c_sql_tipo);
+                        // percorre resultado da query para para montar gráfico
+                        while ($registro = $result_grafico_tipo->fetch_assoc()) {
+                            $c_ocorrencia = $registro['descricao'];
+                            $c_qtd =  $registro['ocorrencias'];
+                        ?>['<?php echo $c_ocorrencia ?>', <?php echo $c_qtd ?>],
+                        <?php } ?>
+                    ]);
+
+                    var options = {
+
+                    };
+
+                    var chart = new google.visualization.PieChart(document.getElementById('chart2'));
+
+                    chart.draw(data, options);
+                }
+            </script>
+
+            <div><?php echo "Total de Chamados : " . $i_chamados ?></div>
+            <br>
+            <div style="text-align: center;">
+                <h3>Gráfico de Ocorrências da Manutenção por tipo de Ocorrência</h3>
+                <div id="chart2" style="width: 900px; height: 500px; margin: 0 auto;"></div>
+            </div>
+            
+            <hr>
+            <table class="table table display table-bordered table-striped table-active tabocorrencias">
+                <thead class="thead">
+                    <tr>
+                        <th scope="col">Tipo da Ocorrência</th>
                         <th scope="col">Ocorrência</th>
                         <th scope="col">No de Chamados</th>
                     </tr>
@@ -44,6 +117,7 @@ $c_query = $_SESSION['query'];
                         $i_chamados += $c_linha['total'];
                         echo "
                             <tr class='info'>
+                            <td>$c_linha[tipo]</td>
                             <td>$c_linha[descricao]</td>
                             <td>$c_linha[total]</td>
                           
@@ -53,7 +127,7 @@ $c_query = $_SESSION['query'];
                     ?>
                 </tbody>
             </table>
-            <div><?php echo "Total de Chamados : ". $i_chamados?></div>
+            <div><?php echo "Total de Chamados : " . $i_chamados ?></div>
         </div>
     </div>
     <hr>
@@ -85,7 +159,7 @@ $c_query = $_SESSION['query'];
             ]);
 
             var options = {
-                
+
             };
 
             var chart = new google.visualization.PieChart(document.getElementById('chart1'));
@@ -94,7 +168,7 @@ $c_query = $_SESSION['query'];
         }
     </script>
 
-    <div style="padding-left:400px;">
+    <div style="text-align: center;">
         <h3 class="text-center">Gráfico de Ocorrências da Manutenção</h3>
         <div id="chart1" style="width: 900px; height: 500px;"></div>
     </div>

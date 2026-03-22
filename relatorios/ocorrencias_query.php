@@ -83,7 +83,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
         $c_linha = $result->fetch_assoc();
         $i_id_solicitante = $c_linha['id'];
         $c_where = $c_where . "ordens.id_solicitante='$i_id_solicitante' and ";
-        $c_query = $c_query . 'Solicitante:'. $c_linha['id']. '-';
+        $c_query = $c_query . 'Solicitante:' . $c_linha['id'] . '-';
     }
     // sql para setor
     if ($_POST["setor"] <> "Todos") {
@@ -93,7 +93,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
         $c_linha = $result->fetch_assoc();
         $i_id_setor = $c_linha['id'];
         $c_where = $c_where . "ordens.id_setor='$i_id_setor' and ";
-        $c_query = $c_query . 'Setor:'. $c_linha['descricao']. '-';
+        $c_query = $c_query . 'Setor:' . $c_linha['descricao'] . '-';
     }
     // sql para oficinas
     if ($_POST['oficina'] <> "Todas") {
@@ -103,19 +103,28 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
         $c_linha = $result->fetch_assoc();
         $i_id_oficina = $c_linha['id'];
         $c_where = $c_where . "ordens.id_oficina='$i_id_oficina' and ";
-        $c_query = $c_query . 'Oficina:'. $c_linha['descricao']. '-';
+        $c_query = $c_query . 'Oficina:' . $c_linha['descricao'] . '-';
     }
 
     $c_where = $c_where = substr($c_where, 0, -5); // tirar o and no final
-    // montagem do sql para recursos físicos
+    // montagem do sql para ocorrencias
     //
-    $c_sql = "SELECT ordens.id_ocorrencia, ocorrencias.descricao, count(ordens.id_ocorrencia) AS total
+    $c_sql = "SELECT ordens.id_ocorrencia, ocorrencias.descricao,  tipo_ocorrencia.descricao AS tipo,
+            count(ordens.id_ocorrencia) AS total
             FROM ordens 
             JOIN ocorrencias ON ordens.id_ocorrencia=ocorrencias.id
-            where $c_where GROUP BY ordens.id_ocorrencia order by total desc";
+            JOIN tipo_ocorrencia ON ocorrencias.id_tipo_ocorrencia=tipo_ocorrencia.id
+            where $c_where GROUP BY ordens.id_ocorrencia, tipo_ocorrencia.descricao order by total desc";
+    // montagem do sql para tipos de ocorrencia
+    $c_sql_tipo = "SELECT tipo_ocorrencia.descricao,
+            COUNT(tipo_ocorrencia.descricao) AS ocorrencias FROM ordens
+            JOIN ocorrencias ON ordens.id_ocorrencia=ocorrencias.id
+            JOIN tipo_ocorrencia ON ocorrencias.id_tipo_ocorrencia=tipo_ocorrencia.id
+            where $c_where GROUP BY tipo_ocorrencia.descricao";
 
     // guardo session para proxima pagina de tabelas
     $_SESSION['sql'] = $c_sql;
+    $_SESSION['sql_tipo'] = $c_sql_tipo;
     if (empty($c_query))
         $_SESSION['query'] = "Nenhum";
     else
