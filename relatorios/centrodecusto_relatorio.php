@@ -96,7 +96,7 @@ $c_query = $_SESSION['query'];
 
     <div style="padding-left:400px;">
         <h3 class="text-center">Gráfico de Manutenção por Centro de Custo no Período</h3>
-        <div id="chart1" style="width: 900px; height: 500px;"></div>
+        <div id="chart" style="width: 900px; height: 500px;"></div>
     </div>
 
 </body>

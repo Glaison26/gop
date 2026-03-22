@@ -11,9 +11,8 @@ include("../links2.php");
 //$result_grafico = $result;
 $c_periodo = $_SESSION['periodo'];
 $c_query = $_SESSION['query'];
-
-
-
+$c_sql_qtd = $_SESSION['sql_qtd'];
+$result_qtd = $conection->query($c_sql_qtd);
 
 ?>
 
@@ -61,13 +60,42 @@ $c_query = $_SESSION['query'];
             </table>
 
         </div>
+        <br>
+        <h2 class="text-center">Relatório de número de atendimento realizados por Executor no Período</h2><br>
+        <hr>
+        <table class="table table display table-bordered table-striped table-active tabocorrencias">
+            <thead class="thead">
+                <tr>
+                    <th scope="col">Executor</th>
+                    <th scope="col">Ocorrências Atendidas</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $result_grafico = $result_qtd;
+                while ($c_linha_qtd = $result_qtd->fetch_assoc()) {
+
+                    echo "
+                            <tr class='info'>
+                            <td>$c_linha_qtd[nome]</td>
+                            <td>$c_linha_qtd[total]</td>
+                           
+                          
+                            </tr>
+                            ";
+                }
+                ?>
+            </tbody>
+        </table>
+
     </div>
     <hr>
     <!-- gráficos de horas por executor -->
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-
+    <!-- grágico de horas de executores -->
     <script type="text/javascript">
         // gráfico por Valor
         google.charts.load('current', {
@@ -103,11 +131,54 @@ $c_query = $_SESSION['query'];
         }
     </script>
 
-    <div style="padding-left:300px;">
+  
+
+    <!-- gráfico de numero de ocorrências por executor -->
+
+    <script type="text/javascript">
+        // gráfico por Valor
+        google.charts.load('current', {
+            'packages': ['corechart']
+        });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            var data = google.visualization.arrayToDataTable([
+                ['Executor', 'Quantidade'],
+
+                <?php
+                $result_grafico2 = $conection->query($c_sql_qtd);
+                // percorre resultado da query para para montar gráfico
+                while ($registro2 = $result_grafico2->fetch_assoc()) {
+                    $c_executor = $registro2['nome'];
+                    $c_qtd =  $registro2['total'];
+                ?>['<?php echo $c_executor ?>', <?php echo $c_qtd ?>],
+                <?php } ?>
+            ]);
+
+            var options = {
+                legend: {
+                    position: 'none'
+                }
+
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById('chart2'));
+
+            chart.draw(data, options);
+        }
+    </script>
+
+      <div style="padding-left:300px;">
         <h3 class="text-center">Gráfico de Horas trabalhadas por Executores</h3>
         <div id="chart1" style="width: 900px; height: 500px;"></div>
     </div>
 
+    <div style="padding-left:300px;">
+        <h3 class="text-center">Gráfico com número de atendimentos por Executor</h3>
+        <div id="chart2" style="width: 900px; height: 500px;"></div>
+    </div>
 
 </body>
 

@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     do {
         // verificos se solicitação está aberta. Se não não deixo gerar ordem de serviço
         if ($registro_solicitacao['status'] <> 'A') {
-            $msg_erro = " Já foi gerada ums Ordem de Serviço para esta Solicitação! Não foi possivel Gerar
+            $msg_erro = " Já foi gerada uma Ordem de Serviço para esta Solicitação! Não foi possivel Gerar
              Ordem de Serviço! ";
             break;
         }
@@ -138,8 +138,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $c_email_envio = $c_linha_email['email_envio'];
         //echo $c_email_oficina;
         // mensagem na pagina para aguardar o envio do e-mail
-
-
         // chamo o envio de email ordem de serviço gerada
         if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
             $c_sql = "SELECT MAX(ordens.ID) AS id_ordens FROM ordens";
@@ -151,13 +149,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $data = $data->format('d-m-Y');
             $hora = new DateTime($d_hora_previsao);
             $hora = $hora->format('H:i');
-            $c_assunto = "<h3>Abertura de Ordem  de Serviço no GOP<h3>";
+            $c_assunto = "<h3>Abertura de Ordem de Serviço no GOP<h3>";
             $c_body = "<h3>A Ordem de serviço No.<b> $ordem da solicitação no. $i_id </b> foi gerada com suceso! Aguarde o atendimento <br>"
                 . "Descrição da Solicitação :" . $c_descricao . "<br>" .
                 " Previsão de execução: $data as $hora" . "</h3>";
             include('../email_gop.php');
         }
-
 
         header('location: /gop/solicitacao/Ordem_gerada.php');
     } while (false);

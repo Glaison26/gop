@@ -202,7 +202,7 @@ $_SESSION['ver_os'] = false;
                                  <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/relatorios/solicitantes_query.php">Ocorrências por Solicitantes</a>
                                  <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/relatorios/setores_query.php">Ocorrências por Setor</a>
                                  <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/relatorios/centrodecusto_query.php">Ocorrências por Centro de Custo</a>
-                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/relatorios/executores_query.php">Horas Trabalhadas por Executor</a>
+                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/relatorios/executores_query.php">Horas Trabalhadas / Ocorrências por Executor</a>
                                  <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores_mensais/ocorrencias_mensais_query.php">Comparativo Mensal de Ocorrências Padrões</a>
                                  <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores_mensais/oficinas_mensais_query.php">Comparativo Mensal por Oficina</a>
                                  <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores_mensais/solicitantes_mensais_query.php">Comparativo Mensal por Solicitante</a>

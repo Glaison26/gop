@@ -106,14 +106,14 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
         $c_query = $c_query . 'Oficina:' . $c_linha['descricao'] . '-';
     }
 
-     // sql para ocorrencias
+    // sql para ocorrencias
     if ($_POST["ocorrencia"] <> "Todas as Ocorrências") {
         $i_ocorrencia = $_POST["ocorrencia"];
         $c_sql_ocorrencia = "select ocorrencias.id, ocorrencias.descricao from ocorrencias where ocorrencias.id = '$i_ocorrencia'";
         $result = $conection->query($c_sql_ocorrencia);
         $c_linha = $result->fetch_assoc();
         $c_where = $c_where . "ordens.id_ocorrencia='$i_ocorrencia' and ";
-        $c_query = $c_query . 'Ocorrência:' . $c_linha['descricao'] . '-';  
+        $c_query = $c_query . 'Ocorrência:' . $c_linha['descricao'] . '-';
     }
 
     $c_where = $c_where = substr($c_where, 0, -5); // tirar o and no final
@@ -153,8 +153,14 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
         $result_ins = $conection->query($c_sql_ins);
     }
 
-    // guardo session para proxima pagina de tabelas
+    // monto sql para numero de ocorrencias por executor
+    $c_sql_qtd = "SELECT ordens_executores.id_executor, executores.nome, count(ordens_executores.id) AS total
+                FROM ordens JOIN ordens_executores ON ordens.id=ordens_executores.id_ordem
+                JOIN executores ON ordens_executores.id_executor=executores.id
+                where $c_where GROUP BY  ordens_executores.id_executor order by executores.nome";
 
+    // guardo session para proxima pagina de tabelas
+    $_SESSION['sql_qtd'] = $c_sql_qtd;
     if (empty($c_query))
         $_SESSION['query'] = "Nenhum";
     else
