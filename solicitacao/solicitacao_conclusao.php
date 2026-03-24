@@ -297,20 +297,21 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
 
 
             </div>
+            <div class="row mb-3">
+                <div class="alert alert-warning" role="alert">
+                    <strong>Atenção:</strong> Por favor, para ajudar no atendimento preencha o questionário na descrição acima com detalhes sobre sua solicitação.
+                </div>
+            </div>
 
-            <hr>
+           
             <div class="row mb-3">
                 <div class="offset-sm-0 col-sm-3">
                     <button type="submit" class="btn"><img src="\gop\images\certo.png" onclick="this.innerText='Finalizando...';" name='finalizar' id='finalizar' alt="" width="25" height="25"></span> Finalizar</button>
                     <a class='btn btn' href='/gop/solicitacao/solicitacao.php'><img src="\gop\images\saida.png" alt="" width="25" height="25"> Voltar</a>
                 </div>
             </div>
-            <hr>
-            <div class="row mb-3">
-                <div class="alert alert-warning" role="alert">
-                    <strong>Atenção:</strong> Por favor, para ajudar no atendimento preencha o questionário na descrição acima com detalhes sobre sua solicitação.
-                </div>
-            </div>
+            
+            
         </form>
     </div>
 
