@@ -43,7 +43,7 @@ if ($_SESSION['tiposolicitacao'] == 'E') {  // espaço físico
 
 //$c_solicitacao = "";
 
-if (($_SERVER['REQUEST_METHOD'] == 'POST') ) {
+if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
 
     // procuro solicitante
     $c_solicitante = $_SESSION['c_usuario'];
@@ -130,10 +130,9 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') ) {
             $solicitacao = $c_linha['id_solicitacao'];
             $c_assunto = "Abertura de Solicitação de Serviço no GOP";
             $c_body = "<h3>Solicitação No.<b> $solicitacao </b> foi gerada com sucesso!<br>"
-                . "Descrição da Solicitação :" . $c_descricao."</h3>";
-            
+                . "Descrição da Solicitação :" . $c_descricao . "</h3>";
+
             include('../email_gop.php');
-              
         }
         header('location: /gop/solicitacao/solicitacao_gerada.php?id_recurso=$i_id_recurso');
     } while (false);
@@ -150,11 +149,11 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') ) {
     <title>GOP - Conclusão de Solicitação</title>
     <link rel="stylesheet" href="/gop/css/basico.css">
 
-   
+
 </head>
 
 <body>
-    
+
     <script>
         // chama arquivo para pegar ocorrencia
         function verifica(value) {
@@ -169,7 +168,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') ) {
         }
     </script>
 
-    
+
 
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
@@ -205,7 +204,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') ) {
             <div class="row mb-3">
 
                 <label class="col-sm-3 col-form-label">Tipo de Ocorrência </label>
-                <div class="col-sm-7">
+                <div class="col-sm-8">
 
                     <select onchange="verifica_tipo(value)" class="form-select form-select-lg mb-3" id="tipo_ocorrencia" name="tipo_ocorrencia" value="<?php echo $c_tipo_ocorrencia ?>" required>
 
@@ -230,7 +229,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') ) {
             <div class="row mb-3">
 
                 <label class="col-sm-3 col-form-label">Ocorrência </label>
-                <div class="col-sm-7">
+                <div class="col-sm-8">
 
                     <select onchange="verifica(value)" class="form-select form-select-lg mb-3" id="ocorrencia" name="ocorrencia" value="<?php echo $c_ocorrencia ?>" required>
 
@@ -268,8 +267,8 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') ) {
 
                     </select>
                 </div>
-                <label class="col-sm-2 col-form-label">Setor </label>
-                <div class="col-sm-3">
+                <label class="col-sm-1 col-form-label">Setor </label>
+                <div class="col-sm-5">
                     <select class="form-select form-select-lg mb-3" id="setor" name="setor" required>
                         <option></option>
                         <?php
@@ -288,19 +287,28 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') ) {
             </div>
             <div style="padding-top:5px;">
 
-                <div class="row mb-7">
+
+                <div class="row mb-3">
                     <label class="col-sm-3 col-form-label">Descrição </label>
-                    <div class="col-sm-7">
-                        <textarea class="form-control" id="solicitacao" name="solicitacao" rows="10"><?php echo $c_solicitacao; ?></textarea>
+                    <div class="col-sm-8">
+                        <textarea title="Responda o Questionário aqui quando for solicitado!!!" class="form-control" id="solicitacao" name="solicitacao" rows="10"><?php echo $c_solicitacao; ?></textarea>
                     </div>
                 </div>
 
+
             </div>
+
             <hr>
             <div class="row mb-3">
                 <div class="offset-sm-0 col-sm-3">
-                    <button type="submit" class="btn"><img src="\gop\images\certo.png" onclick="this.innerText='Finalizando...';"  name='finalizar' id='finalizar' alt="" width="25" height="25"></span> Finalizar</button>
+                    <button type="submit" class="btn"><img src="\gop\images\certo.png" onclick="this.innerText='Finalizando...';" name='finalizar' id='finalizar' alt="" width="25" height="25"></span> Finalizar</button>
                     <a class='btn btn' href='/gop/solicitacao/solicitacao.php'><img src="\gop\images\saida.png" alt="" width="25" height="25"> Voltar</a>
+                </div>
+            </div>
+            <hr>
+            <div class="row mb-3">
+                <div class="alert alert-warning" role="alert">
+                    <strong>Atenção:</strong> Por favor, para ajudar no atendimento preencha o questionário na descrição acima com detalhes sobre sua solicitação.
                 </div>
             </div>
         </form>
@@ -326,6 +334,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') ) {
         </div>
     </div>
 </div>
+
 
 
 </html>
