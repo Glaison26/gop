@@ -204,7 +204,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
             <div class="row mb-3">
 
                 <label class="col-sm-3 col-form-label">Tipo de Ocorrência </label>
-                <div class="col-sm-8">
+                <div class="col-sm-9">
 
                     <select onchange="verifica_tipo(value)" class="form-select form-select-lg mb-3" id="tipo_ocorrencia" name="tipo_ocorrencia" value="<?php echo $c_tipo_ocorrencia ?>" required>
 
@@ -229,7 +229,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
             <div class="row mb-3">
 
                 <label class="col-sm-3 col-form-label">Ocorrência </label>
-                <div class="col-sm-8">
+                <div class="col-sm-9">
 
                     <select onchange="verifica(value)" class="form-select form-select-lg mb-3" id="ocorrencia" name="ocorrencia" value="<?php echo $c_ocorrencia ?>" required>
 
@@ -268,7 +268,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     </select>
                 </div>
                 <label class="col-sm-1 col-form-label">Setor </label>
-                <div class="col-sm-5">
+                <div class="col-sm-6">
                     <select class="form-select form-select-lg mb-3" id="setor" name="setor" required>
                         <option></option>
                         <?php
@@ -289,8 +289,8 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
 
 
                 <div class="row mb-3">
-                    <label class="col-sm-3 col-form-label">Descrição </label>
-                    <div class="col-sm-8">
+                    <label class="col-sm-3 col-form-label">Descrição da Solicitação</label>
+                    <div class="col-sm-9">
                         <textarea title="Responda o Questionário aqui quando for solicitado!!!" class="form-control" id="solicitacao" name="solicitacao" rows="10"><?php echo $c_solicitacao; ?></textarea>
                     </div>
                 </div>
