@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $c_conteudo = "Ordem de Serviço Nº: " . $c_linha['id'] . "\n";
     $c_conteudo = $c_conteudo . "Data de Geração: " . date('d/m/Y', strtotime($c_linha['data_geracao'])) . " Hora: " . $c_linha['hora_geracao'] . "\n";
     $c_conteudo = $c_conteudo . "Previsão de Entrega: " . date('d/m/Y', strtotime($c_linha['data_previsao'])) . " Hora: " . $c_linha['hora_previsao'] . "\n";
-    
+
     $c_conteudo = $c_conteudo . "Previsão de Inicio: " . date('d/m/Y', strtotime($c_linha['data_inicio'])) . " Hora: " . $c_linha['hora_inicio'] . "\n";
     $c_conteudo = $c_conteudo . "Solicitante: " . $c_linha['solicitante'] . "\n";
     $c_conteudo = $c_conteudo . "Setor: " . $c_linha['setor'] . "\n";

@@ -1,0 +1,13 @@
+Ordem de Serviço Nº: 29
+Data de Geração: 19/03/2026 Hora: 19:57:00
+Previsão de Entrega: 20/03/2026 Hora: 19:57:00
+Previsão de Inicio: 19/03/2026 Hora: 19:57:00
+Solicitante: Glaison
+Setor: Planejamento
+Tipo de Ordem: Preventiva
+Ocorrência: Manutenção Preventiva de Parque de TI
+Executor Responsável: Funcionário B
+Descrição: Quantidadeo de Computadores :
+Quantidade  de pontos de Rede:
+Quantidade de Racks :
+Quantidade de Usuários :
