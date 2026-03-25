@@ -92,7 +92,7 @@ $c_where_periodo = "(data_inicio>='$d_data1' and data_inicio<='$d_data2')";
         $sql = "SELECT ocorrencias.descricao, COUNT(ordens_executores.id_executor) AS quantidade FROM ordens
     JOIN ocorrencias ON ordens.id_ocorrencia=ocorrencias.id
     JOIN  ordens_executores ON ordens.id=ordens_executores.id_ordem 
-            where ordens_executores.id_executor=$id and " . $where . " 
+            where ordens.status='C' and ordens_executores.id_executor=$id and " . $where . " 
             group by ocorrencias.descricao order by quantidade desc";
 
 
