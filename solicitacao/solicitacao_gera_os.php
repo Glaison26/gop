@@ -149,7 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $data = $data->format('d-m-Y');
             $hora = new DateTime($d_hora_previsao);
             $hora = $hora->format('H:i');
-            $c_assunto = "<h3>Abertura de Ordem de Serviço no GOP<h3>";
+            $c_assunto = "Abertura de Ordem de Serviço no GOP";
             $c_body = "<h3>A Ordem de serviço No.<b> $ordem da solicitação no. $i_id </b> foi gerada com suceso! Aguarde o atendimento <br>"
                 . "Descrição da Solicitação :" . $c_descricao . "<br>" .
                 " Previsão de execução: $data as $hora" . "</h3>";
