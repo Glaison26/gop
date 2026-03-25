@@ -163,8 +163,7 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
                 echo '<a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_gera_os.php?id=' . $c_id_ordem . '"><img src="\gop\images\ordem.png" alt="" width="25" height="25"> Gerar Ordem de Serviço</a>';
             }
             ?>
-
-            <a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_lista.php"><img src="\gop\images\saida.png" alt="" width="25" height="25"> Voltar</a>
+           
             <hr>
             <div class='alert alert-info' role='alert'>
                 <div style="padding-left:15px;">
@@ -336,6 +335,8 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
                     </div>
                 </div>
             </div>
+            <hr>
+            <a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_lista.php"><img src="\gop\images\saida.png" alt="" width="25" height="25"> Voltar</a>
         </div>
     </div>
 </body>

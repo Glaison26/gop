@@ -209,10 +209,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         ?>
         <form method="post" name="frm_gera_os" id="frm_gera_os" onsubmit="return confirm('Confirma geração de Ordem de Serviço?')">
-            <hr>
-            <button type="submit" class="btn btn btn-sm" href=""><img src="\gop\images\ordem.png" alt="" width="25" height="25"> Gerar Ordem de Serviço</button>
-            <a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_lista.php"><img src="\gop\images\saida.png" alt="" width="25" height="25"> Voltar</a>
-            <hr>
             <div class="row mb-6">
                 <label class="col-md-2 col-form-label">Oficina</label>
                 <div class="col-sm-3">
@@ -287,7 +283,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
                 <br>
             </div>
-            <br>
+            <hr>
+            <button type="submit" class="btn btn btn-sm" href=""><img src="\gop\images\ordem.png" alt="" width="25" height="25"> Gerar Ordem de Serviço</button>
+            <a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_lista.php"><img src="\gop\images\saida.png" alt="" width="25" height="25"> Voltar</a>
+           
+
         </form>
     </div>
 

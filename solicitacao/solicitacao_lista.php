@@ -82,10 +82,10 @@ $registro_conf = $result_conf->fetch_assoc();
         $('.tabsolicitacao_recursos').DataTable({
             // 
             "iDisplayLength": -1,
-            "order": [0, 'desc'],
+            "order": [1, 'desc'],
             "aoColumnDefs": [{
                 'bSortable': false,
-                'aTargets': [6]
+                'aTargets': [7]
             }, {
                 'aTargets': [0],
                 "visible": true
@@ -128,10 +128,10 @@ $registro_conf = $result_conf->fetch_assoc();
         $('.tabsolicitacao_espacos').DataTable({
             // 
             "iDisplayLength": -1,
-            "order": [0, 'desc'],
+            "order": [1, 'desc'],
             "aoColumnDefs": [{
                 'bSortable': false,
-                'aTargets': [6]
+                'aTargets': [7]
             }, {
                 'aTargets': [0],
                 "visible": true
@@ -175,10 +175,10 @@ $registro_conf = $result_conf->fetch_assoc();
         $('.tabsolicitacao_avulsas').DataTable({
             // 
             "iDisplayLength": -1,
-            "order": [0, 'desc'],
+            "order": [1, 'desc'],
             "aoColumnDefs": [{
                 'bSortable': false,
-                'aTargets': [6]
+                'aTargets': [7]
             }, {
                 'aTargets': [0],
                 "visible": true
@@ -251,6 +251,7 @@ $registro_conf = $result_conf->fetch_assoc();
                     <table class="table table display table-bordered table-striped table-active tabsolicitacao_recursos">
                         <thead class="thead">
                             <tr>
+                                <th scope="col"></th>
                                 <th scope="col"># Sol.</th>
                                 <th scope="col"># OS</th>
                                 <th scope="col">Status</th>
@@ -310,6 +311,13 @@ $registro_conf = $result_conf->fetch_assoc();
                                     $i_os = 'N.G';
                                 echo "
                                 <tr>
+                                  <td class='table-light' style='text-align:center'>";
+                                if ($_SESSION['tipo'] <> 'Solicitante' && $c_linha['status'] == 'A') {
+                                    if (($registro_acesso['gera_os'] == 'S') && ($_SESSION['tipo'] == 'Operador') || ($_SESSION['tipo'] == 'Administrador'))
+                                        echo '<a class="btn btn-light" title="Gerar Ordem de Serviço" href="\gop\solicitacao\solicitacao_gera_os.php?id=' . $c_linha['id'] . '">
+                                        <img src="\gop\images\ordem.png" alt="" width="25" height="25"></a>';
+                                }
+                                echo "
                                     <td>$c_linha[id]</td>
                                     <td>$i_os</td>
                                     <td>$c_linha[solicitacao_status]</td>
@@ -326,8 +334,9 @@ $registro_conf = $result_conf->fetch_assoc();
                             
                                     <td>
                                         <a class='btn btn-secondary btn-sm' href='/gop/solicitacao/solicitacao_detalhe.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Detalhe</a>
-                                        
-                                    </td>
+                                
+
+                                </td>
 
                                 </tr>
                                 ";
@@ -343,6 +352,7 @@ $registro_conf = $result_conf->fetch_assoc();
                     <table class="table table display table-bordered table-striped table-active tabsolicitacao_espacos">
                         <thead class="thead">
                             <tr>
+                                <th scope="col"></th>
                                 <th scope="col"># Sol.</th>
                                 <th scope="col"># OS</th>
                                 <th scope="col">Status</th>
@@ -399,6 +409,13 @@ $registro_conf = $result_conf->fetch_assoc();
                                     $i_os = 'N.G';
                                 echo "
                                 <tr>
+                                  <td class='table-light' style='text-align:center'>";
+                                if ($_SESSION['tipo'] <> 'Solicitante' && $c_linha['status'] == 'A') {
+                                    if (($registro_acesso['gera_os'] == 'S') && ($_SESSION['tipo'] == 'Operador') || ($_SESSION['tipo'] == 'Administrador'))
+                                        echo '<a class="btn btn-light" title="Gerar Ordem de Serviço" href="\gop\solicitacao\solicitacao_gera_os.php?id=' . $c_linha['id'] . '">
+                                        <img src="\gop\images\ordem.png" alt="" width="25" height="25"></a>';
+                                }
+                                echo "
                                     <td>$c_linha[id]</td>
                                     <td>$i_os</td>
                                     <td>$c_linha[solicitacao_status]</td>
@@ -433,6 +450,7 @@ $registro_conf = $result_conf->fetch_assoc();
                     <table class="table table display table-bordered table-striped table-active tabsolicitacao_avulsas">
                         <thead class="thead">
                             <tr>
+                                <th scope="col"></th>
                                 <th scope="col"># Sol.</th>
                                 <th scope="col"># OS</th>
                                 <th scope="col">Status</th>
@@ -489,6 +507,14 @@ $registro_conf = $result_conf->fetch_assoc();
                                     $i_os = 'N.G';
                                 echo "
                                 <tr>
+                                    <td class='table-light' style='text-align:center'>";
+                                if ($_SESSION['tipo'] <> 'Solicitante' && $c_linha['status'] == 'A') {
+                                    if (($registro_acesso['gera_os'] == 'S') && ($_SESSION['tipo'] == 'Operador') || ($_SESSION['tipo'] == 'Administrador'))
+                                        echo '<a class="btn btn-light" title="Gerar Ordem de Serviço" href="\gop\solicitacao\solicitacao_gera_os.php?id=' . $c_linha['id'] . '">
+                                        <img src="\gop\images\ordem.png" alt="" width="25" height="25"></a>';
+                                }
+                                echo "
+                                    </td>
                                     <td>$c_linha[id]</td>
                                     <td>$i_os</td>
                                     <td>$c_linha[solicitacao_status]</td>
@@ -503,7 +529,8 @@ $registro_conf = $result_conf->fetch_assoc();
                                     <td>$c_hora_conclusao</td>
                                     <td>
                                         <a class='btn btn-secondary btn-sm' href='/gop/solicitacao/solicitacao_detalhe.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Detalhe</a>
-                                        
+                                
+                                                                  
                                     </td>
 
                                 </tr>
