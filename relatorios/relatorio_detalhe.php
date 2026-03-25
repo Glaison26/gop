@@ -73,7 +73,7 @@ $c_where_periodo = "(data_inicio>='$d_data1' and data_inicio<='$d_data2')";
     <?php
     $i_total_ocorrencia = 0;
     if ($id_executor == '0') {
-        $c_sql_ocorrencias = "select id, nome from executores";
+        $c_sql_ocorrencias = "select id, nome from executores order by nome";
         $result_executores = $conection->query($c_sql_ocorrencias);
 
         while ($executor = $result_executores->fetch_assoc()) {
