@@ -26,8 +26,9 @@ if (!empty($_SESSION['consulta_solicitacao'])) { // consulta da solicitação ap
    case WHEN solicitacao.tipo='P' THEN 'Programada' ELSE 'Urgência' END AS solicitacao_tipo, 
    case when solicitacao.status='A' then 'Aberta' when solicitacao.status='E' then 'Em Andamento' 
    when solicitacao.status='C' then 'Concluída' when solicitacao.status='X' then 'Cancelada'
-   END AS solicitacao_status FROM solicitacao JOIN usuarios ON solicitacao.id_solicitante=usuarios.id 
+   END AS solicitacao_status, setores.descricao as setor FROM solicitacao JOIN usuarios ON solicitacao.id_solicitante=usuarios.id 
    JOIN recursos ON solicitacao.id_recursos=recursos.id JOIN ocorrencias on solicitacao.id_ocorrencia=ocorrencias.id 
+   JOIN setores on solicitacao.id_setor = setores.id
    where solicitacao.id = '$id_nova_solicitacao' order by solicitacao.data_abertura desc";
     // espaço fisico
     $c_sql_espaco = "SELECT solicitacao.id, ocorrencias.descricao, solicitacao.prazo_data, solicitacao.data_conclusao,
@@ -36,9 +37,10 @@ if (!empty($_SESSION['consulta_solicitacao'])) { // consulta da solicitação ap
     usuarios.nome AS solicitante, espacos.descricao AS espaco, case WHEN solicitacao.tipo='P' THEN 'Programada'
     ELSE 'Urgência' END AS solicitacao_tipo, case when solicitacao.status='A' then 'Aberta' 
     when solicitacao.status='E' then 'Em Andamento' when solicitacao.status='C' then 'Concluída'
-    when solicitacao.status='X' then 'Cancelada' END AS solicitacao_status FROM solicitacao 
+    when solicitacao.status='X' then 'Cancelada' END AS solicitacao_status, , setores.descricao as setor FROM solicitacao 
     JOIN usuarios ON solicitacao.id_solicitante=usuarios.id JOIN espacos ON solicitacao.id_espaco=espacos.id 
     JOIN ocorrencias on solicitacao.id_ocorrencia=ocorrencias.id where solicitacao.id = '$id_nova_solicitacao'
+    JOIN setores on solicitacao.id_setor = setores.id
     order by solicitacao.data_abertura desc";
     // solicitação avulsa
     $c_sql_avulso = "SELECT solicitacao.id, ocorrencias.descricao, solicitacao.prazo_data, solicitacao.data_conclusao,
@@ -47,9 +49,10 @@ if (!empty($_SESSION['consulta_solicitacao'])) { // consulta da solicitação ap
      usuarios.nome AS solicitante, case WHEN solicitacao.tipo='P' THEN 'Programada' ELSE 'Urgência' 
      END AS solicitacao_tipo, case when solicitacao.status='A' then 'Aberta' when solicitacao.status='E' 
      then 'Em Andamento' when solicitacao.status='C' then 'Concluída' when solicitacao.status='X' 
-     then 'Cancelada' END AS solicitacao_status FROM solicitacao 
+     then 'Cancelada' END AS solicitacao_status, setores.descricao as setor FROM solicitacao 
      JOIN usuarios ON solicitacao.id_solicitante=usuarios.id 
      JOIN ocorrencias on solicitacao.id_ocorrencia=ocorrencias.id 
+     JOIN setores on solicitacao.id_setor = setores.id
      where solicitacao.id = '$id_nova_solicitacao' and classificacao='V' order by solicitacao.data_abertura desc";
     $_SESSION['consulta_solicitacao'] = "";
 } else {
@@ -85,7 +88,7 @@ $registro_conf = $result_conf->fetch_assoc();
             "order": [1, 'desc'],
             "aoColumnDefs": [{
                 'bSortable': false,
-                'aTargets': [7]
+                'aTargets': [8]
             }, {
                 'aTargets': [0],
                 "visible": true
@@ -131,7 +134,7 @@ $registro_conf = $result_conf->fetch_assoc();
             "order": [1, 'desc'],
             "aoColumnDefs": [{
                 'bSortable': false,
-                'aTargets': [7]
+                'aTargets': [8]
             }, {
                 'aTargets': [0],
                 "visible": true
@@ -178,7 +181,7 @@ $registro_conf = $result_conf->fetch_assoc();
             "order": [1, 'desc'],
             "aoColumnDefs": [{
                 'bSortable': false,
-                'aTargets': [7]
+                'aTargets': [8]
             }, {
                 'aTargets': [0],
                 "visible": true
@@ -261,6 +264,7 @@ $registro_conf = $result_conf->fetch_assoc();
                                 <th scope="col">Prazo data</th>
                                 <th scope="col">Prazo Hora</th>
                                 <th scope="col">Solicitante</th>
+                                <th scope="col">Setor</th>
                                 <th scope="col">Recurso Físico</th>
                                 <th scope="col">Tipo</th>
                                 <th scope="col">Conclusão</th>
@@ -327,6 +331,7 @@ $registro_conf = $result_conf->fetch_assoc();
                                     <td>$c_data_prazo</td>
                                     <td>$c_prazo_hora</td>
                                     <td>$c_linha[solicitante]</td>
+                                    <td>$c_linha[setor]</td>
                                     <td>$c_linha[recurso]</td>
                                     <td $c_cor>$c_linha[solicitacao_tipo]</td>
                                     <td>$c_data_conclusao</td>
@@ -362,6 +367,7 @@ $registro_conf = $result_conf->fetch_assoc();
                                 <th scope="col">Prazo data</th>
                                 <th scope="col">Prazo Hora</th>
                                 <th scope="col">Solicitante</th>
+                                <th scope="col">Setor</th>
                                 <th scope="col">Espaço Físico</th>
                                 <th scope="col">Tipo</th>
                                 <th scope="col">Conclusão</th>
@@ -425,6 +431,7 @@ $registro_conf = $result_conf->fetch_assoc();
                                     <td>$c_data_prazo</td>
                                     <td>$c_prazo_hora </td>
                                     <td>$c_linha[solicitante]</td>
+                                    <td>$c_linha[setor]</td>
                                     <td>$c_linha[espaco]</td>
                                     <td $c_cor>$c_linha[solicitacao_tipo]</td>
                                     <td>$c_data_conclusao</td>
@@ -460,6 +467,7 @@ $registro_conf = $result_conf->fetch_assoc();
                                 <th scope="col">Prazo data</th>
                                 <th scope="col">Prazo Hora</th>
                                 <th scope="col">Solicitante</th>
+                                <th scope="col">Setor</th>
                                 <th scope="col">Tipo</th>
                                 <th scope="col">Conclusão</th>
                                 <th scope="col">Hora Conclusão</th>
@@ -524,6 +532,7 @@ $registro_conf = $result_conf->fetch_assoc();
                                     <td>$c_data_prazo</td>
                                     <td>$c_prazo_hora</td>
                                     <td>$c_linha[solicitante]</td>
+                                    <td>$c_linha[setor]</td>
                                     <td $c_cor>$c_linha[solicitacao_tipo]</td>
                                     <td>$c_data_conclusao</td>
                                     <td>$c_hora_conclusao</td>

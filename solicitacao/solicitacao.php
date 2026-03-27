@@ -106,11 +106,12 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     when solicitacao.status='E' then 'Em Andamento'
                     when solicitacao.status='C' then 'Concluída'
                     when solicitacao.status='X' then 'Cancelada'
-                    END AS solicitacao_status
+                    END AS solicitacao_status, setores.descricao as setor
                     FROM solicitacao
                     JOIN usuarios ON solicitacao.id_solicitante=usuarios.id
                     JOIN recursos ON solicitacao.id_recursos=recursos.id
                     JOIN ocorrencias on solicitacao.id_ocorrencia=ocorrencias.id
+                    JOIN setores on solicitacao.id_setor = setores.id
                     where $c_where" . " order by solicitacao.data_abertura desc";
     // montagem do sql para espaços fisicos
     $c_sqlespacos = "SELECT solicitacao.id, ocorrencias.descricao, solicitacao.prazo_data, solicitacao.data_conclusao, solicitacao.hora_conclusao, solicitacao.prazo_hora, solicitacao.id_ordem, solicitacao.data_abertura, solicitacao.hora_abertura, solicitacao.id_solicitante,
@@ -125,11 +126,12 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     when solicitacao.status='E' then 'Em Andamento'
                     when solicitacao.status='C' then 'Concluída'
                     when solicitacao.status='X' then 'Cancelada'
-                    END AS solicitacao_status
+                    END AS solicitacao_status, setores.descricao as setor
                     FROM solicitacao
                     JOIN usuarios ON solicitacao.id_solicitante=usuarios.id
                     JOIN espacos ON solicitacao.id_espaco=espacos.id  
-                    JOIN ocorrencias on solicitacao.id_ocorrencia=ocorrencias.id             
+                    JOIN ocorrencias on solicitacao.id_ocorrencia=ocorrencias.id 
+                    JOIN setores on solicitacao.id_setor = setores.id            
                     where $c_where" . " order by solicitacao.data_abertura desc";
     // montagem do sql para solicitações avulsas 
     $c_sqlavulso =  "SELECT solicitacao.id, ocorrencias.descricao, solicitacao.prazo_data, solicitacao.data_conclusao, solicitacao.hora_conclusao, solicitacao.prazo_hora, solicitacao.id_ordem, solicitacao.data_abertura, solicitacao.hora_abertura, solicitacao.id_solicitante,
@@ -144,10 +146,11 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     when solicitacao.status='E' then 'Em Andamento'
                     when solicitacao.status='C' then 'Concluída'
                     when solicitacao.status='X' then 'Cancelada'
-                    END AS solicitacao_status
+                    END AS solicitacao_status, setores.descricao as setor
                     FROM solicitacao
                     JOIN usuarios ON solicitacao.id_solicitante=usuarios.id  
                     JOIN ocorrencias on solicitacao.id_ocorrencia=ocorrencias.id
+                    JOIN setores on solicitacao.id_setor = setores.id
                     where $c_where and classificacao='V'" . " order by solicitacao.data_abertura desc";
     // chamo pagina com os dados a serem selecionados passando a string sql
     $_SESSION['sqlrecurso'] = $c_sqlrecursos;
