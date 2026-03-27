@@ -37,10 +37,11 @@ if (!empty($_SESSION['consulta_solicitacao'])) { // consulta da solicitação ap
     usuarios.nome AS solicitante, espacos.descricao AS espaco, case WHEN solicitacao.tipo='P' THEN 'Programada'
     ELSE 'Urgência' END AS solicitacao_tipo, case when solicitacao.status='A' then 'Aberta' 
     when solicitacao.status='E' then 'Em Andamento' when solicitacao.status='C' then 'Concluída'
-    when solicitacao.status='X' then 'Cancelada' END AS solicitacao_status, , setores.descricao as setor FROM solicitacao 
+    when solicitacao.status='X' then 'Cancelada' END AS solicitacao_status, setores.descricao as setor FROM solicitacao 
     JOIN usuarios ON solicitacao.id_solicitante=usuarios.id JOIN espacos ON solicitacao.id_espaco=espacos.id 
-    JOIN ocorrencias on solicitacao.id_ocorrencia=ocorrencias.id where solicitacao.id = '$id_nova_solicitacao'
     JOIN setores on solicitacao.id_setor = setores.id
+    JOIN ocorrencias on solicitacao.id_ocorrencia=ocorrencias.id where solicitacao.id = '$id_nova_solicitacao'
+    
     order by solicitacao.data_abertura desc";
     // solicitação avulsa
     $c_sql_avulso = "SELECT solicitacao.id, ocorrencias.descricao, solicitacao.prazo_data, solicitacao.data_conclusao,
