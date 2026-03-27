@@ -1,0 +1,10 @@
+Ordem de Serviço Nº: 46
+Data de Geração: 25/03/2026 Hora: 16:56:00
+Previsão de Entrega: 26/03/2026 Hora: 11:00:00
+Previsão de Inicio: 25/03/2026 Hora: 16:56:00
+Solicitante: Lucio Machado
+Setor: Secretaria Municipal de Administração
+Tipo de Ordem: Corretiva
+Ocorrência: Acompanhamento de visita técnica
+Executor Responsável: Lucio Machado
+Descrição: Verificar acesso a documentos compartilhados (Drive), na Medicina do Trabalho.
