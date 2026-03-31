@@ -64,6 +64,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $d_data_abertura =   date("Y-m-d");
     $c_agora = date('H:i');
     $c_descricao = $_POST['solicitacao'];
+    $c_descricao = str_replace("'", "", $c_descricao);
     $msg_erro = "";
     do {
 
@@ -100,6 +101,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
             status, classificacao,tipo,descricao, id_ocorrencia) value ('$i_setor', '$i_solicitante', '$i_id_espaco', '$d_data_abertura', 
             '$c_agora', 'A', 'E', '$c_tipo', '$c_descricao', $i_ocorrencia)";
         }
+        
         //echo $c_sql;
         $result = $conection->query($c_sql);
         $c_email_oficina = "";
