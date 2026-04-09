@@ -29,8 +29,8 @@ if (!empty($_SESSION['consulta_ordem'])) { // consulta da Ordem de serviço apó
    JOIN oficinas ON ordens.id_oficina=oficinas.id JOIN usuarios ON ordens.id_solicitante=usuarios.id 
    JOIN executores on ordens.id_executor_responsavel=executores.id where ordens.id = '$i_id_nova_ordem'  and ordens.tipo='E'
    order by ordens.id desc";
-   // ordens avulsas
-   $c_sql_avulso = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, 
+    // ordens avulsas
+    $c_sql_avulso = "SELECT ordens.id, ordens.id_solicitacao, ordens.data_geracao, ordens.hora_geracao, 
    ordens.descritivo, ordens.`status`, ordens.id_setor, ordens.tipo_ordem, ordens.id_solicitante, setores.descricao
    AS setor, usuarios.nome,ordens.data_previsao, data_inicio, oficinas.descricao as oficina, executores.nome 
    as executor, case when ordens.status='A' then 'Aberta' when ordens.status='E' then 'Em Andamento'
@@ -40,7 +40,6 @@ if (!empty($_SESSION['consulta_ordem'])) { // consulta da Ordem de serviço apó
    JOIN oficinas ON ordens.id_oficina=oficinas.id JOIN usuarios ON ordens.id_solicitante=usuarios.id 
    JOIN executores on ordens.id_executor_responsavel=executores.id where ordens.id = '$i_id_nova_ordem' and ordens.tipo='V'
    order by ordens.id desc";
-   
 } else {
     $c_sql_recurso = $_SESSION['sqlrecurso'];
     $c_sql_espaco = $_SESSION['sqlespaco'];
@@ -237,13 +236,20 @@ $registro_conf = $result_conf->fetch_assoc();
                 <h5>Lista de Ordens de Serviços<h5>
             </div>
         </div>
-
-
+        <?php
+        // capturo quantidade registros por aba
+        $result_recurso = $conection->query($c_sql_recurso);
+        $qtd_recursos = $result_recurso->num_rows;
+        $result_avulso = $conection->query($c_sql_avulso);
+        $qtd_avulso = $result_avulso->num_rows;
+        $result_fisico = $conection->query($c_sql_espaco);
+        $qtd_fisico = $result_fisico->num_rows;
+        ?>
         <!-- abas de solicitações por recursos físicos, Espaços físicos e avulsos -->
         <ul class="nav nav-tabs nav-tabs-responsive" role="tablist">
-            <li role="presentation" class="active"><a href="#avulsas" aria-controls="avulsas" role="tab" data-toggle="tab">Visualizar Ordens de Serviço</a></li>
-            <li role="presentation"><a href="#recurso" aria-controls="recurso" role="tab" data-toggle="tab">Visualizar Ordens de Serviço em Recurso Físico</a></li>
-            <li role="presentation"><a href="#espaco" aria-controls="espaco" role="tab" data-toggle="tab">Visualizar Ordens de Serviço em Espaços Físicos</a></li>
+            <li role="presentation" class="active"><a href="#avulsas" aria-controls="avulsas" role="tab" data-toggle="tab">Visualizar Ordens de Serviço <span style="background-color: #2f00ff; color: white; padding: 5px 10px; border-radius: 10px;"> <?php echo '  ' . $qtd_avulso . ' registro(s)' ?></span></a></li>
+            <li role="presentation"><a href="#recurso" aria-controls="recurso" role="tab" data-toggle="tab">Visualizar Ordens de Serviço em Recurso Físico <span style="background-color: #2f00ff; color: white; padding: 5px 10px; border-radius: 10px;"> <?php echo '  ' . $qtd_recursos . ' registro(s)' ?></span></a></li>
+            <li role="presentation"><a href="#espaco" aria-controls="espaco" role="tab" data-toggle="tab">Visualizar Ordens de Serviço em Espaços Físicos <span style="background-color: #2f00ff; color: white; padding: 5px 10px; border-radius: 10px;"> <?php echo '  ' . $qtd_fisico . ' registro(s)' ?></span> </a></li>
         </ul>
         <div class="tab-content">
             <!-- aba da recurso fisico-->
@@ -605,4 +611,6 @@ $registro_conf = $result_conf->fetch_assoc();
         background-color: #4682B4;
         color: white;
     }
+
+    
 </style>
