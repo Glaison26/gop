@@ -247,9 +247,9 @@ $registro_conf = $result_conf->fetch_assoc();
         ?>
         <!-- abas de solicitações por recursos físicos, Espaços físicos e avulsos -->
         <ul class="nav nav-tabs nav-tabs-responsive" role="tablist">
-            <li role="presentation" class="active"><a href="#avulsas" aria-controls="avulsas" role="tab" data-toggle="tab">Visualizar Ordens de Serviço <span style="background-color: #2f00ff; color: white; padding: 5px 10px; border-radius: 10px;"> <?php echo '  ' . $qtd_avulso . ' registro(s)' ?></span></a></li>
-            <li role="presentation"><a href="#recurso" aria-controls="recurso" role="tab" data-toggle="tab">Visualizar Ordens de Serviço em Recurso Físico <span style="background-color: #2f00ff; color: white; padding: 5px 10px; border-radius: 10px;"> <?php echo '  ' . $qtd_recursos . ' registro(s)' ?></span></a></li>
-            <li role="presentation"><a href="#espaco" aria-controls="espaco" role="tab" data-toggle="tab">Visualizar Ordens de Serviço em Espaços Físicos <span style="background-color: #2f00ff; color: white; padding: 5px 10px; border-radius: 10px;"> <?php echo '  ' . $qtd_fisico . ' registro(s)' ?></span> </a></li>
+            <li role="presentation" class="active"><a href="#avulsas" aria-controls="avulsas" role="tab" data-toggle="tab">Visualizar Ordens de Serviço <span style="background-color: #00b7ff;; color: white; padding: 5px 10px; border-radius: 10px;"> <?php echo '  ' . $qtd_avulso . ' registro(s)' ?></span></a></li>
+            <li role="presentation"><a href="#recurso" aria-controls="recurso" role="tab" data-toggle="tab">Visualizar Ordens de Serviço em Recurso Físico <span style="background-color: #00b7ff;; color: white; padding: 5px 10px; border-radius: 10px;"> <?php echo '  ' . $qtd_recursos . ' registro(s)' ?></span></a></li>
+            <li role="presentation"><a href="#espaco" aria-controls="espaco" role="tab" data-toggle="tab">Visualizar Ordens de Serviço em Espaços Físicos <span style="background-color: #00b7ff;; color: white; padding: 5px 10px; border-radius: 10px;"> <?php echo '  ' . $qtd_fisico . ' registro(s)' ?></span> </a></li>
         </ul>
         <div class="tab-content">
             <!-- aba da recurso fisico-->
