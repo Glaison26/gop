@@ -47,7 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <!-- 
     Página de cadastro de pedido de compra
     - Formulário para cadastro de pedido de compra
-    - Campos: Descritivo, Fornecedor, Data, Tipo do pedido, No. da Nota, Cond. Pag., Prazo (dias), Comprador, Vencimento, Frete, Valor e Observação
+    - Campos: Descritivo, Fornecedor, Data, Tipo do pedido, No. da Nota, Cond. Pag., Prazo (dias),
+     Comprador, Vencimento, Frete, Valor e Observação 
     - Botão para salvar o pedido de compra e botão para cancelar o cadastro
 -->
 
@@ -101,7 +102,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <select class="form-select form-select-lg mb-3" id="tipo_compra" name="tipo_compra" required>
                             <option value="M">Materiais</option>
                             <option value="S">Serviços</option>
-                            
                         </select>
                     </div>
                 </div>
