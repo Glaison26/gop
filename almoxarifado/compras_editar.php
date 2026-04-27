@@ -135,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Observação</label>
                 <div class="col-sm-8">
-                    <textarea class="form-control" id="obs" name="obs" rows="6"><?php echo $registro['descritivo']; ?></textarea>
+                    <textarea class="form-control" id="obs" name="obs" rows="6"><?php echo $registro['observacao']; ?></textarea>
                 </div>
             </div>
             <br>
