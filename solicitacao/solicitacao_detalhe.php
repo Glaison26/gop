@@ -35,7 +35,7 @@ $result = $conection->query($c_sql);
 $registro = $result->fetch_assoc();
 // sql para pegar dados da solicitação selecionada
 
-$c_sql = "SELECT solicitacao.id, solicitacao.data_abertura, solicitacao.prazo_data, solicitacao.prazo_hora, solicitacao.hora_abertura, solicitacao.id_solicitante,
+$c_sql = "SELECT solicitacao.id, solicitacao.conclusao, solicitacao.data_abertura, solicitacao.prazo_data, solicitacao.prazo_hora, solicitacao.hora_abertura, solicitacao.id_solicitante,
 solicitacao.id_recursos, solicitacao.tipo, solicitacao.id_ocorrencia, solicitacao.`status`, solicitacao.descricao, solicitacao.classificacao,
 usuarios.nome AS solicitante, setores.descricao AS setor,";
 if ($registro['classificacao'] == 'R') {
@@ -70,6 +70,10 @@ $result = $conection->query($c_sql);
 $registro = $result->fetch_assoc();
 // variaveis do formulário
 $c_descricao = $registro['descricao'];
+$c_conclusao = $registro['conclusao'];
+if (empty($c_conclusao)){
+    $c_conclusao = "Solicitação ainda não foi concluída, favor aguardar ou entrar em contato com o setor responsável";
+}
 
 $c_setor = $registro['setor'];
 $d_data = date("d-m-Y", strtotime(str_replace('/', '-', $registro['data_abertura'])));
@@ -176,6 +180,7 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
 
                 <li role="presentation" class="active"><a href="#detalhe" aria-controls="detalhe" role="tab" data-toggle="tab">Detalhe da Solicitação</a></li>
                 <li role="presentation"><a href="#descritivo" aria-controls="descritivo" role="tab" data-toggle="tab">Descrição do Serviço</a></li>
+                <li role="presentation"><a href="#conclusao" aria-controls="conclusao" role="tab" data-toggle="tab">Conclusão</a></li>
                 <li role="menssagens"><a href="#mensagens" aria-controls="mensagens" role="tab" data-toggle="tab">Troca de Mensagens</a></li>
             </ul>
 
@@ -191,6 +196,17 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
                         </div>
                     </div>
                 </div>
+                <!-- aba de conclusão -->
+                 <div role="tabpanel" class="tab-pane" id="conclusao">
+                    <div style="padding-top:15px;padding-left:20px;">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <textarea readonly class="form-control" id="conclusao" name="conclusao" rows="10"><?php echo $c_conclusao; ?></textarea>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+
                 <!-- aba de Detalhe -->
                 <div role="tabpanel" class="tab-pane active" id="detalhe">
                     <div style="padding-top:15px;padding-left:20px;">

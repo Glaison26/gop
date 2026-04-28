@@ -229,21 +229,30 @@ $registro_conf = $result_conf->fetch_assoc();
                 <h5>Solicitações de Serviços<h5>
             </div>
         </div>
+        <?php
+        // capturo quantidade registros por aba
+        $result_recurso = $conection->query($c_sql_recurso);
+        $qtd_recursos = $result_recurso->num_rows;
+        $result_avulso = $conection->query($c_sql_avulso);
+        $qtd_avulso = $result_avulso->num_rows;
+        $result_fisico = $conection->query($c_sql_espaco);
+        $qtd_fisico = $result_fisico->num_rows;
+        ?>
 
         <!-- abas de solicitações por recursos físicos, Espaços físicos e avulsos -->
         <ul class="nav nav-tabs" role="tablist">
             <?php
             if (($registro_conf['solicitacao_avulsa'] == 'S') || ($_SESSION['tipo'] <> 'Solicitante')) {
                 echo '
-            <li role="presentation" class="active"><a href="#avulsas" aria-controls="avulsas" role="tab" data-toggle="tab">Visualizar Solicitações</a></li>';
+            <li role="presentation" class="active"><a href="#avulsas" aria-controls="avulsas" role="tab" data-toggle="tab">Visualizar Solicitações <span style="background-color: #00b7ff; color: white; padding: 5px 10px; border-radius: 10px;"> '.  $qtd_avulso.'   registro(s)</span></a></li>';
             }
             if (($registro_conf['solicitacao_recursos'] == 'S') || ($_SESSION['tipo'] <> 'Solicitante')) {
                 echo '
-            <li role="presentation"><a href="#recurso" aria-controls="recurso" role="tab" data-toggle="tab">Visualizar Solicitações em Recurso Físico</a></li>';
+            <li role="presentation"><a href="#recurso" aria-controls="recurso" role="tab" data-toggle="tab">Visualizar Solicitações em Recurso Físico <span style="background-color: #00b7ff;; color: white; padding: 5px 10px; border-radius: 10px;"> '.  $qtd_recursos.'   registro(s)</span></a></li>';
             }
             if (($registro_conf['solicitacao_espacos'] == 'S' || ($_SESSION['tipo'] <> 'Solicitante'))) {
                 echo '
-            <li role="presentation"><a href="#espaco" aria-controls="espaco" role="tab" data-toggle="tab">Visualizar Solicitações em Espaços Físicos</a></li>';
+            <li role="presentation"><a href="#espaco" aria-controls="espaco" role="tab" data-toggle="tab">Visualizar Solicitações em Espaços Físicos <span style="background-color: #00b7ff;; color: white; padding: 5px 10px; border-radius: 10px;"> '.  $qtd_fisico.'   registro(s)</span></a></li>';
             }
             ?>
         </ul>

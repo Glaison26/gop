@@ -82,7 +82,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $c_descricao = $c_registro_solicitacao['descricao'];
                 $c_descricao = $c_descricao . "\r\n" . "\r\n".'CONCLUSÃO :'."\r\n". "\r\n" . $_POST['conclusao'];
                 // atualizo o status da solicitação
-                $c_sql_up = "update solicitacao set status='C', data_conclusao='$_POST[data_conclusao]', hora_conclusao='$_POST[hora_conclusao]', descricao='$c_descricao'
+                $c_sql_up = "update solicitacao set status='C', data_conclusao='$_POST[data_conclusao]', 
+                hora_conclusao='$_POST[hora_conclusao]', conclusao = '$_POST[conclusao]'
                   where id_ordem = '$i_id'";
                  
                 $result_up = $conection->query($c_sql_up);
