@@ -97,6 +97,15 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['almoxarifado_mat
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
+        <!-- legenda para as cores do campo quantidade atual sendo vermelho igual a zero, amarelo abaixo do minimo e verde acima do minimo  -->
+        <div class="alert alert-info" role="alert">
+            <div style="padding-left:10px;">
+                <img Align="left" src="\gop\images\aviso.png" alt="30" height="35">
+                <h4>Legenda para o campo de Saldo: Vermelho para quantidade igual a zero, Amarelo para quantidade abaixo
+                     do estoque mínimo e Verde para quantidade acima do estoque mínimo</h4>
+            </div>
+        </div>
+       
         <table class="table table-bordered table-striped tabmateriais">
             <thead class="thead">
                 <tr>
@@ -114,7 +123,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['almoxarifado_mat
                 <?php
                
                 // faço a Leitura da tabela com sql
-                $c_sql = "SELECT materiais.id, materiais.descricao, materiais.quantidadeatual, materiais.custo, unidades.descricao AS unidade," .
+                $c_sql = "SELECT materiais.id, materiais.descricao, materiais.qtdmin, materiais.quantidadeatual, materiais.custo, unidades.descricao AS unidade," .
                     " marcas.descricao AS marca, grupos.descricao AS grupo" .
                     " FROM materiais" .
                     " JOIN  unidades on materiais.id_unidadeSaida=unidades.id" .
@@ -130,11 +139,21 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['almoxarifado_mat
                 // insiro os registro do banco de dados na tabela 
                 while ($c_linha = $result->fetch_assoc()) {
                     $c_custo = mask($c_linha['custo'], 'R$#########');
+                    //  configuro cores para o campo de quantidade atual (amarelo abaixo do estoqe minimo, verde acima do estoque minimo e vermelho para quantidade igual a zero
+                    $cor = '';
+                    if ($c_linha['quantidadeatual'] == 0) {
+                        $cor = 'style="background-color: #f8d7da;"';
+                    } elseif ($c_linha['quantidadeatual'] < $c_linha['qtdmin']) {
+                        $cor = 'style="background-color: #fff3cd;"';
+                    } else {
+                        $cor = 'style="background-color: #d4edda;"';
+                    }
+                    
                     echo "
                     <tr>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descricao]</td>
-                    <td>$c_linha[quantidadeatual]</td>
+                    <td $cor>$c_linha[quantidadeatual]</td>
                     <td>$c_linha[unidade]</td>
                     <td>$c_linha[grupo]</td>
                     <td>$c_linha[marca]</td>
