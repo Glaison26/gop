@@ -112,6 +112,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['almoxarifado_mat
                     <th scope="col">Código</th>
                     <th scope="col">Descrição</th>
                     <th scope="col">Saldo</th>
+                    <th scope="col">estoq. mínimo</th>
                     <th scope="col">Unidade Saída</th>
                     <th scope="col">Grupo</th>
                     <th scope="col">Marca</th>
@@ -154,6 +155,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['almoxarifado_mat
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descricao]</td>
                     <td $cor>$c_linha[quantidadeatual]</td>
+                    <td>$c_linha[qtdmin]</td>
                     <td>$c_linha[unidade]</td>
                     <td>$c_linha[grupo]</td>
                     <td>$c_linha[marca]</td>
