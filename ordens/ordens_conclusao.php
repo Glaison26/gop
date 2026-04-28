@@ -35,6 +35,20 @@ if (($i_total_executores<1)&&($i_total_prestadores<1)){
     ";
 
 }
+// consisto se a ordem de serviço tem materiais de serviço anexados, se tiver verifico se todos os materiais já sofreram baixa para só depois permitir a conclusão da ordem de serviço
+$c_sql_materiais = "select count(*) as total_materiais FROM ordens_materiais
+where ordens_materiais.id_ordem = '$i_id' and ordens_materiais.baixa = 'N'";
+$result_materiais = $conection->query($c_sql_materiais);
+$c_linha_materiais = $result_materiais->fetch_assoc();
+$i_total_materiais = $c_linha_materiais['total_materiais'];
+if ($i_total_materiais>0){
+    echo "
+      <script>
+        alert('Existem materiais que ainda não sofreram baixa, favor verificar para realizar a conclusão!!');
+        window.location.href = '/gop/ordens/ordens_gerenciar.php';
+      </script>
+    ";
+}
 
 $c_conclusao = "";
 $msg_erro = "";
