@@ -116,7 +116,7 @@ $c_linha_compra = $result_compra->fetch_assoc();
             e.preventDefault();
             var c_id = $('#up_idField').val();
             var c_fator = $('#up_fator').val();
-           
+
             if (c_fator != '') {
 
                 $.ajax({
@@ -160,7 +160,7 @@ $c_linha_compra = $result_compra->fetch_assoc();
 
             <h5>Materiais para a Compra No. <?php echo $c_linha_compra['id']  ?> </h5>
         </div>
-
+        <a class="btn btn-primary btn-sm" href="/gop/almoxarifado/pedido_itens_cadastro.php"><span class="glyphicon glyphicon-plus"></span> Novo Material</a>
         <a class="btn btn-secondary btn-sm" href="/gop/almoxarifado/compras_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
@@ -225,7 +225,7 @@ $c_linha_compra = $result_compra->fetch_assoc();
             </tbody>
         </table>
     </div>
-    
+
     <!-- Modal para edição dos dados -->
     <div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="editmodal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -247,7 +247,6 @@ $c_linha_compra = $result_compra->fetch_assoc();
                             </div>
                         </div>
 
-
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
                             <button class="btn btn-secondary" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Fechar</button>
@@ -258,8 +257,8 @@ $c_linha_compra = $result_compra->fetch_assoc();
             </div>
         </div>
     </div>
-    <
 
-        </body>
+
+</body>
 
 </html>
