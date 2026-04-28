@@ -565,12 +565,11 @@ CREATE TABLE IF NOT EXISTS `grupos` (
   `id` int NOT NULL AUTO_INCREMENT,
   `descricao` varchar(120) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela gop.grupos: ~3 rows (aproximadamente)
 REPLACE INTO `grupos` (`id`, `descricao`) VALUES
-	(11, 'Material de Construção'),
-	(12, 'Material de Limpeza');
+	(13, 'Insumos de Informática');
 
 -- Copiando estrutura para tabela gop.grupos_fornecedores
 CREATE TABLE IF NOT EXISTS `grupos_fornecedores` (
@@ -638,9 +637,17 @@ CREATE TABLE IF NOT EXISTS `materiais` (
   CONSTRAINT `FK_materiais_marcas` FOREIGN KEY (`id_marca`) REFERENCES `marcas` (`id`),
   CONSTRAINT `FK_materiais_unidades` FOREIGN KEY (`id_unidadeEntrada`) REFERENCES `unidades` (`id`),
   CONSTRAINT `FK_materiais_unidades_2` FOREIGN KEY (`id_unidadeSaida`) REFERENCES `unidades` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela gop.materiais: ~0 rows (aproximadamente)
+REPLACE INTO `materiais` (`id`, `descricao`, `id_grupo`, `id_marca`, `custo`, `qtdmin`, `qtdmax`, `id_unidadeEntrada`, `id_unidadeSaida`, `fator`, `ultimasaida`, `ultimaentrada`, `data_validade`, `quantidadeatual`, `obs`) VALUES
+	(4, 'Toner Ricoh C2000 Preto', 13, 103, 0, 2, 4, 8, 8, 1, '2026-04-27', '2026-04-27', '2026-04-27', 0, _binary 0x20),
+	(5, 'Toner Ricoh C2000 Amarelo', 13, 103, 0, 2, 4, 8, 8, 1, '2026-04-27', '2026-04-27', '2026-04-27', 4, _binary ''),
+	(6, 'Toner Ricoh C2000 Ciano', 13, 103, 0, 2, 4, 8, 8, 1, '2026-04-27', '2026-04-27', '2026-04-27', 2, _binary 0x20),
+	(7, 'Toner Ricoh C2000 Margenta', 13, 103, 0, 2, 4, 8, 8, 1, '2026-04-27', '2026-04-27', '2026-04-27', 2, _binary 0x20),
+	(8, 'Ricoh IM 430 Preto', 13, 103, 0, 2, 40, 8, 8, 1, '2026-04-27', '2026-04-27', '2026-04-27', 45, _binary 0x20),
+	(9, 'Toner 311 cp Preto', 13, 103, 0, 2, 10, 8, 8, 1, '2026-04-28', '2026-04-28', '2026-04-28', 2, _binary 0x2020),
+	(10, 'Toner 601 / 501 Preto', 13, 101, 0, 2, 10, 2, 2, 1, '2026-04-28', '2026-04-28', '2026-04-28', 4, _binary '');
 
 -- Copiando estrutura para tabela gop.mensagens
 CREATE TABLE IF NOT EXISTS `mensagens` (
@@ -771,8 +778,8 @@ REPLACE INTO `ocorrencias` (`id`, `descricao`, `id_tipo_ocorrencia`, `texto`, `t
 	(38, 'Impressoras - Não está imprimindo', 1, _binary 0x53454c4220646120496d70726573736f7261203a, _binary '', 0, 72),
 	(39, 'Impressoras - Não liga', 1, _binary 0x53454c4220646120696d70726573736f7261, _binary '', 0, 72),
 	(40, 'Impressoras - Papel preso/atolamento', 1, _binary 0x53454c4220646120496d70726573736f7261, _binary '', 0, 72),
-	(41, 'Impressoras - Solicitação de toner', 1, _binary 0x536520666f7220696d70726573736f726120636f6c6f72696461207175616c206120636f7220746f20746f6e6572203f3a0d0a53454c4220646120496d70726573736f7261203a, _binary '', 0, 1),
-	(42, 'Impressoras - Solicitação de troca', 1, _binary 0x53454c4220646120696d70726573736f7261, _binary '', 0, 72),
+	(41, 'Impressoras - Solicitação de toner', 1, _binary 0x536520666f7220696d70726573736f726120636f6c6f726964612c207175616c206120636f7220746f20746f6e6572203f3a0d0a53454c4220646120496d70726573736f7261203a, _binary 0x526573706f6e73c3a176656c2070656c6f207472616e73706f7274653a, 30, 0),
+	(42, 'Impressoras - Solicitação de troca de equipamento', 1, _binary 0x53454c4220646120696d70726573736f7261, _binary '', 0, 72),
 	(43, 'Internet - sem acesso', 7, _binary 0x6c6f63616c203a, _binary '', 0, 3),
 	(44, 'internet - Lentidão', 7, _binary 0x6c6f63616c203a, _binary '', 0, 24),
 	(45, 'Internet - Desbloqueio de Site', 7, _binary 0x6c6f63616c203a0d0a446573637269c3a7c3a36f20652055524c20646f20736974653a, _binary '', 0, 24),
@@ -886,7 +893,7 @@ CREATE TABLE IF NOT EXISTS `ordens` (
   CONSTRAINT `FK_ordens_oficinas` FOREIGN KEY (`id_oficina`) REFERENCES `oficinas` (`id`),
   CONSTRAINT `FK_ordens_setores` FOREIGN KEY (`id_setor`) REFERENCES `setores` (`id`),
   CONSTRAINT `FK_ordens_usuarios` FOREIGN KEY (`id_solicitante`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela gop.ordens: ~102 rows (aproximadamente)
 REPLACE INTO `ordens` (`id`, `id_solicitante`, `id_responsavel`, `id_setor`, `id_recurso`, `id_espaco`, `id_oficina`, `data_entrada`, `id_executor_responsavel`, `hora_entrada`, `data_inicio`, `hora_inicio`, `data_conclusao`, `hora_conclusao`, `data_garantia`, `data_entrega`, `hora_entrega`, `data_saida`, `previsao_Horas`, `previsao_minutos`, `tipo`, `numero_nota`, `conclusao`, `valor_material`, `valor_servico`, `tipo_ordem`, `tipo_corretiva`, `tipo_preventiva`, `descritivo`, `mau_uso`, `situacao`, `motivo_naoconformidade`, `data_emissao`, `descricao`, `data_geracao`, `hora_geracao`, `data_previsao`, `hora_previsao`, `status`, `id_solicitacao`, `id_ocorrencia`, `data_cancelamento`, `motivo_cancelamento`, `hora_cancelamento`, `id_resp_cancelamento`, `id_resp_geracao`, `id_resp_conclusao`) VALUES
@@ -1015,7 +1022,8 @@ REPLACE INTO `ordens` (`id`, `id_solicitante`, `id_responsavel`, `id_setor`, `id
 	(124, 16, 16, 8, 0, 0, 1, NULL, 7, NULL, '2026-04-27', '12:07:46', '2026-04-27', '14:07:00', NULL, NULL, NULL, NULL, NULL, NULL, 'V', NULL, _binary 0x41706c6963617469766f20696e7374616c61646f20636f6d207375636573736f, NULL, 0, 'C', 'P', NULL, 'Instalação do aplicativo no computador', NULL, NULL, NULL, NULL, _binary 0x4c6f63616c3a436f6e746162696c69646164650d0a557375c3a172696f3a4d6172696120476f756c617274, '2026-04-27', '12:07:00', '2026-04-27', '14:37:00', 'C', 131, 77, NULL, NULL, NULL, NULL, 16, 16),
 	(125, 16, 16, 30, 19, 0, 26, NULL, 12, NULL, '2026-04-27', '15:58:49', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, NULL, 'C', 'P', NULL, 'Manutenção de Computadores DeskTop', NULL, NULL, NULL, NULL, _binary 0x496e7374616c61c3a7c3a36f206520436f6e666967757261c3a7c3a36f2064652073697374656d61206f7065726163696f6e616c204c696e7578, '2026-04-27', '15:59:00', '2026-04-30', '15:58:00', 'A', 132, 70, NULL, NULL, NULL, NULL, 16, NULL),
 	(126, 28, 28, 7, 0, 0, 1, NULL, 11, NULL, '2026-04-27', '16:17:12', '2026-04-27', '16:17:00', NULL, NULL, NULL, NULL, NULL, NULL, 'V', NULL, _binary 0x496d70726573736f726120696e7374616c6164612070617261207365727669646f726120456c656d2e20746573746573206f6b21, NULL, 0, 'C', 'P', NULL, 'Impressoras - Instalação', NULL, NULL, NULL, NULL, _binary 0x696e7374616c61c3a7c3a36f20646520696d70726573736f726120646f2052482070617261207365746f722064652066697363616c697a61c3a7c3a36f, '2026-04-27', '16:17:00', '2026-04-27', '18:17:00', 'C', 133, 36, NULL, NULL, NULL, NULL, 28, 28),
-	(127, 16, 16, 8, 0, 0, 1, NULL, 7, NULL, '2026-04-27', '16:20:15', '2026-04-27', '16:20:00', NULL, NULL, NULL, NULL, NULL, NULL, 'V', NULL, _binary 0x4c6f67696e20646f20557375c3a172696f3a6d617269612e7861766965720d0a53656e686120496e696369616c203a7361626172614032303236, NULL, 0, 'C', 'P', NULL, 'Inclusão de usuários de rede / computador', NULL, NULL, NULL, NULL, _binary 0x4e6f6d6520646f20757375c3a172696f203a204d61726961204c75697a6120466572726569726120526f64726967756573205861766965720d0a5061737461732064652061636573736f206e612072656465203a6661436164617374726f, '2026-04-27', '16:20:00', '2026-04-27', '17:20:00', 'C', 134, 54, NULL, NULL, NULL, NULL, 16, 16);
+	(127, 16, 16, 8, 0, 0, 1, NULL, 7, NULL, '2026-04-27', '16:20:15', '2026-04-27', '16:20:00', NULL, NULL, NULL, NULL, NULL, NULL, 'V', NULL, _binary 0x4c6f67696e20646f20557375c3a172696f3a6d617269612e7861766965720d0a53656e686120496e696369616c203a7361626172614032303236, NULL, 0, 'C', 'P', NULL, 'Inclusão de usuários de rede / computador', NULL, NULL, NULL, NULL, _binary 0x4e6f6d6520646f20757375c3a172696f203a204d61726961204c75697a6120466572726569726120526f64726967756573205861766965720d0a5061737461732064652061636573736f206e612072656465203a6661436164617374726f, '2026-04-27', '16:20:00', '2026-04-27', '17:20:00', 'C', 134, 54, NULL, NULL, NULL, NULL, 16, 16),
+	(128, 16, 16, 28, 0, 0, 1, NULL, 7, NULL, '2026-04-28', '09:54:16', '2026-04-28', '09:54:00', NULL, NULL, NULL, NULL, NULL, NULL, 'V', NULL, _binary 0x557375c3a172696f2064652041636573736f203a4ac3a120706f737375690d0a53656e68612064652041636573736f203a4ac3a120706f737375690d0a0d0a557375c3a172696f20646f287329206dc3b364756c6f287329203a206d617269616e612e746f6d617a0d0a53656e686120646f287329206dc3b364756c6f287329203a7361626172614032303236, NULL, 0, 'C', 'P', NULL, 'Sistema Moderna - Criação de Usuário', NULL, NULL, NULL, NULL, _binary 0x4e6f6d6520646f20757375c3a172696f203a4d617269616e612056697267696e696120546f6d617a206465204d616365646f0d0a6ec3ba6d65726f20646f20435046203a203037342e3933302e3530362d31390d0a4d6f64756c6f7320717565206972c3a120616365737361722028636f6d707261732c206573746f7175652c20636f6e746162696c69646164652c2070726567c3a36f2c20637265646f7265732c2066726f7461732c20707265737461c3a7c3a36f20646520636f6e7461732c2070617472696dc3b46e696f203a4573746f7175650d0a0d0a, '2026-04-28', '09:54:00', '2026-04-28', '11:54:00', 'C', 135, 15, NULL, NULL, NULL, NULL, 16, 16);
 
 -- Copiando estrutura para tabela gop.ordens_check
 CREATE TABLE IF NOT EXISTS `ordens_check` (
@@ -1045,7 +1053,7 @@ CREATE TABLE IF NOT EXISTS `ordens_executores` (
   KEY `FK_ordens_executores_executores` (`id_executor`),
   CONSTRAINT `FK_ordens_executores_executores` FOREIGN KEY (`id_executor`) REFERENCES `executores` (`id`),
   CONSTRAINT `FK_ordens_executores_ordens` FOREIGN KEY (`id_ordem`) REFERENCES `ordens` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=140 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=141 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela gop.ordens_executores: ~73 rows (aproximadamente)
 REPLACE INTO `ordens_executores` (`id`, `id_ordem`, `id_executor`, `tempo_horas`, `tempo_minutos`, `valor_hora`, `valor_total`) VALUES
@@ -1185,7 +1193,8 @@ REPLACE INTO `ordens_executores` (`id`, `id_ordem`, `id_executor`, `tempo_horas`
 	(136, 122, 8, 24, 0, 0, 0),
 	(137, 124, 7, 0, 30, 0, 0),
 	(138, 126, 11, 2, 0, 0, 0),
-	(139, 127, 7, 1, 0, 0, 0);
+	(139, 127, 7, 1, 0, 0, 0),
+	(140, 128, 7, 0, 30, 0, 0);
 
 -- Copiando estrutura para tabela gop.ordens_ferramentas
 CREATE TABLE IF NOT EXISTS `ordens_ferramentas` (
@@ -1810,7 +1819,7 @@ CREATE TABLE IF NOT EXISTS `solicitacao` (
   CONSTRAINT `FK_solicitacao_recursos` FOREIGN KEY (`id_recursos`) REFERENCES `recursos` (`id`),
   CONSTRAINT `FK_solicitacao_setores` FOREIGN KEY (`id_setor`) REFERENCES `setores` (`id`),
   CONSTRAINT `FK_solicitacao_usuarios` FOREIGN KEY (`id_solicitante`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=135 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=136 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela gop.solicitacao: ~93 rows (aproximadamente)
 REPLACE INTO `solicitacao` (`id`, `id_setor`, `id_solicitante`, `id_recursos`, `id_espaco`, `id_ocorrencia`, `data_abertura`, `hora_abertura`, `status`, `tipo`, `descricao`, `conclusao`, `classificacao`, `id_ordem`, `prazo_data`, `prazo_hora`, `data_conclusao`, `hora_conclusao`) VALUES
@@ -1942,7 +1951,8 @@ REPLACE INTO `solicitacao` (`id`, `id_setor`, `id_solicitante`, `id_recursos`, `
 	(131, 8, 16, NULL, NULL, 77, '2026-04-27', '12:07:00', 'C', 'P', _binary 0x4c6f63616c3a436f6e746162696c69646164650d0a557375c3a172696f3a4d6172696120476f756c617274, _binary 0x41706c6963617469766f20696e7374616c61646f20636f6d207375636573736f, 'V', 124, '2026-04-27', '14:37:00', '2026-04-27', '14:07:00'),
 	(132, 30, 16, 19, NULL, 70, '2026-04-27', '15:58:00', 'E', 'P', _binary 0x496e7374616c61c3a7c3a36f206520436f6e666967757261c3a7c3a36f2064652073697374656d61206f7065726163696f6e616c204c696e7578, NULL, 'R', 125, '2026-04-30', '15:58:00', NULL, NULL),
 	(133, 7, 28, NULL, NULL, 36, '2026-04-27', '16:17:00', 'C', 'P', _binary 0x696e7374616c61c3a7c3a36f20646520696d70726573736f726120646f2052482070617261207365746f722064652066697363616c697a61c3a7c3a36f, _binary 0x496d70726573736f726120696e7374616c6164612070617261207365727669646f726120456c656d2e20746573746573206f6b21, 'V', 126, '2026-04-27', '18:17:00', '2026-04-27', '16:17:00'),
-	(134, 8, 16, NULL, NULL, 54, '2026-04-27', '16:20:00', 'C', 'P', _binary 0x4e6f6d6520646f20757375c3a172696f203a204d61726961204c75697a6120466572726569726120526f64726967756573205861766965720d0a5061737461732064652061636573736f206e612072656465203a6661436164617374726f, _binary 0x4c6f67696e20646f20557375c3a172696f3a6d617269612e7861766965720d0a53656e686120496e696369616c203a7361626172614032303236, 'V', 127, '2026-04-27', '17:20:00', '2026-04-27', '16:20:00');
+	(134, 8, 16, NULL, NULL, 54, '2026-04-27', '16:20:00', 'C', 'P', _binary 0x4e6f6d6520646f20757375c3a172696f203a204d61726961204c75697a6120466572726569726120526f64726967756573205861766965720d0a5061737461732064652061636573736f206e612072656465203a6661436164617374726f, _binary 0x4c6f67696e20646f20557375c3a172696f3a6d617269612e7861766965720d0a53656e686120496e696369616c203a7361626172614032303236, 'V', 127, '2026-04-27', '17:20:00', '2026-04-27', '16:20:00'),
+	(135, 28, 16, NULL, NULL, 15, '2026-04-28', '09:53:00', 'C', 'P', _binary 0x4e6f6d6520646f20757375c3a172696f203a4d617269616e612056697267696e696120546f6d617a206465204d616365646f0d0a6ec3ba6d65726f20646f20435046203a203037342e3933302e3530362d31390d0a4d6f64756c6f7320717565206972c3a120616365737361722028636f6d707261732c206573746f7175652c20636f6e746162696c69646164652c2070726567c3a36f2c20637265646f7265732c2066726f7461732c20707265737461c3a7c3a36f20646520636f6e7461732c2070617472696dc3b46e696f203a4573746f7175650d0a0d0a, _binary 0x557375c3a172696f2064652041636573736f203a4ac3a120706f737375690d0a53656e68612064652041636573736f203a4ac3a120706f737375690d0a0d0a557375c3a172696f20646f287329206dc3b364756c6f287329203a206d617269616e612e746f6d617a0d0a53656e686120646f287329206dc3b364756c6f287329203a7361626172614032303236, 'V', 128, '2026-04-28', '11:54:00', '2026-04-28', '09:54:00');
 
 -- Copiando estrutura para tabela gop.tempo_horas_mes
 CREATE TABLE IF NOT EXISTS `tempo_horas_mes` (
