@@ -129,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="row mb-3">
                     <label class="col-sm-2 col-form-label">Fator de Conversão</label>
                     <div class="col-sm-2">
-                        <input type="text" class="form-control" id="fator_conversao" name="fator_conversao" required>
+                        <input type="text" class="form-control" id="fator_conversao" name="fator_conversao" value="1" required>
                     </div>
                 </div>
 
