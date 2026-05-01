@@ -20,6 +20,16 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['almoxarifado_mat
 ?>
 <!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>GOP - Lista de Materiais</title>
+        <link rel="stylesheet" href="/gop/css/basico.css">
+        <link rel="stylesheet" href="/gop/css/datatables.min.css">
+        <script src="/gop/js/jquery-3.6.0.min.js"></script>
+        <script src="/gop/js/datatables.min.js"></script>
+        <link rel="shortcut icon" type="imagex/png" href="./imagens/img_gop.ico">
+    </head>
 
 <body>
     
