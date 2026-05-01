@@ -206,13 +206,26 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                         <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
 
                     </div>
-                    <h5><?php $_SESSION['c_usuario'] ?>Clique em nova solitação para abrir uma nova solicitação de serviço ou realize uma pesquisa com as opções de pesquisa abaixo</h5>
+                    <?php
+                    if ($_SESSION['tipo'] <> 'Solicitante') {
+                        echo '
+                    <h5>Clique em nova solitação para abrir uma nova solicitação de serviço ou realize uma pesquisa com as opções de pesquisa abaixo</h5>';
+                    } else {
+                        echo '
+                    <h5>Realize uma pesquisa com as opções de pesquisa abaixo</h5>';
+                    }
+                    ?>
                 </div>
                 <form method="post">
                     <div style="padding-top:5px;padding-bottom:5px">
                         <div class="panel">
                             <div class="panel-heading">
-                                <a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_nova.php"><img src="\gop\images\contato.png" alt="" width="25" height="25"> Nova Solicitação</a>
+                                <?php
+                                if ($_SESSION['tipo'] <> 'Solicitante') {
+                                    echo '
+                                <a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_nova.php"><img src="\gop\images\contato.png" alt="" width="25" height="25"> Nova Solicitação</a>';
+                                }
+                                ?>
                                 <button type="submit" name='btnpesquisa' id='btnpesquisa' class="btn btn btn-sm"><img src="\gop\images\lupa.png" alt="" width="20" height="20"></span> Pesquisar</button>
                                 <!--<a class="btn btn btn-sm" href="#"><img src="\gop\images\eraser.png" alt="" width="25" height="25"> Limpar pesquisa</a> -->
                                 <a class="btn btn btn-sm" href="\gop\menu.php"><img src="\gop\images\saida.png" alt="" width="25" height="25"> Voltar</a>
