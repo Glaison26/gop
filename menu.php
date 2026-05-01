@@ -140,17 +140,7 @@ $_SESSION['ver_os'] = false;
                    
                     </div>
                 </div>';
-                } else {
-                    echo '
-                    <div class="relative dropdown">
-                    <button class="text-white hover:text-blue-200 transition flex items-center focus:outline-none">
-                        Serviços <i class="fas fa-chevron-down ml-1 text-xs"></i>
-                    </button>
-                    <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow-xl rounded-md w-48 z-50">
-                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/solicitacao/solicitacao.php">Solicitações</a>
-                    </div>
-                </div>';
-                }
+               
                 ?>
                 <!-- Dropdown Almoxarifados  -->
                 <?php
@@ -286,7 +276,7 @@ $_SESSION['ver_os'] = false;
     <div class="bg-blue-700 p-2 shadow-md">
         <div class="container mx-auto flex items-center space-x-4">
             <a href="/gop/solicitacao/solicitacao.php" class="text-white hover:text-blue-200 transition flex items-center">
-                <i class="fas fa-file-alt mr-2"></i> Solicitação de Serviço
+                <i class="fas fa-file-alt mr-2"></i> Solicitações de Serviço
             </a>
             <?php
 
