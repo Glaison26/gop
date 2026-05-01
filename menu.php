@@ -140,7 +140,7 @@ $_SESSION['ver_os'] = false;
                    
                     </div>
                 </div>';
-               
+                }
                 ?>
                 <!-- Dropdown Almoxarifados  -->
                 <?php
