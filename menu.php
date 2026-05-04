@@ -155,6 +155,7 @@ $_SESSION['ver_os'] = false;
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/almoxarifado/compras_lista.php">Pedidos de Compras</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/materiais/materiais_lista.php">Cadastro de Materiais</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/grupos/grupos_lista.php">Grupos de Materiais</a>
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/materiais/movimentacao_periodo.php">Movimentação de Materiais</a>
                         
                     </div>
                 </div>';

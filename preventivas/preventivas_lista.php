@@ -5,7 +5,7 @@ if (!isset($_SESSION['newsession'])) {
 }
 $c_sql_recurso = $_SESSION['sqlrecurso'];
 $c_sql_espaco = $_SESSION['sqlespaco'];
-$c_sql_geral = $_SESSION['sqlgeral'];
+$c_sql_avulso    = $_SESSION['c_sql_avulso'];
 
 //echo $c_sql_recurso;
 include('../links.php');
@@ -219,7 +219,7 @@ include('../conexao.php');
                         <tbody>
                             <?php
                             // faço a Leitura da tabela com sql
-                            $result = $conection->query($c_sql_geral);
+                            $result = $conection->query($c_sql_avulso);
                             // verifico se a query foi correto
                             if (!$result) {
                                 die("Erro ao Executar Sql!!" . $conection->connect_error);

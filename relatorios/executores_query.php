@@ -335,7 +335,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Tipo Corretiva</label>
                 <div class="col-sm-2">
-                    <select disabled class="form-select form-select-lg mb-3" id="tipo_corretiva" name="tipo_corretiva" value="<?php echo $c_tipo_corretiva; ?>">
+                    <select disabled class="form-select form-select-lg mb-3" id="tipo_corretiva" name="tipo_corretiva" >
                         <option>Todos</option>
                         <option>Programada</option>
                         <option>Urgênte</option>
