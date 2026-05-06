@@ -78,7 +78,7 @@ $i_atualizacao_menu = $registro['tempo_atualizacao_menu'];
             display: block;
         }
     </style>
-    <!-- script para atualizar págiana do menu a cada 5 minutos -->
+    <!-- script para atualizar págiana do menu a cada x minutos na tabela configuracoes -->
     <script>
         setInterval(function() {
             location.reload();
