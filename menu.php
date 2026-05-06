@@ -15,7 +15,7 @@ $_SESSION['consulta_solicitacao'] = "";
 $_SESSION['consulta_ordem'] = "";
 $_SESSION['consulta_resumo'] = "S";
 $_SESSION['checa_preventiva'] = "N";
-$_SESSION['i_id_tipo_ocorrencia']="";
+$_SESSION['i_id_tipo_ocorrencia'] = "";
 // verifico numero de solicitações em aberto
 $c_sql = "select COUNT(*) AS aberta_solicitacao FROM solicitacao WHERE STATUS = 'A'";
 $result = $conection->query($c_sql);
@@ -87,7 +87,7 @@ $_SESSION['ver_os'] = false;
             <div class="text-white font-bold text-xl">
                 <i class="fas fa-tools mr-2"></i>GOP - Gestão Operacional
             </div>
-            
+
 
             <div class="hidden md:flex items-center space-x-6">
 
@@ -195,17 +195,32 @@ $_SESSION['ver_os'] = false;
                                  <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/relatorios/centrodecusto_query.php">Ocorrências por Centro de Custo</a>
                                  <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/relatorios/executores_query.php">Horas Trabalhadas / Total de ocorrências por Executor</a>
                                  <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/relatorios/detalhe_query.php">Detalhe de ocorrências por Executor</a>
-                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores_mensais/ocorrencias_mensais_query.php">Comparativo Mensal de Ocorrências Padrões</a>
-                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores_mensais/oficinas_mensais_query.php">Comparativo Mensal por Oficina</a>
-                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores_mensais/solicitantes_mensais_query.php">Comparativo Mensal por Solicitante</a>
-                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores_mensais/setores_mensais_query.php">Comparativo Mensal por Setor</a>
-                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores_mensais/centrodecusto_mensais_query.php">Comparativo Mensal por Centro de Custo</a>
-                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores_mensais/executores_mensais_query.php">Comparativo Mensal de Horas por Executor</a>
-                                 <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores_mensais/indicadores_manutencao_query.php">Indicadores da Manutenção</a>
+                                 
                         </div>
                       </div>';
                 }
                 ?>
+                <?php
+                if ($_SESSION['tipo'] <> 'Solicitante') {
+                    echo '<div class="relative dropdown">
+                        <button class="text-white hover:text-blue-200 transition flex items-center focus:outline-none">
+                            Indicadores Comparativos <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow-xl rounded-md w-48 z-50">
+                              <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores_mensais/ocorrencias_mensais_query.php">Comparativo Mensal de Ocorrências Padrões</a>
+                              <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores_mensais/motivos_mensais_query.php">Comparativo Mensal de Tipos de Ocorrências</a>
+                              <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores_mensais/oficinas_mensais_query.php">Comparativo Mensal por Oficina</a>
+                              <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores_mensais/solicitantes_mensais_query.php">Comparativo Mensal por Solicitante</a>
+                              <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores_mensais/setores_mensais_query.php">Comparativo Mensal por Setor</a>
+                              <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores_mensais/centrodecusto_mensais_query.php">Comparativo Mensal por Centro de Custo</a>
+                              <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores_mensais/executores_mensais_query.php">Comparativo Mensal de Horas por Executor</a>
+                              <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/indicadores_mensais/indicadores_manutencao_query.php">Indicadores da Manutenção</a>  
+                                 
+                        </div>  
+                    </div>';
+                }
+                ?>
+
 
                 <!-- indicadores de custos -->
                 <?php

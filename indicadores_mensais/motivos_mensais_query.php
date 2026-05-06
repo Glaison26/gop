@@ -17,8 +17,8 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['indicadores_comp
 }
 date_default_timezone_set('America/Sao_Paulo');
 $c_query = "";
-$_SESSION['titulo_rel'] = "Relatório Comparativo Mensal de Ocorrências de Manutenção por Período" ;
-$_SESSION['titulo_graf'] = "Gráfico Comparativo Mensal de Ocorrências de Manutenção por Período";
+$_SESSION['titulo_rel'] = "Relatório Comparativo Mensal de Tipo de Ocorrência de Manutenção por Período" ;
+$_SESSION['titulo_graf'] = "Gráfico Comparativo Mensal de Tipo Ocorrência de Manutenção por Período";
 // rotina para montagem do sql com as opções selecionadas
 if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     // formatação de datas para o sql
@@ -109,20 +109,22 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     }
     // sql para pegar id da Ocorrencia
     $c_ocorrencia = $_POST['ocorrencia'];
-    $c_sql_pega_ocorrencia = "select ocorrencias.id, ocorrencias.descricao from ocorrencias where ocorrencias.descricao = '$c_ocorrencia'";
+    $c_sql_pega_ocorrencia = "select tipo_ocorrencia.id, tipo_ocorrencia.descricao from tipo_ocorrencia where tipo_ocorrencia.descricao = '$c_ocorrencia'";
     $result = $conection->query($c_sql_pega_ocorrencia);
     $c_linha = $result->fetch_assoc();
-    $i_id_ocorrencia = $c_linha['id'];
-    $c_query = $c_query. 'Ocorrencia:'.$c_linha['descricao'] . '-';
-    $c_where = $c_where . "ordens.id_ocorrencia='$i_id_ocorrencia' and ";
+    $i_id_tipo_ocorrencia = $c_linha['id'];
+    $c_query = $c_query. 'Tipo de Ocorrencia:'.$c_linha['descricao'] . '-';
+    $c_where = $c_where . "ocorrencias.id_tipo_ocorrencia='$i_id_tipo_ocorrencia' and ";
 
     $c_where = $c_where = substr($c_where, 0, -5); // tirar o and no final
     // montagem do sql para recursos físicos
     //
-    $c_sql = "Select extract(month FROM ordens.data_geracao) AS mes, ordens.id_ocorrencia, ocorrencias.descricao, COUNT(ordens.id_ocorrencia) as total
+    $c_sql = "Select extract(month FROM ordens.data_geracao) AS mes, tipo_ocorrencia.descricao, COUNT(ocorrencias.id) as total
             FROM ordens 
             JOIN ocorrencias ON ordens.id_ocorrencia=ocorrencias.id
-            where $c_where GROUP BY extract(month FROM ordens.data_geracao), ordens.id_ocorrencia order by mes";
+            join tipo_ocorrencia on ocorrencias.id_tipo_ocorrencia=tipo_ocorrencia.id
+            
+            where $c_where GROUP BY extract(month FROM ordens.data_geracao), tipo_ocorrencia.descricao order by mes";
 
     // guardo session para proxima pagina de tabelas
     $_SESSION['sql'] = $c_sql;
@@ -202,7 +204,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
             </div>
             <div class="row mb-3">
 
-                <label class="col-sm-2 col-form-label">Ocorrencia </label>
+                <label class="col-sm-2 col-form-label">Tipo de Ocorrência </label>
                 <div class="col-sm-7">
 
                     <select class="form-select form-select-lg mb-3" id="ocorrencia" name="ocorrencia" required>
@@ -210,7 +212,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                         <option></option>
                         <?php
                         // select da tabela de ocorrencia
-                        $c_sql_ocorrencia = "SELECT ocorrencias.id, ocorrencias.descricao FROM ocorrencias ORDER BY ocorrencias.descricao";
+                        $c_sql_ocorrencia = "SELECT tipo_ocorrencia.id, tipo_ocorrencia.descricao FROM tipo_ocorrencia ORDER BY tipo_ocorrencia.descricao";
                         $result_ocorrencia = $conection->query($c_sql_ocorrencia);
                         while ($c_linha = $result_ocorrencia->fetch_assoc()) {
 
