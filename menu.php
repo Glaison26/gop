@@ -53,6 +53,11 @@ $registro = $result->fetch_assoc();
 $c_preventivas_geradas = $registro['preventivas_geradas'];
 // marcados para ver ordem na agenda de executores
 $_SESSION['ver_os'] = false;
+// capturo o tempo de atualização do menu para o script de atualização automática do menu na tabela configuracoes
+$c_sql = "select tempo_atualizacao_menu from configuracoes";
+$result = $conection->query($c_sql);
+$registro = $result->fetch_assoc();
+$i_atualizacao_menu = $registro['tempo_atualizacao_menu'];
 ?>
 
 
@@ -73,6 +78,12 @@ $_SESSION['ver_os'] = false;
             display: block;
         }
     </style>
+    <!-- script para atualizar págiana do menu a cada 5 minutos -->
+    <script>
+        setInterval(function() {
+            location.reload();
+        }, <?php echo $i_atualizacao_menu * 60 * 1000; ?>); // tempo em milissegundos
+    </script>
 </head>
 
 

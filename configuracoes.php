@@ -30,6 +30,10 @@ if ($registro['registros'] == 0) { // tabela vazia crio o registro unico em bran
     $c_host_email = '';
     $c_porta_email = '';
     $c_senha_emailnotificacoes = '';
+    $i_atualizacao_menu = 0;
+    $c_chkrecursosfisicos = 'N';
+    $c_chkespacosfisicos = 'N';
+    $c_chkavulsa = 'N';
 } else {
     $c_sql = "select * from configuracoes";
     $result = $conection->query($c_sql);
@@ -47,6 +51,7 @@ if ($registro['registros'] == 0) { // tabela vazia crio o registro unico em bran
     $c_host_email = $registro['email_host'];
     $c_porta_email = $registro['porta_smtp'];
     $c_senha_email = $registro['senha_email'];
+    $i_atualizacao_menu = $registro['tempo_atualizacao_menu'];
     //checks
     if ($registro['solicitacao_recursos'] == 'S') {
         $c_chkrecursosfisicos = 'checked';
@@ -63,6 +68,7 @@ if ($registro['registros'] == 0) { // tabela vazia crio o registro unico em bran
     } else {
         $c_chkavulsa = 'N';
     }
+   
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo POST para gravar alterações de configurações
@@ -95,13 +101,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo POST para gravar alteraç
     } else {
         $c_chkavulsas = 'N';
     }
+    $i_atualizacao_menu = $_POST['tempo_atualizacao_menu'];
     do {
         if (!valida_cnpj($c_cnpj)) {
             $msg_erro = "Campo CNPJ inválido, favor verificar!!";
             break;
         }
         // verificos se todos as opções de solicitações estão desmarcadas. Se sim não deixar. tem que haver pelo menos uma
-        if ($c_chkrecursosfisicos=='N'&&$c_chkespacosfisicos=='N'&&$c_chkavulsas=='N'){
+        if ($c_chkrecursosfisicos == 'N' && $c_chkespacosfisicos == 'N' && $c_chkavulsas == 'N') {
             $msg_erro = "Pelo menos uma opção de solicitação deve estar marcada! Favor verifica!";
             break;
         }
@@ -110,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo POST para gravar alteraç
                     emailco_manutencao='$c_emailco', email_envio='$c_email_envio',
                     email_host='$c_host_email', porta_smtp='$c_porta_email',
                     senha_email='$c_senha_email', solicitacao_recursos='$c_chkrecursosfisicos'
-                    ,solicitacao_espacos='$c_chkespacosfisicos', solicitacao_avulsa='$c_chkavulsas'";
+                    ,solicitacao_espacos='$c_chkespacosfisicos', solicitacao_avulsa='$c_chkavulsas', tempo_atualizacao_menu='$i_atualizacao_menu'";
         $result = $conection->query($c_sql_up);
         //header('location: /gop/menu.php');
     } while (false);
@@ -298,6 +305,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo POST para gravar alteraç
                 </div>
 
                 <hr>
+                <!-- input para tempo de atualização do menu em minutos -->
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Tempo de Atualização do Menu (minutos)</label>
+                    <div class="col-sm-1">
+                        <input type="text" maxlength="10" class="form-control" name="tempo_atualizacao_menu" value="<?php echo $i_atualizacao_menu; ?>">
+                    </div>
+                </div>
                 <div class="row mb-3">
                     <div class="offset-sm-0 col-sm-3">
                         <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
