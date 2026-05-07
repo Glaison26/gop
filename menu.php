@@ -271,6 +271,7 @@ $i_atualizacao_menu = $registro['tempo_atualizacao_menu'];
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/usuarios/usuarios_lista.php">Usuários do Sistema</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/usuarios/usuarios_perfil_lista.php">Perfis de Acesso</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/configuracoes.php">Parâmetros do Sistema</a>
+                        
                     </div>
                 </div>';
                 }
@@ -281,6 +282,7 @@ $i_atualizacao_menu = $registro['tempo_atualizacao_menu'];
                         <i class="fas fa-user-circle text-2xl"></i>
                     </button>
                     <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow-xl rounded-md w-48 z-50 right-0">
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/about.php">Sobre Sistema GOP</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/alterasenha.php">Alterar Senha</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/index.php">Sair</a>
 
