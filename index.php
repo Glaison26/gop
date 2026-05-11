@@ -78,11 +78,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
         <form method="post" action="index.php">
 
-            <div class="panel panel-primary class">
-                <div class="panel-heading text-center">
-                    <h5>Dados para acesso </h5>
-                </div>
-            </div>
+            
+            <!-- coloco logo marca do gop -->
+            <div class="text-center">
+                <img src="img_gop.jpg" alt="Logo do gop" class="img-fluid" style="max-width: 200px;">
+            </div>  
+            <br>
 
 
             <div class="form-group row" class="form-control">
