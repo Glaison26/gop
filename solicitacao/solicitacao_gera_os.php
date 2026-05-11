@@ -149,10 +149,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $data = $data->format('d-m-Y');
             $hora = new DateTime($d_hora_previsao);
             $hora = $hora->format('H:i');
-            $c_assunto = "Abertura de Ordem de Serviço no GOP";
-            $c_body = "<h3>A Ordem de serviço No.<b> $ordem da solicitação no. $i_id </b> foi gerada com suceso! Aguarde o atendimento <br>"
-                . "Descrição da Solicitação :" . $c_descricao . "<br>" .
-                " Previsão de execução: $data as $hora" . "</h3>";
+            // armazeno na váriave $c_assunto o assunto do email e $c_body o corpo do e-mail com o numero da ordem de serviço, número da solicitação,  data e hora de previsão de atendimento
+            $c_assunto = "GOP - Ordem de Serviço Nº $ordem Gerada a partir da Solicitação Nº $i_id";
+            $c_body = "Olá, uma nova ordem de serviço foi gerada a partir da solicitação de serviço No. $i_id. \n\nNúmero da Ordem de Serviço: $ordem\nNúmero da Solicitação: $i_id\nData de Previsão de Atendimento: $data\nHora de Previsão de Atendimento: $hora\n\nPor favor, acesse o sistema para mais detalhes e para acompanhar o andamento da ordem de serviço.\n\nObrigado!";
             include('../email_gop.php');
         }
 
