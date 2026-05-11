@@ -152,13 +152,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $ordem = $i_id;
             $c_data_conclusao = new DateTime($_POST['data_conclusao']);
             $c_data_conclusao = $c_data_conclusao->format('Y-m-d');
-
-            $c_assunto = "Fechamento de Ordem de Serviço no GOP";
-            $c_body = "A Ordem de serviço No.<b> $ordem </b> foi concluida com suceso!<br>"
-                . "Descrição da Solicitação :" . $c_descricao . "<br>" .
-                "Descrição da Conclusão:<br>" .
-                $c_conclusao;
-
+            // pego a hora da conclusão
+            $c_hora_conclusao = new DateTime($_POST['hora_conclusao']);
+            $c_hora_conclusao = $c_hora_conclusao->format('H:i');
+            // armazeno nas varia $c_assunto e $c_body o assunto e corpo do email para conclusão de ordem de serviço contendo o numero, a descrição da solicitação e a descrição da conclusão
+            $c_assunto = "Conclusão da Ordem de Serviço No. $ordem";
+            $c_body = "A Ordem de Serviço No. $ordem foi concluída com sucesso.\r\n\r\nDescrição da Solicitação:\r\n$c_descricao\r\n\r\nDescrição da Conclusão:\r\n$c_conclusao\r\n\r\nData da Conclusão: $c_data_conclusao às $c_hora_conclusao\r\n\r\nAtenciosamente,\r\nGOP - Gestão Operacional";
+           
             include('../email_gop.php');
         }
 
