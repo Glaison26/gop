@@ -55,7 +55,7 @@
         
         <div class="info">
             <h2>Direitos de Uso</h2>
-            <p>Este sistema é propriedade de [Glaison Queiroz]. Todos os direitos reservados. É proibida a reprodução, distribuição ou modificação sem autorização prévia.</p>
+            <p>Este sistema é propriedade de Glaison Queiroz. Todos os direitos reservados. É proibida a reprodução, distribuição ou modificação sem autorização prévia.</p>
         </div>
     </div>
 </body>
