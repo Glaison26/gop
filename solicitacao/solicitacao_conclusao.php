@@ -130,10 +130,10 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
             $result = $conection->query($c_sql);
             $c_linha = $result->fetch_assoc();
             $solicitacao = $c_linha['id_solicitacao'];
-            $c_assunto = "Abertura de Solicitação de Serviço no GOP";
-            $c_body = "<h3>Solicitação No.<b> $solicitacao </b> foi gerada com sucesso!<br>"
-                . "Descrição da Solicitação :" . $c_descricao . "</h3>";
-
+           // armazeno na váriave $c_assunto o assunto do email e $c_body o corpo do e-mail com o numero da solicitação e a descrição da ocorrência
+            $c_assunto = "GOP - Nova Solicitação de Serviço - Nº $solicitacao";
+            $c_body = "Olá, uma nova solicitação de serviço foi aberta no GOP - Gestão Operacional. \n\nNúmero da Solicitação: $solicitacao\nTipo de Ocorrência: $c_ocorrencia\nDescrição: $c_descricao\n\nPor favor, acesse o sistema para mais detalhes e para acompanhar o andamento da solicitação.\n\nObrigado!";
+            
             include('../email_gop.php');
         }
         header('location: /gop/solicitacao/solicitacao_gerada.php?id_recurso=$i_id_recurso');
@@ -208,7 +208,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
                 <label class="col-sm-3 col-form-label">Tipo de Ocorrência </label>
                 <div class="col-sm-9">
 
-                    <select onchange="verifica_tipo(value)" class="form-select form-select-lg mb-3" id="tipo_ocorrencia" name="tipo_ocorrencia" value="<?php echo $c_tipo_ocorrencia ?>" required>
+                    <select onchange="verifica_tipo(value)" class="form-select form-select-lg mb-3" id="tipo_ocorrencia" name="tipo_ocorrencia"  required>
 
                         <option></option>
                         <?php
@@ -263,7 +263,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Tipo de Solicitação</label>
                 <div class="col-sm-2">
-                    <select class="form-select form-select-lg mb-3" id="tipo" name="tipo" value="<?php echo $c_tipo; ?>" required>
+                    <select class="form-select form-select-lg mb-3" id="tipo" name="tipo"  required>
                         <option>Programada</option>
                         <option>Urgência</option>
 
