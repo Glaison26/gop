@@ -40,6 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $c_email = $registro['email'];
     $c_senha2 = base64_decode($registro['senha']);  // senha descriptografia;
     $i_id_perfil = $registro['id_perfil'];
+    $i_id_setor = $registro['id_setor'];
+    
 
     if ($c_ativo == 'S') {
         $c_statusativo = 'checked';
@@ -56,6 +58,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $c_senha2 = $_POST['senha2'];
     $c_tipo = $_POST['tipo'];
     $c_email = $_POST['email'];
+    $i_id_setor = $_POST['setor'];
+    // pego o id do setor selecionado para gravar no banco
+    $c_sql_setor = "select id from setores where descricao='$i_id_setor'";
+    $result_setor = $conection->query($c_sql_setor);
+    $registro_setor = $result_setor->fetch_assoc();
+    $i_id_setor = $registro_setor['id'];
+
 
     if (!isset($_POST['chkativo'])) {
         $c_ativo = 'N';
@@ -91,16 +100,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             $msg_erro = "Campo Senha deve ter pelo menos (1) caracter numérico";
             break;
         }
-       // if (ctype_digit($c_senha)) {
-       //     $msg_erro = "Campo Senha deve conter pelo menos uma letra do Alfabeto";
-       //     break;
-       // }
+        // if (ctype_digit($c_senha)) {
+        //     $msg_erro = "Campo Senha deve conter pelo menos uma letra do Alfabeto";
+        //     break;
+        // }
         // grava dados no banco
         // criptografo senha
         $c_senha = base64_encode($c_senha);
         // faço a Leitura da tabela com sql
         $c_sql = "Update Usuarios" .
-            " SET nome = '$c_nome', login ='$c_login', senha ='$c_senha', cpf ='$c_cpf', ativo='$c_ativo', tipo='$c_tipo', email='$c_email'" .
+            " SET nome = '$c_nome', login ='$c_login', senha ='$c_senha', cpf ='$c_cpf', ativo='$c_ativo', tipo='$c_tipo', email='$c_email', id_setor='$i_id_setor'" .
             " where id=$c_id";
 
         $result = $conection->query($c_sql);
@@ -204,6 +213,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                             <option <?php echo $op1 ?>>Operador</option>
                             <option <?php echo $op2 ?>>Solicitante</option>
                             <option <?php echo $op3 ?>>Administrador</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- combo box para editar o setor do usuário -->
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Setor</label>
+                    <div class="col-sm-3">
+                        <select class="form-select form-select-lg mb-3" id="setor" name="setor" required>
+
+                            <?php
+                            $c_sql_setor = "select setores.id, setores.descricao from setores order by setores.descricao";
+                            $result_setor = $conection->query($c_sql_setor);
+                            //
+                            while ($registro2 = $result_setor->fetch_assoc()) {
+                                $op = "";
+                                if ($registro2['id'] == $i_id_setor)
+                                    $op = 'selected';
+                                echo "<option $op>$registro2[descricao]</option>";
+                            }
+                            ?>
+
                         </select>
                     </div>
                 </div>

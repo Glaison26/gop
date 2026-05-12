@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $l_erro = ' Nome ou senha inválido. Tente novamente!';
     } else {
         // procuro senha
-        $c_sql = "SELECT usuarios.id,usuarios.senha, usuarios.tipo FROM usuarios where usuarios.login='$c_login'";
+        $c_sql = "SELECT usuarios.id,usuarios.senha, usuarios.id_setor, usuarios.tipo FROM usuarios where usuarios.login='$c_login'";
         $result = $conection->query($c_sql);
         $registro = $result->fetch_assoc();
         $c_senha = base64_decode($registro['senha']);
@@ -41,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $_SESSION["id_usuario"] = $registro['id'];
             $_SESSION['c_usuario'] = $c_login;
             $_SESSION['tipo'] = $registro['tipo'];
+            $_SESSION['id_setor'] = $registro['id_setor'];
             header('location: /gop/menu.php');
         }
     }

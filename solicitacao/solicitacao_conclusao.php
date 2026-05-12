@@ -101,7 +101,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
             status, classificacao,tipo,descricao, id_ocorrencia) value ('$i_setor', '$i_solicitante', '$i_id_espaco', '$d_data_abertura', 
             '$c_agora', 'A', 'E', '$c_tipo', '$c_descricao', $i_ocorrencia)";
         }
-        
+
         //echo $c_sql;
         $result = $conection->query($c_sql);
         $c_email_oficina = "";
@@ -130,10 +130,10 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
             $result = $conection->query($c_sql);
             $c_linha = $result->fetch_assoc();
             $solicitacao = $c_linha['id_solicitacao'];
-           // armazeno na váriave $c_assunto o assunto do email e $c_body o corpo do e-mail com o numero da solicitação e a descrição da ocorrência
+            // armazeno na váriave $c_assunto o assunto do email e $c_body o corpo do e-mail com o numero da solicitação e a descrição da ocorrência
             $c_assunto = "GOP - Nova Solicitação de Serviço - Nº $solicitacao";
             $c_body = "Olá, uma nova solicitação de serviço foi aberta no GOP - Gestão Operacional. \n\nNúmero da Solicitação: $solicitacao\nTipo de Ocorrência: $c_ocorrencia\nDescrição: $c_descricao\n\nPor favor, acesse o sistema para mais detalhes e para acompanhar o andamento da solicitação.\n\nObrigado!";
-            
+
             include('../email_gop.php');
         }
         header('location: /gop/solicitacao/solicitacao_gerada.php?id_recurso=$i_id_recurso');
@@ -208,7 +208,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
                 <label class="col-sm-3 col-form-label">Tipo de Ocorrência </label>
                 <div class="col-sm-9">
 
-                    <select onchange="verifica_tipo(value)" class="form-select form-select-lg mb-3" id="tipo_ocorrencia" name="tipo_ocorrencia"  required>
+                    <select onchange="verifica_tipo(value)" class="form-select form-select-lg mb-3" id="tipo_ocorrencia" name="tipo_ocorrencia" required>
 
                         <option></option>
                         <?php
@@ -263,7 +263,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Tipo de Solicitação</label>
                 <div class="col-sm-2">
-                    <select class="form-select form-select-lg mb-3" id="tipo" name="tipo"  required>
+                    <select class="form-select form-select-lg mb-3" id="tipo" name="tipo" required>
                         <option>Programada</option>
                         <option>Urgência</option>
 
@@ -277,11 +277,26 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
                         // select da tabela de setores
                         $c_sql_setor = "SELECT setores.id, setores.descricao FROM setores ORDER BY setores.descricao";
                         $result_setor = $conection->query($c_sql_setor);
-                        while ($c_linha = $result_setor->fetch_assoc()) {
-                            echo "  
-                          <option>$c_linha[descricao]</option>
-                        ";
+                        // o setor do usuário logado é selecionado por padrão se tipo do usuário for igual a solicitante, caso contrário nenhum setor é selecionado por padrão  
+
+
+                        if ($_SESSION['tipo'] <> 'Solicitante') {
+
+                            while ($c_linha = $result_setor->fetch_assoc()) {
+                                echo "  
+                          <option>$c_linha[descricao]</option>";
+                            }
+                        } else {
+                            while ($c_linha = $result_setor->fetch_assoc()) {
+                                if ($_SESSION['id_setor'] == $c_linha['id'])
+                                    $op = 'selected';
+                                else
+                                    $op = "";
+                                echo "  
+                              <option $op>$c_linha[descricao]</option>";
+                            }
                         }
+
                         ?>
                     </select>
                 </div>

@@ -16,6 +16,7 @@ $c_email = "";
 $c_senha = "";
 $c_senha2 = "";
 $c_tipo = "";
+$i_id_setor = "";
 
 // variaveis para mensagens de erro e suscessso da gravação
 $msg_gravou = "";
@@ -30,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $c_tipo = $_POST['tipo'];
     $c_email = $_POST['email'];
     $c_perfil = $_POST['perfil'];
+    $i_id_setor = $_POST['setor'];
     if (!isset($_POST['chkativo'])) {
         $c_ativo = 'N';
     } else {
@@ -91,8 +93,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // grava dados no banco
 
         // faço a Leitura da tabela com sql
-        $c_sql = "Insert into usuarios (nome,login,senha, ativo, cpf, tipo, email, id_perfil)" .
-            "Value ('$c_nome', '$c_login', '$c_senha', '$c_ativo','$c_cpf', '$c_tipo', '$c_email','$i_id_perfil')";
+        $c_sql = "Insert into usuarios (nome,login,senha, ativo, cpf, tipo, email, id_perfil, id_setor)" .
+            "Value ('$c_nome', '$c_login', '$c_senha', '$c_ativo','$c_cpf', '$c_tipo', '$c_email','$i_id_perfil', '$i_id_setor')";
 
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
@@ -191,6 +193,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <option>Operador</option>
                             <option>Solicitante</option>
                             <option>Administrador</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- combo box para selecionar o setor do usuário -->
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Setor</label>
+                    <div class="col-sm-3">
+                        <select class="form-select form-select-lg mb-3" id="setor" name="setor">
+                            <option></option>
+                            <?php
+                            $c_sql_setor = "select id, descricao from setores order by descricao";
+                            $result_setor = $conection->query($c_sql_setor);
+                            while ($registro = $result_setor->fetch_assoc()) {
+                                echo "<option value='$registro[id]'>$registro[descricao]</option>";
+                            }
+                            ?>
                         </select>
                     </div>
                 </div>
