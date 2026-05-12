@@ -22,16 +22,17 @@ if ($grupo_material != 'Todos') {
 }
 $sql_movimentacao .= " GROUP BY m.descricao, g.descricao, c.id, f.descricao, c.data ORDER BY c.data DESC";
 // monto query para apurar as saídas através da tabela de ordens_servico_materiais e ordens_servico, com filtro de data e tipo de material
-$sql_saida = "SELECT m.descricao AS material, g.descricao AS grupo, os.id AS ordem_servico, SUM(osm.quantidade) AS total_saida, os.data_inicio AS data_saida
+$sql_saida = "SELECT m.descricao AS material, g.descricao AS grupo, s.descricao AS setor, os.id AS ordem_servico, SUM(osm.quantidade) AS total_saida, os.data_inicio AS data_saida
               FROM ordens_materiais osm
               JOIN materiais m ON osm.id_material = m.id
               JOIN grupos g ON m.id_grupo = g.id
               JOIN ordens os ON osm.id_ordem = os.id
+              JOIN setores s ON os.id_setor = s.id
               WHERE os.data_inicio BETWEEN '$data_inicio' AND '$data_fim'";
 if ($grupo_material != 'Todos') {
     $sql_saida .= " AND g.id = $grupo_material";
 }
-$sql_saida .= " GROUP BY m.descricao, g.descricao, os.id,  os.data_inicio ORDER BY os.data_inicio DESC";
+$sql_saida .= " GROUP BY m.descricao, g.descricao, s.descricao, os.id,  os.data_inicio ORDER BY os.data_inicio DESC";
 // executo as queries
 $result_movimentacao = $conection->query($sql_movimentacao);
 $result_saida = $conection->query($sql_saida);
@@ -98,6 +99,7 @@ if (!$result_saida) {
                     <tr>
                         <th>Material</th>
                         <th>Grupo</th>
+                        <th>Setor</th>
                         <th>Ordem de Serviço</th>
                         <th>Quantidade Total</th>
                         <th>Data da Saída</th>
@@ -108,6 +110,7 @@ if (!$result_saida) {
                         <tr>
                             <td><?php echo $row_saida['material']; ?></td>
                             <td><?php echo $row_saida['grupo']; ?></td>
+                            <td><?php echo $row_saida['setor']; ?></td>
                             <td><?php echo $row_saida['ordem_servico']; ?></td>
                             <td><?php echo $row_saida['total_saida']; ?></td>
                             <td><?php echo date('d/m/Y', strtotime($row_saida['data_saida'])); ?></td>
