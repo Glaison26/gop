@@ -199,7 +199,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
             <div style="padding-left:15px;">
                 <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
             </div>
-            <h5>Informações para geração da Solicitação de Serviço. Preencha as informações, clique em Finalizar e aguarde o envio do email de notificação.</h5>
+            <h5>Informações para geração da Solicitação de Serviço. Preencha as informações, clique em Finalizar e aguarde o envio do email de notificação da solicitação.</h5>
         </div>
 
         <form method="post" name="frm_solicitacao" id="frm_solicitacao">
@@ -278,10 +278,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
                         $c_sql_setor = "SELECT setores.id, setores.descricao FROM setores ORDER BY setores.descricao";
                         $result_setor = $conection->query($c_sql_setor);
                         // o setor do usuário logado é selecionado por padrão se tipo do usuário for igual a solicitante, caso contrário nenhum setor é selecionado por padrão  
-
-
                         if ($_SESSION['tipo'] <> 'Solicitante') {
-
                             while ($c_linha = $result_setor->fetch_assoc()) {
                                 echo "  
                           <option>$c_linha[descricao]</option>";
