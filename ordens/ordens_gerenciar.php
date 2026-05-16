@@ -28,6 +28,55 @@ $c_sql_ordem = "select status, id_ocorrencia, descritivo, descricao from ordens 
 $result = $conection->query($c_sql_ordem);
 $c_linha_ordem = $result->fetch_assoc();
 $_SESSION['id_ocorrencia'] = $c_linha_ordem['id_ocorrencia'];
+// capturo o numero de executores na ordem de serviço para mostrar na aba de executores
+$c_sql = "SELECT COUNT(*) AS total_executores FROM ordens_executores WHERE id_ordem='$i_id'";
+$result_executores = $conection->query($c_sql); 
+$registro_executores = $result_executores->fetch_assoc();
+$total_executores = $registro_executores['total_executores'];
+// capturo o numero de prestadores de serviço na ordem de serviço para mostrar na aba de prestadores
+$c_sql = "SELECT COUNT(*) AS total_prestadores FROM ordens_prestadores WHERE id_ordem='$i_id'";
+$result_prestadores = $conection->query($c_sql);
+$registro_prestadores = $result_prestadores->fetch_assoc();
+$total_prestadores = $registro_prestadores['total_prestadores'];
+// capturo o numero de materiais na ordem de serviço para mostrar na aba de materiais
+$c_sql = "SELECT COUNT(*) AS total_materiais FROM ordens_materiais WHERE id_ordem='$i_id'";
+$result_materiais = $conection->query($c_sql);
+$registro_materiais = $result_materiais->fetch_assoc();
+$total_materiais = $registro_materiais['total_materiais'];
+// capturo o numero de imagens na ordem de serviço para mostrar na aba de imagens
+$c_sql = "SELECT COUNT(*) AS total_imagens FROM ordens_imagens WHERE id_ordem='$i_id'";
+$result_imagens = $conection->query($c_sql);
+$registro_imagens = $result_imagens->fetch_assoc();
+$total_imagens = $registro_imagens['total_imagens'];
+// capturo o numero de checklists na ordem de serviço para mostrar na aba de checklists
+$c_sql = "SELECT COUNT(*) AS total_checklists FROM ordens_check WHERE id_ordem='$i_id'";
+$result_checklists = $conection->query($c_sql);
+$registro_checklists = $result_checklists->fetch_assoc();
+$total_checklists = $registro_checklists['total_checklists'];
+// capturo o numero de POPs na ordem de serviço para mostrar na aba de POPs
+$c_sql = "SELECT COUNT(*) AS total_pops FROM ordens_pop WHERE id_ordem='$i_id'";
+$result_pops = $conection->query($c_sql);
+$registro_pops = $result_pops->fetch_assoc();
+$total_pops = $registro_pops['total_pops'];
+// capturo o numero de ferramentas na ordem de serviço para mostrar na aba de ferramentas
+$c_sql = "SELECT COUNT(*) AS total_ferramentas FROM ordens_ferramentas WHERE id_ordem='$i_id'";
+$result_ferramentas = $conection->query($c_sql);
+$registro_ferramentas = $result_ferramentas->fetch_assoc();
+$total_ferramentas = $registro_ferramentas['total_ferramentas'];
+// cpturo o numero de itens no plano de ação da ordem de serviço para mostrar na aba de plano de ação
+$c_sql = "SELECT COUNT(*) AS total_plano FROM ordens_plano WHERE id_ordem='$i_id'";
+$result_plano = $conection->query($c_sql);
+$registro_plano = $result_plano->fetch_assoc();
+$total_plano = $registro_plano['total_plano'];
+// capturo o numero de suspensões na ordem de serviço para mostrar na aba de suspensões
+$c_sql = "SELECT COUNT(*) AS total_suspensoes FROM ordens_suspensao WHERE id_ordem='$i_id'";
+$result_suspensoes = $conection->query($c_sql);
+$registro_suspensoes = $result_suspensoes->fetch_assoc();
+$total_suspensoes = $registro_suspensoes['total_suspensoes'];
+
+
+
+
 
 
 
@@ -97,15 +146,15 @@ $_SESSION['id_ocorrencia'] = $c_linha_ordem['id_ocorrencia'];
                 <!-- abas de itens de os -->
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active"><a href="#descricao" aria-controls="descricao" role="tab" data-toggle="tab">Descrição do Serviço</a></li>
-                    <li role="presentation"><a href="#executores" aria-controls="executores" role="tab" data-toggle="tab">Executores</a></li>
-                    <li role="presentation"><a href="#prestadores" aria-controls="prestadores" role="tab" data-toggle="tab">Prestadores de Serviço</a></li>
-                    <li role="presentation"><a href="#materiais" aria-controls="materiais" role="tab" data-toggle="tab">Materiais Gastos</a></li>
+                    <li role="presentation"><a href="#executores" aria-controls="executores" role="tab" data-toggle="tab">Executores <span class="badge"><?php echo $total_executores; ?></span></a></li>
+                    <li role="presentation"><a href="#prestadores" aria-controls="prestadores" role="tab" data-toggle="tab">Prestadores de Serviço <span class="badge"><?php echo $total_prestadores; ?></span></a></li>
+                    <li role="presentation"><a href="#materiais" aria-controls="materiais" role="tab" data-toggle="tab">Materiais Gastos <span class="badge"><?php echo $total_materiais; ?></span></a></li>
                     <li role="presentation"><a href="#susp" aria-controls="susp" role="tab" data-toggle="tab">Suspensões</a></li>
-                    <li role="presentation"><a href="#checklist" aria-controls="checklist" role="tab" data-toggle="tab">Check Lists</a></li>
-                    <li role="presentation"><a href="#abapop" aria-controls="abapop" role="tab" data-toggle="tab">Procedimentos Operacionais Padrões</a></li>
-                    <li role="presentation"><a href="#imagens" aria-controls="imagens" role="tab" data-toggle="tab">Imagens</a></li>
-                    <li role="presentation"><a href="#ferramenta" aria-controls="ferramenta" role="tab" data-toggle="tab">Ferramentas</a></li>
-                    <li role="presentation"><a href="#plano" aria-controls="plano" role="tab" data-toggle="tab">Plano de Ação</a></li>
+                    <li role="presentation"><a href="#checklist" aria-controls="checklist" role="tab" data-toggle="tab">Check Lists <span class="badge"><?php echo $total_checklists; ?></span></a></li>
+                    <li role="presentation"><a href="#abapop" aria-controls="abapop" role="tab" data-toggle="tab">Procedimentos Operacionais Padrões <span class="badge"><?php echo $total_pops; ?></span></a></li>
+                    <li role="presentation"><a href="#imagens" aria-controls="imagens" role="tab" data-toggle="tab">Imagens <span class="badge"><?php echo $total_imagens; ?></span></a></li>
+                    <li role="presentation"><a href="#ferramenta" aria-controls="ferramenta" role="tab" data-toggle="tab">Ferramentas <span class="badge"><?php echo $total_ferramentas; ?></span></a></li>
+                    <li role="presentation"><a href="#plano" aria-controls="plano" role="tab" data-toggle="tab">Plano de Ação <span class="badge"><?php echo $total_plano; ?></span></a></li>
                 </ul>
                 <div class="tab-content">
                     <!-- aba com descrição do serviço -->

@@ -71,7 +71,7 @@ $registro = $result->fetch_assoc();
 // variaveis do formulário
 $c_descricao = $registro['descricao'];
 $c_conclusao = $registro['conclusao'];
-if (empty($c_conclusao)){
+if (empty($c_conclusao)) {
     $c_conclusao = "Solicitação ainda não foi concluída, favor aguardar ou entrar em contato com o setor responsável";
 }
 
@@ -97,6 +97,16 @@ $c_sql = "select id,descricao from ocorrencias where ocorrencias.id='$i_id_ocorr
 $result_ocorrencia = $conection->query($c_sql);
 $registro_ocorrencia = $result_ocorrencia->fetch_assoc();
 $c_ocorrencia = $registro_ocorrencia['descricao'];
+// capturo o numero de mensagens na solicitacao para mostrar na aba de mensagens
+$c_sql = "SELECT COUNT(*) AS total_mensagens FROM mensagens WHERE id_solicitacao='$i_id'";
+$result_mensagens = $conection->query($c_sql);
+$registro_mensagens = $result_mensagens->fetch_assoc();
+$total_mensagens = $registro_mensagens['total_mensagens'];
+// capturo o numero de anexos na solicitacao para mostrar na aba de anexos
+$c_sql = "SELECT COUNT(*) AS total_anexos FROM anexos WHERE id_solicitacao='$i_id'";
+$result_anexos = $conection->query($c_sql);
+$registro_anexos = $result_anexos->fetch_assoc();
+$total_anexos = $registro_anexos['total_anexos'];
 ?>
 
 <!-- frontend html da página -->
@@ -159,15 +169,8 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
     <div class="container-fluid">
 
         <div class="container content-box">
-            <?php
-            $c_id_ordem = $registro["id"];
             
-            if ($_SESSION['tipo'] <> 'Solicitante' && $registro['status'] == 'A') {
-                if (($registro_acesso['gera_os'] =='S'&&$_SESSION['tipo']=='Operador')||($_SESSION['tipo']=='Administrador'))
-                echo '<a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_gera_os.php?id=' . $c_id_ordem . '"><img src="\gop\images\ordem.png" alt="" width="25" height="25"> Gerar Ordem de Serviço</a>';
-            }
-            ?>
-           
+
             <hr>
             <div class='alert alert-info' role='alert'>
                 <div style="padding-left:15px;">
@@ -175,13 +178,23 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
                 </div>
                 <h5>Detalhe da Solicitação de Serviço No. <?php echo $registro['id'] ?> </h5>
             </div>
+            <?php
+            $c_id_ordem = $registro["id"];
+
+            if ($_SESSION['tipo'] <> 'Solicitante' && $registro['status'] == 'A') {
+                if (($registro_acesso['gera_os'] == 'S' && $_SESSION['tipo'] == 'Operador') || ($_SESSION['tipo'] == 'Administrador'))
+                    echo '<a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_gera_os.php?id=' . $c_id_ordem . '"><img src="\gop\images\ordem.png" alt="" width="25" height="25"> Gerar Ordem de Serviço</a>';
+            }
+            ?>
+            <br><br>
             <!-- abas de solicitações por recursos físicos -->
             <ul class="nav nav-tabs" role="tablist">
 
                 <li role="presentation" class="active"><a href="#detalhe" aria-controls="detalhe" role="tab" data-toggle="tab">Detalhe da Solicitação</a></li>
                 <li role="presentation"><a href="#descritivo" aria-controls="descritivo" role="tab" data-toggle="tab">Descrição do Serviço</a></li>
                 <li role="presentation"><a href="#conclusao" aria-controls="conclusao" role="tab" data-toggle="tab">Conclusão</a></li>
-                <li role="menssagens"><a href="#mensagens" aria-controls="mensagens" role="tab" data-toggle="tab">Troca de Mensagens</a></li>
+                <li role="presentation"><a href="#mensagens" aria-controls="mensagens" role="tab" data-toggle="tab">Troca de Mensagens<span style="background-color: #00b7ff;; color: white; padding: 5px 10px; border-radius: 10px;"> <?php echo '  ' . $total_mensagens  ?></span></a></li>
+                <li role="presentation"><a href="#anexos" aria-controls="anexos" role="tab" data-toggle="tab">Anexos<span style="background-color: #00b7ff;; color: white; padding: 5px 10px; border-radius: 10px;"> <?php echo '  ' . $total_anexos ?></span></a></li>
             </ul>
 
             <div class="tab-content">
@@ -197,7 +210,7 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
                     </div>
                 </div>
                 <!-- aba de conclusão -->
-                 <div role="tabpanel" class="tab-pane" id="conclusao">
+                <div role="tabpanel" class="tab-pane" id="conclusao">
                     <div style="padding-top:15px;padding-left:20px;">
                         <div class="form-group">
                             <div class="col-sm-12">
@@ -205,7 +218,7 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
                             </div>
                         </div>
                     </div>
-                 </div>
+                </div>
 
                 <!-- aba de Detalhe -->
                 <div role="tabpanel" class="tab-pane active" id="detalhe">
@@ -348,6 +361,65 @@ $c_ocorrencia = $registro_ocorrencia['descricao'];
                                 ?>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+                <!-- Aba de Anexos -->
+                <div role="tabpanel" class="tab-pane" id="anexos">
+                    <div style="padding-top:15px;padding-left:20px;">
+                        <!-- botão para chamar a pagina de upload de arquivos com o id da solicitação -->
+                        <a class="btn btn-success btn-sm" href="/gop/solicitacao/solicitacao_anexo.php?solicitacao_id=<?php echo $i_id; ?>"><span class="glyphicon glyphicon-paperclip"></span> Gerenciar Anexos</a>
+                        <hr>
+                        <table class="table table   tab_anexos">
+                            <thead class="thead">
+                                <tr>
+
+                                    <th scope="col">Data</th>
+                                    <th scope="col">Hora</th>
+                                    <th scope="col">Enviado por</th>
+                                    
+                                    <th scope="col">Arquivo</th>
+                                    <!-- botão para download do arquivo -->
+                                    
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                // faço a Leitura da tabela com sql
+                                $c_sql = "SELECT anexos.id, anexos.id_solicitacao, anexos.id_usuario, usuarios.nome,
+                         anexos.`data`, anexos.hora, anexos.arquivo
+                        FROM anexos
+                        JOIN usuarios ON anexos.id_usuario=usuarios.id
+                        WHERE anexos.id_solicitacao='$i_id ' ORDER BY anexos.`data`,anexos.hora desc";
+                                $result = $conection->query($c_sql);
+                                // verifico se a query foi correto
+                                if (!$result) {
+                                    die("Erro ao Executar Sql!!" . $conection->connect_error);
+                                }
+
+                                // insiro os registro do banco de dados na tabela 
+                                while ($c_linha = $result->fetch_assoc()) {
+                                    $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data'])));
+                                    echo "
+                    <tr>
+                    
+                    <td>$c_data</td>
+                    <td>$c_linha[hora]</td>
+                    <td>$c_linha[nome]</td>
+                    
+                    
+                    <td><a href='/gop/solicitacao/anexos/$c_linha[arquivo]' target='_blank'>$c_linha[arquivo]</a></td>
+                    
+                    
+                   
+
+                    </tr>
+                    ";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+
                     </div>
                 </div>
             </div>
