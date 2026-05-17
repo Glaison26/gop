@@ -360,7 +360,7 @@ $registro_conf = $result_conf->fetch_assoc();
                     </table>
                 </div>
             </div>
-        
+
             <!-- aba da espaco fisico-->
             <div role="tabpanel" class="tab-pane" id="espaco">
                 <div style="padding-top:15px;padding-left:20px;">
@@ -561,17 +561,19 @@ $registro_conf = $result_conf->fetch_assoc();
                 </div>
             </div>
         </div>
+        <hr>
+        <div style="padding-bottom :15px;">
+            <?php
+            if ($_SESSION['pesquisamenu'] == false) {
+                echo "<a class='btn btn btn-sm' align='left' href='\gop\solicitacao\solicitacao.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
+            } else {
+                echo "<a class='btn btn btn-sm' align='left' href='\gop\menu.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
+            }
+            ?>
+        </div>
     </div>
-    <hr>
-    <div style="padding-bottom :15px;">
-        <?php
-        if ($_SESSION['pesquisamenu'] == false) {
-            echo "<a class='btn btn btn-sm' align='left' href='\gop\solicitacao\solicitacao.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
-        } else {
-            echo "<a class='btn btn btn-sm' align='left' href='\gop\menu.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
-        }
-        ?>
-    </div>
+
+
 </body>
 
 

@@ -193,8 +193,8 @@ $total_anexos = $registro_anexos['total_anexos'];
                 <li role="presentation" class="active"><a href="#detalhe" aria-controls="detalhe" role="tab" data-toggle="tab">Detalhe da Solicitação</a></li>
                 <li role="presentation"><a href="#descritivo" aria-controls="descritivo" role="tab" data-toggle="tab">Descrição do Serviço</a></li>
                 <li role="presentation"><a href="#conclusao" aria-controls="conclusao" role="tab" data-toggle="tab">Conclusão</a></li>
-                <li role="presentation"><a href="#mensagens" aria-controls="mensagens" role="tab" data-toggle="tab">Troca de Mensagens<span style="background-color: #00b7ff;; color: white; padding: 5px 10px; border-radius: 10px;"> <?php echo '  ' . $total_mensagens  ?></span></a></li>
-                <li role="presentation"><a href="#anexos" aria-controls="anexos" role="tab" data-toggle="tab">Anexos<span style="background-color: #00b7ff;; color: white; padding: 5px 10px; border-radius: 10px;"> <?php echo '  ' . $total_anexos ?></span></a></li>
+                <li role="presentation"><a href="#mensagens" aria-controls="mensagens" role="tab" data-toggle="tab">Troca de Mensagens <span style="background-color: #00b7ff;; color: white; padding: 5px 10px; border-radius: 10px;"> <?php echo '  ' . $total_mensagens  ?></span></a></li>
+                <li role="presentation"><a href="#anexos" aria-controls="anexos" role="tab" data-toggle="tab">Anexos <span style="background-color: #00b7ff;; color: white; padding: 5px 10px; border-radius: 10px;"> <?php echo '  ' . $total_anexos ?></span></a></li>
             </ul>
 
             <div class="tab-content">
