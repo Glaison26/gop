@@ -244,15 +244,15 @@ $registro_conf = $result_conf->fetch_assoc();
             <?php
             if (($registro_conf['solicitacao_avulsa'] == 'S') || ($_SESSION['tipo'] <> 'Solicitante')) {
                 echo '
-            <li role="presentation" class="active"><a href="#avulsas" aria-controls="avulsas" role="tab" data-toggle="tab">Visualizar Solicitações <span style="background-color: #00b7ff; color: white; padding: 5px 10px; border-radius: 10px;"> '.  $qtd_avulso.'   registro(s)</span></a></li>';
+            <li role="presentation" class="active"><a href="#avulsas" aria-controls="avulsas" role="tab" data-toggle="tab">Visualizar Solicitações <span style="background-color: #00b7ff; color: white; padding: 5px 10px; border-radius: 10px;"> ' .  $qtd_avulso . '   registro(s)</span></a></li>';
             }
             if (($registro_conf['solicitacao_recursos'] == 'S') || ($_SESSION['tipo'] <> 'Solicitante')) {
                 echo '
-            <li role="presentation"><a href="#recurso" aria-controls="recurso" role="tab" data-toggle="tab">Visualizar Solicitações em Recurso Físico <span style="background-color: #00b7ff;; color: white; padding: 5px 10px; border-radius: 10px;"> '.  $qtd_recursos.'   registro(s)</span></a></li>';
+            <li role="presentation"><a href="#recurso" aria-controls="recurso" role="tab" data-toggle="tab">Visualizar Solicitações em Recurso Físico <span style="background-color: #00b7ff;; color: white; padding: 5px 10px; border-radius: 10px;"> ' .  $qtd_recursos . '   registro(s)</span></a></li>';
             }
             if (($registro_conf['solicitacao_espacos'] == 'S' || ($_SESSION['tipo'] <> 'Solicitante'))) {
                 echo '
-            <li role="presentation"><a href="#espaco" aria-controls="espaco" role="tab" data-toggle="tab">Visualizar Solicitações em Espaços Físicos <span style="background-color: #00b7ff;; color: white; padding: 5px 10px; border-radius: 10px;"> '.  $qtd_fisico.'   registro(s)</span></a></li>';
+            <li role="presentation"><a href="#espaco" aria-controls="espaco" role="tab" data-toggle="tab">Visualizar Solicitações em Espaços Físicos <span style="background-color: #00b7ff;; color: white; padding: 5px 10px; border-radius: 10px;"> ' .  $qtd_fisico . '   registro(s)</span></a></li>';
             }
             ?>
         </ul>
@@ -332,6 +332,7 @@ $registro_conf = $result_conf->fetch_assoc();
                                         <img src="\gop\images\ordem.png" alt="" width="25" height="25"></a>';
                                 }
                                 echo "
+                                    
                                     <td>$c_linha[id]</td>
                                     <td>$i_os</td>
                                     <td>$c_linha[solicitacao_status]</td>
@@ -349,9 +350,7 @@ $registro_conf = $result_conf->fetch_assoc();
                             
                                     <td>
                                         <a class='btn btn-secondary btn-sm' href='/gop/solicitacao/solicitacao_detalhe.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Detalhe</a>
-                                
-
-                                </td>
+                                    </td>
 
                                 </tr>
                                 ";
@@ -361,6 +360,7 @@ $registro_conf = $result_conf->fetch_assoc();
                     </table>
                 </div>
             </div>
+        
             <!-- aba da espaco fisico-->
             <div role="tabpanel" class="tab-pane" id="espaco">
                 <div style="padding-top:15px;padding-left:20px;">
@@ -561,19 +561,22 @@ $registro_conf = $result_conf->fetch_assoc();
                 </div>
             </div>
         </div>
-        <hr>
-        <div style="padding-bottom :15px;">
-            <?php
-            if ($_SESSION['pesquisamenu'] == false) {
-                echo "<a class='btn btn btn-sm' align='left' href='\gop\solicitacao\solicitacao.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
-            } else {
-                echo "<a class='btn btn btn-sm' align='left' href='\gop\menu.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
-            }
-            ?>
-        </div>
     </div>
-
+    <hr>
+    <div style="padding-bottom :15px;">
+        <?php
+        if ($_SESSION['pesquisamenu'] == false) {
+            echo "<a class='btn btn btn-sm' align='left' href='\gop\solicitacao\solicitacao.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
+        } else {
+            echo "<a class='btn btn btn-sm' align='left' href='\gop\menu.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
+        }
+        ?>
+    </div>
 </body>
+
+
+
+
 
 </html>
 
