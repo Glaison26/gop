@@ -174,7 +174,7 @@ $total_anexos = $registro_anexos['total_anexos'];
             <hr>
             <div class='alert alert-info' role='alert'>
                 
-                <h5>Detalhe da Solicitação de Serviço No. <?php echo $registro['id'] ?> </h5>
+                <h5><strong>Detalhe da Solicitação de Serviço No. <?php echo $registro['id'] ?> </strong></h5>
             </div>
             <?php
             $c_id_ordem = $registro["id"];
