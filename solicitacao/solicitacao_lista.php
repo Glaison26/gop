@@ -463,7 +463,7 @@ $registro_conf = $result_conf->fetch_assoc();
             </div>
             <!-- aba das avulsas-->
             <div role="tabpanel" class="tab-pane active" id="avulsas">
-                <div style="padding-top:15px;padding-left:20px;">
+                <div style="padding-top:15px;padding-left:5px;">
                     <table class="table table display table-bordered table-striped table-active tabsolicitacao_avulsas">
                         <thead class="thead">
                             <tr>
@@ -548,8 +548,7 @@ $registro_conf = $result_conf->fetch_assoc();
                                     <td>$c_hora_conclusao</td>
                                     <td>
                                         <a class='btn btn-secondary btn-sm' href='/gop/solicitacao/solicitacao_detalhe.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Detalhe</a>
-                                
-                                                                  
+                                                                                
                                     </td>
 
                                 </tr>
@@ -561,24 +560,22 @@ $registro_conf = $result_conf->fetch_assoc();
                 </div>
             </div>
         </div>
-        <hr>
-        <div style="padding-bottom :15px;">
-            <?php
-            if ($_SESSION['pesquisamenu'] == false) {
-                echo "<a class='btn btn btn-sm' align='left' href='\gop\solicitacao\solicitacao.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
-            } else {
-                echo "<a class='btn btn btn-sm' align='left' href='\gop\menu.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
-            }
-            ?>
-        </div>
     </div>
+   
+    <hr>
+    <div style="padding-bottom :15px;">
+        <?php
+        if ($_SESSION['pesquisamenu'] == false) {
+            echo "<a class='btn btn btn-sm' align='left' href='\gop\solicitacao\solicitacao.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
+        } else {
+            echo "<a class='btn btn btn-sm' align='left' href='\gop\menu.php'><img src='\gop\images\saida.png' alt='' width='25' height='25'> Voltar</a>";
+        }
+        ?>
+    </div>
+  
 
 
 </body>
-
-
-
-
 
 </html>
 

@@ -384,13 +384,30 @@ $pagina_anterior = $_GET['voltar'] ?? 'solicitacao_detalhe.php';
                     Formatos permitidos: PDF, DOC, DOCX, XLS, XLSX, JPG, JPEG, PNG, TXT
                 </small>
             </div>
-            <button type="submit" class="btn-enviar">📤 Enviar Anexo</button>
+            <?php 
+            // verifico se a solicitação já está finalizada para desabilitar o envio de anexos
+            $sql = "SELECT status FROM solicitacao WHERE id = :id_solicitacao";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([':id_solicitacao' => $id_solicitacao]);
+            $solicitacao = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($solicitacao && $solicitacao['status'] === 'C'): ?>
+                <button type="submit" class="btn-enviar" disabled>📤 Enviar Anexo</button>
+                <small style="color: #dc3545; display: block; margin-top: 5px;">
+                    Esta solicitação está finalizada. Não é possível enviar novos anexos.
+                </small>
+            <?php else: ?>
+                <button type="submit" class="btn-enviar">📤 Enviar Anexo</button>
+            <?php endif; ?>
         </form>
 
         <div class="anexos-list">
             <h2>Anexos da Solicitação</h2>
             <?php if (count($anexos) > 0): ?>
-                <?php foreach ($anexos as $anexo): ?>
+                <?php // botão de deletar desativado para anexos de solicitações finalizadas
+                if ($solicitacao && $solicitacao['status'] === 'C') {
+                    echo '<style>.btn-deletar { display: none; }</style>';
+                }
+                foreach ($anexos as $anexo): ?>
                     <div class="anexo-item">
                         <div class="anexo-info">
                             <div class="anexo-nome">📎 <?php echo htmlspecialchars(basename($anexo['arquivo'])); ?></div>

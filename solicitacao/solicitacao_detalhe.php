@@ -398,6 +398,9 @@ $total_anexos = $registro_anexos['total_anexos'];
                                 // insiro os registro do banco de dados na tabela 
                                 while ($c_linha = $result->fetch_assoc()) {
                                     $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data'])));
+                                    $c_arquivo = $c_linha['arquivo'];
+                                    // tiro a pasta anexos/upload do nome do arquivo para mostrar somente o nome do arquivo na tabela
+                                    
                                     echo "
                     <tr>
                     
@@ -406,7 +409,8 @@ $total_anexos = $registro_anexos['total_anexos'];
                     <td>$c_linha[nome]</td>
                     
                     
-                    <td><a href='/gop/solicitacao/anexos/$c_linha[arquivo]' target='_blank'>$c_linha[arquivo]</a></td>
+
+                    <td>$c_arquivo</td>
                     
                     
                    
