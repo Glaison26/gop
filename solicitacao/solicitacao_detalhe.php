@@ -407,14 +407,9 @@ $total_anexos = $registro_anexos['total_anexos'];
                     <td>$c_data</td>
                     <td>$c_linha[hora]</td>
                     <td>$c_linha[nome]</td>
-                    
-                    
-
+ 
                     <td>$c_arquivo</td>
-                    
-                    
-                   
-
+ 
                     </tr>
                     ";
                                 }

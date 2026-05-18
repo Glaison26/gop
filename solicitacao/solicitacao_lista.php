@@ -30,6 +30,7 @@ if (!empty($_SESSION['consulta_solicitacao'])) { // consulta da solicitação ap
    JOIN recursos ON solicitacao.id_recursos=recursos.id JOIN ocorrencias on solicitacao.id_ocorrencia=ocorrencias.id 
    JOIN setores on solicitacao.id_setor = setores.id
    where solicitacao.id = '$id_nova_solicitacao' order by solicitacao.data_abertura desc";
+    $_SESSION['sqlrecurso'] = $c_sql_recurso;
     // espaço fisico
     $c_sql_espaco = "SELECT solicitacao.id, ocorrencias.descricao, solicitacao.prazo_data, solicitacao.data_conclusao,
     solicitacao.hora_conclusao, solicitacao.prazo_hora, solicitacao.id_ordem, solicitacao.data_abertura, 
@@ -43,6 +44,7 @@ if (!empty($_SESSION['consulta_solicitacao'])) { // consulta da solicitação ap
     JOIN ocorrencias on solicitacao.id_ocorrencia=ocorrencias.id where solicitacao.id = '$id_nova_solicitacao'
     
     order by solicitacao.data_abertura desc";
+    $_SESSION['sqlespaco'] = $c_sql_espaco;
     // solicitação avulsa
     $c_sql_avulso = "SELECT solicitacao.id, ocorrencias.descricao, solicitacao.prazo_data, solicitacao.data_conclusao,
      solicitacao.hora_conclusao, solicitacao.prazo_hora, solicitacao.id_ordem, solicitacao.data_abertura, 
@@ -55,11 +57,14 @@ if (!empty($_SESSION['consulta_solicitacao'])) { // consulta da solicitação ap
      JOIN ocorrencias on solicitacao.id_ocorrencia=ocorrencias.id 
      JOIN setores on solicitacao.id_setor = setores.id
      where solicitacao.id = '$id_nova_solicitacao' and classificacao='V' order by solicitacao.data_abertura desc";
+    $_SESSION['sqlavulso'] = $c_sql_avulso;
     $_SESSION['consulta_solicitacao'] = "";
 } else {
-    $c_sql_recurso = $_SESSION['sqlrecurso'];
-    $c_sql_espaco = $_SESSION['sqlespaco'];
-    $c_sql_avulso = $_SESSION['sqlavulso'];
+    if (isset($_SESSION['sqlrecurso']) && isset($_SESSION['sqlespaco']) && isset($_SESSION['sqlavulso'])) {
+        $c_sql_recurso = $_SESSION['sqlrecurso'];
+        $c_sql_espaco = $_SESSION['sqlespaco'];
+        $c_sql_avulso = $_SESSION['sqlavulso'];
+    }
 }
 //echo $c_sql_recurso.'<br>';
 //echo $c_sql_espaco.'<br>';
@@ -561,7 +566,7 @@ $registro_conf = $result_conf->fetch_assoc();
             </div>
         </div>
     </div>
-   
+
     <hr>
     <div style="padding-bottom :15px;">
         <?php
@@ -572,7 +577,7 @@ $registro_conf = $result_conf->fetch_assoc();
         }
         ?>
     </div>
-  
+
 
 
 </body>
