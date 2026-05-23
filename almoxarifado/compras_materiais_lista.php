@@ -160,7 +160,11 @@ $c_linha_compra = $result_compra->fetch_assoc();
 
             <h5>Materiais para a Compra No. <?php echo $c_linha_compra['id']  ?> </h5>
         </div>
-        <a class="btn btn-primary btn-sm" href="/gop/almoxarifado/pedido_itens_cadastro.php"><span class="glyphicon glyphicon-plus"></span> Novo Material</a>
+        // se a compra estiver finalizada, não exibe o botão de adicionar material
+        <?php if ($c_linha_compra['status'] != 'C') { ?>
+                <a class="btn btn-success btn-sm" href="/gop/almoxarifado/compras_material_cadastro.php"><span class="glyphicon glyphicon-plus"></span> Adicionar Material</a>
+        <?php } ?>
+
         <a class="btn btn-secondary btn-sm" href="/gop/almoxarifado/compras_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
