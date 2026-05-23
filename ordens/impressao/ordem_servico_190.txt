@@ -1,0 +1,10 @@
+Ordem de Serviço Nº: 190
+Data de Geração: 20/05/2026 Hora: 16:42:00
+Previsão de Entrega: 22/05/2026 Hora: 16:42:00
+Previsão de Inicio: 20/05/2026 Hora: 16:42:39
+Solicitante: Glaison Queiroz
+Setor: Secretaria Municipal de Cultura
+Tipo de Ordem: Corretiva
+Ocorrência: Desktop - Incluir desktop na rede
+Executor Responsável: Jerônimo Mayer dos Santos
+Descrição: Patrimônio :099484
