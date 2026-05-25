@@ -1,0 +1,11 @@
+Ordem de Serviço Nº: 191
+Data de Geração: 21/05/2026 Hora: 08:54:00
+Previsão de Entrega: 21/05/2026 Hora: 09:23:00
+Previsão de Inicio: 21/05/2026 Hora: 08:53:59
+Solicitante: Glaison Queiroz
+Setor: Secretaria Municipal de Educação
+Tipo de Ordem: Corretiva
+Ocorrência: Impressoras - Solicitação de toner
+Executor Responsável: Glaison Queiroz
+Descrição: Se for impressora colorida, qual a cor to toner ?:Preto
+SELB da Impressora :im430 Educação
