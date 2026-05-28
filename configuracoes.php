@@ -68,7 +68,6 @@ if ($registro['registros'] == 0) { // tabela vazia crio o registro unico em bran
     } else {
         $c_chkavulsa = 'N';
     }
-   
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo POST para gravar alterações de configurações
@@ -153,7 +152,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo POST para gravar alteraç
     } else {
         $c_chkavulsa = 'N';
     }
-    $msg_gravou = "Configurações gravadas com sucesso!";
+    // verifico se filtro por executor responsável está marcado ou não para manter a configuração
+    if (isset($_POST['chkfiltroexecutor'])) {
+        $c_sql_up = "update configuracoes set filtra_por_executor='S'";
+        $result = $conection->query($c_sql_up);
+    } else {
+        $c_sql_up = "update configuracoes set filtra_por_executor='N'";
+        $result = $conection->query($c_sql_up);
+    }
+    // pego a configuração atualizada do filtro por executor responsável para manter a configuração na tela
+    $c_sql = "select * from configuracoes";
+    $result = $conection->query($c_sql);
+    $registro = $result->fetch_assoc();
 }
 
 ?>
@@ -311,6 +321,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // metodo POST para gravar alteraç
                     <div class="col-sm-1">
                         <input type="text" maxlength="10" class="form-control" name="tempo_atualizacao_menu" value="<?php echo $i_atualizacao_menu; ?>">
                     </div>
+                </div>
+                <hr>
+                <!-- select para selcionar se filtro ordens de serviço por executor responsável estará habilitado ou não. Se sim, somente mostrar ordens de serviço vinculadas ao executor logado. -->
+                <div class="row mb-3">
+                    <p><strong>Opção de filtro de ordens de serviço por executor responsável</strong></p>
+                    <div class="form-check col-sm-3">
+                        <label class="form-check-label col-form-label">Habilitar filtro por executor responsável</label>
+                        <div class="col-sm-3">
+                            <input class="form-check-input" type="checkbox" value="S" name="chkfiltroexecutor" id="chkfiltroexecutor" <?php if (isset($registro['filtra_por_executor']) && $registro['filtra_por_executor'] == 'S') {
+                                                                                                                                            echo 'checked';
+                                                                                                                                        } ?>>
+                        </div>
+                    </div>
+                </div>
+                <!-- insiro linha em branco -->
+                <div class="row mb-3">
+                    <p><strong></strong></p>
+                    <p><strong></strong></p>
+                    <p><strong></strong></p>
+                    <hr>
                 </div>
                 <div class="row mb-3">
                     <div class="offset-sm-0 col-sm-3">
