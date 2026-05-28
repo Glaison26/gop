@@ -16,6 +16,9 @@ $_SESSION['consulta_ordem'] = "";
 $_SESSION['consulta_resumo'] = "S";
 $_SESSION['checa_preventiva'] = "N";
 $_SESSION['i_id_tipo_ocorrencia'] = "";
+$c_sql_config = "select * from configuracoes";
+$result_config = $conection->query($c_sql_config);
+$registro_config = $result_config->fetch_assoc();
 // verifico numero de solicitações em aberto
 $c_sql = "select COUNT(*) AS aberta_solicitacao FROM solicitacao WHERE STATUS = 'A'";
 $result = $conection->query($c_sql);
@@ -28,17 +31,31 @@ $result = $conection->query($c_sql);
 $registro = $result->fetch_assoc();
 $c_preventivas = $registro['preventivas'];
 // verifico Ordens de serviço com o SLA em atraso
-$c_sql = "select COUNT(*) AS sla FROM ordens WHERE ((data_previsao < '$c_data' AND ordens.`status`='A') OR (data_previsao = '$c_data' AND hora_previsao <= CURTIME() AND ordens.`status`='A'))";
+$c_where = "((data_previsao < '$c_data' AND ordens.`status`='A') OR (data_previsao = '$c_data' AND hora_previsao <= CURTIME() AND ordens.`status`='A'))";
+if (isset($registro_config['filtra_por_executor']) && $registro_config['filtra_por_executor'] == 'S'&& $_SESSION['tipo']=='Operador') {
+    $c_where .= " and ordens.id_executor_responsavel='" . $_SESSION['id_executor'] . "'";
+}
+$c_sql = "select COUNT(*) AS sla FROM ordens WHERE $c_where";
 $result = $conection->query($c_sql);
 $registro = $result->fetch_assoc();
 $c_ordens_sla = $registro['sla'];
 // verifico ordens de serviço que encontran-se em aberto
-$c_sql = "select COUNT(*) AS abertas FROM ordens WHERE  ordens.`status`='A'";
+// verifico se na tabela de configurações a opção de filtrar por executor responsável está habilitada ou não, apenas para usuário que forem Operadores. Se sim, adiciono na cláusula where para mostrar somente as ordens vinculadas ao executor logado
+$c_where = "ordens.`status`='A'";
+
+if (isset($registro_config['filtra_por_executor']) && $registro_config['filtra_por_executor'] == 'S'&& $_SESSION['tipo']=='Operador') {
+    $c_where .= " and ordens.id_executor_responsavel='" . $_SESSION['id_executor'] . "'";
+}
+$c_sql = "select COUNT(*) AS abertas FROM ordens WHERE $c_where";
 $result = $conection->query($c_sql);
 $registro = $result->fetch_assoc();
 $c_ordens_abertas = $registro['abertas'];
 // verifico ordens de servico que encontran-se suspensas
-$c_sql = "select COUNT(*) as suspensas from ordens where ordens.status='S'";
+$c_where = "ordens.`status`='S'";
+if (isset($registro_config['filtra_por_executor']) && $registro_config['filtra_por_executor'] == 'S'&& $_SESSION['tipo']=='Operador') {
+    $c_where .= " and ordens.id_executor_responsavel='" . $_SESSION['id_executor'] . "'";
+}
+$c_sql = "select COUNT(*) as suspensas from ordens where $c_where";
 $result = $conection->query($c_sql);
 $registro = $result->fetch_assoc();
 $c_ordens_suspensas = $registro['suspensas'];

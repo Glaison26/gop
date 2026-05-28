@@ -59,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $c_escolaridade = $_POST['escolaridade'];
     $c_obs = $_POST['obs'];
     $c_ativo = $_POST['ativo'];
+    $i_usuario = $_POST['usuario'];
 
     do {
         if (empty($c_nome) || empty($c_endereco) || empty($c_cnpj_cpf) || empty($c_bairro) || empty($c_cidade) || empty($c_cep)) {
@@ -97,10 +98,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // faço a inclusão da tabela com sql
         $c_sql = "Insert into executores (id_oficina,id_funcao, nome,endereco,bairro,cep,cidade,uf,contato,tipo,cpf_cnpj,email,url," .
-            " fone1,fone2,fone3,salario,horastrab,valorhora,escolaridade,formacao,obs,ativo)" .
+            " fone1,fone2,fone3,salario,horastrab,valorhora,escolaridade,formacao,obs,ativo,id_usuario)" .
             " Value ('$i_oficina', '$i_funcao', '$c_nome', '$c_endereco', '$c_bairro','$c_cep', '$c_cidade', '$c_estado'," .
             " '$c_contato', '$c_tipo', '$c_cnpj_cpf', '$c_email', '$c_url','$c_fone1', '$c_fone2', '$c_fone3'," .
-            " '$n_salario', '$i_horastrab', '$n_valorhora', '$c_escolaridade', '$c_formacao', '$c_obs','$c_ativo')";
+            " '$n_salario', '$i_horastrab', '$n_valorhora', '$c_escolaridade', '$c_formacao', '$c_obs','$c_ativo','$i_usuario')";
         echo $c_sql;
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
@@ -108,26 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
         }
 
-        $c_nome = '';
-        $c_tipo = '';
-        $c_endereco = '';
-        $c_bairro = '';
-        $c_cidade = '';
-        $c_estado = '';
-        $c_cep = '';
-        $c_email = '';
-        $c_url = '';
-        $c_formacao = '';
-        $c_contato = '';
-        $c_fone1 = '';
-        $c_fone2 = '';
-        $c_fone3 = '';
-        $c_salrio = '0.00';
-        $c_cnpj_cpf = '';
-        $i_horastrab = '0.00';
-        $n_valorhora = '0.00';
-        $c_escolaridade = '';
-        $c_obs = '';
+       
 
 
         $msg_gravou = "Dados Gravados com Sucesso!!";
@@ -214,6 +196,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <select class="form-select form-select-lg mb-3" id="ativo" name="ativo">
                             <option value="Sim">Sim</option>
                             <option value="Não">Não</option>
+                        </select>
+                    </div>
+                    <!-- coloco select com o login de usuario para selecionar o usuário que está cadastrando o executor -->
+                    <label class="col-sm-1 col-form-label">Login</label>
+                    <div class="col-sm-3">
+                        <select class="form-select form-select-lg mb-4" id="usuario" name="usuario">
+                            <option></option>
+                            <?php
+                            // select da tabela de usuários para usuarios igual a operadores
+                            $c_sql_secundario = "SELECT usuarios.id, usuarios.login FROM usuarios WHERE usuarios.tipo = 'operador' OR usuarios.tipo = 'Administrador' ORDER BY usuarios.login";
+                            $result_secundario = $conection->query($c_sql_secundario);
+                            while ($c_linha = $result_secundario->fetch_assoc()) {
+                                 
+                                echo "  
+                          <option value='" . $c_linha['id'] . "'>" . $c_linha['login'] . "</option>
+                        ";
+                            }
+                            ?>
                         </select>
                     </div>
                 </div>

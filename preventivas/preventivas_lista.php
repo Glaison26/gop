@@ -10,6 +10,8 @@ $c_sql_avulso    = $_SESSION['c_sql_avulso'];
 //echo $c_sql_recurso;
 include('../links.php');
 include('../conexao.php');
+//checo se usuariotem permissão de acesso
+
 ?>
 
 <!DOCTYPE html>

@@ -14,3 +14,11 @@ Roberto Ds:Solicito manutenção em algumas máquinas que estão sem interne, in
 e wifi para os notbooks.
 
 15191542673
+
+
+incluir campo id_usuario na tabela de executore
+chave secundario com tabela de usuários
+
+editar o cadastro de executor e associar ao respectivo login
+
+criar campo filtra_por_executor na tabela configuracoes do ti char (1)
