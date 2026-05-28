@@ -568,7 +568,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="row mb-3">
                                     <label class="col-sm-3 col-form-label">Alugado</label>
                                     <div class="col-sm-2">
-                                        <select class="form-select form-select-lg mb-3" id="equip_alugado" name="equip_alugado" value="<?php echo $c_equip_alugado; ?>">
+                                        <select class="form-select form-select-lg mb-3" id="equip_alugado" name="equip_alugado" >
                                             <option Value='N'>Não</option>
                                             <option Value='S'>Sim</option>
 

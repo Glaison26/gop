@@ -150,8 +150,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
 
             $ordem = $i_id;
+            
             $c_data_conclusao = new DateTime($_POST['data_conclusao']);
-            $c_data_conclusao = $c_data_conclusao->format('Y-m-d');
+            $c_data_conclusao = $c_data_conclusao->format('d-m-Y');
             // pego a hora da conclusão
             $c_hora_conclusao = new DateTime($_POST['hora_conclusao']);
             $c_hora_conclusao = $c_hora_conclusao->format('H:i');
