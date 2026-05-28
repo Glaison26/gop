@@ -48,6 +48,13 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     if ($_POST['numero'] == '' && $_POST['rdo_data'] == 'C' && $l_intervalo == true) {
         $c_where = "(data_conclusao>='$d_data1' and data_conclusao<='$d_data2') and ";
     }
+     // verifico se na tabela de configurações a opção de filtrar por executor responsável está habilitada ou não, apenas para usuário que forem Operadores. Se sim, adiciono na cláusula where para mostrar somente as ordens vinculadas ao executor logado
+    $c_sql_config = "select * from configuracoes";
+    $result_config = $conection->query($c_sql_config);
+    $registro_config = $result_config->fetch_assoc();
+    if (isset($registro_config['filtra_por_executor']) && $registro_config['filtra_por_executor'] == 'S' && $_SESSION['tipo'] == 'Operador') {
+        $c_where .= "ordens.id_executor_responsavel='" . $_SESSION['id_executor'] . "' and ";
+    }
     // sql para tipo de atendimento (programada ou urgência)
     $c_tipo_atendimento = $_POST['tipo'];
     if ($c_tipo_atendimento == "1") {  // corretiva
@@ -138,6 +145,7 @@ if ((isset($_POST["btnpesquisa"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
         $c_numero = $_POST['numero'];
         $c_where = $c_where . "ordens.id = '$c_numero' and ";
     }
+   
     $c_wheretipo_recurso =  " and ordens.tipo='R'";
     $c_wheretipo_espaco =  " and ordens.tipo='E'";
     $c_wheretipo_avulso =  " and ordens.tipo='V'";

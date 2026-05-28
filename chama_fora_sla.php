@@ -12,6 +12,13 @@ date_default_timezone_set('America/Sao_Paulo');
 $c_data = date('Y-m-d');
 // sql para selecionar as ordens em aberto com data de previsão menor  que a data atual e status aberto ou data de previsão igual a data atual e hora do sistema maior que a hora de previsão e status aberto
 $c_where = "((data_previsao < '$c_data' AND ordens.`status`='A') OR (data_previsao = '$c_data' AND hora_previsao <= CURTIME() AND ordens.`status`='A'))";
+// verifico se na tabela de configurações a opção de filtrar por executor responsável está habilitada ou não, apenas para usuário que forem Operadores. Se sim, adiciono na cláusula where para mostrar somente as ordens vinculadas ao executor logado
+$c_sql_config = "select * from configuracoes";
+$result_config = $conection->query($c_sql_config);
+$registro_config = $result_config->fetch_assoc();
+if (isset($registro_config['filtra_por_executor']) && $registro_config['filtra_por_executor'] == 'S'&& $_SESSION['tipo']=='Operador') {
+    $c_where .= " and ordens.id_executor_responsavel='" . $_SESSION['id_executor'] . "'";
+}
 //$c_where = "data_previsao < '$c_data' AND ordens.`status`='A'";
 $c_wheretipo_recurso =  " and ordens.tipo='R'";
 $c_wheretipo_espaco =  " and ordens.tipo='E'";

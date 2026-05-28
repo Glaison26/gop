@@ -42,6 +42,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $_SESSION['c_usuario'] = $c_login;
             $_SESSION['tipo'] = $registro['tipo'];
             $_SESSION['id_setor'] = $registro['id_setor'];
+            // se o usuário for igual a Operador pego a id do executor vinculado no cadastro de executores para colocar na sessão e usar para mostrar somente os serviços vinculados a ele
+            if ($registro['tipo'] == 'Operador') {
+                $c_sql = "SELECT id FROM executores where id_usuario='" . $registro['id'] . "'";
+                $result = $conection->query($c_sql);
+                $registro_executor = $result->fetch_assoc();
+                $_SESSION['id_executor'] = $registro_executor['id'];
+            }
             header('location: /gop/menu.php');
         }
     }

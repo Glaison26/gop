@@ -3,6 +3,19 @@ session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
+//echo $c_sql_recurso;
+include('../links.php');
+include('../conexao.php');
+// verifico se usuário e operador de tem autorização de acesso
+$i_id_usuario = $_SESSION["id_usuario"];
+$c_sql_acesso = "select usuarios.tipo, perfil_usuarios.servicos_preventivas FROM usuarios
+JOIN perfil_usuarios ON usuarios.id_perfil=perfil_usuarios.id
+WHERE usuarios.id='$i_id_usuario'";
+$result_acesso = $conection->query($c_sql_acesso);
+$registro_acesso = $result_acesso->fetch_assoc();
+if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['servicos_preventivas'] == 'N') {
+    header('location: /gop/acesso.php');
+}
 // pego data do dia
 date_default_timezone_set('America/Sao_Paulo');
 $agora = date('Y-m-d');
@@ -30,9 +43,7 @@ join ocorrencias on preventivas.id_ocorrencia=ocorrencias.id
 where data_prox_realizacao<='$agora' and preventivas.tipo = 'V'
 ORDER BY preventivas.data_prox_realizacao desc";
 
-//echo $c_sql_recurso;
-include('../links.php');
-include('../conexao.php');
+
 ?>
 
 <!--

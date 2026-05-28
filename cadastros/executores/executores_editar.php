@@ -62,6 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $i_funcao = $registro["id_funcao"];
     $c_obs = $registro["obs"];
     $c_ativo = $registro["ativo"];
+    $i_usuario = $registro["id_usuario"];
 } else {
     // metodo post para atualizar dados
     $c_id = $_POST["id"];
@@ -88,6 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     $c_funcao = $_POST['funcao'];
     $c_oficina = $_POST['oficina'];
     $c_ativo = $_POST['ativo'];
+    $i_usuario = $_POST['usuario'];
     if ($i_horastrab == '') {
         $i_horastrab = 0;
     }
@@ -133,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
             " bairro='$c_bairro',cep='$c_cep',cidade='$c_cidade',uf='$c_estado'," .
             " contato='$c_contato',tipo='$c_tipo',cpf_cnpj='$c_cnpj_cpf',email='$c_email',url='$c_url'," .
             " fone1='$c_fone1',fone2='$c_fone2',salario='$n_salario',horastrab='$i_horastrab'," .
-            " valorhora='$n_valorhora',escolaridade='$c_escolaridade',formacao='$c_formacao',obs='$c_obs',ativo='$c_ativo'" .
+            " valorhora='$n_valorhora',escolaridade='$c_escolaridade',formacao='$c_formacao',obs='$c_obs',ativo='$c_ativo',id_usuario='$i_usuario'" .
             " where id=$c_id";
         //echo $c_sql;
         //die();
@@ -214,6 +216,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                             <option value="Não" <?= ($c_ativo == 'Não') ? 'selected' : '' ?>>Não</option>
                         </select>
                     </div>
+                    <!-- coloco select com o login de usuario para selecionar o usuário que está cadastrando o executor para ser editado -->
+                    <label class="col-sm-1 col-form-label">Login</label>
+                    <div class="col-sm-3">
+                        <select class="form-select form-select-lg mb-4" id="usuario" name="usuario">
+                            <option></option>
+                            <?php
+                            // select da tabela de usuários somente do tipo oprador ou Administrador para selecionar o usuário que está cadastrando o executor para ser editado
+                            $c_sql_secundario = "SELECT usuarios.id, usuarios.login FROM usuarios WHERE usuarios.tipo = 'operador' OR usuarios.tipo = 'Administrador' ORDER BY usuarios.login";
+                            $result_secundario = $conection->query($c_sql_secundario);
+                            while ($c_linha = $result_secundario->fetch_assoc()) {
+                                if ($c_linha['id'] == $i_usuario) {
+                                    $op = 'selected';
+                                } else {
+                                    $op = '';
+                                }
+                                echo "
+                               <option value='" . $c_linha['id'] . "' $op>" . $c_linha['login'] . "</option>
+                        ";
+                            }
+                            ?>
+                        </select>   
+                    </div>    
                 </div>
 
                 <div class="row mb-3">
