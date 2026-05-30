@@ -147,7 +147,7 @@ if (!$result_saida) {
             </div>
         </div>
         <!-- botão para voltar ao menu -->
-        <a href="/gop/materiais/movimentacao_periodo.php" class="btn btn-secondary">Voltar</a>
+        <a href="/gop/cadastros/materiais/movimentacao_periodo.php" class="btn btn-secondary">Voltar</a>
     </div>
 </body>
 
