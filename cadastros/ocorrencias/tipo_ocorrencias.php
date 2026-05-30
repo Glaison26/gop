@@ -40,7 +40,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_grupos
         $(document).ready(function() {
             $('.tabtipos_ocorrencias').DataTable({
                 // 
-                "iDisplayLength": -1,
+                "iDisplayLength": 10,
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,
@@ -191,7 +191,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_grupos
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
-        <table class="table table-bordered table-striped tabgrupos">
+        <table class="table table-bordered table-striped tabtipos_ocorrencias">
             <thead class="thead">
                 <tr>
                     <th scope="col">#</th>

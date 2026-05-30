@@ -41,7 +41,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_setore
         $(document).ready(function() {
             $('.tabsetores').DataTable({
                 // 
-                "iDisplayLength": -1,
+                "iDisplayLength": 10,
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,

@@ -31,7 +31,7 @@ include("../../links.php");
         $(document).ready(function() {
             $('.tabusuarios').DataTable({
                 // 
-                "iDisplayLength": -1,
+                "iDisplayLength": 10,
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,

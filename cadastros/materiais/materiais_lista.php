@@ -53,7 +53,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['almoxarifado_mat
         $(document).ready(function() {
             $('.tabmateriais').DataTable({
                 // 
-                "iDisplayLength": -1,
+                "iDisplayLength": 10,
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,
