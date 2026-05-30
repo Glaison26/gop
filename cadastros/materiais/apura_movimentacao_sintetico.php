@@ -114,6 +114,24 @@ if (!$result_saida) {
                 ?>
             </tbody>
         </table>
+        <!-- apuro total de entradas e saídas -->
+        <?php
+        $total_entrada = 0;
+        $total_saida = 0;
+        foreach ($movimentacao as $dados) {
+            $total_entrada += $dados['entrada'];
+            $total_saida += $dados['saida'];
+        }
+        ?>
+        <hr>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <h5>Total de Entradas: <?php echo $total_entrada; ?></h5>
+            </div>
+            <div class="col-md-6">
+                <h5>Total de Saídas: <?php echo $total_saida; ?></h5>
+            </div>
+        </div>
         <!-- botão para voltar ao menu -->
         <a href="/gop/menu.php" class="btn btn-secondary">Voltar ao Menu</a>
     </div>
