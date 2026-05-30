@@ -78,7 +78,7 @@ if (!$result_saida) {
                     <th>Grupo</th>
                     <th>Total Entrada</th>
                     <th>Total Saída</th>
-                    <th>Quantidade Atual em Estoque</th>
+                    <th>Estoque Atual</th>
                 </tr>
             </thead>
             <tbody>
