@@ -133,6 +133,11 @@ if (!$result_saida) {
         }
         ?>
         <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Resumo da Movimentação de Materiais</h4>
+            </div>
+        </div>
         <div class="row mt-4">
             <div class="col-md-6">
                 <h5>Total de Entradas: <?php echo $total_entrada; ?></h5>
