@@ -43,7 +43,7 @@ $n_tempo_minutos = '0';
         $(document).ready(function() {
             $('.tabocorrencias').DataTable({
                 // 
-                "iDisplayLength": -1,
+                "iDisplayLength": 10,
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,

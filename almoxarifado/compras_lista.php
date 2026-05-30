@@ -27,7 +27,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['almoxarifado_ped
         $(document).ready(function() {
             $('.tabcompras').DataTable({
                 // 
-                "iDisplayLength": -1,
+                "iDisplayLength": 10,
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,
