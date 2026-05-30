@@ -78,6 +78,7 @@ if (!$result_saida) {
                     <th>Grupo</th>
                     <th>Total Entrada</th>
                     <th>Total Saída</th>
+                    <th>Quantidade Atual em Estoque</th>
                 </tr>
             </thead>
             <tbody>
@@ -104,11 +105,19 @@ if (!$result_saida) {
                 }
                 // exibo os resultados em uma tabela
                 foreach ($movimentacao as $material => $dados) {
+                    // capturo o quantidade atual em estoque na tabela de materiais atrvés de sql.
+                    $sql_estoque = "SELECT quantidadeatual FROM materiais WHERE descricao = '$material'";
+                    $result_estoque = $conection->query($sql_estoque);
+                    if (!$result_estoque) {
+                        die("Erro ao Executar Sql de Estoque!!" . $conection->connect_error);
+                    }
+                    $row_estoque = $result_estoque->fetch_assoc();
                     echo "<tr>";
                     echo "<td>{$material}</td>";
                     echo "<td>{$dados['grupo']}</td>";
                     echo "<td>{$dados['entrada']}</td>";
                     echo "<td>{$dados['saida']}</td>";
+                    echo "<td>{$row_estoque['quantidadeatual']}</td>";
                     echo "</tr>";
                 }
                 ?>
