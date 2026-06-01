@@ -8,6 +8,7 @@ include('../links2.php');
 include('../conexao.php');
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no formulário
 
+
     if (!isset($_GET["id"])) {
         header('location: /gop/pops_lista.php');
         exit;
@@ -24,6 +25,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
         $c_ativa = "disabled";
     } else {
         $c_estado = "";
+        $c_ativa = "";
+    }
+    // coloco os inputs de hora de data da previsão somente leitura se usuário não for administrador
+    $i_id_usuario = $_SESSION["id_usuario"];
+    $c_sql_acesso = "select usuarios.tipo from usuarios where id='$i_id_usuario'";
+    $result_acesso = $conection->query($c_sql_acesso);
+    $registro_acesso = $result_acesso->fetch_assoc();
+    if ($registro_acesso['tipo'] != 'Administrador') {
+        $c_estado = "readonly";
+        $c_ativa = "disabled";
+    } else {
+         $c_estado = "";
         $c_ativa = "";
     }
 
@@ -557,7 +570,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
                                 </div>
                                 <label class="col-md-2 form-label">Hora da Previsão</label>
                                 <div class="col-sm-2">
-                                    <input <?php echo $c_estado; ?> type="time" class="form-control" name="hora_previsao" id="hora_previsao" value="<?php echo $c_hora_previsao ?>">
+                                    <input <?php echo $c_estado;  ?> type="time" class="form-control" name="hora_previsao" id="hora_previsao" value="<?php echo $c_hora_previsao ?>">
                                 </div>
                             </div>
                             <br>

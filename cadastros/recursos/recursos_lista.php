@@ -44,7 +44,7 @@ if ($registro_acesso['tipo'] == 'Operador' && $registro_acesso['cadastros_recurs
         $(document).ready(function() {
             $('.tabrecursos').DataTable({
                 // 
-                "iDisplayLength": -1,
+                "iDisplayLength": 10,
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,

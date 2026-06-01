@@ -78,6 +78,7 @@ if (!$result_saida) {
                     <th>Grupo</th>
                     <th>Total Entrada</th>
                     <th>Total Saída</th>
+                    <th>Estoque Atual</th>
                 </tr>
             </thead>
             <tbody>
@@ -104,18 +105,49 @@ if (!$result_saida) {
                 }
                 // exibo os resultados em uma tabela
                 foreach ($movimentacao as $material => $dados) {
+                    // capturo o quantidade atual em estoque na tabela de materiais atrvés de sql.
+                    $sql_estoque = "SELECT quantidadeatual FROM materiais WHERE descricao = '$material'";
+                    $result_estoque = $conection->query($sql_estoque);
+                    if (!$result_estoque) {
+                        die("Erro ao Executar Sql de Estoque!!" . $conection->connect_error);
+                    }
+                    $row_estoque = $result_estoque->fetch_assoc();
                     echo "<tr>";
                     echo "<td>{$material}</td>";
                     echo "<td>{$dados['grupo']}</td>";
                     echo "<td>{$dados['entrada']}</td>";
                     echo "<td>{$dados['saida']}</td>";
+                    echo "<td>{$row_estoque['quantidadeatual']}</td>";
                     echo "</tr>";
                 }
                 ?>
             </tbody>
         </table>
+        <!-- apuro total de entradas e saídas -->
+        <?php
+        $total_entrada = 0;
+        $total_saida = 0;
+        foreach ($movimentacao as $dados) {
+            $total_entrada += $dados['entrada'];
+            $total_saida += $dados['saida'];
+        }
+        ?>
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Resumo da Movimentação de Materiais</h4>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <h5>Total de Entradas: <?php echo $total_entrada; ?></h5>
+            </div>
+            <div class="col-md-6">
+                <h5>Total de Saídas: <?php echo $total_saida; ?></h5>
+            </div>
+        </div>
         <!-- botão para voltar ao menu -->
-        <a href="/gop/menu.php" class="btn btn-secondary">Voltar ao Menu</a>
+        <a href="/gop/cadastros/materiais/movimentacao_periodo.php" class="btn btn-secondary">Voltar</a>
     </div>
 </body>
 

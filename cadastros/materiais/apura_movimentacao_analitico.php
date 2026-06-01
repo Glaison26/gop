@@ -119,7 +119,7 @@ if (!$result_saida) {
                 </tbody>
             </table>
             <!-- botão para voltar ao menu -->
-            <a href="/gop/menu.php" class="btn btn-secondary">Voltar ao Menu</a>
+            <a href="/gop/cadastros/materiais/movimentacao_periodo.php" class="btn btn-secondary">Voltar</a>
             <!-- botão para imprimir a página -->
             <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
         </div>

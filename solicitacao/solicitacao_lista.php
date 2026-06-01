@@ -90,7 +90,7 @@ $registro_conf = $result_conf->fetch_assoc();
     $(document).ready(function() {
         $('.tabsolicitacao_recursos').DataTable({
             // 
-            "iDisplayLength": -1,
+            "iDisplayLength": 5,
             "order": [1, 'desc'],
             "aoColumnDefs": [{
                 'bSortable': false,
@@ -136,7 +136,7 @@ $registro_conf = $result_conf->fetch_assoc();
     $(document).ready(function() {
         $('.tabsolicitacao_espacos').DataTable({
             // 
-            "iDisplayLength": -1,
+            "iDisplayLength": 5,
             "order": [1, 'desc'],
             "aoColumnDefs": [{
                 'bSortable': false,
@@ -183,7 +183,7 @@ $registro_conf = $result_conf->fetch_assoc();
     $(document).ready(function() {
         $('.tabsolicitacao_avulsas').DataTable({
             // 
-            "iDisplayLength": -1,
+            "iDisplayLength": 5,
             "order": [1, 'desc'],
             "aoColumnDefs": [{
                 'bSortable': false,

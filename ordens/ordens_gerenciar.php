@@ -114,7 +114,12 @@ $total_suspensoes = $registro_suspensoes['total_suspensoes'];
                             <div style="padding-bottom :2px;">
                                 <a class='btn btn btn-sm' href='/gop/ordens/ordens_emissao.php?id=<?php echo $i_id ?>' target='_blank'>
                                     <img src="\gop\images\printer.png" alt="" width="25" height="25"> Emitir</a>
-                                <a class='btn btn btn-sm' title='Editar Ordem de serviço' href='\gop\ordens\ordens_editar.php?id=<?php echo $i_id ?>'><img src='\gop\images\xxxescrever.png' alt='' width='30' height='20'><span> Editar</span></a>
+                                    
+                                <?php if ($c_linha_ordem['status'] == 'C' || $c_linha_ordem['status'] == 'S' || $c_linha_ordem['status'] == 'X') { ?>
+                                    <a class='btn btn btn-sm' title='Visualizar Ordem de serviço' href='\gop\ordens\ordens_editar.php?id=<?php echo $i_id ?>'><img src='\gop\images\visualizar.png' alt='' width='30' height='20'><span> Visualizar</span></a>
+                                <?php } else { ?>
+                                    <a class='btn btn btn-sm' title='Editar Ordem de serviço' href='\gop\ordens\ordens_editar.php?id=<?php echo $i_id ?>'><img src='\gop\images\xxxescrever.png' alt='' width='30' height='20'><span> Editar</span></a>
+                                <?php } ?>
                                 <?php
                                 // cabeçalho do gerenciar
                                 if ($c_linha_ordem['status'] <> 'C' && $c_linha_ordem['status'] <> 'S' && $c_linha_ordem['status'] <> 'X') {

@@ -89,7 +89,7 @@ $registro_conf = $result_conf->fetch_assoc();
     $(document).ready(function() {
         $('.tabordens_recursos').DataTable({
             // 
-            "iDisplayLength": -1,
+            "iDisplayLength": 5,
             "order": [0, 'desc'],
             "aoColumnDefs": [{
                 'bSortable': false,
@@ -135,7 +135,7 @@ $registro_conf = $result_conf->fetch_assoc();
     $(document).ready(function() {
         $('.tabordens_espacos').DataTable({
             // 
-            "iDisplayLength": -1,
+            "iDisplayLength": 5,
             "order": [0, 'desc'],
             "aoColumnDefs": [{
                 'bSortable': false,
@@ -182,7 +182,7 @@ $registro_conf = $result_conf->fetch_assoc();
     $(document).ready(function() {
         $('.tabordens_avulsas').DataTable({
             // 
-            "iDisplayLength": -1,
+            "iDisplayLength": 5,
             "order": [0, 'desc'],
             "aoColumnDefs": [{
                 'bSortable': true,
