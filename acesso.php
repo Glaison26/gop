@@ -50,7 +50,8 @@
         <h1>Acesso Negado</h1>
         <p>Você não tem permissão para acessar esta página.</p>
         <div class="btn-home">
-            <a href="menu.php">Voltar para a Página Inicial</a>
+            <!-- botão para voltar a página anterior -->
+            <a href="javascript:history.back()">Voltar</a>
         </div>
     </div>
 </body>

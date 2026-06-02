@@ -220,6 +220,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no
     } else {
         $c_chkgera_os = 'N';
     }
+    // gerenciar ordens de serviço
+    if ($registro['gerenciar_ordem'] == 'S') {
+        $c_chkgerenciar_os = 'checked';
+    } else {
+        $c_chkgerenciar_os = 'N';
+    }
 }
 // Metodo post para gravação dos dados editados
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -428,6 +434,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         $c_chkgera_os = 'N';
     }
+    // gerenciar ordens de serviço
+    if (isset($_POST['chkgerenciar_os'])) {
+        $c_chkgerenciar_os = 'S';
+    } else {
+        $c_chkgerenciar_os = 'N';
+    }
 
     do {
 
@@ -444,7 +456,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         almoxarifado_unidadesmedidas='$c_chkunidades', indicadores_ocorrencias='$c_chkcontagem', indicadores_comparativos='$c_chkcomparativo',
         custos_ocorrencias='$c_chkcustoindividual', custos_comparativos='$c_chkcomparativocustos', cadastros_tipos='$c_chktipo',
         obras='$c_chkobras', servicos_agenda='$c_chkagendaexecutores', cadastros_prestadores='$c_chkprestadoresdeservico',
-        gera_os='$c_chkgera_os'
+        gera_os='$c_chkgera_os', gerenciar_ordem='$c_chkgerenciar_os'
         where id='$c_id'";
         //echo $c_sql;
         $result = $conection->query($c_sql);
@@ -688,10 +700,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         <input class="form-check-input" type="checkbox" value="S" name="chkagendaexecutores" id="chkagendaexecutores" <?php echo $c_chkagendaexecutores ?>>
                                     </div>
                                 </div>
-                                 <div class="form-check col-sm-3">
+                                <div class="form-check col-sm-3">
                                     <label class="form-check-label col-form-label">Gerar Ordem de Serviço</label>
                                     <div class="col-sm-3">
                                         <input class="form-check-input" type="checkbox" value="S" name="chkgera_os" id="chkgera_os" <?php echo $c_chkgera_os ?>>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row mb-3">
+                                <!-- checkbox para gerenciar ordens de serviço -->
+                                <div class="form-check col-sm-3">
+                                    <label class="form-check-label col-form-label">Gerenciar Ordens de Serviço</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-check-input" type="checkbox" value="S" name="chkgerenciar_os" id="chkgerenciar_os" <?php echo $c_chkgerenciar_os ?>>
                                     </div>
                                 </div>
                             </div>

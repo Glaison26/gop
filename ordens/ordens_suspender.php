@@ -9,6 +9,15 @@ if (!isset($_SESSION['newsession'])) {
 
 include('../links2.php');
 include('../conexao.php');
+$i_id_usuario = $_SESSION["id_usuario"];
+$c_sql_acesso = "select usuarios.tipo, perfil_usuarios.gerenciar_ordem FROM usuarios
+JOIN perfil_usuarios ON usuarios.id_perfil=perfil_usuarios.id
+WHERE usuarios.id='$i_id_usuario'";
+$result_acesso = $conection->query($c_sql_acesso);
+$registro_acesso = $result_acesso->fetch_assoc();
+if ($registro_acesso['tipo'] != 'Administrador' && $registro_acesso['gerenciar_ordem'] != 'S') {
+    header('location: /gop/acesso.php');
+}
 date_default_timezone_set('America/Sao_Paulo');
 
 $i_id =  $_SESSION['id_ordem']; // id da ordem de serviço

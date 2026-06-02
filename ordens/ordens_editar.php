@@ -6,6 +6,16 @@ if (!isset($_SESSION['newsession'])) {
 
 include('../links2.php');
 include('../conexao.php');
+// perfil do usuário o campo gerenciar ordem = 'S' para habilitar edição de ordens de serviço ou tipo de usuário seja administrador
+$i_id_usuario = $_SESSION["id_usuario"];
+$c_sql_acesso = "select usuarios.tipo, perfil_usuarios.gerenciar_ordem FROM usuarios
+JOIN perfil_usuarios ON usuarios.id_perfil=perfil_usuarios.id
+WHERE usuarios.id='$i_id_usuario'";
+$result_acesso = $conection->query($c_sql_acesso);
+$registro_acesso = $result_acesso->fetch_assoc();
+if ($registro_acesso['tipo'] != 'Administrador' && $registro_acesso['gerenciar_ordem'] != 'S') {
+    header('location: /gop/acesso.php');
+}
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {  // metodo get para carregar dados no formulário
 
 
