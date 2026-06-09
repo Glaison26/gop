@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $c_motivo_suspensao = $_POST['motivo'];
 
             $c_assunto = "Suspensão de Ordem de Serviço no GOP";
-            $c_body = "A Ordem de serviço No.<b> $ordem </b> teve que ser suspensa Suspensa!<br>"
+            $c_body = "A Ordem de serviço No.<b> $ordem </b> teve que ser Suspensa!<br>"
                 . "Descrição da Solicitação :" . $c_descricao . "<br>" .
                 "Motivo da Suspensão:<br>" .
                 $c_motivo;
