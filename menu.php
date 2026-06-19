@@ -165,6 +165,8 @@ $i_atualizacao_menu = $registro['tempo_atualizacao_menu'];
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/agenda/agenda.php">Agenda de Executores</a>
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/ocorrencias/tipo_ocorrencias.php">Tipos de Ocorrência</a>
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/ocorrencias/ocorrencias_lista.php">Ocorrências Padrões de Serviço</a>
+                    <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/artigos/artigos_lista.php">Artigos Técnicos</a>
+                    <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/artigos/categorias_lista.php">Categorias de artigos Técnicos</a>
                    
                     </div>
                 </div>';
