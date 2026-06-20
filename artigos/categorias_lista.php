@@ -3,9 +3,9 @@ session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
-include("../../conexao.php");
-include("../../links.php");
-include_once "../../lib_gop.php";
+include("../conexao.php");
+include("../links.php");
+include_once "../lib_gop.php";
 // verifico se usuário e operador de tem autorização de acesso
 $i_id_usuario = $_SESSION["id_usuario"];
 //$c_sql_acesso = "select usuarios.tipo, perfil_usuarios.cadastros_cargosfuncoes FROM usuarios
@@ -29,7 +29,7 @@ $i_id_usuario = $_SESSION["id_usuario"];
         function confirmacao(id) {
             var resposta = confirm("Deseja remover esse registro?");
             if (resposta == true) {
-                window.location.href = "/gop/artigos/artigos_excluir.php?id=" + id;
+                window.location.href = "/gop/artigos/categorias_excluir.php?id=" + id;
             }
         }
     </script>
@@ -43,7 +43,7 @@ $i_id_usuario = $_SESSION["id_usuario"];
 
     <script>
         $(document).ready(function() {
-            $('.tabfuncoes').DataTable({
+            $('.tabcategorias').DataTable({
                 // 
                 "iDisplayLength": -1,
                 "order": [1, 'asc'],
@@ -193,7 +193,7 @@ $i_id_usuario = $_SESSION["id_usuario"];
 
     <div class="container-fluid">
         <br>
-        <button type="button" title="Inclusão de Nova categoria / Função" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
+        <button type="button" title="Inclusão de Nova categoria" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
             Incluir
         </button>
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
@@ -211,7 +211,7 @@ $i_id_usuario = $_SESSION["id_usuario"];
                 <?php
 
                 // faço a Leitura da tabela com sql
-                $c_sql = "SELECT funcoes.id, funcoes.descricao, funcoes.valorhora FROM funcoes ORDER BY funcoes.descricao";
+                $c_sql = "SELECT artigos_categoria.id, artigos_categoria.descricao FROM artigos_categoria ORDER BY artigos_categoria.descricao";
                 $result = $conection->query($c_sql);
                 // verifico se a query foi correto
                 if (!$result) {
@@ -221,15 +221,14 @@ $i_id_usuario = $_SESSION["id_usuario"];
                 // insiro os registro do banco de dados na tabela 
                 while ($c_linha = $result->fetch_assoc()) {
 
-                    $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
-                    $c_custo = $formatter->formatCurrency($c_linha['valorhora'], 'BRL');
+                    
                     echo "
                     <tr>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[descricao]</td>
-                    <td style='text-align: right;'>$c_custo</td>
+                    
                     <td>
-                   <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Cargo/Função'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
+                   <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Categoria'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
@@ -247,7 +246,7 @@ $i_id_usuario = $_SESSION["id_usuario"];
         <div class="modal-dialog modal-dialog-centered" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Inclusão de Cargos/Funções</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Inclusão de Categoria</h4>
                 </div>
                 <div class="modal-body">
                     <div class='alert alert-warning' role='alert'>
@@ -279,7 +278,7 @@ $i_id_usuario = $_SESSION["id_usuario"];
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Editar Cargo / Função</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Editar Categoria</h4>
                 </div>
                 <div class="modal-body">
                     <div class='alert alert-warning' role='alert'>

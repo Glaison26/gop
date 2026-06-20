@@ -15,16 +15,18 @@ if ($registro_acesso['tipo'] != 'Administrador' && $registro_acesso['gerenciar_o
     header('location: /gop/acesso.php');
 }
 
-if (!isset($_GET["id"])) {
-    header('location: /gop/ordens/ordens_gerenciar.php');
-    exit;
-}
-$c_id = "";
+//if (!isset($_GET["id"])) {
+//    header('location: /gop/ordens/ordens_gerenciar.php');
+//    exit;
+//}
+
 $c_id = $_GET["id"];
 $c_id_ordem = $_SESSION['id_ordem'];
 
 // Exclusão do registro
 $c_sql = "delete from ordens_materiais where id=$c_id";
+//echo $c_sql;
+//die();
 $result = $conection->query($c_sql);
  // somatório dos valores de custo de material
  $c_sql = "SELECT SUM(ordens_materiais.quantidade * ordens_materiais.valor) AS total
