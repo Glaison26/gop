@@ -1,0 +1,146 @@
+<?php
+// controle de acesso ao formulário
+session_start();
+if (!isset($_SESSION['newsession'])) {
+    die('Acesso não autorizado!!!');
+}
+
+include_once "../lib_gop.php";
+include("../conexao.php");
+include("../links2.php");
+
+
+
+
+// variaveis para mensagens de erro e suscessso da gravação
+$msg_gravou = "";
+$msg_erro = "";
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // faço post para as variáveis que vão gravar no sql
+    $c_descricao = $_POST['descricao'];
+    $c_tipo_empresa = $_POST['tipo_empresa'];
+    $c_contrato = $_POST['contrato'];
+    $c_vigencia = $_POST['vigencia'];
+    $c_resp_contratante = $_POST['resp_contratante'];
+    $c_resp_contratado = $_POST['resp_contratada'];
+    $c_objeto = $_POST['objeto'];
+    $c_centro = $_POST['centrodecusto'];
+    $c_espaco = $_POST['espacofisico'];
+    $c_setor = $_POST['setor'];
+    $d_inicio = $_POST['inicio'];
+    $d_termino = $_POST['termino'];
+    $c_operacional = '';
+    $c_email_operacional = $_POST['email_operacional'];
+    $c_email_gerencia = $_POST['email_gerencia'];
+    $c_email_diretoria =  $_POST['email_diretoria'];
+    $c_dados_iniciais = $_POST['iniciais'];
+    $c_denuncia = $_POST['denuncia'];
+
+    //$c_periodo_faturamento = $_POST[''];
+    $c_valor = $_POST['valor'];
+    $c_reajuste = $_POST['reajuste'];
+    $c_obs = $_POST['obs'];
+
+    do {
+
+        if (!is_numeric($c_valor) || !is_numeric($c_reajuste)) {
+
+            $msg_erro = "Valor de contrato ou de reajuste inválido !!";
+            break;
+        }
+        // localizo o id do valor do combobox de centro de custos
+        $c_sql_secundario = "SELECT centrodecusto.id FROM centrodecusto where centrodecusto.descricao='$c_centro' ORDER BY centrodecusto.descricao";
+        $result_secundario = $conection->query($c_sql_secundario);
+        $registro_secundario = $result_secundario->fetch_assoc();
+        $i_centrodecusto = $registro_secundario['id'];
+        // select da tabela de espacos fisicos
+        $c_sql_secundario = "SELECT espacos.id FROM espacos where espacos.descricao='$c_espaco' ORDER BY espacos.descricao";
+        $result_secundario = $conection->query($c_sql_secundario);
+        $registro_secundario = $result_secundario->fetch_assoc();
+        $i_espaco = $registro_secundario['id'];
+        // select da tabela de setores
+        $c_sql_secundario = "SELECT setores.id FROM setores where setores.descricao='$c_setor' ORDER BY setores.descricao";
+        $result_secundario = $conection->query($c_sql_secundario);
+        $registro_secundario = $result_secundario->fetch_assoc();
+        $i_setor = $registro_secundario['id'];
+        // grava dados do contrato no banco de dados
+        // faço a Leitura da tabela com sql
+        $c_sql = "Insert into contratos (`id_espacofisico`, `id_setor`, `id_centrocusto`, `empresa`, `tipo_empresa`, `vigencia`, `inicio_contrato`, 
+        `termino_contrato`, `numero_contrato`, `resp_contratado`, `resp_contratante`, `objeto`, 
+        `email_operacional`, `email_diretoria`, `email_gerente`, `valor_mensal`, `dados_iniciais`, `denuncia`, `reajuste`, `tipo_prestador_servico`,
+        `tipo_fornecedor_produtos`, `tipo_producao_mes`, `observacao`)" .
+            "Value ('$i_espaco', '$i_setor', '$i_centrodecusto', '$c_descricao', '$c_tipo_empresa', '$c_vigencia', '$d_inicio', '$d_termino', '$c_contrato',
+        '$c_resp_contratado', '$c_resp_contratante', '$c_objeto', '$c_email_operacional', '$c_email_diretoria', '$c_email_gerencia', '$c_valor',
+        '$c_dados_iniciais', '$c_denuncia', '$c_reajuste','','','','$c_obs')";
+        //echo $c_sql;
+        $result = $conection->query($c_sql);
+        // verifico se a query foi correto
+        if (!$result) {
+            die("Erro ao Executar Sql!!" . $conection->connect_error);
+        }
+
+        header('location: /gop/cadastros/contratos/contratos_lista.php');
+    } while (false);
+}
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOP - Novo Artigo</title>
+    <link rel="stylesheet" href="/gop/css/basico.css">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div style="padding-top:5px;">
+            <div class="panel panel-primary class">
+                <div class="panel-heading text-center">
+                    <h4>GOP - Gestão Operacional</h4>
+                    <h5>Novo Artigo Técnico<h5>
+                </div>
+            </div>
+        </div>
+
+        <?php
+        if (!empty($msg_erro)) {
+            echo "
+            <div class='alert alert-warning' role='alert'>
+                <div style='padding-left:15px;'>
+                    
+                </div>
+                <h4><img Align='left' src='\gop\images\aviso.png' alt='30' height='35'> $msg_erro</h4>
+            </div>
+            ";
+        }
+        ?>
+        <div class="container content-box">
+            <div class='alert alert-info' role='alert'>
+                <div style="padding-left:15px;">
+                    <img Align="left" src="\gop\images\escrita.png" alt="30" height="35">
+
+                </div>
+                <h5>Campos com (*) são obrigatórios</h5>
+            </div>
+            <form method="post">
+                <hr>
+                 <div class="row mb-3">
+                    <div class="offset-sm-0 col-sm-3">
+                        <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
+                        <a class='btn btn-danger' href='/gop/artigos/artigos_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>

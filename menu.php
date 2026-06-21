@@ -195,7 +195,7 @@ $i_atualizacao_menu = $registro['tempo_atualizacao_menu'];
                     echo '
                     <div class="relative dropdown">
                     <button class="text-white hover:text-blue-200 transition flex items-center focus:outline-none">
-                        Itens Auxiliares <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        Cadastros Auxiliares <i class="fas fa-chevron-down ml-1 text-xs"></i>
                     </button>
                     <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow-xl rounded-md w-48 z-50">
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/artigos/artigos_lista.php">Artigos Técnicos</a>

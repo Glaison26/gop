@@ -86,18 +86,18 @@ $i_id_usuario = $_SESSION["id_usuario"];
         });
     </script>
 
-    <div class="panel panel-primary class">
-        <div class="panel-heading text-center">
-            <h4>GOP - Gestão Operacional</h4>
-            <h5>Lista de Artigos Técnicos<h5>
+    <div class="container-fluid">
+        <div class="panel panel-primary class">
+            <div class="panel-heading text-center">
+                <h4>GOP - Gestão Operacional</h4>
+                <h5>Lista de Artigos Técnicos<h5>
+            </div>
         </div>
     </div>
 
     <div class="container-fluid">
         <br>
-        <button type="button" title="Inclusão de Novo Artigo técnico" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
-            Incluir
-        </button>
+        <a class="btn btn-success btn-sm" title="Incluir novo artigo" href="/gop/artigos/artigos_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
         <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
 
         <hr>
@@ -152,7 +152,7 @@ $i_id_usuario = $_SESSION["id_usuario"];
     </div>
 
 
-    
+
 </body>
 
 </html>
