@@ -128,18 +128,15 @@ $i_id_usuario = $_SESSION["id_usuario"];
                 // insiro os registro do banco de dados na tabela 
                 while ($c_linha = $result->fetch_assoc()) {
 
-
                     echo "
                     <tr>
                     <td>$c_linha[id]</td>
                     <td>$c_linha[titulo]</td>
                     <td>$c_linha[categoria]</td>
                     <td>$c_linha[tags]</td>
-
-                    
+                   
                     <td>
-                    <a class='btn btn-secondary btn-sm' href='/gop/cadastros/contratos/contratos_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
-                    <a class='btn btn-primary btn-sm' href='/gop/artigos/artigos_anexos.php?id=$c_linha[id]'><span class='glyphicon glyphicon-paperclip'></span> Anexos</a>
+                    <a class='btn btn-secondary btn-sm' href='/gop/artigos/artigos_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 

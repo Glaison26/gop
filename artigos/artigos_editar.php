@@ -1,23 +1,28 @@
 <?php
-// controle de acesso ao formulário
+include_once("../conexao.php");
 session_start();
 if (!isset($_SESSION['newsession'])) {
     die('Acesso não autorizado!!!');
 }
-
-include_once "../lib_gop.php";
-include("../conexao.php");
 include("../links2.php");
-
-
-// variaveis para mensagens de erro e suscessso da gravação
-$msg_gravou = "";
-$msg_erro = "";
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // faço post para as variáveis que vão gravar no sql
+include_once "../lib_gop.php";
+// pego o id do artigo técnico a ser editado
+$id_artigo = $_GET['id'] ?? null;
+if (!$id_artigo) {
+    die('ID do artigo técnico não fornecido!');
+}
+// monto sql para buscar os dados atuais do artigo técnico selecionado para edição
+$sql_artigo = "SELECT * FROM artigos WHERE id = $id_artigo";
+$result_artigo = $conection->query($sql_artigo);
+if ($result_artigo->num_rows == 0) {
+    die('Artigo técnico não encontrado!');
+}
+$artigo = $result_artigo->fetch_assoc();
+// verifico se o formulário de edição foi submetido
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $msg_erro = '';
     do {
-
+        // pego os dados do formulário
         $titulo = $_POST['titulo'];
         $descricao = $_POST['descricao'];
         $palavra_chave = $_POST['palavra_chave'];
@@ -26,26 +31,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $solucao_abordagem = $_POST['solucao_abordagem'];
         $requisitos = $_POST['requisitos'];
         $executor_id = $_POST['executor'];
-        $data_criacao = $_POST['data_criacao'];
+        // data de criação não pode ser alterada, então pego a data de criação atual do artigo técnico
+        $data_criacao = $artigo['data_criacao'];
         $data_atualizacao = $_POST['data_atualizacao'] ?? null;
         $categoria_id = $_POST['categoria'];
-        // monto o sql para inserir os dados do novo artigo técnico
-        $sql_insert = "INSERT INTO artigos (titulo, breve_descricao, tags, cenario_sitoma, causa_raiz,
-         passo_a_passo, requisitos, id_autor, data_criacao, data_atualizacao, id_categoria) VALUES 
-         ('$titulo', '$descricao', '$palavra_chave', '$aplicacao', '$causa_problema', '$solucao_abordagem', 
-         '$requisitos', $executor_id, '$data_criacao', " . ($data_atualizacao ? "'$data_atualizacao'" : "NULL") . ", $categoria_id)";   
-        $result = $conection->query($sql_insert);
+        // monto o sql para atualizar os dados do artigo técnico
+        $sql_update = "UPDATE artigos SET titulo='$titulo', breve_descricao='$descricao', tags='$palavra_chave', cenario_sitoma='$aplicacao', causa_raiz='$causa_problema',
+         passo_a_passo='$solucao_abordagem', requisitos='$requisitos', id_autor=$executor_id, 
+         data_atualizacao=" . ($data_atualizacao ? "'$data_atualizacao'" : "NULL") . ", id_categoria=$categoria_id
+         WHERE id = $id_artigo";
+        $result = $conection->query($sql_update);
         if (!$result) {
-            $msg_erro = "Erro ao gravar o artigo técnico: " . $conection->error;
+            $msg_erro = "Erro ao atualizar o artigo técnico: " . $conection->error;
             break;
         }
-
-        header('location: /gop/artigos/artigos_lista.php');
+        // se a atualização for bem-sucedida, redireciono para a lista de artigos técnicos
+         header('location: /gop/artigos/artigos_lista.php');
+         exit;
     } while (false);
+    
 }
 
+   
 ?>
 
+<!-- front end com formulário para edição dos artigos técnicos, com campos pré-preenchidos com os dados atuais do artigo técnico selecionado para edição -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GOP - Novo Artigo</title>
+    <title>GOP - Editar Artigo</title>
 
 </head>
 
@@ -63,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
                     <h4>GOP - Gestão Operacional</h4>
-                    <h5>Novo Artigo Técnico<h5>
+                    <h5>Editar Artigo Técnico<h5>
                 </div>
             </div>
         </div>
@@ -103,9 +113,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="offset-sm-0 col-sm-6">
                         <label for="categoria" class="form-label">Categoria *</label>
                         <select class="form-select form-select-lg mb-3" id="categoria" name="categoria" required>
-                            <option value="">Selecione uma categoria</option>
+                            
                             <?php foreach ($categorias as $categoria) { ?>
-                                <option value="<?= $categoria['id'] ?>"><?= $categoria['descricao'] ?></option>
+                                <option value="<?= $categoria['id'] ?>" <?= $categoria['id'] == $artigo['id_categoria'] ? 'selected' : '' ?>><?= $categoria['descricao'] ?></option>
                             <?php } ?>
                         </select>
                     </div>
@@ -114,49 +124,49 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="row mb-3">
                     <div class="offset-sm-0 col-sm-12">
                         <label for="titulo" class="form-label">Título do Artigo Técnico *</label>
-                        <input type="text" class="form-control" id="titulo" name="titulo" required>
+                        <input type="text" class="form-control" id="titulo" name="titulo" value="<?= $artigo['titulo'] ?>" required>
                     </div>
                 </div>
                 <!-- breve descrição do artigo -->
                 <div class="row mb-3">
                     <div class="offset-sm-0 col-sm-12">
                         <label for="descricao" class="form-label">Breve Descrição do Artigo Técnico *</label>
-                        <input type="text" class="form-control" id="descricao" name="descricao" maxlength="150" required>
+                        <input type="text" class="form-control" id="descricao" name="descricao" value="<?= $artigo['breve_descricao'] ?>" maxlength="150" required>
                     </div>
                 </div>
                 <!-- tag ou palavra-chave para o artigo -->
                 <div class="row mb-3">
                     <div class="offset-sm-0 col-sm-6">
                         <label for="palavra_chave" class="form-label">Tag ou Palavra-chave *</label>
-                        <input type="text" class="form-control" id="palavra_chave" name="palavra_chave" required>
+                        <input type="text" class="form-control" id="palavra_chave" name="palavra_chave" value="<?= $artigo['tags'] ?>" required>
                     </div>
                 </div>
                 <!-- cenário de aplicação do artigo -->
                 <div class="row mb-3">
                     <div class="offset-sm-0 col-sm-6">
                         <label for="aplicacao" class="form-label">Cenário de Aplicação *</label>
-                        <input type="text" class="form-control" id="aplicacao" name="aplicacao" required>
+                        <input type="text" class="form-control" id="aplicacao" name="aplicacao" value="<?= $artigo['cenario_sitoma'] ?>" required>
                     </div>
                 </div>
                 <!-- causa ou problema que o artigo técnico aborda -->
                 <div class="row mb-3">
                     <div class="offset-sm-0 col-sm-12">
                         <label for="causa_problema" class="form-label">Causa ou Problema Abordado *</label>
-                        <textarea class="form-control" id="causa_problema" name="causa_problema" rows="6" required></textarea>
+                        <textarea class="form-control" id="causa_problema" name="causa_problema" rows="6" required><?= $artigo['causa_raiz'] ?></textarea>
                     </div>
                 </div>
                 <!-- solução ou abordagem proposta pelo artigo técnico -->
                 <div class="row mb-3">
                     <div class="offset-sm-0 col-sm-12">
                         <label for="solucao_abordagem" class="form-label">Solução ou Abordagem Proposta *</label>
-                        <textarea class="form-control" id="solucao_abordagem" name="solucao_abordagem" rows="6" required></textarea>
+                        <textarea class="form-control" id="solucao_abordagem" name="solucao_abordagem" rows="6" required><?= $artigo['passo_a_passo'] ?></textarea>
                     </div>
                 </div>
                 <!-- requisitos ou pré-requisitos para aplicar a solução do artigo técnico -->
                 <div class="row mb-3">
                     <div class="offset-sm-0 col-sm-12">
                         <label for="requisitos" class="form-label">Requisitos ou Pré-requisitos para Aplicação *</label>
-                        <textarea class="form-control" id="requisitos" name="requisitos" rows="6" required></textarea>
+                        <textarea class="form-control" id="requisitos" name="requisitos" rows="6" required><?= $artigo['requisitos'] ?></textarea>
                     </div>
                 </div>
                 <?php
@@ -174,7 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <select class="form-select form-select-lg mb-3" id="executor" name="executor" required>
                             <option value="">Selecione um executor</option>
                             <?php foreach ($executores as $executor) { ?>
-                                <option value="<?= $executor['id'] ?>"><?= $executor['nome'] ?></option>
+                                <option value="<?= $executor['id'] ?>" <?= $executor['id'] == $artigo['id_autor'] ? 'selected' : '' ?>><?= $executor['nome'] ?></option>
                             <?php } ?>
                         </select>
                     </div>
@@ -183,14 +193,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="row mb-3">
                     <div class="offset-sm-0 col-sm-6">
                         <label for="data_criacao" class="form-label">Data de Criação *</label>
-                        <input type="date" class="form-control" id="data_criacao" name="data_criacao" required>
+                        <input type="date" class="form-control" id="data_criacao" name="data_criacao" value="<?= $artigo['data_criacao'] ?>" required>
                     </div>
                 </div>
                 <!-- data da ultima atualização do artigo técnico -->
                 <div class="row mb-3">
                     <div class="offset-sm-0 col-sm-6">
                         <label for="data_atualizacao" class="form-label">Data da Última Atualização</label>
-                        <input type="date" class="form-control" id="data_atualizacao" name="data_atualizacao">
+                        <input type="date" class="form-control" id="data_atualizacao" name="data_atualizacao" value="<?= $artigo['data_atualizacao'] ?>">
                     </div>
                 </div>
                 <hr>
