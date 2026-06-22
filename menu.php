@@ -32,7 +32,7 @@ $registro = $result->fetch_assoc();
 $c_preventivas = $registro['preventivas'];
 // verifico Ordens de serviço com o SLA em atraso
 $c_where = "((data_previsao < '$c_data' AND ordens.`status`='A') OR (data_previsao = '$c_data' AND hora_previsao <= CURTIME() AND ordens.`status`='A'))";
-if (isset($registro_config['filtra_por_executor']) && $registro_config['filtra_por_executor'] == 'S'&& $_SESSION['tipo']=='Operador') {
+if (isset($registro_config['filtra_por_executor']) && $registro_config['filtra_por_executor'] == 'S' && $_SESSION['tipo'] == 'Operador') {
     $c_where .= " and ordens.id_executor_responsavel='" . $_SESSION['id_executor'] . "'";
 }
 $c_sql = "select COUNT(*) AS sla FROM ordens WHERE $c_where";
@@ -43,7 +43,7 @@ $c_ordens_sla = $registro['sla'];
 // verifico se na tabela de configurações a opção de filtrar por executor responsável está habilitada ou não, apenas para usuário que forem Operadores. Se sim, adiciono na cláusula where para mostrar somente as ordens vinculadas ao executor logado
 $c_where = "ordens.`status`='A'";
 
-if (isset($registro_config['filtra_por_executor']) && $registro_config['filtra_por_executor'] == 'S'&& $_SESSION['tipo']=='Operador') {
+if (isset($registro_config['filtra_por_executor']) && $registro_config['filtra_por_executor'] == 'S' && $_SESSION['tipo'] == 'Operador') {
     $c_where .= " and ordens.id_executor_responsavel='" . $_SESSION['id_executor'] . "'";
 }
 $c_sql = "select COUNT(*) AS abertas FROM ordens WHERE $c_where";
@@ -52,7 +52,7 @@ $registro = $result->fetch_assoc();
 $c_ordens_abertas = $registro['abertas'];
 // verifico ordens de servico que encontran-se suspensas
 $c_where = "ordens.`status`='S'";
-if (isset($registro_config['filtra_por_executor']) && $registro_config['filtra_por_executor'] == 'S'&& $_SESSION['tipo']=='Operador') {
+if (isset($registro_config['filtra_por_executor']) && $registro_config['filtra_por_executor'] == 'S' && $_SESSION['tipo'] == 'Operador') {
     $c_where .= " and ordens.id_executor_responsavel='" . $_SESSION['id_executor'] . "'";
 }
 $c_sql = "select COUNT(*) as suspensas from ordens where $c_where";
@@ -165,7 +165,7 @@ $i_atualizacao_menu = $registro['tempo_atualizacao_menu'];
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/agenda/agenda.php">Agenda de Executores</a>
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/ocorrencias/tipo_ocorrencias.php">Tipos de Ocorrência</a>
                     <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/ocorrencias/ocorrencias_lista.php">Ocorrências Padrões de Serviço</a>
-                   
+                    
                     </div>
                 </div>';
                 }
@@ -195,9 +195,12 @@ $i_atualizacao_menu = $registro['tempo_atualizacao_menu'];
                     echo '
                     <div class="relative dropdown">
                     <button class="text-white hover:text-blue-200 transition flex items-center focus:outline-none">
-                        Outros Aplicativos <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        Cadastros Auxiliares <i class="fas fa-chevron-down ml-1 text-xs"></i>
                     </button>
                     <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow-xl rounded-md w-48 z-50">
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/artigos/artigos_lista.php">Artigos Técnicos</a>
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/artigos/categorias_lista.php">Categorias de artigos Técnicos</a>
+                   
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/plano_acao/planos_menu.php">Planos de Ação</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/pop/pops_lista.php">Cadastro de Procedimentos Operacionais Padrões</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/obras/obras_menu.php">Custos de Obras</a>

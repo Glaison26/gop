@@ -31,7 +31,7 @@ if (isset($_POST['btn_baixa']) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
 
 
 <script language="Javascript">
-    function confirmacao(id) {
+    function confirmacao_material(id) {
         var resposta = confirm("Deseja remover esse registro?");
         if (resposta == true) {
             window.location.href = "/gop/ordens/ordens_materiais_excluir.php?id=" + id;
@@ -157,7 +157,7 @@ if (isset($_POST['btn_baixa']) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     <td>";
                 if ($c_linha_ordem['status'] <> 'C' && $c_linha_ordem['status'] <> 'S') {
                     echo "<a class='btn btn-secondary btn-sm' href='/gop/ordens/ordens_materiais_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
-                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
+                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao_material($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                 
                     </td>";
                 }
