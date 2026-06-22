@@ -1,0 +1,12 @@
+Ordem de Serviço Nº: 268
+Data de Geração: 17/06/2026 Hora: 12:48:00
+Previsão de Entrega: 19/06/2026 Hora: 17:00:00
+Previsão de Inicio: 16/06/2026 Hora: 10:47:24
+Solicitante: Lucio Machado
+Setor: Secretaria de Segurança Pública
+Recurso: Computador
+Tipo de Ordem: Corretiva
+Ocorrência: Desktop - Lentidão do desktop
+Executor Responsável: Lucio Machado
+Descrição: Patrimõnio do Computador : 97353
+Usuário: Mauricio Mendes
