@@ -23,12 +23,12 @@ USE `gop`;
 CREATE TABLE IF NOT EXISTS `artigos` (
   `id` int NOT NULL AUTO_INCREMENT,
   `titulo` varchar(150) DEFAULT NULL,
-  `breve_descricao` varchar(50) DEFAULT NULL,
+  `breve_descricao` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `id_categoria` int DEFAULT NULL,
   `id_subcategoria` int DEFAULT NULL,
   `tags` varchar(50) DEFAULT NULL,
   `cenario_sitoma` blob,
-  `cauza_raiz` blob,
+  `causa_raiz` blob,
   `passo_a_passo` blob,
   `requisitos` varchar(150) DEFAULT NULL,
   `id_autor` int DEFAULT NULL,
@@ -42,30 +42,22 @@ CREATE TABLE IF NOT EXISTS `artigos` (
   CONSTRAINT `FK_artigos_artigos_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `artigos_categoria` (`id`),
   CONSTRAINT `FK_artigos_artigos_subcategoria` FOREIGN KEY (`id_subcategoria`) REFERENCES `artigos_subcategoria` (`id`),
   CONSTRAINT `FK_artigos_executores` FOREIGN KEY (`id_autor`) REFERENCES `executores` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela gop.artigos: ~0 rows (aproximadamente)
+INSERT INTO `artigos` (`id`, `titulo`, `breve_descricao`, `id_categoria`, `id_subcategoria`, `tags`, `cenario_sitoma`, `causa_raiz`, `passo_a_passo`, `requisitos`, `id_autor`, `data_criacao`, `data_atualizacao`, `versao`) VALUES
+	(1, 'teste', 'teste', 1, NULL, 'teste', _binary 0x7465737465, _binary 0x7465737465, _binary 0x7465737465, 'teste', 7, '2026-06-22', '2026-06-22', NULL);
 
 -- Copiando estrutura para tabela gop.artigos_categoria
 CREATE TABLE IF NOT EXISTS `artigos_categoria` (
   `id` int NOT NULL AUTO_INCREMENT,
   `descricao` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela gop.artigos_categoria: ~0 rows (aproximadamente)
-
--- Copiando estrutura para tabela gop.artigos_subcategoria
-CREATE TABLE IF NOT EXISTS `artigos_subcategoria` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `id_categoria` int DEFAULT NULL,
-  `descricao` varchar(150) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK__artigos_categoria` (`id_categoria`),
-  CONSTRAINT `FK__artigos_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `artigos_categoria` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- Copiando dados para a tabela gop.artigos_subcategoria: ~0 rows (aproximadamente)
+INSERT INTO `artigos_categoria` (`id`, `descricao`) VALUES
+	(1, 'Rede');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
