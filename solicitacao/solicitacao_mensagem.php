@@ -53,7 +53,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // mensagem em javascript de espera do envio do email
     if (filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
         $c_assunto = "Mensagem de sobre solicitação de Serviço No.:" . $i_id_solicitacao . " no Sistema GOP";
-        $c_body = $c_descricao;
+        //$c_body = $c_descricao;
+        // mensagem em html na variavel $c_body contento o corpo do email tendo como conteúdo o numero da solicitação, a mensagem e o link para acessar o sistema GOP
+        $c_body = "<html><body>";
+        $c_body .= "<h3>Mensagem sobre Solicitação de Serviço No.:" . $i_id_solicitacao . "</h3>";
+        $c_body .= "<p>" . nl2br($c_descricao) . "</p>";
+        $c_body .= "<p>Para acessar o sistema GOP, clique no link abaixo:</p>";
+        $c_body .= "<p><a href='http://192.168.10.11:11080/gop'>Acessar Sistema GOP</a></p>";
+        $c_body .= "</body></html>";
         $c_email_oficina = "";
         include('../email_gop.php');
     }
