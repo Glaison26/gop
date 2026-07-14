@@ -132,7 +132,14 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
             $solicitacao = $c_linha['id_solicitacao'];
             // armazeno na váriave $c_assunto o assunto do email e $c_body o corpo do e-mail com o numero da solicitação e a descrição da ocorrência
             $c_assunto = "GOP - Nova Solicitação de Serviço - Nº $solicitacao";
-            $c_body = "Olá, uma nova solicitação de serviço foi aberta no GOP - Gestão Operacional. \n\nNúmero da Solicitação: $solicitacao\nTipo de Ocorrência: $c_ocorrencia\nDescrição: $c_descricao\n\nPor favor, acesse o sistema para mais detalhes e para acompanhar o andamento da solicitação.\n\nObrigado!";
+
+            $c_body = "<html><body>";
+            $c_body .= "<h3>GOP - Nova Solicitação de Serviço - Nº $solicitacao</h3>";
+            $c_body .= "<p><strong>Tipo de Ocorrência:</strong> $c_ocorrencia</p>";
+            $c_body .= "<p><strong>Descrição:</strong> " . nl2br($c_descricao) . "</p>";
+            $c_body .= "<p>Para acessar o sistema GOP, clique no link abaixo:</p>";
+            $c_body .= "<p><a href='http://192.168.10.11:11080/gop'>Acessar Sistema GOP</a></p>";
+            $c_body .= "</body></html>";
 
             include('../email_gop.php');
         }

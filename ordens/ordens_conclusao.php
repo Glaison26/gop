@@ -167,7 +167,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $c_hora_conclusao = $c_hora_conclusao->format('H:i');
             // armazeno nas varia $c_assunto e $c_body o assunto e corpo do email para conclusão de ordem de serviço contendo o numero, a descrição da solicitação e a descrição da conclusão
             $c_assunto = "Conclusão da Ordem de Serviço No. $ordem";
-            $c_body = "A Ordem de Serviço No. $ordem foi concluída com sucesso.\r\n\r\nDescrição da Solicitação:\r\n$c_descricao\r\n\r\nDescrição da Conclusão:\r\n$c_conclusao\r\n\r\nData da Conclusão: $c_data_conclusao às $c_hora_conclusao\r\n\r\nAtenciosamente,\r\nGOP - Gestão Operacional";
+            $c_body = "<html><body>";
+            $c_body .= "<h3>Conclusão da Ordem de Serviço No. $ordem</h3>";
+            $c_body .= "<p><strong>Descrição da Solicitação:</strong> " . nl2br($c_descricao) . "</p>";
+            $c_body .= "<p><strong>Descrição da Conclusão:</strong> " . nl2br($_POST['conclusao']) . "</p>";
+            $c_body .= "<p><strong>Data da Conclusão:</strong> $c_data_conclusao</p>";
+            $c_body .= "<p><strong>Hora da Conclusão:</strong> $c_hora_conclusao</p>";
+            $c_body .= "<p>Para acessar o sistema GOP, clique no link abaixo:</p>";
+            $c_body .= "<p><a href='http://192.168.10.11:11080/gop'>Acessar Sistema GOP</a></p>";
+            $c_body .= "</body></html>";
+            
+
            
             include('../email_gop.php');
         }

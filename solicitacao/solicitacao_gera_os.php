@@ -150,8 +150,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $hora = new DateTime($d_hora_previsao);
             $hora = $hora->format('H:i');
             // armazeno na váriave $c_assunto o assunto do email e $c_body o corpo do e-mail com o numero da ordem de serviço, número da solicitação,  data e hora de previsão de atendimento
-            $c_assunto = "GOP - Ordem de Serviço Nº $ordem Gerada a partir da Solicitação Nº $i_id";
-            $c_body = "Olá, uma nova ordem de serviço foi gerada a partir da solicitação de serviço No. $i_id. \n\nNúmero da Ordem de Serviço: $ordem\nNúmero da Solicitação: $i_id\nData de Previsão de Atendimento: $data\nHora de Previsão de Atendimento: $hora\n\nPor favor, acesse o sistema para mais detalhes e para acompanhar o andamento da ordem de serviço.\n\nObrigado!";
+            $c_assunto = "GOP - Ordem de Serviço Gerada - Nº $ordem";
+            $c_body = "<html><body>";
+           // mensagem com o numero da ordem de serviço e pedindo para aguardar o atendimento da solicitação
+            $c_body .= "<p>Olá, uma nova ordem de serviço foi gerada no GOP - Gestão Operacional. </p>";
+            $c_body .= "<h3>GOP - Ordem de Serviço Gerada - Nº $ordem aguarde o atendimento com base no prazo estabelecido abaixo:</h3>";
+
+            $c_body .= "<p><strong>Solicitação:</strong> $i_id</p>";
+            // descrição da ocorrência
+            $c_body .= "<p><strong>Tipo de Ocorrência:</strong> $c_descritivo</p>";
+            $c_body .= "<p><strong>Descrição:</strong> " . nl2br($c_descricao) . "</p>";
+                     
+            // mensagem alertando que a ordem de serviço foi gerada e informando a data e hora de previsão de atendimento
+            
+            $c_body .= "<p><strong>Data de Previsão de atendimento:</strong> $data</p>";
+            $c_body .= "<p><strong>Hora de Previsão de atendimento:</strong> $hora</p>";
+            $c_body .= "<p>Para acessar o sistema GOP, clique no link abaixo:</p>";
+            $c_body .= "<p><a href='http://192.168.10.11:11080/gop'>Acessar Sistema GOP</a></p>";
             include('../email_gop.php');
         }
 
@@ -285,7 +300,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <hr>
             <button type="submit" class="btn btn btn-sm" href=""><img src="\gop\images\ordem.png" alt="" width="25" height="25"> Gerar Ordem de Serviço</button>
             <a class="btn btn btn-sm" href="\gop\solicitacao\solicitacao_lista.php"><img src="\gop\images\saida.png" alt="" width="25" height="25"> Voltar</a>
-           
+
 
         </form>
     </div>
