@@ -80,10 +80,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $c_motivo_suspensao = $_POST['motivo'];
 
             $c_assunto = "Suspensão de Ordem de Serviço no GOP";
-            $c_body = "A Ordem de serviço No.<b> $ordem </b> teve que ser Suspensa!<br>"
-                . "Descrição da Solicitação :" . $c_descricao . "<br>" .
-                "Motivo da Suspensão:<br>" .
-                $c_motivo;
+            $c_assunto = "GOP - Suspensão de Ordem de Serviço - Nº $ordem";
+            $c_body = "<html><body>";
+            $c_body .= "<h3>Suspensão de Ordem de Serviço - Nº $ordem</h3>";
+            $c_body .= "<p>A Ordem de serviço No.<b> $ordem </b> teve que ser Suspensa!</p>";
+            $c_body .= "<p><strong>Descrição da Solicitação:</strong> " . nl2br($c_descricao) . "</p>";
+            $c_body .= "<p><strong>Motivo da Suspensão:</strong> " . nl2br($c_motivo_suspensao) . "</p>";
+            $c_body .= "<p><strong>Data da Suspensão:</strong> $c_data_suspensao</p>";
+            $c_body .= "<p><strong>Hora da Suspensão:</strong> $c_hora_suspensao</p>";
+            $c_body .= "<p>Para acessar o sistema GOP, clique no link abaixo:</p>";
+            $c_body .= "<p><a href='http://179.106.96.58:11080/gop/'>Acessar Sistema GOP</a></p>";
+            $c_body .= "</body></html>";
 
             include('../email_gop.php');
         }

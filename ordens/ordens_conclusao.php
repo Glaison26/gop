@@ -174,9 +174,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $c_body .= "<p><strong>Data da Conclusão:</strong> $c_data_conclusao</p>";
             $c_body .= "<p><strong>Hora da Conclusão:</strong> $c_hora_conclusao</p>";
             $c_body .= "<p>Para acessar o sistema GOP, clique no link abaixo:</p>";
-            $c_body .= "<p><a href='http://192.168.10.11:11080/gop'>Acessar Sistema GOP</a></p>";
+            $c_body .= "<p><a href='http://179.106.96.58:11080/gop/'>Acessar Sistema GOP</a></p>";
             $c_body .= "</body></html>";
-            
+
 
            
             include('../email_gop.php');

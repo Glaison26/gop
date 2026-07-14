@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $c_body .= "<h3>Mensagem sobre Solicitação de Serviço No.:" . $i_id_solicitacao . "</h3>";
         $c_body .= "<p>" . nl2br($c_descricao) . "</p>";
         $c_body .= "<p>Para acessar o sistema GOP, clique no link abaixo:</p>";
-        $c_body .= "<p><a href='http://192.168.10.11:11080/gop'>Acessar Sistema GOP</a></p>";
+        $c_body .= "<p><a href='http://179.106.96.58:11080/gop/'>Acessar Sistema GOP</a></p>";
         $c_body .= "</body></html>";
         $c_email_oficina = "";
         include('../email_gop.php');
