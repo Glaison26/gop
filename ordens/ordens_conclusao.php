@@ -69,10 +69,11 @@ $c_linha_ordem = $result->fetch_assoc();
 $i_id_ocorrencia = $c_linha_ordem['id_ocorrencia'];
 //echo $c_sql_ordem;
 // pego texto padrão de fechamento na table de ocorrencias padrões
-$c_sql_ocor = "select ocorrencias.id,ocorrencias.texto_fechamento from ocorrencias where ocorrencias.id='$i_id_ocorrencia'";
+$c_sql_ocor = "select ocorrencias.id,ocorrencias.texto_fechamento, ocorrencias.descricao from ocorrencias where ocorrencias.id='$i_id_ocorrencia'";
 $result_ocor = $conection->query($c_sql_ocor);
 $c_registro_ocor = $result_ocor->fetch_assoc();
 $c_conclusao = $c_registro_ocor['texto_fechamento'];
+$c_descricao_ocor = $c_registro_ocor['descricao'];
 
 // post para fechar a ordem de serviço
 
@@ -169,6 +170,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $c_assunto = "Conclusão da Ordem de Serviço No. $ordem";
             $c_body = "<html><body>";
             $c_body .= "<h3>Conclusão da Ordem de Serviço No. $ordem</h3>";
+            // adiciono tipo de ocorrência na mensagem
+            
+            $c_body .= "<p><strong>Tipo da Ocorrência:</strong> " . nl2br($c_descricao_ocor) . "</p>";
             $c_body .= "<p><strong>Descrição da Solicitação:</strong> " . nl2br($c_descricao) . "</p>";
             $c_body .= "<p><strong>Descrição da Conclusão:</strong> " . nl2br($_POST['conclusao']) . "</p>";
             $c_body .= "<p><strong>Data da Conclusão:</strong> $c_data_conclusao</p>";
