@@ -88,6 +88,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $c_body .= "<p><strong>Motivo da Suspensão:</strong> " . nl2br($c_motivo_suspensao) . "</p>";
             $c_body .= "<p><strong>Data da Suspensão:</strong> $c_data_suspensao</p>";
             $c_body .= "<p><strong>Hora da Suspensão:</strong> $c_hora_suspensao</p>";
+            // mensagem para não responder o e-mail
+            $c_body .= "<p><strong>Observação:</strong> Este é um e-mail automático, por favor não responda.</p>";  
             $c_body .= "<p>Para acessar o sistema GOP, clique no link abaixo:</p>";
             $c_body .= "<p><a href='http://179.106.96.58:11080/gop/'>Acessar Sistema GOP</a></p>";
             $c_body .= "</body></html>";
