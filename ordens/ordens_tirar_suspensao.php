@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $c_sql_up = "update ordens set status='A' where id=$i_id";
         $result_up = $conection->query($c_sql_up);
         // incluir dados da suspensão na tabela de históricos da suspensão
-        $c_sql = "update ordens_suspensao set data_retirada='$c_data_retirada', hora_retirada='$c_hora_retirada', motivo='$c_motivo'";
+        $c_sql = "update ordens_suspensao set data_retirada='$c_data_retirada', hora_retirada='$c_hora_retirada', motivo='$c_motivo' where id_ordem='$i_id'";
         $result = $conection->query($c_sql);
         // rotina para envio de email quando houver suspensão
         // envio para solicitante, oficina e 

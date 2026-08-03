@@ -63,8 +63,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    
 
 
 </head>
@@ -84,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         }
         ?>
 
-        <form method="post" action="index.php">
+        <form method="post" action="index.php" style="max-width:500px;margin:auto">
 
             
             <!-- coloco logo marca do gop -->
@@ -97,12 +100,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             <div class="form-group row" class="form-control">
                 <label class="col-sm-3 col-form-label">Login</label>
                 <div class="col-xs-12">
+                                            
                     <input type="text" maxlength="40" class="form-control" name="login" placeholder="Digite o login" required>
                 </div>
             </div>
             <div class="form-group row" class="form-control">
                 <label class="col-sm-3 col-form-label">Senha</label>
                 <div class="col-xs-12">
+                 
                     <input type="password" maxlength="32" class="form-control" id="senha" name="senha" placeholder="Entre com a senha" required>
                 </div>
             </div>
