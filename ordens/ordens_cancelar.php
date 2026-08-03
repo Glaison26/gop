@@ -94,10 +94,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $c_data_cancelamento = $c_data_cancelamento->format('Y-m-d');
             $c_motivo_cancelamento = $_POST['motivo'];
             $c_assunto = "Cancelamento de Ordem de Serviço no GOP<br>";
-            $c_body = "A Ordem de serviço No.<b> $ordem </b> foi cancelada no sistema!<br>"
-                . "Descrição da Solicitação :" . $c_descricao . "<br>" .
-                "Motivo do cancelamento:<br>" .
-                $c_motivo_cancelamento;
+            // mensagem em html na variável $c_body contento o corpo do email tendo como conteúdo o numero da ordem, a descrição, a data e hora do cancelamento, o motivo do cancelamento e o link para acessar o sistema GOP
+            $c_body = "<html><body>";
+            $c_body .= "<h3>Cancelamento de Ordem de Serviço No.:" . $ordem . "</h3>";
+            $c_body .= "<p><strong>Descrição:</strong> " . nl2br($c_descricao) . "</p>";
+            $c_body .= "<p><strong>Data do Cancelamento:</strong> $c_data_cancelamento</p>";
+            $c_body .= "<p><strong>Hora do Cancelamento:</strong> $c_hora_cancelamento</p>";
+            $c_body .= "<p><strong>Motivo do Cancelamento:</strong> " . nl2br($c_motivo_cancelamento) . "</p>";
+            // mensagem para não responder o e-mail
+            $c_body .= "<p><strong>Observação:</strong> Este é um e-mail automático, por favor não responda.</p>";
+            $c_body .= "<p>Para acessar o sistema GOP, clique no link abaixo:</p>";
+            $c_body .= "<p><a href='http://179.106.96.58:11080/gop/'>Acessar Sistema GOP</a></p>";
+            $c_body .= "</body></html>";
 
             include('../email_gop.php');
         }
