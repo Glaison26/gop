@@ -63,8 +63,8 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
     date_default_timezone_set('America/Sao_Paulo');
     $d_data_abertura =   date("Y-m-d");
     $c_agora = date('H:i');
-    $c_descricao = $_POST['solicitacao'];
-    $c_descricao = str_replace("'", "", $c_descricao);
+    $c_descricao = addcslashes($_POST['solicitacao'], "'");
+
     $msg_erro = "";
     do {
 
