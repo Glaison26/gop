@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // atualizo o status da ordem de servico e colo data hora e texto de conclusão
         $c_data_cancelamento = $_POST['data_cancelamento'];
         $c_hora_cancelamento = $_POST['hora_cancelamento'];
-        $c_motivo = $_POST['motivo'];
+        $c_motivo = addcslashes($_POST['motivo'], "'");
         $c_sql_up = "update ordens set status='X', motivo_cancelamento='$c_motivo', data_cancelamento='$c_data_cancelamento',
          hora_cancelamento='$c_hora_cancelamento',
          id_resp_cancelamento='$i_solicitante' where id=$i_id";
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $ordem = $i_id;
             $c_data_cancelamento = new DateTime($_POST['data_cancelamento']);
-            $c_data_cancelamento = $c_data_cancelamento->format('Y-m-d');
+            $c_data_cancelamento = $c_data_cancelamento->format('d-m-Y');
             $c_motivo_cancelamento = $_POST['motivo'];
             $c_assunto = "Cancelamento de Ordem de Serviço no GOP<br>";
             // mensagem em html na variável $c_body contento o corpo do email tendo como conteúdo o numero da ordem, a descrição, a data e hora do cancelamento, o motivo do cancelamento e o link para acessar o sistema GOP

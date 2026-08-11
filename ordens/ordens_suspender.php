@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // atualizo o status da ordem de servico e colo data hora e texto de conclusão
         $c_data_suspensao = $_POST['data_suspensao'];
         $c_hora_suspensao = $_POST['hora_suspensao'];
-        $c_motivo = $_POST['motivo'];
+        $c_motivo = addcslashes($_POST['motivo'], "'");
         $c_sql_up = "update ordens set status='S' where id=$i_id";
         $result_up = $conection->query($c_sql_up);
         // incluir dados da suspensão na tabela de históricos da suspensão
