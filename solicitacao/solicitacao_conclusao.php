@@ -340,9 +340,12 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
 </body>
 
 <script>
-    document.getElementById('frm_solicitacao').addEventListener('submit', function() {
-        document.getElementById('modalProcessamento').style.display = 'block';
-    });
+    // não houve submit do formulário, então o modal não é exibido. O modal só será exibido quando o formulário for submetido.
+    if (document.getElementById('frm_solicitacao')) {
+        document.getElementById('frm_solicitacao').addEventListener('submit', function() {
+            document.getElementById('modalProcessamento').style.display = 'block';
+        });
+    }
 </script>
 
 <div id="modalProcessamento" class="modal" style="display:none; position:fixed; z-index:1; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.4);">

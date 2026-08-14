@@ -129,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $c_data_conclusao = $_POST['data_conclusao'];
         $c_hora_conclusao = $_POST['hora_conclusao'];
         $c_conclusao = addcslashes($_POST['conclusao'], "'");
-        $c_fone1 = addcslashes($_POST['fone1'], "'");
+        $c_fone1 = $_POST['fone1'];
         $i_id_resp_conclusao = $_SESSION["id_usuario"];
 
         $c_sql_up = "update ordens set status='C', data_conclusao='$c_data_conclusao', 
