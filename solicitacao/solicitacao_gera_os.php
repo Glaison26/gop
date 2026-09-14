@@ -103,6 +103,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
         }
         // monto sql
+        $c_descricao = addslashes($c_descricao);
+        $c_descritivo = addslashes($c_descritivo);
         $c_sql = "Insert into ordens (id_solicitante,id_responsavel, id_setor, id_recurso
              , id_espaco, id_oficina, tipo, tipo_ordem, tipo_corretiva, descritivo
              , descricao, data_geracao, hora_geracao, data_previsao, hora_previsao, status, id_solicitacao,
@@ -112,6 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
              '$c_descritivo', '$c_descricao', '$d_data_geracao', '$d_hora_geracao', 
              '$d_data_previsao', '$d_hora_previsao', 'A', '$i_id ', '$i_id_ocorrencia', 
              '$d_data_inicio','$d_hora_inicio', '$i_executor_resp', '$i_id_resp_geracao') ";
+       
         $result = $conection->query($c_sql);
         $c_sql =    "SELECT MAX(ordens.ID) AS id_ordem FROM ordens";
         $result = $conection->query($c_sql);
@@ -121,6 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // mudo status da solicitacao que gerou a ordem de serviços
         $c_sql = "Update solicitacao SET status = 'E', id_ordem='$i_ordem', 
         prazo_data = '$d_data_previsao', prazo_hora = '$d_hora_previsao' where id='$i_id'";
+       
         $result = $conection->query($c_sql);
         // envia email com numero da OS e previsão de atendimento para solicitante
         // procuro solicitante
