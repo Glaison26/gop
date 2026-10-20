@@ -1,0 +1,14 @@
+Ordem de Serviço Nº: 602
+Data de Geração: 15/09/2026 Hora: 17:08:00
+Previsão de Entrega: 15/09/2026 Hora: 17:38:00
+Previsão de Inicio: 15/09/2026 Hora: 17:08:09
+Solicitante: Laila Soares
+Setor: Gabinete
+Tipo de Ordem: Corretiva
+Ocorrência: Impressoras - Solicitação de toner
+Executor Responsável: Andre Braga
+Descrição: Se for impressora colorida, qual a cor to toner ?: Ciano
+SELB da Impressora : TFD2
+Boa tarde!
+Gentileza colocar toner. 
+Obrigada!

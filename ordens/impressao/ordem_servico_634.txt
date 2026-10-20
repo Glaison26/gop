@@ -1,0 +1,12 @@
+Ordem de Serviço Nº: 634
+Data de Geração: 23/09/2026 Hora: 10:09:00
+Previsão de Entrega: 30/09/2026 Hora: 10:08:00
+Previsão de Inicio: 23/09/2026 Hora: 10:08:54
+Solicitante: Juan Pablo Alves Anastácio
+Setor: Secretaria Municipal de Esportes
+Tipo de Ordem: Corretiva
+Ocorrência: Acompanhamento de visita técnica
+Executor Responsável: Lucio Machado
+Descrição: Responsável pelo chamado : Lucio 
+Descrição do Serviço : Verificação das ventoinha do rack
+Local: Campo do Siderurgica

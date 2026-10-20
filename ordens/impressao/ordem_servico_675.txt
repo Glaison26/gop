@@ -1,0 +1,11 @@
+Ordem de Serviço Nº: 675
+Data de Geração: 01/10/2026 Hora: 15:01:00
+Previsão de Entrega: 06/10/2026 Hora: 15:30:00
+Previsão de Inicio: 01/10/2026 Hora: 15:00:50
+Solicitante: Recursos Humanos
+Setor: Recursos Humanos
+Tipo de Ordem: Corretiva
+Ocorrência: Impressoras - Solicitação de toner
+Executor Responsável: Lucio Machado
+Descrição: Se for impressora colorida, qual a cor to toner ?: Preto
+SELB da Impressora :  RVG8 (Medicina do trabalho)
