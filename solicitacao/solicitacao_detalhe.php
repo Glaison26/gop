@@ -257,7 +257,7 @@ $total_anexos = $registro_anexos['total_anexos'];
                         <div class="row mb-3">
                             <label class="col-md-2 form-label">Responsável</label>
                             <div class="col-sm-6">
-                                <input type="text" readonly class="form-control" name="responsavel" id="responsavel" value='<?php echo $c_responsavel; ?>'>
+                                <input type="text"  readonly class="form-control" name="responsavel" id="responsavel" value='<?php echo $c_responsavel; ?>'>
                             </div>
                         </div>
 

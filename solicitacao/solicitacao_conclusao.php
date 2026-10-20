@@ -312,7 +312,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Responsável pela Solicitação</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="responsavel" name="responsavel" required>
+                    <input type="text" class="form-control" placeholder="Informar nome do responsável pela solicitação" id="responsavel" name="responsavel" required>
                 </div>
             </div>
             <div style="padding-top:5px;">
