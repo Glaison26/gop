@@ -52,6 +52,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $registro_solicitante = $result_solicitante->fetch_assoc();
     $i_solicitante = $registro_solicitante['id'];
     $c_email = $registro_solicitante['email'];
+    $c_responsavel = $_POST['responsavel'];
 
     // tipo da solicitação
     if ($_POST['tipo'] == "Programada") {
@@ -68,7 +69,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $msg_erro = "";
     do {
 
-        if (($_POST['ocorrencia'] == '') || ($_POST['setor'] == '') || ($_POST['tipo'] == '') || ($_POST['solicitacao'] == '')) {
+        if (($_POST['ocorrencia'] == '') || ($_POST['setor'] == '') || ($_POST['tipo'] == '') || ($_POST['solicitacao'] == '') || ($_POST['responsavel'] == '')) {
             $msg_erro = 'Todos os campos devem selecionados e preenchidos!!';
             break;
         }
@@ -88,18 +89,18 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
         // gravar informações 
         if ($_SESSION['tiposolicitacao'] == 'V') { // avulso
             $c_sql = "Insert into solicitacao (id_setor, id_solicitante, data_abertura, hora_abertura, 
-                status, classificacao,tipo,descricao,id_ocorrencia) value ('$i_setor', '$i_solicitante',  '$d_data_abertura', 
-                '$c_agora', 'A', 'V', '$c_tipo', '$c_descricao', $i_ocorrencia)";
+                status, classificacao,tipo,descricao,id_ocorrencia, responsavel) value ('$i_setor', '$i_solicitante',  '$d_data_abertura', 
+                '$c_agora', 'A', 'V', '$c_tipo', '$c_descricao', $i_ocorrencia, '$c_responsavel')";
         }
         if ($_SESSION['tiposolicitacao'] == 'R') { // recurso fisico
             $c_sql = "Insert into solicitacao (id_setor, id_solicitante, data_abertura, hora_abertura, 
-            status, classificacao,tipo,descricao,  id_ocorrencia, id_recursos) value ('$i_setor', '$i_solicitante', '$d_data_abertura', 
-            '$c_agora', 'A', 'R', '$c_tipo', '$c_descricao', '$i_ocorrencia', '$i_id_recurso')";
+            status, classificacao,tipo,descricao,  id_ocorrencia, id_recursos, responsavel) value ('$i_setor', '$i_solicitante', '$d_data_abertura', 
+            '$c_agora', 'A', 'R', '$c_tipo', '$c_descricao', '$i_ocorrencia', '$i_id_recurso', '$c_responsavel')";
         }
         if ($_SESSION['tiposolicitacao'] == 'E') { // espaço fisico
             $c_sql = "Insert into solicitacao (id_setor, id_solicitante,id_espaco, data_abertura, hora_abertura, 
-            status, classificacao,tipo,descricao, id_ocorrencia) value ('$i_setor', '$i_solicitante', '$i_id_espaco', '$d_data_abertura', 
-            '$c_agora', 'A', 'E', '$c_tipo', '$c_descricao', $i_ocorrencia)";
+            status, classificacao,tipo,descricao, id_ocorrencia,responsavel) value ('$i_setor', '$i_solicitante', '$i_id_espaco', '$d_data_abertura', 
+            '$c_agora', 'A', 'E', '$c_tipo', '$c_descricao', $i_ocorrencia, '$c_responsavel')";
         }
 
         //echo $c_sql;
@@ -135,6 +136,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
 
             $c_body = "<html><body>";
             $c_body .= "<h3>GOP - Nova Solicitação de Serviço - Nº $solicitacao</h3>";
+            $c_body .= "<p><strong>Responsável pela Solicitação:</strong> $c_responsavel</p>";
             $c_body .= "<p><strong>Tipo de Ocorrência:</strong> $c_ocorrencia</p>";
             $c_body .= "<p><strong>Descrição:</strong> " . nl2br($c_descricao) . "</p>";
             $c_body .= "<p><strong>Observação:</strong> Este é um e-mail automático, por favor não responda.</p>";
@@ -307,9 +309,13 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
                 </div>
 
             </div>
+            <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">Responsável pela Solicitação</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="responsavel" name="responsavel" required>
+                </div>
+            </div>
             <div style="padding-top:5px;">
-
-
                 <div class="row mb-3">
                     <label class="col-sm-3 col-form-label">Descrição da Solicitação</label>
                     <div class="col-sm-9">
