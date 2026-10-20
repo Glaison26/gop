@@ -37,7 +37,7 @@ $registro = $result->fetch_assoc();
 
 $c_sql = "SELECT solicitacao.id, solicitacao.conclusao, solicitacao.data_abertura, solicitacao.prazo_data, solicitacao.prazo_hora, solicitacao.hora_abertura, solicitacao.id_solicitante,
 solicitacao.id_recursos, solicitacao.tipo, solicitacao.id_ocorrencia, solicitacao.`status`, solicitacao.descricao, solicitacao.classificacao,
-usuarios.nome AS solicitante, setores.descricao AS setor,";
+usuarios.nome AS solicitante, setores.descricao AS setor, solicitacao.responsavel,";
 if ($registro['classificacao'] == 'R') {
     $c_sql = $c_sql . "recursos.descricao AS recurso,";
 }
@@ -53,6 +53,7 @@ when solicitacao.status='A' then 'Aberta'
 when solicitacao.status='E' then 'Em Andamento'
 when solicitacao.status='C' then 'Concluída'
 END AS solicitacao_status
+
 FROM solicitacao
 JOIN usuarios ON solicitacao.id_solicitante=usuarios.id";
 if ($registro['classificacao'] == 'R') {
@@ -71,6 +72,7 @@ $registro = $result->fetch_assoc();
 // variaveis do formulário
 $c_descricao = $registro['descricao'];
 $c_conclusao = $registro['conclusao'];
+$c_responsavel = $registro['responsavel'];
 if (empty($c_conclusao)) {
     $c_conclusao = "Solicitação ainda não foi concluída, favor aguardar ou entrar em contato com o setor responsável";
 }
@@ -169,11 +171,11 @@ $total_anexos = $registro_anexos['total_anexos'];
     <div class="container-fluid">
 
         <div class="container content-box">
-            
+
 
             <hr>
             <div class='alert alert-info' role='alert'>
-                
+
                 <h5><strong>Detalhe da Solicitação de Serviço No. <?php echo $registro['id'] ?> </strong></h5>
             </div>
             <?php
@@ -249,6 +251,13 @@ $total_anexos = $registro_anexos['total_anexos'];
                             <label class="col-md-2 form-label">Ocorrência</label>
                             <div class="col-sm-6">
                                 <input type="text" readonly class="form-control" name="ocorrencia" id="ocorrencia" value='<?php echo $c_ocorrencia; ?>'>
+                            </div>
+                        </div>
+                        <!-- linha com responsável pela abertura da solicitação de serviço -->
+                        <div class="row mb-3">
+                            <label class="col-md-2 form-label">Responsável</label>
+                            <div class="col-sm-6">
+                                <input type="text"  readonly class="form-control" name="responsavel" id="responsavel" value='<?php echo $c_responsavel; ?>'>
                             </div>
                         </div>
 
@@ -374,10 +383,10 @@ $total_anexos = $registro_anexos['total_anexos'];
                                     <th scope="col">Data</th>
                                     <th scope="col">Hora</th>
                                     <th scope="col">Enviado por</th>
-                                    
+
                                     <th scope="col">Arquivo</th>
                                     <!-- botão para download do arquivo -->
-                                    
+
 
                                 </tr>
                             </thead>
@@ -400,7 +409,7 @@ $total_anexos = $registro_anexos['total_anexos'];
                                     $c_data = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['data'])));
                                     $c_arquivo = $c_linha['arquivo'];
                                     // tiro a pasta anexos/upload do nome do arquivo para mostrar somente o nome do arquivo na tabela
-                                    
+
                                     echo "
                     <tr>
                     
